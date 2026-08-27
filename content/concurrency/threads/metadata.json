@@ -1,0 +1,16 @@
+{
+  "slug": "threads",
+  "title": "threads",
+  "module_slug": "concurrency",
+  "module_title": "Конкурентность и асинхронность",
+  "order": 37,
+  "duration": 29,
+  "xp": 5,
+  "topics": [
+    "threading",
+    "I/O-bound"
+  ],
+  "description": "Учебный блок: threading, I/O-bound.",
+  "has_task": false,
+  "has_solution": false
+}

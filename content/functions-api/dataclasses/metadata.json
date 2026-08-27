@@ -1,0 +1,17 @@
+{
+  "slug": "dataclasses",
+  "title": "dataclasses",
+  "module_slug": "functions-api",
+  "module_title": "Функции, типизация и API",
+  "order": 22,
+  "duration": 27,
+  "xp": 5,
+  "topics": [
+    "field",
+    "frozen",
+    "slots"
+  ],
+  "description": "Учебный блок: field, frozen, slots.",
+  "has_task": false,
+  "has_solution": false
+}

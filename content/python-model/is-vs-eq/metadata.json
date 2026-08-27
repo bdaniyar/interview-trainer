@@ -1,0 +1,17 @@
+{
+  "slug": "is-vs-eq",
+  "title": "is vs ==",
+  "module_slug": "python-model",
+  "module_title": "Модель Python и продвинутый ООП",
+  "order": 2,
+  "duration": 20,
+  "xp": 25,
+  "topics": [
+    "identity",
+    "equality",
+    "hashing"
+  ],
+  "description": "Идентичность объектов, равенство значений и контракт __eq__.",
+  "has_task": true,
+  "has_solution": true
+}

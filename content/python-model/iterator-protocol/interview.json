@@ -1,0 +1,10 @@
+[
+  {
+    "question": "В чём разница между iterable и iterator?",
+    "answer": [
+      "Iterable создаёт iterator через __iter__",
+      "Iterator хранит состояние обхода и реализует __next__",
+      "Iterator обычно возвращает self из __iter__"
+    ]
+  }
+]

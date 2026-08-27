@@ -1,0 +1,16 @@
+{
+  "slug": "typeddict",
+  "title": "TypedDict",
+  "module_slug": "functions-api",
+  "module_title": "Функции, типизация и API",
+  "order": 26,
+  "duration": 18,
+  "xp": 5,
+  "topics": [
+    "mapping shapes",
+    "NotRequired"
+  ],
+  "description": "Учебный блок: mapping shapes, NotRequired.",
+  "has_task": false,
+  "has_solution": false
+}

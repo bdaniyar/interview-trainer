@@ -1,0 +1,16 @@
+{
+  "slug": "locks",
+  "title": "locks",
+  "module_slug": "concurrency",
+  "module_title": "Конкурентность и асинхронность",
+  "order": 40,
+  "duration": 19,
+  "xp": 5,
+  "topics": [
+    "Lock",
+    "RLock"
+  ],
+  "description": "Учебный блок: Lock, RLock.",
+  "has_task": false,
+  "has_solution": false
+}

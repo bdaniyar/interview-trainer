@@ -1,0 +1,17 @@
+{
+  "slug": "asyncio-practice",
+  "title": "Asyncio: практика и backpressure",
+  "module_slug": "concurrency",
+  "module_title": "Конкурентность и асинхронность",
+  "order": 52,
+  "duration": 18,
+  "xp": 5,
+  "topics": [
+    "Queue",
+    "Semaphore",
+    "backpressure"
+  ],
+  "description": "Учебный блок: Queue, Semaphore, backpressure.",
+  "has_task": false,
+  "has_solution": false
+}

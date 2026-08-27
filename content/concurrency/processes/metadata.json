@@ -1,0 +1,16 @@
+{
+  "slug": "processes",
+  "title": "processes",
+  "module_slug": "concurrency",
+  "module_title": "Конкурентность и асинхронность",
+  "order": 38,
+  "duration": 30,
+  "xp": 5,
+  "topics": [
+    "multiprocessing",
+    "IPC"
+  ],
+  "description": "Учебный блок: multiprocessing, IPC.",
+  "has_task": false,
+  "has_solution": false
+}

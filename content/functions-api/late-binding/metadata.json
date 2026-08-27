@@ -1,0 +1,16 @@
+{
+  "slug": "late-binding",
+  "title": "late binding",
+  "module_slug": "functions-api",
+  "module_title": "Функции, типизация и API",
+  "order": 16,
+  "duration": 21,
+  "xp": 5,
+  "topics": [
+    "closures",
+    "binding time"
+  ],
+  "description": "Учебный блок: closures, binding time.",
+  "has_task": false,
+  "has_solution": false
+}

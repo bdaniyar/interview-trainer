@@ -1,0 +1,16 @@
+{
+  "slug": "async-generators",
+  "title": "async generators",
+  "module_slug": "concurrency",
+  "module_title": "Конкурентность и асинхронность",
+  "order": 50,
+  "duration": 29,
+  "xp": 5,
+  "topics": [
+    "async yield",
+    "aclose"
+  ],
+  "description": "Учебный блок: async yield, aclose.",
+  "has_task": false,
+  "has_solution": false
+}

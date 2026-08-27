@@ -1,0 +1,16 @@
+{
+  "slug": "decorators",
+  "title": "decorators",
+  "module_slug": "functions-api",
+  "module_title": "Функции, типизация и API",
+  "order": 18,
+  "duration": 23,
+  "xp": 5,
+  "topics": [
+    "higher-order functions",
+    "wrapping"
+  ],
+  "description": "Учебный блок: higher-order functions, wrapping.",
+  "has_task": false,
+  "has_solution": false
+}

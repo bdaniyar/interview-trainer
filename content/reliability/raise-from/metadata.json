@@ -1,0 +1,16 @@
+{
+  "slug": "raise-from",
+  "title": "raise from",
+  "module_slug": "reliability",
+  "module_title": "Надёжность, тесты и архитектура",
+  "order": 56,
+  "duration": 22,
+  "xp": 5,
+  "topics": [
+    "explicit cause",
+    "traceback"
+  ],
+  "description": "Учебный блок: explicit cause, traceback.",
+  "has_task": false,
+  "has_solution": false
+}

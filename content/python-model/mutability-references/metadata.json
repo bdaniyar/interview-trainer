@@ -1,0 +1,17 @@
+{
+  "slug": "mutability-references",
+  "title": "Mutability and references",
+  "module_slug": "python-model",
+  "module_title": "Модель Python и продвинутый ООП",
+  "order": 3,
+  "duration": 21,
+  "xp": 25,
+  "topics": [
+    "references",
+    "mutable objects",
+    "aliasing"
+  ],
+  "description": "Алиасинг, мутации и безопасная работа с изменяемыми данными.",
+  "has_task": true,
+  "has_solution": true
+}

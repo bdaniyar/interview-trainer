@@ -1,0 +1,17 @@
+{
+  "slug": "descriptors",
+  "title": "Дескрипторы в прикладном коде",
+  "module_slug": "python-model",
+  "module_title": "Модель Python и продвинутый ООП",
+  "order": 8,
+  "duration": 26,
+  "xp": 5,
+  "topics": [
+    "__get__",
+    "__set__",
+    "property"
+  ],
+  "description": "Учебный блок: __get__, __set__, property.",
+  "has_task": false,
+  "has_solution": false
+}

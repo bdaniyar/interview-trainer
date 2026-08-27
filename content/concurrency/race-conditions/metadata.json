@@ -1,0 +1,16 @@
+{
+  "slug": "race-conditions",
+  "title": "race conditions",
+  "module_slug": "concurrency",
+  "module_title": "Конкурентность и асинхронность",
+  "order": 39,
+  "duration": 18,
+  "xp": 5,
+  "topics": [
+    "shared state",
+    "atomicity"
+  ],
+  "description": "Учебный блок: shared state, atomicity.",
+  "has_task": false,
+  "has_solution": false
+}

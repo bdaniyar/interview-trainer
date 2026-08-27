@@ -1,0 +1,16 @@
+{
+  "slug": "memory-profiling",
+  "title": "memory profiling",
+  "module_slug": "memory-performance",
+  "module_title": "Память, производительность и отладка",
+  "order": 35,
+  "duration": 27,
+  "xp": 5,
+  "topics": [
+    "tracemalloc",
+    "allocation"
+  ],
+  "description": "Учебный блок: tracemalloc, allocation.",
+  "has_task": false,
+  "has_solution": false
+}

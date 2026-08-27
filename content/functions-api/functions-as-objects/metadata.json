@@ -1,0 +1,16 @@
+{
+  "slug": "functions-as-objects",
+  "title": "Functions as objects",
+  "module_slug": "functions-api",
+  "module_title": "Функции, типизация и API",
+  "order": 10,
+  "duration": 28,
+  "xp": 5,
+  "topics": [
+    "callable",
+    "first-class functions"
+  ],
+  "description": "Учебный блок: callable, first-class functions.",
+  "has_task": false,
+  "has_solution": false
+}

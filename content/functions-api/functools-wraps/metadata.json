@@ -1,0 +1,16 @@
+{
+  "slug": "functools-wraps",
+  "title": "functools.wraps",
+  "module_slug": "functions-api",
+  "module_title": "Функции, типизация и API",
+  "order": 19,
+  "duration": 24,
+  "xp": 5,
+  "topics": [
+    "metadata",
+    "__wrapped__"
+  ],
+  "description": "Учебный блок: metadata, __wrapped__.",
+  "has_task": false,
+  "has_solution": false
+}

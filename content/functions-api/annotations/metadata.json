@@ -1,0 +1,16 @@
+{
+  "slug": "annotations",
+  "title": "annotations",
+  "module_slug": "functions-api",
+  "module_title": "Функции, типизация и API",
+  "order": 21,
+  "duration": 26,
+  "xp": 5,
+  "topics": [
+    "__annotations__",
+    "typing"
+  ],
+  "description": "Учебный блок: __annotations__, typing.",
+  "has_task": false,
+  "has_solution": false
+}

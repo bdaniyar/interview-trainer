@@ -1,0 +1,16 @@
+{
+  "slug": "object-lifetime",
+  "title": "Object lifetime",
+  "module_slug": "memory-performance",
+  "module_title": "Память, производительность и отладка",
+  "order": 28,
+  "duration": 20,
+  "xp": 5,
+  "topics": [
+    "lifetime",
+    "finalization"
+  ],
+  "description": "Учебный блок: lifetime, finalization.",
+  "has_task": false,
+  "has_solution": false
+}

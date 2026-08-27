@@ -1,0 +1,16 @@
+{
+  "slug": "args-kwargs",
+  "title": "*args и **kwargs",
+  "module_slug": "functions-api",
+  "module_title": "Функции, типизация и API",
+  "order": 14,
+  "duration": 19,
+  "xp": 5,
+  "topics": [
+    "packing",
+    "unpacking"
+  ],
+  "description": "Учебный блок: packing, unpacking.",
+  "has_task": false,
+  "has_solution": false
+}

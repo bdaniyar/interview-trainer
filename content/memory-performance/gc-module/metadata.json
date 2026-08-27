@@ -1,0 +1,16 @@
+{
+  "slug": "gc-module",
+  "title": "gc",
+  "module_slug": "memory-performance",
+  "module_title": "Память, производительность и отладка",
+  "order": 31,
+  "duration": 23,
+  "xp": 5,
+  "topics": [
+    "gc.collect",
+    "gc.get_objects"
+  ],
+  "description": "Учебный блок: gc.collect, gc.get_objects.",
+  "has_task": false,
+  "has_solution": false
+}

@@ -1,0 +1,16 @@
+{
+  "slug": "architecture-basics",
+  "title": "architecture basics",
+  "module_slug": "reliability",
+  "module_title": "Надёжность, тесты и архитектура",
+  "order": 64,
+  "duration": 30,
+  "xp": 5,
+  "topics": [
+    "layers",
+    "boundaries"
+  ],
+  "description": "Учебный блок: layers, boundaries.",
+  "has_task": false,
+  "has_solution": false
+}

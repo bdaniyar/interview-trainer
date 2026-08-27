@@ -1,0 +1,16 @@
+{
+  "slug": "backend-core-project",
+  "title": "Мини-проект: ядро backend-сервиса",
+  "module_slug": "reliability",
+  "module_title": "Надёжность, тесты и архитектура",
+  "order": 67,
+  "duration": 20,
+  "xp": 5,
+  "topics": [
+    "service layer",
+    "repository"
+  ],
+  "description": "Учебный блок: service layer, repository.",
+  "has_task": false,
+  "has_solution": false
+}

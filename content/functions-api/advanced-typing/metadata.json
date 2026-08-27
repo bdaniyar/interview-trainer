@@ -1,0 +1,17 @@
+{
+  "slug": "advanced-typing",
+  "title": "advanced typing",
+  "module_slug": "functions-api",
+  "module_title": "Функции, типизация и API",
+  "order": 23,
+  "duration": 28,
+  "xp": 5,
+  "topics": [
+    "Union",
+    "Literal",
+    "overload"
+  ],
+  "description": "Учебный блок: Union, Literal, overload.",
+  "has_task": false,
+  "has_solution": false
+}

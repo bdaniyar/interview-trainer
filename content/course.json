@@ -1,0 +1,1130 @@
+{
+  "title": "Python для опытных разработчиков",
+  "lessons_count": 67,
+  "modules": [
+    {
+      "slug": "python-model",
+      "title": "Модель Python и продвинутый ООП",
+      "order": 1,
+      "lessons": [
+        {
+          "slug": "python-basics",
+          "title": "Устройство Python: базовая теория",
+          "module_slug": "python-model",
+          "module_title": "Модель Python и продвинутый ООП",
+          "order": 1,
+          "duration": 19,
+          "xp": 25,
+          "topics": [
+            "objects",
+            "namespaces",
+            "MRO",
+            "descriptors"
+          ],
+          "description": "Объекты, пространства имён, data model, MRO, дескрипторы и метаклассы.",
+          "has_task": true,
+          "has_solution": true
+        },
+        {
+          "slug": "is-vs-eq",
+          "title": "is vs ==",
+          "module_slug": "python-model",
+          "module_title": "Модель Python и продвинутый ООП",
+          "order": 2,
+          "duration": 20,
+          "xp": 25,
+          "topics": [
+            "identity",
+            "equality",
+            "hashing"
+          ],
+          "description": "Идентичность объектов, равенство значений и контракт __eq__.",
+          "has_task": true,
+          "has_solution": true
+        },
+        {
+          "slug": "mutability-references",
+          "title": "Mutability and references",
+          "module_slug": "python-model",
+          "module_title": "Модель Python и продвинутый ООП",
+          "order": 3,
+          "duration": 21,
+          "xp": 25,
+          "topics": [
+            "references",
+            "mutable objects",
+            "aliasing"
+          ],
+          "description": "Алиасинг, мутации и безопасная работа с изменяемыми данными.",
+          "has_task": true,
+          "has_solution": true
+        },
+        {
+          "slug": "data-model",
+          "title": "Data model и спецметоды",
+          "module_slug": "python-model",
+          "module_title": "Модель Python и продвинутый ООП",
+          "order": 4,
+          "duration": 22,
+          "xp": 5,
+          "topics": [
+            "dunder methods",
+            "protocols"
+          ],
+          "description": "Учебный блок: dunder methods, protocols.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "iterator-protocol",
+          "title": "Iterator protocol",
+          "module_slug": "python-model",
+          "module_title": "Модель Python и продвинутый ООП",
+          "order": 5,
+          "duration": 23,
+          "xp": 25,
+          "topics": [
+            "Iterable",
+            "Iterator",
+            "StopIteration"
+          ],
+          "description": "Iterable, iterator, __iter__, __next__ и StopIteration.",
+          "has_task": true,
+          "has_solution": true
+        },
+        {
+          "slug": "generators",
+          "title": "Generators",
+          "module_slug": "python-model",
+          "module_title": "Модель Python и продвинутый ООП",
+          "order": 6,
+          "duration": 24,
+          "xp": 25,
+          "topics": [
+            "yield",
+            "lazy evaluation",
+            "generator expressions"
+          ],
+          "description": "yield, ленивые последовательности и корректная работа с потоком.",
+          "has_task": true,
+          "has_solution": true
+        },
+        {
+          "slug": "context-managers",
+          "title": "Контекстные менеджеры",
+          "module_slug": "python-model",
+          "module_title": "Модель Python и продвинутый ООП",
+          "order": 7,
+          "duration": 25,
+          "xp": 5,
+          "topics": [
+            "with",
+            "__enter__",
+            "__exit__"
+          ],
+          "description": "Учебный блок: with, __enter__, __exit__.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "descriptors",
+          "title": "Дескрипторы в прикладном коде",
+          "module_slug": "python-model",
+          "module_title": "Модель Python и продвинутый ООП",
+          "order": 8,
+          "duration": 26,
+          "xp": 5,
+          "topics": [
+            "__get__",
+            "__set__",
+            "property"
+          ],
+          "description": "Учебный блок: __get__, __set__, property.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "metaclasses",
+          "title": "Метаклассы и __init_subclass__",
+          "module_slug": "python-model",
+          "module_title": "Модель Python и продвинутый ООП",
+          "order": 9,
+          "duration": 27,
+          "xp": 5,
+          "topics": [
+            "type",
+            "metaclass",
+            "__init_subclass__"
+          ],
+          "description": "Учебный блок: type, metaclass, __init_subclass__.",
+          "has_task": false,
+          "has_solution": false
+        }
+      ]
+    },
+    {
+      "slug": "functions-api",
+      "title": "Функции, типизация и API",
+      "order": 2,
+      "lessons": [
+        {
+          "slug": "functions-as-objects",
+          "title": "Functions as objects",
+          "module_slug": "functions-api",
+          "module_title": "Функции, типизация и API",
+          "order": 10,
+          "duration": 28,
+          "xp": 5,
+          "topics": [
+            "callable",
+            "first-class functions"
+          ],
+          "description": "Учебный блок: callable, first-class functions.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "legb",
+          "title": "LEGB",
+          "module_slug": "functions-api",
+          "module_title": "Функции, типизация и API",
+          "order": 11,
+          "duration": 29,
+          "xp": 5,
+          "topics": [
+            "local",
+            "enclosing",
+            "global",
+            "builtins"
+          ],
+          "description": "Учебный блок: local, enclosing, global, builtins.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "positional-only",
+          "title": "positional-only arguments",
+          "module_slug": "functions-api",
+          "module_title": "Функции, типизация и API",
+          "order": 12,
+          "duration": 30,
+          "xp": 5,
+          "topics": [
+            "/",
+            "signature"
+          ],
+          "description": "Учебный блок: /, signature.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "keyword-only",
+          "title": "keyword-only arguments",
+          "module_slug": "functions-api",
+          "module_title": "Функции, типизация и API",
+          "order": 13,
+          "duration": 18,
+          "xp": 5,
+          "topics": [
+            "*",
+            "signature"
+          ],
+          "description": "Учебный блок: *, signature.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "args-kwargs",
+          "title": "*args и **kwargs",
+          "module_slug": "functions-api",
+          "module_title": "Функции, типизация и API",
+          "order": 14,
+          "duration": 19,
+          "xp": 5,
+          "topics": [
+            "packing",
+            "unpacking"
+          ],
+          "description": "Учебный блок: packing, unpacking.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "closures",
+          "title": "closures",
+          "module_slug": "functions-api",
+          "module_title": "Функции, типизация и API",
+          "order": 15,
+          "duration": 20,
+          "xp": 5,
+          "topics": [
+            "free variables",
+            "nonlocal"
+          ],
+          "description": "Учебный блок: free variables, nonlocal.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "late-binding",
+          "title": "late binding",
+          "module_slug": "functions-api",
+          "module_title": "Функции, типизация и API",
+          "order": 16,
+          "duration": 21,
+          "xp": 5,
+          "topics": [
+            "closures",
+            "binding time"
+          ],
+          "description": "Учебный блок: closures, binding time.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "mutable-default-arguments",
+          "title": "Mutable default arguments",
+          "module_slug": "functions-api",
+          "module_title": "Функции, типизация и API",
+          "order": 17,
+          "duration": 22,
+          "xp": 25,
+          "topics": [
+            "defaults",
+            "sentinel",
+            "None"
+          ],
+          "description": "Время вычисления default-значений и безопасный sentinel-паттерн.",
+          "has_task": true,
+          "has_solution": true
+        },
+        {
+          "slug": "decorators",
+          "title": "decorators",
+          "module_slug": "functions-api",
+          "module_title": "Функции, типизация и API",
+          "order": 18,
+          "duration": 23,
+          "xp": 5,
+          "topics": [
+            "higher-order functions",
+            "wrapping"
+          ],
+          "description": "Учебный блок: higher-order functions, wrapping.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "functools-wraps",
+          "title": "functools.wraps",
+          "module_slug": "functions-api",
+          "module_title": "Функции, типизация и API",
+          "order": 19,
+          "duration": 24,
+          "xp": 5,
+          "topics": [
+            "metadata",
+            "__wrapped__"
+          ],
+          "description": "Учебный блок: metadata, __wrapped__.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "signatures",
+          "title": "signatures",
+          "module_slug": "functions-api",
+          "module_title": "Функции, типизация и API",
+          "order": 20,
+          "duration": 25,
+          "xp": 5,
+          "topics": [
+            "inspect.signature",
+            "parameters"
+          ],
+          "description": "Учебный блок: inspect.signature, parameters.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "annotations",
+          "title": "annotations",
+          "module_slug": "functions-api",
+          "module_title": "Функции, типизация и API",
+          "order": 21,
+          "duration": 26,
+          "xp": 5,
+          "topics": [
+            "__annotations__",
+            "typing"
+          ],
+          "description": "Учебный блок: __annotations__, typing.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "dataclasses",
+          "title": "dataclasses",
+          "module_slug": "functions-api",
+          "module_title": "Функции, типизация и API",
+          "order": 22,
+          "duration": 27,
+          "xp": 5,
+          "topics": [
+            "field",
+            "frozen",
+            "slots"
+          ],
+          "description": "Учебный блок: field, frozen, slots.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "advanced-typing",
+          "title": "advanced typing",
+          "module_slug": "functions-api",
+          "module_title": "Функции, типизация и API",
+          "order": 23,
+          "duration": 28,
+          "xp": 5,
+          "topics": [
+            "Union",
+            "Literal",
+            "overload"
+          ],
+          "description": "Учебный блок: Union, Literal, overload.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "generic",
+          "title": "Generic",
+          "module_slug": "functions-api",
+          "module_title": "Функции, типизация и API",
+          "order": 24,
+          "duration": 29,
+          "xp": 5,
+          "topics": [
+            "TypeVar",
+            "generic classes"
+          ],
+          "description": "Учебный блок: TypeVar, generic classes.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "protocol",
+          "title": "Protocol",
+          "module_slug": "functions-api",
+          "module_title": "Функции, типизация и API",
+          "order": 25,
+          "duration": 30,
+          "xp": 5,
+          "topics": [
+            "structural typing",
+            "runtime_checkable"
+          ],
+          "description": "Учебный блок: structural typing, runtime_checkable.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "typeddict",
+          "title": "TypedDict",
+          "module_slug": "functions-api",
+          "module_title": "Функции, типизация и API",
+          "order": 26,
+          "duration": 18,
+          "xp": 5,
+          "topics": [
+            "mapping shapes",
+            "NotRequired"
+          ],
+          "description": "Учебный блок: mapping shapes, NotRequired.",
+          "has_task": false,
+          "has_solution": false
+        }
+      ]
+    },
+    {
+      "slug": "memory-performance",
+      "title": "Память, производительность и отладка",
+      "order": 3,
+      "lessons": [
+        {
+          "slug": "references",
+          "title": "References",
+          "module_slug": "memory-performance",
+          "module_title": "Память, производительность и отладка",
+          "order": 27,
+          "duration": 19,
+          "xp": 5,
+          "topics": [
+            "identity",
+            "aliasing"
+          ],
+          "description": "Учебный блок: identity, aliasing.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "object-lifetime",
+          "title": "Object lifetime",
+          "module_slug": "memory-performance",
+          "module_title": "Память, производительность и отладка",
+          "order": 28,
+          "duration": 20,
+          "xp": 5,
+          "topics": [
+            "lifetime",
+            "finalization"
+          ],
+          "description": "Учебный блок: lifetime, finalization.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "reference-counting",
+          "title": "Reference counting",
+          "module_slug": "memory-performance",
+          "module_title": "Память, производительность и отладка",
+          "order": 29,
+          "duration": 21,
+          "xp": 5,
+          "topics": [
+            "sys.getrefcount",
+            "CPython"
+          ],
+          "description": "Учебный блок: sys.getrefcount, CPython.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "cyclic-gc",
+          "title": "Cyclic garbage collector",
+          "module_slug": "memory-performance",
+          "module_title": "Память, производительность и отладка",
+          "order": 30,
+          "duration": 22,
+          "xp": 5,
+          "topics": [
+            "cycles",
+            "generations"
+          ],
+          "description": "Учебный блок: cycles, generations.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "gc-module",
+          "title": "gc",
+          "module_slug": "memory-performance",
+          "module_title": "Память, производительность и отладка",
+          "order": 31,
+          "duration": 23,
+          "xp": 5,
+          "topics": [
+            "gc.collect",
+            "gc.get_objects"
+          ],
+          "description": "Учебный блок: gc.collect, gc.get_objects.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "weak-references",
+          "title": "weak references",
+          "module_slug": "memory-performance",
+          "module_title": "Память, производительность и отладка",
+          "order": 32,
+          "duration": 24,
+          "xp": 5,
+          "topics": [
+            "weakref",
+            "WeakValueDictionary"
+          ],
+          "description": "Учебный блок: weakref, WeakValueDictionary.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "copying",
+          "title": "shallow copy и deep copy",
+          "module_slug": "memory-performance",
+          "module_title": "Память, производительность и отладка",
+          "order": 33,
+          "duration": 25,
+          "xp": 5,
+          "topics": [
+            "copy",
+            "deepcopy"
+          ],
+          "description": "Учебный блок: copy, deepcopy.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "profiling",
+          "title": "profiling",
+          "module_slug": "memory-performance",
+          "module_title": "Память, производительность и отладка",
+          "order": 34,
+          "duration": 26,
+          "xp": 5,
+          "topics": [
+            "cProfile",
+            "timeit"
+          ],
+          "description": "Учебный блок: cProfile, timeit.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "memory-profiling",
+          "title": "memory profiling",
+          "module_slug": "memory-performance",
+          "module_title": "Память, производительность и отладка",
+          "order": 35,
+          "duration": 27,
+          "xp": 5,
+          "topics": [
+            "tracemalloc",
+            "allocation"
+          ],
+          "description": "Учебный блок: tracemalloc, allocation.",
+          "has_task": false,
+          "has_solution": false
+        }
+      ]
+    },
+    {
+      "slug": "concurrency",
+      "title": "Конкурентность и асинхронность",
+      "order": 4,
+      "lessons": [
+        {
+          "slug": "gil",
+          "title": "GIL",
+          "module_slug": "concurrency",
+          "module_title": "Конкурентность и асинхронность",
+          "order": 36,
+          "duration": 28,
+          "xp": 5,
+          "topics": [
+            "bytecode",
+            "CPU-bound"
+          ],
+          "description": "Учебный блок: bytecode, CPU-bound.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "threads",
+          "title": "threads",
+          "module_slug": "concurrency",
+          "module_title": "Конкурентность и асинхронность",
+          "order": 37,
+          "duration": 29,
+          "xp": 5,
+          "topics": [
+            "threading",
+            "I/O-bound"
+          ],
+          "description": "Учебный блок: threading, I/O-bound.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "processes",
+          "title": "processes",
+          "module_slug": "concurrency",
+          "module_title": "Конкурентность и асинхронность",
+          "order": 38,
+          "duration": 30,
+          "xp": 5,
+          "topics": [
+            "multiprocessing",
+            "IPC"
+          ],
+          "description": "Учебный блок: multiprocessing, IPC.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "race-conditions",
+          "title": "race conditions",
+          "module_slug": "concurrency",
+          "module_title": "Конкурентность и асинхронность",
+          "order": 39,
+          "duration": 18,
+          "xp": 5,
+          "topics": [
+            "shared state",
+            "atomicity"
+          ],
+          "description": "Учебный блок: shared state, atomicity.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "locks",
+          "title": "locks",
+          "module_slug": "concurrency",
+          "module_title": "Конкурентность и асинхронность",
+          "order": 40,
+          "duration": 19,
+          "xp": 5,
+          "topics": [
+            "Lock",
+            "RLock"
+          ],
+          "description": "Учебный блок: Lock, RLock.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "thread-pool",
+          "title": "ThreadPoolExecutor",
+          "module_slug": "concurrency",
+          "module_title": "Конкурентность и асинхронность",
+          "order": 41,
+          "duration": 20,
+          "xp": 5,
+          "topics": [
+            "Future",
+            "Executor"
+          ],
+          "description": "Учебный блок: Future, Executor.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "process-pool",
+          "title": "ProcessPoolExecutor",
+          "module_slug": "concurrency",
+          "module_title": "Конкурентность и асинхронность",
+          "order": 42,
+          "duration": 21,
+          "xp": 5,
+          "topics": [
+            "pickle",
+            "workers"
+          ],
+          "description": "Учебный блок: pickle, workers.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "coroutine",
+          "title": "coroutine",
+          "module_slug": "concurrency",
+          "module_title": "Конкурентность и асинхронность",
+          "order": 43,
+          "duration": 22,
+          "xp": 5,
+          "topics": [
+            "coroutine object",
+            "awaitable"
+          ],
+          "description": "Учебный блок: coroutine object, awaitable.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "event-loop",
+          "title": "event loop",
+          "module_slug": "concurrency",
+          "module_title": "Конкурентность и асинхронность",
+          "order": 44,
+          "duration": 23,
+          "xp": 5,
+          "topics": [
+            "scheduling",
+            "callbacks"
+          ],
+          "description": "Учебный блок: scheduling, callbacks.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "async-await",
+          "title": "async / await",
+          "module_slug": "concurrency",
+          "module_title": "Конкурентность и асинхронность",
+          "order": 45,
+          "duration": 24,
+          "xp": 5,
+          "topics": [
+            "async def",
+            "await"
+          ],
+          "description": "Учебный блок: async def, await.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "tasks",
+          "title": "tasks",
+          "module_slug": "concurrency",
+          "module_title": "Конкурентность и асинхронность",
+          "order": 46,
+          "duration": 25,
+          "xp": 5,
+          "topics": [
+            "create_task",
+            "Task"
+          ],
+          "description": "Учебный блок: create_task, Task.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "gather",
+          "title": "gather",
+          "module_slug": "concurrency",
+          "module_title": "Конкурентность и асинхронность",
+          "order": 47,
+          "duration": 26,
+          "xp": 5,
+          "topics": [
+            "concurrent await",
+            "exceptions"
+          ],
+          "description": "Учебный блок: concurrent await, exceptions.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "cancellation",
+          "title": "cancellation",
+          "module_slug": "concurrency",
+          "module_title": "Конкурентность и асинхронность",
+          "order": 48,
+          "duration": 27,
+          "xp": 5,
+          "topics": [
+            "CancelledError",
+            "timeout"
+          ],
+          "description": "Учебный блок: CancelledError, timeout.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "async-iterators",
+          "title": "async iterators",
+          "module_slug": "concurrency",
+          "module_title": "Конкурентность и асинхронность",
+          "order": 49,
+          "duration": 28,
+          "xp": 5,
+          "topics": [
+            "__aiter__",
+            "__anext__"
+          ],
+          "description": "Учебный блок: __aiter__, __anext__.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "async-generators",
+          "title": "async generators",
+          "module_slug": "concurrency",
+          "module_title": "Конкурентность и асинхронность",
+          "order": 50,
+          "duration": 29,
+          "xp": 5,
+          "topics": [
+            "async yield",
+            "aclose"
+          ],
+          "description": "Учебный блок: async yield, aclose.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "async-context-managers",
+          "title": "async context managers",
+          "module_slug": "concurrency",
+          "module_title": "Конкурентность и асинхронность",
+          "order": 51,
+          "duration": 30,
+          "xp": 5,
+          "topics": [
+            "__aenter__",
+            "__aexit__"
+          ],
+          "description": "Учебный блок: __aenter__, __aexit__.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "asyncio-practice",
+          "title": "Asyncio: практика и backpressure",
+          "module_slug": "concurrency",
+          "module_title": "Конкурентность и асинхронность",
+          "order": 52,
+          "duration": 18,
+          "xp": 5,
+          "topics": [
+            "Queue",
+            "Semaphore",
+            "backpressure"
+          ],
+          "description": "Учебный блок: Queue, Semaphore, backpressure.",
+          "has_task": false,
+          "has_solution": false
+        }
+      ]
+    },
+    {
+      "slug": "reliability",
+      "title": "Надёжность, тесты и архитектура",
+      "order": 5,
+      "lessons": [
+        {
+          "slug": "exceptions",
+          "title": "exceptions",
+          "module_slug": "reliability",
+          "module_title": "Надёжность, тесты и архитектура",
+          "order": 53,
+          "duration": 19,
+          "xp": 5,
+          "topics": [
+            "try",
+            "except",
+            "finally"
+          ],
+          "description": "Учебный блок: try, except, finally.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "custom-exceptions",
+          "title": "custom exceptions",
+          "module_slug": "reliability",
+          "module_title": "Надёжность, тесты и архитектура",
+          "order": 54,
+          "duration": 20,
+          "xp": 5,
+          "topics": [
+            "exception hierarchy",
+            "domain errors"
+          ],
+          "description": "Учебный блок: exception hierarchy, domain errors.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "exception-chaining",
+          "title": "exception chaining",
+          "module_slug": "reliability",
+          "module_title": "Надёжность, тесты и архитектура",
+          "order": 55,
+          "duration": 21,
+          "xp": 5,
+          "topics": [
+            "__context__",
+            "__cause__"
+          ],
+          "description": "Учебный блок: __context__, __cause__.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "raise-from",
+          "title": "raise from",
+          "module_slug": "reliability",
+          "module_title": "Надёжность, тесты и архитектура",
+          "order": 56,
+          "duration": 22,
+          "xp": 5,
+          "topics": [
+            "explicit cause",
+            "traceback"
+          ],
+          "description": "Учебный блок: explicit cause, traceback.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "pytest",
+          "title": "pytest",
+          "module_slug": "reliability",
+          "module_title": "Надёжность, тесты и архитектура",
+          "order": 57,
+          "duration": 23,
+          "xp": 5,
+          "topics": [
+            "assert rewriting",
+            "discovery"
+          ],
+          "description": "Учебный блок: assert rewriting, discovery.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "fixtures",
+          "title": "fixtures",
+          "module_slug": "reliability",
+          "module_title": "Надёжность, тесты и архитектура",
+          "order": 58,
+          "duration": 24,
+          "xp": 5,
+          "topics": [
+            "scope",
+            "yield fixtures"
+          ],
+          "description": "Учебный блок: scope, yield fixtures.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "parametrization",
+          "title": "parametrization",
+          "module_slug": "reliability",
+          "module_title": "Надёжность, тесты и архитектура",
+          "order": 59,
+          "duration": 25,
+          "xp": 5,
+          "topics": [
+            "pytest.mark.parametrize",
+            "cases"
+          ],
+          "description": "Учебный блок: pytest.mark.parametrize, cases.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "mocks",
+          "title": "mocks",
+          "module_slug": "reliability",
+          "module_title": "Надёжность, тесты и архитектура",
+          "order": 60,
+          "duration": 26,
+          "xp": 5,
+          "topics": [
+            "Mock",
+            "patch",
+            "autospec"
+          ],
+          "description": "Учебный блок: Mock, patch, autospec.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "async-testing",
+          "title": "async testing",
+          "module_slug": "reliability",
+          "module_title": "Надёжность, тесты и архитектура",
+          "order": 61,
+          "duration": 27,
+          "xp": 5,
+          "topics": [
+            "pytest-asyncio",
+            "event loop"
+          ],
+          "description": "Учебный блок: pytest-asyncio, event loop.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "dependency-injection",
+          "title": "dependency injection",
+          "module_slug": "reliability",
+          "module_title": "Надёжность, тесты и архитектура",
+          "order": 62,
+          "duration": 28,
+          "xp": 5,
+          "topics": [
+            "dependencies",
+            "inversion of control"
+          ],
+          "description": "Учебный блок: dependencies, inversion of control.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "inheritance-composition",
+          "title": "inheritance vs composition",
+          "module_slug": "reliability",
+          "module_title": "Надёжность, тесты и архитектура",
+          "order": 63,
+          "duration": 29,
+          "xp": 5,
+          "topics": [
+            "delegation",
+            "coupling"
+          ],
+          "description": "Учебный блок: delegation, coupling.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "architecture-basics",
+          "title": "architecture basics",
+          "module_slug": "reliability",
+          "module_title": "Надёжность, тесты и архитектура",
+          "order": 64,
+          "duration": 30,
+          "xp": 5,
+          "topics": [
+            "layers",
+            "boundaries"
+          ],
+          "description": "Учебный блок: layers, boundaries.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "package-design",
+          "title": "Архитектура пакетов и модулей",
+          "module_slug": "reliability",
+          "module_title": "Надёжность, тесты и архитектура",
+          "order": 65,
+          "duration": 18,
+          "xp": 5,
+          "topics": [
+            "imports",
+            "public API"
+          ],
+          "description": "Учебный блок: imports, public API.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "contracts",
+          "title": "Контракты, фейки и интеграционные тесты",
+          "module_slug": "reliability",
+          "module_title": "Надёжность, тесты и архитектура",
+          "order": 66,
+          "duration": 19,
+          "xp": 5,
+          "topics": [
+            "contracts",
+            "fakes"
+          ],
+          "description": "Учебный блок: contracts, fakes.",
+          "has_task": false,
+          "has_solution": false
+        },
+        {
+          "slug": "backend-core-project",
+          "title": "Мини-проект: ядро backend-сервиса",
+          "module_slug": "reliability",
+          "module_title": "Надёжность, тесты и архитектура",
+          "order": 67,
+          "duration": 20,
+          "xp": 5,
+          "topics": [
+            "service layer",
+            "repository"
+          ],
+          "description": "Учебный блок: service layer, repository.",
+          "has_task": false,
+          "has_solution": false
+        }
+      ]
+    }
+  ]
+}

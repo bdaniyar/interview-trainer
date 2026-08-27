@@ -1,0 +1,18 @@
+{
+  "slug": "python-basics",
+  "title": "Устройство Python: базовая теория",
+  "module_slug": "python-model",
+  "module_title": "Модель Python и продвинутый ООП",
+  "order": 1,
+  "duration": 19,
+  "xp": 25,
+  "topics": [
+    "objects",
+    "namespaces",
+    "MRO",
+    "descriptors"
+  ],
+  "description": "Объекты, пространства имён, data model, MRO, дескрипторы и метаклассы.",
+  "has_task": true,
+  "has_solution": true
+}

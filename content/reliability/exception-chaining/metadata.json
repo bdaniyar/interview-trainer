@@ -1,0 +1,16 @@
+{
+  "slug": "exception-chaining",
+  "title": "exception chaining",
+  "module_slug": "reliability",
+  "module_title": "Надёжность, тесты и архитектура",
+  "order": 55,
+  "duration": 21,
+  "xp": 5,
+  "topics": [
+    "__context__",
+    "__cause__"
+  ],
+  "description": "Учебный блок: __context__, __cause__.",
+  "has_task": false,
+  "has_solution": false
+}

@@ -1,0 +1,16 @@
+{
+  "slug": "async-await",
+  "title": "async / await",
+  "module_slug": "concurrency",
+  "module_title": "Конкурентность и асинхронность",
+  "order": 45,
+  "duration": 24,
+  "xp": 5,
+  "topics": [
+    "async def",
+    "await"
+  ],
+  "description": "Учебный блок: async def, await.",
+  "has_task": false,
+  "has_solution": false
+}

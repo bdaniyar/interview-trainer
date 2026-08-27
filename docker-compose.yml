@@ -1,0 +1,60 @@
+name: pythoria
+
+services:
+  sandbox:
+    image: pythoria-sandbox:local
+    build:
+      context: ./runner/sandbox
+    command: ["python", "--version"]
+    restart: "no"
+
+  runner:
+    build:
+      context: ./runner
+    environment:
+      RUNNER_MODE: docker
+      SANDBOX_IMAGE: pythoria-sandbox:local
+      EXECUTION_TIMEOUT: "4"
+      OUTPUT_LIMIT: "32768"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      sandbox:
+        condition: service_completed_successfully
+    expose:
+      - "8001"
+    ports:
+      - "8001:8001"
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+    environment:
+      DATABASE_URL: sqlite:////data/pythoria.db
+      CONTENT_ROOT: /content
+      RUNNER_URL: http://runner:8001
+    volumes:
+      - pythoria_data:/data
+      - ./content:/content:ro
+    ports:
+      - "8000:8000"
+    depends_on:
+      - runner
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:8000
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  pythoria_data:

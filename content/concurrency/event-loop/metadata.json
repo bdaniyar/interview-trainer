@@ -1,0 +1,16 @@
+{
+  "slug": "event-loop",
+  "title": "event loop",
+  "module_slug": "concurrency",
+  "module_title": "Конкурентность и асинхронность",
+  "order": 44,
+  "duration": 23,
+  "xp": 5,
+  "topics": [
+    "scheduling",
+    "callbacks"
+  ],
+  "description": "Учебный блок: scheduling, callbacks.",
+  "has_task": false,
+  "has_solution": false
+}

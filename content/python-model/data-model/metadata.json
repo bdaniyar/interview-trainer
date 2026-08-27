@@ -1,0 +1,16 @@
+{
+  "slug": "data-model",
+  "title": "Data model и спецметоды",
+  "module_slug": "python-model",
+  "module_title": "Модель Python и продвинутый ООП",
+  "order": 4,
+  "duration": 22,
+  "xp": 5,
+  "topics": [
+    "dunder methods",
+    "protocols"
+  ],
+  "description": "Учебный блок: dunder methods, protocols.",
+  "has_task": false,
+  "has_solution": false
+}

@@ -1,0 +1,16 @@
+{
+  "slug": "closures",
+  "title": "closures",
+  "module_slug": "functions-api",
+  "module_title": "Функции, типизация и API",
+  "order": 15,
+  "duration": 20,
+  "xp": 5,
+  "topics": [
+    "free variables",
+    "nonlocal"
+  ],
+  "description": "Учебный блок: free variables, nonlocal.",
+  "has_task": false,
+  "has_solution": false
+}

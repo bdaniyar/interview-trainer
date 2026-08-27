@@ -1,0 +1,16 @@
+{
+  "slug": "generic",
+  "title": "Generic",
+  "module_slug": "functions-api",
+  "module_title": "Функции, типизация и API",
+  "order": 24,
+  "duration": 29,
+  "xp": 5,
+  "topics": [
+    "TypeVar",
+    "generic classes"
+  ],
+  "description": "Учебный блок: TypeVar, generic classes.",
+  "has_task": false,
+  "has_solution": false
+}

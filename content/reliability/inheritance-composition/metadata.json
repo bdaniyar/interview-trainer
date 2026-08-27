@@ -1,0 +1,16 @@
+{
+  "slug": "inheritance-composition",
+  "title": "inheritance vs composition",
+  "module_slug": "reliability",
+  "module_title": "Надёжность, тесты и архитектура",
+  "order": 63,
+  "duration": 29,
+  "xp": 5,
+  "topics": [
+    "delegation",
+    "coupling"
+  ],
+  "description": "Учебный блок: delegation, coupling.",
+  "has_task": false,
+  "has_solution": false
+}

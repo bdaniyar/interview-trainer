@@ -1,0 +1,16 @@
+{
+  "slug": "cancellation",
+  "title": "cancellation",
+  "module_slug": "concurrency",
+  "module_title": "Конкурентность и асинхронность",
+  "order": 48,
+  "duration": 27,
+  "xp": 5,
+  "topics": [
+    "CancelledError",
+    "timeout"
+  ],
+  "description": "Учебный блок: CancelledError, timeout.",
+  "has_task": false,
+  "has_solution": false
+}

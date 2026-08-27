@@ -1,0 +1,16 @@
+{
+  "slug": "async-iterators",
+  "title": "async iterators",
+  "module_slug": "concurrency",
+  "module_title": "Конкурентность и асинхронность",
+  "order": 49,
+  "duration": 28,
+  "xp": 5,
+  "topics": [
+    "__aiter__",
+    "__anext__"
+  ],
+  "description": "Учебный блок: __aiter__, __anext__.",
+  "has_task": false,
+  "has_solution": false
+}

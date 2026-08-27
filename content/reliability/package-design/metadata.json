@@ -1,0 +1,16 @@
+{
+  "slug": "package-design",
+  "title": "Архитектура пакетов и модулей",
+  "module_slug": "reliability",
+  "module_title": "Надёжность, тесты и архитектура",
+  "order": 65,
+  "duration": 18,
+  "xp": 5,
+  "topics": [
+    "imports",
+    "public API"
+  ],
+  "description": "Учебный блок: imports, public API.",
+  "has_task": false,
+  "has_solution": false
+}

@@ -1,0 +1,15 @@
+.DS_Store
+.env
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+backend/data/
+backend/tests/*.db
+.runner-workspaces/
+frontend/node_modules/
+frontend/dist/
+frontend/.next/
+npm-debug.log*

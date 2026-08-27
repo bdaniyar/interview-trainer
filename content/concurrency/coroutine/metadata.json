@@ -1,0 +1,16 @@
+{
+  "slug": "coroutine",
+  "title": "coroutine",
+  "module_slug": "concurrency",
+  "module_title": "Конкурентность и асинхронность",
+  "order": 43,
+  "duration": 22,
+  "xp": 5,
+  "topics": [
+    "coroutine object",
+    "awaitable"
+  ],
+  "description": "Учебный блок: coroutine object, awaitable.",
+  "has_task": false,
+  "has_solution": false
+}

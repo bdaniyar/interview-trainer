@@ -1,0 +1,16 @@
+{
+  "slug": "gil",
+  "title": "GIL",
+  "module_slug": "concurrency",
+  "module_title": "Конкурентность и асинхронность",
+  "order": 36,
+  "duration": 28,
+  "xp": 5,
+  "topics": [
+    "bytecode",
+    "CPU-bound"
+  ],
+  "description": "Учебный блок: bytecode, CPU-bound.",
+  "has_task": false,
+  "has_solution": false
+}

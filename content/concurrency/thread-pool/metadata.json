@@ -1,0 +1,16 @@
+{
+  "slug": "thread-pool",
+  "title": "ThreadPoolExecutor",
+  "module_slug": "concurrency",
+  "module_title": "Конкурентность и асинхронность",
+  "order": 41,
+  "duration": 20,
+  "xp": 5,
+  "topics": [
+    "Future",
+    "Executor"
+  ],
+  "description": "Учебный блок: Future, Executor.",
+  "has_task": false,
+  "has_solution": false
+}

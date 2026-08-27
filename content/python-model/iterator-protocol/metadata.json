@@ -1,0 +1,17 @@
+{
+  "slug": "iterator-protocol",
+  "title": "Iterator protocol",
+  "module_slug": "python-model",
+  "module_title": "Модель Python и продвинутый ООП",
+  "order": 5,
+  "duration": 23,
+  "xp": 25,
+  "topics": [
+    "Iterable",
+    "Iterator",
+    "StopIteration"
+  ],
+  "description": "Iterable, iterator, __iter__, __next__ и StopIteration.",
+  "has_task": true,
+  "has_solution": true
+}

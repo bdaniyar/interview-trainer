@@ -1,0 +1,17 @@
+{
+  "slug": "metaclasses",
+  "title": "Метаклассы и __init_subclass__",
+  "module_slug": "python-model",
+  "module_title": "Модель Python и продвинутый ООП",
+  "order": 9,
+  "duration": 27,
+  "xp": 5,
+  "topics": [
+    "type",
+    "metaclass",
+    "__init_subclass__"
+  ],
+  "description": "Учебный блок: type, metaclass, __init_subclass__.",
+  "has_task": false,
+  "has_solution": false
+}

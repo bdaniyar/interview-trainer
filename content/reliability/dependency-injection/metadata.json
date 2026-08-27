@@ -1,0 +1,16 @@
+{
+  "slug": "dependency-injection",
+  "title": "dependency injection",
+  "module_slug": "reliability",
+  "module_title": "Надёжность, тесты и архитектура",
+  "order": 62,
+  "duration": 28,
+  "xp": 5,
+  "topics": [
+    "dependencies",
+    "inversion of control"
+  ],
+  "description": "Учебный блок: dependencies, inversion of control.",
+  "has_task": false,
+  "has_solution": false
+}

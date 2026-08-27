@@ -1,0 +1,16 @@
+{
+  "slug": "contracts",
+  "title": "Контракты, фейки и интеграционные тесты",
+  "module_slug": "reliability",
+  "module_title": "Надёжность, тесты и архитектура",
+  "order": 66,
+  "duration": 19,
+  "xp": 5,
+  "topics": [
+    "contracts",
+    "fakes"
+  ],
+  "description": "Учебный блок: contracts, fakes.",
+  "has_task": false,
+  "has_solution": false
+}

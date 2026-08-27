@@ -1,0 +1,10 @@
+[
+  {
+    "question": "Когда вычисляются default arguments?",
+    "answer": [
+      "Один раз при выполнении def",
+      "Объект хранится в function.__defaults__",
+      "Для нового mutable-объекта на вызов используют None/sentinel"
+    ]
+  }
+]

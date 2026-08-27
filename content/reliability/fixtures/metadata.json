@@ -1,0 +1,16 @@
+{
+  "slug": "fixtures",
+  "title": "fixtures",
+  "module_slug": "reliability",
+  "module_title": "Надёжность, тесты и архитектура",
+  "order": 58,
+  "duration": 24,
+  "xp": 5,
+  "topics": [
+    "scope",
+    "yield fixtures"
+  ],
+  "description": "Учебный блок: scope, yield fixtures.",
+  "has_task": false,
+  "has_solution": false
+}

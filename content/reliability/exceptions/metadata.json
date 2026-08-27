@@ -1,0 +1,17 @@
+{
+  "slug": "exceptions",
+  "title": "exceptions",
+  "module_slug": "reliability",
+  "module_title": "Надёжность, тесты и архитектура",
+  "order": 53,
+  "duration": 19,
+  "xp": 5,
+  "topics": [
+    "try",
+    "except",
+    "finally"
+  ],
+  "description": "Учебный блок: try, except, finally.",
+  "has_task": false,
+  "has_solution": false
+}

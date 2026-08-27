@@ -1,0 +1,16 @@
+{
+  "slug": "async-testing",
+  "title": "async testing",
+  "module_slug": "reliability",
+  "module_title": "Надёжность, тесты и архитектура",
+  "order": 61,
+  "duration": 27,
+  "xp": 5,
+  "topics": [
+    "pytest-asyncio",
+    "event loop"
+  ],
+  "description": "Учебный блок: pytest-asyncio, event loop.",
+  "has_task": false,
+  "has_solution": false
+}

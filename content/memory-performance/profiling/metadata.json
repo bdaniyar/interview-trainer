@@ -1,0 +1,16 @@
+{
+  "slug": "profiling",
+  "title": "profiling",
+  "module_slug": "memory-performance",
+  "module_title": "Память, производительность и отладка",
+  "order": 34,
+  "duration": 26,
+  "xp": 5,
+  "topics": [
+    "cProfile",
+    "timeit"
+  ],
+  "description": "Учебный блок: cProfile, timeit.",
+  "has_task": false,
+  "has_solution": false
+}

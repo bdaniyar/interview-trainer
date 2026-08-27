@@ -1,0 +1,16 @@
+{
+  "slug": "gather",
+  "title": "gather",
+  "module_slug": "concurrency",
+  "module_title": "Конкурентность и асинхронность",
+  "order": 47,
+  "duration": 26,
+  "xp": 5,
+  "topics": [
+    "concurrent await",
+    "exceptions"
+  ],
+  "description": "Учебный блок: concurrent await, exceptions.",
+  "has_task": false,
+  "has_solution": false
+}

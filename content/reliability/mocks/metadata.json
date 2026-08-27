@@ -1,0 +1,17 @@
+{
+  "slug": "mocks",
+  "title": "mocks",
+  "module_slug": "reliability",
+  "module_title": "Надёжность, тесты и архитектура",
+  "order": 60,
+  "duration": 26,
+  "xp": 5,
+  "topics": [
+    "Mock",
+    "patch",
+    "autospec"
+  ],
+  "description": "Учебный блок: Mock, patch, autospec.",
+  "has_task": false,
+  "has_solution": false
+}

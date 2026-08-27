@@ -1,0 +1,16 @@
+{
+  "slug": "parametrization",
+  "title": "parametrization",
+  "module_slug": "reliability",
+  "module_title": "Надёжность, тесты и архитектура",
+  "order": 59,
+  "duration": 25,
+  "xp": 5,
+  "topics": [
+    "pytest.mark.parametrize",
+    "cases"
+  ],
+  "description": "Учебный блок: pytest.mark.parametrize, cases.",
+  "has_task": false,
+  "has_solution": false
+}

@@ -1,0 +1,17 @@
+{
+  "slug": "generators",
+  "title": "Generators",
+  "module_slug": "python-model",
+  "module_title": "Модель Python и продвинутый ООП",
+  "order": 6,
+  "duration": 24,
+  "xp": 25,
+  "topics": [
+    "yield",
+    "lazy evaluation",
+    "generator expressions"
+  ],
+  "description": "yield, ленивые последовательности и корректная работа с потоком.",
+  "has_task": true,
+  "has_solution": true
+}

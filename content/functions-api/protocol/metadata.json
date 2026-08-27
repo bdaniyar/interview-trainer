@@ -1,0 +1,16 @@
+{
+  "slug": "protocol",
+  "title": "Protocol",
+  "module_slug": "functions-api",
+  "module_title": "Функции, типизация и API",
+  "order": 25,
+  "duration": 30,
+  "xp": 5,
+  "topics": [
+    "structural typing",
+    "runtime_checkable"
+  ],
+  "description": "Учебный блок: structural typing, runtime_checkable.",
+  "has_task": false,
+  "has_solution": false
+}

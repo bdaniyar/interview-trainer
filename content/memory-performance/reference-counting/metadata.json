@@ -1,0 +1,16 @@
+{
+  "slug": "reference-counting",
+  "title": "Reference counting",
+  "module_slug": "memory-performance",
+  "module_title": "Память, производительность и отладка",
+  "order": 29,
+  "duration": 21,
+  "xp": 5,
+  "topics": [
+    "sys.getrefcount",
+    "CPython"
+  ],
+  "description": "Учебный блок: sys.getrefcount, CPython.",
+  "has_task": false,
+  "has_solution": false
+}

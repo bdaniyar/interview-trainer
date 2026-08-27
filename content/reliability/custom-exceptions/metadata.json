@@ -1,0 +1,16 @@
+{
+  "slug": "custom-exceptions",
+  "title": "custom exceptions",
+  "module_slug": "reliability",
+  "module_title": "Надёжность, тесты и архитектура",
+  "order": 54,
+  "duration": 20,
+  "xp": 5,
+  "topics": [
+    "exception hierarchy",
+    "domain errors"
+  ],
+  "description": "Учебный блок: exception hierarchy, domain errors.",
+  "has_task": false,
+  "has_solution": false
+}

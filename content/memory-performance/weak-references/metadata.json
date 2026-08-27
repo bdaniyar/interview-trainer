@@ -1,0 +1,16 @@
+{
+  "slug": "weak-references",
+  "title": "weak references",
+  "module_slug": "memory-performance",
+  "module_title": "Память, производительность и отладка",
+  "order": 32,
+  "duration": 24,
+  "xp": 5,
+  "topics": [
+    "weakref",
+    "WeakValueDictionary"
+  ],
+  "description": "Учебный блок: weakref, WeakValueDictionary.",
+  "has_task": false,
+  "has_solution": false
+}

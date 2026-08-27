@@ -1,0 +1,16 @@
+{
+  "slug": "positional-only",
+  "title": "positional-only arguments",
+  "module_slug": "functions-api",
+  "module_title": "Функции, типизация и API",
+  "order": 12,
+  "duration": 30,
+  "xp": 5,
+  "topics": [
+    "/",
+    "signature"
+  ],
+  "description": "Учебный блок: /, signature.",
+  "has_task": false,
+  "has_solution": false
+}

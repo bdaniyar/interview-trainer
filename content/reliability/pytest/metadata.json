@@ -1,0 +1,16 @@
+{
+  "slug": "pytest",
+  "title": "pytest",
+  "module_slug": "reliability",
+  "module_title": "Надёжность, тесты и архитектура",
+  "order": 57,
+  "duration": 23,
+  "xp": 5,
+  "topics": [
+    "assert rewriting",
+    "discovery"
+  ],
+  "description": "Учебный блок: assert rewriting, discovery.",
+  "has_task": false,
+  "has_solution": false
+}

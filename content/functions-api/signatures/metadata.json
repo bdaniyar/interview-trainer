@@ -1,0 +1,16 @@
+{
+  "slug": "signatures",
+  "title": "signatures",
+  "module_slug": "functions-api",
+  "module_title": "Функции, типизация и API",
+  "order": 20,
+  "duration": 25,
+  "xp": 5,
+  "topics": [
+    "inspect.signature",
+    "parameters"
+  ],
+  "description": "Учебный блок: inspect.signature, parameters.",
+  "has_task": false,
+  "has_solution": false
+}

@@ -1,0 +1,17 @@
+{
+  "slug": "mutable-default-arguments",
+  "title": "Mutable default arguments",
+  "module_slug": "functions-api",
+  "module_title": "Функции, типизация и API",
+  "order": 17,
+  "duration": 22,
+  "xp": 25,
+  "topics": [
+    "defaults",
+    "sentinel",
+    "None"
+  ],
+  "description": "Время вычисления default-значений и безопасный sentinel-паттерн.",
+  "has_task": true,
+  "has_solution": true
+}

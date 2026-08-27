@@ -1,0 +1,18 @@
+{
+  "slug": "legb",
+  "title": "LEGB",
+  "module_slug": "functions-api",
+  "module_title": "Функции, типизация и API",
+  "order": 11,
+  "duration": 29,
+  "xp": 5,
+  "topics": [
+    "local",
+    "enclosing",
+    "global",
+    "builtins"
+  ],
+  "description": "Учебный блок: local, enclosing, global, builtins.",
+  "has_task": false,
+  "has_solution": false
+}

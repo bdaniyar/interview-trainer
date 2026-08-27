@@ -1,0 +1,17 @@
+{
+  "slug": "context-managers",
+  "title": "Контекстные менеджеры",
+  "module_slug": "python-model",
+  "module_title": "Модель Python и продвинутый ООП",
+  "order": 7,
+  "duration": 25,
+  "xp": 5,
+  "topics": [
+    "with",
+    "__enter__",
+    "__exit__"
+  ],
+  "description": "Учебный блок: with, __enter__, __exit__.",
+  "has_task": false,
+  "has_solution": false
+}
