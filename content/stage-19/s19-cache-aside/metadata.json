@@ -1,0 +1,47 @@
+{
+  "id": "backend-interview.19.4.cache-aside",
+  "slug": "s19-cache-aside",
+  "title": "Cache-aside",
+  "module_slug": "stage-19",
+  "module_title": "Stage 19 · Redis",
+  "module_order": 19,
+  "order": 255,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "read cache",
+    "miss → DB → cache",
+    "source of truth remains DB."
+  ],
+  "description": "P1 · Cache-aside: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "common",
+  "market_evidence": "Redis явно встречался в 6/18 и входит в фактические проекты кандидата.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Cache-aside и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.19.3.ttl-and-expiration"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

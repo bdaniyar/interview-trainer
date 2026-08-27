@@ -1,5 +1,4 @@
-"""Заготовка для урока: functools.wraps."""
+from functools import wraps
 
-
-def main():
-    raise NotImplementedError("Задача будет добавлена позже")
+def traced(function):
+    raise NotImplementedError

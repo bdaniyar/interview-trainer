@@ -1,5 +1,4 @@
-"""Заготовка для урока: async / await."""
+import asyncio
 
-
-def main():
-    raise NotImplementedError("Задача будет добавлена позже")
+async def load_profile(client, user_id):
+    raise NotImplementedError

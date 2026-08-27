@@ -1,0 +1,55 @@
+{
+  "id": "backend-interview.3.13.decorator-factory-and-decorator-arguments",
+  "slug": "s03-decorator-factory-and-decorator-arguments",
+  "title": "Decorator factory and decorator arguments",
+  "module_slug": "stage-03",
+  "module_title": "Stage 3 · Functions, Scope, Closures and Decorators",
+  "module_order": 3,
+  "order": 31,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 25,
+  "topics": [
+    "three levels of functions",
+    "configuration captured by closure",
+    "retry/timing/permission examples."
+  ],
+  "description": "P1 · Decorator factory and decorator arguments: mental model, interview rubric и backend-сценарий.",
+  "has_task": true,
+  "has_solution": true,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Python указан в 18/18; functions/scope/decorators регулярно проверяют на screening.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Decorator factory and decorator arguments и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.3.12.functools-wraps"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py",
+  "task_id": "backend-interview.3.13.decorator-factory-and-decorator-arguments.practice",
+  "task_title": "Retry decorator",
+  "task_difficulty": "interview",
+  "task_skills": [
+    "decorator-factory",
+    "retry"
+  ],
+  "task_estimated_minutes": 20
+}

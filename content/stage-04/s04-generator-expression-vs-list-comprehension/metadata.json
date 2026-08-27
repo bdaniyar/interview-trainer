@@ -1,0 +1,48 @@
+{
+  "id": "backend-interview.4.4.generator-expression-vs-list-comprehension",
+  "slug": "s04-generator-expression-vs-list-comprehension",
+  "title": "Generator expression vs list comprehension",
+  "module_slug": "stage-04",
+  "module_title": "Stage 4 · Iteration, Generators, Exceptions and Context Managers",
+  "module_order": 4,
+  "order": 37,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "eager vs lazy",
+    "single-use",
+    "performance/memory",
+    "when list is preferable."
+  ],
+  "description": "P0 · Generator expression vs list comprehension: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | high",
+  "interview_probability": "high",
+  "market_frequency": "very_common",
+  "market_evidence": "Python указан в 18/18; iteration/exceptions/resource cleanup нужны в production code.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Generator expression vs list comprehension и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.4.3.generator-function-and-yield"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

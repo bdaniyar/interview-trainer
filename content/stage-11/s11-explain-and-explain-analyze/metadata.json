@@ -1,0 +1,50 @@
+{
+  "id": "backend-interview.11.8.explain-and-explain-analyze",
+  "slug": "s11-explain-and-explain-analyze",
+  "title": "EXPLAIN and EXPLAIN ANALYZE",
+  "module_slug": "stage-11",
+  "module_title": "Stage 11 · Database Design and PostgreSQL",
+  "module_order": 11,
+  "order": 129,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "estimated vs actual",
+    "scan types",
+    "rows",
+    "loops",
+    "timing",
+    "ANALYZE executes the query."
+  ],
+  "description": "P1 · EXPLAIN and EXPLAIN ANALYZE: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "PostgreSQL явно встречался в 13/18; indexes/transactions/concurrency критичны для backend.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить EXPLAIN and EXPLAIN ANALYZE и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.11.7.selectivity"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

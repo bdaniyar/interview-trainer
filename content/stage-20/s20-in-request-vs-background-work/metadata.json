@@ -1,0 +1,49 @@
+{
+  "id": "backend-interview.20.1.in-request-vs-background-work",
+  "slug": "s20-in-request-vs-background-work",
+  "title": "In-request vs background work",
+  "module_slug": "stage-20",
+  "module_title": "Stage 20 · Background Work, Celery and Message Brokers",
+  "module_order": 20,
+  "order": 262,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "latency",
+    "reliability",
+    "user-visible result",
+    "retry",
+    "transaction boundary."
+  ],
+  "description": "P0 · In-request vs background work: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Background work/outbox/Celery нужны для защиты фактических project claims; broker depth ниже core.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить In-request vs background work и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.12.3.http-methods"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

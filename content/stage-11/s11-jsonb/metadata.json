@@ -1,0 +1,45 @@
+{
+  "id": "backend-interview.11.16.jsonb",
+  "slug": "s11-jsonb",
+  "title": "JSONB",
+  "module_slug": "stage-11",
+  "module_title": "Stage 11 · Database Design and PostgreSQL",
+  "module_order": 11,
+  "order": 137,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "flexible data",
+    "indexing basics",
+    "not a replacement for relational modeling."
+  ],
+  "description": "P2 · JSONB: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P2",
+  "priority_note": "P2 | medium",
+  "interview_probability": "medium",
+  "market_frequency": "occasional",
+  "market_evidence": "PostgreSQL явно встречался в 13/18; indexes/transactions/concurrency критичны для backend.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить JSONB и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior_plus",
+  "prerequisites": [
+    "backend-interview.11.15.pagination"
+  ],
+  "modes": [
+    "learn",
+    "interview"
+  ],
+  "tracks": [
+    "full"
+  ],
+  "content_status": "planned",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

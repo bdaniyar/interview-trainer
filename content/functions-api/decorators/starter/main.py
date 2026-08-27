@@ -1,5 +1,4 @@
-"""Заготовка для урока: decorators."""
+from functools import wraps
 
-
-def main():
-    raise NotImplementedError("Задача будет добавлена позже")
+def require_role(role):
+    raise NotImplementedError

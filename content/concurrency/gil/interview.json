@@ -1,0 +1,94 @@
+[
+  {
+    "question": "Объясни тему «GIL» как на Junior Python Backend interview.",
+    "level": "normal",
+    "priority": "P1",
+    "interview_probability": "high",
+    "answer": [
+      "one thread executing Python bytecode in one CPython process",
+      "threads still useful for I/O",
+      "processes/native code for CPU work",
+      "GIL is not a general lock for application data.",
+      "Разделяй спецификацию Python и конкретную реализацию CPython; GIL относится к выполнению bytecode, не к бизнес-инвариантам."
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "one thread executing Python bytecode in one CPython process",
+        "threads still useful for I/O",
+        "processes/native code for CPU work",
+        "GIL is not a general lock for application data.",
+        "Разделяй спецификацию Python и конкретную реализацию CPython; GIL относится к выполнению bytecode, не к бизнес-инвариантам."
+      ],
+      "good_additions": [
+        "конкретный backend example",
+        "trade-off или failure mode"
+      ],
+      "common_wrong_answers": [
+        "Считать GIL автоматической защитой shared state или вызывать gc.collect как универсальную оптимизацию.",
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "red_flags": [
+        "Считать GIL автоматической защитой shared state или вызывать gc.collect как универсальную оптимизацию."
+      ],
+      "follow_up_questions": [
+        "Классифицируй проблему как lifetime, allocation, race или CPU contention перед выбором инструмента."
+      ]
+    },
+    "follow_ups": [
+      "Классифицируй проблему как lifetime, allocation, race или CPU contention перед выбором инструмента."
+    ],
+    "tags": [
+      "stage-07",
+      "p1"
+    ],
+    "sets": [
+      "stage-07",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  },
+  {
+    "question": "Сценарий по теме «GIL»: Классифицируй проблему как lifetime, allocation, race или CPU contention перед выбором инструмента. Что проверишь первым?",
+    "level": "scenario",
+    "priority": "P1",
+    "interview_probability": "high",
+    "answer": [
+      "Уточнить требования и observable symptom",
+      "Разделяй спецификацию Python и конкретную реализацию CPython; GIL относится к выполнению bytecode, не к бизнес-инвариантам.",
+      "Назвать edge case",
+      "Предложить test/log/metric для проверки"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "assumptions",
+        "mechanism",
+        "failure mode",
+        "verification"
+      ],
+      "good_additions": [
+        "альтернатива и trade-off"
+      ],
+      "common_wrong_answers": [
+        "Сразу называть технологию до уточнения проблемы"
+      ],
+      "red_flags": [
+        "Считать GIL автоматической защитой shared state или вызывать gc.collect как универсальную оптимизацию."
+      ],
+      "follow_up_questions": [
+        "Что произойдёт при повторе или частичном отказе?"
+      ]
+    },
+    "follow_ups": [
+      "Что произойдёт при повторе или частичном отказе?"
+    ],
+    "tags": [
+      "stage-07",
+      "scenario"
+    ],
+    "sets": [
+      "stage-07",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  }
+]

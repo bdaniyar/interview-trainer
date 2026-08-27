@@ -1,4 +1,4 @@
-import type { CourseData, ExecutionResult, InterviewQuestion, LessonData } from './types';
+import type { CourseData, ExecutionResult, InterviewData, LessonData } from './types';
 
 export const API_ORIGIN = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000';
 
@@ -32,7 +32,7 @@ export const api = {
       body: JSON.stringify({ completed: true }),
     }),
   solution: (slug: string) => request<{ files: Record<string, string> }>(`/api/lessons/${slug}/solution`),
-  interview: () => request<{ questions: InterviewQuestion[]; current_index: number }>('/api/interview'),
+  interview: (setSlug?: string) => request<InterviewData>('/api/interview' + (setSlug ? '?set_slug=' + encodeURIComponent(setSlug) : '')),
   completeInterview: (question_id: string, answer: string) =>
     request<{ completed: boolean; xp_awarded: number; xp: number }>('/api/interview/complete', {
       method: 'POST',

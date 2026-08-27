@@ -90,7 +90,7 @@ def get_course(db: Session = Depends(get_db)):
     state = get_state(db)
     total = sum(len(module["lessons"]) for module in modules)
     return {
-        "title": "Python для опытных разработчиков",
+        "title": "Python Backend Interview Trainer",
         "modules": modules,
         "summary": {
             "total": total,
@@ -252,13 +252,17 @@ def get_solution(slug: str):
 
 
 @app.get("/api/interview")
-def interview(db: Session = Depends(get_db)):
-    questions = content_repo.interview_questions()
+def interview(set_slug: str | None = None, db: Session = Depends(get_db)):
+    catalog = content_repo.interview_sets()
+    active_set = set_slug or catalog.get("default_set") or None
+    questions = content_repo.interview_questions(active_set)
     completed = {row.question_id for row in db.scalars(select(InterviewProgress)).all()}
     state = get_state(db)
     return {
         "questions": [{**item, "completed": item["id"] in completed} for item in questions],
         "current_index": min(state.interview_index, max(0, len(questions) - 1)),
+        "sets": catalog.get("sets", []),
+        "active_set": active_set,
     }
 
 

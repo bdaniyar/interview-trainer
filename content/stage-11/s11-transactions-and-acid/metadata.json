@@ -1,0 +1,49 @@
+{
+  "id": "backend-interview.11.9.transactions-and-acid",
+  "slug": "s11-transactions-and-acid",
+  "title": "Transactions and ACID",
+  "module_slug": "stage-11",
+  "module_title": "Stage 11 · Database Design and PostgreSQL",
+  "module_order": 11,
+  "order": 130,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "atomicity",
+    "consistency",
+    "isolation",
+    "durability",
+    "transaction boundary."
+  ],
+  "description": "P0 · Transactions and ACID: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "very_common",
+  "market_evidence": "PostgreSQL явно встречался в 13/18; indexes/transactions/concurrency критичны для backend.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Transactions and ACID и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.11.8.explain-and-explain-analyze"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

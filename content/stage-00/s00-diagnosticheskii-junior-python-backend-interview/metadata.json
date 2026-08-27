@@ -1,0 +1,50 @@
+{
+  "id": "backend-interview.0.1.diagnosticheskii-junior-python-backend-interview",
+  "slug": "s00-diagnosticheskii-junior-python-backend-interview",
+  "title": "Диагностический Junior Python Backend interview",
+  "module_slug": "stage-00",
+  "module_title": "Stage 0 · Orientation and diagnostic",
+  "module_order": 0,
+  "order": 1,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "Python Core diagnostic",
+    "SQL diagnostic",
+    "HTTP/REST diagnostic",
+    "FastAPI/ORM diagnostic",
+    "Git/Docker diagnostic",
+    "project-defense diagnostic",
+    "результат по категориям",
+    "рекомендации по слабым темам."
+  ],
+  "description": "P0 · Диагностический Junior Python Backend interview: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "common",
+  "market_evidence": "Interview foundation; приоритет подтверждён целью Junior screening.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Диагностический Junior Python Backend interview и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

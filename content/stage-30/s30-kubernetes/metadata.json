@@ -1,0 +1,44 @@
+{
+  "id": "backend-interview.30.4.kubernetes",
+  "slug": "s30-kubernetes",
+  "title": "Kubernetes",
+  "module_slug": "stage-30",
+  "module_title": "Stage 30 · Cloud, Nginx and Advanced Infrastructure",
+  "module_order": 30,
+  "order": 370,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "pod/deployment/service/config/secret at awareness level",
+    "do not spend significant course volume."
+  ],
+  "description": "P3 · Kubernetes: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P3",
+  "priority_note": "P3 | low",
+  "interview_probability": "low",
+  "market_frequency": "rare_for_junior",
+  "market_evidence": "Cloud встречался в 6/18, Kubernetes — 1/18; инфраструктура остаётся P2/P3 после core.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Kubernetes и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior_plus",
+  "prerequisites": [
+    "backend-interview.30.3.nginx-plus-fastapi"
+  ],
+  "modes": [
+    "learn",
+    "interview"
+  ],
+  "tracks": [
+    "full"
+  ],
+  "content_status": "planned",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

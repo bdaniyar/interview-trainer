@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Pythoria — Python Interview Trainer',
-  description: 'Интерактивный курс продвинутого Python с практикой и проверкой кода.',
+  title: 'Pythoria — Junior Python Backend Interview Trainer',
+  description: 'Локальная подготовка к Junior Python Backend собеседованиям: Python, SQL, HTTP, FastAPI, PostgreSQL и практические задачи.',
 };
 
 export default function RootLayout({

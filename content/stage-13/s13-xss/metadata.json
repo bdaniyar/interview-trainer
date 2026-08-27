@@ -1,0 +1,47 @@
+{
+  "id": "backend-interview.13.11.xss",
+  "slug": "s13-xss",
+  "title": "XSS",
+  "module_slug": "stage-13",
+  "module_title": "Stage 13 · Authentication, Authorization and Security",
+  "module_order": 13,
+  "order": 171,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "stored/reflected",
+    "output encoding",
+    "relevance to API-returned user content."
+  ],
+  "description": "P1 · XSS: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Auth/security защищают заявленные JWT/OAuth2/PKCE и API permissions.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить XSS и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.13.10.sql-injection"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

@@ -1,0 +1,94 @@
+[
+  {
+    "question": "Объясни тему «Access and refresh tokens» как на Junior Python Backend interview.",
+    "level": "normal",
+    "priority": "P0",
+    "interview_probability": "very_high",
+    "answer": [
+      "short-lived access",
+      "longer refresh",
+      "rotation",
+      "revocation",
+      "Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации."
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "short-lived access",
+        "longer refresh",
+        "rotation",
+        "revocation",
+        "Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации."
+      ],
+      "good_additions": [
+        "конкретный backend example",
+        "trade-off или failure mode"
+      ],
+      "common_wrong_answers": [
+        "Считать CORS авторизацией, JWT шифрованием или хранить пароль быстрым hash.",
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "red_flags": [
+        "Считать CORS авторизацией, JWT шифрованием или хранить пароль быстрым hash."
+      ],
+      "follow_up_questions": [
+        "Назови атакующего, актив, проверку на сервере и безопасный отказ."
+      ]
+    },
+    "follow_ups": [
+      "Назови атакующего, актив, проверку на сервере и безопасный отказ."
+    ],
+    "tags": [
+      "stage-13",
+      "p0"
+    ],
+    "sets": [
+      "stage-13",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  },
+  {
+    "question": "Сценарий по теме «Access and refresh tokens»: Назови атакующего, актив, проверку на сервере и безопасный отказ. Что проверишь первым?",
+    "level": "scenario",
+    "priority": "P0",
+    "interview_probability": "very_high",
+    "answer": [
+      "Уточнить требования и observable symptom",
+      "Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации.",
+      "Назвать edge case",
+      "Предложить test/log/metric для проверки"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "assumptions",
+        "mechanism",
+        "failure mode",
+        "verification"
+      ],
+      "good_additions": [
+        "альтернатива и trade-off"
+      ],
+      "common_wrong_answers": [
+        "Сразу называть технологию до уточнения проблемы"
+      ],
+      "red_flags": [
+        "Считать CORS авторизацией, JWT шифрованием или хранить пароль быстрым hash."
+      ],
+      "follow_up_questions": [
+        "Что произойдёт при повторе или частичном отказе?"
+      ]
+    },
+    "follow_ups": [
+      "Что произойдёт при повторе или частичном отказе?"
+    ],
+    "tags": [
+      "stage-13",
+      "scenario"
+    ],
+    "sets": [
+      "stage-13",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  }
+]

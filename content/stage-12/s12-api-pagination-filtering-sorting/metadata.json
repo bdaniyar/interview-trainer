@@ -1,0 +1,47 @@
+{
+  "id": "backend-interview.12.19.api-pagination-filtering-sorting",
+  "slug": "s12-api-pagination-filtering-sorting",
+  "title": "API pagination/filtering/sorting",
+  "module_slug": "stage-12",
+  "module_title": "Stage 12 · HTTP, Networking and REST",
+  "module_order": 12,
+  "order": 157,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "stable contract",
+    "validation",
+    "default/max limits."
+  ],
+  "description": "P0 · API pagination/filtering/sorting: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | high",
+  "interview_probability": "high",
+  "market_frequency": "very_common",
+  "market_evidence": "HTTP/REST/API явно встречались в 13/18 — P0 внешний контракт backend.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить API pagination/filtering/sorting и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.12.18.rest-resources-and-urls"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

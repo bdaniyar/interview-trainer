@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowRight, CheckCircle2, Code2, X } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 
 import { api } from '../api';
-import type { InterviewQuestion } from '../types';
+import type { InterviewQuestion, InterviewSet } from '../types';
 
 interface Props {
   onClose: () => void;
@@ -13,6 +13,8 @@ interface Props {
 
 export function InterviewModal({ onClose, onXp }: Props) {
   const [questions, setQuestions] = useState<InterviewQuestion[]>([]);
+  const [sets, setSets] = useState<InterviewSet[]>([]);
+  const [activeSet, setActiveSet] = useState('');
   const [index, setIndex] = useState(0);
   const [answer, setAnswer] = useState('');
   const [revealed, setRevealed] = useState(false);
@@ -22,8 +24,23 @@ export function InterviewModal({ onClose, onXp }: Props) {
     api.interview().then((data) => {
       setQuestions(data.questions);
       setIndex(data.current_index);
+      setSets(data.sets);
+      setActiveSet(data.active_set);
     }).catch((err: Error) => setError(err.message));
   }, []);
+
+  const selectSet = (slug: string) => {
+    setActiveSet(slug);
+    setQuestions([]);
+    setIndex(0);
+    setAnswer('');
+    setRevealed(false);
+    setError('');
+    api.interview(slug).then((data) => {
+      setQuestions(data.questions);
+      setSets(data.sets);
+    }).catch((err: Error) => setError(err.message));
+  };
 
   const question = questions[index];
   const completedCount = useMemo(() => questions.filter((item) => item.completed).length, [questions]);
@@ -51,6 +68,9 @@ export function InterviewModal({ onClose, onXp }: Props) {
       <section className="interview-modal">
         <header>
           <div className="interview-title"><span className="interview-icon"><Code2 size={18} /></span><div><b>Interview mode</b><small>{completedCount} из {questions.length} отвечено</small></div></div>
+          <select className="interview-set-select" value={activeSet} onChange={(event) => selectSet(event.target.value)} aria-label="Набор вопросов">
+            {sets.map((item) => <option key={item.slug} value={item.slug}>{item.title}</option>)}
+          </select>
           <button className="icon-button" onClick={onClose} aria-label="Закрыть"><X size={17} /></button>
         </header>
         <div className="interview-progress"><span style={{ width: `${questions.length ? ((index + 1) / questions.length) * 100 : 0}%` }} /></div>

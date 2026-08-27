@@ -1,0 +1,45 @@
+{
+  "id": "backend-interview.5.17.slots",
+  "slug": "s05-slots",
+  "title": "`__slots__`",
+  "module_slug": "stage-05",
+  "module_title": "Stage 5 · OOP and Python Data Model",
+  "module_order": 5,
+  "order": 63,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "memory/layout idea",
+    "limitations",
+    "not a default optimization."
+  ],
+  "description": "P3 · `__slots__`: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P3",
+  "priority_note": "P3 | low",
+  "interview_probability": "low",
+  "market_frequency": "rare_for_junior",
+  "market_evidence": "Python указан в 18/18; OOP/data model важны для чтения framework и domain code.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить `__slots__` и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior_plus",
+  "prerequisites": [
+    "backend-interview.5.16.property-and-descriptors"
+  ],
+  "modes": [
+    "learn",
+    "interview"
+  ],
+  "tracks": [
+    "full"
+  ],
+  "content_status": "planned",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

@@ -1,16 +1,57 @@
 {
+  "id": "backend-interview.3.9.closures-and-free-variables",
   "slug": "closures",
-  "title": "closures",
-  "module_slug": "functions-api",
-  "module_title": "Функции, типизация и API",
-  "order": 15,
-  "duration": 20,
-  "xp": 5,
+  "title": "Closures and free variables",
+  "module_slug": "stage-03",
+  "module_title": "Stage 3 · Functions, Scope, Closures and Decorators",
+  "module_order": 3,
+  "order": 27,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 25,
   "topics": [
-    "free variables",
+    "closure",
+    "enclosing scope",
+    "free variable",
+    "retained state",
+    "practical factory/callback examples."
+  ],
+  "description": "P0 · Closures and free variables: mental model, interview rubric и backend-сценарий.",
+  "has_task": true,
+  "has_solution": true,
+  "priority": "P0",
+  "priority_note": "P0 | high",
+  "interview_probability": "high",
+  "market_frequency": "very_common",
+  "market_evidence": "Python указан в 18/18; functions/scope/decorators регулярно проверяют на screening.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Closures and free variables и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.3.8.global-and-nonlocal"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py",
+  "task_id": "backend-interview.3.9.closures-and-free-variables.practice",
+  "task_title": "Stateful closure",
+  "task_difficulty": "interview",
+  "task_skills": [
+    "closure",
     "nonlocal"
   ],
-  "description": "Учебный блок: free variables, nonlocal.",
-  "has_task": false,
-  "has_solution": false
+  "task_estimated_minutes": 20
 }

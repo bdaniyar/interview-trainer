@@ -1,16 +1,56 @@
 {
+  "id": "backend-interview.8.4.event-loop",
   "slug": "event-loop",
-  "title": "event loop",
-  "module_slug": "concurrency",
-  "module_title": "Конкурентность и асинхронность",
-  "order": 44,
-  "duration": 23,
-  "xp": 5,
+  "title": "Event loop",
+  "module_slug": "stage-08",
+  "module_title": "Stage 8 · Async Python",
+  "module_order": 8,
+  "order": 83,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 25,
   "topics": [
     "scheduling",
-    "callbacks"
+    "readiness",
+    "callbacks/tasks",
+    "one blocking call stalls the loop."
   ],
-  "description": "Учебный блок: scheduling, callbacks.",
-  "has_task": false,
-  "has_solution": false
+  "description": "P0 · Event loop: mental model, interview rubric и backend-сценарий.",
+  "has_task": true,
+  "has_solution": true,
+  "priority": "P0",
+  "priority_note": "P0 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "common",
+  "market_evidence": "Async явно встречался в 5/18 и является P0/P1 для FastAPI async-проектов кандидата.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Event loop и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.8.3.await-and-cooperative-scheduling"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py",
+  "task_id": "backend-interview.8.4.event-loop.practice",
+  "task_title": "Cooperative checkpoint",
+  "task_difficulty": "interview",
+  "task_skills": [
+    "event-loop",
+    "cooperative-scheduling"
+  ],
+  "task_estimated_minutes": 20
 }

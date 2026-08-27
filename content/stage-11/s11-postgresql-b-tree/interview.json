@@ -1,0 +1,92 @@
+[
+  {
+    "question": "Объясни тему «PostgreSQL B-tree» как на Junior Python Backend interview.",
+    "level": "normal",
+    "priority": "P1",
+    "interview_probability": "high",
+    "answer": [
+      "equality/range/order",
+      "common default",
+      "no deep page internals required.",
+      "Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path."
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "equality/range/order",
+        "common default",
+        "no deep page internals required.",
+        "Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path."
+      ],
+      "good_additions": [
+        "конкретный backend example",
+        "trade-off или failure mode"
+      ],
+      "common_wrong_answers": [
+        "Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова.",
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "red_flags": [
+        "Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова."
+      ],
+      "follow_up_questions": [
+        "Назови инвариант, конкурентный сценарий и точку, где его гарантирует база."
+      ]
+    },
+    "follow_ups": [
+      "Назови инвариант, конкурентный сценарий и точку, где его гарантирует база."
+    ],
+    "tags": [
+      "stage-11",
+      "p1"
+    ],
+    "sets": [
+      "stage-11",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  },
+  {
+    "question": "Сценарий по теме «PostgreSQL B-tree»: Назови инвариант, конкурентный сценарий и точку, где его гарантирует база. Что проверишь первым?",
+    "level": "scenario",
+    "priority": "P1",
+    "interview_probability": "high",
+    "answer": [
+      "Уточнить требования и observable symptom",
+      "Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.",
+      "Назвать edge case",
+      "Предложить test/log/metric для проверки"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "assumptions",
+        "mechanism",
+        "failure mode",
+        "verification"
+      ],
+      "good_additions": [
+        "альтернатива и trade-off"
+      ],
+      "common_wrong_answers": [
+        "Сразу называть технологию до уточнения проблемы"
+      ],
+      "red_flags": [
+        "Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова."
+      ],
+      "follow_up_questions": [
+        "Что произойдёт при повторе или частичном отказе?"
+      ]
+    },
+    "follow_ups": [
+      "Что произойдёт при повторе или частичном отказе?"
+    ],
+    "tags": [
+      "stage-11",
+      "scenario"
+    ],
+    "sets": [
+      "stage-11",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  }
+]

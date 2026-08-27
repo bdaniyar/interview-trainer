@@ -1,0 +1,48 @@
+{
+  "id": "backend-interview.24.2.cd-basics",
+  "slug": "s24-cd-basics",
+  "title": "CD basics",
+  "module_slug": "stage-24",
+  "module_title": "Stage 24 · CI/CD",
+  "module_order": 24,
+  "order": 311,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "artifact",
+    "environment",
+    "deploy",
+    "migration",
+    "rollback",
+    "no cloud-specific deep dive."
+  ],
+  "description": "P2 · CD basics: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P2",
+  "priority_note": "P2 | medium",
+  "interview_probability": "medium",
+  "market_frequency": "occasional",
+  "market_evidence": "CI/CD явно встречался в 11/18; junior должен понимать quality gates и читать logs.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить CD basics и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior_plus",
+  "prerequisites": [
+    "backend-interview.24.1.ci-pipeline-mental-model"
+  ],
+  "modes": [
+    "learn",
+    "interview"
+  ],
+  "tracks": [
+    "full"
+  ],
+  "content_status": "planned",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

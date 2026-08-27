@@ -1,0 +1,94 @@
+[
+  {
+    "question": "Объясни тему «Async iterators and generators» как на Junior Python Backend interview.",
+    "level": "normal",
+    "priority": "P1",
+    "interview_probability": "medium",
+    "answer": [
+      "`async for`",
+      "streaming",
+      "paginated I/O",
+      "cleanup.",
+      "Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код."
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "`async for`",
+        "streaming",
+        "paginated I/O",
+        "cleanup.",
+        "Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код."
+      ],
+      "good_additions": [
+        "конкретный backend example",
+        "trade-off или failure mode"
+      ],
+      "common_wrong_answers": [
+        "Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint.",
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "red_flags": [
+        "Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint."
+      ],
+      "follow_up_questions": [
+        "Найди blocking участок, обозначь cancellation boundary и выбери способ конкурентного запуска."
+      ]
+    },
+    "follow_ups": [
+      "Найди blocking участок, обозначь cancellation boundary и выбери способ конкурентного запуска."
+    ],
+    "tags": [
+      "stage-08",
+      "p1"
+    ],
+    "sets": [
+      "stage-08",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  },
+  {
+    "question": "Сценарий по теме «Async iterators and generators»: Найди blocking участок, обозначь cancellation boundary и выбери способ конкурентного запуска. Что проверишь первым?",
+    "level": "scenario",
+    "priority": "P1",
+    "interview_probability": "medium",
+    "answer": [
+      "Уточнить требования и observable symptom",
+      "Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.",
+      "Назвать edge case",
+      "Предложить test/log/metric для проверки"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "assumptions",
+        "mechanism",
+        "failure mode",
+        "verification"
+      ],
+      "good_additions": [
+        "альтернатива и trade-off"
+      ],
+      "common_wrong_answers": [
+        "Сразу называть технологию до уточнения проблемы"
+      ],
+      "red_flags": [
+        "Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint."
+      ],
+      "follow_up_questions": [
+        "Что произойдёт при повторе или частичном отказе?"
+      ]
+    },
+    "follow_ups": [
+      "Что произойдёт при повторе или частичном отказе?"
+    ],
+    "tags": [
+      "stage-08",
+      "scenario"
+    ],
+    "sets": [
+      "stage-08",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  }
+]

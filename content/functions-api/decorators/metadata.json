@@ -1,16 +1,57 @@
 {
+  "id": "backend-interview.3.11.basic-decorators",
   "slug": "decorators",
-  "title": "decorators",
-  "module_slug": "functions-api",
-  "module_title": "Функции, типизация и API",
-  "order": 18,
-  "duration": 23,
-  "xp": 5,
+  "title": "Basic decorators",
+  "module_slug": "stage-03",
+  "module_title": "Stage 3 · Functions, Scope, Closures and Decorators",
+  "module_order": 3,
+  "order": 29,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 25,
   "topics": [
-    "higher-order functions",
-    "wrapping"
+    "wrapper",
+    "accepting `*args/**kwargs`",
+    "returning result",
+    "function replacement",
+    "backend use cases."
   ],
-  "description": "Учебный блок: higher-order functions, wrapping.",
-  "has_task": false,
-  "has_solution": false
+  "description": "P0 · Basic decorators: mental model, interview rubric и backend-сценарий.",
+  "has_task": true,
+  "has_solution": true,
+  "priority": "P0",
+  "priority_note": "P0 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "very_common",
+  "market_evidence": "Python указан в 18/18; functions/scope/decorators регулярно проверяют на screening.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Basic decorators и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.3.10.late-binding"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py",
+  "task_id": "backend-interview.3.11.basic-decorators.practice",
+  "task_title": "Decorator проверки роли",
+  "task_difficulty": "interview",
+  "task_skills": [
+    "decorator",
+    "authorization"
+  ],
+  "task_estimated_minutes": 20
 }

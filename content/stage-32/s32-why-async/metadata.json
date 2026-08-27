@@ -1,0 +1,47 @@
+{
+  "id": "backend-interview.32.4.why-async",
+  "slug": "s32-why-async",
+  "title": "Why async?",
+  "module_slug": "stage-32",
+  "module_title": "Stage 32 · Personalized Resume Defense",
+  "module_order": 32,
+  "order": 387,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "PostgreSQL/Redis/object storage/WebSocket are I/O-bound",
+    "event loop serves other work while waiting",
+    "CPU-heavy work must leave event loop."
+  ],
+  "description": "P0 · Why async?: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "very_common",
+  "market_evidence": "Resume Defense основан только на фактических StudyHub, Hotel Booking и Share Recipe claims.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Why async? и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.32.3.why-one-backend-language"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

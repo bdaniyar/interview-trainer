@@ -1,0 +1,94 @@
+[
+  {
+    "question": "Объясни тему «FastAPI tests» как на Junior Python Backend interview.",
+    "level": "normal",
+    "priority": "P0",
+    "interview_probability": "very_high",
+    "answer": [
+      "request/response",
+      "auth",
+      "validation",
+      "dependency overrides",
+      "Arrange создаёт условия, Act выполняет одно поведение, Assert проверяет значимый результат."
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "request/response",
+        "auth",
+        "validation",
+        "dependency overrides",
+        "Arrange создаёт условия, Act выполняет одно поведение, Assert проверяет значимый результат."
+      ],
+      "good_additions": [
+        "конкретный backend example",
+        "trade-off или failure mode"
+      ],
+      "common_wrong_answers": [
+        "Mock не в том namespace, shared fixture state или тест только happy path.",
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "red_flags": [
+        "Mock не в том namespace, shared fixture state или тест только happy path."
+      ],
+      "follow_up_questions": [
+        "Выдели unit boundary, integration boundary и критичный failure case."
+      ]
+    },
+    "follow_ups": [
+      "Выдели unit boundary, integration boundary и критичный failure case."
+    ],
+    "tags": [
+      "stage-18",
+      "p0"
+    ],
+    "sets": [
+      "stage-18",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  },
+  {
+    "question": "Сценарий по теме «FastAPI tests»: Выдели unit boundary, integration boundary и критичный failure case. Что проверишь первым?",
+    "level": "scenario",
+    "priority": "P0",
+    "interview_probability": "very_high",
+    "answer": [
+      "Уточнить требования и observable symptom",
+      "Arrange создаёт условия, Act выполняет одно поведение, Assert проверяет значимый результат.",
+      "Назвать edge case",
+      "Предложить test/log/metric для проверки"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "assumptions",
+        "mechanism",
+        "failure mode",
+        "verification"
+      ],
+      "good_additions": [
+        "альтернатива и trade-off"
+      ],
+      "common_wrong_answers": [
+        "Сразу называть технологию до уточнения проблемы"
+      ],
+      "red_flags": [
+        "Mock не в том namespace, shared fixture state или тест только happy path."
+      ],
+      "follow_up_questions": [
+        "Что произойдёт при повторе или частичном отказе?"
+      ]
+    },
+    "follow_ups": [
+      "Что произойдёт при повторе или частичном отказе?"
+    ],
+    "tags": [
+      "stage-18",
+      "scenario"
+    ],
+    "sets": [
+      "stage-18",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  }
+]

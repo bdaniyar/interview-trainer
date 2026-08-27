@@ -1,0 +1,48 @@
+{
+  "id": "backend-interview.32.13.rate-limiting",
+  "slug": "s32-rate-limiting",
+  "title": "Rate limiting",
+  "module_slug": "stage-32",
+  "module_title": "Stage 32 · Personalized Resume Defense",
+  "module_order": 32,
+  "order": 396,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "Redis shared atomic state",
+    "fixed/sliding/token bucket trade-off",
+    "multiple signals",
+    "fail policy depends on endpoint risk."
+  ],
+  "description": "P1 · Rate limiting: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Resume Defense основан только на фактических StudyHub, Hotel Booking и Share Recipe claims.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Rate limiting и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.32.12.roles-and-permissions"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

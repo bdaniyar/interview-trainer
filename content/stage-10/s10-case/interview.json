@@ -1,0 +1,90 @@
+[
+  {
+    "question": "Объясни тему «CASE» как на Junior Python Backend interview.",
+    "level": "normal",
+    "priority": "P1",
+    "interview_probability": "high",
+    "answer": [
+      "conditional projection",
+      "grouped reporting.",
+      "Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT."
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "conditional projection",
+        "grouped reporting.",
+        "Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT."
+      ],
+      "good_additions": [
+        "конкретный backend example",
+        "trade-off или failure mode"
+      ],
+      "common_wrong_answers": [
+        "Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE.",
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "red_flags": [
+        "Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE."
+      ],
+      "follow_up_questions": [
+        "Предскажи cardinality результата и проверь, не размножает ли JOIN строки."
+      ]
+    },
+    "follow_ups": [
+      "Предскажи cardinality результата и проверь, не размножает ли JOIN строки."
+    ],
+    "tags": [
+      "stage-10",
+      "p1"
+    ],
+    "sets": [
+      "stage-10",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  },
+  {
+    "question": "Сценарий по теме «CASE»: Предскажи cardinality результата и проверь, не размножает ли JOIN строки. Что проверишь первым?",
+    "level": "scenario",
+    "priority": "P1",
+    "interview_probability": "high",
+    "answer": [
+      "Уточнить требования и observable symptom",
+      "Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.",
+      "Назвать edge case",
+      "Предложить test/log/metric для проверки"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "assumptions",
+        "mechanism",
+        "failure mode",
+        "verification"
+      ],
+      "good_additions": [
+        "альтернатива и trade-off"
+      ],
+      "common_wrong_answers": [
+        "Сразу называть технологию до уточнения проблемы"
+      ],
+      "red_flags": [
+        "Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE."
+      ],
+      "follow_up_questions": [
+        "Что произойдёт при повторе или частичном отказе?"
+      ]
+    },
+    "follow_ups": [
+      "Что произойдёт при повторе или частичном отказе?"
+    ],
+    "tags": [
+      "stage-10",
+      "scenario"
+    ],
+    "sets": [
+      "stage-10",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  }
+]

@@ -1,0 +1,92 @@
+[
+  {
+    "question": "Объясни тему «Stack» как на Junior Python Backend interview.",
+    "level": "normal",
+    "priority": "P1",
+    "interview_probability": "medium",
+    "answer": [
+      "brackets",
+      "undo",
+      "DFS basics.",
+      "Выбери структуру по операциям и оцени dominant time/space term."
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "brackets",
+        "undo",
+        "DFS basics.",
+        "Выбери структуру по операциям и оцени dominant time/space term."
+      ],
+      "good_additions": [
+        "конкретный backend example",
+        "trade-off или failure mode"
+      ],
+      "common_wrong_answers": [
+        "Писать O(n²), когда один dict даёт линейный проход, или оптимизировать без constraints.",
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "red_flags": [
+        "Писать O(n²), когда один dict даёт линейный проход, или оптимизировать без constraints."
+      ],
+      "follow_up_questions": [
+        "Реши задачу сначала корректно, затем назови complexity и граничные случаи."
+      ]
+    },
+    "follow_ups": [
+      "Реши задачу сначала корректно, затем назови complexity и граничные случаи."
+    ],
+    "tags": [
+      "stage-28",
+      "p1"
+    ],
+    "sets": [
+      "stage-28",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  },
+  {
+    "question": "Сценарий по теме «Stack»: Реши задачу сначала корректно, затем назови complexity и граничные случаи. Что проверишь первым?",
+    "level": "scenario",
+    "priority": "P1",
+    "interview_probability": "medium",
+    "answer": [
+      "Уточнить требования и observable symptom",
+      "Выбери структуру по операциям и оцени dominant time/space term.",
+      "Назвать edge case",
+      "Предложить test/log/metric для проверки"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "assumptions",
+        "mechanism",
+        "failure mode",
+        "verification"
+      ],
+      "good_additions": [
+        "альтернатива и trade-off"
+      ],
+      "common_wrong_answers": [
+        "Сразу называть технологию до уточнения проблемы"
+      ],
+      "red_flags": [
+        "Писать O(n²), когда один dict даёт линейный проход, или оптимизировать без constraints."
+      ],
+      "follow_up_questions": [
+        "Что произойдёт при повторе или частичном отказе?"
+      ]
+    },
+    "follow_ups": [
+      "Что произойдёт при повторе или частичном отказе?"
+    ],
+    "tags": [
+      "stage-28",
+      "scenario"
+    ],
+    "sets": [
+      "stage-28",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  }
+]

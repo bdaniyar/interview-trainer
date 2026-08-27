@@ -1,0 +1,45 @@
+{
+  "id": "backend-interview.17.2.revision-upgrade-and-downgrade",
+  "slug": "s17-revision-upgrade-and-downgrade",
+  "title": "Revision, upgrade and downgrade",
+  "module_slug": "stage-17",
+  "module_title": "Stage 17 · Alembic",
+  "module_order": 17,
+  "order": 233,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "Revision, upgrade and downgrade"
+  ],
+  "description": "P0 · Revision, upgrade and downgrade: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Alembic защищает заявленный migration опыт и безопасные schema changes.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Revision, upgrade and downgrade и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.17.1.why-migrations-exist"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

@@ -1,0 +1,94 @@
+[
+  {
+    "question": "Объясни тему «`functools.wraps`» как на Junior Python Backend interview.",
+    "level": "normal",
+    "priority": "P0",
+    "interview_probability": "high",
+    "answer": [
+      "preserving `__name__`",
+      "docstring",
+      "annotations",
+      "`__wrapped__`",
+      "Разделяй момент определения функции, момент вызова и момент разрешения свободного имени."
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "preserving `__name__`",
+        "docstring",
+        "annotations",
+        "`__wrapped__`",
+        "Разделяй момент определения функции, момент вызова и момент разрешения свободного имени."
+      ],
+      "good_additions": [
+        "конкретный backend example",
+        "trade-off или failure mode"
+      ],
+      "common_wrong_answers": [
+        "Скрывать неясный API за **kwargs или забывать о времени вычисления defaults.",
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "red_flags": [
+        "Скрывать неясный API за **kwargs или забывать о времени вычисления defaults."
+      ],
+      "follow_up_questions": [
+        "Разбери сигнатуру helper-функции и объясни, какие вызовы допустимы и почему."
+      ]
+    },
+    "follow_ups": [
+      "Разбери сигнатуру helper-функции и объясни, какие вызовы допустимы и почему."
+    ],
+    "tags": [
+      "stage-03",
+      "p0"
+    ],
+    "sets": [
+      "stage-03",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  },
+  {
+    "question": "Сценарий по теме «`functools.wraps`»: Разбери сигнатуру helper-функции и объясни, какие вызовы допустимы и почему. Что проверишь первым?",
+    "level": "scenario",
+    "priority": "P0",
+    "interview_probability": "high",
+    "answer": [
+      "Уточнить требования и observable symptom",
+      "Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.",
+      "Назвать edge case",
+      "Предложить test/log/metric для проверки"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "assumptions",
+        "mechanism",
+        "failure mode",
+        "verification"
+      ],
+      "good_additions": [
+        "альтернатива и trade-off"
+      ],
+      "common_wrong_answers": [
+        "Сразу называть технологию до уточнения проблемы"
+      ],
+      "red_flags": [
+        "Скрывать неясный API за **kwargs или забывать о времени вычисления defaults."
+      ],
+      "follow_up_questions": [
+        "Что произойдёт при повторе или частичном отказе?"
+      ]
+    },
+    "follow_ups": [
+      "Что произойдёт при повторе или частичном отказе?"
+    ],
+    "tags": [
+      "stage-03",
+      "scenario"
+    ],
+    "sets": [
+      "stage-03",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  }
+]

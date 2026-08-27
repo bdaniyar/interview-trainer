@@ -1,0 +1,50 @@
+{
+  "id": "backend-interview.32.11.jwt-refresh-sessions",
+  "slug": "s32-jwt-refresh-sessions",
+  "title": "JWT refresh sessions",
+  "module_slug": "stage-32",
+  "module_title": "Stage 32 · Personalized Resume Defense",
+  "module_order": 32,
+  "order": 394,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "short access token",
+    "server-side refresh session",
+    "hashed token identifier",
+    "rotation",
+    "revocation",
+    "reuse detection."
+  ],
+  "description": "P0 · JWT refresh sessions: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | high",
+  "interview_probability": "high",
+  "market_frequency": "very_common",
+  "market_evidence": "Resume Defense основан только на фактических StudyHub, Hotel Booking и Share Recipe claims.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить JWT refresh sessions и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.32.10.multiple-outbox-workers"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

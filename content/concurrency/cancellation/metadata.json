@@ -1,16 +1,56 @@
 {
+  "id": "backend-interview.8.8.cancellation",
   "slug": "cancellation",
-  "title": "cancellation",
-  "module_slug": "concurrency",
-  "module_title": "Конкурентность и асинхронность",
-  "order": 48,
-  "duration": 27,
-  "xp": 5,
+  "title": "Cancellation",
+  "module_slug": "stage-08",
+  "module_title": "Stage 8 · Async Python",
+  "module_order": 8,
+  "order": 87,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 25,
   "topics": [
-    "CancelledError",
-    "timeout"
+    "`CancelledError`",
+    "cleanup",
+    "cooperative cancellation",
+    "do not swallow cancellation accidentally."
   ],
-  "description": "Учебный блок: CancelledError, timeout.",
-  "has_task": false,
-  "has_solution": false
+  "description": "P1 · Cancellation: mental model, interview rubric и backend-сценарий.",
+  "has_task": true,
+  "has_solution": true,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Async явно встречался в 5/18 и является P0/P1 для FastAPI async-проектов кандидата.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Cancellation и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.8.7.timeouts"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py",
+  "task_id": "backend-interview.8.8.cancellation.practice",
+  "task_title": "Cancel and wait",
+  "task_difficulty": "interview",
+  "task_skills": [
+    "cancellation",
+    "cleanup"
+  ],
+  "task_estimated_minutes": 20
 }

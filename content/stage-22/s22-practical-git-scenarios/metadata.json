@@ -1,0 +1,50 @@
+{
+  "id": "backend-interview.22.12.practical-git-scenarios",
+  "slug": "s22-practical-git-scenarios",
+  "title": "Practical Git scenarios",
+  "module_slug": "stage-22",
+  "module_title": "Stage 22 · Git and GitHub Workflow",
+  "module_order": 22,
+  "order": 301,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "wrong branch",
+    "accidental commit",
+    "merge conflict",
+    "undo public change",
+    "recover stashed work",
+    "sync with main."
+  ],
+  "description": "P0 · Practical Git scenarios: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0/P1",
+  "interview_probability": "medium",
+  "market_frequency": "very_common",
+  "market_evidence": "Git явно встречался в 7/18 и, вероятно, недоучтён как assumed foundation.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Practical Git scenarios и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.22.11.pull-request-and-code-review"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

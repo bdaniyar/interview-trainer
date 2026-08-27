@@ -1,0 +1,94 @@
+[
+  {
+    "question": "Объясни тему «Shallow and deep copy» как на Junior Python Backend interview.",
+    "level": "normal",
+    "priority": "P0",
+    "interview_probability": "high",
+    "answer": [
+      "slicing",
+      "`list.copy`",
+      "`dict.copy`",
+      "`copy.copy`",
+      "Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию."
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "slicing",
+        "`list.copy`",
+        "`dict.copy`",
+        "`copy.copy`",
+        "Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию."
+      ],
+      "good_additions": [
+        "конкретный backend example",
+        "trade-off или failure mode"
+      ],
+      "common_wrong_answers": [
+        "Объяснять переменную как коробку, которая всегда содержит независимое значение.",
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "red_flags": [
+        "Объяснять переменную как коробку, которая всегда содержит независимое значение."
+      ],
+      "follow_up_questions": [
+        "Проследи identity и состояние объекта после двух присваиваний и одной мутации."
+      ]
+    },
+    "follow_ups": [
+      "Проследи identity и состояние объекта после двух присваиваний и одной мутации."
+    ],
+    "tags": [
+      "stage-01",
+      "p0"
+    ],
+    "sets": [
+      "stage-01",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  },
+  {
+    "question": "Сценарий по теме «Shallow and deep copy»: Проследи identity и состояние объекта после двух присваиваний и одной мутации. Что проверишь первым?",
+    "level": "scenario",
+    "priority": "P0",
+    "interview_probability": "high",
+    "answer": [
+      "Уточнить требования и observable symptom",
+      "Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию.",
+      "Назвать edge case",
+      "Предложить test/log/metric для проверки"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "assumptions",
+        "mechanism",
+        "failure mode",
+        "verification"
+      ],
+      "good_additions": [
+        "альтернатива и trade-off"
+      ],
+      "common_wrong_answers": [
+        "Сразу называть технологию до уточнения проблемы"
+      ],
+      "red_flags": [
+        "Объяснять переменную как коробку, которая всегда содержит независимое значение."
+      ],
+      "follow_up_questions": [
+        "Что произойдёт при повторе или частичном отказе?"
+      ]
+    },
+    "follow_ups": [
+      "Что произойдёт при повторе или частичном отказе?"
+    ],
+    "tags": [
+      "stage-01",
+      "scenario"
+    ],
+    "sets": [
+      "stage-01",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  }
+]

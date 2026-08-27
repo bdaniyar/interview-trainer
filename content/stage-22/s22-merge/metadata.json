@@ -1,0 +1,47 @@
+{
+  "id": "backend-interview.22.5.merge",
+  "slug": "s22-merge",
+  "title": "merge",
+  "module_slug": "stage-22",
+  "module_title": "Stage 22 · Git and GitHub Workflow",
+  "module_order": 22,
+  "order": 294,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "fast-forward",
+    "merge commit",
+    "conflicts."
+  ],
+  "description": "P0 · merge: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | high",
+  "interview_probability": "high",
+  "market_frequency": "very_common",
+  "market_evidence": "Git явно встречался в 7/18 и, вероятно, недоучтён как assumed foundation.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить merge и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.22.4.fetch-pull-and-push"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

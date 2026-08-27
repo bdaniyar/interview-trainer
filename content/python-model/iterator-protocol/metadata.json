@@ -1,17 +1,48 @@
 {
+  "id": "backend-interview.4.2.iterator-protocol",
   "slug": "iterator-protocol",
   "title": "Iterator protocol",
-  "module_slug": "python-model",
-  "module_title": "Модель Python и продвинутый ООП",
-  "order": 5,
-  "duration": 23,
+  "module_slug": "stage-04",
+  "module_title": "Stage 4 · Iteration, Generators, Exceptions and Context Managers",
+  "module_order": 4,
+  "order": 35,
+  "duration": 12,
+  "estimated_minutes": 12,
   "xp": 25,
   "topics": [
-    "Iterable",
-    "Iterator",
-    "StopIteration"
+    "`__iter__`",
+    "`__next__`",
+    "`StopIteration`",
+    "custom iterator exercise."
   ],
-  "description": "Iterable, iterator, __iter__, __next__ и StopIteration.",
+  "description": "P0 · Iterator protocol: mental model, interview rubric и backend-сценарий.",
   "has_task": true,
-  "has_solution": true
+  "has_solution": true,
+  "priority": "P0",
+  "priority_note": "P0 | high",
+  "interview_probability": "high",
+  "market_frequency": "very_common",
+  "market_evidence": "Python указан в 18/18; iteration/exceptions/resource cleanup нужны в production code.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Iterator protocol и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.4.1.iterable-vs-iterator"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
 }

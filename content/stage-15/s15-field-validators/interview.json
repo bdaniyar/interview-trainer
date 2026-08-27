@@ -1,0 +1,92 @@
+[
+  {
+    "question": "Объясни тему «Field validators» как на Junior Python Backend interview.",
+    "level": "normal",
+    "priority": "P1",
+    "interview_probability": "high",
+    "answer": [
+      "modern v2 validator API",
+      "before/after",
+      "avoid DB I/O inside schema validation.",
+      "Сначала приходит недоверенный input, затем core schema выполняет validation, после чего model_dump управляет serialization."
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "modern v2 validator API",
+        "before/after",
+        "avoid DB I/O inside schema validation.",
+        "Сначала приходит недоверенный input, затем core schema выполняет validation, после чего model_dump управляет serialization."
+      ],
+      "good_additions": [
+        "конкретный backend example",
+        "trade-off или failure mode"
+      ],
+      "common_wrong_answers": [
+        "Путать str | None с полем, которое можно полностью не передать.",
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "red_flags": [
+        "Путать str | None с полем, которое можно полностью не передать."
+      ],
+      "follow_up_questions": [
+        "Проверь missing, explicit null, неверный тип и сериализованный результат."
+      ]
+    },
+    "follow_ups": [
+      "Проверь missing, explicit null, неверный тип и сериализованный результат."
+    ],
+    "tags": [
+      "stage-15",
+      "p1"
+    ],
+    "sets": [
+      "stage-15",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  },
+  {
+    "question": "Сценарий по теме «Field validators»: Проверь missing, explicit null, неверный тип и сериализованный результат. Что проверишь первым?",
+    "level": "scenario",
+    "priority": "P1",
+    "interview_probability": "high",
+    "answer": [
+      "Уточнить требования и observable symptom",
+      "Сначала приходит недоверенный input, затем core schema выполняет validation, после чего model_dump управляет serialization.",
+      "Назвать edge case",
+      "Предложить test/log/metric для проверки"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "assumptions",
+        "mechanism",
+        "failure mode",
+        "verification"
+      ],
+      "good_additions": [
+        "альтернатива и trade-off"
+      ],
+      "common_wrong_answers": [
+        "Сразу называть технологию до уточнения проблемы"
+      ],
+      "red_flags": [
+        "Путать str | None с полем, которое можно полностью не передать."
+      ],
+      "follow_up_questions": [
+        "Что произойдёт при повторе или частичном отказе?"
+      ]
+    },
+    "follow_ups": [
+      "Что произойдёт при повторе или частичном отказе?"
+    ],
+    "tags": [
+      "stage-15",
+      "scenario"
+    ],
+    "sets": [
+      "stage-15",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  }
+]

@@ -1,16 +1,47 @@
 {
+  "id": "backend-interview.6.4.literal-and-typeddict",
   "slug": "typeddict",
-  "title": "TypedDict",
-  "module_slug": "functions-api",
-  "module_title": "Функции, типизация и API",
-  "order": 26,
-  "duration": 18,
+  "title": "Literal and TypedDict",
+  "module_slug": "stage-06",
+  "module_title": "Stage 6 · Typing",
+  "module_order": 6,
+  "order": 69,
+  "duration": 10,
+  "estimated_minutes": 10,
   "xp": 5,
   "topics": [
-    "mapping shapes",
-    "NotRequired"
+    "constrained literals",
+    "typed dictionaries",
+    "JSON-like structures."
   ],
-  "description": "Учебный блок: mapping shapes, NotRequired.",
+  "description": "P1 · Literal and TypedDict: mental model, interview rubric и backend-сценарий.",
   "has_task": false,
-  "has_solution": false
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | medium",
+  "interview_probability": "medium",
+  "market_frequency": "common",
+  "market_evidence": "Python указан в 18/18; typing повышает надёжность API contracts.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Literal and TypedDict и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.6.3.collection-and-callable-types"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
 }

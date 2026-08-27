@@ -1,0 +1,94 @@
+[
+  {
+    "question": "Объясни тему «Declarative models» как на Junior Python Backend interview.",
+    "level": "normal",
+    "priority": "P0",
+    "interview_probability": "very_high",
+    "answer": [
+      "`Mapped`",
+      "`mapped_column`",
+      "types",
+      "primary keys",
+      "Один request/use case обычно владеет одной Session и явно завершает commit или rollback."
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "`Mapped`",
+        "`mapped_column`",
+        "types",
+        "primary keys",
+        "Один request/use case обычно владеет одной Session и явно завершает commit или rollback."
+      ],
+      "good_additions": [
+        "конкретный backend example",
+        "trade-off или failure mode"
+      ],
+      "common_wrong_answers": [
+        "Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks.",
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "red_flags": [
+        "Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks."
+      ],
+      "follow_up_questions": [
+        "Опиши session scope, момент flush/commit и количество SQL-запросов."
+      ]
+    },
+    "follow_ups": [
+      "Опиши session scope, момент flush/commit и количество SQL-запросов."
+    ],
+    "tags": [
+      "stage-16",
+      "p0"
+    ],
+    "sets": [
+      "stage-16",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  },
+  {
+    "question": "Сценарий по теме «Declarative models»: Опиши session scope, момент flush/commit и количество SQL-запросов. Что проверишь первым?",
+    "level": "scenario",
+    "priority": "P0",
+    "interview_probability": "very_high",
+    "answer": [
+      "Уточнить требования и observable symptom",
+      "Один request/use case обычно владеет одной Session и явно завершает commit или rollback.",
+      "Назвать edge case",
+      "Предложить test/log/metric для проверки"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "assumptions",
+        "mechanism",
+        "failure mode",
+        "verification"
+      ],
+      "good_additions": [
+        "альтернатива и trade-off"
+      ],
+      "common_wrong_answers": [
+        "Сразу называть технологию до уточнения проблемы"
+      ],
+      "red_flags": [
+        "Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks."
+      ],
+      "follow_up_questions": [
+        "Что произойдёт при повторе или частичном отказе?"
+      ]
+    },
+    "follow_ups": [
+      "Что произойдёт при повторе или частичном отказе?"
+    ],
+    "tags": [
+      "stage-16",
+      "scenario"
+    ],
+    "sets": [
+      "stage-16",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  }
+]

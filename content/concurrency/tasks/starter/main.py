@@ -1,5 +1,4 @@
-"""Заготовка для урока: tasks."""
+import asyncio
 
-
-def main():
-    raise NotImplementedError("Задача будет добавлена позже")
+def start_job(coro, registry):
+    raise NotImplementedError

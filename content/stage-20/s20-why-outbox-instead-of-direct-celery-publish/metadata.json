@@ -1,0 +1,48 @@
+{
+  "id": "backend-interview.20.8.why-outbox-instead-of-direct-celery-publish",
+  "slug": "s20-why-outbox-instead-of-direct-celery-publish",
+  "title": "Why outbox instead of direct Celery publish",
+  "module_slug": "stage-20",
+  "module_title": "Stage 20 · Background Work, Celery and Message Brokers",
+  "module_order": 20,
+  "order": 269,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "publish after commit can be lost",
+    "publish before commit can observe rolled-back state",
+    "outbox closes atomicity gap",
+    "Celery may still be delivery/execution layer."
+  ],
+  "description": "P1 · Why outbox instead of direct Celery publish: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Background work/outbox/Celery нужны для защиты фактических project claims; broker depth ниже core.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Why outbox instead of direct Celery publish и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.20.7.outbox-pattern"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

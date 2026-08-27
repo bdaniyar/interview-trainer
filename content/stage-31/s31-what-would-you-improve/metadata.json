@@ -1,0 +1,47 @@
+{
+  "id": "backend-interview.31.9.what-would-you-improve",
+  "slug": "s31-what-would-you-improve",
+  "title": "What would you improve?",
+  "module_slug": "stage-31",
+  "module_title": "Stage 31 · HR, Screening and Communication",
+  "module_order": 31,
+  "order": 380,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "honest trade-off",
+    "measured next step",
+    "avoid pretending project is production-perfect."
+  ],
+  "description": "P0 · What would you improve?: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Screening communication влияет на прохождение remote и local interviews.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить What would you improve? и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.31.8.difficult-bug"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

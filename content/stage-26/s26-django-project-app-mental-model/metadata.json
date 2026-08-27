@@ -1,0 +1,45 @@
+{
+  "id": "backend-interview.26.1.django-project-app-mental-model",
+  "slug": "s26-django-project-app-mental-model",
+  "title": "Django project/app mental model",
+  "module_slug": "stage-26",
+  "module_title": "Stage 26 · Django and Django REST Framework",
+  "module_order": 26,
+  "order": 322,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "Django project/app mental model"
+  ],
+  "description": "P1 · Django project/app mental model: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Django/DRF встречался в 7/18 и расширяет Казахстанскую junior-воронку.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Django project/app mental model и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.10.1.relational-model-and-tables"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

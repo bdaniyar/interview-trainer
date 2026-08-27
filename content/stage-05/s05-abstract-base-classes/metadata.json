@@ -1,0 +1,49 @@
+{
+  "id": "backend-interview.5.9.abstract-base-classes",
+  "slug": "s05-abstract-base-classes",
+  "title": "Abstract base classes",
+  "module_slug": "stage-05",
+  "module_title": "Stage 5 · OOP and Python Data Model",
+  "module_order": 5,
+  "order": 55,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "`ABC`",
+    "`abstractmethod`",
+    "contract",
+    "ABC vs Protocol",
+    "repository interface example."
+  ],
+  "description": "P1 · Abstract base classes: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Python указан в 18/18; OOP/data model важны для чтения framework и domain code.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Abstract base classes и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.5.8.mro-and-multiple-inheritance"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

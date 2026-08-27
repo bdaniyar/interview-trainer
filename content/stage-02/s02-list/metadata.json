@@ -1,0 +1,52 @@
+{
+  "id": "backend-interview.2.1.list",
+  "slug": "s02-list",
+  "title": "List",
+  "module_slug": "stage-02",
+  "module_title": "Stage 2 · Collections and Comprehensions",
+  "module_order": 2,
+  "order": 12,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "order",
+    "mutability",
+    "indexing/slicing",
+    "append/extend/insert",
+    "remove/pop",
+    "membership",
+    "common time complexity",
+    "copying"
+  ],
+  "description": "P0 · List: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "very_common",
+  "market_evidence": "Python указан в 18/18; collections — ежедневная data transformation работа backend.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить List и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.1.3.mutability-and-immutability"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

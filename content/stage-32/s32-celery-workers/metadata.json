@@ -1,0 +1,50 @@
+{
+  "id": "backend-interview.32.19.celery-workers",
+  "slug": "s32-celery-workers",
+  "title": "Celery workers",
+  "module_slug": "stage-32",
+  "module_title": "Stage 32 · Personalized Resume Defense",
+  "module_order": 32,
+  "order": 402,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "durable task",
+    "broker",
+    "worker",
+    "transient retry",
+    "backoff",
+    "idempotency."
+  ],
+  "description": "P1 · Celery workers: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | high for resume",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Resume Defense основан только на фактических StudyHub, Hotel Booking и Share Recipe claims.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Celery workers и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.32.18.redis-caching-in-hotel-booking"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

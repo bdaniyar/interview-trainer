@@ -1,0 +1,88 @@
+[
+  {
+    "question": "Объясни тему «Repository, working tree, index and commit» как на Junior Python Backend interview.",
+    "level": "normal",
+    "priority": "P0",
+    "interview_probability": "very_high",
+    "answer": [
+      "Repository, working tree, index and commit",
+      "Перед командой определяй, что именно меняется: файлы, index, branch pointer или shared history."
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "Repository, working tree, index and commit",
+        "Перед командой определяй, что именно меняется: файлы, index, branch pointer или shared history."
+      ],
+      "good_additions": [
+        "конкретный backend example",
+        "trade-off или failure mode"
+      ],
+      "common_wrong_answers": [
+        "Rebase shared commits или удалять secret из файла без ротации.",
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "red_flags": [
+        "Rebase shared commits или удалять secret из файла без ротации."
+      ],
+      "follow_up_questions": [
+        "Выбери безопасный способ отменить локальное и уже опубликованное изменение."
+      ]
+    },
+    "follow_ups": [
+      "Выбери безопасный способ отменить локальное и уже опубликованное изменение."
+    ],
+    "tags": [
+      "stage-22",
+      "p0"
+    ],
+    "sets": [
+      "stage-22",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  },
+  {
+    "question": "Сценарий по теме «Repository, working tree, index and commit»: Выбери безопасный способ отменить локальное и уже опубликованное изменение. Что проверишь первым?",
+    "level": "scenario",
+    "priority": "P0",
+    "interview_probability": "very_high",
+    "answer": [
+      "Уточнить требования и observable symptom",
+      "Перед командой определяй, что именно меняется: файлы, index, branch pointer или shared history.",
+      "Назвать edge case",
+      "Предложить test/log/metric для проверки"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "assumptions",
+        "mechanism",
+        "failure mode",
+        "verification"
+      ],
+      "good_additions": [
+        "альтернатива и trade-off"
+      ],
+      "common_wrong_answers": [
+        "Сразу называть технологию до уточнения проблемы"
+      ],
+      "red_flags": [
+        "Rebase shared commits или удалять secret из файла без ротации."
+      ],
+      "follow_up_questions": [
+        "Что произойдёт при повторе или частичном отказе?"
+      ]
+    },
+    "follow_ups": [
+      "Что произойдёт при повторе или частичном отказе?"
+    ],
+    "tags": [
+      "stage-22",
+      "scenario"
+    ],
+    "sets": [
+      "stage-22",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  }
+]

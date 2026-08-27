@@ -1,16 +1,48 @@
 {
+  "id": "backend-interview.18.3.fixtures",
   "slug": "fixtures",
-  "title": "fixtures",
-  "module_slug": "reliability",
-  "module_title": "Надёжность, тесты и архитектура",
-  "order": 58,
-  "duration": 24,
+  "title": "Fixtures",
+  "module_slug": "stage-18",
+  "module_title": "Stage 18 · Testing",
+  "module_order": 18,
+  "order": 240,
+  "duration": 12,
+  "estimated_minutes": 12,
   "xp": 5,
   "topics": [
-    "scope",
-    "yield fixtures"
+    "setup/teardown",
+    "dependency injection",
+    "yield fixture",
+    "avoiding giant fixture graphs."
   ],
-  "description": "Учебный блок: scope, yield fixtures.",
+  "description": "P0 · Fixtures: mental model, interview rubric и backend-сценарий.",
   "has_task": false,
-  "has_solution": false
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "very_common",
+  "market_evidence": "Testing явно встречался в 6/18 и часто подразумевается; pytest — P0/P1 рабочий навык.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Fixtures и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.18.2.pytest-fundamentals"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
 }

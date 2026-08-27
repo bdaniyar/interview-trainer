@@ -1,0 +1,94 @@
+[
+  {
+    "question": "Объясни тему «Диагностический Junior Python Backend interview» как на Junior Python Backend interview.",
+    "level": "normal",
+    "priority": "P0",
+    "interview_probability": "very_high",
+    "answer": [
+      "Python Core diagnostic",
+      "SQL diagnostic",
+      "HTTP/REST diagnostic",
+      "FastAPI/ORM diagnostic",
+      "Сначала классифицируй вопрос, затем дай определение, механизм, минимальный пример и ограничение."
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "Python Core diagnostic",
+        "SQL diagnostic",
+        "HTTP/REST diagnostic",
+        "FastAPI/ORM diagnostic",
+        "Сначала классифицируй вопрос, затем дай определение, механизм, минимальный пример и ограничение."
+      ],
+      "good_additions": [
+        "конкретный backend example",
+        "trade-off или failure mode"
+      ],
+      "common_wrong_answers": [
+        "Перечислять технологии без связи с решённой проблемой.",
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "red_flags": [
+        "Перечислять технологии без связи с решённой проблемой."
+      ],
+      "follow_up_questions": [
+        "Сформулируй ответ как определение → механизм → пример → trade-off."
+      ]
+    },
+    "follow_ups": [
+      "Сформулируй ответ как определение → механизм → пример → trade-off."
+    ],
+    "tags": [
+      "stage-00",
+      "p0"
+    ],
+    "sets": [
+      "stage-00",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  },
+  {
+    "question": "Сценарий по теме «Диагностический Junior Python Backend interview»: Сформулируй ответ как определение → механизм → пример → trade-off. Что проверишь первым?",
+    "level": "scenario",
+    "priority": "P0",
+    "interview_probability": "very_high",
+    "answer": [
+      "Уточнить требования и observable symptom",
+      "Сначала классифицируй вопрос, затем дай определение, механизм, минимальный пример и ограничение.",
+      "Назвать edge case",
+      "Предложить test/log/metric для проверки"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "assumptions",
+        "mechanism",
+        "failure mode",
+        "verification"
+      ],
+      "good_additions": [
+        "альтернатива и trade-off"
+      ],
+      "common_wrong_answers": [
+        "Сразу называть технологию до уточнения проблемы"
+      ],
+      "red_flags": [
+        "Перечислять технологии без связи с решённой проблемой."
+      ],
+      "follow_up_questions": [
+        "Что произойдёт при повторе или частичном отказе?"
+      ]
+    },
+    "follow_ups": [
+      "Что произойдёт при повторе или частичном отказе?"
+    ],
+    "tags": [
+      "stage-00",
+      "scenario"
+    ],
+    "sets": [
+      "stage-00",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  }
+]

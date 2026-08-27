@@ -1,0 +1,46 @@
+{
+  "id": "backend-interview.9.5.shared-state-and-synchronization",
+  "slug": "s09-shared-state-and-synchronization",
+  "title": "Shared state and synchronization",
+  "module_slug": "stage-09",
+  "module_title": "Stage 9 · Threading and Multiprocessing",
+  "module_order": 9,
+  "order": 96,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "locks",
+    "queues",
+    "process-safe communication",
+    "prefer reducing shared state."
+  ],
+  "description": "P2 · Shared state and synchronization: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P2",
+  "priority_note": "P2 | medium",
+  "interview_probability": "medium",
+  "market_frequency": "occasional",
+  "market_evidence": "Concurrency fundamentals поддерживают выбор threads/processes/async без мифов о GIL.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Shared state and synchronization и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior_plus",
+  "prerequisites": [
+    "backend-interview.9.4.processpoolexecutor"
+  ],
+  "modes": [
+    "learn",
+    "interview"
+  ],
+  "tracks": [
+    "full"
+  ],
+  "content_status": "planned",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

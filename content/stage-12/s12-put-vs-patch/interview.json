@@ -1,0 +1,92 @@
+[
+  {
+    "question": "Объясни тему «PUT vs PATCH» как на Junior Python Backend interview.",
+    "level": "normal",
+    "priority": "P0",
+    "interview_probability": "very_high",
+    "answer": [
+      "replacement vs partial update",
+      "API contract",
+      "idempotency.",
+      "Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса."
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "replacement vs partial update",
+        "API contract",
+        "idempotency.",
+        "Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса."
+      ],
+      "good_additions": [
+        "конкретный backend example",
+        "trade-off или failure mode"
+      ],
+      "common_wrong_answers": [
+        "Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне.",
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "red_flags": [
+        "Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне."
+      ],
+      "follow_up_questions": [
+        "Спроектируй request/response контракт и объясни retry, idempotency и error body."
+      ]
+    },
+    "follow_ups": [
+      "Спроектируй request/response контракт и объясни retry, idempotency и error body."
+    ],
+    "tags": [
+      "stage-12",
+      "p0"
+    ],
+    "sets": [
+      "stage-12",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  },
+  {
+    "question": "Сценарий по теме «PUT vs PATCH»: Спроектируй request/response контракт и объясни retry, idempotency и error body. Что проверишь первым?",
+    "level": "scenario",
+    "priority": "P0",
+    "interview_probability": "very_high",
+    "answer": [
+      "Уточнить требования и observable symptom",
+      "Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.",
+      "Назвать edge case",
+      "Предложить test/log/metric для проверки"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "assumptions",
+        "mechanism",
+        "failure mode",
+        "verification"
+      ],
+      "good_additions": [
+        "альтернатива и trade-off"
+      ],
+      "common_wrong_answers": [
+        "Сразу называть технологию до уточнения проблемы"
+      ],
+      "red_flags": [
+        "Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне."
+      ],
+      "follow_up_questions": [
+        "Что произойдёт при повторе или частичном отказе?"
+      ]
+    },
+    "follow_ups": [
+      "Что произойдёт при повторе или частичном отказе?"
+    ],
+    "tags": [
+      "stage-12",
+      "scenario"
+    ],
+    "sets": [
+      "stage-12",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  }
+]

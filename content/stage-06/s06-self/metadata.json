@@ -1,0 +1,44 @@
+{
+  "id": "backend-interview.6.7.self",
+  "slug": "s06-self",
+  "title": "Self",
+  "module_slug": "stage-06",
+  "module_title": "Stage 6 · Typing",
+  "module_order": 6,
+  "order": 72,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "fluent APIs",
+    "class-returning methods."
+  ],
+  "description": "P2 · Self: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P2",
+  "priority_note": "P2 | medium",
+  "interview_probability": "medium",
+  "market_frequency": "occasional",
+  "market_evidence": "Python указан в 18/18; typing повышает надёжность API contracts.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Self и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior_plus",
+  "prerequisites": [
+    "backend-interview.6.6.protocol"
+  ],
+  "modes": [
+    "learn",
+    "interview"
+  ],
+  "tracks": [
+    "full"
+  ],
+  "content_status": "planned",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

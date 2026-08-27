@@ -1,0 +1,52 @@
+{
+  "id": "backend-interview.28.8.backend-oriented-coding-set",
+  "slug": "s28-backend-oriented-coding-set",
+  "title": "Backend-oriented coding set",
+  "module_slug": "stage-28",
+  "module_title": "Stage 28 · Algorithms and Data Structures",
+  "module_order": 28,
+  "order": 355,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "frequency map",
+    "deduplicate preserving order",
+    "group records",
+    "merge intervals",
+    "validate brackets",
+    "top-K without excessive complexity",
+    "simple LRU mental model",
+    "pagination cursor"
+  ],
+  "description": "P1 · Backend-oriented coding set: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1",
+  "interview_probability": "medium",
+  "market_frequency": "common",
+  "market_evidence": "Базовые structures/complexity проверяют на coding screen; competitive programming не приоритет.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Backend-oriented coding set и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.28.7.sorting-basics"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

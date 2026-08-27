@@ -1,0 +1,44 @@
+{
+  "id": "backend-interview.6.8.covariance-and-contravariance",
+  "slug": "s06-covariance-and-contravariance",
+  "title": "Covariance and contravariance",
+  "module_slug": "stage-06",
+  "module_title": "Stage 6 · Typing",
+  "module_order": 6,
+  "order": 73,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "intuition only",
+    "do not turn into type theory exam."
+  ],
+  "description": "P3 · Covariance and contravariance: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P3",
+  "priority_note": "P3 | low",
+  "interview_probability": "low",
+  "market_frequency": "rare_for_junior",
+  "market_evidence": "Python указан в 18/18; typing повышает надёжность API contracts.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Covariance and contravariance и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior_plus",
+  "prerequisites": [
+    "backend-interview.6.7.self"
+  ],
+  "modes": [
+    "learn",
+    "interview"
+  ],
+  "tracks": [
+    "full"
+  ],
+  "content_status": "planned",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

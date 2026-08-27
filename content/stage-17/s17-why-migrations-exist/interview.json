@@ -1,0 +1,90 @@
+[
+  {
+    "question": "Объясни тему «Why migrations exist» как на Junior Python Backend interview.",
+    "level": "normal",
+    "priority": "P0",
+    "interview_probability": "high",
+    "answer": [
+      "model code does not update an existing DB",
+      "versioned schema history.",
+      "Migration — воспроизводимый переход между версиями, который нужно review, test и безопасно раскатывать."
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "model code does not update an existing DB",
+        "versioned schema history.",
+        "Migration — воспроизводимый переход между версиями, который нужно review, test и безопасно раскатывать."
+      ],
+      "good_additions": [
+        "конкретный backend example",
+        "trade-off или failure mode"
+      ],
+      "common_wrong_answers": [
+        "Слепо принимать autogenerate или совмещать несовместимое изменение в один deploy.",
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "red_flags": [
+        "Слепо принимать autogenerate или совмещать несовместимое изменение в один deploy."
+      ],
+      "follow_up_questions": [
+        "Предложи expand/contract sequence для изменения schema без остановки API."
+      ]
+    },
+    "follow_ups": [
+      "Предложи expand/contract sequence для изменения schema без остановки API."
+    ],
+    "tags": [
+      "stage-17",
+      "p0"
+    ],
+    "sets": [
+      "stage-17",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  },
+  {
+    "question": "Сценарий по теме «Why migrations exist»: Предложи expand/contract sequence для изменения schema без остановки API. Что проверишь первым?",
+    "level": "scenario",
+    "priority": "P0",
+    "interview_probability": "high",
+    "answer": [
+      "Уточнить требования и observable symptom",
+      "Migration — воспроизводимый переход между версиями, который нужно review, test и безопасно раскатывать.",
+      "Назвать edge case",
+      "Предложить test/log/metric для проверки"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "assumptions",
+        "mechanism",
+        "failure mode",
+        "verification"
+      ],
+      "good_additions": [
+        "альтернатива и trade-off"
+      ],
+      "common_wrong_answers": [
+        "Сразу называть технологию до уточнения проблемы"
+      ],
+      "red_flags": [
+        "Слепо принимать autogenerate или совмещать несовместимое изменение в один deploy."
+      ],
+      "follow_up_questions": [
+        "Что произойдёт при повторе или частичном отказе?"
+      ]
+    },
+    "follow_ups": [
+      "Что произойдёт при повторе или частичном отказе?"
+    ],
+    "tags": [
+      "stage-17",
+      "scenario"
+    ],
+    "sets": [
+      "stage-17",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  }
+]

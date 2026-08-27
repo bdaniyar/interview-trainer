@@ -1,0 +1,47 @@
+{
+  "id": "backend-interview.19.9.distributed-locks",
+  "slug": "s19-distributed-locks",
+  "title": "Distributed locks",
+  "module_slug": "stage-19",
+  "module_title": "Stage 19 · Redis",
+  "module_order": 19,
+  "order": 260,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "lease/expiry",
+    "ownership token",
+    "release safety",
+    "DB constraints often stronger for business invariants",
+    "no claims of perfect distributed correctness."
+  ],
+  "description": "P2 · Distributed locks: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P2",
+  "priority_note": "P2 | medium",
+  "interview_probability": "medium",
+  "market_frequency": "occasional",
+  "market_evidence": "Redis явно встречался в 6/18 и входит в фактические проекты кандидата.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Distributed locks и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior_plus",
+  "prerequisites": [
+    "backend-interview.19.8.redis-pub-sub"
+  ],
+  "modes": [
+    "learn",
+    "interview"
+  ],
+  "tracks": [
+    "full"
+  ],
+  "content_status": "planned",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

@@ -1,0 +1,46 @@
+{
+  "id": "backend-interview.23.1.filesystem-navigation",
+  "slug": "s23-filesystem-navigation",
+  "title": "Filesystem navigation",
+  "module_slug": "stage-23",
+  "module_title": "Stage 23 · Linux and Shell",
+  "module_order": 23,
+  "order": 302,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "pwd",
+    "ls",
+    "cd",
+    "relative/absolute paths."
+  ],
+  "description": "P1 · Filesystem navigation: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Linux basics явно встречались в 5/18 и часто подразумеваются для backend debugging.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Filesystem navigation и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

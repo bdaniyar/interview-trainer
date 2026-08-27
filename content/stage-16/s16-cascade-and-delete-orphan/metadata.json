@@ -1,0 +1,47 @@
+{
+  "id": "backend-interview.16.16.cascade-and-delete-orphan",
+  "slug": "s16-cascade-and-delete-orphan",
+  "title": "Cascade and delete-orphan",
+  "module_slug": "stage-16",
+  "module_title": "Stage 16 · SQLAlchemy 2.x",
+  "module_order": 16,
+  "order": 228,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "ORM cascade vs DB cascade",
+    "ownership",
+    "dangerous deletes."
+  ],
+  "description": "P1 · Cascade and delete-orphan: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | medium",
+  "interview_probability": "medium",
+  "market_frequency": "common",
+  "market_evidence": "ORM/SQLAlchemy явно встречались в 4/18, но Session/transaction знание фундаментально для FastAPI backend.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Cascade and delete-orphan и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.16.15.joinedload"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

@@ -1,0 +1,57 @@
+{
+  "id": "backend-interview.14.2.routes-and-routers",
+  "slug": "s14-routes-and-routers",
+  "title": "Routes and routers",
+  "module_slug": "stage-14",
+  "module_title": "Stage 14 · FastAPI",
+  "module_order": 14,
+  "order": 179,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 25,
+  "topics": [
+    "decorator",
+    "APIRouter",
+    "prefix",
+    "tags",
+    "modular structure."
+  ],
+  "description": "P0 · Routes and routers: mental model, interview rubric и backend-сценарий.",
+  "has_task": true,
+  "has_solution": true,
+  "priority": "P0",
+  "priority_note": "P0 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "very_common",
+  "market_evidence": "FastAPI явно встречался в 9/18, любой Python web framework — в 16/18.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Routes and routers и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.14.1.application-and-asgi-mental-model"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py",
+  "task_id": "backend-interview.14.2.routes-and-routers.practice",
+  "task_title": "Health route",
+  "task_difficulty": "interview",
+  "task_skills": [
+    "fastapi",
+    "routing"
+  ],
+  "task_estimated_minutes": 20
+}

@@ -1,0 +1,50 @@
+{
+  "id": "backend-interview.13.9.authorization-code-plus-pkce",
+  "slug": "s13-authorization-code-plus-pkce",
+  "title": "Authorization Code + PKCE",
+  "module_slug": "stage-13",
+  "module_title": "Stage 13 · Authentication, Authorization and Security",
+  "module_order": 13,
+  "order": 169,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "verifier",
+    "challenge",
+    "code interception",
+    "`state`",
+    "redirect URI",
+    "PKCE does not replace all CSRF protections."
+  ],
+  "description": "P1 · Authorization Code + PKCE: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Auth/security защищают заявленные JWT/OAuth2/PKCE и API permissions.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Authorization Code + PKCE и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.13.8.oauth2-basics"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

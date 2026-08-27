@@ -1,0 +1,47 @@
+{
+  "id": "backend-interview.25.6.sentry-basics",
+  "slug": "s25-sentry-basics",
+  "title": "Sentry basics",
+  "module_slug": "stage-25",
+  "module_title": "Stage 25 · Logging and Observability",
+  "module_order": 25,
+  "order": 320,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "grouped exceptions",
+    "stack trace",
+    "context",
+    "release/environment",
+    "not a replacement for all logs."
+  ],
+  "description": "P2 · Sentry basics: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P2",
+  "priority_note": "P2 globally, P1 Resume Defense | medium",
+  "interview_probability": "medium",
+  "market_frequency": "occasional",
+  "market_evidence": "Observability явно встречалась в 7/18; особенно важна для защиты Prometheus/Grafana/Sentry claims.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Sentry basics и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior_plus",
+  "prerequisites": [
+    "backend-interview.25.5.grafana-basics"
+  ],
+  "modes": [
+    "learn",
+    "interview"
+  ],
+  "tracks": [
+    "full"
+  ],
+  "content_status": "planned",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

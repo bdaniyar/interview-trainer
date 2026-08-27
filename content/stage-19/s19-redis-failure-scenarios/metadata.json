@@ -1,0 +1,48 @@
+{
+  "id": "backend-interview.19.10.redis-failure-scenarios",
+  "slug": "s19-redis-failure-scenarios",
+  "title": "Redis failure scenarios",
+  "module_slug": "stage-19",
+  "module_title": "Stage 19 · Redis",
+  "module_order": 19,
+  "order": 261,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "cache unavailable → DB fallback",
+    "rate limiter/session behavior depends on risk",
+    "thundering herd basics",
+    "stale values."
+  ],
+  "description": "P1 · Redis failure scenarios: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Redis явно встречался в 6/18 и входит в фактические проекты кандидата.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Redis failure scenarios и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.19.9.distributed-locks"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

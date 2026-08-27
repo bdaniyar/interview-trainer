@@ -1,17 +1,44 @@
 {
+  "id": "backend-interview.5.18.init-subclass-and-class-creation",
   "slug": "metaclasses",
-  "title": "Метаклассы и __init_subclass__",
-  "module_slug": "python-model",
-  "module_title": "Модель Python и продвинутый ООП",
-  "order": 9,
-  "duration": 27,
+  "title": "`__init_subclass__` and class creation",
+  "module_slug": "stage-05",
+  "module_title": "Stage 5 · OOP and Python Data Model",
+  "module_order": 5,
+  "order": 64,
+  "duration": 10,
+  "estimated_minutes": 10,
   "xp": 5,
   "topics": [
-    "type",
-    "metaclass",
-    "__init_subclass__"
+    "registration/validation basics",
+    "no deep framework construction."
   ],
-  "description": "Учебный блок: type, metaclass, __init_subclass__.",
+  "description": "P3 · `__init_subclass__` and class creation: mental model, interview rubric и backend-сценарий.",
   "has_task": false,
-  "has_solution": false
+  "has_solution": false,
+  "priority": "P3",
+  "priority_note": "P3 | low",
+  "interview_probability": "low",
+  "market_frequency": "rare_for_junior",
+  "market_evidence": "Python указан в 18/18; OOP/data model важны для чтения framework и domain code.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить `__init_subclass__` and class creation и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior_plus",
+  "prerequisites": [
+    "backend-interview.5.17.slots"
+  ],
+  "modes": [
+    "learn",
+    "interview"
+  ],
+  "tracks": [
+    "full"
+  ],
+  "content_status": "planned",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
 }

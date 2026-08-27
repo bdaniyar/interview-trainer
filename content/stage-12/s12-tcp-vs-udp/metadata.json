@@ -1,0 +1,45 @@
+{
+  "id": "backend-interview.12.16.tcp-vs-udp",
+  "slug": "s12-tcp-vs-udp",
+  "title": "TCP vs UDP",
+  "module_slug": "stage-12",
+  "module_title": "Stage 12 · HTTP, Networking and REST",
+  "module_order": 12,
+  "order": 154,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "reliability/order vs datagrams",
+    "backend relevance",
+    "HTTP commonly over TCP, HTTP/3 over QUIC awareness only."
+  ],
+  "description": "P2 · TCP vs UDP: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P2",
+  "priority_note": "P2 | medium",
+  "interview_probability": "medium",
+  "market_frequency": "occasional",
+  "market_evidence": "HTTP/REST/API явно встречались в 13/18 — P0 внешний контракт backend.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить TCP vs UDP и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior_plus",
+  "prerequisites": [
+    "backend-interview.12.15.dns"
+  ],
+  "modes": [
+    "learn",
+    "interview"
+  ],
+  "tracks": [
+    "full"
+  ],
+  "content_status": "planned",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

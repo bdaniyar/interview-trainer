@@ -1,0 +1,45 @@
+{
+  "id": "backend-interview.29.7.preventing-double-booking",
+  "slug": "s29-preventing-double-booking",
+  "title": "Preventing double booking",
+  "module_slug": "stage-29",
+  "module_title": "Stage 29 · Junior Backend System Design",
+  "module_order": 29,
+  "order": 362,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "Preventing double booking"
+  ],
+  "description": "P0 · Preventing double booking: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "common",
+  "market_evidence": "Junior system design связывает HTTP, DB, cache и failure modes в практический ответ.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Preventing double booking и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.29.6.booking-endpoint"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

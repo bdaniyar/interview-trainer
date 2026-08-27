@@ -1,0 +1,90 @@
+[
+  {
+    "question": "Объясни тему «`contextlib.contextmanager`» как на Junior Python Backend interview.",
+    "level": "normal",
+    "priority": "P1",
+    "interview_probability": "high",
+    "answer": [
+      "generator-based context manager",
+      "transaction/file/timer examples.",
+      "Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка."
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "generator-based context manager",
+        "transaction/file/timer examples.",
+        "Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка."
+      ],
+      "good_additions": [
+        "конкретный backend example",
+        "trade-off или failure mode"
+      ],
+      "common_wrong_answers": [
+        "Перехватывать Exception без стратегии либо удерживать весь поток данных в памяти.",
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "red_flags": [
+        "Перехватывать Exception без стратегии либо удерживать весь поток данных в памяти."
+      ],
+      "follow_up_questions": [
+        "Покажи happy path, завершение протокола и поведение при исключении."
+      ]
+    },
+    "follow_ups": [
+      "Покажи happy path, завершение протокола и поведение при исключении."
+    ],
+    "tags": [
+      "stage-04",
+      "p1"
+    ],
+    "sets": [
+      "stage-04",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  },
+  {
+    "question": "Сценарий по теме «`contextlib.contextmanager`»: Покажи happy path, завершение протокола и поведение при исключении. Что проверишь первым?",
+    "level": "scenario",
+    "priority": "P1",
+    "interview_probability": "high",
+    "answer": [
+      "Уточнить требования и observable symptom",
+      "Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка.",
+      "Назвать edge case",
+      "Предложить test/log/metric для проверки"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "assumptions",
+        "mechanism",
+        "failure mode",
+        "verification"
+      ],
+      "good_additions": [
+        "альтернатива и trade-off"
+      ],
+      "common_wrong_answers": [
+        "Сразу называть технологию до уточнения проблемы"
+      ],
+      "red_flags": [
+        "Перехватывать Exception без стратегии либо удерживать весь поток данных в памяти."
+      ],
+      "follow_up_questions": [
+        "Что произойдёт при повторе или частичном отказе?"
+      ]
+    },
+    "follow_ups": [
+      "Что произойдёт при повторе или частичном отказе?"
+    ],
+    "tags": [
+      "stage-04",
+      "scenario"
+    ],
+    "sets": [
+      "stage-04",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  }
+]

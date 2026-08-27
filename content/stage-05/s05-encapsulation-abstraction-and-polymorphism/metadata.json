@@ -1,0 +1,48 @@
+{
+  "id": "backend-interview.5.5.encapsulation-abstraction-and-polymorphism",
+  "slug": "s05-encapsulation-abstraction-and-polymorphism",
+  "title": "Encapsulation, abstraction and polymorphism",
+  "module_slug": "stage-05",
+  "module_title": "Stage 5 · OOP and Python Data Model",
+  "module_order": 5,
+  "order": 51,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "practical Python meaning",
+    "duck typing",
+    "contracts",
+    "avoid Java-style ceremony."
+  ],
+  "description": "P0 · Encapsulation, abstraction and polymorphism: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Python указан в 18/18; OOP/data model важны для чтения framework и domain code.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Encapsulation, abstraction and polymorphism и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.5.4.classmethod-and-staticmethod"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

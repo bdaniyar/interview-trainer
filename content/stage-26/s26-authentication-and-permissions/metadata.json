@@ -1,0 +1,46 @@
+{
+  "id": "backend-interview.26.9.authentication-and-permissions",
+  "slug": "s26-authentication-and-permissions",
+  "title": "Authentication and permissions",
+  "module_slug": "stage-26",
+  "module_title": "Stage 26 · Django and Django REST Framework",
+  "module_order": 26,
+  "order": 330,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "global vs per-view",
+    "object-level permission."
+  ],
+  "description": "P1 · Authentication and permissions: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Django/DRF встречался в 7/18 и расширяет Казахстанскую junior-воронку.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Authentication and permissions и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.26.8.apiview-generic-views-and-viewset"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

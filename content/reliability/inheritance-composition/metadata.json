@@ -1,16 +1,49 @@
 {
+  "id": "backend-interview.5.6.inheritance-vs-composition",
   "slug": "inheritance-composition",
-  "title": "inheritance vs composition",
-  "module_slug": "reliability",
-  "module_title": "Надёжность, тесты и архитектура",
-  "order": 63,
-  "duration": 29,
+  "title": "Inheritance vs composition",
+  "module_slug": "stage-05",
+  "module_title": "Stage 5 · OOP and Python Data Model",
+  "module_order": 5,
+  "order": 52,
+  "duration": 12,
+  "estimated_minutes": 12,
   "xp": 5,
   "topics": [
-    "delegation",
-    "coupling"
+    "is-a vs has-a",
+    "coupling",
+    "testability",
+    "service composition",
+    "when inheritance is justified."
   ],
-  "description": "Учебный блок: delegation, coupling.",
+  "description": "P0 · Inheritance vs composition: mental model, interview rubric и backend-сценарий.",
   "has_task": false,
-  "has_solution": false
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "common",
+  "market_evidence": "Python указан в 18/18; OOP/data model важны для чтения framework и domain code.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Inheritance vs composition и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.5.5.encapsulation-abstraction-and-polymorphism"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
 }

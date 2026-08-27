@@ -1,0 +1,47 @@
+{
+  "id": "backend-interview.11.6.composite-indexes-and-column-order",
+  "slug": "s11-composite-indexes-and-column-order",
+  "title": "Composite indexes and column order",
+  "module_slug": "stage-11",
+  "module_title": "Stage 11 · Database Design and PostgreSQL",
+  "module_order": 11,
+  "order": 127,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "leftmost prefix intuition",
+    "filter/order patterns",
+    "equality before range as a heuristic, not dogma."
+  ],
+  "description": "P1 · Composite indexes and column order: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "common",
+  "market_evidence": "PostgreSQL явно встречался в 13/18; indexes/transactions/concurrency критичны для backend.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Composite indexes and column order и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.11.5.postgresql-b-tree"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

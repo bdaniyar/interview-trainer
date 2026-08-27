@@ -1,5 +1,4 @@
-"""Заготовка для урока: event loop."""
+import asyncio
 
-
-def main():
-    raise NotImplementedError("Задача будет добавлена позже")
+async def checkpoint(log):
+    raise NotImplementedError

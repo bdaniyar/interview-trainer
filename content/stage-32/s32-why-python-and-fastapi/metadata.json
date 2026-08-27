@@ -1,0 +1,49 @@
+{
+  "id": "backend-interview.32.2.why-python-and-fastapi",
+  "slug": "s32-why-python-and-fastapi",
+  "title": "Why Python and FastAPI?",
+  "module_slug": "stage-32",
+  "module_title": "Stage 32 · Personalized Resume Defense",
+  "module_order": 32,
+  "order": 385,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "mature ecosystem and development speed",
+    "type hints/Pydantic/OpenAPI",
+    "async stack suits WebSockets and I/O waits",
+    "FastAPI is not universally superior to Django",
+    "Django could reduce custom work for admin/content-heavy product."
+  ],
+  "description": "P0 · Why Python and FastAPI?: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "very_common",
+  "market_evidence": "Resume Defense основан только на фактических StudyHub, Hotel Booking и Share Recipe claims.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Why Python and FastAPI? и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.32.1.studyhub-in-60-seconds"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

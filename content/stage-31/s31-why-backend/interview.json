@@ -1,0 +1,88 @@
+[
+  {
+    "question": "Объясни тему «Why backend?» как на Junior Python Backend interview.",
+    "level": "normal",
+    "priority": "P0",
+    "interview_probability": "high",
+    "answer": [
+      "Why backend?",
+      "Используй STAR для поведения и context → decision → trade-off → verification для техники."
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "Why backend?",
+        "Используй STAR для поведения и context → decision → trade-off → verification для техники."
+      ],
+      "good_additions": [
+        "конкретный backend example",
+        "trade-off или failure mode"
+      ],
+      "common_wrong_answers": [
+        "Читать заученный список технологий без результата и личного вклада.",
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "red_flags": [
+        "Читать заученный список технологий без результата и личного вклада."
+      ],
+      "follow_up_questions": [
+        "Сформулируй ответ на 60–90 секунд и подготовь один проверяемый follow-up."
+      ]
+    },
+    "follow_ups": [
+      "Сформулируй ответ на 60–90 секунд и подготовь один проверяемый follow-up."
+    ],
+    "tags": [
+      "stage-31",
+      "p0"
+    ],
+    "sets": [
+      "stage-31",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  },
+  {
+    "question": "Сценарий по теме «Why backend?»: Сформулируй ответ на 60–90 секунд и подготовь один проверяемый follow-up. Что проверишь первым?",
+    "level": "scenario",
+    "priority": "P0",
+    "interview_probability": "high",
+    "answer": [
+      "Уточнить требования и observable symptom",
+      "Используй STAR для поведения и context → decision → trade-off → verification для техники.",
+      "Назвать edge case",
+      "Предложить test/log/metric для проверки"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "assumptions",
+        "mechanism",
+        "failure mode",
+        "verification"
+      ],
+      "good_additions": [
+        "альтернатива и trade-off"
+      ],
+      "common_wrong_answers": [
+        "Сразу называть технологию до уточнения проблемы"
+      ],
+      "red_flags": [
+        "Читать заученный список технологий без результата и личного вклада."
+      ],
+      "follow_up_questions": [
+        "Что произойдёт при повторе или частичном отказе?"
+      ]
+    },
+    "follow_ups": [
+      "Что произойдёт при повторе или частичном отказе?"
+    ],
+    "tags": [
+      "stage-31",
+      "scenario"
+    ],
+    "sets": [
+      "stage-31",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  }
+]

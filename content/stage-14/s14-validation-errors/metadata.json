@@ -1,0 +1,47 @@
+{
+  "id": "backend-interview.14.11.validation-errors",
+  "slug": "s14-validation-errors",
+  "title": "Validation errors",
+  "module_slug": "stage-14",
+  "module_title": "Stage 14 · FastAPI",
+  "module_order": 14,
+  "order": 188,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "request validation",
+    "422 convention",
+    "custom validation response only with reason."
+  ],
+  "description": "P0 · Validation errors: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | high",
+  "interview_probability": "high",
+  "market_frequency": "very_common",
+  "market_evidence": "FastAPI явно встречался в 9/18, любой Python web framework — в 16/18.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Validation errors и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.14.10.yield-dependencies"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "backend-interview.22.1.repository-working-tree-index-and-commit",
+  "slug": "s22-repository-working-tree-index-and-commit",
+  "title": "Repository, working tree, index and commit",
+  "module_slug": "stage-22",
+  "module_title": "Stage 22 · Git and GitHub Workflow",
+  "module_order": 22,
+  "order": 290,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "Repository, working tree, index and commit"
+  ],
+  "description": "P0 · Repository, working tree, index and commit: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "very_common",
+  "market_evidence": "Git явно встречался в 7/18 и, вероятно, недоучтён как assumed foundation.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Repository, working tree, index and commit и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

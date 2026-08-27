@@ -1,17 +1,57 @@
 {
+  "id": "backend-interview.4.12.context-manager-protocol",
   "slug": "context-managers",
-  "title": "Контекстные менеджеры",
-  "module_slug": "python-model",
-  "module_title": "Модель Python и продвинутый ООП",
-  "order": 7,
-  "duration": 25,
-  "xp": 5,
+  "title": "Context manager protocol",
+  "module_slug": "stage-04",
+  "module_title": "Stage 4 · Iteration, Generators, Exceptions and Context Managers",
+  "module_order": 4,
+  "order": 45,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 25,
   "topics": [
-    "with",
-    "__enter__",
-    "__exit__"
+    "`with`",
+    "`__enter__`",
+    "`__exit__`",
+    "resource cleanup",
+    "exception suppression."
   ],
-  "description": "Учебный блок: with, __enter__, __exit__.",
-  "has_task": false,
-  "has_solution": false
+  "description": "P0 · Context manager protocol: mental model, interview rubric и backend-сценарий.",
+  "has_task": true,
+  "has_solution": true,
+  "priority": "P0",
+  "priority_note": "P0 | high",
+  "interview_probability": "high",
+  "market_frequency": "very_common",
+  "market_evidence": "Python указан в 18/18; iteration/exceptions/resource cleanup нужны в production code.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Context manager protocol и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.4.11.custom-exceptions"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py",
+  "task_id": "backend-interview.4.12.context-manager-protocol.practice",
+  "task_title": "Transaction context manager",
+  "task_difficulty": "interview",
+  "task_skills": [
+    "context-manager",
+    "transaction"
+  ],
+  "task_estimated_minutes": 20
 }

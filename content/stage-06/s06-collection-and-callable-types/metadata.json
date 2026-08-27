@@ -1,0 +1,49 @@
+{
+  "id": "backend-interview.6.3.collection-and-callable-types",
+  "slug": "s06-collection-and-callable-types",
+  "title": "Collection and callable types",
+  "module_slug": "stage-06",
+  "module_title": "Stage 6 · Typing",
+  "module_order": 6,
+  "order": 68,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "`list[str]`",
+    "`dict[str, int]`",
+    "`Sequence`",
+    "`Iterable`",
+    "`Callable`."
+  ],
+  "description": "P0 · Collection and callable types: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Python указан в 18/18; typing повышает надёжность API contracts.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Collection and callable types и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.6.2.union-optional-and"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

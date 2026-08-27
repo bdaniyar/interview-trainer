@@ -1,0 +1,47 @@
+{
+  "id": "backend-interview.6.2.union-optional-and",
+  "slug": "s06-union-optional-and",
+  "title": "Union, Optional and `|`",
+  "module_slug": "stage-06",
+  "module_title": "Stage 6 · Typing",
+  "module_order": 6,
+  "order": 67,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "optional value",
+    "required nullable field distinction",
+    "narrowing."
+  ],
+  "description": "P0 · Union, Optional and `|`: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Python указан в 18/18; typing повышает надёжность API contracts.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Union, Optional and `|` и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.6.1.static-hints-vs-runtime-behavior"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

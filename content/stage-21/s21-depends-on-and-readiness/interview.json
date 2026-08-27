@@ -1,0 +1,92 @@
+[
+  {
+    "question": "Объясни тему «`depends_on` and readiness» как на Junior Python Backend interview.",
+    "level": "normal",
+    "priority": "P1",
+    "interview_probability": "very_high",
+    "answer": [
+      "start order is not application readiness",
+      "healthcheck",
+      "retry/backoff.",
+      "Разделяй build-time layers, runtime config, network DNS и persistent volumes."
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "start order is not application readiness",
+        "healthcheck",
+        "retry/backoff.",
+        "Разделяй build-time layers, runtime config, network DNS и persistent volumes."
+      ],
+      "good_additions": [
+        "конкретный backend example",
+        "trade-off или failure mode"
+      ],
+      "common_wrong_answers": [
+        "Использовать localhost между containers или считать depends_on проверкой readiness.",
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "red_flags": [
+        "Использовать localhost между containers или считать depends_on проверкой readiness."
+      ],
+      "follow_up_questions": [
+        "Диагностируй container через logs, env, DNS, port и healthcheck по порядку."
+      ]
+    },
+    "follow_ups": [
+      "Диагностируй container через logs, env, DNS, port и healthcheck по порядку."
+    ],
+    "tags": [
+      "stage-21",
+      "p1"
+    ],
+    "sets": [
+      "stage-21",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  },
+  {
+    "question": "Сценарий по теме «`depends_on` and readiness»: Диагностируй container через logs, env, DNS, port и healthcheck по порядку. Что проверишь первым?",
+    "level": "scenario",
+    "priority": "P1",
+    "interview_probability": "very_high",
+    "answer": [
+      "Уточнить требования и observable symptom",
+      "Разделяй build-time layers, runtime config, network DNS и persistent volumes.",
+      "Назвать edge case",
+      "Предложить test/log/metric для проверки"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "assumptions",
+        "mechanism",
+        "failure mode",
+        "verification"
+      ],
+      "good_additions": [
+        "альтернатива и trade-off"
+      ],
+      "common_wrong_answers": [
+        "Сразу называть технологию до уточнения проблемы"
+      ],
+      "red_flags": [
+        "Использовать localhost между containers или считать depends_on проверкой readiness."
+      ],
+      "follow_up_questions": [
+        "Что произойдёт при повторе или частичном отказе?"
+      ]
+    },
+    "follow_ups": [
+      "Что произойдёт при повторе или частичном отказе?"
+    ],
+    "tags": [
+      "stage-21",
+      "scenario"
+    ],
+    "sets": [
+      "stage-21",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  }
+]

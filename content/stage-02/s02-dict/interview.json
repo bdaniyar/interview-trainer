@@ -1,0 +1,94 @@
+[
+  {
+    "question": "Объясни тему «Dict» как на Junior Python Backend interview.",
+    "level": "normal",
+    "priority": "P0",
+    "interview_probability": "very_high",
+    "answer": [
+      "keys/values/items",
+      "insertion order",
+      "lookup",
+      "`.get`",
+      "Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set."
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "keys/values/items",
+        "insertion order",
+        "lookup",
+        "`.get`",
+        "Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set."
+      ],
+      "good_additions": [
+        "конкретный backend example",
+        "trade-off или failure mode"
+      ],
+      "common_wrong_answers": [
+        "Выбирать коллекцию по привычке и игнорировать порядок, дубликаты или хешируемость.",
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "red_flags": [
+        "Выбирать коллекцию по привычке и игнорировать порядок, дубликаты или хешируемость."
+      ],
+      "follow_up_questions": [
+        "Выбери структуру для набора API-записей и обоснуй lookup, порядок и дубликаты."
+      ]
+    },
+    "follow_ups": [
+      "Выбери структуру для набора API-записей и обоснуй lookup, порядок и дубликаты."
+    ],
+    "tags": [
+      "stage-02",
+      "p0"
+    ],
+    "sets": [
+      "stage-02",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  },
+  {
+    "question": "Сценарий по теме «Dict»: Выбери структуру для набора API-записей и обоснуй lookup, порядок и дубликаты. Что проверишь первым?",
+    "level": "scenario",
+    "priority": "P0",
+    "interview_probability": "very_high",
+    "answer": [
+      "Уточнить требования и observable symptom",
+      "Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set.",
+      "Назвать edge case",
+      "Предложить test/log/metric для проверки"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "assumptions",
+        "mechanism",
+        "failure mode",
+        "verification"
+      ],
+      "good_additions": [
+        "альтернатива и trade-off"
+      ],
+      "common_wrong_answers": [
+        "Сразу называть технологию до уточнения проблемы"
+      ],
+      "red_flags": [
+        "Выбирать коллекцию по привычке и игнорировать порядок, дубликаты или хешируемость."
+      ],
+      "follow_up_questions": [
+        "Что произойдёт при повторе или частичном отказе?"
+      ]
+    },
+    "follow_ups": [
+      "Что произойдёт при повторе или частичном отказе?"
+    ],
+    "tags": [
+      "stage-02",
+      "scenario"
+    ],
+    "sets": [
+      "stage-02",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  }
+]

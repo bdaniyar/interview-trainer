@@ -1,5 +1,9 @@
-"""Заготовка для урока: Контекстные менеджеры."""
+class Transaction:
+    def __init__(self, resource):
+        self.resource = resource
 
+    def __enter__(self):
+        raise NotImplementedError
 
-def main():
-    raise NotImplementedError("Задача будет добавлена позже")
+    def __exit__(self, exc_type, exc, traceback):
+        raise NotImplementedError

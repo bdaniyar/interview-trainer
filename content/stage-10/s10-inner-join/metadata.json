@@ -1,0 +1,48 @@
+{
+  "id": "backend-interview.10.10.inner-join",
+  "slug": "s10-inner-join",
+  "title": "INNER JOIN",
+  "module_slug": "stage-10",
+  "module_title": "Stage 10 · SQL Fundamentals and Practice",
+  "module_order": 10,
+  "order": 106,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "join condition",
+    "cardinality",
+    "duplicates",
+    "missing condition/cartesian product."
+  ],
+  "description": "P0 · INNER JOIN: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "very_common",
+  "market_evidence": "SQL/relational DB явно встречались в 15/18 — один из главных P0-разделов.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить INNER JOIN и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.10.9.having"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

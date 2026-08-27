@@ -1,0 +1,47 @@
+{
+  "id": "backend-interview.21.5.port-mapping",
+  "slug": "s21-port-mapping",
+  "title": "Port mapping",
+  "module_slug": "stage-21",
+  "module_title": "Stage 21 · Docker and Docker Compose",
+  "module_order": 21,
+  "order": 278,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "host port",
+    "container port",
+    "service-to-service uses container port."
+  ],
+  "description": "P1 · Port mapping: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "common",
+  "market_evidence": "Docker/containers явно встречались в 11/18 — обязательный P1 practical skill.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Port mapping и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.21.4.build-vs-run"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

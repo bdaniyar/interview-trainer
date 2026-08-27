@@ -1,0 +1,52 @@
+{
+  "id": "backend-interview.32.1.studyhub-in-60-seconds",
+  "slug": "s32-studyhub-in-60-seconds",
+  "title": "StudyHub in 60 seconds",
+  "module_slug": "stage-32",
+  "module_title": "Stage 32 · Personalized Resume Defense",
+  "module_order": 32,
+  "order": 384,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "student platform backend",
+    "FastAPI/PostgreSQL/Redis",
+    "communities/roles/discussions/materials/Q&A/moderation",
+    "WebSocket for client connection",
+    "Redis Pub/Sub for cross-instance live fan-out",
+    "PostgreSQL for history/read state",
+    "outbox worker",
+    "MinIO"
+  ],
+  "description": "P0 · StudyHub in 60 seconds: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "very_common",
+  "market_evidence": "Resume Defense основан только на фактических StudyHub, Hotel Booking и Share Recipe claims.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить StudyHub in 60 seconds и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.0.3.kak-zaschischat-proekt"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

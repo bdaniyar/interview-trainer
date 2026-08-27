@@ -1,0 +1,94 @@
+[
+  {
+    "question": "Объясни тему «Monolith» как на Junior Python Backend interview.",
+    "level": "normal",
+    "priority": "P1",
+    "interview_probability": "high",
+    "answer": [
+      "one deployable",
+      "simplicity",
+      "internal modules",
+      "valid default for Junior projects.",
+      "Высокоуровневое правило не должно зависеть от детали storage/framework без необходимости."
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "one deployable",
+        "simplicity",
+        "internal modules",
+        "valid default for Junior projects.",
+        "Высокоуровневое правило не должно зависеть от детали storage/framework без необходимости."
+      ],
+      "good_additions": [
+        "конкретный backend example",
+        "trade-off или failure mode"
+      ],
+      "common_wrong_answers": [
+        "Добавлять repository/service слои без поведения и тем самым создавать pass-through boilerplate.",
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "red_flags": [
+        "Добавлять repository/service слои без поведения и тем самым создавать pass-through boilerplate."
+      ],
+      "follow_up_questions": [
+        "Назови направление зависимости, seam для теста и ожидаемое изменение."
+      ]
+    },
+    "follow_ups": [
+      "Назови направление зависимости, seam для теста и ожидаемое изменение."
+    ],
+    "tags": [
+      "stage-27",
+      "p1"
+    ],
+    "sets": [
+      "stage-27",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  },
+  {
+    "question": "Сценарий по теме «Monolith»: Назови направление зависимости, seam для теста и ожидаемое изменение. Что проверишь первым?",
+    "level": "scenario",
+    "priority": "P1",
+    "interview_probability": "high",
+    "answer": [
+      "Уточнить требования и observable symptom",
+      "Высокоуровневое правило не должно зависеть от детали storage/framework без необходимости.",
+      "Назвать edge case",
+      "Предложить test/log/metric для проверки"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "assumptions",
+        "mechanism",
+        "failure mode",
+        "verification"
+      ],
+      "good_additions": [
+        "альтернатива и trade-off"
+      ],
+      "common_wrong_answers": [
+        "Сразу называть технологию до уточнения проблемы"
+      ],
+      "red_flags": [
+        "Добавлять repository/service слои без поведения и тем самым создавать pass-through boilerplate."
+      ],
+      "follow_up_questions": [
+        "Что произойдёт при повторе или частичном отказе?"
+      ]
+    },
+    "follow_ups": [
+      "Что произойдёт при повторе или частичном отказе?"
+    ],
+    "tags": [
+      "stage-27",
+      "scenario"
+    ],
+    "sets": [
+      "stage-27",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  }
+]

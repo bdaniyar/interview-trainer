@@ -1,16 +1,49 @@
 {
+  "id": "backend-interview.7.6.race-conditions-and-locks",
   "slug": "race-conditions",
-  "title": "race conditions",
-  "module_slug": "concurrency",
-  "module_title": "Конкурентность и асинхронность",
-  "order": 39,
-  "duration": 18,
+  "title": "Race conditions and locks",
+  "module_slug": "stage-07",
+  "module_title": "Stage 7 · CPython, Memory and Concurrency Foundations",
+  "module_order": 7,
+  "order": 79,
+  "duration": 10,
+  "estimated_minutes": 10,
   "xp": 5,
   "topics": [
-    "shared state",
-    "atomicity"
+    "check-then-act",
+    "shared mutable state",
+    "`Lock`",
+    "deadlock basics",
+    "database race conditions are separate from Python GIL."
   ],
-  "description": "Учебный блок: shared state, atomicity.",
+  "description": "P1 · Race conditions and locks: mental model, interview rubric и backend-сценарий.",
   "has_task": false,
-  "has_solution": false
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Python указан в 18/18; CPython details приоритетны только там, где объясняют реальные bugs.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Race conditions and locks и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.7.5.gil"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
 }

@@ -1,0 +1,47 @@
+{
+  "id": "backend-interview.22.9.reset-vs-revert",
+  "slug": "s22-reset-vs-revert",
+  "title": "reset vs revert",
+  "module_slug": "stage-22",
+  "module_title": "Stage 22 · Git and GitHub Workflow",
+  "module_order": 22,
+  "order": 298,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "local history movement",
+    "working/index effects",
+    "safe public-history undo."
+  ],
+  "description": "P0 · reset vs revert: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | high",
+  "interview_probability": "high",
+  "market_frequency": "very_common",
+  "market_evidence": "Git явно встречался в 7/18 и, вероятно, недоучтён как assumed foundation.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить reset vs revert и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.22.8.stash"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

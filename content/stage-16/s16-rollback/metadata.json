@@ -1,0 +1,55 @@
+{
+  "id": "backend-interview.16.9.rollback",
+  "slug": "s16-rollback",
+  "title": "Rollback",
+  "module_slug": "stage-16",
+  "module_title": "Stage 16 · SQLAlchemy 2.x",
+  "module_order": 16,
+  "order": 221,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 25,
+  "topics": [
+    "failed transaction state",
+    "rollback before reuse",
+    "exception boundary."
+  ],
+  "description": "P0 · Rollback: mental model, interview rubric и backend-сценарий.",
+  "has_task": true,
+  "has_solution": true,
+  "priority": "P0",
+  "priority_note": "P0 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "very_common",
+  "market_evidence": "ORM/SQLAlchemy явно встречались в 4/18, но Session/transaction знание фундаментально для FastAPI backend.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Rollback и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.16.8.add-flush-commit-and-refresh"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py",
+  "task_id": "backend-interview.16.9.rollback.practice",
+  "task_title": "Rollback failed unit of work",
+  "task_difficulty": "interview",
+  "task_skills": [
+    "sqlalchemy-2",
+    "rollback"
+  ],
+  "task_estimated_minutes": 20
+}

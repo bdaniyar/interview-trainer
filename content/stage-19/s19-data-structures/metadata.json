@@ -1,0 +1,50 @@
+{
+  "id": "backend-interview.19.2.data-structures",
+  "slug": "s19-data-structures",
+  "title": "Data structures",
+  "module_slug": "stage-19",
+  "module_title": "Stage 19 · Redis",
+  "module_order": 19,
+  "order": 253,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "strings",
+    "hashes",
+    "lists",
+    "sets",
+    "sorted sets",
+    "streams awareness."
+  ],
+  "description": "P1 · Data structures: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | medium",
+  "interview_probability": "medium",
+  "market_frequency": "common",
+  "market_evidence": "Redis явно встречался в 6/18 и входит в фактические проекты кандидата.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Data structures и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.19.1.redis-mental-model"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

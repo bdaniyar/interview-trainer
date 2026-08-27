@@ -1,0 +1,94 @@
+[
+  {
+    "question": "Объясни тему «Static hints vs runtime behavior» как на Junior Python Backend interview.",
+    "level": "normal",
+    "priority": "P0",
+    "interview_probability": "high",
+    "answer": [
+      "type hints",
+      "static checker",
+      "Python remains dynamic",
+      "FastAPI/Pydantic use hints at runtime.",
+      "Аннотация — описание для инструментов; runtime validation выполняет отдельный код или библиотека."
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "type hints",
+        "static checker",
+        "Python remains dynamic",
+        "FastAPI/Pydantic use hints at runtime.",
+        "Аннотация — описание для инструментов; runtime validation выполняет отдельный код или библиотека."
+      ],
+      "good_additions": [
+        "конкретный backend example",
+        "trade-off или failure mode"
+      ],
+      "common_wrong_answers": [
+        "Считать Any безопасным escape hatch либо путать Optional с необязательным аргументом.",
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "red_flags": [
+        "Считать Any безопасным escape hatch либо путать Optional с необязательным аргументом."
+      ],
+      "follow_up_questions": [
+        "Опиши тип входа API helper так, чтобы mypy видел ошибочный вызов до запуска."
+      ]
+    },
+    "follow_ups": [
+      "Опиши тип входа API helper так, чтобы mypy видел ошибочный вызов до запуска."
+    ],
+    "tags": [
+      "stage-06",
+      "p0"
+    ],
+    "sets": [
+      "stage-06",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  },
+  {
+    "question": "Сценарий по теме «Static hints vs runtime behavior»: Опиши тип входа API helper так, чтобы mypy видел ошибочный вызов до запуска. Что проверишь первым?",
+    "level": "scenario",
+    "priority": "P0",
+    "interview_probability": "high",
+    "answer": [
+      "Уточнить требования и observable symptom",
+      "Аннотация — описание для инструментов; runtime validation выполняет отдельный код или библиотека.",
+      "Назвать edge case",
+      "Предложить test/log/metric для проверки"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "assumptions",
+        "mechanism",
+        "failure mode",
+        "verification"
+      ],
+      "good_additions": [
+        "альтернатива и trade-off"
+      ],
+      "common_wrong_answers": [
+        "Сразу называть технологию до уточнения проблемы"
+      ],
+      "red_flags": [
+        "Считать Any безопасным escape hatch либо путать Optional с необязательным аргументом."
+      ],
+      "follow_up_questions": [
+        "Что произойдёт при повторе или частичном отказе?"
+      ]
+    },
+    "follow_ups": [
+      "Что произойдёт при повторе или частичном отказе?"
+    ],
+    "tags": [
+      "stage-06",
+      "scenario"
+    ],
+    "sets": [
+      "stage-06",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  }
+]

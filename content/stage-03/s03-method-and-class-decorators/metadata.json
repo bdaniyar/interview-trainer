@@ -1,0 +1,45 @@
+{
+  "id": "backend-interview.3.15.method-and-class-decorators",
+  "slug": "s03-method-and-class-decorators",
+  "title": "Method and class decorators",
+  "module_slug": "stage-03",
+  "module_title": "Stage 3 · Functions, Scope, Closures and Decorators",
+  "module_order": 3,
+  "order": 33,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "method wrappers",
+    "class decorator basics",
+    "do not turn into metaprogramming course."
+  ],
+  "description": "P2 · Method and class decorators: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P2",
+  "priority_note": "P2 | medium",
+  "interview_probability": "medium",
+  "market_frequency": "occasional",
+  "market_evidence": "Python указан в 18/18; functions/scope/decorators регулярно проверяют на screening.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Method and class decorators и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior_plus",
+  "prerequisites": [
+    "backend-interview.3.14.multiple-decorators-and-order"
+  ],
+  "modes": [
+    "learn",
+    "interview"
+  ],
+  "tracks": [
+    "full"
+  ],
+  "content_status": "planned",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

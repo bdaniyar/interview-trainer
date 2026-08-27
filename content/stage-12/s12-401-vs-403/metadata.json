@@ -1,0 +1,47 @@
+{
+  "id": "backend-interview.12.8.401-vs-403",
+  "slug": "s12-401-vs-403",
+  "title": "401 vs 403",
+  "module_slug": "stage-12",
+  "module_title": "Stage 12 · HTTP, Networking and REST",
+  "module_order": 12,
+  "order": 146,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "authentication absent/invalid",
+    "authenticated but forbidden",
+    "appropriate challenge/header context."
+  ],
+  "description": "P0 · 401 vs 403: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "very_common",
+  "market_evidence": "HTTP/REST/API явно встречались в 13/18 — P0 внешний контракт backend.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить 401 vs 403 и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.12.7.status-codes"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

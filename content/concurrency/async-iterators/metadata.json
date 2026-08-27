@@ -1,16 +1,56 @@
 {
+  "id": "backend-interview.8.11.async-iterators-and-generators",
   "slug": "async-iterators",
-  "title": "async iterators",
-  "module_slug": "concurrency",
-  "module_title": "Конкурентность и асинхронность",
-  "order": 49,
-  "duration": 28,
-  "xp": 5,
+  "title": "Async iterators and generators",
+  "module_slug": "stage-08",
+  "module_title": "Stage 8 · Async Python",
+  "module_order": 8,
+  "order": 90,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 25,
   "topics": [
-    "__aiter__",
-    "__anext__"
+    "`async for`",
+    "streaming",
+    "paginated I/O",
+    "cleanup."
   ],
-  "description": "Учебный блок: __aiter__, __anext__.",
-  "has_task": false,
-  "has_solution": false
+  "description": "P1 · Async iterators and generators: mental model, interview rubric и backend-сценарий.",
+  "has_task": true,
+  "has_solution": true,
+  "priority": "P1",
+  "priority_note": "P1 | medium",
+  "interview_probability": "medium",
+  "market_frequency": "common",
+  "market_evidence": "Async явно встречался в 5/18 и является P0/P1 для FastAPI async-проектов кандидата.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Async iterators and generators и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.8.10.async-context-managers"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py",
+  "task_id": "backend-interview.8.11.async-iterators-and-generators.practice",
+  "task_title": "AsyncRange",
+  "task_difficulty": "interview",
+  "task_skills": [
+    "async-iterator",
+    "StopAsyncIteration"
+  ],
+  "task_estimated_minutes": 20
 }

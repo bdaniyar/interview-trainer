@@ -1,0 +1,47 @@
+{
+  "id": "backend-interview.17.6.migration-history-conflicts",
+  "slug": "s17-migration-history-conflicts",
+  "title": "Migration history conflicts",
+  "module_slug": "stage-17",
+  "module_title": "Stage 17 · Alembic",
+  "module_order": 17,
+  "order": 237,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "multiple heads",
+    "merge revision",
+    "team workflow."
+  ],
+  "description": "P1 · Migration history conflicts: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | medium",
+  "interview_probability": "medium",
+  "market_frequency": "common",
+  "market_evidence": "Alembic защищает заявленный migration опыт и безопасные schema changes.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Migration history conflicts и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.17.5.safe-schema-changes"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

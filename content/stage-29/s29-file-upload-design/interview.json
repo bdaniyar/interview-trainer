@@ -1,0 +1,94 @@
+[
+  {
+    "question": "Объясни тему «File upload design» как на Junior Python Backend interview.",
+    "level": "normal",
+    "priority": "P1",
+    "interview_probability": "high",
+    "answer": [
+      "presigned URL",
+      "object storage",
+      "metadata in PostgreSQL",
+      "validation/finalize",
+      "Сначала обеспечь корректность простого монолита; масштабируй измеренный bottleneck."
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "presigned URL",
+        "object storage",
+        "metadata in PostgreSQL",
+        "validation/finalize",
+        "Сначала обеспечь корректность простого монолита; масштабируй измеренный bottleneck."
+      ],
+      "good_additions": [
+        "конкретный backend example",
+        "trade-off или failure mode"
+      ],
+      "common_wrong_answers": [
+        "Начинать с microservices, не определив нагрузку, consistency и ownership.",
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "red_flags": [
+        "Начинать с microservices, не определив нагрузку, consistency и ownership."
+      ],
+      "follow_up_questions": [
+        "Уточни traffic, consistency, latency и failure behavior перед схемой компонентов."
+      ]
+    },
+    "follow_ups": [
+      "Уточни traffic, consistency, latency и failure behavior перед схемой компонентов."
+    ],
+    "tags": [
+      "stage-29",
+      "p1"
+    ],
+    "sets": [
+      "stage-29",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  },
+  {
+    "question": "Сценарий по теме «File upload design»: Уточни traffic, consistency, latency и failure behavior перед схемой компонентов. Что проверишь первым?",
+    "level": "scenario",
+    "priority": "P1",
+    "interview_probability": "high",
+    "answer": [
+      "Уточнить требования и observable symptom",
+      "Сначала обеспечь корректность простого монолита; масштабируй измеренный bottleneck.",
+      "Назвать edge case",
+      "Предложить test/log/metric для проверки"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "assumptions",
+        "mechanism",
+        "failure mode",
+        "verification"
+      ],
+      "good_additions": [
+        "альтернатива и trade-off"
+      ],
+      "common_wrong_answers": [
+        "Сразу называть технологию до уточнения проблемы"
+      ],
+      "red_flags": [
+        "Начинать с microservices, не определив нагрузку, consistency и ownership."
+      ],
+      "follow_up_questions": [
+        "Что произойдёт при повторе или частичном отказе?"
+      ]
+    },
+    "follow_ups": [
+      "Что произойдёт при повторе или частичном отказе?"
+    ],
+    "tags": [
+      "stage-29",
+      "scenario"
+    ],
+    "sets": [
+      "stage-29",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  }
+]

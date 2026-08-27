@@ -1,0 +1,48 @@
+{
+  "id": "backend-interview.11.12.locks",
+  "slug": "s11-locks",
+  "title": "Locks",
+  "module_slug": "stage-11",
+  "module_title": "Stage 11 · Database Design and PostgreSQL",
+  "module_order": 11,
+  "order": 133,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "row/table locks",
+    "`SELECT ... FOR UPDATE`",
+    "short transactions",
+    "lock contention."
+  ],
+  "description": "P1 · Locks: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "PostgreSQL явно встречался в 13/18; indexes/transactions/concurrency критичны для backend.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Locks и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.11.11.mvcc-basics"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

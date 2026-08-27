@@ -1,0 +1,50 @@
+{
+  "id": "backend-interview.20.7.outbox-pattern",
+  "slug": "s20-outbox-pattern",
+  "title": "Outbox pattern",
+  "module_slug": "stage-20",
+  "module_title": "Stage 20 · Background Work, Celery and Message Brokers",
+  "module_order": 20,
+  "order": 268,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "business row + outbox row in one DB transaction",
+    "worker",
+    "at-least-once",
+    "retry",
+    "idempotent consumer",
+    "dual-write problem."
+  ],
+  "description": "P1 · Outbox pattern: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Background work/outbox/Celery нужны для защиты фактических project claims; broker depth ниже core.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Outbox pattern и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.20.6.periodic-tasks"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

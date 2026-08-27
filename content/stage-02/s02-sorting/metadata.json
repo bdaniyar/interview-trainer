@@ -1,0 +1,59 @@
+{
+  "id": "backend-interview.2.7.sorting",
+  "slug": "s02-sorting",
+  "title": "Sorting",
+  "module_slug": "stage-02",
+  "module_title": "Stage 2 · Collections and Comprehensions",
+  "module_order": 2,
+  "order": 18,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 25,
+  "topics": [
+    "`sorted` vs `.sort`",
+    "`key`",
+    "stability",
+    "multiple fields",
+    "`reverse`",
+    "sorting dictionaries/objects",
+    "complexity basics."
+  ],
+  "description": "P1 · Sorting: mental model, interview rubric и backend-сценарий.",
+  "has_task": true,
+  "has_solution": true,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Python указан в 18/18; collections — ежедневная data transformation работа backend.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Sorting и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.2.6.comprehensions"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py",
+  "task_id": "backend-interview.2.7.sorting.practice",
+  "task_title": "Стабильно отсортировать события",
+  "task_difficulty": "interview",
+  "task_skills": [
+    "sorting",
+    "stability"
+  ],
+  "task_estimated_minutes": 20
+}

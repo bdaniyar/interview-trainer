@@ -1,14 +1,14 @@
-# Python Interview Trainer
+# Python Backend Interview Trainer
 
-Pythoria — локальная интерактивная платформа для изучения продвинутого Python. UX построен вокруг плотного lesson reader, встроенного Monaco IDE, xterm.js-терминала, автоматической проверки задач, прогресса, XP и interview mode. Визуальная система самостоятельная; исходный код, логотипы и закрытые материалы UPSHELL не использовались.
+Pythoria — локальная платформа подготовки к собеседованиям Intern / Trainee / Junior / Junior+ Python Backend. Программа покрывает Python Core, SQL/PostgreSQL, HTTP/security, FastAPI/Pydantic, SQLAlchemy/Alembic, testing, Redis, Docker/Git/Linux, architecture и честную защиту проектов StudyHub, Hotel Booking и Share Recipe. UX построен вокруг lesson reader, Monaco IDE, xterm.js, автоматической проверки, прогресса, XP и тематического interview mode.
 
 ## Что уже работает
 
-- каталог из 67 уроков и 5 модулей;
-- полноформатный первый урок «Устройство Python»;
-- 5 обязательных оригинальных seed-уроков: `is` vs `==`, mutability, mutable defaults, iterator protocol, generators;
-- дополнительная рабочая задача `MagicBox` в первом уроке;
-- placeholders для остальных тем;
+- полная taxonomy из 406 стабильных lesson IDs в 33 stages;
+- 359 опубликованных P0/P1-уроков; P2/P3 остаются честно помеченными `planned` и не открывают пустые страницы;
+- 63 рабочие Python/FastAPI/Pydantic/SQLAlchemy/Alembic задачи со starter code, solutions и hidden pytest tests;
+- 40 Python code-prediction snippets, 12 asyncio-задач, 48 полностью специфицированных PostgreSQL practice tasks, 59 debugging и 20 architecture scenarios;
+- 20 interview sets, включая 25-вопросный Full Junior Interview, Crash Course и Resume Defense;
 - Markdown с заголовками, списками, GFM-таблицами, цитатами/callouts, inline code и подсвеченными Python-блоками;
 - Monaco Editor: Python highlighting, line numbers, tabs, auto-indent, несколько файлов, dark/light themes;
 - file explorer: открыть, создать, переименовать и удалить пользовательский Python-файл;
@@ -146,10 +146,16 @@ NEXT_PUBLIC_API_URL=http://localhost:8000 npm run dev
 │   ├── sandbox/Dockerfile    # Python + pytest image
 │   └── tests/
 ├── content/
-│   ├── course.json
-│   └── <module>/<lesson>/
+│   ├── curriculum.json       # полная taxonomy и planning status
+│   ├── interview_sets.json   # тематические interview collections
+│   ├── practice_banks.json   # SQL/debug/testing/architecture banks
+│   ├── course.json           # сгенерированный published snapshot
+│   └── <stage>/<lesson>/
 ├── scripts/smoke_test.py
-├── tools/seed_content.py
+├── tools/validate_content.py
+├── tools/export_course_snapshot.py
+├── docs/CONTENT_INVENTORY.md
+├── docs/SQL_RUNNER_DESIGN.md
 └── docker-compose.yml
 ```
 
@@ -175,12 +181,22 @@ content/python-model/iterator-protocol/
 
 ```json
 {
+  "id": "backend-interview.4.2.iterator-protocol",
   "slug": "iterator-protocol",
   "title": "Iterator protocol",
-  "module_slug": "python-model",
-  "module_title": "Модель Python и продвинутый ООП",
-  "order": 5,
-  "duration": 23,
+  "module_slug": "stage-04",
+  "module_title": "Stage 4 · Iteration, Generators, Exceptions and Context Managers",
+  "order": 42,
+  "priority": "P0",
+  "interview_probability": "very_high",
+  "market_frequency": "very_common",
+  "market_evidence": "Python указан в 18/18 primary вакансий...",
+  "prerequisites": ["backend-interview.4.1.iterable-vs-iterator"],
+  "modes": ["learn", "interview", "practice"],
+  "tracks": ["full", "interview_crash_course"],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "duration": 12,
   "xp": 25,
   "topics": ["Iterable", "Iterator", "StopIteration"],
   "description": "Iterable, iterator, __iter__, __next__ и StopIteration.",
@@ -189,17 +205,16 @@ content/python-model/iterator-protocol/
 }
 ```
 
-Backend сканирует `metadata.json` при запросе, поэтому новый материал появляется без правок в React-коде. `content/course.json` — удобный сгенерированный snapshot каталога, а источником lesson details остаются директории уроков.
+Backend сканирует `metadata.json` при запросе, поэтому новый материал появляется без правок в React. `slug` — неизменяемый persistence key для progress/code; `id` — стабильный curriculum identifier. `curriculum.json` хранит taxonomy и planning status, lesson directories — опубликованный material, а `course.json` является только generated snapshot.
 
 ## Adding lessons
 
-1. Найди подходящий модуль в `content/`.
-2. Проверь slug существующих уроков, чтобы не создать duplicate.
-3. Создай lesson directory, `lesson.md` и `metadata.json`.
-4. Выбери уникальный глобальный `order`.
-5. Добавь `starter/main.py`, даже если задача пока placeholder.
-6. Перезапусти backend или просто обнови страницу: loader перечитывает файлы.
-7. Обнови `content/course.json` вручную или осознанно запусти `python tools/seed_content.py`; без `--force` скрипт не перезаписывает существующие файлы.
+1. Сначала найди тему по `id`, `slug` и title в `content/curriculum.json`; duplicate запрещён.
+2. Для planned record сохрани существующий ID/slug и переведи `content_status` в `complete` только после готовности материала.
+3. Создай/обнови lesson directory, `lesson.md`, `metadata.json`, `interview.json` и `starter/main.py`.
+4. Сохрани обязательные секции: objectives, theory, mental model, examples, mistakes, interview rubric, task, cheat sheet и official sources.
+5. Не переименовывай опубликованный slug: иначе потеряется связь с сохранённым progress/code.
+6. Запусти `python3 tools/validate_content.py` и `python3 tools/export_course_snapshot.py`.
 
 Для будущего импорта материала формата `TOPIC:` / `MATERIAL:` сначала ищи урок по slug/title, затем разделяй текст на theory, examples, interview notes и task. Не создавай второй урок с той же темой.
 
@@ -213,6 +228,12 @@ Backend сканирует `metadata.json` при запросе, поэтому
 6. Проверь как неправильное, так и правильное решение через UI или smoke-test.
 
 File API принимает максимум 24 файла, 100 KB на файл и 500 KB на workspace. Абсолютные пути, `..` и неизвестные расширения отклоняются.
+
+## Adding interview questions
+
+`interview.json` хранит `question`, `level`, `priority`, `interview_probability`, краткий `answer`, структурированный `expected_answer`, follow-ups, tags и sets. `expected_answer` содержит `must_mention`, `good_additions`, `common_wrong_answers`, `red_flags` и `follow_up_questions`. ID вопроса формируется стабильно как `<lesson-slug>:<index>`, поэтому не переставляй существующие вопросы без миграции progress.
+
+Тематические collections определены в `content/interview_sets.json`. Full Junior Interview содержит ровно 25 curated questions; frontend позволяет переключать набор без внешнего LLM.
 
 ## Writing hidden tests
 
@@ -241,6 +262,23 @@ def test_stop_iteration():
 - не полагайся на порядок запуска тестов;
 - не импортируй зависимости, которых нет в sandbox image;
 - сохраняй тесты только в `tests/`: endpoint урока их не раскрывает.
+
+Sandbox Python 3.12 содержит pytest 8.4, FastAPI 0.116, Pydantic 2.11, SQLAlchemy 2.0.43, Alembic 1.19 и HTTPX 0.28. Версионно чувствительный material должен использовать именно Pydantic v2 и SQLAlchemy 2.x APIs.
+
+## SQL practice
+
+SQL runner в текущей архитектуре отсутствует. Поэтому сайт не заявляет интерактивное SQL execution: 48 PostgreSQL-compatible tasks содержат schema, seed, question, expected columns, ordered/unordered comparison, hidden solution или reasoning rubric. Они видны внутри SQL/PostgreSQL lessons и структурированы в `content/practice_banks.json`.
+
+Безопасный disposable PostgreSQL design описан в `docs/SQL_RUNNER_DESIGN.md`. Не подменяй PostgreSQL SQLite-исполнением и не добавляй DB credentials в content.
+
+## Priorities and planned content
+
+- `P0` — обязательно для уверенного Junior interview;
+- `P1` — часто встречается или заметно усиливает кандидата;
+- `P2` — полезно для Junior+ или конкретного проекта;
+- `P3` — bonus/advanced и не блокирует отклики.
+
+P2/P3 metadata уже зарегистрирована, но `content_status: planned` исключает её из navigation. Чтобы опубликовать такой lesson, сначала добавь полный материал и только затем смени status; content validator не допускает пустые P0/P1 страницы.
 
 ## Python runner security
 
@@ -282,6 +320,12 @@ Unit/API tests:
 python -m pytest backend/tests runner/tests -q
 ```
 
+Content schema и все reference solutions:
+
+```bash
+python3 tools/validate_content.py --run-solutions
+```
+
 Frontend production build:
 
 ```bash
@@ -295,4 +339,4 @@ End-to-end smoke-test для уже запущенного стека:
 python scripts/smoke_test.py
 ```
 
-Smoke-test проверяет frontend response, backend/runner health, 67-lesson catalog, сохранение файлов, stdout, SyntaxError, failed hidden tests, passed hidden tests, terminal и persistent progress.
+Smoke-test проверяет frontend response, backend/runner health, 359 published lessons, 20 interview sets, сохранение файлов, stdout, SyntaxError, failed/passed hidden tests, terminal и persistent progress.

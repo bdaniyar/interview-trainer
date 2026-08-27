@@ -1,0 +1,49 @@
+{
+  "id": "backend-interview.32.20.prometheus-grafana-sentry",
+  "slug": "s32-prometheus-grafana-sentry",
+  "title": "Prometheus/Grafana/Sentry",
+  "module_slug": "stage-32",
+  "module_title": "Stage 32 · Personalized Resume Defense",
+  "module_order": 32,
+  "order": 403,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "Prometheus collects time-series metrics",
+    "Grafana visualizes data and dashboards",
+    "Sentry groups application errors with stack/context",
+    "candidate configured and used them in a pet-project",
+    "candidate did not administer a production monitoring cluster."
+  ],
+  "description": "P1 · Prometheus/Grafana/Sentry: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 for resume, P2 globally | medium",
+  "interview_probability": "medium",
+  "market_frequency": "common",
+  "market_evidence": "Resume Defense основан только на фактических StudyHub, Hotel Booking и Share Recipe claims.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Prometheus/Grafana/Sentry и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.32.19.celery-workers"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

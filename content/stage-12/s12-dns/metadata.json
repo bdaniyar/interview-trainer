@@ -1,0 +1,47 @@
+{
+  "id": "backend-interview.12.15.dns",
+  "slug": "s12-dns",
+  "title": "DNS",
+  "module_slug": "stage-12",
+  "module_title": "Stage 12 · HTTP, Networking and REST",
+  "module_order": 12,
+  "order": 153,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "name resolution",
+    "service/container names",
+    "common failure scenarios."
+  ],
+  "description": "P1 · DNS: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "HTTP/REST/API явно встречались в 13/18 — P0 внешний контракт backend.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить DNS и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.12.14.ip-ports-and-sockets"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

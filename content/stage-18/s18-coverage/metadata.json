@@ -1,0 +1,47 @@
+{
+  "id": "backend-interview.18.13.coverage",
+  "slug": "s18-coverage",
+  "title": "Coverage",
+  "module_slug": "stage-18",
+  "module_title": "Stage 18 · Testing",
+  "module_order": 18,
+  "order": 250,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "coverage is a signal",
+    "branch/critical path",
+    "80% does not mean 80% quality."
+  ],
+  "description": "P1 · Coverage: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Testing явно встречался в 6/18 и часто подразумевается; pytest — P0/P1 рабочий навык.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Coverage и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.18.12.what-to-test"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

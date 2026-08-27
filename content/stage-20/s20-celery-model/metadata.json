@@ -1,0 +1,50 @@
+{
+  "id": "backend-interview.20.3.celery-model",
+  "slug": "s20-celery-model",
+  "title": "Celery model",
+  "module_slug": "stage-20",
+  "module_title": "Stage 20 · Background Work, Celery and Message Brokers",
+  "module_order": 20,
+  "order": 264,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "task",
+    "broker",
+    "worker",
+    "result backend distinction",
+    "serialization",
+    "retries."
+  ],
+  "description": "P1 · Celery model: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 for Resume Defense, P2 globally | medium",
+  "interview_probability": "medium",
+  "market_frequency": "common",
+  "market_evidence": "Background work/outbox/Celery нужны для защиты фактических project claims; broker depth ниже core.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Celery model и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.20.2.fastapi-backgroundtasks"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

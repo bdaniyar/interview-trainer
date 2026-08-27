@@ -1,0 +1,53 @@
+{
+  "id": "backend-interview.15.1.basemodel-and-validation",
+  "slug": "s15-basemodel-and-validation",
+  "title": "BaseModel and validation",
+  "module_slug": "stage-15",
+  "module_title": "Stage 15 · Pydantic v2",
+  "module_order": 15,
+  "order": 202,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 25,
+  "topics": [
+    "BaseModel and validation"
+  ],
+  "description": "P0 · BaseModel and validation: mental model, interview rubric и backend-сценарий.",
+  "has_task": true,
+  "has_solution": true,
+  "priority": "P0",
+  "priority_note": "P0 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "very_common",
+  "market_evidence": "Pydantic v2 — validation boundary основной FastAPI trajectory.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить BaseModel and validation и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.6.1.static-hints-vs-runtime-behavior"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py",
+  "task_id": "backend-interview.15.1.basemodel-and-validation.practice",
+  "task_title": "UserCreate model",
+  "task_difficulty": "interview",
+  "task_skills": [
+    "pydantic-v2",
+    "validation"
+  ],
+  "task_estimated_minutes": 20
+}

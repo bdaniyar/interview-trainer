@@ -1,0 +1,88 @@
+[
+  {
+    "question": "Объясни тему «DRF exception/response flow» как на Junior Python Backend interview.",
+    "level": "normal",
+    "priority": "P1",
+    "interview_probability": "medium",
+    "answer": [
+      "DRF exception/response flow",
+      "Django project содержит configuration, apps группируют domain capability, DRF serializer задаёт API boundary."
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "DRF exception/response flow",
+        "Django project содержит configuration, apps группируют domain capability, DRF serializer задаёт API boundary."
+      ],
+      "good_additions": [
+        "конкретный backend example",
+        "trade-off или failure mode"
+      ],
+      "common_wrong_answers": [
+        "Путать select_related и prefetch_related или переносить FastAPI patterns дословно.",
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "red_flags": [
+        "Путать select_related и prefetch_related или переносить FastAPI patterns дословно."
+      ],
+      "follow_up_questions": [
+        "Сравни request flow и data access одного endpoint в DRF и FastAPI."
+      ]
+    },
+    "follow_ups": [
+      "Сравни request flow и data access одного endpoint в DRF и FastAPI."
+    ],
+    "tags": [
+      "stage-26",
+      "p1"
+    ],
+    "sets": [
+      "stage-26",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  },
+  {
+    "question": "Сценарий по теме «DRF exception/response flow»: Сравни request flow и data access одного endpoint в DRF и FastAPI. Что проверишь первым?",
+    "level": "scenario",
+    "priority": "P1",
+    "interview_probability": "medium",
+    "answer": [
+      "Уточнить требования и observable symptom",
+      "Django project содержит configuration, apps группируют domain capability, DRF serializer задаёт API boundary.",
+      "Назвать edge case",
+      "Предложить test/log/metric для проверки"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "assumptions",
+        "mechanism",
+        "failure mode",
+        "verification"
+      ],
+      "good_additions": [
+        "альтернатива и trade-off"
+      ],
+      "common_wrong_answers": [
+        "Сразу называть технологию до уточнения проблемы"
+      ],
+      "red_flags": [
+        "Путать select_related и prefetch_related или переносить FastAPI patterns дословно."
+      ],
+      "follow_up_questions": [
+        "Что произойдёт при повторе или частичном отказе?"
+      ]
+    },
+    "follow_ups": [
+      "Что произойдёт при повторе или частичном отказе?"
+    ],
+    "tags": [
+      "stage-26",
+      "scenario"
+    ],
+    "sets": [
+      "stage-26",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  }
+]

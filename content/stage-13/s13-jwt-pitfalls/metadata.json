@@ -1,0 +1,50 @@
+{
+  "id": "backend-interview.13.6.jwt-pitfalls",
+  "slug": "s13-jwt-pitfalls",
+  "title": "JWT pitfalls",
+  "module_slug": "stage-13",
+  "module_title": "Stage 13 · Authentication, Authorization and Security",
+  "module_order": 13,
+  "order": 166,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "accepting wrong algorithm",
+    "skipping issuer/audience/expiry",
+    "storing secrets in payload",
+    "long-lived access tokens",
+    "unsafe browser storage",
+    "no revocation plan."
+  ],
+  "description": "P0 · JWT pitfalls: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Auth/security защищают заявленные JWT/OAuth2/PKCE и API permissions.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить JWT pitfalls и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.13.5.access-and-refresh-tokens"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

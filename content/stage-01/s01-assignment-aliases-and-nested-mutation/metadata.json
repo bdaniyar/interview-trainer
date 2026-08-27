@@ -1,0 +1,49 @@
+{
+  "id": "backend-interview.1.6.assignment-aliases-and-nested-mutation",
+  "slug": "s01-assignment-aliases-and-nested-mutation",
+  "title": "Assignment, aliases and nested mutation",
+  "module_slug": "stage-01",
+  "module_title": "Stage 1 · Python Object Model and Core Types",
+  "module_order": 1,
+  "order": 9,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "aliases",
+    "shared nested structures",
+    "repeated references",
+    "`[[]] * 3`",
+    "passing objects into functions."
+  ],
+  "description": "P0 · Assignment, aliases and nested mutation: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "very_common",
+  "market_evidence": "Python указан в 18/18 primary вакансий; object model — базовый screening foundation.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Assignment, aliases and nested mutation и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.1.5.truthiness"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

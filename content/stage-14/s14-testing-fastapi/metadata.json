@@ -1,0 +1,49 @@
+{
+  "id": "backend-interview.14.24.testing-fastapi",
+  "slug": "s14-testing-fastapi",
+  "title": "Testing FastAPI",
+  "module_slug": "stage-14",
+  "module_title": "Stage 14 · FastAPI",
+  "module_order": 14,
+  "order": 201,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "TestClient/AsyncClient according to stack",
+    "dependency overrides",
+    "app lifespan",
+    "database isolation",
+    "response assertions."
+  ],
+  "description": "P0 · Testing FastAPI: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "very_common",
+  "market_evidence": "FastAPI явно встречался в 9/18, любой Python web framework — в 16/18.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Testing FastAPI и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.14.23.repository-pattern"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

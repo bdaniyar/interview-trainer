@@ -1,0 +1,47 @@
+{
+  "id": "backend-interview.23.6.permissions",
+  "slug": "s23-permissions",
+  "title": "Permissions",
+  "module_slug": "stage-23",
+  "module_title": "Stage 23 · Linux and Shell",
+  "module_order": 23,
+  "order": 307,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "read/write/execute",
+    "chmod basics",
+    "ownership awareness."
+  ],
+  "description": "P1 · Permissions: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | medium",
+  "interview_probability": "medium",
+  "market_frequency": "common",
+  "market_evidence": "Linux basics явно встречались в 5/18 и часто подразумеваются для backend debugging.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Permissions и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.23.5.processes"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

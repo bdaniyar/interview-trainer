@@ -1,0 +1,94 @@
+[
+  {
+    "question": "Объясни тему «Backend signals» как на Junior Python Backend interview.",
+    "level": "normal",
+    "priority": "P1",
+    "interview_probability": "high",
+    "answer": [
+      "request rate",
+      "error rate",
+      "latency/p95",
+      "DB errors",
+      "Сначала сформулируй вопрос, затем выбери signal и labels с контролируемой cardinality."
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "request rate",
+        "error rate",
+        "latency/p95",
+        "DB errors",
+        "Сначала сформулируй вопрос, затем выбери signal и labels с контролируемой cardinality."
+      ],
+      "good_additions": [
+        "конкретный backend example",
+        "trade-off или failure mode"
+      ],
+      "common_wrong_answers": [
+        "Логировать secrets или использовать user_id как Prometheus label.",
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "red_flags": [
+        "Логировать secrets или использовать user_id как Prometheus label."
+      ],
+      "follow_up_questions": [
+        "По росту p95 при стабильной средней выбери следующие metrics и logs."
+      ]
+    },
+    "follow_ups": [
+      "По росту p95 при стабильной средней выбери следующие metrics и logs."
+    ],
+    "tags": [
+      "stage-25",
+      "p1"
+    ],
+    "sets": [
+      "stage-25",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  },
+  {
+    "question": "Сценарий по теме «Backend signals»: По росту p95 при стабильной средней выбери следующие metrics и logs. Что проверишь первым?",
+    "level": "scenario",
+    "priority": "P1",
+    "interview_probability": "high",
+    "answer": [
+      "Уточнить требования и observable symptom",
+      "Сначала сформулируй вопрос, затем выбери signal и labels с контролируемой cardinality.",
+      "Назвать edge case",
+      "Предложить test/log/metric для проверки"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "assumptions",
+        "mechanism",
+        "failure mode",
+        "verification"
+      ],
+      "good_additions": [
+        "альтернатива и trade-off"
+      ],
+      "common_wrong_answers": [
+        "Сразу называть технологию до уточнения проблемы"
+      ],
+      "red_flags": [
+        "Логировать secrets или использовать user_id как Prometheus label."
+      ],
+      "follow_up_questions": [
+        "Что произойдёт при повторе или частичном отказе?"
+      ]
+    },
+    "follow_ups": [
+      "Что произойдёт при повторе или частичном отказе?"
+    ],
+    "tags": [
+      "stage-25",
+      "scenario"
+    ],
+    "sets": [
+      "stage-25",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  }
+]

@@ -1,0 +1,56 @@
+{
+  "id": "backend-interview.14.13.middleware",
+  "slug": "s14-middleware",
+  "title": "Middleware",
+  "module_slug": "stage-14",
+  "module_title": "Stage 14 · FastAPI",
+  "module_order": 14,
+  "order": 190,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 25,
+  "topics": [
+    "request/response wrapper",
+    "timing/request ID",
+    "ordering",
+    "not for domain logic."
+  ],
+  "description": "P1 · Middleware: mental model, interview rubric и backend-сценарий.",
+  "has_task": true,
+  "has_solution": true,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "FastAPI явно встречался в 9/18, любой Python web framework — в 16/18.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Middleware и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.14.12.exception-handlers"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py",
+  "task_id": "backend-interview.14.13.middleware.practice",
+  "task_title": "Request-ID middleware",
+  "task_difficulty": "interview",
+  "task_skills": [
+    "fastapi",
+    "middleware"
+  ],
+  "task_estimated_minutes": 20
+}

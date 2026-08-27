@@ -1,0 +1,47 @@
+{
+  "id": "backend-interview.28.4.stack",
+  "slug": "s28-stack",
+  "title": "Stack",
+  "module_slug": "stage-28",
+  "module_title": "Stage 28 · Algorithms and Data Structures",
+  "module_order": 28,
+  "order": 351,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "brackets",
+    "undo",
+    "DFS basics."
+  ],
+  "description": "P1 · Stack: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | medium",
+  "interview_probability": "medium",
+  "market_frequency": "common",
+  "market_evidence": "Базовые structures/complexity проверяют на coding screen; competitive programming не приоритет.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Stack и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.28.3.hash-table-dict-set"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

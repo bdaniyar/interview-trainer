@@ -1,0 +1,47 @@
+{
+  "id": "backend-interview.32.21.oauth2-authorization-code-plus-pkce",
+  "slug": "s32-oauth2-authorization-code-plus-pkce",
+  "title": "OAuth2 Authorization Code + PKCE",
+  "module_slug": "stage-32",
+  "module_title": "Stage 32 · Personalized Resume Defense",
+  "module_order": 32,
+  "order": 404,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "verifier/challenge",
+    "intercepted code cannot be exchanged without verifier",
+    "state/redirect validation still needed."
+  ],
+  "description": "P1 · OAuth2 Authorization Code + PKCE: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Resume Defense основан только на фактических StudyHub, Hotel Booking и Share Recipe claims.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить OAuth2 Authorization Code + PKCE и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.32.20.prometheus-grafana-sentry"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

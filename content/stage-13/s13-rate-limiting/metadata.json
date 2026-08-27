@@ -1,0 +1,50 @@
+{
+  "id": "backend-interview.13.15.rate-limiting",
+  "slug": "s13-rate-limiting",
+  "title": "Rate limiting",
+  "module_slug": "stage-13",
+  "module_title": "Stage 13 · Authentication, Authorization and Security",
+  "module_order": 13,
+  "order": 175,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "abuse control",
+    "per-user/IP/action",
+    "fixed/sliding/token bucket concepts",
+    "Redis atomic counters",
+    "429",
+    "fail-open/fail-closed trade-off."
+  ],
+  "description": "P1 · Rate limiting: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Auth/security защищают заявленные JWT/OAuth2/PKCE и API permissions.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Rate limiting и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.13.14.secret-management"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

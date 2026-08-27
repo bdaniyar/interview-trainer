@@ -1,16 +1,57 @@
 {
+  "id": "backend-interview.3.5.args-kwargs-and-unpacking",
   "slug": "args-kwargs",
-  "title": "*args и **kwargs",
-  "module_slug": "functions-api",
-  "module_title": "Функции, типизация и API",
-  "order": 14,
-  "duration": 19,
-  "xp": 5,
+  "title": "`*args`, `**kwargs` and unpacking",
+  "module_slug": "stage-03",
+  "module_title": "Stage 3 · Functions, Scope, Closures and Decorators",
+  "module_order": 3,
+  "order": 23,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 25,
   "topics": [
-    "packing",
-    "unpacking"
+    "collection",
+    "forwarding",
+    "iterable/dict unpacking",
+    "duplicate arguments",
+    "wrapper functions."
   ],
-  "description": "Учебный блок: packing, unpacking.",
-  "has_task": false,
-  "has_solution": false
+  "description": "P0 · `*args`, `**kwargs` and unpacking: mental model, interview rubric и backend-сценарий.",
+  "has_task": true,
+  "has_solution": true,
+  "priority": "P0",
+  "priority_note": "P0 | high",
+  "interview_probability": "high",
+  "market_frequency": "very_common",
+  "market_evidence": "Python указан в 18/18; functions/scope/decorators регулярно проверяют на screening.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить `*args`, `**kwargs` and unpacking и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.3.4.default-arguments"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py",
+  "task_id": "backend-interview.3.5.args-kwargs-and-unpacking.practice",
+  "task_title": "Объединить options",
+  "task_difficulty": "interview",
+  "task_skills": [
+    "kwargs",
+    "immutability"
+  ],
+  "task_estimated_minutes": 20
 }

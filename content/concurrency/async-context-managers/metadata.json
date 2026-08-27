@@ -1,16 +1,55 @@
 {
+  "id": "backend-interview.8.10.async-context-managers",
   "slug": "async-context-managers",
-  "title": "async context managers",
-  "module_slug": "concurrency",
-  "module_title": "Конкурентность и асинхронность",
-  "order": 51,
-  "duration": 30,
-  "xp": 5,
+  "title": "Async context managers",
+  "module_slug": "stage-08",
+  "module_title": "Stage 8 · Async Python",
+  "module_order": 8,
+  "order": 89,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 25,
   "topics": [
-    "__aenter__",
-    "__aexit__"
+    "`async with`",
+    "connection/session/client lifecycle",
+    "`__aenter__`/`__aexit__`."
   ],
-  "description": "Учебный блок: __aenter__, __aexit__.",
-  "has_task": false,
-  "has_solution": false
+  "description": "P1 · Async context managers: mental model, interview rubric и backend-сценарий.",
+  "has_task": true,
+  "has_solution": true,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Async явно встречался в 5/18 и является P0/P1 для FastAPI async-проектов кандидата.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Async context managers и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.8.9.blocking-code-inside-async-code"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py",
+  "task_id": "backend-interview.8.10.async-context-managers.practice",
+  "task_title": "Async resource manager",
+  "task_difficulty": "interview",
+  "task_skills": [
+    "async-context-manager",
+    "cleanup"
+  ],
+  "task_estimated_minutes": 20
 }

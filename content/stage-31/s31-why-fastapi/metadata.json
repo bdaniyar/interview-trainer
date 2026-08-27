@@ -1,0 +1,49 @@
+{
+  "id": "backend-interview.31.4.why-fastapi",
+  "slug": "s31-why-fastapi",
+  "title": "Why FastAPI?",
+  "module_slug": "stage-31",
+  "module_title": "Stage 31 · HR, Screening and Communication",
+  "module_order": 31,
+  "order": 375,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "type hints",
+    "Pydantic",
+    "OpenAPI",
+    "async stack",
+    "comparison with Django without tribalism."
+  ],
+  "description": "P0 · Why FastAPI?: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "common",
+  "market_evidence": "Screening communication влияет на прохождение remote и local interviews.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Why FastAPI? и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.31.3.why-backend"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

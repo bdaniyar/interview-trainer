@@ -1,5 +1,2 @@
-"""Заготовка для урока: closures."""
-
-
-def main():
-    raise NotImplementedError("Задача будет добавлена позже")
+def make_counter(start=0, step=1):
+    raise NotImplementedError

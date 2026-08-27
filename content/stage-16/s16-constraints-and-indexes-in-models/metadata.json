@@ -1,0 +1,46 @@
+{
+  "id": "backend-interview.16.19.constraints-and-indexes-in-models",
+  "slug": "s16-constraints-and-indexes-in-models",
+  "title": "Constraints and indexes in models",
+  "module_slug": "stage-16",
+  "module_title": "Stage 16 · SQLAlchemy 2.x",
+  "module_order": 16,
+  "order": 231,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "DB migration still required",
+    "model declaration is not production schema migration."
+  ],
+  "description": "P0 · Constraints and indexes in models: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | high",
+  "interview_probability": "high",
+  "market_frequency": "very_common",
+  "market_evidence": "ORM/SQLAlchemy явно встречались в 4/18, но Session/transaction знание фундаментально для FastAPI backend.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Constraints and indexes in models и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.16.18.async-lazy-loading-pitfalls"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

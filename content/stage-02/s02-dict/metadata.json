@@ -1,0 +1,60 @@
+{
+  "id": "backend-interview.2.3.dict",
+  "slug": "s02-dict",
+  "title": "Dict",
+  "module_slug": "stage-02",
+  "module_title": "Stage 2 · Collections and Comprehensions",
+  "module_order": 2,
+  "order": 14,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 25,
+  "topics": [
+    "keys/values/items",
+    "insertion order",
+    "lookup",
+    "`.get`",
+    "`.setdefault`",
+    "update/merge",
+    "iteration",
+    "hash table mental model"
+  ],
+  "description": "P0 · Dict: mental model, interview rubric и backend-сценарий.",
+  "has_task": true,
+  "has_solution": true,
+  "priority": "P0",
+  "priority_note": "P0 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "very_common",
+  "market_evidence": "Python указан в 18/18; collections — ежедневная data transformation работа backend.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Dict и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.2.2.tuple"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py",
+  "task_id": "backend-interview.2.3.dict.practice",
+  "task_title": "Индекс без тихих дублей",
+  "task_difficulty": "interview",
+  "task_skills": [
+    "dict",
+    "data-integrity"
+  ],
+  "task_estimated_minutes": 20
+}

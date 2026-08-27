@@ -1,0 +1,48 @@
+{
+  "id": "backend-interview.30.2.one-simple-deployment-mental-model",
+  "slug": "s30-one-simple-deployment-mental-model",
+  "title": "One simple deployment mental model",
+  "module_slug": "stage-30",
+  "module_title": "Stage 30 · Cloud, Nginx and Advanced Infrastructure",
+  "module_order": 30,
+  "order": 368,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "image",
+    "environment",
+    "database",
+    "migration",
+    "healthcheck",
+    "rollback."
+  ],
+  "description": "P2 · One simple deployment mental model: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P2",
+  "priority_note": "P2 | medium",
+  "interview_probability": "medium",
+  "market_frequency": "occasional",
+  "market_evidence": "Cloud встречался в 6/18, Kubernetes — 1/18; инфраструктура остаётся P2/P3 после core.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить One simple deployment mental model и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior_plus",
+  "prerequisites": [
+    "backend-interview.30.1.cloud-concepts"
+  ],
+  "modes": [
+    "learn",
+    "interview"
+  ],
+  "tracks": [
+    "full"
+  ],
+  "content_status": "planned",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

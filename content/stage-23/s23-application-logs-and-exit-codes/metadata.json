@@ -1,0 +1,47 @@
+{
+  "id": "backend-interview.23.8.application-logs-and-exit-codes",
+  "slug": "s23-application-logs-and-exit-codes",
+  "title": "Application logs and exit codes",
+  "module_slug": "stage-23",
+  "module_title": "Stage 23 · Linux and Shell",
+  "module_order": 23,
+  "order": 309,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "stdout/stderr",
+    "exit status",
+    "pipeline failure awareness."
+  ],
+  "description": "P1 · Application logs and exit codes: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Linux basics явно встречались в 5/18 и часто подразумеваются для backend debugging.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Application logs and exit codes и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.23.7.ports-and-network-diagnostics"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "backend-interview.21.1.image-vs-container",
+  "slug": "s21-image-vs-container",
+  "title": "Image vs container",
+  "module_slug": "stage-21",
+  "module_title": "Stage 21 · Docker and Docker Compose",
+  "module_order": 21,
+  "order": 274,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "Image vs container"
+  ],
+  "description": "P1 · Image vs container: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "common",
+  "market_evidence": "Docker/containers явно встречались в 11/18 — обязательный P1 practical skill.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Image vs container и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

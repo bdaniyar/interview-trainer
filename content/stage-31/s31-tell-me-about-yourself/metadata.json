@@ -1,0 +1,49 @@
+{
+  "id": "backend-interview.31.1.tell-me-about-yourself",
+  "slug": "s31-tell-me-about-yourself",
+  "title": "Tell me about yourself",
+  "module_slug": "stage-31",
+  "module_title": "Stage 31 · HR, Screening and Communication",
+  "module_order": 31,
+  "order": 372,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "60–90 seconds",
+    "current focus",
+    "relevant project",
+    "target role",
+    "no autobiography."
+  ],
+  "description": "P0 · Tell me about yourself: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "common",
+  "market_evidence": "Screening communication влияет на прохождение remote и local interviews.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Tell me about yourself и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.0.2.kak-otvechat-na-tehnicheskii-vopros"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

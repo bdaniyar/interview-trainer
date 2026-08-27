@@ -1,5 +1,4 @@
-"""Заготовка для урока: gather."""
+import asyncio
 
-
-def main():
-    raise NotImplementedError("Задача будет добавлена позже")
+async def fetch_many(fetch, ids):
+    raise NotImplementedError

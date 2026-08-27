@@ -1,0 +1,50 @@
+{
+  "id": "backend-interview.10.25.data-modification",
+  "slug": "s10-data-modification",
+  "title": "Data modification",
+  "module_slug": "stage-10",
+  "module_title": "Stage 10 · SQL Fundamentals and Practice",
+  "module_order": 10,
+  "order": 121,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "INSERT",
+    "UPDATE",
+    "DELETE",
+    "`RETURNING`",
+    "safe WHERE",
+    "upsert basics."
+  ],
+  "description": "P0 · Data modification: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | high",
+  "interview_probability": "high",
+  "market_frequency": "very_common",
+  "market_evidence": "SQL/relational DB явно встречались в 15/18 — один из главных P0-разделов.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Data modification и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.10.24.lag-and-lead"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

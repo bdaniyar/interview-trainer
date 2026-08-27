@@ -1,18 +1,50 @@
 {
+  "id": "backend-interview.3.7.legb",
   "slug": "legb",
   "title": "LEGB",
-  "module_slug": "functions-api",
-  "module_title": "Функции, типизация и API",
-  "order": 11,
-  "duration": 29,
+  "module_slug": "stage-03",
+  "module_title": "Stage 3 · Functions, Scope, Closures and Decorators",
+  "module_order": 3,
+  "order": 25,
+  "duration": 12,
+  "estimated_minutes": 12,
   "xp": 5,
   "topics": [
-    "local",
-    "enclosing",
-    "global",
-    "builtins"
+    "Local",
+    "Enclosing",
+    "Global",
+    "Builtins",
+    "name lookup",
+    "shadowing."
   ],
-  "description": "Учебный блок: local, enclosing, global, builtins.",
+  "description": "P0 · LEGB: mental model, interview rubric и backend-сценарий.",
   "has_task": false,
-  "has_solution": false
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "very_common",
+  "market_evidence": "Python указан в 18/18; functions/scope/decorators регулярно проверяют на screening.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить LEGB и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.3.6.function-annotations"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
 }

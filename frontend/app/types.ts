@@ -12,6 +12,9 @@ export interface LessonSummary {
   description: string;
   has_task: boolean;
   has_solution: boolean;
+  priority?: 'P0' | 'P1' | 'P2' | 'P3';
+  interview_probability?: 'very_high' | 'high' | 'medium' | 'low';
+  content_status?: 'complete' | 'planned' | 'archived';
   status: LessonStatus;
   theory_completed: boolean;
   task_completed: boolean;
@@ -78,4 +81,18 @@ export interface InterviewQuestion {
   code?: string;
   expected?: string;
   reason?: string;
+}
+
+export interface InterviewSet {
+  slug: string;
+  title: string;
+  description: string;
+  estimated_minutes: number;
+}
+
+export interface InterviewData {
+  questions: InterviewQuestion[];
+  current_index: number;
+  sets: InterviewSet[];
+  active_set: string;
 }

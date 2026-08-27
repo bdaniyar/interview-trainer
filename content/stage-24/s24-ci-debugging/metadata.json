@@ -1,0 +1,47 @@
+{
+  "id": "backend-interview.24.5.ci-debugging",
+  "slug": "s24-ci-debugging",
+  "title": "CI debugging",
+  "module_slug": "stage-24",
+  "module_title": "Stage 24 · CI/CD",
+  "module_order": 24,
+  "order": 314,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "works locally but fails in CI",
+    "dependency/version/env/timezone/order differences",
+    "reading logs."
+  ],
+  "description": "P1 · CI debugging: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "CI/CD явно встречался в 11/18; junior должен понимать quality gates и читать logs.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить CI debugging и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.24.4.quality-gates"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

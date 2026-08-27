@@ -1,16 +1,48 @@
 {
+  "id": "backend-interview.5.14.len-bool-contains-getitem",
   "slug": "data-model",
-  "title": "Data model и спецметоды",
-  "module_slug": "python-model",
-  "module_title": "Модель Python и продвинутый ООП",
-  "order": 4,
-  "duration": 22,
+  "title": "`__len__`, `__bool__`, `__contains__`, `__getitem__`",
+  "module_slug": "stage-05",
+  "module_title": "Stage 5 · OOP and Python Data Model",
+  "module_order": 5,
+  "order": 60,
+  "duration": 10,
+  "estimated_minutes": 10,
   "xp": 5,
   "topics": [
-    "dunder methods",
-    "protocols"
+    "protocol-driven behavior",
+    "truthiness",
+    "membership",
+    "indexing/iteration fallback."
   ],
-  "description": "Учебный блок: dunder methods, protocols.",
+  "description": "P1 · `__len__`, `__bool__`, `__contains__`, `__getitem__`: mental model, interview rubric и backend-сценарий.",
   "has_task": false,
-  "has_solution": false
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | medium",
+  "interview_probability": "medium",
+  "market_frequency": "common",
+  "market_evidence": "Python указан в 18/18; OOP/data model важны для чтения framework и domain code.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить `__len__`, `__bool__`, `__contains__`, `__getitem__` и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.5.13.eq-and-hash"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
 }

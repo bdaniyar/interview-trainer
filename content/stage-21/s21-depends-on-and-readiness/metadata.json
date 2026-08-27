@@ -1,0 +1,47 @@
+{
+  "id": "backend-interview.21.13.depends-on-and-readiness",
+  "slug": "s21-depends-on-and-readiness",
+  "title": "`depends_on` and readiness",
+  "module_slug": "stage-21",
+  "module_title": "Stage 21 · Docker and Docker Compose",
+  "module_order": 21,
+  "order": 286,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "start order is not application readiness",
+    "healthcheck",
+    "retry/backoff."
+  ],
+  "description": "P1 · `depends_on` and readiness: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "common",
+  "market_evidence": "Docker/containers явно встречались в 11/18 — обязательный P1 practical skill.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить `depends_on` and readiness и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.21.12.build-vs-image"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

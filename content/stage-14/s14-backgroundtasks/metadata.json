@@ -1,0 +1,49 @@
+{
+  "id": "backend-interview.14.16.backgroundtasks",
+  "slug": "s14-backgroundtasks",
+  "title": "BackgroundTasks",
+  "module_slug": "stage-14",
+  "module_title": "Stage 14 · FastAPI",
+  "module_order": 14,
+  "order": 193,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "runs after response in same application process",
+    "small non-critical work",
+    "not durable",
+    "lost on crash",
+    "not a replacement for Celery/outbox."
+  ],
+  "description": "P1 · BackgroundTasks: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "FastAPI явно встречался в 9/18, любой Python web framework — в 16/18.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить BackgroundTasks и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.14.15.sync-vs-async-endpoints"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

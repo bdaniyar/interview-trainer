@@ -1,17 +1,58 @@
 {
+  "id": "backend-interview.5.10.dataclasses",
   "slug": "dataclasses",
-  "title": "dataclasses",
-  "module_slug": "functions-api",
-  "module_title": "Функции, типизация и API",
-  "order": 22,
-  "duration": 27,
-  "xp": 5,
+  "title": "Dataclasses",
+  "module_slug": "stage-05",
+  "module_title": "Stage 5 · OOP and Python Data Model",
+  "module_order": 5,
+  "order": 56,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 25,
   "topics": [
-    "field",
+    "generated methods",
+    "equality/repr",
+    "mutable fields",
+    "`field(default_factory=...)`",
     "frozen",
-    "slots"
+    "domain data vs ORM/Pydantic models."
   ],
-  "description": "Учебный блок: field, frozen, slots.",
-  "has_task": false,
-  "has_solution": false
+  "description": "P0 · Dataclasses: mental model, interview rubric и backend-сценарий.",
+  "has_task": true,
+  "has_solution": true,
+  "priority": "P0",
+  "priority_note": "P0 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Python указан в 18/18; OOP/data model важны для чтения framework и domain code.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Dataclasses и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.5.9.abstract-base-classes"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py",
+  "task_id": "backend-interview.5.10.dataclasses.practice",
+  "task_title": "Immutable BookingWindow",
+  "task_difficulty": "interview",
+  "task_skills": [
+    "dataclass",
+    "value-object"
+  ],
+  "task_estimated_minutes": 20
 }

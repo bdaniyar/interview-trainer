@@ -1,0 +1,94 @@
+[
+  {
+    "question": "Объясни тему «TTL and expiration» как на Junior Python Backend interview.",
+    "level": "normal",
+    "priority": "P1",
+    "interview_probability": "high",
+    "answer": [
+      "expiry",
+      "renewal",
+      "stale/missing keys",
+      "memory policy awareness.",
+      "Для cache всегда определяй key, value, TTL, invalidation и fallback."
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "expiry",
+        "renewal",
+        "stale/missing keys",
+        "memory policy awareness.",
+        "Для cache всегда определяй key, value, TTL, invalidation и fallback."
+      ],
+      "good_additions": [
+        "конкретный backend example",
+        "trade-off или failure mode"
+      ],
+      "common_wrong_answers": [
+        "Использовать Pub/Sub как историю или забыть TTL и invalidation.",
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "red_flags": [
+        "Использовать Pub/Sub как историю или забыть TTL и invalidation."
+      ],
+      "follow_up_questions": [
+        "Разбери cache miss, stale value, Redis outage и concurrent refill."
+      ]
+    },
+    "follow_ups": [
+      "Разбери cache miss, stale value, Redis outage и concurrent refill."
+    ],
+    "tags": [
+      "stage-19",
+      "p1"
+    ],
+    "sets": [
+      "stage-19",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  },
+  {
+    "question": "Сценарий по теме «TTL and expiration»: Разбери cache miss, stale value, Redis outage и concurrent refill. Что проверишь первым?",
+    "level": "scenario",
+    "priority": "P1",
+    "interview_probability": "high",
+    "answer": [
+      "Уточнить требования и observable symptom",
+      "Для cache всегда определяй key, value, TTL, invalidation и fallback.",
+      "Назвать edge case",
+      "Предложить test/log/metric для проверки"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "assumptions",
+        "mechanism",
+        "failure mode",
+        "verification"
+      ],
+      "good_additions": [
+        "альтернатива и trade-off"
+      ],
+      "common_wrong_answers": [
+        "Сразу называть технологию до уточнения проблемы"
+      ],
+      "red_flags": [
+        "Использовать Pub/Sub как историю или забыть TTL и invalidation."
+      ],
+      "follow_up_questions": [
+        "Что произойдёт при повторе или частичном отказе?"
+      ]
+    },
+    "follow_ups": [
+      "Что произойдёт при повторе или частичном отказе?"
+    ],
+    "tags": [
+      "stage-19",
+      "scenario"
+    ],
+    "sets": [
+      "stage-19",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  }
+]

@@ -1,0 +1,48 @@
+{
+  "id": "backend-interview.12.21.api-versioning-and-compatibility",
+  "slug": "s12-api-versioning-and-compatibility",
+  "title": "API versioning and compatibility",
+  "module_slug": "stage-12",
+  "module_title": "Stage 12 · HTTP, Networking and REST",
+  "module_order": 12,
+  "order": 159,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "additive changes",
+    "breaking changes",
+    "version strategies",
+    "avoid premature version complexity."
+  ],
+  "description": "P1 · API versioning and compatibility: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | medium",
+  "interview_probability": "medium",
+  "market_frequency": "common",
+  "market_evidence": "HTTP/REST/API явно встречались в 13/18 — P0 внешний контракт backend.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить API versioning and compatibility и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.12.20.error-contracts"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

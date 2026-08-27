@@ -1,0 +1,48 @@
+{
+  "id": "backend-interview.4.9.raising-and-re-raising",
+  "slug": "s04-raising-and-re-raising",
+  "title": "Raising and re-raising",
+  "module_slug": "stage-04",
+  "module_title": "Stage 4 · Iteration, Generators, Exceptions and Context Managers",
+  "module_order": 4,
+  "order": 42,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "`raise`",
+    "bare `raise`",
+    "preserving traceback",
+    "domain exceptions."
+  ],
+  "description": "P0 · Raising and re-raising: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | high",
+  "interview_probability": "high",
+  "market_frequency": "very_common",
+  "market_evidence": "Python указан в 18/18; iteration/exceptions/resource cleanup нужны в production code.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Raising and re-raising и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.4.8.try-except-else-finally"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

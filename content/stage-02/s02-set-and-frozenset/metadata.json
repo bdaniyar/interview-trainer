@@ -1,0 +1,58 @@
+{
+  "id": "backend-interview.2.4.set-and-frozenset",
+  "slug": "s02-set-and-frozenset",
+  "title": "Set and frozenset",
+  "module_slug": "stage-02",
+  "module_title": "Stage 2 · Collections and Comprehensions",
+  "module_order": 2,
+  "order": 15,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 25,
+  "topics": [
+    "uniqueness",
+    "membership",
+    "union/intersection/difference",
+    "deduplication",
+    "set vs list",
+    "frozenset."
+  ],
+  "description": "P0 · Set and frozenset: mental model, interview rubric и backend-сценарий.",
+  "has_task": true,
+  "has_solution": true,
+  "priority": "P0",
+  "priority_note": "P0 | high",
+  "interview_probability": "high",
+  "market_frequency": "very_common",
+  "market_evidence": "Python указан в 18/18; collections — ежедневная data transformation работа backend.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Set and frozenset и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.2.3.dict"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py",
+  "task_id": "backend-interview.2.4.set-and-frozenset.practice",
+  "task_title": "Нормализовать scopes",
+  "task_difficulty": "interview",
+  "task_skills": [
+    "set",
+    "normalization"
+  ],
+  "task_estimated_minutes": 20
+}

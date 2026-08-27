@@ -1,0 +1,57 @@
+{
+  "id": "backend-interview.15.3.field-constraints",
+  "slug": "s15-field-constraints",
+  "title": "Field constraints",
+  "module_slug": "stage-15",
+  "module_title": "Stage 15 · Pydantic v2",
+  "module_order": 15,
+  "order": 204,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 25,
+  "topics": [
+    "length",
+    "range",
+    "pattern",
+    "aliases",
+    "Field."
+  ],
+  "description": "P0 · Field constraints: mental model, interview rubric и backend-сценарий.",
+  "has_task": true,
+  "has_solution": true,
+  "priority": "P0",
+  "priority_note": "P0 | high",
+  "interview_probability": "high",
+  "market_frequency": "very_common",
+  "market_evidence": "Pydantic v2 — validation boundary основной FastAPI trajectory.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Field constraints и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.15.2.parsing-vs-validation-mental-model"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py",
+  "task_id": "backend-interview.15.3.field-constraints.practice",
+  "task_title": "Constrained Product",
+  "task_difficulty": "interview",
+  "task_skills": [
+    "pydantic-v2",
+    "field-constraints"
+  ],
+  "task_estimated_minutes": 20
+}

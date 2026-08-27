@@ -1,0 +1,94 @@
+[
+  {
+    "question": "Объясни тему «Exception handlers» как на Junior Python Backend interview.",
+    "level": "normal",
+    "priority": "P0",
+    "interview_probability": "high",
+    "answer": [
+      "domain exception",
+      "HTTP mapping",
+      "global handler",
+      "avoid leaking internals.",
+      "Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency."
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "domain exception",
+        "HTTP mapping",
+        "global handler",
+        "avoid leaking internals.",
+        "Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency."
+      ],
+      "good_additions": [
+        "конкретный backend example",
+        "trade-off или failure mode"
+      ],
+      "common_wrong_answers": [
+        "Открывать Session глобально или выполнять blocking I/O в async route.",
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "red_flags": [
+        "Открывать Session глобально или выполнять blocking I/O в async route."
+      ],
+      "follow_up_questions": [
+        "Проследи request от router через dependency и service до response model."
+      ]
+    },
+    "follow_ups": [
+      "Проследи request от router через dependency и service до response model."
+    ],
+    "tags": [
+      "stage-14",
+      "p0"
+    ],
+    "sets": [
+      "stage-14",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  },
+  {
+    "question": "Сценарий по теме «Exception handlers»: Проследи request от router через dependency и service до response model. Что проверишь первым?",
+    "level": "scenario",
+    "priority": "P0",
+    "interview_probability": "high",
+    "answer": [
+      "Уточнить требования и observable symptom",
+      "Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.",
+      "Назвать edge case",
+      "Предложить test/log/metric для проверки"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "assumptions",
+        "mechanism",
+        "failure mode",
+        "verification"
+      ],
+      "good_additions": [
+        "альтернатива и trade-off"
+      ],
+      "common_wrong_answers": [
+        "Сразу называть технологию до уточнения проблемы"
+      ],
+      "red_flags": [
+        "Открывать Session глобально или выполнять blocking I/O в async route."
+      ],
+      "follow_up_questions": [
+        "Что произойдёт при повторе или частичном отказе?"
+      ]
+    },
+    "follow_ups": [
+      "Что произойдёт при повторе или частичном отказе?"
+    ],
+    "tags": [
+      "stage-14",
+      "scenario"
+    ],
+    "sets": [
+      "stage-14",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  }
+]

@@ -1,5 +1,4 @@
-"""Заготовка для урока: cancellation."""
+import asyncio
 
-
-def main():
-    raise NotImplementedError("Задача будет добавлена позже")
+async def cancel_and_wait(task):
+    raise NotImplementedError

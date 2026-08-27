@@ -1,16 +1,50 @@
 {
+  "id": "backend-interview.3.1.function-objects-and-first-class-functions",
   "slug": "functions-as-objects",
-  "title": "Functions as objects",
-  "module_slug": "functions-api",
-  "module_title": "Функции, типизация и API",
-  "order": 10,
-  "duration": 28,
+  "title": "Function objects and first-class functions",
+  "module_slug": "stage-03",
+  "module_title": "Stage 3 · Functions, Scope, Closures and Decorators",
+  "module_order": 3,
+  "order": 19,
+  "duration": 12,
+  "estimated_minutes": 12,
   "xp": 5,
   "topics": [
+    "defining vs calling",
+    "function object",
     "callable",
-    "first-class functions"
+    "passing/returning functions",
+    "storing functions",
+    "higher-order functions."
   ],
-  "description": "Учебный блок: callable, first-class functions.",
+  "description": "P0 · Function objects and first-class functions: mental model, interview rubric и backend-сценарий.",
   "has_task": false,
-  "has_solution": false
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "very_common",
+  "market_evidence": "Python указан в 18/18; functions/scope/decorators регулярно проверяют на screening.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Function objects and first-class functions и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.1.1.object-type-name-and-binding"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
 }

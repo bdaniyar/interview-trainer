@@ -1,0 +1,48 @@
+{
+  "id": "backend-interview.31.7.why-docker",
+  "slug": "s31-why-docker",
+  "title": "Why Docker?",
+  "module_slug": "stage-31",
+  "module_title": "Stage 31 · HR, Screening and Communication",
+  "module_order": 31,
+  "order": 378,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "reproducible environment",
+    "dependency isolation",
+    "multi-service local setup",
+    "not “Docker automatically scales”."
+  ],
+  "description": "P1 · Why Docker?: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Screening communication влияет на прохождение remote и local interviews.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Why Docker? и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.31.6.why-redis"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

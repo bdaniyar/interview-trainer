@@ -1,0 +1,47 @@
+{
+  "id": "backend-interview.15.11.orm-integration",
+  "slug": "s15-orm-integration",
+  "title": "ORM integration",
+  "module_slug": "stage-15",
+  "module_title": "Stage 15 · Pydantic v2",
+  "module_order": 15,
+  "order": 212,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "response schemas separate from ORM models",
+    "relationship loading",
+    "serialization does not solve N+1."
+  ],
+  "description": "P0 · ORM integration: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | high",
+  "interview_probability": "high",
+  "market_frequency": "very_common",
+  "market_evidence": "Pydantic v2 — validation boundary основной FastAPI trajectory.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить ORM integration и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.15.10.configdict"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

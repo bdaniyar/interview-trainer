@@ -1,0 +1,46 @@
+{
+  "id": "backend-interview.17.1.why-migrations-exist",
+  "slug": "s17-why-migrations-exist",
+  "title": "Why migrations exist",
+  "module_slug": "stage-17",
+  "module_title": "Stage 17 · Alembic",
+  "module_order": 17,
+  "order": 232,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "model code does not update an existing DB",
+    "versioned schema history."
+  ],
+  "description": "P0 · Why migrations exist: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Alembic защищает заявленный migration опыт и безопасные schema changes.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Why migrations exist и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.16.2.declarative-models"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

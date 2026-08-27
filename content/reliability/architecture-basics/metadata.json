@@ -1,16 +1,48 @@
 {
+  "id": "backend-interview.27.6.layered-architecture",
   "slug": "architecture-basics",
-  "title": "architecture basics",
-  "module_slug": "reliability",
-  "module_title": "Надёжность, тесты и архитектура",
-  "order": 64,
-  "duration": 30,
+  "title": "Layered architecture",
+  "module_slug": "stage-27",
+  "module_title": "Stage 27 · Architecture and Useful Patterns",
+  "module_order": 27,
+  "order": 340,
+  "duration": 10,
+  "estimated_minutes": 10,
   "xp": 5,
   "topics": [
-    "layers",
-    "boundaries"
+    "API",
+    "service/use case",
+    "data access",
+    "infrastructure."
   ],
-  "description": "Учебный блок: layers, boundaries.",
+  "description": "P1 · Layered architecture: mental model, interview rubric и backend-сценарий.",
   "has_task": false,
-  "has_solution": false
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Architecture basics нужны для объяснения design choices без senior-level overengineering.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Layered architecture и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.27.5.separation-of-concerns"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
 }

@@ -1,0 +1,96 @@
+[
+  {
+    "question": "Объясни тему «MinIO and presigned URLs» как на Junior Python Backend interview.",
+    "level": "normal",
+    "priority": "P1",
+    "interview_probability": "high",
+    "answer": [
+      "S3-compatible object storage",
+      "short-lived direct upload",
+      "metadata/key in PostgreSQL",
+      "authorization",
+      "Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы."
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "S3-compatible object storage",
+        "short-lived direct upload",
+        "metadata/key in PostgreSQL",
+        "authorization",
+        "Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы."
+      ],
+      "good_additions": [
+        "конкретный backend example",
+        "trade-off или failure mode"
+      ],
+      "common_wrong_answers": [
+        "Приписывать себе production scale, AWS, Kubernetes, Kafka или RabbitMQ без фактического опыта.",
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "red_flags": [
+        "Приписывать себе production scale, AWS, Kubernetes, Kafka или RabbitMQ без фактического опыта."
+      ],
+      "follow_up_questions": [
+        "Защити один claim, назвав точный flow, failure mode и способ проверки."
+      ]
+    },
+    "follow_ups": [
+      "Защити один claim, назвав точный flow, failure mode и способ проверки."
+    ],
+    "tags": [
+      "stage-32",
+      "p1"
+    ],
+    "sets": [
+      "stage-32",
+      "full-junior-backend",
+      "interview-crash-course",
+      "resume-defense"
+    ]
+  },
+  {
+    "question": "Сценарий по теме «MinIO and presigned URLs»: Защити один claim, назвав точный flow, failure mode и способ проверки. Что проверишь первым?",
+    "level": "scenario",
+    "priority": "P1",
+    "interview_probability": "high",
+    "answer": [
+      "Уточнить требования и observable symptom",
+      "Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы.",
+      "Назвать edge case",
+      "Предложить test/log/metric для проверки"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "assumptions",
+        "mechanism",
+        "failure mode",
+        "verification"
+      ],
+      "good_additions": [
+        "альтернатива и trade-off"
+      ],
+      "common_wrong_answers": [
+        "Сразу называть технологию до уточнения проблемы"
+      ],
+      "red_flags": [
+        "Приписывать себе production scale, AWS, Kubernetes, Kafka или RabbitMQ без фактического опыта."
+      ],
+      "follow_up_questions": [
+        "Что произойдёт при повторе или частичном отказе?"
+      ]
+    },
+    "follow_ups": [
+      "Что произойдёт при повторе или частичном отказе?"
+    ],
+    "tags": [
+      "stage-32",
+      "scenario"
+    ],
+    "sets": [
+      "stage-32",
+      "full-junior-backend",
+      "interview-crash-course",
+      "resume-defense"
+    ]
+  }
+]

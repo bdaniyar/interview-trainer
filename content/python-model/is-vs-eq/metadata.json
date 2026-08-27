@@ -1,17 +1,51 @@
 {
+  "id": "backend-interview.1.2.identity-and-equality",
   "slug": "is-vs-eq",
-  "title": "is vs ==",
-  "module_slug": "python-model",
-  "module_title": "Модель Python и продвинутый ООП",
-  "order": 2,
-  "duration": 20,
+  "title": "Identity and equality",
+  "module_slug": "stage-01",
+  "module_title": "Stage 1 · Python Object Model and Core Types",
+  "module_order": 1,
+  "order": 5,
+  "duration": 12,
+  "estimated_minutes": 12,
   "xp": 25,
   "topics": [
-    "identity",
-    "equality",
-    "hashing"
+    "`id()`",
+    "`is`",
+    "`==`",
+    "identity vs value equality",
+    "`is None`",
+    "почему нельзя полагаться на interning",
+    "custom `__eq__`."
   ],
-  "description": "Идентичность объектов, равенство значений и контракт __eq__.",
+  "description": "P0 · Identity and equality: mental model, interview rubric и backend-сценарий.",
   "has_task": true,
-  "has_solution": true
+  "has_solution": true,
+  "priority": "P0",
+  "priority_note": "P0 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "very_common",
+  "market_evidence": "Python указан в 18/18 primary вакансий; object model — базовый screening foundation.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Identity and equality и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.1.1.object-type-name-and-binding"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
 }

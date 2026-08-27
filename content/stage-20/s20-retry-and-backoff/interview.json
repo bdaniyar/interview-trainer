@@ -1,0 +1,94 @@
+[
+  {
+    "question": "Объясни тему «Retry and backoff» как на Junior Python Backend interview.",
+    "level": "normal",
+    "priority": "P1",
+    "interview_probability": "high",
+    "answer": [
+      "transient vs permanent failure",
+      "exponential backoff",
+      "jitter",
+      "retry limit.",
+      "Между DB commit и publish есть atomicity gap; outbox переносит событие в ту же transaction."
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "transient vs permanent failure",
+        "exponential backoff",
+        "jitter",
+        "retry limit.",
+        "Между DB commit и publish есть atomicity gap; outbox переносит событие в ту же transaction."
+      ],
+      "good_additions": [
+        "конкретный backend example",
+        "trade-off или failure mode"
+      ],
+      "common_wrong_answers": [
+        "Повторять side effect без idempotency или считать exactly-once свойством одного флага.",
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "red_flags": [
+        "Повторять side effect без idempotency или считать exactly-once свойством одного флага."
+      ],
+      "follow_up_questions": [
+        "Проследи событие от commit через broker/worker до повторной доставки."
+      ]
+    },
+    "follow_ups": [
+      "Проследи событие от commit через broker/worker до повторной доставки."
+    ],
+    "tags": [
+      "stage-20",
+      "p1"
+    ],
+    "sets": [
+      "stage-20",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  },
+  {
+    "question": "Сценарий по теме «Retry and backoff»: Проследи событие от commit через broker/worker до повторной доставки. Что проверишь первым?",
+    "level": "scenario",
+    "priority": "P1",
+    "interview_probability": "high",
+    "answer": [
+      "Уточнить требования и observable symptom",
+      "Между DB commit и publish есть atomicity gap; outbox переносит событие в ту же transaction.",
+      "Назвать edge case",
+      "Предложить test/log/metric для проверки"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "assumptions",
+        "mechanism",
+        "failure mode",
+        "verification"
+      ],
+      "good_additions": [
+        "альтернатива и trade-off"
+      ],
+      "common_wrong_answers": [
+        "Сразу называть технологию до уточнения проблемы"
+      ],
+      "red_flags": [
+        "Повторять side effect без idempotency или считать exactly-once свойством одного флага."
+      ],
+      "follow_up_questions": [
+        "Что произойдёт при повторе или частичном отказе?"
+      ]
+    },
+    "follow_ups": [
+      "Что произойдёт при повторе или частичном отказе?"
+    ],
+    "tags": [
+      "stage-20",
+      "scenario"
+    ],
+    "sets": [
+      "stage-20",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  }
+]

@@ -1,16 +1,45 @@
 {
+  "id": "backend-interview.29.1.basic-request-path",
   "slug": "backend-core-project",
-  "title": "Мини-проект: ядро backend-сервиса",
-  "module_slug": "reliability",
-  "module_title": "Надёжность, тесты и архитектура",
-  "order": 67,
-  "duration": 20,
+  "title": "Basic request path",
+  "module_slug": "stage-29",
+  "module_title": "Stage 29 · Junior Backend System Design",
+  "module_order": 29,
+  "order": 356,
+  "duration": 12,
+  "estimated_minutes": 12,
   "xp": 5,
   "topics": [
-    "service layer",
-    "repository"
+    "Basic request path"
   ],
-  "description": "Учебный блок: service layer, repository.",
+  "description": "P0 · Basic request path: mental model, interview rubric и backend-сценарий.",
   "has_task": false,
-  "has_solution": false
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Junior system design связывает HTTP, DB, cache и failure modes в практический ответ.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Basic request path и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.12.1.http-request-and-response"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
 }

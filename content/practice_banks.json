@@ -1,0 +1,2004 @@
+{
+  "schema_version": 1,
+  "python_prediction": [
+    {
+      "id": "python.prediction.01",
+      "lesson_number": "1.2",
+      "title": "Identity не равна equality",
+      "snippet": "a = [1]\nb = [1]\nprint(a == b, a is b)",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "True False",
+      "step_by_step": "Списки равны по содержимому, но созданы как два разных объекта.",
+      "misconception_tag": "identity-vs-equality"
+    },
+    {
+      "id": "python.prediction.02",
+      "lesson_number": "1.3",
+      "title": "Два имени одного списка",
+      "snippet": "a = []\nb = a\nb.append(1)\nprint(a)",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "[1]",
+      "step_by_step": "Assignment связал b с тем же mutable list; append виден через оба имени.",
+      "misconception_tag": "aliasing"
+    },
+    {
+      "id": "python.prediction.03",
+      "lesson_number": "1.6",
+      "title": "Повтор вложенного списка",
+      "snippet": "rows = [[0]] * 3\nrows[0].append(1)\nprint(rows)",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "[[0, 1], [0, 1], [0, 1]]",
+      "step_by_step": "Оператор * повторил одну ссылку на внутренний список, а не создал три списка.",
+      "misconception_tag": "nested-aliasing"
+    },
+    {
+      "id": "python.prediction.04",
+      "lesson_number": "1.7",
+      "title": "Shallow copy",
+      "snippet": "source = {'roles': ['reader']}\ncopy = source.copy()\ncopy['roles'].append('writer')\nprint(source['roles'])",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "['reader', 'writer']",
+      "step_by_step": "Копия отделила внешний dict, но вложенный list остался общим.",
+      "misconception_tag": "shallow-copy"
+    },
+    {
+      "id": "python.prediction.05",
+      "lesson_number": "1.5",
+      "title": "Truthiness пользовательского объекта",
+      "snippet": "class Queue:\n    def __len__(self):\n        return 0\n\nprint(bool(Queue()))",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "False",
+      "step_by_step": "Если __bool__ не определён, bool использует __len__; нулевая длина означает falsy.",
+      "misconception_tag": "truthiness"
+    },
+    {
+      "id": "python.prediction.06",
+      "lesson_number": "1.4",
+      "title": "Равные ключи dict",
+      "snippet": "data = {True: 'yes', 1: 'one'}\nprint(len(data), data[True])",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "1 one",
+      "step_by_step": "True == 1 и их hashes равны, поэтому второй assignment заменяет значение того же ключа.",
+      "misconception_tag": "hash-equality-contract"
+    },
+    {
+      "id": "python.prediction.07",
+      "lesson_number": "2.1",
+      "title": "Срез создаёт новый list",
+      "snippet": "items = [1, 2, 3]\npart = items[:]\npart.append(4)\nprint(items, part)",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "[1, 2, 3] [1, 2, 3, 4]",
+      "step_by_step": "Срез создаёт новый внешний список; для immutable int этого достаточно для независимости.",
+      "misconception_tag": "slice-copy"
+    },
+    {
+      "id": "python.prediction.08",
+      "lesson_number": "2.4",
+      "title": "set удаляет дубликаты",
+      "snippet": "values = {3, 1, 3, 2}\nprint(len(values), sorted(values))",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "3 [1, 2, 3]",
+      "step_by_step": "set хранит уникальные hashable значения; порядок вывода делают явным через sorted.",
+      "misconception_tag": "set-order"
+    },
+    {
+      "id": "python.prediction.09",
+      "lesson_number": "2.3",
+      "title": "dict сохраняет insertion order",
+      "snippet": "data = {'b': 2, 'a': 1}\ndata['b'] = 3\nprint(list(data))",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "['b', 'a']",
+      "step_by_step": "Замена значения существующего ключа не переносит ключ в конец.",
+      "misconception_tag": "dict-order"
+    },
+    {
+      "id": "python.prediction.10",
+      "lesson_number": "2.1",
+      "title": "Unpacking со starred target",
+      "snippet": "first, *middle, last = [1, 2, 3, 4]\nprint(first, middle, last)",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "1 [2, 3] 4",
+      "step_by_step": "Starred target собирает промежуточные элементы в новый list.",
+      "misconception_tag": "unpacking"
+    },
+    {
+      "id": "python.prediction.11",
+      "lesson_number": "3.4",
+      "title": "Default вычисляется один раз",
+      "snippet": "def add(value, bucket=[]):\n    bucket.append(value)\n    return bucket\n\nprint(add(1), add(2))",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "[1] [1, 2]",
+      "step_by_step": "Mutable default создаётся при выполнении def и переиспользуется следующими вызовами.",
+      "misconception_tag": "mutable-default"
+    },
+    {
+      "id": "python.prediction.12",
+      "lesson_number": "3.7",
+      "title": "LEGB и локальное имя",
+      "snippet": "value = 'global'\ndef read():\n    value = 'local'\n    return value\nprint(read(), value)",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "local global",
+      "step_by_step": "Assignment внутри функции создаёт local binding и не меняет global binding.",
+      "misconception_tag": "legb"
+    },
+    {
+      "id": "python.prediction.13",
+      "lesson_number": "3.9",
+      "title": "Closure хранит binding",
+      "snippet": "def make(prefix):\n    def render(value):\n        return f'{prefix}:{value}'\n    return render\nprint(make('id')(7))",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "id:7",
+      "step_by_step": "Внутренняя функция замыкает свободное имя prefix после завершения make.",
+      "misconception_tag": "closure"
+    },
+    {
+      "id": "python.prediction.14",
+      "lesson_number": "3.10",
+      "title": "Late binding в цикле",
+      "snippet": "funcs = [lambda: i for i in range(3)]\nprint([fn() for fn in funcs])",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "[2, 2, 2]",
+      "step_by_step": "Свободное имя i разрешается при вызове; после цикла оно равно 2.",
+      "misconception_tag": "late-binding"
+    },
+    {
+      "id": "python.prediction.15",
+      "lesson_number": "3.12",
+      "title": "Decorator меняет вызываемый объект",
+      "snippet": "def twice(fn):\n    def wrapper():\n        return fn() * 2\n    return wrapper\n\n@twice\ndef answer():\n    return 21\nprint(answer())",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "42",
+      "step_by_step": "После декорирования имя answer связано с wrapper, который вызывает исходную функцию.",
+      "misconception_tag": "decorator"
+    },
+    {
+      "id": "python.prediction.16",
+      "lesson_number": "3.3",
+      "title": "Keyword-only argument",
+      "snippet": "def page(limit, *, offset=0):\n    return limit, offset\nprint(page(10, offset=20))",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "(10, 20)",
+      "step_by_step": "Параметр после * можно передать только по имени, что делает API вызова явным.",
+      "misconception_tag": "keyword-only"
+    },
+    {
+      "id": "python.prediction.17",
+      "lesson_number": "4.2",
+      "title": "Iterator исчерпывается",
+      "snippet": "it = iter([1, 2])\nprint(list(it), list(it))",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "[1, 2] []",
+      "step_by_step": "list потребил stateful iterator; повторный обход продолжается после его конца.",
+      "misconception_tag": "iterator-exhaustion"
+    },
+    {
+      "id": "python.prediction.18",
+      "lesson_number": "4.3",
+      "title": "Generator ленивый",
+      "snippet": "def values():\n    print('start')\n    yield 1\ng = values()\nprint('made')\nprint(next(g))",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "made\nstart\n1",
+      "step_by_step": "Тело generator не выполняется при вызове функции, а стартует на первом next.",
+      "misconception_tag": "generator-laziness"
+    },
+    {
+      "id": "python.prediction.19",
+      "lesson_number": "4.3",
+      "title": "yield from передаёт значения",
+      "snippet": "def numbers():\n    yield from [1, 2]\n    yield 3\nprint(list(numbers()))",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "[1, 2, 3]",
+      "step_by_step": "yield from делегирует итерацию вложенному iterable до его исчерпания.",
+      "misconception_tag": "yield-from"
+    },
+    {
+      "id": "python.prediction.20",
+      "lesson_number": "4.7",
+      "title": "finally выполняется при return",
+      "snippet": "def run():\n    try:\n        return 'result'\n    finally:\n        print('cleanup')\nprint(run())",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "cleanup\nresult",
+      "step_by_step": "Перед фактическим выходом из функции Python выполняет finally.",
+      "misconception_tag": "finally"
+    },
+    {
+      "id": "python.prediction.21",
+      "lesson_number": "4.10",
+      "title": "Exception chaining",
+      "snippet": "try:\n    int('x')\nexcept ValueError as exc:\n    try:\n        raise RuntimeError('bad input') from exc\n    except RuntimeError as wrapped:\n        print(type(wrapped.__cause__).__name__)",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "ValueError",
+      "step_by_step": "raise from записывает исходное исключение в __cause__ и делает цепочку явной.",
+      "misconception_tag": "exception-chaining"
+    },
+    {
+      "id": "python.prediction.22",
+      "lesson_number": "4.12",
+      "title": "Context manager получает exception",
+      "snippet": "class Guard:\n    def __enter__(self): return self\n    def __exit__(self, kind, value, tb):\n        print(kind.__name__)\n        return True\nwith Guard():\n    raise ValueError('x')\nprint('after')",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "ValueError\nafter",
+      "step_by_step": "__exit__ получил тип ошибки и вернул True, поэтому исключение было подавлено.",
+      "misconception_tag": "context-manager-suppression"
+    },
+    {
+      "id": "python.prediction.23",
+      "lesson_number": "5.2",
+      "title": "Class attribute общий",
+      "snippet": "class User:\n    roles = []\na = User(); b = User()\na.roles.append('admin')\nprint(b.roles)",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "['admin']",
+      "step_by_step": "До instance assignment оба объекта находят один mutable class attribute.",
+      "misconception_tag": "class-attribute"
+    },
+    {
+      "id": "python.prediction.24",
+      "lesson_number": "5.5",
+      "title": "super следует MRO",
+      "snippet": "class A:\n    def name(self): return 'A'\nclass B(A):\n    def name(self): return 'B>' + super().name()\nclass C(B): pass\nprint(C().name())",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "B>A",
+      "step_by_step": "super в B продолжает поиск после B в MRO фактического класса C.",
+      "misconception_tag": "mro"
+    },
+    {
+      "id": "python.prediction.25",
+      "lesson_number": "5.10",
+      "title": "dataclass equality",
+      "snippet": "from dataclasses import dataclass\n@dataclass\nclass Point:\n    x: int\nprint(Point(1) == Point(1), Point(1) is Point(1))",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "True False",
+      "step_by_step": "dataclass генерирует equality по полям, но каждый constructor call создаёт новый объект.",
+      "misconception_tag": "dataclass-equality"
+    },
+    {
+      "id": "python.prediction.26",
+      "lesson_number": "5.14",
+      "title": "Property управляет записью",
+      "snippet": "class Score:\n    def __init__(self): self._value = 0\n    @property\n    def value(self): return self._value\n    @value.setter\n    def value(self, value): self._value = max(0, value)\ns = Score(); s.value = -3\nprint(s.value)",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "0",
+      "step_by_step": "Assignment проходит через property setter, который сохраняет нормализованное значение.",
+      "misconception_tag": "descriptor-property"
+    },
+    {
+      "id": "python.prediction.27",
+      "lesson_number": "6.1",
+      "title": "Type hint не валидирует runtime",
+      "snippet": "def double(value: int) -> int:\n    return value * 2\nprint(double('a'))",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "aa",
+      "step_by_step": "Обычная annotation не вставляет runtime type check; строка использует собственный operator *.",
+      "misconception_tag": "typing-runtime"
+    },
+    {
+      "id": "python.prediction.28",
+      "lesson_number": "6.2",
+      "title": "Optional не создаёт default",
+      "snippet": "def parse(value: str | None):\n    return value is None\ntry:\n    parse()\nexcept TypeError:\n    print('missing')",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "missing",
+      "step_by_step": "Union с None разрешает значение None, но параметр остаётся обязательным без default.",
+      "misconception_tag": "optional-vs-default"
+    },
+    {
+      "id": "python.prediction.29",
+      "lesson_number": "7.1",
+      "title": "Cycle не означает немедленное удаление",
+      "snippet": "a = []\na.append(a)\nprint(a[0] is a)",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "True",
+      "step_by_step": "Список может ссылаться на себя; цикл обрабатывает cyclic GC, а identity сохраняется.",
+      "misconception_tag": "reference-cycle"
+    },
+    {
+      "id": "python.prediction.30",
+      "lesson_number": "8.2",
+      "title": "Вызов async def",
+      "snippet": "async def answer():\n    return 42\nvalue = answer()\nprint(type(value).__name__)\nvalue.close()",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "coroutine",
+      "step_by_step": "Вызов async def создаёт coroutine object; выполнение требует await/event loop.",
+      "misconception_tag": "coroutine-object"
+    },
+    {
+      "id": "python.prediction.31",
+      "lesson_number": "8.3",
+      "title": "Await сохраняет порядок внутри task",
+      "snippet": "import asyncio\nasync def main():\n    print('a')\n    await asyncio.sleep(0)\n    print('b')\nasyncio.run(main())",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "a\nb",
+      "step_by_step": "await может отдать управление loop, но эта программа содержит только одну пользовательскую task.",
+      "misconception_tag": "await-order"
+    },
+    {
+      "id": "python.prediction.32",
+      "lesson_number": "8.5",
+      "title": "create_task планирует работу",
+      "snippet": "import asyncio\nasync def child():\n    print('child')\nasync def main():\n    task = asyncio.create_task(child())\n    print('parent')\n    await task\nasyncio.run(main())",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "parent\nchild",
+      "step_by_step": "create_task ставит coroutine в планирование; текущая task продолжает до await.",
+      "misconception_tag": "task-scheduling"
+    },
+    {
+      "id": "python.prediction.33",
+      "lesson_number": "8.6",
+      "title": "gather сохраняет порядок результатов",
+      "snippet": "import asyncio\nasync def item(value, delay):\n    await asyncio.sleep(delay)\n    return value\nasync def main():\n    print(await asyncio.gather(item('a', .01), item('b', 0)))\nasyncio.run(main())",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "['a', 'b']",
+      "step_by_step": "Coroutines завершаются в разное время, но gather возвращает results в порядке awaitables.",
+      "misconception_tag": "gather-order"
+    },
+    {
+      "id": "python.prediction.34",
+      "lesson_number": "8.8",
+      "title": "Timeout преобразует ожидание в ошибку",
+      "snippet": "import asyncio\nasync def main():\n    try:\n        await asyncio.wait_for(asyncio.sleep(1), timeout=0.001)\n    except TimeoutError:\n        print('timeout')\nasyncio.run(main())",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "timeout",
+      "step_by_step": "wait_for отменяет слишком долгий awaitable и поднимает TimeoutError вызывающему коду.",
+      "misconception_tag": "async-timeout"
+    },
+    {
+      "id": "python.prediction.35",
+      "lesson_number": "9.1",
+      "title": "Threads разделяют объект",
+      "snippet": "from threading import Thread\nitems = []\nt = Thread(target=items.append, args=(1,))\nt.start(); t.join()\nprint(items)",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "[1]",
+      "step_by_step": "Thread работает в памяти процесса; join гарантирует завершение перед print.",
+      "misconception_tag": "thread-shared-memory"
+    },
+    {
+      "id": "python.prediction.36",
+      "lesson_number": "18.5",
+      "title": "parametrize создаёт отдельные cases",
+      "snippet": "import pytest\n@pytest.mark.parametrize('value', [1, 2, 3])\ndef test_positive(value):\n    assert value > 0",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "3 passed",
+      "step_by_step": "pytest создаёт отдельный test case для каждого параметра; точное оформление строки зависит от verbosity.",
+      "misconception_tag": "pytest-parametrize"
+    },
+    {
+      "id": "python.prediction.37",
+      "lesson_number": "28.2",
+      "title": "Stable sort",
+      "snippet": "rows = [('a', 2), ('b', 1), ('c', 2)]\nprint(sorted(rows, key=lambda row: row[1]))",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "[('b', 1), ('a', 2), ('c', 2)]",
+      "step_by_step": "При равных keys sorted сохраняет исходный относительный порядок элементов.",
+      "misconception_tag": "stable-sort"
+    },
+    {
+      "id": "python.prediction.38",
+      "lesson_number": "28.5",
+      "title": "Dedup с сохранением порядка",
+      "snippet": "values = [2, 1, 2, 3, 1]\nprint(list(dict.fromkeys(values)))",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "[2, 1, 3]",
+      "step_by_step": "dict сохраняет порядок первого появления каждого hashable key.",
+      "misconception_tag": "ordered-dedup"
+    },
+    {
+      "id": "python.prediction.39",
+      "lesson_number": "28.6",
+      "title": "Счётчик частот",
+      "snippet": "from collections import Counter\ncounts = Counter('aba')\nprint(counts['a'], counts['x'])",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "2 0",
+      "step_by_step": "Counter возвращает ноль для отсутствующего ключа вместо KeyError.",
+      "misconception_tag": "counter"
+    },
+    {
+      "id": "python.prediction.40",
+      "lesson_number": "27.7",
+      "title": "Dependency передана явно",
+      "snippet": "class Service:\n    def __init__(self, clock): self.clock = clock\n    def now(self): return self.clock()\ns = Service(lambda: 42)\nprint(s.now())",
+      "prompt": "Что выведет код и почему? Сначала ответь без запуска.",
+      "expected_output": "42",
+      "step_by_step": "Explicit dependency делает поведение заменяемым в тесте без global patch.",
+      "misconception_tag": "dependency-injection"
+    }
+  ],
+  "sql": [
+    {
+      "id": "sql.basic.01",
+      "lesson_number": "10.2",
+      "category": "basic",
+      "title": "Активные пользователи",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Выбери id и email активных пользователей.",
+      "expected_columns": [
+        "id",
+        "email"
+      ],
+      "comparison": "unordered",
+      "solution_sql": "SELECT id, email FROM users WHERE active IS TRUE;",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.basic.02",
+      "lesson_number": "10.3",
+      "category": "basic",
+      "title": "Email domain",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Найди email, заканчивающиеся на @example.com.",
+      "expected_columns": [
+        "email"
+      ],
+      "comparison": "unordered",
+      "solution_sql": "SELECT email FROM users WHERE email LIKE '%@example.com';",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.basic.03",
+      "lesson_number": "10.4",
+      "category": "basic",
+      "title": "Неизвестная страна",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Найди пользователей, у которых country неизвестна.",
+      "expected_columns": [
+        "id",
+        "email"
+      ],
+      "comparison": "unordered",
+      "solution_sql": "SELECT id, email FROM users WHERE country IS NULL;",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.basic.04",
+      "lesson_number": "10.5",
+      "category": "basic",
+      "title": "Последние два заказа",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Верни два последних заказа по created_at, при равенстве — больший id первым.",
+      "expected_columns": [
+        "id",
+        "created_at"
+      ],
+      "comparison": "ordered",
+      "solution_sql": "SELECT id, created_at FROM orders ORDER BY created_at DESC, id DESC LIMIT 2;",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.basic.05",
+      "lesson_number": "10.6",
+      "category": "basic",
+      "title": "Уникальные страны",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Верни уникальные непустые country по алфавиту.",
+      "expected_columns": [
+        "country"
+      ],
+      "comparison": "ordered",
+      "solution_sql": "SELECT DISTINCT country FROM users WHERE country IS NOT NULL ORDER BY country;",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.basic.06",
+      "lesson_number": "10.19",
+      "category": "basic",
+      "title": "Label статуса",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Верни id заказа и label: paid → completed, cancelled → cancelled, иначе pending.",
+      "expected_columns": [
+        "id",
+        "label"
+      ],
+      "comparison": "unordered",
+      "solution_sql": "SELECT id, CASE status WHEN 'paid' THEN 'completed' WHEN 'cancelled' THEN 'cancelled' ELSE 'pending' END AS label FROM orders;",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.basic.07",
+      "lesson_number": "10.3",
+      "category": "basic",
+      "title": "Пользователи после даты",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Выбери id пользователей, созданных не раньше 2026-01-03.",
+      "expected_columns": [
+        "id"
+      ],
+      "comparison": "unordered",
+      "solution_sql": "SELECT id FROM users WHERE created_at >= TIMESTAMPTZ '2026-01-03';",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.basic.08",
+      "lesson_number": "10.5",
+      "category": "basic",
+      "title": "Вторая страница",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Верни вторую страницу пользователей размера 2 с устойчивым order по id.",
+      "expected_columns": [
+        "id",
+        "email"
+      ],
+      "comparison": "ordered",
+      "solution_sql": "SELECT id, email FROM users ORDER BY id LIMIT 2 OFFSET 2;",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.aggregation.09",
+      "lesson_number": "10.7",
+      "category": "aggregation",
+      "title": "Количество заказов",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Посчитай все строки orders.",
+      "expected_columns": [
+        "orders_count"
+      ],
+      "comparison": "ordered",
+      "solution_sql": "SELECT COUNT(*) AS orders_count FROM orders;",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.aggregation.10",
+      "lesson_number": "10.8",
+      "category": "aggregation",
+      "title": "Заказы по status",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Посчитай заказы по status и отсортируй status.",
+      "expected_columns": [
+        "status",
+        "count"
+      ],
+      "comparison": "ordered",
+      "solution_sql": "SELECT status, COUNT(*) AS count FROM orders GROUP BY status ORDER BY status;",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.aggregation.11",
+      "lesson_number": "10.8",
+      "category": "aggregation",
+      "title": "Выручка по пользователю",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Суммируй total только paid-заказов по user_id.",
+      "expected_columns": [
+        "user_id",
+        "revenue"
+      ],
+      "comparison": "ordered",
+      "solution_sql": "SELECT user_id, SUM(total) AS revenue FROM orders WHERE status='paid' GROUP BY user_id ORDER BY user_id;",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.aggregation.12",
+      "lesson_number": "10.8",
+      "category": "aggregation",
+      "title": "Средний paid-чек",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Найди средний total paid-заказа.",
+      "expected_columns": [
+        "average_total"
+      ],
+      "comparison": "ordered",
+      "solution_sql": "SELECT AVG(total) AS average_total FROM orders WHERE status='paid';",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.aggregation.13",
+      "lesson_number": "10.9",
+      "category": "aggregation",
+      "title": "Пользователи с двумя заказами",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Верни user_id с минимум двумя заказами.",
+      "expected_columns": [
+        "user_id",
+        "count"
+      ],
+      "comparison": "ordered",
+      "solution_sql": "SELECT user_id, COUNT(*) AS count FROM orders GROUP BY user_id HAVING COUNT(*) >= 2 ORDER BY user_id;",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.aggregation.14",
+      "lesson_number": "10.7",
+      "category": "aggregation",
+      "title": "COUNT и NULL",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Верни count всех users и count известных country в одной строке.",
+      "expected_columns": [
+        "users_count",
+        "known_country_count"
+      ],
+      "comparison": "ordered",
+      "solution_sql": "SELECT COUNT(*) AS users_count, COUNT(country) AS known_country_count FROM users;",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.aggregation.15",
+      "lesson_number": "10.7",
+      "category": "aggregation",
+      "title": "Диапазон цен",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Верни минимальную и максимальную product price.",
+      "expected_columns": [
+        "min_price",
+        "max_price"
+      ],
+      "comparison": "ordered",
+      "solution_sql": "SELECT MIN(price) AS min_price, MAX(price) AS max_price FROM products;",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.aggregation.16",
+      "lesson_number": "10.7",
+      "category": "aggregation",
+      "title": "Условные counts",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Одной строкой посчитай paid и cancelled orders через FILTER.",
+      "expected_columns": [
+        "paid_count",
+        "cancelled_count"
+      ],
+      "comparison": "ordered",
+      "solution_sql": "SELECT COUNT(*) FILTER (WHERE status='paid') AS paid_count, COUNT(*) FILTER (WHERE status='cancelled') AS cancelled_count FROM orders;",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.join.17",
+      "lesson_number": "10.10",
+      "category": "join",
+      "title": "Пользователь каждого заказа",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "INNER JOIN orders/users; верни order_id и email.",
+      "expected_columns": [
+        "order_id",
+        "email"
+      ],
+      "comparison": "unordered",
+      "solution_sql": "SELECT o.id AS order_id, u.email FROM orders o JOIN users u ON u.id=o.user_id;",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.join.18",
+      "lesson_number": "10.11",
+      "category": "join",
+      "title": "Пользователи без заказов",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "LEFT JOIN и найди users без orders.",
+      "expected_columns": [
+        "id",
+        "email"
+      ],
+      "comparison": "unordered",
+      "solution_sql": "SELECT u.id, u.email FROM users u LEFT JOIN orders o ON o.user_id=u.id WHERE o.id IS NULL;",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.join.19",
+      "lesson_number": "10.10",
+      "category": "join",
+      "title": "Товары заказа",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Для order 10 верни product name и quantity.",
+      "expected_columns": [
+        "name",
+        "quantity"
+      ],
+      "comparison": "ordered",
+      "solution_sql": "SELECT p.name, oi.quantity FROM order_items oi JOIN products p ON p.id=oi.product_id WHERE oi.order_id=10 ORDER BY p.id;",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.join.20",
+      "lesson_number": "10.13",
+      "category": "join",
+      "title": "Manager self join",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Верни email пользователя и manager_email; пользователей без manager сохрани.",
+      "expected_columns": [
+        "email",
+        "manager_email"
+      ],
+      "comparison": "ordered",
+      "solution_sql": "SELECT u.email, m.email AS manager_email FROM users u LEFT JOIN users m ON m.id=u.manager_id ORDER BY u.id;",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.join.21",
+      "lesson_number": "10.11",
+      "category": "join",
+      "title": "LEFT JOIN с условием в ON",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Верни всех users и id только paid orders, не теряя users без paid-заказов.",
+      "expected_columns": [
+        "user_id",
+        "order_id"
+      ],
+      "comparison": "ordered",
+      "solution_sql": "SELECT u.id AS user_id, o.id AS order_id FROM users u LEFT JOIN orders o ON o.user_id=u.id AND o.status='paid' ORDER BY u.id,o.id;",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.join.22",
+      "lesson_number": "10.10",
+      "category": "join",
+      "title": "Состав paid-заказов",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Соедини users, orders, items, products; верни email, order_id, product и quantity для paid.",
+      "expected_columns": [
+        "email",
+        "order_id",
+        "name",
+        "quantity"
+      ],
+      "comparison": "unordered",
+      "solution_sql": "SELECT u.email,o.id AS order_id,p.name,oi.quantity FROM users u JOIN orders o ON o.user_id=u.id JOIN order_items oi ON oi.order_id=o.id JOIN products p ON p.id=oi.product_id WHERE o.status='paid';",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.join.23",
+      "lesson_number": "10.11",
+      "category": "join",
+      "title": "Категории без продаж",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Верни products, которые ни разу не встречались в order_items.",
+      "expected_columns": [
+        "id",
+        "name"
+      ],
+      "comparison": "unordered",
+      "solution_sql": "SELECT p.id,p.name FROM products p LEFT JOIN order_items oi ON oi.product_id=p.id WHERE oi.product_id IS NULL;",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.join.24",
+      "lesson_number": "10.10",
+      "category": "join",
+      "title": "Количество товаров в заказе",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Для каждого order с items верни сумму quantity.",
+      "expected_columns": [
+        "id",
+        "units"
+      ],
+      "comparison": "ordered",
+      "solution_sql": "SELECT o.id, SUM(oi.quantity) AS units FROM orders o JOIN order_items oi ON oi.order_id=o.id GROUP BY o.id ORDER BY o.id;",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.join.25",
+      "lesson_number": "10.12",
+      "category": "join",
+      "title": "RIGHT JOIN awareness",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Сохрани все products через RIGHT JOIN от items к products и верни product_id/order_id.",
+      "expected_columns": [
+        "product_id",
+        "order_id"
+      ],
+      "comparison": "ordered",
+      "solution_sql": "SELECT p.id AS product_id,oi.order_id FROM order_items oi RIGHT JOIN products p ON p.id=oi.product_id ORDER BY p.id,oi.order_id;",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.join.26",
+      "lesson_number": "10.12",
+      "category": "join",
+      "title": "FULL OUTER reconciliation",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Сопоставь users и orders по user_id, сохрани строки без пары с обеих сторон.",
+      "expected_columns": [
+        "user_id",
+        "order_id"
+      ],
+      "comparison": "unordered",
+      "solution_sql": "SELECT u.id AS user_id,o.id AS order_id FROM users u FULL OUTER JOIN orders o ON o.user_id=u.id;",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.subquery.27",
+      "lesson_number": "10.14",
+      "category": "subquery",
+      "title": "Заказы выше среднего",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Найди orders с total выше среднего total всех orders.",
+      "expected_columns": [
+        "id",
+        "total"
+      ],
+      "comparison": "unordered",
+      "solution_sql": "SELECT id,total FROM orders WHERE total > (SELECT AVG(total) FROM orders);",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.subquery.28",
+      "lesson_number": "10.16",
+      "category": "subquery",
+      "title": "Users с paid order",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Через EXISTS верни users, у которых есть paid order.",
+      "expected_columns": [
+        "id",
+        "email"
+      ],
+      "comparison": "unordered",
+      "solution_sql": "SELECT u.id,u.email FROM users u WHERE EXISTS (SELECT 1 FROM orders o WHERE o.user_id=u.id AND o.status='paid');",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.subquery.29",
+      "lesson_number": "10.16",
+      "category": "subquery",
+      "title": "Users без orders",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Через NOT EXISTS верни users без orders.",
+      "expected_columns": [
+        "id"
+      ],
+      "comparison": "unordered",
+      "solution_sql": "SELECT u.id FROM users u WHERE NOT EXISTS (SELECT 1 FROM orders o WHERE o.user_id=u.id);",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.subquery.30",
+      "lesson_number": "10.17",
+      "category": "subquery",
+      "title": "CTE revenue",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "CTE paid_totals считает paid revenue по user, затем оставь revenue >= 150.",
+      "expected_columns": [
+        "user_id",
+        "revenue"
+      ],
+      "comparison": "ordered",
+      "solution_sql": "WITH paid_totals AS (SELECT user_id,SUM(total) revenue FROM orders WHERE status='paid' GROUP BY user_id) SELECT user_id,revenue FROM paid_totals WHERE revenue>=150 ORDER BY user_id;",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.subquery.31",
+      "lesson_number": "10.15",
+      "category": "subquery",
+      "title": "Последний заказ пользователя",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Correlated subquery: верни orders, чей created_at максимален для своего user.",
+      "expected_columns": [
+        "id",
+        "user_id"
+      ],
+      "comparison": "ordered",
+      "solution_sql": "SELECT o.id,o.user_id FROM orders o WHERE o.created_at=(SELECT MAX(i.created_at) FROM orders i WHERE i.user_id=o.user_id) ORDER BY o.user_id;",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.subquery.32",
+      "lesson_number": "10.17",
+      "category": "subquery",
+      "title": "Цепочка менеджеров",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Recursive CTE от user 4 вверх по manager_id, верни id и depth.",
+      "expected_columns": [
+        "id",
+        "depth"
+      ],
+      "comparison": "ordered",
+      "solution_sql": "WITH RECURSIVE chain AS (SELECT id,manager_id,0 depth FROM users WHERE id=4 UNION ALL SELECT u.id,u.manager_id,c.depth+1 FROM users u JOIN chain c ON u.id=c.manager_id) SELECT id,depth FROM chain ORDER BY depth;",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.window.33",
+      "lesson_number": "10.22",
+      "category": "window",
+      "title": "ROW_NUMBER orders",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Пронумеруй orders каждого user по created_at desc, id desc.",
+      "expected_columns": [
+        "id",
+        "user_id",
+        "row_number"
+      ],
+      "comparison": "ordered",
+      "solution_sql": "SELECT id,user_id,ROW_NUMBER() OVER(PARTITION BY user_id ORDER BY created_at DESC,id DESC) AS row_number FROM orders ORDER BY user_id,row_number;",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.window.34",
+      "lesson_number": "10.22",
+      "category": "window",
+      "title": "RANK totals",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Ранжируй orders по total desc с пропусками после ties.",
+      "expected_columns": [
+        "id",
+        "total",
+        "rank"
+      ],
+      "comparison": "ordered",
+      "solution_sql": "SELECT id,total,RANK() OVER(ORDER BY total DESC) AS rank FROM orders ORDER BY rank,id;",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.window.35",
+      "lesson_number": "10.22",
+      "category": "window",
+      "title": "DENSE_RANK totals",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Плотно ранжируй orders по total desc.",
+      "expected_columns": [
+        "id",
+        "total",
+        "dense_rank"
+      ],
+      "comparison": "ordered",
+      "solution_sql": "SELECT id,total,DENSE_RANK() OVER(ORDER BY total DESC) AS dense_rank FROM orders ORDER BY dense_rank,id;",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.window.36",
+      "lesson_number": "10.23",
+      "category": "window",
+      "title": "Running revenue",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Для каждого user посчитай накопительный total по created_at/id.",
+      "expected_columns": [
+        "id",
+        "user_id",
+        "running_total"
+      ],
+      "comparison": "ordered",
+      "solution_sql": "SELECT id,user_id,SUM(total) OVER(PARTITION BY user_id ORDER BY created_at,id) AS running_total FROM orders ORDER BY user_id,created_at,id;",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.window.37",
+      "lesson_number": "10.21",
+      "category": "window",
+      "title": "Предыдущий order total",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Добавь previous_total через LAG в рамках user.",
+      "expected_columns": [
+        "id",
+        "user_id",
+        "total",
+        "previous_total"
+      ],
+      "comparison": "ordered",
+      "solution_sql": "SELECT id,user_id,total,LAG(total) OVER(PARTITION BY user_id ORDER BY created_at,id) AS previous_total FROM orders ORDER BY user_id,created_at,id;",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.window.38",
+      "lesson_number": "10.21",
+      "category": "window",
+      "title": "Следующий order time",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "prompt": "Добавь next_created_at через LEAD в рамках user.",
+      "expected_columns": [
+        "id",
+        "user_id",
+        "next_created_at"
+      ],
+      "comparison": "ordered",
+      "solution_sql": "SELECT id,user_id,LEAD(created_at) OVER(PARTITION BY user_id ORDER BY created_at,id) AS next_created_at FROM orders ORDER BY user_id,created_at,id;",
+      "hidden_dataset_note": "Проверять additional rows, NULL, duplicates и ties."
+    },
+    {
+      "id": "sql.postgresql.01",
+      "lesson_number": "11.4",
+      "category": "postgresql_reasoning",
+      "title": "Index для email lookup",
+      "schema": "CREATE TABLE rooms (\n    id bigint PRIMARY KEY,\n    hotel_id bigint NOT NULL,\n    number text NOT NULL,\n    UNIQUE (hotel_id, number)\n);\nCREATE TABLE bookings (\n    id bigint PRIMARY KEY,\n    room_id bigint NOT NULL REFERENCES rooms(id),\n    starts_at timestamptz NOT NULL,\n    ends_at timestamptz NOT NULL,\n    status text NOT NULL,\n    CHECK (ends_at > starts_at)\n);",
+      "seed": "INSERT INTO rooms VALUES (1,10,'101'),(2,10,'102');\nINSERT INTO bookings VALUES\n(1,1,'2026-09-01','2026-09-05','confirmed'),\n(2,1,'2026-09-10','2026-09-12','cancelled');",
+      "prompt": "GET /users/by-email выполняет WHERE lower(email)=lower($1), но индекс только на email. Что проверить?",
+      "expected_columns": [],
+      "comparison": "reasoning_rubric",
+      "solution_sql": null,
+      "expected_reasoning": "EXPLAIN ANALYZE; expression index on lower(email) либо normalized stored value; цена write/storage."
+    },
+    {
+      "id": "sql.postgresql.02",
+      "lesson_number": "11.6",
+      "category": "postgresql_reasoning",
+      "title": "Composite index order",
+      "schema": "CREATE TABLE rooms (\n    id bigint PRIMARY KEY,\n    hotel_id bigint NOT NULL,\n    number text NOT NULL,\n    UNIQUE (hotel_id, number)\n);\nCREATE TABLE bookings (\n    id bigint PRIMARY KEY,\n    room_id bigint NOT NULL REFERENCES rooms(id),\n    starts_at timestamptz NOT NULL,\n    ends_at timestamptz NOT NULL,\n    status text NOT NULL,\n    CHECK (ends_at > starts_at)\n);",
+      "seed": "INSERT INTO rooms VALUES (1,10,'101'),(2,10,'102');\nINSERT INTO bookings VALUES\n(1,1,'2026-09-01','2026-09-05','confirmed'),\n(2,1,'2026-09-10','2026-09-12','cancelled');",
+      "prompt": "Запрос WHERE hotel_id=$1 AND starts_at >= $2 ORDER BY starts_at. Предложи индекс.",
+      "expected_columns": [],
+      "comparison": "reasoning_rubric",
+      "solution_sql": null,
+      "expected_reasoning": "B-tree (hotel_id, starts_at): equality prefix before range/order; проверить plan и selectivity."
+    },
+    {
+      "id": "sql.postgresql.03",
+      "lesson_number": "11.8",
+      "category": "postgresql_reasoning",
+      "title": "Sequential scan",
+      "schema": "CREATE TABLE rooms (\n    id bigint PRIMARY KEY,\n    hotel_id bigint NOT NULL,\n    number text NOT NULL,\n    UNIQUE (hotel_id, number)\n);\nCREATE TABLE bookings (\n    id bigint PRIMARY KEY,\n    room_id bigint NOT NULL REFERENCES rooms(id),\n    starts_at timestamptz NOT NULL,\n    ends_at timestamptz NOT NULL,\n    status text NOT NULL,\n    CHECK (ends_at > starts_at)\n);",
+      "seed": "INSERT INTO rooms VALUES (1,10,'101'),(2,10,'102');\nINSERT INTO bookings VALUES\n(1,1,'2026-09-01','2026-09-05','confirmed'),\n(2,1,'2026-09-10','2026-09-12','cancelled');",
+      "prompt": "После роста таблицы endpoint замедлился и plan показывает Seq Scan. План диагностики?",
+      "expected_columns": [],
+      "comparison": "reasoning_rubric",
+      "solution_sql": null,
+      "expected_reasoning": "Predicate/types/stats/selectivity; EXPLAIN ANALYZE; подходящий index; Seq Scan не всегда плох."
+    },
+    {
+      "id": "sql.postgresql.04",
+      "lesson_number": "11.9",
+      "category": "postgresql_reasoning",
+      "title": "Atomic booking",
+      "schema": "CREATE TABLE rooms (\n    id bigint PRIMARY KEY,\n    hotel_id bigint NOT NULL,\n    number text NOT NULL,\n    UNIQUE (hotel_id, number)\n);\nCREATE TABLE bookings (\n    id bigint PRIMARY KEY,\n    room_id bigint NOT NULL REFERENCES rooms(id),\n    starts_at timestamptz NOT NULL,\n    ends_at timestamptz NOT NULL,\n    status text NOT NULL,\n    CHECK (ends_at > starts_at)\n);",
+      "seed": "INSERT INTO rooms VALUES (1,10,'101'),(2,10,'102');\nINSERT INTO bookings VALUES\n(1,1,'2026-09-01','2026-09-05','confirmed'),\n(2,1,'2026-09-10','2026-09-12','cancelled');",
+      "prompt": "Два запроса бронируют последний room одновременно. Где защитить инвариант?",
+      "expected_columns": [],
+      "comparison": "reasoning_rubric",
+      "solution_sql": null,
+      "expected_reasoning": "Short transaction плюс DB constraint/lock/conditional write; separate SELECT недостаточен; вернуть 409."
+    },
+    {
+      "id": "sql.postgresql.05",
+      "lesson_number": "11.13",
+      "category": "postgresql_reasoning",
+      "title": "Deadlock lock order",
+      "schema": "CREATE TABLE rooms (\n    id bigint PRIMARY KEY,\n    hotel_id bigint NOT NULL,\n    number text NOT NULL,\n    UNIQUE (hotel_id, number)\n);\nCREATE TABLE bookings (\n    id bigint PRIMARY KEY,\n    room_id bigint NOT NULL REFERENCES rooms(id),\n    starts_at timestamptz NOT NULL,\n    ends_at timestamptz NOT NULL,\n    status text NOT NULL,\n    CHECK (ends_at > starts_at)\n);",
+      "seed": "INSERT INTO rooms VALUES (1,10,'101'),(2,10,'102');\nINSERT INTO bookings VALUES\n(1,1,'2026-09-01','2026-09-05','confirmed'),\n(2,1,'2026-09-10','2026-09-12','cancelled');",
+      "prompt": "Две transaction обновляют accounts A/B в разном порядке.",
+      "expected_columns": [],
+      "comparison": "reasoning_rubric",
+      "solution_sql": null,
+      "expected_reasoning": "Единый порядок locks, короткая transaction, retry whole transaction после deadlock."
+    },
+    {
+      "id": "sql.postgresql.06",
+      "lesson_number": "11.5",
+      "category": "postgresql_reasoning",
+      "title": "Partial index",
+      "schema": "CREATE TABLE rooms (\n    id bigint PRIMARY KEY,\n    hotel_id bigint NOT NULL,\n    number text NOT NULL,\n    UNIQUE (hotel_id, number)\n);\nCREATE TABLE bookings (\n    id bigint PRIMARY KEY,\n    room_id bigint NOT NULL REFERENCES rooms(id),\n    starts_at timestamptz NOT NULL,\n    ends_at timestamptz NOT NULL,\n    status text NOT NULL,\n    CHECK (ends_at > starts_at)\n);",
+      "seed": "INSERT INTO rooms VALUES (1,10,'101'),(2,10,'102');\nINSERT INTO bookings VALUES\n(1,1,'2026-09-01','2026-09-05','confirmed'),\n(2,1,'2026-09-10','2026-09-12','cancelled');",
+      "prompt": "Большинство orders имеют status='archived', а dashboard читает только status='new'. Как оценить partial index?",
+      "expected_columns": [],
+      "comparison": "reasoning_rubric",
+      "solution_sql": null,
+      "expected_reasoning": "Сверить точный predicate запроса, долю active rows и write cost; EXPLAIN ANALYZE; index WHERE status='new' не помогает несовместимому predicate."
+    },
+    {
+      "id": "sql.postgresql.07",
+      "lesson_number": "11.7",
+      "category": "postgresql_reasoning",
+      "title": "Covering index",
+      "schema": "CREATE TABLE rooms (\n    id bigint PRIMARY KEY,\n    hotel_id bigint NOT NULL,\n    number text NOT NULL,\n    UNIQUE (hotel_id, number)\n);\nCREATE TABLE bookings (\n    id bigint PRIMARY KEY,\n    room_id bigint NOT NULL REFERENCES rooms(id),\n    starts_at timestamptz NOT NULL,\n    ends_at timestamptz NOT NULL,\n    status text NOT NULL,\n    CHECK (ends_at > starts_at)\n);",
+      "seed": "INSERT INTO rooms VALUES (1,10,'101'),(2,10,'102');\nINSERT INTO bookings VALUES\n(1,1,'2026-09-01','2026-09-05','confirmed'),\n(2,1,'2026-09-10','2026-09-12','cancelled');",
+      "prompt": "Query фильтрует user_id, сортирует created_at и возвращает total. Когда уместен INCLUDE?",
+      "expected_columns": [],
+      "comparison": "reasoning_rubric",
+      "solution_sql": null,
+      "expected_reasoning": "B-tree (user_id, created_at DESC) INCLUDE (total); index-only scan зависит от visibility map, а INCLUDE увеличивает размер/write cost."
+    },
+    {
+      "id": "sql.postgresql.08",
+      "lesson_number": "11.10",
+      "category": "postgresql_reasoning",
+      "title": "Isolation anomaly",
+      "schema": "CREATE TABLE rooms (\n    id bigint PRIMARY KEY,\n    hotel_id bigint NOT NULL,\n    number text NOT NULL,\n    UNIQUE (hotel_id, number)\n);\nCREATE TABLE bookings (\n    id bigint PRIMARY KEY,\n    room_id bigint NOT NULL REFERENCES rooms(id),\n    starts_at timestamptz NOT NULL,\n    ends_at timestamptz NOT NULL,\n    status text NOT NULL,\n    CHECK (ends_at > starts_at)\n);",
+      "seed": "INSERT INTO rooms VALUES (1,10,'101'),(2,10,'102');\nINSERT INTO bookings VALUES\n(1,1,'2026-09-01','2026-09-05','confirmed'),\n(2,1,'2026-09-10','2026-09-12','cancelled');",
+      "prompt": "Две transaction читают доступный balance и обе списывают средства. Что гарантирует Read Committed?",
+      "expected_columns": [],
+      "comparison": "reasoning_rubric",
+      "solution_sql": null,
+      "expected_reasoning": "Каждый statement видит свой snapshot; read-then-write требует conditional UPDATE, lock либо более сильной isolation с retry."
+    },
+    {
+      "id": "sql.postgresql.09",
+      "lesson_number": "11.11",
+      "category": "postgresql_reasoning",
+      "title": "Savepoint",
+      "schema": "CREATE TABLE rooms (\n    id bigint PRIMARY KEY,\n    hotel_id bigint NOT NULL,\n    number text NOT NULL,\n    UNIQUE (hotel_id, number)\n);\nCREATE TABLE bookings (\n    id bigint PRIMARY KEY,\n    room_id bigint NOT NULL REFERENCES rooms(id),\n    starts_at timestamptz NOT NULL,\n    ends_at timestamptz NOT NULL,\n    status text NOT NULL,\n    CHECK (ends_at > starts_at)\n);",
+      "seed": "INSERT INTO rooms VALUES (1,10,'101'),(2,10,'102');\nINSERT INTO bookings VALUES\n(1,1,'2026-09-01','2026-09-05','confirmed'),\n(2,1,'2026-09-10','2026-09-12','cancelled');",
+      "prompt": "В batch нужно отклонить одну строку после IntegrityError, сохранив остальные.",
+      "expected_columns": [],
+      "comparison": "reasoning_rubric",
+      "solution_sql": null,
+      "expected_reasoning": "Использовать SAVEPOINT/nested transaction вокруг строки; после ошибки откатить savepoint, не продолжать failed transaction как будто она здорова."
+    },
+    {
+      "id": "sql.postgresql.10",
+      "lesson_number": "11.12",
+      "category": "postgresql_reasoning",
+      "title": "Pool exhaustion",
+      "schema": "CREATE TABLE rooms (\n    id bigint PRIMARY KEY,\n    hotel_id bigint NOT NULL,\n    number text NOT NULL,\n    UNIQUE (hotel_id, number)\n);\nCREATE TABLE bookings (\n    id bigint PRIMARY KEY,\n    room_id bigint NOT NULL REFERENCES rooms(id),\n    starts_at timestamptz NOT NULL,\n    ends_at timestamptz NOT NULL,\n    status text NOT NULL,\n    CHECK (ends_at > starts_at)\n);",
+      "seed": "INSERT INTO rooms VALUES (1,10,'101'),(2,10,'102');\nINSERT INTO bookings VALUES\n(1,1,'2026-09-01','2026-09-05','confirmed'),\n(2,1,'2026-09-10','2026-09-12','cancelled');",
+      "prompt": "API получает timeout на connection pool при нормальном DB CPU.",
+      "expected_columns": [],
+      "comparison": "reasoning_rubric",
+      "solution_sql": null,
+      "expected_reasoning": "Проверить leaked/long transactions, pool size/overflow/wait time, request concurrency и DB max_connections; не лечить только ростом pool."
+    }
+  ],
+  "testing": [
+    {
+      "id": "testing.01",
+      "lesson_number": "18.1",
+      "title": "Test boundary",
+      "prompt": "Раздели booking flow на unit, integration и API tests.",
+      "expected_reasoning": "Unit domain decision; integration DB constraint; API status/body.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "testing.02",
+      "lesson_number": "18.2",
+      "title": "Readable assertion",
+      "prompt": "Тест падает без понятного expected/actual.",
+      "expected_reasoning": "Один observable contract и plain assert.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "testing.03",
+      "lesson_number": "18.3",
+      "title": "Fixture cleanup",
+      "prompt": "Resource остаётся после failed test.",
+      "expected_reasoning": "yield fixture, cleanup in finally, narrow scope.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "testing.04",
+      "lesson_number": "18.4",
+      "title": "Fixture scope",
+      "prompt": "Mutable session fixture течёт между tests.",
+      "expected_reasoning": "Function scope или reset; scope по isolation.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "testing.05",
+      "lesson_number": "18.5",
+      "title": "Parametrization",
+      "prompt": "Пять копий теста отличаются input/result.",
+      "expected_reasoning": "parametrize cases с ids и boundaries.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "testing.06",
+      "lesson_number": "18.6",
+      "title": "Mock boundary",
+      "prompt": "Тест mock-ает private calls.",
+      "expected_reasoning": "Mock external boundary; assert outcome.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "testing.07",
+      "lesson_number": "18.7",
+      "title": "Patch namespace",
+      "prompt": "patch library.client не влияет на imported symbol.",
+      "expected_reasoning": "Patch имя в module under test.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "testing.08",
+      "lesson_number": "18.8",
+      "title": "Dependency override",
+      "prompt": "FastAPI test ходит в real DB.",
+      "expected_reasoning": "app.dependency_overrides и cleanup.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "testing.09",
+      "lesson_number": "18.9",
+      "title": "Database isolation",
+      "prompt": "Порядок tests влияет на rows.",
+      "expected_reasoning": "Transaction rollback/recreated schema.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "testing.10",
+      "lesson_number": "18.10",
+      "title": "Redis fake",
+      "prompt": "Fake не моделирует TTL/failure.",
+      "expected_reasoning": "Отдельные unit fake и integration Redis tests.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "testing.11",
+      "lesson_number": "18.11",
+      "title": "Async task leak",
+      "prompt": "Test завершился, background task осталась.",
+      "expected_reasoning": "Await/cancel tasks; deterministic event.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "testing.12",
+      "lesson_number": "18.14",
+      "title": "Flaky order",
+      "prompt": "Test зависит от timezone/unordered SELECT.",
+      "expected_reasoning": "Fixed clock и explicit ORDER BY.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    }
+  ],
+  "operations": [
+    {
+      "id": "operations.01",
+      "lesson_number": "21.5",
+      "title": "Wrong port",
+      "prompt": "Host открывает 5433, какой port использует API container?",
+      "expected_reasoning": "service:5432; host mapping только для host client.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "operations.02",
+      "lesson_number": "21.8",
+      "title": "Service discovery",
+      "prompt": "API config содержит DB_HOST=localhost.",
+      "expected_reasoning": "Compose service name; shared network/DNS.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "operations.03",
+      "lesson_number": "21.13",
+      "title": "Readiness",
+      "prompt": "depends_on есть, migrations падают.",
+      "expected_reasoning": "Healthcheck/ready retry; start order не readiness.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "operations.04",
+      "lesson_number": "21.6",
+      "title": "Lost data",
+      "prompt": "После recreate DB данные исчезли.",
+      "expected_reasoning": "Named volume; backups; down -v destructive.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "operations.05",
+      "lesson_number": "21.9",
+      "title": "Secret in image",
+      "prompt": "COPY . . добавил .env.",
+      "expected_reasoning": "dockerignore, rotation, runtime secrets.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "operations.06",
+      "lesson_number": "22.7",
+      "title": "Conflict",
+      "prompt": "Markers удалены, tests не запускались.",
+      "expected_reasoning": "Понять обе стороны, stage, test.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "operations.07",
+      "lesson_number": "22.9",
+      "title": "Undo public commit",
+      "prompt": "Ошибка уже в main.",
+      "expected_reasoning": "git revert; не rewrite shared history.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "operations.08",
+      "lesson_number": "22.10",
+      "title": "Leaked token",
+      "prompt": "Secret удалён из file.",
+      "expected_reasoning": "Rotate; audit; history cleanup отдельно.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "operations.09",
+      "lesson_number": "22.6",
+      "title": "Shared rebase",
+      "prompt": "Rebase опубликованных commits.",
+      "expected_reasoning": "Не rebase shared; coordinate/recover refs.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "operations.10",
+      "lesson_number": "22.12",
+      "title": "Wrong branch",
+      "prompt": "Commit случайно в main local.",
+      "expected_reasoning": "Создать branch at commit; безопасно restore main.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "operations.11",
+      "lesson_number": "23.3",
+      "title": "Find error",
+      "prompt": "Найди ERROR request_id=abc.",
+      "expected_reasoning": "rg/grep + tail/context.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "operations.12",
+      "lesson_number": "23.5",
+      "title": "Process exit",
+      "prompt": "Uvicorn сразу code 1.",
+      "expected_reasoning": "stderr/log, command, env, permissions, port.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "operations.13",
+      "lesson_number": "23.6",
+      "title": "Permission denied",
+      "prompt": "Container не читает mount.",
+      "expected_reasoning": "uid/gid/mode, минимальный доступ.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "operations.14",
+      "lesson_number": "23.7",
+      "title": "Port occupied",
+      "prompt": "API не bind 8000.",
+      "expected_reasoning": "ss/lsof, stop owner или change mapping.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "operations.15",
+      "lesson_number": "23.4",
+      "title": "Missing env",
+      "prompt": "Local works, service KeyError APP_ENV.",
+      "expected_reasoning": "Runtime env source, quoting, restart.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    }
+  ],
+  "debugging": [
+    {
+      "id": "debugging.01",
+      "lesson_number": "3.4",
+      "title": "Mutable default",
+      "prompt": "Список tags растёт между независимыми вызовами.",
+      "expected_reasoning": "Default создаётся при def; None/sentinel и новый list; тест на два вызова.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.02",
+      "lesson_number": "1.6",
+      "title": "Nested alias",
+      "prompt": "[[]] * 3 меняет все строки после append.",
+      "expected_reasoning": "Повторяется одна reference; comprehension создаёт независимые lists.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.03",
+      "lesson_number": "1.7",
+      "title": "Shallow copy",
+      "prompt": "dict.copy не изолировал nested roles.",
+      "expected_reasoning": "Outer container новый, nested object общий; selective/deep copy по ownership.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.04",
+      "lesson_number": "3.10",
+      "title": "Late closure",
+      "prompt": "Callbacks из цикла используют последнее id.",
+      "expected_reasoning": "Free name resolved at call time; bind default/factory.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.05",
+      "lesson_number": "4.7",
+      "title": "Broad exception",
+      "prompt": "except Exception превращает DB outage в 404.",
+      "expected_reasoning": "Перехватывать ожидаемую domain error; unexpected log/re-raise.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.06",
+      "lesson_number": "3.12",
+      "title": "Missing wraps",
+      "prompt": "FastAPI/introspection видит wrapper signature.",
+      "expected_reasoning": "functools.wraps сохраняет metadata и __wrapped__.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.07",
+      "lesson_number": "5.2",
+      "title": "Shared class state",
+      "prompt": "roles=[] class attribute делится между instances.",
+      "expected_reasoning": "Mutable instance state создавать в __init__/default_factory.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.08",
+      "lesson_number": "5.13",
+      "title": "Broken hash",
+      "prompt": "Mutable field участвует в __hash__, set не находит object.",
+      "expected_reasoning": "Hash/equality contract; immutable key or unhashable entity.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.09",
+      "lesson_number": "8.3",
+      "title": "Forgotten await",
+      "prompt": "Endpoint возвращает coroutine object.",
+      "expected_reasoning": "await coroutine; включить warnings/test serialization.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.10",
+      "lesson_number": "8.9",
+      "title": "Blocking HTTP",
+      "prompt": "requests.get внутри async route блокирует loop.",
+      "expected_reasoning": "Async client или to_thread; timeout/cancellation.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.11",
+      "lesson_number": "8.9",
+      "title": "time.sleep in async",
+      "prompt": "Все concurrent requests замирают.",
+      "expected_reasoning": "asyncio.sleep для cooperative wait.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.12",
+      "lesson_number": "8.6",
+      "title": "Sequential awaits",
+      "prompt": "Независимые I/O выполняются по очереди.",
+      "expected_reasoning": "gather/TaskGroup с bounded concurrency и failure policy.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.13",
+      "lesson_number": "8.5",
+      "title": "Unhandled task",
+      "prompt": "create_task потерян, exception logged later.",
+      "expected_reasoning": "Хранить reference, await/supervise, done callback.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.14",
+      "lesson_number": "8.8",
+      "title": "Swallowed cancellation",
+      "prompt": "except BaseException подавляет shutdown.",
+      "expected_reasoning": "CancelledError не поглощать; cleanup finally; re-raise.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.15",
+      "lesson_number": "16.17",
+      "title": "Shared AsyncSession",
+      "prompt": "Две tasks используют одну AsyncSession.",
+      "expected_reasoning": "Session per concurrent task/use case.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.16",
+      "lesson_number": "10.11",
+      "title": "LEFT becomes INNER",
+      "prompt": "WHERE right.status='paid' удалил NULL rows.",
+      "expected_reasoning": "Условие правой таблицы в ON или explicit NULL semantics.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.17",
+      "lesson_number": "10.8",
+      "title": "COUNT nullable",
+      "prompt": "COUNT(country) меньше COUNT(*).",
+      "expected_reasoning": "COUNT(expression) пропускает NULL.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.18",
+      "lesson_number": "16.9",
+      "title": "Failed session",
+      "prompt": "После IntegrityError новые queries падают.",
+      "expected_reasoning": "Rollback failed transaction before reuse.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.19",
+      "lesson_number": "19.5",
+      "title": "Stale cache",
+      "prompt": "PUT commit успешен, GET отдаёт старое.",
+      "expected_reasoning": "Invalidate/update after commit; key ownership, TTL, race.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.20",
+      "lesson_number": "21.8",
+      "title": "Container localhost",
+      "prompt": "API не видит PostgreSQL по localhost.",
+      "expected_reasoning": "localhost — тот же container; Compose DNS service name + container port.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.21",
+      "lesson_number": "10.10",
+      "title": "Wrong JOIN condition",
+      "prompt": "JOIN orders/users размножил и сопоставил несвязанные строки.",
+      "expected_reasoning": "Проверить foreign-key cardinality и ON u.id=o.user_id; сравнить row count до/после JOIN.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.22",
+      "lesson_number": "10.8",
+      "title": "Incorrect GROUP BY",
+      "prompt": "Запрос агрегирует по user_id, но выбирает произвольный email.",
+      "expected_reasoning": "Все неагрегированные columns должны быть функционально зависимы/в GROUP BY; сначала определить grain результата.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.23",
+      "lesson_number": "10.5",
+      "title": "Missing deterministic order",
+      "prompt": "LIMIT 20 иногда возвращает другой набор строк.",
+      "expected_reasoning": "Добавить ORDER BY с уникальным tie-breaker; без него SQL не обещает порядок.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.24",
+      "lesson_number": "11.4",
+      "title": "Missing index",
+      "prompt": "Lookup по уникальному external_id замедлился после роста таблицы.",
+      "expected_reasoning": "Снять EXPLAIN ANALYZE, проверить predicate/type/statistics и добавить targeted unique B-tree index.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.25",
+      "lesson_number": "11.8",
+      "title": "Low-selectivity index",
+      "prompt": "Planner выбирает Seq Scan для boolean active, хотя index существует.",
+      "expected_reasoning": "При высокой доле совпадений Seq Scan может быть дешевле; сравнить estimates/actual rows, не принуждать index вслепую.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.26",
+      "lesson_number": "11.9",
+      "title": "Long transaction",
+      "prompt": "Request держит transaction открытой во время HTTP-вызова.",
+      "expected_reasoning": "Сетевой I/O вынести за DB transaction; короткая boundary уменьшает locks, pool pressure и stale snapshot.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.27",
+      "lesson_number": "11.13",
+      "title": "Deadlock order",
+      "prompt": "Два flow блокируют resources A/B в противоположном порядке.",
+      "expected_reasoning": "Единый порядок lock acquisition, короткие transactions и retry всей transaction после deadlock.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.28",
+      "lesson_number": "11.9",
+      "title": "Double booking race",
+      "prompt": "Два SELECT видят свободный номер и создают booking.",
+      "expected_reasoning": "Защитить invariant в БД constraint/lock/conditional write и проверить concurrent integration test.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.29",
+      "lesson_number": "16.8",
+      "title": "Commit in repository",
+      "prompt": "repository.save неожиданно commit-ит половину use case.",
+      "expected_reasoning": "Transaction boundary принадлежит service/use case; repository делает add/flush, caller решает commit/rollback.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.30",
+      "lesson_number": "16.13",
+      "title": "N+1",
+      "prompt": "Список 100 users выполняет ещё 100 SELECT roles.",
+      "expected_reasoning": "Посчитать queries и использовать selectinload/joinedload по cardinality; integration test с query counter.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.31",
+      "lesson_number": "16.12",
+      "title": "Unexpected lazy load",
+      "prompt": "Доступ к relationship запускает SQL в serializer.",
+      "expected_reasoning": "Загрузить данные явно, запретить accidental lazy load и не прятать I/O за attribute access.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.32",
+      "lesson_number": "16.12",
+      "title": "Detached instance",
+      "prompt": "После закрытия Session serializer читает unloaded relationship и падает.",
+      "expected_reasoning": "Сформировать DTO внутри session boundary или eager-load нужное; не возвращать live ORM entity наружу.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.33",
+      "lesson_number": "16.18",
+      "title": "Serialization hits DB",
+      "prompt": "Response validation выполняет queries после service return.",
+      "expected_reasoning": "Map ORM to response data при открытой session; query-count test обнаруживает hidden I/O.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.34",
+      "lesson_number": "16.16",
+      "title": "Wrong cascade",
+      "prompt": "Удаление parent неожиданно удалило shared children.",
+      "expected_reasoning": "Настроить cascade по ownership и DB FK semantics; тестировать delete/replace relationship на реальной БД.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.35",
+      "lesson_number": "14.15",
+      "title": "Blocking dependency",
+      "prompt": "Async route вызывает sync dependency с долгим blocking client внутри event loop.",
+      "expected_reasoning": "Использовать async client/driver или thread offload; измерить event-loop lag и concurrent latency.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.36",
+      "lesson_number": "14.6",
+      "title": "Secret ORM field",
+      "prompt": "Endpoint возвращает ORM object вместе с password_hash.",
+      "expected_reasoning": "Явная response model/DTO с allowlist полей; contract test проверяет отсутствие secret.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.37",
+      "lesson_number": "14.7",
+      "title": "Wrong 401/403",
+      "prompt": "API отдаёт 403 пользователю без валидной authentication.",
+      "expected_reasoning": "401 — нет/невалидна authentication (с challenge), 403 — identity известна, permission недостаточно.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.38",
+      "lesson_number": "14.24",
+      "title": "Dependency not overridden",
+      "prompt": "FastAPI test ходит в production-like DB.",
+      "expected_reasoning": "Переопределить тот же dependency key через app.dependency_overrides и очищать override после test.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.39",
+      "lesson_number": "14.22",
+      "title": "Global request state",
+      "prompt": "Route пишет current_user в module global.",
+      "expected_reasoning": "Request-scoped dependency/context, immutable arguments; concurrent test обнаруживает утечку между запросами.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.40",
+      "lesson_number": "14.14",
+      "title": "Resource not closed",
+      "prompt": "HTTP client создаётся на startup, но socket остаётся после shutdown.",
+      "expected_reasoning": "Lifespan async context manager с cleanup в finally; test lifespan and close state.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.41",
+      "lesson_number": "19.3",
+      "title": "Missing TTL",
+      "prompt": "Reset state навсегда остаётся в Redis.",
+      "expected_reasoning": "Установить короткий TTL атомарно при записи и тестировать expiration policy.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.42",
+      "lesson_number": "19.2",
+      "title": "Cache key collision",
+      "prompt": "profile:42 разных tenants возвращает чужие данные.",
+      "expected_reasoning": "Key включает namespace/version/tenant/entity; authorization остаётся server-side.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.43",
+      "lesson_number": "19.8",
+      "title": "PubSub as history",
+      "prompt": "Offline WebSocket client потерял события.",
+      "expected_reasoning": "Pub/Sub только live fan-out; durable history/read state хранить в PostgreSQL или durable stream.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.44",
+      "lesson_number": "19.7",
+      "title": "Local rate limit",
+      "prompt": "Два API process дают вдвое больший лимит.",
+      "expected_reasoning": "Shared Redis counter + atomic operation/Lua, window semantics, TTL и fail-open/fail-closed policy.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.45",
+      "lesson_number": "21.5",
+      "title": "Wrong Docker port",
+      "prompt": "API container подключается к db:5433 из-за host mapping 5433:5432.",
+      "expected_reasoning": "Между containers использовать service DNS и container port 5432; host port нужен только host client.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.46",
+      "lesson_number": "21.13",
+      "title": "depends_on readiness",
+      "prompt": "API стартует после container DB, но раньше готовности принимать SQL.",
+      "expected_reasoning": "Healthcheck/retry/backoff или entrypoint wait; start order не является readiness guarantee.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.47",
+      "lesson_number": "21.6",
+      "title": "Bind mount hides files",
+      "prompt": "Mount ./app:/app скрыл dependencies, созданные в image path.",
+      "expected_reasoning": "Проверить mount target; отделить source и dependency paths, использовать named volume где уместно.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.48",
+      "lesson_number": "21.9",
+      "title": "Secret copied into image",
+      "prompt": "COPY . . сохранил .env в старом image layer.",
+      "expected_reasoning": "Rotate secret, .dockerignore, runtime injection/secrets; удаление в следующем layer не очищает историю.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.49",
+      "lesson_number": "21.6",
+      "title": "No database volume",
+      "prompt": "После compose down/recreate PostgreSQL пуст.",
+      "expected_reasoning": "Named volume и backup/restore; документировать, что down -v удаляет данные.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.50",
+      "lesson_number": "22.9",
+      "title": "Reset shared branch",
+      "prompt": "force push после reset удалил commits коллег.",
+      "expected_reasoning": "Для published history использовать revert; recovery через reflog/remote refs и coordination.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.51",
+      "lesson_number": "22.7",
+      "title": "Untested conflict resolution",
+      "prompt": "Conflict markers удалены выбором одной стороны, контракт сломан.",
+      "expected_reasoning": "Понять обе версии, собрать итог вручную, inspect diff и запустить tests.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.52",
+      "lesson_number": "22.10",
+      "title": "Secret still active",
+      "prompt": "Token удалён из Git, но им продолжают пользоваться.",
+      "expected_reasoning": "Немедленно revoke/rotate, затем audit и при необходимости clean history; gitignore не лечит leak.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.53",
+      "lesson_number": "22.6",
+      "title": "Rebase published commits",
+      "prompt": "Коллеги получили divergent history после rebase main.",
+      "expected_reasoning": "Не переписывать shared commits; merge/revert или явно координировать rare rewrite.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.54",
+      "lesson_number": "13.2",
+      "title": "Fast password hash",
+      "prompt": "Пароли сохранены через один SHA-256.",
+      "expected_reasoning": "Argon2id/bcrypt/scrypt с индивидуальной солью и cost; тест verify и migration policy.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.55",
+      "lesson_number": "13.6",
+      "title": "Unverified JWT",
+      "prompt": "API декодирует payload без проверки signature/issuer/audience/exp.",
+      "expected_reasoning": "Полная verification с разрешённым algorithm и claims; invalid token всегда безопасно отклоняется.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.56",
+      "lesson_number": "13.5",
+      "title": "Long-lived access token",
+      "prompt": "Украденный access действует месяц без возможности быстро ограничить ущерб.",
+      "expected_reasoning": "Короткий access, controlled refresh session/rotation/revocation; threat-based TTL.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.57",
+      "lesson_number": "32.22",
+      "title": "Reusable reset token",
+      "prompt": "Один reset URL меняет пароль повторно.",
+      "expected_reasoning": "Random high-entropy token, server-side hash, TTL и atomic one-time invalidation; revoke sessions по policy.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.58",
+      "lesson_number": "13.13",
+      "title": "CORS as authorization",
+      "prompt": "Backend разрешает действие, полагаясь на blocked browser origin.",
+      "expected_reasoning": "CORS — browser read policy; authentication/authorization проверяются на сервере для каждого request.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "debugging.59",
+      "lesson_number": "13.10",
+      "title": "SQL f-string",
+      "prompt": "Query строится из user input через f-string.",
+      "expected_reasoning": "Parameterized query/SQLAlchemy expression; test malicious input как data, не SQL syntax.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    }
+  ],
+  "architecture": [
+    {
+      "id": "architecture.01",
+      "lesson_number": "29.1",
+      "title": "Request path",
+      "prompt": "Покажи путь request.",
+      "expected_reasoning": "Boundaries, timeout, request id, source of truth.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "architecture.02",
+      "lesson_number": "29.2",
+      "title": "Stateless API",
+      "prompt": "Что мешает второму API instance?",
+      "expected_reasoning": "Local state; shared DB/cache/storage.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "architecture.03",
+      "lesson_number": "29.3",
+      "title": "Cache placement",
+      "prompt": "Где cache profile read?",
+      "expected_reasoning": "Auth-aware key; TTL/invalidation/fallback.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "architecture.04",
+      "lesson_number": "29.4",
+      "title": "Background email",
+      "prompt": "Email без latency/loss.",
+      "expected_reasoning": "Outbox/durable queue, retry, idempotency.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "architecture.05",
+      "lesson_number": "29.5",
+      "title": "DB bottleneck",
+      "prompt": "p95 вырос, DB CPU высокий.",
+      "expected_reasoning": "Slow queries, pool, plans, indexes, N+1.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "architecture.06",
+      "lesson_number": "29.6",
+      "title": "Booking endpoint",
+      "prompt": "Спроектируй POST booking.",
+      "expected_reasoning": "Validation, auth, transaction, 201/409, idempotency.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "architecture.07",
+      "lesson_number": "29.7",
+      "title": "Double booking",
+      "prompt": "Concurrent availability.",
+      "expected_reasoning": "DB conflict, lock/constraint, test.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "architecture.08",
+      "lesson_number": "29.8",
+      "title": "WebSocket scale",
+      "prompt": "Fan-out между processes.",
+      "expected_reasoning": "Redis Pub/Sub live + PostgreSQL history.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "architecture.09",
+      "lesson_number": "29.9",
+      "title": "File upload",
+      "prompt": "Большой upload не через API memory.",
+      "expected_reasoning": "Presigned URL, policy, finalize validation.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "architecture.10",
+      "lesson_number": "29.10",
+      "title": "Outbox",
+      "prompt": "Commit прошёл, publish упал.",
+      "expected_reasoning": "Same transaction outbox; retry/idempotency.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "architecture.11",
+      "lesson_number": "29.11",
+      "title": "Scaling order",
+      "prompt": "Когда microservice?",
+      "expected_reasoning": "Measure/ownership; modular monolith first.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "architecture.12",
+      "lesson_number": "32.1",
+      "title": "StudyHub pitch",
+      "prompt": "Проект за 60 секунд.",
+      "expected_reasoning": "Problem, own role, stack, decision, verification.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "architecture.13",
+      "lesson_number": "32.4",
+      "title": "Why async",
+      "prompt": "Зачем async?",
+      "expected_reasoning": "Concurrent I/O; not CPU speed; no blocking.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "architecture.14",
+      "lesson_number": "32.5",
+      "title": "PostgreSQL plus Redis",
+      "prompt": "Почему оба?",
+      "expected_reasoning": "Durable truth vs cache/temp/fan-out.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "architecture.15",
+      "lesson_number": "32.6",
+      "title": "WebSocket Pub/Sub",
+      "prompt": "Cross-instance flow.",
+      "expected_reasoning": "Persist, publish, fan-out; offline reads DB.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "architecture.16",
+      "lesson_number": "32.8",
+      "title": "Outbox defense",
+      "prompt": "Почему outbox?",
+      "expected_reasoning": "Atomicity gap; at-least-once/idempotency.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "architecture.17",
+      "lesson_number": "32.11",
+      "title": "JWT sessions",
+      "prompt": "Отозвать stolen refresh.",
+      "expected_reasoning": "Server session, rotation/revocation, short access.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "architecture.18",
+      "lesson_number": "32.14",
+      "title": "Presigned upload",
+      "prompt": "Слишком большой file.",
+      "expected_reasoning": "Policy, size validation, delete/reject.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "architecture.19",
+      "lesson_number": "32.17",
+      "title": "Hotel race",
+      "prompt": "Не допустить double booking.",
+      "expected_reasoning": "DB invariant, short transaction, concurrent test.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    },
+    {
+      "id": "architecture.20",
+      "lesson_number": "32.23",
+      "title": "Honest boundary",
+      "prompt": "Спросили Kafka/Kubernetes/AWS.",
+      "expected_reasoning": "Не заявлять опыт; learning plan; factual stack.",
+      "common_weak_answer": "Сразу назвать инструмент без symptom, boundary и verification."
+    }
+  ]
+}

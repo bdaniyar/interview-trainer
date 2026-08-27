@@ -1,0 +1,49 @@
+{
+  "id": "backend-interview.32.7.why-pub-sub-is-not-storage",
+  "slug": "s32-why-pub-sub-is-not-storage",
+  "title": "Why Pub/Sub is not storage",
+  "module_slug": "stage-32",
+  "module_title": "Stage 32 · Personalized Resume Defense",
+  "module_order": 32,
+  "order": 390,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "offline subscribers miss events",
+    "no durable history",
+    "no acknowledgement/replay",
+    "history stored in PostgreSQL",
+    "reconnect fetches missed messages."
+  ],
+  "description": "P0 · Why Pub/Sub is not storage: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "very_common",
+  "market_evidence": "Resume Defense основан только на фактических StudyHub, Hotel Booking и Share Recipe claims.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Why Pub/Sub is not storage и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.32.6.websockets-plus-redis-pub-sub"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

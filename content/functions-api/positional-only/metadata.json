@@ -1,16 +1,57 @@
 {
+  "id": "backend-interview.3.3.positional-only-and-keyword-only-parameters",
   "slug": "positional-only",
-  "title": "positional-only arguments",
-  "module_slug": "functions-api",
-  "module_title": "Функции, типизация и API",
-  "order": 12,
-  "duration": 30,
-  "xp": 5,
+  "title": "Positional-only and keyword-only parameters",
+  "module_slug": "stage-03",
+  "module_title": "Stage 3 · Functions, Scope, Closures and Decorators",
+  "module_order": 3,
+  "order": 21,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 25,
   "topics": [
-    "/",
-    "signature"
+    "`/`",
+    "`*`",
+    "API design",
+    "readable signatures",
+    "backward compatibility."
   ],
-  "description": "Учебный блок: /, signature.",
-  "has_task": false,
-  "has_solution": false
+  "description": "P1 · Positional-only and keyword-only parameters: mental model, interview rubric и backend-сценарий.",
+  "has_task": true,
+  "has_solution": true,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Python указан в 18/18; functions/scope/decorators регулярно проверяют на screening.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Positional-only and keyword-only parameters и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.3.2.parameters-vs-arguments"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py",
+  "task_id": "backend-interview.3.3.positional-only-and-keyword-only-parameters.practice",
+  "task_title": "Явная сигнатура pagination helper",
+  "task_difficulty": "interview",
+  "task_skills": [
+    "signature",
+    "api-design"
+  ],
+  "task_estimated_minutes": 20
 }

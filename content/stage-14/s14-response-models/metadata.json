@@ -1,0 +1,57 @@
+{
+  "id": "backend-interview.14.6.response-models",
+  "slug": "s14-response-models",
+  "title": "Response models",
+  "module_slug": "stage-14",
+  "module_title": "Stage 14 · FastAPI",
+  "module_order": 14,
+  "order": 183,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 25,
+  "topics": [
+    "contract",
+    "serialization",
+    "filtering fields",
+    "avoiding secret leakage."
+  ],
+  "description": "P0 · Response models: mental model, interview rubric и backend-сценарий.",
+  "has_task": true,
+  "has_solution": true,
+  "priority": "P0",
+  "priority_note": "P0 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "very_common",
+  "market_evidence": "FastAPI явно встречался в 9/18, любой Python web framework — в 16/18.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Response models и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.14.5.request-bodies"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py",
+  "task_id": "backend-interview.14.6.response-models.practice",
+  "task_title": "Не раскрыть secret",
+  "task_difficulty": "interview",
+  "task_skills": [
+    "fastapi",
+    "response-model",
+    "security"
+  ],
+  "task_estimated_minutes": 20
+}

@@ -1,0 +1,56 @@
+{
+  "id": "backend-interview.5.4.classmethod-and-staticmethod",
+  "slug": "s05-classmethod-and-staticmethod",
+  "title": "`classmethod` and `staticmethod`",
+  "module_slug": "stage-05",
+  "module_title": "Stage 5 · OOP and Python Data Model",
+  "module_order": 5,
+  "order": 50,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 25,
+  "topics": [
+    "alternate constructors",
+    "class-aware behavior",
+    "namespace utility",
+    "when module-level function is simpler."
+  ],
+  "description": "P0 · `classmethod` and `staticmethod`: mental model, interview rubric и backend-сценарий.",
+  "has_task": true,
+  "has_solution": true,
+  "priority": "P0",
+  "priority_note": "P0 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Python указан в 18/18; OOP/data model важны для чтения framework и domain code.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить `classmethod` and `staticmethod` и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.5.3.methods-and-self"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py",
+  "task_id": "backend-interview.5.4.classmethod-and-staticmethod.practice",
+  "task_title": "Создать User из mapping",
+  "task_difficulty": "interview",
+  "task_skills": [
+    "classmethod",
+    "staticmethod"
+  ],
+  "task_estimated_minutes": 20
+}

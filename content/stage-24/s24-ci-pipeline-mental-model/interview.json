@@ -1,0 +1,94 @@
+[
+  {
+    "question": "Объясни тему «CI pipeline mental model» как на Junior Python Backend interview.",
+    "level": "normal",
+    "priority": "P1",
+    "interview_probability": "high",
+    "answer": [
+      "checkout",
+      "install",
+      "lint",
+      "test",
+      "Pipeline должен собирать один artifact и падать на воспроизводимой проверке с понятным log."
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "checkout",
+        "install",
+        "lint",
+        "test",
+        "Pipeline должен собирать один artifact и падать на воспроизводимой проверке с понятным log."
+      ],
+      "good_additions": [
+        "конкретный backend example",
+        "trade-off или failure mode"
+      ],
+      "common_wrong_answers": [
+        "Игнорировать flaky test или собирать другой код на каждом environment.",
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "red_flags": [
+        "Игнорировать flaky test или собирать другой код на каждом environment."
+      ],
+      "follow_up_questions": [
+        "Разбери failure по шагу, версии runtime, env и отличию от local run."
+      ]
+    },
+    "follow_ups": [
+      "Разбери failure по шагу, версии runtime, env и отличию от local run."
+    ],
+    "tags": [
+      "stage-24",
+      "p1"
+    ],
+    "sets": [
+      "stage-24",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  },
+  {
+    "question": "Сценарий по теме «CI pipeline mental model»: Разбери failure по шагу, версии runtime, env и отличию от local run. Что проверишь первым?",
+    "level": "scenario",
+    "priority": "P1",
+    "interview_probability": "high",
+    "answer": [
+      "Уточнить требования и observable symptom",
+      "Pipeline должен собирать один artifact и падать на воспроизводимой проверке с понятным log.",
+      "Назвать edge case",
+      "Предложить test/log/metric для проверки"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "assumptions",
+        "mechanism",
+        "failure mode",
+        "verification"
+      ],
+      "good_additions": [
+        "альтернатива и trade-off"
+      ],
+      "common_wrong_answers": [
+        "Сразу называть технологию до уточнения проблемы"
+      ],
+      "red_flags": [
+        "Игнорировать flaky test или собирать другой код на каждом environment."
+      ],
+      "follow_up_questions": [
+        "Что произойдёт при повторе или частичном отказе?"
+      ]
+    },
+    "follow_ups": [
+      "Что произойдёт при повторе или частичном отказе?"
+    ],
+    "tags": [
+      "stage-24",
+      "scenario"
+    ],
+    "sets": [
+      "stage-24",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  }
+]

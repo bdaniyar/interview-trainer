@@ -1,0 +1,94 @@
+[
+  {
+    "question": "Объясни тему «Inheritance vs composition» как на Junior Python Backend interview.",
+    "level": "normal",
+    "priority": "P0",
+    "interview_probability": "very_high",
+    "answer": [
+      "is-a vs has-a",
+      "coupling",
+      "testability",
+      "service composition",
+      "У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее."
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "is-a vs has-a",
+        "coupling",
+        "testability",
+        "service composition",
+        "У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее."
+      ],
+      "good_additions": [
+        "конкретный backend example",
+        "trade-off или failure mode"
+      ],
+      "common_wrong_answers": [
+        "Создавать глубокую иерархию ради переиспользования нескольких строк.",
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "red_flags": [
+        "Создавать глубокую иерархию ради переиспользования нескольких строк."
+      ],
+      "follow_up_questions": [
+        "Сравни composition и inheritance для сервиса уведомлений и назови цену изменения."
+      ]
+    },
+    "follow_ups": [
+      "Сравни composition и inheritance для сервиса уведомлений и назови цену изменения."
+    ],
+    "tags": [
+      "stage-05",
+      "p0"
+    ],
+    "sets": [
+      "stage-05",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  },
+  {
+    "question": "Сценарий по теме «Inheritance vs composition»: Сравни composition и inheritance для сервиса уведомлений и назови цену изменения. Что проверишь первым?",
+    "level": "scenario",
+    "priority": "P0",
+    "interview_probability": "very_high",
+    "answer": [
+      "Уточнить требования и observable symptom",
+      "У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.",
+      "Назвать edge case",
+      "Предложить test/log/metric для проверки"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "assumptions",
+        "mechanism",
+        "failure mode",
+        "verification"
+      ],
+      "good_additions": [
+        "альтернатива и trade-off"
+      ],
+      "common_wrong_answers": [
+        "Сразу называть технологию до уточнения проблемы"
+      ],
+      "red_flags": [
+        "Создавать глубокую иерархию ради переиспользования нескольких строк."
+      ],
+      "follow_up_questions": [
+        "Что произойдёт при повторе или частичном отказе?"
+      ]
+    },
+    "follow_ups": [
+      "Что произойдёт при повторе или частичном отказе?"
+    ],
+    "tags": [
+      "stage-05",
+      "scenario"
+    ],
+    "sets": [
+      "stage-05",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  }
+]

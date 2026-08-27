@@ -300,5 +300,5 @@ export function CourseApp() {
 
 function LessonRow({ lesson, active, onClick }: { lesson: LessonSummary; active: boolean; onClick: () => void }) {
   const statusIcon = lesson.status === 'completed' ? <Check size={11} /> : lesson.status === 'in_progress' ? <span className="progress-dot" /> : <Circle size={9} />;
-  return <button className={`lesson ${active ? 'active' : ''}`} onClick={onClick}><span className={`lesson-state ${lesson.status}`}>{statusIcon}</span><span>{lesson.title}</span>{lesson.has_task ? <span className="code-badge">CODE</span> : null}</button>;
+  return <button className={`lesson ${active ? 'active' : ''}`} onClick={onClick}><span className={`lesson-state ${lesson.status}`}>{statusIcon}</span><span>{lesson.title}</span><span className="lesson-badges">{lesson.priority ? <span className={'priority-badge ' + lesson.priority.toLowerCase()}>{lesson.priority}</span> : null}{lesson.has_task ? <span className="code-badge">CODE</span> : null}</span></button>;
 }

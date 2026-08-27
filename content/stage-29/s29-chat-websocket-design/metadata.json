@@ -1,0 +1,50 @@
+{
+  "id": "backend-interview.29.8.chat-websocket-design",
+  "slug": "s29-chat-websocket-design",
+  "title": "Chat/WebSocket design",
+  "module_slug": "stage-29",
+  "module_title": "Stage 29 · Junior Backend System Design",
+  "module_order": 29,
+  "order": 363,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "connection",
+    "live fan-out",
+    "history",
+    "reconnect",
+    "multi-instance delivery",
+    "Redis Pub/Sub limitations."
+  ],
+  "description": "P1 · Chat/WebSocket design: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Junior system design связывает HTTP, DB, cache и failure modes в практический ответ.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Chat/WebSocket design и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.29.7.preventing-double-booking"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

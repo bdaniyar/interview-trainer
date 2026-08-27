@@ -1,0 +1,57 @@
+{
+  "id": "backend-interview.14.8.dependency-injection-with-depends",
+  "slug": "s14-dependency-injection-with-depends",
+  "title": "Dependency injection with `Depends`",
+  "module_slug": "stage-14",
+  "module_title": "Stage 14 · FastAPI",
+  "module_order": 14,
+  "order": 185,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 25,
+  "topics": [
+    "dependency graph",
+    "request-scoped lifecycle",
+    "auth/session/settings",
+    "caching per request."
+  ],
+  "description": "P0 · Dependency injection with `Depends`: mental model, interview rubric и backend-сценарий.",
+  "has_task": true,
+  "has_solution": true,
+  "priority": "P0",
+  "priority_note": "P0 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "very_common",
+  "market_evidence": "FastAPI явно встречался в 9/18, любой Python web framework — в 16/18.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Dependency injection with `Depends` и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.14.7.status-codes-headers-and-cookies"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py",
+  "task_id": "backend-interview.14.8.dependency-injection-with-depends.practice",
+  "task_title": "Authorization dependency",
+  "task_difficulty": "interview",
+  "task_skills": [
+    "fastapi",
+    "depends",
+    "authorization"
+  ],
+  "task_estimated_minutes": 20
+}

@@ -1,0 +1,45 @@
+{
+  "id": "backend-interview.21.14.compose-volumes-networks-env-file",
+  "slug": "s21-compose-volumes-networks-env-file",
+  "title": "Compose volumes/networks/env_file",
+  "module_slug": "stage-21",
+  "module_title": "Stage 21 · Docker and Docker Compose",
+  "module_order": 21,
+  "order": 287,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "Compose volumes/networks/env_file"
+  ],
+  "description": "P1 · Compose volumes/networks/env_file: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Docker/containers явно встречались в 11/18 — обязательный P1 practical skill.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Compose volumes/networks/env_file и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.21.13.depends-on-and-readiness"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

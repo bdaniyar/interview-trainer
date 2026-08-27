@@ -1,0 +1,281 @@
+{
+  "schema_version": 1,
+  "default_set": "full-junior-backend",
+  "sets": [
+    {
+      "slug": "full-junior-backend",
+      "title": "Full Junior Python Backend Interview",
+      "description": "25 вопросов по Python, SQL, HTTP, framework, debugging и защите проектов.",
+      "question_ids": [
+        "is-vs-eq:0",
+        "mutability-references:0",
+        "mutable-default-arguments:0",
+        "legb:0",
+        "inheritance-composition:0",
+        "s10-group-by:0",
+        "s10-inner-join:0",
+        "s11-index-mental-model:0",
+        "s11-transactions-and-acid:0",
+        "s12-safe-and-idempotent-methods:0",
+        "s12-status-codes:0",
+        "s13-rbac-and-permissions:0",
+        "s14-dependency-injection-with-depends:0",
+        "s15-optional-nullable-and-default-values:0",
+        "s16-session-mental-model:0",
+        "s16-n-plus-1:0",
+        "event-loop:0",
+        "s08-blocking-code-inside-async-code:0",
+        "fixtures:0",
+        "s22-reset-vs-revert:0",
+        "s19-cache-invalidation:0",
+        "s29-preventing-double-booking:0",
+        "s32-studyhub-in-60-seconds:0",
+        "s32-outbox-pattern:0",
+        "s28-hash-table-dict-set:0"
+      ],
+      "estimated_minutes": 70
+    },
+    {
+      "slug": "interview-crash-course",
+      "title": "Interview Crash Course",
+      "description": "Быстрый повтор наиболее вероятных P0/P1 вопросов по всему backend path.",
+      "question_ids": [
+        "python-basics:0",
+        "is-vs-eq:0",
+        "mutability-references:0",
+        "copying:0",
+        "mutable-default-arguments:0",
+        "legb:0",
+        "closures:0",
+        "late-binding:0",
+        "decorators:0",
+        "s04-iterable-vs-iterator:0",
+        "generators:0",
+        "exceptions:0",
+        "s05-instance-vs-class-attributes:0",
+        "inheritance-composition:0",
+        "dataclasses:0",
+        "s10-group-by:0",
+        "s10-having:0",
+        "s10-inner-join:0",
+        "s10-left-join:0",
+        "s10-exists-vs-in:0",
+        "s10-window-functions:0",
+        "s11-constraints:0",
+        "s11-index-mental-model:0",
+        "s11-transactions-and-acid:0",
+        "s11-isolation-levels:0",
+        "s12-http-methods:0",
+        "s12-safe-and-idempotent-methods:0",
+        "s12-status-codes:0",
+        "s13-authentication-vs-authorization:0",
+        "s13-access-and-refresh-tokens:0",
+        "s13-rbac-and-permissions:0",
+        "s14-dependency-injection-with-depends:0",
+        "s14-sync-vs-async-endpoints:0",
+        "s15-optional-nullable-and-default-values:0",
+        "s16-session-mental-model:0",
+        "s16-add-flush-commit-and-refresh:0",
+        "s16-n-plus-1:0",
+        "fixtures:0",
+        "s19-cache-aside:0",
+        "s20-idempotency:0",
+        "s21-depends-on-and-readiness:0",
+        "s22-reset-vs-revert:0",
+        "s23-reading-searching-logs-and-files:0",
+        "s32-studyhub-in-60-seconds:0"
+      ],
+      "estimated_minutes": 95
+    },
+    {
+      "slug": "python-core",
+      "title": "Python Core Interview",
+      "description": "Object model, collections, functions and iteration.",
+      "stage_slugs": [
+        "stage-01",
+        "stage-02",
+        "stage-03",
+        "stage-04"
+      ],
+      "limit": 30,
+      "estimated_minutes": 45
+    },
+    {
+      "slug": "python-advanced",
+      "title": "Python Advanced Interview",
+      "description": "Typing, CPython internals and concurrency boundaries.",
+      "stage_slugs": [
+        "stage-05",
+        "stage-06",
+        "stage-07"
+      ],
+      "limit": 30,
+      "estimated_minutes": 45
+    },
+    {
+      "slug": "oop-data-model",
+      "title": "OOP and Data Model Interview",
+      "description": "Objects, protocols, composition and data model.",
+      "stage_slugs": [
+        "stage-05"
+      ],
+      "limit": 30,
+      "estimated_minutes": 45
+    },
+    {
+      "slug": "async-python",
+      "title": "Async Python Interview",
+      "description": "Event loop, tasks, cancellation, threads and processes.",
+      "stage_slugs": [
+        "stage-08",
+        "stage-09"
+      ],
+      "limit": 30,
+      "estimated_minutes": 45
+    },
+    {
+      "slug": "sql",
+      "title": "SQL Interview",
+      "description": "Queries, joins, aggregation, subqueries and windows.",
+      "stage_slugs": [
+        "stage-10"
+      ],
+      "limit": 30,
+      "estimated_minutes": 45
+    },
+    {
+      "slug": "postgresql",
+      "title": "PostgreSQL Interview",
+      "description": "Constraints, indexes, transactions and concurrency.",
+      "stage_slugs": [
+        "stage-11"
+      ],
+      "limit": 30,
+      "estimated_minutes": 45
+    },
+    {
+      "slug": "http-rest",
+      "title": "HTTP and REST Interview",
+      "description": "HTTP semantics, networking and API contracts.",
+      "stage_slugs": [
+        "stage-12"
+      ],
+      "limit": 30,
+      "estimated_minutes": 45
+    },
+    {
+      "slug": "fastapi",
+      "title": "FastAPI Interview",
+      "description": "ASGI request lifecycle, Depends, validation and testing.",
+      "stage_slugs": [
+        "stage-14"
+      ],
+      "limit": 30,
+      "estimated_minutes": 45
+    },
+    {
+      "slug": "pydantic",
+      "title": "Pydantic Interview",
+      "description": "Pydantic v2 validation and serialization.",
+      "stage_slugs": [
+        "stage-15"
+      ],
+      "limit": 30,
+      "estimated_minutes": 45
+    },
+    {
+      "slug": "sqlalchemy-alembic",
+      "title": "SQLAlchemy and Alembic Interview",
+      "description": "Session, transactions, loading and migrations.",
+      "stage_slugs": [
+        "stage-16",
+        "stage-17"
+      ],
+      "limit": 30,
+      "estimated_minutes": 45
+    },
+    {
+      "slug": "auth-security",
+      "title": "Authentication and Security Interview",
+      "description": "AuthN/AuthZ, tokens, OAuth and web security.",
+      "stage_slugs": [
+        "stage-13"
+      ],
+      "limit": 30,
+      "estimated_minutes": 45
+    },
+    {
+      "slug": "redis-background",
+      "title": "Redis and Background Jobs Interview",
+      "description": "Cache, Pub/Sub, outbox, retries and workers.",
+      "stage_slugs": [
+        "stage-19",
+        "stage-20"
+      ],
+      "limit": 30,
+      "estimated_minutes": 45
+    },
+    {
+      "slug": "docker",
+      "title": "Docker Interview",
+      "description": "Images, containers, Compose and debugging.",
+      "stage_slugs": [
+        "stage-21"
+      ],
+      "limit": 30,
+      "estimated_minutes": 45
+    },
+    {
+      "slug": "git-linux",
+      "title": "Git and Linux Interview",
+      "description": "Working tree, history, shell and process diagnostics.",
+      "stage_slugs": [
+        "stage-22",
+        "stage-23"
+      ],
+      "limit": 30,
+      "estimated_minutes": 45
+    },
+    {
+      "slug": "testing",
+      "title": "Testing Interview",
+      "description": "pytest, fixtures, mocks and isolation.",
+      "stage_slugs": [
+        "stage-18"
+      ],
+      "limit": 30,
+      "estimated_minutes": 45
+    },
+    {
+      "slug": "backend-fundamentals",
+      "title": "Backend Fundamentals Interview",
+      "description": "Architecture, patterns and junior system design.",
+      "stage_slugs": [
+        "stage-27",
+        "stage-29"
+      ],
+      "limit": 30,
+      "estimated_minutes": 45
+    },
+    {
+      "slug": "django-drf",
+      "title": "Django/DRF Interview",
+      "description": "Working Django and DRF fundamentals.",
+      "stage_slugs": [
+        "stage-26"
+      ],
+      "limit": 30,
+      "estimated_minutes": 45
+    },
+    {
+      "slug": "resume-defense",
+      "title": "Resume Defense Interview",
+      "description": "StudyHub, Hotel Booking and Share Recipe claims.",
+      "stage_slugs": [
+        "stage-32"
+      ],
+      "limit": 30,
+      "estimated_minutes": 45
+    }
+  ]
+}

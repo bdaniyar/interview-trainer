@@ -1,0 +1,46 @@
+{
+  "id": "backend-interview.10.12.right-and-full-outer-join",
+  "slug": "s10-right-and-full-outer-join",
+  "title": "RIGHT and FULL OUTER JOIN",
+  "module_slug": "stage-10",
+  "module_title": "Stage 10 · SQL Fundamentals and Practice",
+  "module_order": 10,
+  "order": 108,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "conceptual symmetry",
+    "practical alternatives."
+  ],
+  "description": "P1 · RIGHT and FULL OUTER JOIN: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | medium",
+  "interview_probability": "medium",
+  "market_frequency": "common",
+  "market_evidence": "SQL/relational DB явно встречались в 15/18 — один из главных P0-разделов.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить RIGHT and FULL OUTER JOIN и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.10.11.left-join"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

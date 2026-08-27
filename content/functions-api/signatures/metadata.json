@@ -1,16 +1,49 @@
 {
+  "id": "backend-interview.3.2.parameters-vs-arguments",
   "slug": "signatures",
-  "title": "signatures",
-  "module_slug": "functions-api",
-  "module_title": "Функции, типизация и API",
+  "title": "Parameters vs arguments",
+  "module_slug": "stage-03",
+  "module_title": "Stage 3 · Functions, Scope, Closures and Decorators",
+  "module_order": 3,
   "order": 20,
-  "duration": 25,
+  "duration": 12,
+  "estimated_minutes": 12,
   "xp": 5,
   "topics": [
-    "inspect.signature",
-    "parameters"
+    "parameter",
+    "argument",
+    "positional",
+    "keyword",
+    "binding process."
   ],
-  "description": "Учебный блок: inspect.signature, parameters.",
+  "description": "P0 · Parameters vs arguments: mental model, interview rubric и backend-сценарий.",
   "has_task": false,
-  "has_solution": false
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "very_common",
+  "market_evidence": "Python указан в 18/18; functions/scope/decorators регулярно проверяют на screening.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Parameters vs arguments и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.3.1.function-objects-and-first-class-functions"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
 }

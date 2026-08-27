@@ -1,0 +1,54 @@
+{
+  "id": "backend-interview.15.7.model-validators",
+  "slug": "s15-model-validators",
+  "title": "Model validators",
+  "module_slug": "stage-15",
+  "module_title": "Stage 15 · Pydantic v2",
+  "module_order": 15,
+  "order": 208,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 25,
+  "topics": [
+    "cross-field invariant",
+    "validation ordering."
+  ],
+  "description": "P1 · Model validators: mental model, interview rubric и backend-сценарий.",
+  "has_task": true,
+  "has_solution": true,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Pydantic v2 — validation boundary основной FastAPI trajectory.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Model validators и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.15.6.field-validators"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py",
+  "task_id": "backend-interview.15.7.model-validators.practice",
+  "task_title": "Cross-field validator",
+  "task_difficulty": "interview",
+  "task_skills": [
+    "pydantic-v2",
+    "model-validator"
+  ],
+  "task_estimated_minutes": 20
+}

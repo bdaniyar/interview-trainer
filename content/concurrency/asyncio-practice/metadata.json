@@ -13,5 +13,7 @@
   ],
   "description": "Учебный блок: Queue, Semaphore, backpressure.",
   "has_task": false,
-  "has_solution": false
+  "has_solution": false,
+  "content_status": "archived",
+  "archive_reason": "Replaced by the backend-interview taxonomy; slug kept for saved progress compatibility."
 }

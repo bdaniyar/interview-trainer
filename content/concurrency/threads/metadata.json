@@ -1,16 +1,49 @@
 {
+  "id": "backend-interview.9.1.threading",
   "slug": "threads",
-  "title": "threads",
-  "module_slug": "concurrency",
-  "module_title": "Конкурентность и асинхронность",
-  "order": 37,
-  "duration": 29,
+  "title": "Threading",
+  "module_slug": "stage-09",
+  "module_title": "Stage 9 · Threading and Multiprocessing",
+  "module_order": 9,
+  "order": 92,
+  "duration": 10,
+  "estimated_minutes": 10,
   "xp": 5,
   "topics": [
-    "threading",
-    "I/O-bound"
+    "shared process memory",
+    "I/O-bound",
+    "race conditions",
+    "locks",
+    "GIL limitations."
   ],
-  "description": "Учебный блок: threading, I/O-bound.",
+  "description": "P1 · Threading: mental model, interview rubric и backend-сценарий.",
   "has_task": false,
-  "has_solution": false
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | medium",
+  "interview_probability": "medium",
+  "market_frequency": "common",
+  "market_evidence": "Concurrency fundamentals поддерживают выбор threads/processes/async без мифов о GIL.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Threading и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.8.1.sync-concurrency-and-parallelism"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
 }

@@ -1,0 +1,56 @@
+{
+  "id": "backend-interview.16.15.joinedload",
+  "slug": "s16-joinedload",
+  "title": "`joinedload`",
+  "module_slug": "stage-16",
+  "module_title": "Stage 16 · SQLAlchemy 2.x",
+  "module_order": 16,
+  "order": 227,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 25,
+  "topics": [
+    "join",
+    "row multiplication",
+    "scalar relationships",
+    "result uniqueness when relevant."
+  ],
+  "description": "P1 · `joinedload`: mental model, interview rubric и backend-сценарий.",
+  "has_task": true,
+  "has_solution": true,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "ORM/SQLAlchemy явно встречались в 4/18, но Session/transaction знание фундаментально для FastAPI backend.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить `joinedload` и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.16.14.selectinload"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py",
+  "task_id": "backend-interview.16.15.joinedload.practice",
+  "task_title": "joinedload scalar",
+  "task_difficulty": "interview",
+  "task_skills": [
+    "sqlalchemy-2",
+    "joinedload"
+  ],
+  "task_estimated_minutes": 20
+}

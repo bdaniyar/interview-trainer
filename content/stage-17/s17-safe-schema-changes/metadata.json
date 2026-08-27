@@ -1,0 +1,48 @@
+{
+  "id": "backend-interview.17.5.safe-schema-changes",
+  "slug": "s17-safe-schema-changes",
+  "title": "Safe schema changes",
+  "module_slug": "stage-17",
+  "module_title": "Stage 17 · Alembic",
+  "module_order": 17,
+  "order": 236,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "expand/contract",
+    "nullable → backfill → constraint",
+    "indexes on large tables",
+    "backward compatibility."
+  ],
+  "description": "P1 · Safe schema changes: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Alembic защищает заявленный migration опыт и безопасные schema changes.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Safe schema changes и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.17.4.data-migrations"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

@@ -1,0 +1,48 @@
+{
+  "id": "backend-interview.27.1.monolith",
+  "slug": "s27-monolith",
+  "title": "Monolith",
+  "module_slug": "stage-27",
+  "module_title": "Stage 27 · Architecture and Useful Patterns",
+  "module_order": 27,
+  "order": 335,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "one deployable",
+    "simplicity",
+    "internal modules",
+    "valid default for Junior projects."
+  ],
+  "description": "P1 · Monolith: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Architecture basics нужны для объяснения design choices без senior-level overengineering.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Monolith и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.5.6.inheritance-vs-composition"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

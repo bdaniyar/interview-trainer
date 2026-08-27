@@ -1,0 +1,44 @@
+{
+  "id": "backend-interview.27.10.strategy",
+  "slug": "s27-strategy",
+  "title": "Strategy",
+  "module_slug": "stage-27",
+  "module_title": "Stage 27 · Architecture and Useful Patterns",
+  "module_order": 27,
+  "order": 344,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "interchangeable behavior",
+    "payment/storage/notification example."
+  ],
+  "description": "P2 · Strategy: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P2",
+  "priority_note": "P2 | medium",
+  "interview_probability": "medium",
+  "market_frequency": "occasional",
+  "market_evidence": "Architecture basics нужны для объяснения design choices без senior-level overengineering.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Strategy и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior_plus",
+  "prerequisites": [
+    "backend-interview.27.9.solid-basics"
+  ],
+  "modes": [
+    "learn",
+    "interview"
+  ],
+  "tracks": [
+    "full"
+  ],
+  "content_status": "planned",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

@@ -1,16 +1,57 @@
 {
+  "id": "backend-interview.3.12.functools-wraps",
   "slug": "functools-wraps",
-  "title": "functools.wraps",
-  "module_slug": "functions-api",
-  "module_title": "Функции, типизация и API",
-  "order": 19,
-  "duration": 24,
-  "xp": 5,
+  "title": "`functools.wraps`",
+  "module_slug": "stage-03",
+  "module_title": "Stage 3 · Functions, Scope, Closures and Decorators",
+  "module_order": 3,
+  "order": 30,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 25,
   "topics": [
-    "metadata",
-    "__wrapped__"
+    "preserving `__name__`",
+    "docstring",
+    "annotations",
+    "`__wrapped__`",
+    "why frameworks/tools care."
   ],
-  "description": "Учебный блок: metadata, __wrapped__.",
-  "has_task": false,
-  "has_solution": false
+  "description": "P0 · `functools.wraps`: mental model, interview rubric и backend-сценарий.",
+  "has_task": true,
+  "has_solution": true,
+  "priority": "P0",
+  "priority_note": "P0 | high",
+  "interview_probability": "high",
+  "market_frequency": "very_common",
+  "market_evidence": "Python указан в 18/18; functions/scope/decorators регулярно проверяют на screening.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить `functools.wraps` и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.3.11.basic-decorators"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py",
+  "task_id": "backend-interview.3.12.functools-wraps.practice",
+  "task_title": "Сохранить metadata wrapper",
+  "task_difficulty": "interview",
+  "task_skills": [
+    "functools.wraps",
+    "introspection"
+  ],
+  "task_estimated_minutes": 20
 }

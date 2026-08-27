@@ -1,0 +1,55 @@
+{
+  "id": "backend-interview.16.11.joins",
+  "slug": "s16-joins",
+  "title": "Joins",
+  "module_slug": "stage-16",
+  "module_title": "Stage 16 · SQLAlchemy 2.x",
+  "module_order": 16,
+  "order": 223,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 25,
+  "topics": [
+    "ORM joins",
+    "explicit conditions",
+    "selecting entities/columns."
+  ],
+  "description": "P0 · Joins: mental model, interview rubric и backend-сценарий.",
+  "has_task": true,
+  "has_solution": true,
+  "priority": "P0",
+  "priority_note": "P0 | high",
+  "interview_probability": "high",
+  "market_frequency": "very_common",
+  "market_evidence": "ORM/SQLAlchemy явно встречались в 4/18, но Session/transaction знание фундаментально для FastAPI backend.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Joins и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.16.10.explicit-transactions"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py",
+  "task_id": "backend-interview.16.11.joins.practice",
+  "task_title": "ORM join",
+  "task_difficulty": "interview",
+  "task_skills": [
+    "sqlalchemy-2",
+    "join"
+  ],
+  "task_estimated_minutes": 20
+}

@@ -1,0 +1,45 @@
+{
+  "id": "backend-interview.7.4.memory-allocation-basics",
+  "slug": "s07-memory-allocation-basics",
+  "title": "Memory allocation basics",
+  "module_slug": "stage-07",
+  "module_title": "Stage 7 · CPython, Memory and Concurrency Foundations",
+  "module_order": 7,
+  "order": 77,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "objects have overhead",
+    "allocator awareness",
+    "measure before optimizing."
+  ],
+  "description": "P3 · Memory allocation basics: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P3",
+  "priority_note": "P3 | low",
+  "interview_probability": "low",
+  "market_frequency": "rare_for_junior",
+  "market_evidence": "Python указан в 18/18; CPython details приоритетны только там, где объясняют реальные bugs.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Memory allocation basics и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior_plus",
+  "prerequisites": [
+    "backend-interview.7.3.weak-references"
+  ],
+  "modes": [
+    "learn",
+    "interview"
+  ],
+  "tracks": [
+    "full"
+  ],
+  "content_status": "planned",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

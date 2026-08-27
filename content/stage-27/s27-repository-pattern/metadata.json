@@ -1,0 +1,45 @@
+{
+  "id": "backend-interview.27.8.repository-pattern",
+  "slug": "s27-repository-pattern",
+  "title": "Repository pattern",
+  "module_slug": "stage-27",
+  "module_title": "Stage 27 · Architecture and Useful Patterns",
+  "module_order": 27,
+  "order": 342,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "useful abstraction",
+    "leaky abstraction",
+    "avoid needless one-method wrappers."
+  ],
+  "description": "P2 · Repository pattern: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P2",
+  "priority_note": "P2 | medium",
+  "interview_probability": "medium",
+  "market_frequency": "occasional",
+  "market_evidence": "Architecture basics нужны для объяснения design choices без senior-level overengineering.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Repository pattern и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior_plus",
+  "prerequisites": [
+    "backend-interview.27.7.dependency-injection"
+  ],
+  "modes": [
+    "learn",
+    "interview"
+  ],
+  "tracks": [
+    "full"
+  ],
+  "content_status": "planned",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

@@ -1,0 +1,50 @@
+{
+  "id": "backend-interview.2.5.choosing-a-collection",
+  "slug": "s02-choosing-a-collection",
+  "title": "Choosing a collection",
+  "module_slug": "stage-02",
+  "module_title": "Stage 2 · Collections and Comprehensions",
+  "module_order": 2,
+  "order": 16,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "list vs tuple",
+    "list vs set",
+    "dict vs list of pairs",
+    "queue/stack choices",
+    "complexity trade-offs",
+    "practical backend examples."
+  ],
+  "description": "P0 · Choosing a collection: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "very_common",
+  "market_evidence": "Python указан в 18/18; collections — ежедневная data transformation работа backend.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Choosing a collection и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.2.4.set-and-frozenset"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

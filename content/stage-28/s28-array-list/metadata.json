@@ -1,0 +1,45 @@
+{
+  "id": "backend-interview.28.2.array-list",
+  "slug": "s28-array-list",
+  "title": "Array/list",
+  "module_slug": "stage-28",
+  "module_title": "Stage 28 · Algorithms and Data Structures",
+  "module_order": 28,
+  "order": 349,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "Array/list"
+  ],
+  "description": "P1 · Array/list: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Базовые structures/complexity проверяют на coding screen; competitive programming не приоритет.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Array/list и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.28.1.big-o"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

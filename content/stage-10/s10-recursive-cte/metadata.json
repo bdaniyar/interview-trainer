@@ -1,0 +1,45 @@
+{
+  "id": "backend-interview.10.18.recursive-cte",
+  "slug": "s10-recursive-cte",
+  "title": "Recursive CTE",
+  "module_slug": "stage-10",
+  "module_title": "Stage 10 · SQL Fundamentals and Practice",
+  "module_order": 10,
+  "order": 114,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "hierarchy basics",
+    "termination",
+    "not a Junior core requirement."
+  ],
+  "description": "P2 · Recursive CTE: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P2",
+  "priority_note": "P2 | low",
+  "interview_probability": "low",
+  "market_frequency": "occasional",
+  "market_evidence": "SQL/relational DB явно встречались в 15/18 — один из главных P0-разделов.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Recursive CTE и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior_plus",
+  "prerequisites": [
+    "backend-interview.10.17.cte"
+  ],
+  "modes": [
+    "learn",
+    "interview"
+  ],
+  "tracks": [
+    "full"
+  ],
+  "content_status": "planned",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

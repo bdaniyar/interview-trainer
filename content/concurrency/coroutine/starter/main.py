@@ -1,5 +1,2 @@
-"""Заготовка для урока: coroutine."""
-
-
-def main():
-    raise NotImplementedError("Задача будет добавлена позже")
+async def fetch_name(client, user_id):
+    raise NotImplementedError

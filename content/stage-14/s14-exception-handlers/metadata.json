@@ -1,0 +1,56 @@
+{
+  "id": "backend-interview.14.12.exception-handlers",
+  "slug": "s14-exception-handlers",
+  "title": "Exception handlers",
+  "module_slug": "stage-14",
+  "module_title": "Stage 14 · FastAPI",
+  "module_order": 14,
+  "order": 189,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 25,
+  "topics": [
+    "domain exception",
+    "HTTP mapping",
+    "global handler",
+    "avoid leaking internals."
+  ],
+  "description": "P0 · Exception handlers: mental model, interview rubric и backend-сценарий.",
+  "has_task": true,
+  "has_solution": true,
+  "priority": "P0",
+  "priority_note": "P0 | high",
+  "interview_probability": "high",
+  "market_frequency": "very_common",
+  "market_evidence": "FastAPI явно встречался в 9/18, любой Python web framework — в 16/18.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Exception handlers и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.14.11.validation-errors"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py",
+  "task_id": "backend-interview.14.12.exception-handlers.practice",
+  "task_title": "Domain exception handler",
+  "task_difficulty": "interview",
+  "task_skills": [
+    "fastapi",
+    "exception-handler"
+  ],
+  "task_estimated_minutes": 20
+}

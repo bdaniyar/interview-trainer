@@ -1,5 +1,2 @@
-"""Заготовка для урока: positional-only arguments."""
-
-
-def main():
-    raise NotImplementedError("Задача будет добавлена позже")
+def build_page_query(resource, /, *, limit=20, offset=0):
+    raise NotImplementedError

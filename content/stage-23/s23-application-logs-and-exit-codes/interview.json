@@ -1,0 +1,92 @@
+[
+  {
+    "question": "Объясни тему «Application logs and exit codes» как на Junior Python Backend interview.",
+    "level": "normal",
+    "priority": "P1",
+    "interview_probability": "high",
+    "answer": [
+      "stdout/stderr",
+      "exit status",
+      "pipeline failure awareness.",
+      "Процесс видит filesystem, env, user permissions, descriptors и network namespace."
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "stdout/stderr",
+        "exit status",
+        "pipeline failure awareness.",
+        "Процесс видит filesystem, env, user permissions, descriptors и network namespace."
+      ],
+      "good_additions": [
+        "конкретный backend example",
+        "trade-off или failure mode"
+      ],
+      "common_wrong_answers": [
+        "Менять permissions на 777 вместо поиска владельца и требуемого доступа.",
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "red_flags": [
+        "Менять permissions на 777 вместо поиска владельца и требуемого доступа."
+      ],
+      "follow_up_questions": [
+        "Найди процесс, его exit code, порт, env и последнюю ошибку в log."
+      ]
+    },
+    "follow_ups": [
+      "Найди процесс, его exit code, порт, env и последнюю ошибку в log."
+    ],
+    "tags": [
+      "stage-23",
+      "p1"
+    ],
+    "sets": [
+      "stage-23",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  },
+  {
+    "question": "Сценарий по теме «Application logs and exit codes»: Найди процесс, его exit code, порт, env и последнюю ошибку в log. Что проверишь первым?",
+    "level": "scenario",
+    "priority": "P1",
+    "interview_probability": "high",
+    "answer": [
+      "Уточнить требования и observable symptom",
+      "Процесс видит filesystem, env, user permissions, descriptors и network namespace.",
+      "Назвать edge case",
+      "Предложить test/log/metric для проверки"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "assumptions",
+        "mechanism",
+        "failure mode",
+        "verification"
+      ],
+      "good_additions": [
+        "альтернатива и trade-off"
+      ],
+      "common_wrong_answers": [
+        "Сразу называть технологию до уточнения проблемы"
+      ],
+      "red_flags": [
+        "Менять permissions на 777 вместо поиска владельца и требуемого доступа."
+      ],
+      "follow_up_questions": [
+        "Что произойдёт при повторе или частичном отказе?"
+      ]
+    },
+    "follow_ups": [
+      "Что произойдёт при повторе или частичном отказе?"
+    ],
+    "tags": [
+      "stage-23",
+      "scenario"
+    ],
+    "sets": [
+      "stage-23",
+      "full-junior-backend",
+      "interview-crash-course"
+    ]
+  }
+]

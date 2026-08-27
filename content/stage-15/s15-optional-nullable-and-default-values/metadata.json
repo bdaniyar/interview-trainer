@@ -1,0 +1,56 @@
+{
+  "id": "backend-interview.15.4.optional-nullable-and-default-values",
+  "slug": "s15-optional-nullable-and-default-values",
+  "title": "Optional, nullable and default values",
+  "module_slug": "stage-15",
+  "module_title": "Stage 15 · Pydantic v2",
+  "module_order": 15,
+  "order": 205,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 25,
+  "topics": [
+    "missing",
+    "present with null",
+    "default",
+    "PATCH semantics."
+  ],
+  "description": "P0 · Optional, nullable and default values: mental model, interview rubric и backend-сценарий.",
+  "has_task": true,
+  "has_solution": true,
+  "priority": "P0",
+  "priority_note": "P0 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "very_common",
+  "market_evidence": "Pydantic v2 — validation boundary основной FastAPI trajectory.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Optional, nullable and default values и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.15.3.field-constraints"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py",
+  "task_id": "backend-interview.15.4.optional-nullable-and-default-values.practice",
+  "task_title": "Patch semantics",
+  "task_difficulty": "interview",
+  "task_skills": [
+    "pydantic-v2",
+    "optional-nullable"
+  ],
+  "task_estimated_minutes": 20
+}

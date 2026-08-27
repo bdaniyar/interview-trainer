@@ -1,0 +1,50 @@
+{
+  "id": "backend-interview.23.3.reading-searching-logs-and-files",
+  "slug": "s23-reading-searching-logs-and-files",
+  "title": "Reading/searching logs and files",
+  "module_slug": "stage-23",
+  "module_title": "Stage 23 · Linux and Shell",
+  "module_order": 23,
+  "order": 304,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "cat",
+    "less",
+    "head",
+    "tail",
+    "grep/rg",
+    "`tail -f`."
+  ],
+  "description": "P1 · Reading/searching logs and files: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Linux basics явно встречались в 5/18 и часто подразумеваются для backend debugging.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Reading/searching logs and files и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.23.2.file-operations"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

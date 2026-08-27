@@ -1,0 +1,46 @@
+{
+  "id": "backend-interview.31.6.why-redis",
+  "slug": "s31-why-redis",
+  "title": "Why Redis?",
+  "module_slug": "stage-31",
+  "module_title": "Stage 31 · HR, Screening and Communication",
+  "module_order": 31,
+  "order": 377,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "cache/ephemeral coordination",
+    "not durable source of truth."
+  ],
+  "description": "P0 · Why Redis?: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Screening communication влияет на прохождение remote и local interviews.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Why Redis? и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.31.5.why-postgresql"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

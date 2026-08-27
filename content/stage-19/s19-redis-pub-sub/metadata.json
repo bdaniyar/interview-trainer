@@ -1,0 +1,51 @@
+{
+  "id": "backend-interview.19.8.redis-pub-sub",
+  "slug": "s19-redis-pub-sub",
+  "title": "Redis Pub/Sub",
+  "module_slug": "stage-19",
+  "module_title": "Stage 19 · Redis",
+  "module_order": 19,
+  "order": 259,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "publisher",
+    "subscriber",
+    "channel",
+    "live delivery",
+    "no durable history",
+    "offline subscriber misses message",
+    "no acknowledgement/replay."
+  ],
+  "description": "P1 · Redis Pub/Sub: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Redis явно встречался в 6/18 и входит в фактические проекты кандидата.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Redis Pub/Sub и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.19.7.atomic-counters-and-rate-limiting"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

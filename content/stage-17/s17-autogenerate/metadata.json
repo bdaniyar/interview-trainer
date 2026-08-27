@@ -1,0 +1,55 @@
+{
+  "id": "backend-interview.17.3.autogenerate",
+  "slug": "s17-autogenerate",
+  "title": "Autogenerate",
+  "module_slug": "stage-17",
+  "module_title": "Stage 17 · Alembic",
+  "module_order": 17,
+  "order": 234,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 25,
+  "topics": [
+    "generated diff is a draft",
+    "manual review",
+    "rename may look like drop/add."
+  ],
+  "description": "P0 · Autogenerate: mental model, interview rubric и backend-сценарий.",
+  "has_task": true,
+  "has_solution": true,
+  "priority": "P0",
+  "priority_note": "P0 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Alembic защищает заявленный migration опыт и безопасные schema changes.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Autogenerate и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.17.2.revision-upgrade-and-downgrade"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py",
+  "task_id": "backend-interview.17.3.autogenerate.practice",
+  "task_title": "Review autogenerate",
+  "task_difficulty": "interview",
+  "task_skills": [
+    "alembic",
+    "migration-review"
+  ],
+  "task_estimated_minutes": 20
+}

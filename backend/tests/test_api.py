@@ -3,13 +3,23 @@ from __future__ import annotations
 from backend.app import main as main_module
 
 
-def test_course_catalog_contains_67_lessons(client):
+def test_course_catalog_contains_complete_backend_curriculum(client):
     response = client.get("/api/course")
     assert response.status_code == 200
     payload = response.json()
-    assert payload["summary"]["total"] == 67
-    assert len(payload["modules"]) == 5
-    assert payload["modules"][0]["lessons"][0]["slug"] == "python-basics"
+    assert payload["summary"]["total"] == 359
+    assert len(payload["modules"]) >= 30
+    assert payload["modules"][0]["lessons"][0]["slug"] == "s00-diagnosticheskii-junior-python-backend-interview"
+
+
+def test_full_interview_and_thematic_sets(client):
+    full = client.get("/api/interview").json()
+    assert full["active_set"] == "full-junior-backend"
+    assert len(full["questions"]) == 25
+    assert len(full["sets"]) == 20
+    sql = client.get("/api/interview", params={"set_slug": "sql"}).json()
+    assert len(sql["questions"]) == 30
+    assert all(question["stage_slug"] == "stage-10" for question in sql["questions"])
 
 
 def test_user_files_survive_lesson_reload(client):

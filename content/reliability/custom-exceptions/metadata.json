@@ -1,16 +1,48 @@
 {
+  "id": "backend-interview.4.11.custom-exceptions",
   "slug": "custom-exceptions",
-  "title": "custom exceptions",
-  "module_slug": "reliability",
-  "module_title": "Надёжность, тесты и архитектура",
-  "order": 54,
-  "duration": 20,
+  "title": "Custom exceptions",
+  "module_slug": "stage-04",
+  "module_title": "Stage 4 · Iteration, Generators, Exceptions and Context Managers",
+  "module_order": 4,
+  "order": 44,
+  "duration": 10,
+  "estimated_minutes": 10,
   "xp": 5,
   "topics": [
-    "exception hierarchy",
-    "domain errors"
+    "hierarchy",
+    "useful context",
+    "mapping to HTTP errors",
+    "avoiding exception-driven normal flow."
   ],
-  "description": "Учебный блок: exception hierarchy, domain errors.",
+  "description": "P1 · Custom exceptions: mental model, interview rubric и backend-сценарий.",
   "has_task": false,
-  "has_solution": false
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Python указан в 18/18; iteration/exceptions/resource cleanup нужны в production code.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Custom exceptions и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.4.10.exception-chaining"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
 }

@@ -1,0 +1,47 @@
+{
+  "id": "backend-interview.32.6.websockets-plus-redis-pub-sub",
+  "slug": "s32-websockets-plus-redis-pub-sub",
+  "title": "WebSockets + Redis Pub/Sub",
+  "module_slug": "stage-32",
+  "module_title": "Stage 32 · Personalized Resume Defense",
+  "module_order": 32,
+  "order": 389,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "WebSocket connects client to one process",
+    "Pub/Sub distributes live events between instances",
+    "API instances fan out to local clients."
+  ],
+  "description": "P0 · WebSockets + Redis Pub/Sub: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "very_common",
+  "market_evidence": "Resume Defense основан только на фактических StudyHub, Hotel Booking и Share Recipe claims.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить WebSockets + Redis Pub/Sub и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.32.5.why-postgresql-and-redis-together"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

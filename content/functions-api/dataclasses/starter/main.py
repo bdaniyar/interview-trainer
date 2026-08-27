@@ -1,5 +1,3 @@
-"""Заготовка для урока: dataclasses."""
+from dataclasses import dataclass
 
-
-def main():
-    raise NotImplementedError("Задача будет добавлена позже")
+# Реализуй BookingWindow.

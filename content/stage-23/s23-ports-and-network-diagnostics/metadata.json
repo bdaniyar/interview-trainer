@@ -1,0 +1,49 @@
+{
+  "id": "backend-interview.23.7.ports-and-network-diagnostics",
+  "slug": "s23-ports-and-network-diagnostics",
+  "title": "Ports and network diagnostics",
+  "module_slug": "stage-23",
+  "module_title": "Stage 23 · Linux and Shell",
+  "module_order": 23,
+  "order": 308,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "curl",
+    "listening port",
+    "localhost",
+    "DNS",
+    "service unavailable."
+  ],
+  "description": "P1 · Ports and network diagnostics: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Linux basics явно встречались в 5/18 и часто подразумеваются для backend debugging.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Ports and network diagnostics и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.23.6.permissions"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

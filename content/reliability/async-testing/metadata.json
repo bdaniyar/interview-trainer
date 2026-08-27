@@ -1,16 +1,48 @@
 {
+  "id": "backend-interview.18.11.async-tests",
   "slug": "async-testing",
-  "title": "async testing",
-  "module_slug": "reliability",
-  "module_title": "Надёжность, тесты и архитектура",
-  "order": 61,
-  "duration": 27,
+  "title": "Async tests",
+  "module_slug": "stage-18",
+  "module_title": "Stage 18 · Testing",
+  "module_order": 18,
+  "order": 248,
+  "duration": 10,
+  "estimated_minutes": 10,
   "xp": 5,
   "topics": [
-    "pytest-asyncio",
-    "event loop"
+    "event loop plugin/config",
+    "AsyncClient",
+    "deterministic timeouts",
+    "no sleep-heavy tests."
   ],
-  "description": "Учебный блок: pytest-asyncio, event loop.",
+  "description": "P1 · Async tests: mental model, interview rubric и backend-сценарий.",
   "has_task": false,
-  "has_solution": false
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "Testing явно встречался в 6/18 и часто подразумевается; pytest — P0/P1 рабочий навык.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Async tests и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.18.10.redis-tests"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
 }

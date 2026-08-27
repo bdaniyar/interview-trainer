@@ -1,16 +1,47 @@
 {
+  "id": "backend-interview.18.5.parametrization",
   "slug": "parametrization",
-  "title": "parametrization",
-  "module_slug": "reliability",
-  "module_title": "Надёжность, тесты и архитектура",
-  "order": 59,
-  "duration": 25,
+  "title": "Parametrization",
+  "module_slug": "stage-18",
+  "module_title": "Stage 18 · Testing",
+  "module_order": 18,
+  "order": 242,
+  "duration": 12,
+  "estimated_minutes": 12,
   "xp": 5,
   "topics": [
-    "pytest.mark.parametrize",
-    "cases"
+    "edge cases",
+    "readable IDs",
+    "avoiding repeated tests."
   ],
-  "description": "Учебный блок: pytest.mark.parametrize, cases.",
+  "description": "P0 · Parametrization: mental model, interview rubric и backend-сценарий.",
   "has_task": false,
-  "has_solution": false
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | high",
+  "interview_probability": "high",
+  "market_frequency": "very_common",
+  "market_evidence": "Testing явно встречался в 6/18 и часто подразумевается; pytest — P0/P1 рабочий навык.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Parametrization и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.18.4.fixture-scope"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
 }

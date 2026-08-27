@@ -1,0 +1,55 @@
+{
+  "id": "backend-interview.14.3.path-parameters",
+  "slug": "s14-path-parameters",
+  "title": "Path parameters",
+  "module_slug": "stage-14",
+  "module_title": "Stage 14 · FastAPI",
+  "module_order": 14,
+  "order": 180,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 25,
+  "topics": [
+    "type conversion",
+    "validation",
+    "routing order pitfalls."
+  ],
+  "description": "P0 · Path parameters: mental model, interview rubric и backend-сценарий.",
+  "has_task": true,
+  "has_solution": true,
+  "priority": "P0",
+  "priority_note": "P0 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "very_common",
+  "market_evidence": "FastAPI явно встречался в 9/18, любой Python web framework — в 16/18.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Path parameters и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.14.2.routes-and-routers"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py",
+  "task_id": "backend-interview.14.3.path-parameters.practice",
+  "task_title": "Validated path parameter",
+  "task_difficulty": "interview",
+  "task_skills": [
+    "fastapi",
+    "path-parameter"
+  ],
+  "task_estimated_minutes": 20
+}

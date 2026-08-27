@@ -1,0 +1,47 @@
+{
+  "id": "backend-interview.18.10.redis-tests",
+  "slug": "s18-redis-tests",
+  "title": "Redis tests",
+  "module_slug": "stage-18",
+  "module_title": "Stage 18 · Testing",
+  "module_order": 18,
+  "order": 247,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "real disposable Redis for integration boundary",
+    "fakes only when semantics are sufficient",
+    "TTL/invalidation."
+  ],
+  "description": "P1 · Redis tests: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | medium",
+  "interview_probability": "medium",
+  "market_frequency": "common",
+  "market_evidence": "Testing явно встречался в 6/18 и часто подразумевается; pytest — P0/P1 рабочий навык.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Redis tests и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.18.9.database-tests"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

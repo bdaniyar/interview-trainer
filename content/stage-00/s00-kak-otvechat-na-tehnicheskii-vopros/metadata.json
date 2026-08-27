@@ -1,0 +1,45 @@
+{
+  "id": "backend-interview.0.2.kak-otvechat-na-tehnicheskii-vopros",
+  "slug": "s00-kak-otvechat-na-tehnicheskii-vopros",
+  "title": "Как отвечать на технический вопрос",
+  "module_slug": "stage-00",
+  "module_title": "Stage 0 · Orientation and diagnostic",
+  "module_order": 0,
+  "order": 2,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "Как отвечать на технический вопрос"
+  ],
+  "description": "P0 · Как отвечать на технический вопрос: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | very_high",
+  "interview_probability": "very_high",
+  "market_frequency": "common",
+  "market_evidence": "Interview foundation; приоритет подтверждён целью Junior screening.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Как отвечать на технический вопрос и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.0.1.diagnosticheskii-junior-python-backend-interview"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

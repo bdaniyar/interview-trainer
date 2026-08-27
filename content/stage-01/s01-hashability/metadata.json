@@ -1,0 +1,50 @@
+{
+  "id": "backend-interview.1.4.hashability",
+  "slug": "s01-hashability",
+  "title": "Hashability",
+  "module_slug": "stage-01",
+  "module_title": "Stage 1 · Python Object Model and Core Types",
+  "module_order": 1,
+  "order": 7,
+  "duration": 12,
+  "estimated_minutes": 12,
+  "xp": 5,
+  "topics": [
+    "hashable object",
+    "dict key/set member",
+    "equality/hash contract",
+    "mutable object as key",
+    "tuple hashability",
+    "custom `__hash__`."
+  ],
+  "description": "P0 · Hashability: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P0",
+  "priority_note": "P0 | high",
+  "interview_probability": "high",
+  "market_frequency": "very_common",
+  "market_evidence": "Python указан в 18/18 primary вакансий; object model — базовый screening foundation.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить Hashability и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.1.3.mutability-and-immutability"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}

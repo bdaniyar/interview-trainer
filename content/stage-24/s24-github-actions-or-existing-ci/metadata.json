@@ -1,0 +1,50 @@
+{
+  "id": "backend-interview.24.3.github-actions-or-existing-ci",
+  "slug": "s24-github-actions-or-existing-ci",
+  "title": "GitHub Actions or existing CI",
+  "module_slug": "stage-24",
+  "module_title": "Stage 24 · CI/CD",
+  "module_order": 24,
+  "order": 312,
+  "duration": 10,
+  "estimated_minutes": 10,
+  "xp": 5,
+  "topics": [
+    "workflow",
+    "trigger",
+    "job",
+    "step",
+    "cache",
+    "secrets."
+  ],
+  "description": "P1 · GitHub Actions or existing CI: mental model, interview rubric и backend-сценарий.",
+  "has_task": false,
+  "has_solution": false,
+  "priority": "P1",
+  "priority_note": "P1 | high",
+  "interview_probability": "high",
+  "market_frequency": "common",
+  "market_evidence": "CI/CD явно встречался в 11/18; junior должен понимать quality gates и читать logs.",
+  "priority_basis": [
+    "market",
+    "technical_interview",
+    "backend_work"
+  ],
+  "why_it_matters": "Помогает объяснить GitHub Actions or existing CI и применить тему без типичной backend-ошибки.",
+  "difficulty": "junior",
+  "prerequisites": [
+    "backend-interview.24.2.cd-basics"
+  ],
+  "modes": [
+    "learn",
+    "interview",
+    "practice"
+  ],
+  "tracks": [
+    "full",
+    "interview_crash_course"
+  ],
+  "content_status": "complete",
+  "last_verified": "2026-08-27",
+  "generated_by": "populate_curriculum.py"
+}
