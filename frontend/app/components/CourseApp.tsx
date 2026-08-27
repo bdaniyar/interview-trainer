@@ -43,7 +43,7 @@ export function CourseApp() {
   const [error, setError] = useState('');
   const [loadingLesson, setLoadingLesson] = useState(true);
   const [sidebarWidth, setSidebarWidth] = useState(() => storedNumber('pythoria-sidebar-width', 278, 220, 420));
-  const [theoryRatio, setTheoryRatio] = useState(() => storedNumber('pythoria-theory-ratio', 52, 28, 72));
+  const [workspaceRatio, setWorkspaceRatio] = useState(() => storedNumber('pythoria-workspace-ratio', 50, 34, 72));
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [expandedModules, setExpandedModules] = useState<Set<string>>(new Set());
@@ -175,12 +175,15 @@ export function CourseApp() {
     window.addEventListener('pointerup', up);
   };
 
-  const startTheoryResize = (event: React.PointerEvent) => {
+  const startWorkspaceResize = (event: React.PointerEvent) => {
     const container = (event.currentTarget.parentElement as HTMLElement).getBoundingClientRect();
-    const move = (next: PointerEvent) => setTheoryRatio(clamp(((next.clientY - container.top) / container.height) * 100, 28, 72));
-    const up = (next: PointerEvent) => {
-      const ratio = clamp(((next.clientY - container.top) / container.height) * 100, 28, 72);
-      localStorage.setItem('pythoria-theory-ratio', String(ratio));
+    let latest = workspaceRatio;
+    const move = (next: PointerEvent) => {
+      latest = clamp(((container.right - next.clientX) / container.width) * 100, 34, 72);
+      setWorkspaceRatio(latest);
+    };
+    const up = () => {
+      localStorage.setItem('pythoria-workspace-ratio', String(latest));
       window.removeEventListener('pointermove', move);
       window.removeEventListener('pointerup', up);
     };
@@ -251,7 +254,7 @@ export function CourseApp() {
 
         <div className="vertical-resizer sidebar-resizer" onPointerDown={startSidebarResize} />
 
-        <div className="content-stack" style={{ gridTemplateRows: `${theoryRatio}% 5px minmax(250px, 1fr)` }}>
+        <div className="content-stack" style={{ gridTemplateColumns: `minmax(260px, ${100 - workspaceRatio}fr) 5px minmax(340px, ${workspaceRatio}fr)` }}>
           <section className="lesson-pane">
             <div className="lesson-toolbar">
               <div><span className="eyebrow">МОДУЛЬ {course.modules.findIndex((module) => module.slug === lesson?.module_slug) + 1} · УРОК {activePosition}</span><strong>{lesson?.title ?? 'Загрузка…'}</strong></div>
@@ -265,7 +268,13 @@ export function CourseApp() {
             )}
             {mentorOpen && lesson ? <aside className="mentor-card"><header><Bot size={16} /><b>AI-ментор</b><button onClick={() => setMentorOpen(false)}><X size={14} /></button></header><p>Начни с контракта задачи. Для темы <b>{lesson.topics[0]}</b> проверь граничные случаи и не меняй публичную сигнатуру.</p><div className="mentor-tip"><BookOpenCheck size={14} /> Запусти Check: тесты укажут, какой сценарий ещё не покрыт.</div></aside> : null}
           </section>
-          <div className="horizontal-resizer theory-resizer" onPointerDown={startTheoryResize} />
+          <div
+            className="vertical-resizer workspace-resizer"
+            role="separator"
+            aria-label="Изменить ширину IDE"
+            aria-orientation="vertical"
+            onPointerDown={startWorkspaceResize}
+          />
           {lesson ? (
             <CodeWorkspace
               key={lesson.slug}

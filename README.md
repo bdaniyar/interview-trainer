@@ -15,7 +15,7 @@ Pythoria — локальная интерактивная платформа д
 - xterm.js с командами `python file.py`, `pytest`, `ls`, `pwd`, `clear`;
 - отдельные Run и Check, stdout/stderr, exit code, timeout и список pytest-результатов;
 - SQLite persistence для кода, прогресса, XP, попыток, последнего урока и interview answers;
-- resizable course/sidebar, theory/workspace и editor/terminal panels;
+- resizable sidebar, горизонтальный lesson/IDE split и editor/terminal panels;
 - горячие клавиши `Cmd/Ctrl + Enter`, `Cmd/Ctrl + Shift + Enter`, `Cmd/Ctrl + S`;
 - responsive sidebar и компактный mobile layout;
 - оригинальные interview и code questions;
