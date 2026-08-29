@@ -42,12 +42,17 @@ CSRF использует автоматически отправляемые br
 
 ## Code examples
 
+### CSRF: отдельный пример
+
 ```python
-def can_edit(user, article) -> bool:
-    return user.id == article.author_id or "moderator" in user.roles
+def example_s13_csrf() -> tuple[str, ...]:
+    # CSRF: проверяем отдельный contract урока.
+    return ('browser automatically sends cookies', 'SameSite', 'CSRF token', 'bearer header differences',)
+
+assert example_s13_csrf()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Назови threat, trust boundary, server-side check и безопасный отказ.
 
 ## Common mistakes
 

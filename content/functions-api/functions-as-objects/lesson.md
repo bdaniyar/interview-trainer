@@ -50,13 +50,17 @@
 
 ## Code examples
 
+### Function objects and first-class functions: отдельный пример
+
 ```python
-def list_users(limit: int = 20, *, active: bool | None = None) -> list[dict]:
-    """Явный API: active нельзя передать случайно позиционно."""
-    return []
+def normalize_email(value: str) -> str:
+    return value.strip().lower()
+
+handlers = [normalize_email, str.upper]
+print([handler(" A@EXAMPLE.COM ") for handler in handlers])
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Функции — объекты: их можно хранить в коллекции, передавать и вызывать позже.
 
 ## Common mistakes
 

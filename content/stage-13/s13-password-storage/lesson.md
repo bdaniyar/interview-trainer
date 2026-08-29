@@ -46,12 +46,16 @@ Security строится слоями: аутентификация, автор
 
 ## Code examples
 
-```python
-def can_edit(user, article) -> bool:
-    return user.id == article.author_id or "moderator" in user.roles
+### Password storage: отдельный пример
+
+```text
+Сценарий: Пароли сохранены через один SHA-256.
+
+Проверка:
+Argon2id/bcrypt/scrypt с индивидуальной солью и cost; тест verify и migration policy.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный debugging example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

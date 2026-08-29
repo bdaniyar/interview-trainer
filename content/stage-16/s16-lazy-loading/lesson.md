@@ -38,19 +38,16 @@ Dependency объявляет вход handler/service явно; FastAPI раз�
 
 ## Code examples
 
-```python
-from sqlalchemy import select
-from sqlalchemy.orm import selectinload
+### Lazy loading: отдельный пример
 
-statement = (
-    select(User)
-    .options(selectinload(User.roles))
-    .where(User.active.is_(True))
-)
-users = session.scalars(statement).all()
+```text
+Сценарий: Доступ к relationship запускает SQL в serializer.
+
+Проверка:
+Загрузить данные явно, запретить accidental lazy load и не прятать I/O за attribute access.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный debugging example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

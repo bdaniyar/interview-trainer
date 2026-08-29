@@ -54,14 +54,16 @@ Window function считает значение по partition, не свора�
 
 ## Code examples
 
+### Cache invalidation: отдельный пример
+
 ```text
-GET cache:user:42 → miss
-SELECT user FROM PostgreSQL
-SET cache:user:42 value EX 60
-UPDATE user → COMMIT → DEL cache:user:42
+Сценарий: PUT commit успешен, GET отдаёт старое.
+
+Проверка:
+Invalidate/update after commit; key ownership, TTL, race.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный debugging example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

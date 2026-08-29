@@ -46,13 +46,19 @@ LEGB ищет имя в local, enclosing, global и builtins; assignment дел�
 
 ## Code examples
 
+### Closures and free variables: отдельный пример
+
 ```python
-def list_users(limit: int = 20, *, active: bool | None = None) -> list[dict]:
-    """Явный API: active нельзя передать случайно позиционно."""
-    return []
+def make_prefixer(prefix):
+    def render(value):
+        return f"{prefix}:{value}"
+    return render
+
+user_key = make_prefixer("user")
+print(user_key(42))
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Closure продолжает видеть binding `prefix` после завершения внешней функции.
 
 ## Common mistakes
 

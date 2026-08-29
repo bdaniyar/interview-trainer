@@ -50,14 +50,20 @@ Pipeline должен собирать один artifact и падать на в
 
 ## Code examples
 
+### Quality gates: отдельный пример
+
 ```yaml
-steps:
-  - run: python -m pytest
-  - run: ruff check .
-  - run: docker build -t app:${GITHUB_SHA} .
+# 24.4 · Quality gates
+lesson:
+  key: s24_quality_gates
+  checks:
+    - Ruff
+    - tests
+    - typecheck
+    - coverage
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+CI gate должен быть воспроизводимым, иметь понятный failure log и не раскрывать secrets.
 
 ## Common mistakes
 

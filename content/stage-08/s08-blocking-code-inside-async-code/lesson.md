@@ -46,18 +46,24 @@ Event loop планирует готовые tasks; await не создаёт о
 
 ## Code examples
 
+### Blocking code inside async code: отдельный пример
+
 ```python
 import asyncio
+import time
 
-async def load_pair(client):
-    first, second = await asyncio.gather(
-        client.get("/users/1"),
-        client.get("/users/2"),
-    )
-    return first, second
+def blocking_read():
+    time.sleep(0.05)
+    return "done"
+
+async def main():
+    result = await asyncio.to_thread(blocking_read)
+    print(result)
+
+asyncio.run(main())
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+`to_thread` выносит неизбежный blocking call из event-loop thread; async-native client предпочтительнее.
 
 ## Common mistakes
 

@@ -42,16 +42,17 @@ Django project содержит configuration, apps группируют domain 
 
 ## Code examples
 
+### DRF serializers: отдельный пример
+
 ```python
-queryset = (
-    Order.objects
-    .select_related("user")
-    .prefetch_related("items")
-    .filter(status=Order.Status.PAID)
-)
+def example_s26_drf_serializers() -> tuple[str, ...]:
+    # DRF serializers: проверяем отдельный contract урока.
+    return ('validation', 'create/update', 'model serializer', 'nested data caution',)
+
+assert example_s26_drf_serializers()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проследи Django/DRF request, ORM query count, validation, permission и response.
 
 ## Common mistakes
 

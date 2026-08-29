@@ -42,18 +42,23 @@ Event loop планирует готовые tasks; await не создаёт о
 
 ## Code examples
 
+### `asyncio.gather`: отдельный пример
+
 ```python
 import asyncio
 
-async def load_pair(client):
-    first, second = await asyncio.gather(
-        client.get("/users/1"),
-        client.get("/users/2"),
-    )
-    return first, second
+async def item(value, delay):
+    await asyncio.sleep(delay)
+    return value
+
+async def main():
+    result = await asyncio.gather(item("first", 0.02), item("second", 0))
+    print(result)
+
+asyncio.run(main())
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+`gather` запускает операции конкурентно, но возвращает результаты в порядке переданных awaitables.
 
 ## Common mistakes
 

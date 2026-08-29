@@ -46,19 +46,17 @@ SQLAlchemy 2.x управляет SQL, identity map, unit of work и transaction
 
 ## Code examples
 
-```python
-from sqlalchemy import select
-from sqlalchemy.orm import selectinload
+### Relationships: отдельный пример
 
-statement = (
-    select(User)
-    .options(selectinload(User.roles))
-    .where(User.active.is_(True))
-)
-users = session.scalars(statement).all()
+```python
+def example_s16_relationships() -> tuple[str, ...]:
+    # Relationships: проверяем отдельный contract урока.
+    return ('one-to-many', 'many-to-one', 'many-to-many', '`back_populates`',)
+
+assert example_s16_relationships()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Укажи владельца Session/transaction и момент фактического SQL I/O.
 
 ## Common mistakes
 

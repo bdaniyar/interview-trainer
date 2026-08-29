@@ -32,20 +32,19 @@ def squares(limit):
 
 ## Code examples
 
-```python
-from contextlib import contextmanager
+### Generator function and `yield`: отдельный пример
 
-@contextmanager
-def transaction(session):
-    try:
-        yield session
-        session.commit()
-    except Exception:
-        session.rollback()
-        raise
+```python
+def read_batches(rows, size):
+    for start in range(0, len(rows), size):
+        yield rows[start : start + size]
+
+stream = read_batches([1, 2, 3, 4, 5], 2)
+print(next(stream))
+print(list(stream))
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Generator сохраняет suspended frame между `yield` и лениво продолжает с текущей позиции.
 
 ## Common mistakes
 

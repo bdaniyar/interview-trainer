@@ -50,14 +50,20 @@ Pipeline должен собирать один artifact и падать на в
 
 ## Code examples
 
+### CI pipeline mental model: отдельный пример
+
 ```yaml
-steps:
-  - run: python -m pytest
-  - run: ruff check .
-  - run: docker build -t app:${GITHUB_SHA} .
+# 24.1 · CI pipeline mental model
+lesson:
+  key: s24_ci_pipeline_mental_model
+  checks:
+    - checkout
+    - install
+    - lint
+    - test
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+CI gate должен быть воспроизводимым, иметь понятный failure log и не раскрывать secrets.
 
 ## Common mistakes
 

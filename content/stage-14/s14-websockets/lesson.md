@@ -50,18 +50,17 @@ Path operation — внешний адаптер; бизнес-правила л
 
 ## Code examples
 
+### WebSockets: отдельный пример
+
 ```python
-from typing import Annotated
-from fastapi import APIRouter, Depends
+def example_s14_websockets() -> tuple[str, ...]:
+    # WebSockets: проверяем отдельный contract урока.
+    return ('connection lifecycle', 'receive/send', 'disconnect', 'authentication',)
 
-router = APIRouter(prefix="/users")
-
-@router.get("/{user_id}")
-def get_user(user_id: int, service: Annotated[UserService, Depends()]):
-    return service.get_or_404(user_id)
+assert example_s14_websockets()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проследи request через router, validation, dependency, service и response model.
 
 ## Common mistakes
 

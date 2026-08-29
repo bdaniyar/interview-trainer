@@ -33,14 +33,22 @@ assert original["roles"] == ["reader", "writer"]
 
 ## Code examples
 
+### Mutability and immutability: отдельный пример
+
 ```python
-payload = {"roles": ["reader"]}
-alias = payload
-alias["roles"].append("writer")
-assert payload["roles"] == ["reader", "writer"]
+roles = ["reader"]
+original_id = id(roles)
+roles.append("writer")
+
+name = "api"
+old_name_id = id(name)
+name += "-v2"
+
+print(id(roles) == original_id)
+print(id(name) == old_name_id)
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+List меняется с сохранением identity; операция со строкой создаёт новый immutable объект.
 
 ## Common mistakes
 

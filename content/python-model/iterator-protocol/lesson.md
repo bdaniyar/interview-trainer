@@ -32,20 +32,26 @@ next(iterator)  # 20
 
 ## Code examples
 
-```python
-from contextlib import contextmanager
+### Iterator protocol: отдельный пример
 
-@contextmanager
-def transaction(session):
-    try:
-        yield session
-        session.commit()
-    except Exception:
-        session.rollback()
-        raise
+```python
+class Countdown:
+    def __init__(self, start):
+        self.current = start
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.current == 0:
+            raise StopIteration
+        self.current -= 1
+        return self.current + 1
+
+print(list(Countdown(3)))
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Iterator protocol состоит из `__iter__`, stateful `__next__` и `StopIteration`.
 
 ## Common mistakes
 

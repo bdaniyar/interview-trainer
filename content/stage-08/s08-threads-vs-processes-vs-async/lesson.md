@@ -42,18 +42,18 @@ Event loop планирует готовые tasks; await не создаёт о
 
 ## Code examples
 
-```python
-import asyncio
+### Threads vs processes vs async: отдельный пример
 
-async def load_pair(client):
-    first, second = await asyncio.gather(
-        client.get("/users/1"),
-        client.get("/users/2"),
-    )
-    return first, second
+```python
+decision = {
+    "many_network_waits": "asyncio",
+    "blocking_library": "threads",
+    "cpu_bound_python": "processes",
+}
+print(decision)
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Модель конкурентности выбирают по workload, isolation и цене communication, а не по моде.
 
 ## Common mistakes
 

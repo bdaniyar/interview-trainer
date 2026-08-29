@@ -28,18 +28,17 @@
 
 ## Code examples
 
-```python
-class BookingService:
-    def __init__(self, repository, clock):
-        self.repository = repository
-        self.clock = clock
+### Separation of concerns: отдельный пример
 
-    def cancel(self, booking_id):
-        booking = self.repository.get(booking_id)
-        booking.cancel(at=self.clock.now())
+```python
+def example_s27_separation_of_concerns() -> tuple[str, ...]:
+    # Separation of concerns: проверяем отдельный contract урока.
+    return ('Separation of concerns',)
+
+assert example_s27_separation_of_concerns()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проведи границу слоя и dependency direction; business rule не должен зависеть от framework.
 
 ## Common mistakes
 

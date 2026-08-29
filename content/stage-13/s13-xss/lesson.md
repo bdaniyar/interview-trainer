@@ -38,12 +38,17 @@ Security строится слоями: аутентификация, автор
 
 ## Code examples
 
+### XSS: отдельный пример
+
 ```python
-def can_edit(user, article) -> bool:
-    return user.id == article.author_id or "moderator" in user.roles
+def example_s13_xss() -> tuple[str, ...]:
+    # XSS: проверяем отдельный contract урока.
+    return ('stored/reflected', 'output encoding', 'relevance to API-returned user content',)
+
+assert example_s13_xss()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Назови threat, trust boundary, server-side check и безопасный отказ.
 
 ## Common mistakes
 

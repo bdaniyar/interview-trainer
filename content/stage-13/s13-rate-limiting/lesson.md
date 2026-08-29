@@ -50,12 +50,17 @@ Redis хранит данные в памяти и полезен для cache/T
 
 ## Code examples
 
+### Rate limiting: отдельный пример
+
 ```python
-def can_edit(user, article) -> bool:
-    return user.id == article.author_id or "moderator" in user.roles
+def example_s13_rate_limiting() -> tuple[str, ...]:
+    # Rate limiting: проверяем отдельный contract урока.
+    return ('abuse control', 'per-user/IP/action', 'fixed/sliding/token bucket concepts', 'Redis atomic counters',)
+
+assert example_s13_rate_limiting()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Назови threat, trust boundary, server-side check и безопасный отказ.
 
 ## Common mistakes
 

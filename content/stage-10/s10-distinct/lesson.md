@@ -38,15 +38,16 @@ JOIN соединяет строки по условию и может изме�
 
 ## Code examples
 
+### DISTINCT: отдельный пример
+
 ```sql
-SELECT u.id, u.email, COUNT(o.id) AS orders_count
-FROM users AS u
-LEFT JOIN orders AS o ON o.user_id = u.id
-GROUP BY u.id, u.email
-ORDER BY u.id;
+SELECT DISTINCT category
+FROM products
+WHERE category IS NOT NULL
+ORDER BY category;
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+DISTINCT удаляет одинаковые result rows; ORDER BY отдельно задаёт наблюдаемый порядок.
 
 ## Common mistakes
 

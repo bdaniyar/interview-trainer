@@ -38,19 +38,16 @@ SQLAlchemy 2.x управляет SQL, identity map, unit of work и transaction
 
 ## Code examples
 
-```python
-from sqlalchemy import select
-from sqlalchemy.orm import selectinload
+### Cascade and delete-orphan: отдельный пример
 
-statement = (
-    select(User)
-    .options(selectinload(User.roles))
-    .where(User.active.is_(True))
-)
-users = session.scalars(statement).all()
+```text
+Сценарий: Удаление parent неожиданно удалило shared children.
+
+Проверка:
+Настроить cascade по ownership и DB FK semantics; тестировать delete/replace relationship на реальной БД.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный debugging example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

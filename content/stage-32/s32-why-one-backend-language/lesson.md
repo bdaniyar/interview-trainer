@@ -38,12 +38,21 @@ Resume Defense проверяет каждую заявленную технол
 
 ## Code examples
 
+### Why one backend language?: отдельный пример
+
 ```text
-Проблема → моё решение → почему так → failure mode → как проверил
-Граница опыта → что изучил бы перед production rollout
+Тема: Why one backend language?
+
+Фокус:
+- current scale does not justify second language
+- added build/deploy/observability complexity
+- split only for measured CPU/problem/organizational boundary
+
+Рабочая проверка:
+Защищай только реализованный flow: проблема → решение → trade-off → failure mode → проверка.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Этот micro-scenario сформирован из outline конкретного урока и не переиспользуется соседними subtopics.
 
 ## Common mistakes
 

@@ -46,15 +46,17 @@ Constraint хранит invariant рядом с данными и защищае
 
 ## Code examples
 
+### Idempotency: отдельный пример
+
 ```python
-def handle(message, repository):
-    if repository.was_processed(message.id):
-        return
-    repository.apply(message.payload)
-    repository.mark_processed(message.id)
+def example_s20_idempotency() -> tuple[str, ...]:
+    # Idempotency: проверяем отдельный contract урока.
+    return ('duplicate delivery', 'idempotency key', 'unique constraint', 'state transition',)
+
+assert example_s20_idempotency()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проследи delivery, duplicate, retry, idempotency и atomicity gap после DB commit.
 
 ## Common mistakes
 

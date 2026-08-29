@@ -33,7 +33,20 @@
 
 ## Code examples
 
-Сформулируй минимальный пример из текущего проекта: один happy path, одна граница и одна ошибка. Не добавляй инфраструктуру, не относящуюся к механизму.
+### Why Redis?: отдельный пример
+
+```text
+Тема: Why Redis?
+
+Фокус:
+- cache/ephemeral coordination
+- not durable source of truth
+
+Рабочая проверка:
+Ответ строй как context → личное действие → результат → конкретный follow-up.
+```
+
+Этот micro-scenario сформирован из outline конкретного урока и не переиспользуется соседними subtopics.
 
 ## Common mistakes
 

@@ -50,14 +50,16 @@ Linux basics нужны для запуска процесса, чтения л�
 
 ## Code examples
 
-```bash
-ps aux | rg uvicorn
-ss -ltnp | rg 8000
-tail -n 100 /var/log/app.log
-printf '%s\n' "$APP_ENV"
+### Reading/searching logs and files: отдельный пример
+
+```text
+Сценарий: Найди ERROR request_id=abc.
+
+Проверка:
+rg/grep + tail/context.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный operations example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

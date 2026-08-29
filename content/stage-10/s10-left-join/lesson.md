@@ -38,15 +38,17 @@ SQL описывает требуемый набор строк; коррект�
 
 ## Code examples
 
+### LEFT JOIN: отдельный пример
+
 ```sql
-SELECT u.id, u.email, COUNT(o.id) AS orders_count
+SELECT u.id, COUNT(s.id) AS active_sessions
 FROM users AS u
-LEFT JOIN orders AS o ON o.user_id = u.id
-GROUP BY u.id, u.email
-ORDER BY u.id;
+LEFT JOIN sessions AS s
+  ON s.user_id = u.id AND s.revoked_at IS NULL
+GROUP BY u.id;
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Условие правой таблицы находится в ON, поэтому users без active sessions не исчезают.
 
 ## Common mistakes
 

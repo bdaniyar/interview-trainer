@@ -42,19 +42,23 @@ Index — отдельная структура доступа с ценой з�
 
 ## Code examples
 
+### `__len__`, `__bool__`, `__contains__`, `__getitem__`: отдельный пример
+
 ```python
-from dataclasses import dataclass
+class Page:
+    def __init__(self, items):
+        self.items = tuple(items)
 
-@dataclass(frozen=True, slots=True)
-class UserId:
-    value: int
+    def __len__(self): return len(self.items)
+    def __bool__(self): return bool(self.items)
+    def __contains__(self, item): return item in self.items
+    def __getitem__(self, index): return self.items[index]
 
-    def __post_init__(self):
-        if self.value <= 0:
-            raise ValueError("user id must be positive")
+page = Page([10, 20])
+print(len(page), bool(page), 20 in page, page[0])
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Набор dunder methods подключает объект к независимым Python protocols длины, truthiness, membership и indexing.
 
 ## Common mistakes
 

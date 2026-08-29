@@ -33,15 +33,19 @@ GROUP BY формирует группы до вычисления aggregates, �
 
 ## Code examples
 
+### CASE: отдельный пример
+
 ```sql
-SELECT u.id, u.email, COUNT(o.id) AS orders_count
-FROM users AS u
-LEFT JOIN orders AS o ON o.user_id = u.id
-GROUP BY u.id, u.email
-ORDER BY u.id;
+SELECT id,
+       CASE
+           WHEN score >= 80 THEN 'high'
+           WHEN score >= 50 THEN 'medium'
+           ELSE 'low'
+       END AS score_band
+FROM assessments;
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+CASE проверяет ветви сверху вниз и возвращает одно значение для каждой строки.
 
 ## Common mistakes
 

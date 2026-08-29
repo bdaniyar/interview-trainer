@@ -46,18 +46,16 @@ Path operation — внешний адаптер; бизнес-правила л
 
 ## Code examples
 
-```python
-from typing import Annotated
-from fastapi import APIRouter, Depends
+### Testing FastAPI: отдельный пример
 
-router = APIRouter(prefix="/users")
+```text
+Сценарий: FastAPI test ходит в production-like DB.
 
-@router.get("/{user_id}")
-def get_user(user_id: int, service: Annotated[UserService, Depends()]):
-    return service.get_or_404(user_id)
+Проверка:
+Переопределить тот же dependency key через app.dependency_overrides и очищать override после test.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный debugging example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

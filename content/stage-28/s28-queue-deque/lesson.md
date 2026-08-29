@@ -38,13 +38,14 @@ Processes изолируют память и подходят для CPU-bound P
 
 ## Code examples
 
+### Queue/deque: отдельный пример
+
 ```python
-def deduplicate(values):
-    seen = set()
-    return [value for value in values if not (value in seen or seen.add(value))]
+values = [2, 1, 2, 3, 1]
+print(list(dict.fromkeys(values)))
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Expected: `[2, 1, 3]`. dict сохраняет порядок первого появления каждого hashable key.
 
 ## Common mistakes
 

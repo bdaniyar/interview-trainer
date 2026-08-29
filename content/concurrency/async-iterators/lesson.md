@@ -42,18 +42,24 @@ Event loop планирует готовые tasks; await не создаёт о
 
 ## Code examples
 
+### Async iterators and generators: отдельный пример
+
 ```python
 import asyncio
 
-async def load_pair(client):
-    first, second = await asyncio.gather(
-        client.get("/users/1"),
-        client.get("/users/2"),
-    )
-    return first, second
+async def events():
+    for value in range(3):
+        await asyncio.sleep(0)
+        yield value
+
+async def main():
+    async for event in events():
+        print(event)
+
+asyncio.run(main())
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Async generator лениво выдаёт значения и может ожидать I/O между итерациями.
 
 ## Common mistakes
 

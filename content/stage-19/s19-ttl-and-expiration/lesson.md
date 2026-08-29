@@ -42,14 +42,16 @@ Redis — быстрый in-memory data store для cache и временног
 
 ## Code examples
 
+### TTL and expiration: отдельный пример
+
 ```text
-GET cache:user:42 → miss
-SELECT user FROM PostgreSQL
-SET cache:user:42 value EX 60
-UPDATE user → COMMIT → DEL cache:user:42
+Сценарий: Reset state навсегда остаётся в Redis.
+
+Проверка:
+Установить короткий TTL атомарно при записи и тестировать expiration policy.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный debugging example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

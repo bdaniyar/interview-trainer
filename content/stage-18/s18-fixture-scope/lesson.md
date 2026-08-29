@@ -33,15 +33,16 @@ Arrange создаёт условия, Act выполняет одно пове�
 
 ## Code examples
 
-```python
-import pytest
+### Fixture scope: отдельный пример
 
-@pytest.mark.parametrize(("value", "expected"), [(0, False), (1, True)])
-def test_is_positive(value, expected):
-    assert is_positive(value) is expected
+```text
+Сценарий: Mutable session fixture течёт между tests.
+
+Проверка:
+Function scope или reset; scope по isolation.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный testing example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

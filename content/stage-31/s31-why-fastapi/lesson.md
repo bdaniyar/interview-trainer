@@ -46,7 +46,22 @@ Type hint описывает контракт для checker/IDE; обычный
 
 ## Code examples
 
-Сформулируй минимальный пример из текущего проекта: один happy path, одна граница и одна ошибка. Не добавляй инфраструктуру, не относящуюся к механизму.
+### Why FastAPI?: отдельный пример
+
+```text
+Тема: Why FastAPI?
+
+Фокус:
+- type hints
+- Pydantic
+- OpenAPI
+- async stack
+
+Рабочая проверка:
+Ответ строй как context → личное действие → результат → конкретный follow-up.
+```
+
+Этот micro-scenario сформирован из outline конкретного урока и не переиспользуется соседними subtopics.
 
 ## Common mistakes
 

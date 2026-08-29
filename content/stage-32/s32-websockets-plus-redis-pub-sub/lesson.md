@@ -38,12 +38,16 @@ Redis Pub/Sub доставляет только активным subscribers и 
 
 ## Code examples
 
+### WebSockets + Redis Pub/Sub: отдельный пример
+
 ```text
-Проблема → моё решение → почему так → failure mode → как проверил
-Граница опыта → что изучил бы перед production rollout
+Сценарий: Cross-instance flow.
+
+Проверка:
+Persist, publish, fan-out; offline reads DB.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный architecture example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

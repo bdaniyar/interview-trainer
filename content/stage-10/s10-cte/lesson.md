@@ -42,15 +42,20 @@ SQL описывает требуемый набор строк; коррект�
 
 ## Code examples
 
+### CTE: отдельный пример
+
 ```sql
-SELECT u.id, u.email, COUNT(o.id) AS orders_count
-FROM users AS u
-LEFT JOIN orders AS o ON o.user_id = u.id
-GROUP BY u.id, u.email
-ORDER BY u.id;
+WITH monthly AS (
+    SELECT date_trunc('month', created_at) AS month, SUM(total) AS revenue
+    FROM invoices
+    GROUP BY date_trunc('month', created_at)
+)
+SELECT month, revenue
+FROM monthly
+WHERE revenue > 1000;
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+CTE именует промежуточный result и отделяет aggregation от последующей фильтрации.
 
 ## Common mistakes
 

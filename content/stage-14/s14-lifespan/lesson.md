@@ -42,18 +42,16 @@ Path operation — внешний адаптер; бизнес-правила л
 
 ## Code examples
 
-```python
-from typing import Annotated
-from fastapi import APIRouter, Depends
+### Lifespan: отдельный пример
 
-router = APIRouter(prefix="/users")
+```text
+Сценарий: HTTP client создаётся на startup, но socket остаётся после shutdown.
 
-@router.get("/{user_id}")
-def get_user(user_id: int, service: Annotated[UserService, Depends()]):
-    return service.get_or_404(user_id)
+Проверка:
+Lifespan async context manager с cleanup в finally; test lifespan and close state.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный debugging example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

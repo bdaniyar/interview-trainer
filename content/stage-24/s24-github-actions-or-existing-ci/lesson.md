@@ -50,14 +50,20 @@ Pipeline должен собирать один artifact и падать на в
 
 ## Code examples
 
+### GitHub Actions or existing CI: отдельный пример
+
 ```yaml
-steps:
-  - run: python -m pytest
-  - run: ruff check .
-  - run: docker build -t app:${GITHUB_SHA} .
+# 24.3 · GitHub Actions or existing CI
+lesson:
+  key: s24_github_actions_or_existing_ci
+  checks:
+    - workflow
+    - trigger
+    - job
+    - step
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+CI gate должен быть воспроизводимым, иметь понятный failure log и не раскрывать secrets.
 
 ## Common mistakes
 

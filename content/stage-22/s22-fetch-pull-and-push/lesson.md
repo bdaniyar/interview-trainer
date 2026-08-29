@@ -33,14 +33,16 @@ Git хранит snapshots и граф commits; working tree, index, local branc
 
 ## Code examples
 
+### fetch, pull and push: отдельный пример
+
 ```bash
-git status
-git add backend/app.py tests/test_app.py
-git commit -m "fix booking conflict handling"
-git push -u origin fix/booking-conflict
+# 22.4 · fetch, pull and push
+# Focus: pull as fetch + integration, upstream branch
+printf '%s
+' 's22_fetch_pull_and_push'
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Перед командой назови изменяемое состояние: files, index, branch pointer или shared history.
 
 ## Common mistakes
 

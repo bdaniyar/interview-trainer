@@ -46,7 +46,22 @@
 
 ## Code examples
 
-Сформулируй минимальный пример из текущего проекта: один happy path, одна граница и одна ошибка. Не добавляй инфраструктуру, не относящуюся к механизму.
+### Tell me about yourself: отдельный пример
+
+```text
+Тема: Tell me about yourself
+
+Фокус:
+- 60–90 seconds
+- current focus
+- relevant project
+- target role
+
+Рабочая проверка:
+Ответ строй как context → личное действие → результат → конкретный follow-up.
+```
+
+Этот micro-scenario сформирован из outline конкретного урока и не переиспользуется соседними subtopics.
 
 ## Common mistakes
 

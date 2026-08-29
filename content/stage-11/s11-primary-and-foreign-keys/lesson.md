@@ -38,14 +38,15 @@ Constraint защищает истину, transaction объединяет из�
 
 ## Code examples
 
+### Primary and foreign keys: отдельный пример
+
 ```sql
-BEGIN;
-SELECT id FROM rooms WHERE id = 42 FOR UPDATE;
-INSERT INTO bookings(room_id, starts_at, ends_at) VALUES (42, $1, $2);
-COMMIT;
+-- 11.1 · Primary and foreign keys
+-- Focus: entity identity, referential integrity, delete/update actions
+SELECT 's11_primary_and_foreign_keys' AS example_key;
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проверь invariant, конкурентный сценарий и фактический query plan вместо догадки.
 
 ## Common mistakes
 

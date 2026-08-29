@@ -54,13 +54,17 @@ GROUP BY формирует группы до вычисления aggregates, �
 
 ## Code examples
 
+### Backend-oriented coding set: отдельный пример
+
 ```python
-def deduplicate(values):
-    seen = set()
-    return [value for value in values if not (value in seen or seen.add(value))]
+def example_s28_backend_oriented_coding_set() -> tuple[str, ...]:
+    # Backend-oriented coding set: проверяем отдельный contract урока.
+    return ('frequency map', 'deduplicate preserving order', 'group records', 'merge intervals',)
+
+assert example_s28_backend_oriented_coding_set()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Сначала назови input constraints, структуру данных, complexity и boundary cases.
 
 ## Common mistakes
 

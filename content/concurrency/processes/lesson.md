@@ -42,14 +42,21 @@ Thread разделяет память процесса; process изолиро�
 
 ## Code examples
 
-```python
-from concurrent.futures import ThreadPoolExecutor
+### Multiprocessing: отдельный пример
 
-with ThreadPoolExecutor(max_workers=4) as pool:
-    results = list(pool.map(read_remote_resource, urls))
+```python
+from multiprocessing import Process, Queue
+
+def calculate(output):
+    output.put(sum(value * value for value in range(10_000)))
+
+queue = Queue()
+process = Process(target=calculate, args=(queue,))
+process.start(); process.join()
+print(queue.get())
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Process имеет отдельную память, поэтому результат передаётся через IPC, а arguments должны сериализоваться.
 
 ## Common mistakes
 

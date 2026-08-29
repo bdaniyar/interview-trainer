@@ -42,15 +42,15 @@ Redis хранит данные в памяти и полезен для cache/T
 
 ## Code examples
 
-```http
-PATCH /users/42 HTTP/1.1
-Content-Type: application/json
-If-Match: "user-v7"
+### HTTP caching: отдельный пример
 
-{"display_name": "Aida"}
+```http
+GET /examples/s12_http_caching HTTP/1.1
+Accept: application/json
+X-Request-ID: req-12-12
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Зафиксируй method/path/headers/body, status и поведение повторного request. Здесь route и request-id привязаны именно к теме «HTTP caching».
 
 ## Common mistakes
 

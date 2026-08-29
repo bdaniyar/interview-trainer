@@ -42,15 +42,16 @@ JOIN соединяет строки по условию и может изме�
 
 ## Code examples
 
+### INNER JOIN: отдельный пример
+
 ```sql
-SELECT u.id, u.email, COUNT(o.id) AS orders_count
-FROM users AS u
-LEFT JOIN orders AS o ON o.user_id = u.id
-GROUP BY u.id, u.email
-ORDER BY u.id;
+SELECT a.id, a.title, u.email AS author_email
+FROM articles AS a
+JOIN users AS u ON u.id = a.author_id
+ORDER BY a.id;
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+INNER JOIN оставляет только пары строк, удовлетворяющие условию связи author_id → users.id.
 
 ## Common mistakes
 

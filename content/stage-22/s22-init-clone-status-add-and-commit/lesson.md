@@ -28,14 +28,16 @@ Git хранит snapshots и граф commits; working tree, index, local branc
 
 ## Code examples
 
+### init, clone, status, add and commit: отдельный пример
+
 ```bash
-git status
-git add backend/app.py tests/test_app.py
-git commit -m "fix booking conflict handling"
-git push -u origin fix/booking-conflict
+# 22.2 · init, clone, status, add and commit
+# Focus: init, clone, status, add and commit
+printf '%s
+' 's22_init_clone_status_add_and_commit'
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Перед командой назови изменяемое состояние: files, index, branch pointer или shared history.
 
 ## Common mistakes
 

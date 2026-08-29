@@ -38,19 +38,20 @@ Mutable объект меняется с сохранением identity, поэ
 
 ## Code examples
 
+### `__new__` vs `__init__`: отдельный пример
+
 ```python
-from dataclasses import dataclass
+class PositiveInt(int):
+    def __new__(cls, value):
+        parsed = int(value)
+        if parsed <= 0:
+            raise ValueError("positive value required")
+        return super().__new__(cls, parsed)
 
-@dataclass(frozen=True, slots=True)
-class UserId:
-    value: int
-
-    def __post_init__(self):
-        if self.value <= 0:
-            raise ValueError("user id must be positive")
+print(PositiveInt("7"))
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Для immutable base создание и validation значения выполняют в `__new__`; `__init__` уже получает созданный объект.
 
 ## Common mistakes
 

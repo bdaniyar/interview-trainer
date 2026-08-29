@@ -46,12 +46,17 @@ Authorization выполняется server-side на каждом resource/acti
 
 ## Code examples
 
+### OAuth2 basics: отдельный пример
+
 ```python
-def can_edit(user, article) -> bool:
-    return user.id == article.author_id or "moderator" in user.roles
+def example_s13_oauth2_basics() -> tuple[str, ...]:
+    # OAuth2 basics: проверяем отдельный contract урока.
+    return ('resource owner', 'client', 'authorization server', 'resource server',)
+
+assert example_s13_oauth2_basics()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Назови threat, trust boundary, server-side check и безопасный отказ.
 
 ## Common mistakes
 

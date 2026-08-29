@@ -42,15 +42,16 @@ Arrange создаёт условия, Act выполняет одно пове�
 
 ## Code examples
 
-```python
-import pytest
+### Async tests: отдельный пример
 
-@pytest.mark.parametrize(("value", "expected"), [(0, False), (1, True)])
-def test_is_positive(value, expected):
-    assert is_positive(value) is expected
+```text
+Сценарий: Test завершился, background task осталась.
+
+Проверка:
+Await/cancel tasks; deterministic event.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный testing example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

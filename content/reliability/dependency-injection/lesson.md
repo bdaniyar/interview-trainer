@@ -38,18 +38,17 @@
 
 ## Code examples
 
-```python
-class BookingService:
-    def __init__(self, repository, clock):
-        self.repository = repository
-        self.clock = clock
+### Dependency injection: отдельный пример
 
-    def cancel(self, booking_id):
-        booking = self.repository.get(booking_id)
-        booking.cancel(at=self.clock.now())
+```python
+class Service:
+    def __init__(self, clock): self.clock = clock
+    def now(self): return self.clock()
+s = Service(lambda: 42)
+print(s.now())
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Expected: `42`. Explicit dependency делает поведение заменяемым в тесте без global patch.
 
 ## Common mistakes
 

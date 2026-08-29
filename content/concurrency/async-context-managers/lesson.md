@@ -38,18 +38,21 @@ Event loop планирует готовые tasks; await не создаёт о
 
 ## Code examples
 
-```python
-import asyncio
+### Async context managers: отдельный пример
 
-async def load_pair(client):
-    first, second = await asyncio.gather(
-        client.get("/users/1"),
-        client.get("/users/2"),
-    )
-    return first, second
+```python
+class AsyncResource:
+    async def __aenter__(self):
+        return self
+
+    async def __aexit__(self, kind, value, traceback):
+        await self.close()
+
+    async def close(self):
+        pass
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Async context manager разрешает await во время acquire/release и гарантирует cleanup вокруг блока.
 
 ## Common mistakes
 

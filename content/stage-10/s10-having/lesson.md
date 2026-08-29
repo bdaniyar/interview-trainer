@@ -38,15 +38,16 @@ SQL описывает требуемый набор строк; коррект�
 
 ## Code examples
 
+### HAVING: отдельный пример
+
 ```sql
-SELECT u.id, u.email, COUNT(o.id) AS orders_count
-FROM users AS u
-LEFT JOIN orders AS o ON o.user_id = u.id
-GROUP BY u.id, u.email
-ORDER BY u.id;
+SELECT author_id, COUNT(*) AS article_count
+FROM articles
+GROUP BY author_id
+HAVING COUNT(*) >= 3;
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+HAVING фильтрует уже сформированные группы; аналогичный predicate нельзя применить в WHERE до aggregation.
 
 ## Common mistakes
 

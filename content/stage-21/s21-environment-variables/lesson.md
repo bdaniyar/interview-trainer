@@ -38,16 +38,19 @@ Docker image — неизменяемый шаблон filesystem, container —
 
 ## Code examples
 
-```dockerfile
-FROM python:3.12-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
-CMD ["python", "-m", "app"]
+### Environment variables: отдельный пример
+
+```yaml
+# 21.7 · Environment variables
+lesson:
+  key: s21_environment_variables
+  checks:
+    - runtime configuration
+    - no secrets baked into image
+    - `.env` vs `.env.example`
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Разделяй build-time image и runtime container: DNS, ports, mounts, env и readiness.
 
 ## Common mistakes
 

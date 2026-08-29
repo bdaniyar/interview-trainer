@@ -42,13 +42,15 @@ Migration — воспроизводимый переход между верс�
 
 ## Code examples
 
+### Safe schema changes: отдельный пример
+
 ```bash
-alembic revision --autogenerate -m "add booking status"
+alembic revision -m "s17_safe_schema_changes"
+# review upgrade/downgrade for: expand/contract, nullable → backfill → constraint, indexes on large tables, backward compatibility
 alembic upgrade head
-alembic current
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Review migration как versioned schema transition; autogenerate — только кандидат.
 
 ## Common mistakes
 

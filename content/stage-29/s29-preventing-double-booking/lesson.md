@@ -28,13 +28,16 @@ Junior system design начинается с требований, request path,
 
 ## Code examples
 
+### Preventing double booking: отдельный пример
+
 ```text
-Client → reverse proxy → FastAPI → service → PostgreSQL
-                                  ↘ Redis
-                                  ↘ outbox → worker
+Сценарий: Concurrent availability.
+
+Проверка:
+DB conflict, lock/constraint, test.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный architecture example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

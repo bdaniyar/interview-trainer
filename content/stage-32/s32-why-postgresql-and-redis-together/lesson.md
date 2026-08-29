@@ -38,12 +38,16 @@ Redis хранит данные в памяти и полезен для cache/T
 
 ## Code examples
 
+### Why PostgreSQL and Redis together?: отдельный пример
+
 ```text
-Проблема → моё решение → почему так → failure mode → как проверил
-Граница опыта → что изучил бы перед production rollout
+Сценарий: Почему оба?
+
+Проверка:
+Durable truth vs cache/temp/fan-out.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный architecture example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

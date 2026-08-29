@@ -50,15 +50,22 @@ SQL описывает требуемый набор строк; коррект�
 
 ## Code examples
 
+### Relational model and tables: отдельный пример
+
 ```sql
-SELECT u.id, u.email, COUNT(o.id) AS orders_count
-FROM users AS u
-LEFT JOIN orders AS o ON o.user_id = u.id
-GROUP BY u.id, u.email
-ORDER BY u.id;
+CREATE TABLE authors (
+    id bigint PRIMARY KEY,
+    name text NOT NULL
+);
+
+CREATE TABLE articles (
+    id bigint PRIMARY KEY,
+    author_id bigint NOT NULL REFERENCES authors(id),
+    title text NOT NULL
+);
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Таблицы моделируют сущности, primary key идентифицирует строку, foreign key хранит допустимую связь.
 
 ## Common mistakes
 

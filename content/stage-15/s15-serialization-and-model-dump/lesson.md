@@ -42,15 +42,17 @@ Pydantic v2 преобразует и валидирует данные на г�
 
 ## Code examples
 
-```python
-from pydantic import BaseModel, Field
+### Serialization and `model_dump`: отдельный пример
 
-class BookingCreate(BaseModel):
-    room_id: int = Field(gt=0)
-    guests: int = Field(ge=1, le=8)
+```python
+def example_s15_serialization_and_model_dump() -> tuple[str, ...]:
+    # Serialization and `model_dump`: проверяем отдельный contract урока.
+    return ('JSON mode', 'exclude unset', 'aliases', 'secret fields',)
+
+assert example_s15_serialization_and_model_dump()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проверь missing, explicit null, invalid input и serialized output Pydantic v2.
 
 ## Common mistakes
 

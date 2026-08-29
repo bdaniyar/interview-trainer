@@ -46,13 +46,17 @@
 
 ## Code examples
 
+### `*args`, `**kwargs` and unpacking: отдельный пример
+
 ```python
-def list_users(limit: int = 20, *, active: bool | None = None) -> list[dict]:
-    """Явный API: active нельзя передать случайно позиционно."""
-    return []
+def audit(event, *entity_ids, request_id=None, **details):
+    return event, entity_ids, request_id, details
+
+context = {"request_id": "req-7", "actor": 42}
+print(audit("updated", 10, 11, **context))
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+`*args` собирает positional IDs, `**kwargs` — дополнительные named fields; unpacking разворачивает mapping при вызове.
 
 ## Common mistakes
 

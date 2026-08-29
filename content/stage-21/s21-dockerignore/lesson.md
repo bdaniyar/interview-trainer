@@ -28,16 +28,16 @@ Container запускает изолированный process из image; да
 
 ## Code examples
 
-```dockerfile
-FROM python:3.12-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
-CMD ["python", "-m", "app"]
+### `.dockerignore`: отдельный пример
+
+```text
+Сценарий: COPY . . добавил .env.
+
+Проверка:
+dockerignore, rotation, runtime secrets.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный operations example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

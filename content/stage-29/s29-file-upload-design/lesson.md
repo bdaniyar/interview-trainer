@@ -46,13 +46,16 @@ Junior system design начинается с требований, request path,
 
 ## Code examples
 
+### File upload design: отдельный пример
+
 ```text
-Client → reverse proxy → FastAPI → service → PostgreSQL
-                                  ↘ Redis
-                                  ↘ outbox → worker
+Сценарий: Большой upload не через API memory.
+
+Проверка:
+Presigned URL, policy, finalize validation.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный architecture example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

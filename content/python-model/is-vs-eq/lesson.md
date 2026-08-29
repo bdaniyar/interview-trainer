@@ -41,14 +41,19 @@ print(a is c)  # True
 
 ## Code examples
 
+### Identity and equality: отдельный пример
+
 ```python
-payload = {"roles": ["reader"]}
-alias = payload
-alias["roles"].append("writer")
-assert payload["roles"] == ["reader", "writer"]
+left = [1, 2]
+right = [1, 2]
+same = left
+
+print(left == right)
+print(left is right)
+print(left is same)
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+`==` вызывает equality protocol, а `is` сравнивает identity объектов.
 
 ## Common mistakes
 

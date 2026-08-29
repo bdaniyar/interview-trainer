@@ -42,18 +42,21 @@ Event loop планирует готовые tasks; await не создаёт о
 
 ## Code examples
 
+### Event loop: отдельный пример
+
 ```python
 import asyncio
 
-async def load_pair(client):
-    first, second = await asyncio.gather(
-        client.get("/users/1"),
-        client.get("/users/2"),
-    )
-    return first, second
+async def main():
+    loop = asyncio.get_running_loop()
+    future = loop.create_future()
+    loop.call_soon(future.set_result, "ready")
+    print(await future)
+
+asyncio.run(main())
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Event loop выполняет ready callback, завершает Future и возобновляет ожидающую coroutine.
 
 ## Common mistakes
 

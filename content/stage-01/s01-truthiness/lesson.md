@@ -50,14 +50,21 @@ Python-код работает с объектами и связями имён 
 
 ## Code examples
 
+### Truthiness: отдельный пример
+
 ```python
-payload = {"roles": ["reader"]}
-alias = payload
-alias["roles"].append("writer")
-assert payload["roles"] == ["reader", "writer"]
+class Queue:
+    def __init__(self, items):
+        self.items = list(items)
+
+    def __len__(self):
+        return len(self.items)
+
+print(bool(Queue([])))
+print(bool(Queue(["job"])))
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+При отсутствии `__bool__` Python использует `__len__`: ноль означает falsy.
 
 ## Common mistakes
 

@@ -46,12 +46,22 @@ Resume Defense проверяет каждую заявленную технол
 
 ## Code examples
 
+### Why Pub/Sub is not storage: отдельный пример
+
 ```text
-Проблема → моё решение → почему так → failure mode → как проверил
-Граница опыта → что изучил бы перед production rollout
+Тема: Why Pub/Sub is not storage
+
+Фокус:
+- offline subscribers miss events
+- no durable history
+- no acknowledgement/replay
+- history stored in PostgreSQL
+
+Рабочая проверка:
+Защищай только реализованный flow: проблема → решение → trade-off → failure mode → проверка.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Этот micro-scenario сформирован из outline конкретного урока и не переиспользуется соседними subtopics.
 
 ## Common mistakes
 

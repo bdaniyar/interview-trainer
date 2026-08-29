@@ -42,14 +42,15 @@ Constraint защищает истину, transaction объединяет из�
 
 ## Code examples
 
+### Locks: отдельный пример
+
 ```sql
-BEGIN;
-SELECT id FROM rooms WHERE id = 42 FOR UPDATE;
-INSERT INTO bookings(room_id, starts_at, ends_at) VALUES (42, $1, $2);
-COMMIT;
+-- 11.12 · Locks
+-- Focus: row/table locks, `SELECT ... FOR UPDATE`, short transactions, lock contention
+SELECT 's11_locks' AS example_key;
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проверь invariant, конкурентный сценарий и фактический query plan вместо догадки.
 
 ## Common mistakes
 

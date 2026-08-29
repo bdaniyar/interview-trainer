@@ -50,14 +50,16 @@ Git хранит snapshots и граф commits; working tree, index, local branc
 
 ## Code examples
 
-```bash
-git status
-git add backend/app.py tests/test_app.py
-git commit -m "fix booking conflict handling"
-git push -u origin fix/booking-conflict
+### Practical Git scenarios: отдельный пример
+
+```text
+Сценарий: Commit случайно в main local.
+
+Проверка:
+Создать branch at commit; безопасно restore main.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный operations example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

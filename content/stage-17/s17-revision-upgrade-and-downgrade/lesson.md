@@ -28,13 +28,15 @@ Migration — воспроизводимый переход между верс�
 
 ## Code examples
 
+### Revision, upgrade and downgrade: отдельный пример
+
 ```bash
-alembic revision --autogenerate -m "add booking status"
+alembic revision -m "s17_revision_upgrade_and_downgrade"
+# review upgrade/downgrade for: Revision, upgrade and downgrade
 alembic upgrade head
-alembic current
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Review migration как versioned schema transition; autogenerate — только кандидат.
 
 ## Common mistakes
 

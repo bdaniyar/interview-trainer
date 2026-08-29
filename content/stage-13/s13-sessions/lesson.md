@@ -46,12 +46,17 @@ Security строится слоями: аутентификация, автор
 
 ## Code examples
 
+### Sessions: отдельный пример
+
 ```python
-def can_edit(user, article) -> bool:
-    return user.id == article.author_id or "moderator" in user.roles
+def example_s13_sessions() -> tuple[str, ...]:
+    # Sessions: проверяем отдельный contract урока.
+    return ('opaque identifier', 'server-side state', 'cookie', 'revocation',)
+
+assert example_s13_sessions()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Назови threat, trust boundary, server-side check и безопасный отказ.
 
 ## Common mistakes
 

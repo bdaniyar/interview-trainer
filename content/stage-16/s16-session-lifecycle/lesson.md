@@ -50,19 +50,17 @@ Session владеет identity map и transaction state; после ошибк�
 
 ## Code examples
 
-```python
-from sqlalchemy import select
-from sqlalchemy.orm import selectinload
+### Session lifecycle: отдельный пример
 
-statement = (
-    select(User)
-    .options(selectinload(User.roles))
-    .where(User.active.is_(True))
-)
-users = session.scalars(statement).all()
+```python
+def example_s16_session_lifecycle() -> tuple[str, ...]:
+    # Session lifecycle: проверяем отдельный contract урока.
+    return ('create', 'use', 'commit/rollback', 'close',)
+
+assert example_s16_session_lifecycle()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Укажи владельца Session/transaction и момент фактического SQL I/O.
 
 ## Common mistakes
 

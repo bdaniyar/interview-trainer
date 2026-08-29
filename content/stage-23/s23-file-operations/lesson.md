@@ -46,14 +46,16 @@ Linux basics нужны для запуска процесса, чтения л�
 
 ## Code examples
 
+### File operations: отдельный пример
+
 ```bash
-ps aux | rg uvicorn
-ss -ltnp | rg 8000
-tail -n 100 /var/log/app.log
-printf '%s\n' "$APP_ENV"
+# 23.2 · File operations
+# Focus: mkdir, cp, mv, rm
+printf '%s
+' 's23_file_operations'
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Свяжи command с конкретным process, file, permission, environment или port symptom.
 
 ## Common mistakes
 

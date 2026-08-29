@@ -38,14 +38,16 @@ Git хранит snapshots и граф commits; working tree, index, local branc
 
 ## Code examples
 
+### merge: отдельный пример
+
 ```bash
-git status
-git add backend/app.py tests/test_app.py
-git commit -m "fix booking conflict handling"
-git push -u origin fix/booking-conflict
+# 22.5 · merge
+# Focus: fast-forward, merge commit, conflicts
+printf '%s
+' 's22_merge'
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Перед командой назови изменяемое состояние: files, index, branch pointer или shared history.
 
 ## Common mistakes
 

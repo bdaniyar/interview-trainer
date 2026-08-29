@@ -38,19 +38,16 @@ Rollback отменяет текущую transaction и возвращает Ses
 
 ## Code examples
 
-```python
-from sqlalchemy import select
-from sqlalchemy.orm import selectinload
+### Rollback: отдельный пример
 
-statement = (
-    select(User)
-    .options(selectinload(User.roles))
-    .where(User.active.is_(True))
-)
-users = session.scalars(statement).all()
+```text
+Сценарий: После IntegrityError новые queries падают.
+
+Проверка:
+Rollback failed transaction before reuse.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный debugging example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

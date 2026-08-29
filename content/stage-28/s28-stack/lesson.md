@@ -38,13 +38,17 @@
 
 ## Code examples
 
+### Stack: отдельный пример
+
 ```python
-def deduplicate(values):
-    seen = set()
-    return [value for value in values if not (value in seen or seen.add(value))]
+def example_s28_stack() -> tuple[str, ...]:
+    # Stack: проверяем отдельный contract урока.
+    return ('brackets', 'undo', 'DFS basics',)
+
+assert example_s28_stack()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Сначала назови input constraints, структуру данных, complexity и boundary cases.
 
 ## Common mistakes
 

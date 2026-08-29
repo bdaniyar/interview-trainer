@@ -54,14 +54,16 @@ Redis — быстрый in-memory data store для cache и временног
 
 ## Code examples
 
+### Redis Pub/Sub: отдельный пример
+
 ```text
-GET cache:user:42 → miss
-SELECT user FROM PostgreSQL
-SET cache:user:42 value EX 60
-UPDATE user → COMMIT → DEL cache:user:42
+Сценарий: Offline WebSocket client потерял события.
+
+Проверка:
+Pub/Sub только live fan-out; durable history/read state хранить в PostgreSQL или durable stream.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный debugging example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

@@ -33,15 +33,16 @@ SQL описывает требуемый набор строк; коррект�
 
 ## Code examples
 
+### RIGHT and FULL OUTER JOIN: отдельный пример
+
 ```sql
-SELECT u.id, u.email, COUNT(o.id) AS orders_count
-FROM users AS u
-LEFT JOIN orders AS o ON o.user_id = u.id
-GROUP BY u.id, u.email
-ORDER BY u.id;
+SELECT old.id AS old_id, new.id AS new_id
+FROM old_catalog AS old
+FULL OUTER JOIN new_catalog AS new ON new.sku = old.sku
+WHERE old.id IS NULL OR new.id IS NULL;
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+FULL OUTER JOIN полезен для reconciliation: сохраняет unmatched rows с обеих сторон.
 
 ## Common mistakes
 

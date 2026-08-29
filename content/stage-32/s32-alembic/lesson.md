@@ -42,12 +42,22 @@ Rollback отменяет текущую transaction и возвращает Ses
 
 ## Code examples
 
+### Alembic: отдельный пример
+
 ```text
-Проблема → моё решение → почему так → failure mode → как проверил
-Граница опыта → что изучил бы перед production rollout
+Тема: Alembic
+
+Фокус:
+- versioned schema
+- autogenerate review
+- expand/contract
+- data migration/rollback awareness
+
+Рабочая проверка:
+Защищай только реализованный flow: проблема → решение → trade-off → failure mode → проверка.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Этот micro-scenario сформирован из outline конкретного урока и не переиспользуется соседними subtopics.
 
 ## Common mistakes
 

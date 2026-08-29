@@ -54,16 +54,20 @@ Container запускает изолированный process из image; да
 
 ## Code examples
 
-```dockerfile
-FROM python:3.12-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
-CMD ["python", "-m", "app"]
+### Compose commands: отдельный пример
+
+```yaml
+# 21.15 · Compose commands
+lesson:
+  key: s21_compose_commands
+  checks:
+    - `docker compose up`
+    - `up --build`
+    - `build`
+    - `ps`
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Разделяй build-time image и runtime container: DNS, ports, mounts, env и readiness.
 
 ## Common mistakes
 

@@ -38,12 +38,21 @@ Coverage показывает исполненные строки/ветки, н
 
 ## Code examples
 
+### pytest and 80% coverage gate: отдельный пример
+
 ```text
-Проблема → моё решение → почему так → failure mode → как проверил
-Граница опыта → что изучил бы перед production rollout
+Тема: pytest and 80% coverage gate
+
+Фокус:
+- unit vs integration
+- critical failure cases
+- coverage gate is not quality proof
+
+Рабочая проверка:
+Защищай только реализованный flow: проблема → решение → trade-off → failure mode → проверка.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Этот micro-scenario сформирован из outline конкретного урока и не переиспользуется соседними subtopics.
 
 ## Common mistakes
 

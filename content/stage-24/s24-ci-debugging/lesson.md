@@ -38,14 +38,19 @@ Pipeline должен собирать один artifact и падать на в
 
 ## Code examples
 
+### CI debugging: отдельный пример
+
 ```yaml
-steps:
-  - run: python -m pytest
-  - run: ruff check .
-  - run: docker build -t app:${GITHUB_SHA} .
+# 24.5 · CI debugging
+lesson:
+  key: s24_ci_debugging
+  checks:
+    - works locally but fails in CI
+    - dependency/version/env/timezone/order differences
+    - reading logs
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+CI gate должен быть воспроизводимым, иметь понятный failure log и не раскрывать secrets.
 
 ## Common mistakes
 

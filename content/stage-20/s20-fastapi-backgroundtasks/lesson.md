@@ -42,15 +42,17 @@ Processes изолируют память и подходят для CPU-bound P
 
 ## Code examples
 
+### FastAPI BackgroundTasks: отдельный пример
+
 ```python
-def handle(message, repository):
-    if repository.was_processed(message.id):
-        return
-    repository.apply(message.payload)
-    repository.mark_processed(message.id)
+def example_s20_fastapi_backgroundtasks() -> tuple[str, ...]:
+    # FastAPI BackgroundTasks: проверяем отдельный contract урока.
+    return ('process-local', 'non-durable', 'small side effects', 'crash loss',)
+
+assert example_s20_fastapi_backgroundtasks()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проследи delivery, duplicate, retry, idempotency и atomicity gap после DB commit.
 
 ## Common mistakes
 

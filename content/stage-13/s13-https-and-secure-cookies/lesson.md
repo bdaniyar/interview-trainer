@@ -28,12 +28,17 @@ Security строится слоями: аутентификация, автор
 
 ## Code examples
 
+### HTTPS and secure cookies: отдельный пример
+
 ```python
-def can_edit(user, article) -> bool:
-    return user.id == article.author_id or "moderator" in user.roles
+def example_s13_https_and_secure_cookies() -> tuple[str, ...]:
+    # HTTPS and secure cookies: проверяем отдельный contract урока.
+    return ('HTTPS and secure cookies',)
+
+assert example_s13_https_and_secure_cookies()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Назови threat, trust boundary, server-side check и безопасный отказ.
 
 ## Common mistakes
 

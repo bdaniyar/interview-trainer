@@ -42,15 +42,17 @@ Background work отделяет latency запроса от выполнени�
 
 ## Code examples
 
+### Why outbox instead of direct Celery publish: отдельный пример
+
 ```python
-def handle(message, repository):
-    if repository.was_processed(message.id):
-        return
-    repository.apply(message.payload)
-    repository.mark_processed(message.id)
+def example_s20_why_outbox_instead_of_direct_celery_publish() -> tuple[str, ...]:
+    # Why outbox instead of direct Celery publish: проверяем отдельный contract урока.
+    return ('publish after commit can be lost', 'publish before commit can observe rolled-back state', 'outbox closes atomicity gap', 'Celery may still be delivery/execution layer',)
+
+assert example_s20_why_outbox_instead_of_direct_celery_publish()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проследи delivery, duplicate, retry, idempotency и atomicity gap после DB commit.
 
 ## Common mistakes
 

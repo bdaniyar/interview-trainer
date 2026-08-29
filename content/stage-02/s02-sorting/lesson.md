@@ -54,13 +54,19 @@
 
 ## Code examples
 
+### Sorting: отдельный пример
+
 ```python
-records = [{"id": 2}, {"id": 1}, {"id": 2}]
-by_id = {record["id"]: record for record in records}
-ordered = sorted(by_id.values(), key=lambda row: row["id"] )
+users = [
+    {"id": 2, "score": 10},
+    {"id": 1, "score": 10},
+    {"id": 3, "score": 7},
+]
+result = sorted(users, key=lambda user: (-user["score"], user["id"]))
+print([user["id"] for user in result])
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Tuple key задаёт основной порядок и детерминированный tie-breaker.
 
 ## Common mistakes
 

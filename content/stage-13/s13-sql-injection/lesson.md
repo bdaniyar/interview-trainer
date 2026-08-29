@@ -38,12 +38,16 @@ Security строится слоями: аутентификация, автор
 
 ## Code examples
 
-```python
-def can_edit(user, article) -> bool:
-    return user.id == article.author_id or "moderator" in user.roles
+### SQL injection: отдельный пример
+
+```text
+Сценарий: Query строится из user input через f-string.
+
+Проверка:
+Parameterized query/SQLAlchemy expression; test malicious input как data, не SQL syntax.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный debugging example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

@@ -42,20 +42,23 @@
 
 ## Code examples
 
-```python
-from contextlib import contextmanager
+### Raising and re-raising: отдельный пример
 
-@contextmanager
-def transaction(session):
+```python
+def load_id(raw):
     try:
-        yield session
-        session.commit()
-    except Exception:
-        session.rollback()
+        return int(raw)
+    except ValueError:
+        print("invalid id")
         raise
+
+try:
+    load_id("x")
+except ValueError:
+    print("caller decides")
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Bare `raise` повторно поднимает текущую ошибку с исходным traceback.
 
 ## Common mistakes
 

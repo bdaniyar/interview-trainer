@@ -54,14 +54,17 @@ Observability отвечает на вопросы о поведении сис�
 
 ## Code examples
 
+### Backend signals: отдельный пример
+
 ```python
-logger.info(
-    "booking_created",
-    extra={"booking_id": booking.id, "request_id": request_id},
-)
+def example_s25_backend_signals() -> tuple[str, ...]:
+    # Backend signals: проверяем отдельный contract урока.
+    return ('request rate', 'error rate', 'latency/p95', 'DB errors',)
+
+assert example_s25_backend_signals()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Сигнал полезен, когда содержит контекст, correlation и ведёт к конкретному действию.
 
 ## Common mistakes
 

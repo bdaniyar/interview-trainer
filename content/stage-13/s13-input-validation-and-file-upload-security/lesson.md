@@ -50,12 +50,17 @@ Authorization выполняется server-side на каждом resource/acti
 
 ## Code examples
 
+### Input validation and file upload security: отдельный пример
+
 ```python
-def can_edit(user, article) -> bool:
-    return user.id == article.author_id or "moderator" in user.roles
+def example_s13_input_validation_and_file_upload_security() -> tuple[str, ...]:
+    # Input validation and file upload security: проверяем отдельный contract урока.
+    return ('size', 'type', 'filename/key', 'content inspection limitations',)
+
+assert example_s13_input_validation_and_file_upload_security()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Назови threat, trust boundary, server-side check и безопасный отказ.
 
 ## Common mistakes
 

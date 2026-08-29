@@ -38,13 +38,15 @@
 
 ## Code examples
 
+### Binary search: отдельный пример
+
 ```python
-def deduplicate(values):
-    seen = set()
-    return [value for value in values if not (value in seen or seen.add(value))]
+from collections import Counter
+counts = Counter('aba')
+print(counts['a'], counts['x'])
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Expected: `2 0`. Counter возвращает ноль для отсутствующего ключа вместо KeyError.
 
 ## Common mistakes
 

@@ -46,15 +46,16 @@ SQL описывает требуемый набор строк; коррект�
 
 ## Code examples
 
+### NULL and three-valued logic: отдельный пример
+
 ```sql
-SELECT u.id, u.email, COUNT(o.id) AS orders_count
-FROM users AS u
-LEFT JOIN orders AS o ON o.user_id = u.id
-GROUP BY u.id, u.email
-ORDER BY u.id;
+SELECT id,
+       COALESCE(display_name, email) AS visible_name
+FROM users
+WHERE deleted_at IS NULL;
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+`IS NULL` проверяет отсутствие значения, а COALESCE выбирает первое не-NULL выражение.
 
 ## Common mistakes
 

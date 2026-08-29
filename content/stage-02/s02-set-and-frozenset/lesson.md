@@ -50,13 +50,17 @@
 
 ## Code examples
 
+### Set and frozenset: отдельный пример
+
 ```python
-records = [{"id": 2}, {"id": 1}, {"id": 2}]
-by_id = {record["id"]: record for record in records}
-ordered = sorted(by_id.values(), key=lambda row: row["id"] )
+requested = {"read", "write"}
+granted = frozenset({"read", "moderate"})
+
+print(requested & granted)
+print(requested <= granted)
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Set operations прямо выражают пересечение и проверку подмножества permissions.
 
 ## Common mistakes
 

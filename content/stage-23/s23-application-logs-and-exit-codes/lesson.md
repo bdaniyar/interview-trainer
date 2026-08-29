@@ -38,14 +38,16 @@ Linux basics нужны для запуска процесса, чтения л�
 
 ## Code examples
 
+### Application logs and exit codes: отдельный пример
+
 ```bash
-ps aux | rg uvicorn
-ss -ltnp | rg 8000
-tail -n 100 /var/log/app.log
-printf '%s\n' "$APP_ENV"
+# 23.8 · Application logs and exit codes
+# Focus: stdout/stderr, exit status, pipeline failure awareness
+printf '%s
+' 's23_application_logs_and_exit_codes'
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Свяжи command с конкретным process, file, permission, environment или port symptom.
 
 ## Common mistakes
 

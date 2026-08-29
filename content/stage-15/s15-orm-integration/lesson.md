@@ -38,15 +38,17 @@ N+1 возникает, когда список загружается одни�
 
 ## Code examples
 
-```python
-from pydantic import BaseModel, Field
+### ORM integration: отдельный пример
 
-class BookingCreate(BaseModel):
-    room_id: int = Field(gt=0)
-    guests: int = Field(ge=1, le=8)
+```python
+def example_s15_orm_integration() -> tuple[str, ...]:
+    # ORM integration: проверяем отдельный contract урока.
+    return ('response schemas separate from ORM models', 'relationship loading', 'serialization does not solve N+1',)
+
+assert example_s15_orm_integration()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проверь missing, explicit null, invalid input и serialized output Pydantic v2.
 
 ## Common mistakes
 

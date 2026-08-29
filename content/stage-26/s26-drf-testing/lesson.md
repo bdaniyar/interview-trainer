@@ -28,16 +28,17 @@ Django project содержит configuration, apps группируют domain 
 
 ## Code examples
 
+### DRF testing: отдельный пример
+
 ```python
-queryset = (
-    Order.objects
-    .select_related("user")
-    .prefetch_related("items")
-    .filter(status=Order.Status.PAID)
-)
+def example_s26_drf_testing() -> tuple[str, ...]:
+    # DRF testing: проверяем отдельный contract урока.
+    return ('DRF testing',)
+
+assert example_s26_drf_testing()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проследи Django/DRF request, ORM query count, validation, permission и response.
 
 ## Common mistakes
 

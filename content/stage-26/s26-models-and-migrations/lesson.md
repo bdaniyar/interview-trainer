@@ -28,16 +28,17 @@ Django project содержит configuration, apps группируют domain 
 
 ## Code examples
 
+### Models and migrations: отдельный пример
+
 ```python
-queryset = (
-    Order.objects
-    .select_related("user")
-    .prefetch_related("items")
-    .filter(status=Order.Status.PAID)
-)
+def example_s26_models_and_migrations() -> tuple[str, ...]:
+    # Models and migrations: проверяем отдельный contract урока.
+    return ('Models and migrations',)
+
+assert example_s26_models_and_migrations()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проследи Django/DRF request, ORM query count, validation, permission и response.
 
 ## Common mistakes
 

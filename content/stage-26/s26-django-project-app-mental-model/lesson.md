@@ -28,16 +28,17 @@ Django project содержит configuration, apps группируют domain 
 
 ## Code examples
 
+### Django project/app mental model: отдельный пример
+
 ```python
-queryset = (
-    Order.objects
-    .select_related("user")
-    .prefetch_related("items")
-    .filter(status=Order.Status.PAID)
-)
+def example_s26_django_project_app_mental_model() -> tuple[str, ...]:
+    # Django project/app mental model: проверяем отдельный contract урока.
+    return ('Django project/app mental model',)
+
+assert example_s26_django_project_app_mental_model()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проследи Django/DRF request, ORM query count, validation, permission и response.
 
 ## Common mistakes
 

@@ -46,14 +46,16 @@ Linux basics нужны для запуска процесса, чтения л�
 
 ## Code examples
 
-```bash
-ps aux | rg uvicorn
-ss -ltnp | rg 8000
-tail -n 100 /var/log/app.log
-printf '%s\n' "$APP_ENV"
+### Ports and network diagnostics: отдельный пример
+
+```text
+Сценарий: API не bind 8000.
+
+Проверка:
+ss/lsof, stop owner или change mapping.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный operations example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

@@ -110,14 +110,20 @@ print(type(Event()))  # <class '__main__.Event'>
 
 ## Code examples
 
+### Object, type, name and binding: отдельный пример
+
 ```python
-payload = {"roles": ["reader"]}
-alias = payload
-alias["roles"].append("writer")
-assert payload["roles"] == ["reader", "writer"]
+message = "Learn with Pythoria"
+alias = message
+
+print(type(message).__name__)
+print(message is alias)
+
+alias = alias.upper()
+print(message, alias)
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Имена `message` и `alias` сначала связаны с одним `str`; новый assignment переводит только `alias` на новый объект.
 
 ## Common mistakes
 

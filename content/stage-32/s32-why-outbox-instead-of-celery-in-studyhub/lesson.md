@@ -42,12 +42,22 @@ Processes изолируют память и подходят для CPU-bound P
 
 ## Code examples
 
+### Why outbox instead of Celery in StudyHub: отдельный пример
+
 ```text
-Проблема → моё решение → почему так → failure mode → как проверил
-Граница опыта → что изучил бы перед production rollout
+Тема: Why outbox instead of Celery in StudyHub
+
+Фокус:
+- problem is atomicity, not merely “background”
+- direct publish after commit may be lost
+- publish before commit may process rolled-back state
+- Celery can coexist but does not alone solve dual write
+
+Рабочая проверка:
+Защищай только реализованный flow: проблема → решение → trade-off → failure mode → проверка.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Этот micro-scenario сформирован из outline конкретного урока и не переиспользуется соседними subtopics.
 
 ## Common mistakes
 

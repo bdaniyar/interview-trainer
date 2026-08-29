@@ -54,18 +54,17 @@ Path operation — внешний адаптер; бизнес-правила л
 
 ## Code examples
 
+### Project structure: отдельный пример
+
 ```python
-from typing import Annotated
-from fastapi import APIRouter, Depends
+def example_s14_project_structure() -> tuple[str, ...]:
+    # Project structure: проверяем отдельный contract урока.
+    return ('routers', 'schemas', 'services', 'repositories/data access',)
 
-router = APIRouter(prefix="/users")
-
-@router.get("/{user_id}")
-def get_user(user_id: int, service: Annotated[UserService, Depends()]):
-    return service.get_or_404(user_id)
+assert example_s14_project_structure()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проследи request через router, validation, dependency, service и response model.
 
 ## Common mistakes
 

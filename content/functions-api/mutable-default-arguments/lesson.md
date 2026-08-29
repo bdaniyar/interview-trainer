@@ -32,13 +32,20 @@ def broken(value, bucket=[]):
 
 ## Code examples
 
+### Default arguments: отдельный пример
+
 ```python
-def list_users(limit: int = 20, *, active: bool | None = None) -> list[dict]:
-    """Явный API: active нельзя передать случайно позиционно."""
-    return []
+def add_tag(tag, tags=None):
+    if tags is None:
+        tags = []
+    tags.append(tag)
+    return tags
+
+print(add_tag("python"))
+print(add_tag("sql"))
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Sentinel/default `None` создаёт новый mutable list на каждый вызов и исключает shared state.
 
 ## Common mistakes
 

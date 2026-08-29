@@ -50,14 +50,19 @@ Mutable объект меняется с сохранением identity, поэ
 
 ## Code examples
 
+### Hashability: отдельный пример
+
 ```python
-payload = {"roles": ["reader"]}
-alias = payload
-alias["roles"].append("writer")
-assert payload["roles"] == ["reader", "writer"]
+keys = {(1, 2): "point"}
+print(keys[(1, 2)])
+
+try:
+    {[1, 2]: "broken"}
+except TypeError as exc:
+    print(type(exc).__name__)
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Tuple из hashable элементов допустим как ключ, mutable list — нет.
 
 ## Common mistakes
 

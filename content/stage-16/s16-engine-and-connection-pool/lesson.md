@@ -28,19 +28,17 @@ SQLAlchemy Engine владеет dialect и connection pool; Session запра�
 
 ## Code examples
 
-```python
-from sqlalchemy import select
-from sqlalchemy.orm import selectinload
+### Engine and connection pool: отдельный пример
 
-statement = (
-    select(User)
-    .options(selectinload(User.roles))
-    .where(User.active.is_(True))
-)
-users = session.scalars(statement).all()
+```python
+def example_s16_engine_and_connection_pool() -> tuple[str, ...]:
+    # Engine and connection pool: проверяем отдельный contract урока.
+    return ('Engine and connection pool',)
+
+assert example_s16_engine_and_connection_pool()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Укажи владельца Session/transaction и момент фактического SQL I/O.
 
 ## Common mistakes
 

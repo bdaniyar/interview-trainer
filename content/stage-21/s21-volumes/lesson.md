@@ -42,16 +42,16 @@ Docker image — неизменяемый шаблон filesystem, container —
 
 ## Code examples
 
-```dockerfile
-FROM python:3.12-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
-CMD ["python", "-m", "app"]
+### Volumes: отдельный пример
+
+```text
+Сценарий: После recreate DB данные исчезли.
+
+Проверка:
+Named volume; backups; down -v destructive.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный operations example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

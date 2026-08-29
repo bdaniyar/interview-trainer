@@ -38,13 +38,17 @@
 
 ## Code examples
 
+### Big O: отдельный пример
+
 ```python
-def deduplicate(values):
-    seen = set()
-    return [value for value in values if not (value in seen or seen.add(value))]
+def example_s28_big_o() -> tuple[str, ...]:
+    # Big O: проверяем отдельный contract урока.
+    return ('time vs space', 'dominant term', 'common collection operations',)
+
+assert example_s28_big_o()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Сначала назови input constraints, структуру данных, complexity и boundary cases.
 
 ## Common mistakes
 

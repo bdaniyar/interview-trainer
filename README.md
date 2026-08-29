@@ -153,6 +153,7 @@ NEXT_PUBLIC_API_URL=http://localhost:8000 npm run dev
 │   └── <stage>/<lesson>/
 ├── scripts/smoke_test.py
 ├── tools/validate_content.py
+├── tools/personalize_examples.py
 ├── tools/export_course_snapshot.py
 ├── docs/CONTENT_INVENTORY.md
 ├── docs/SQL_RUNNER_DESIGN.md
@@ -212,9 +213,10 @@ Backend сканирует `metadata.json` при запросе, поэтому
 1. Сначала найди тему по `id`, `slug` и title в `content/curriculum.json`; duplicate запрещён.
 2. Для planned record сохрани существующий ID/slug и переведи `content_status` в `complete` только после готовности материала.
 3. Создай/обнови lesson directory, `lesson.md`, `metadata.json`, `interview.json` и `starter/main.py`.
-4. Сохрани обязательные секции: objectives, theory, mental model, examples, mistakes, interview rubric, task, cheat sheet и official sources.
+4. Сохрани обязательные секции: objectives, theory, mental model, examples, mistakes, interview rubric, task, cheat sheet и official sources. `Code examples` обязан иллюстрировать именно этот subtopic: stage-wide дубликаты validator отклоняет.
 5. Не переименовывай опубликованный slug: иначе потеряется связь с сохранённым progress/code.
-6. Запусти `python3 tools/validate_content.py` и `python3 tools/export_course_snapshot.py`.
+6. После массовой генерации запусти `python3 tools/personalize_examples.py`: tool использует curated core examples, публичный task starter и prediction/practice banks, чтобы соседние уроки не получали одинаковый пример и hidden solution не попадал в Markdown.
+7. Запусти `python3 tools/validate_content.py` и `python3 tools/export_course_snapshot.py`.
 
 Для будущего импорта материала формата `TOPIC:` / `MATERIAL:` сначала ищи урок по slug/title, затем разделяй текст на theory, examples, interview notes и task. Не создавай второй урок с той же темой.
 

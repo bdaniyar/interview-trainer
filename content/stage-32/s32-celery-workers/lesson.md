@@ -50,12 +50,22 @@ Retry подходит для transient failure, ограничивается ч
 
 ## Code examples
 
+### Celery workers: отдельный пример
+
 ```text
-Проблема → моё решение → почему так → failure mode → как проверил
-Граница опыта → что изучил бы перед production rollout
+Тема: Celery workers
+
+Фокус:
+- durable task
+- broker
+- worker
+- transient retry
+
+Рабочая проверка:
+Защищай только реализованный flow: проблема → решение → trade-off → failure mode → проверка.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Этот micro-scenario сформирован из outline конкретного урока и не переиспользуется соседними subtopics.
 
 ## Common mistakes
 

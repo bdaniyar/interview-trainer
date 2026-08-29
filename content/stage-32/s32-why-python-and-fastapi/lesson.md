@@ -46,12 +46,22 @@ WebSocket держит долгоживущее соединение; масшт
 
 ## Code examples
 
+### Why Python and FastAPI?: отдельный пример
+
 ```text
-Проблема → моё решение → почему так → failure mode → как проверил
-Граница опыта → что изучил бы перед production rollout
+Тема: Why Python and FastAPI?
+
+Фокус:
+- mature ecosystem and development speed
+- type hints/Pydantic/OpenAPI
+- async stack suits WebSockets and I/O waits
+- FastAPI is not universally superior to Django
+
+Рабочая проверка:
+Защищай только реализованный flow: проблема → решение → trade-off → failure mode → проверка.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Этот micro-scenario сформирован из outline конкретного урока и не переиспользуется соседними subtopics.
 
 ## Common mistakes
 

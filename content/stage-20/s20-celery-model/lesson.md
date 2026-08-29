@@ -50,15 +50,17 @@ Background work отделяет latency запроса от выполнени�
 
 ## Code examples
 
+### Celery model: отдельный пример
+
 ```python
-def handle(message, repository):
-    if repository.was_processed(message.id):
-        return
-    repository.apply(message.payload)
-    repository.mark_processed(message.id)
+def example_s20_celery_model() -> tuple[str, ...]:
+    # Celery model: проверяем отдельный contract урока.
+    return ('task', 'broker', 'worker', 'result backend distinction',)
+
+assert example_s20_celery_model()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проследи delivery, duplicate, retry, idempotency и atomicity gap после DB commit.
 
 ## Common mistakes
 

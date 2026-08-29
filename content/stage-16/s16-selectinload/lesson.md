@@ -38,19 +38,14 @@ SQLAlchemy 2.x управляет SQL, identity map, unit of work и transaction
 
 ## Code examples
 
-```python
-from sqlalchemy import select
-from sqlalchemy.orm import selectinload
+### `selectinload`: отдельный пример
 
-statement = (
-    select(User)
-    .options(selectinload(User.roles))
-    .where(User.active.is_(True))
-)
-users = session.scalars(statement).all()
+```python
+def projects_with_tasks(Project):
+    raise NotImplementedError
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это публичный starter contract практики «selectinload collection». Реализация и hidden assertions в lesson Markdown не раскрываются.
 
 ## Common mistakes
 

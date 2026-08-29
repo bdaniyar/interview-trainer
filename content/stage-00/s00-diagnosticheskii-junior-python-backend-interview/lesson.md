@@ -54,7 +54,15 @@ Container запускает изолированный process из image; да
 
 ## Code examples
 
-Сформулируй минимальный пример из текущего проекта: один happy path, одна граница и одна ошибка. Не добавляй инфраструктуру, не относящуюся к механизму.
+### Диагностический Junior Python Backend interview: отдельный пример
+
+```text
+Question: Почему `is` и `==` дают разные ответы?
+Answer plan: definition → mechanism → example → limitation
+Follow-up: что изменит custom `__eq__`?
+```
+
+Диагностика проверяет не угадывание термина, а структуру объяснения и готовность к follow-up.
 
 ## Common mistakes
 

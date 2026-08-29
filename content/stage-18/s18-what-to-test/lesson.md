@@ -54,15 +54,17 @@ Arrange создаёт условия, Act выполняет одно пове�
 
 ## Code examples
 
-```python
-import pytest
+### What to test: отдельный пример
 
-@pytest.mark.parametrize(("value", "expected"), [(0, False), (1, True)])
-def test_is_positive(value, expected):
-    assert is_positive(value) is expected
+```python
+def example_s18_what_to_test() -> tuple[str, ...]:
+    # What to test: проверяем отдельный contract урока.
+    return ('happy path', 'validation', 'permissions', 'not found',)
+
+assert example_s18_what_to_test()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Тестируй observable contract, failure path и изоляцию между cases.
 
 ## Common mistakes
 

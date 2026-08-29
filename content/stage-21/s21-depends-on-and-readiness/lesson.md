@@ -38,16 +38,16 @@ Retry подходит для transient failure, ограничивается ч
 
 ## Code examples
 
-```dockerfile
-FROM python:3.12-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
-CMD ["python", "-m", "app"]
+### `depends_on` and readiness: отдельный пример
+
+```text
+Сценарий: depends_on есть, migrations падают.
+
+Проверка:
+Healthcheck/ready retry; start order не readiness.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный operations example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

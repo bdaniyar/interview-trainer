@@ -38,13 +38,23 @@ Retry подходит для transient failure, ограничивается ч
 
 ## Code examples
 
+### Decorator factory and decorator arguments: отдельный пример
+
 ```python
-def list_users(limit: int = 20, *, active: bool | None = None) -> list[dict]:
-    """Явный API: active нельзя передать случайно позиционно."""
-    return []
+def retry(*, attempts):
+    def decorate(function):
+        def wrapper(*args, **kwargs):
+            for number in range(attempts):
+                try:
+                    return function(*args, **kwargs)
+                except TimeoutError:
+                    if number + 1 == attempts:
+                        raise
+        return wrapper
+    return decorate
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Decorator factory сначала фиксирует configuration, затем получает функцию и строит wrapper.
 
 ## Common mistakes
 

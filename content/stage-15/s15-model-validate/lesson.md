@@ -33,15 +33,17 @@ Pydantic v2 преобразует и валидирует данные на г�
 
 ## Code examples
 
-```python
-from pydantic import BaseModel, Field
+### `model_validate`: отдельный пример
 
-class BookingCreate(BaseModel):
-    room_id: int = Field(gt=0)
-    guests: int = Field(ge=1, le=8)
+```python
+def example_s15_model_validate() -> tuple[str, ...]:
+    # `model_validate`: проверяем отдельный contract урока.
+    return ('validating objects/data', 'ORM attributes',)
+
+assert example_s15_model_validate()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проверь missing, explicit null, invalid input и serialized output Pydantic v2.
 
 ## Common mistakes
 

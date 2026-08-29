@@ -54,13 +54,18 @@ Index — отдельная структура доступа с ценой з�
 
 ## Code examples
 
+### List: отдельный пример
+
 ```python
-records = [{"id": 2}, {"id": 1}, {"id": 2}]
-by_id = {record["id"]: record for record in records}
-ordered = sorted(by_id.values(), key=lambda row: row["id"] )
+events = ["created", "paid"]
+events.append("sent")
+last = events.pop()
+
+print(events)
+print(last)
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+List сохраняет порядок, поддерживает mutation и удобен для последовательного набора событий.
 
 ## Common mistakes
 

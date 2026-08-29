@@ -46,12 +46,16 @@ Session владеет identity map и transaction state; после ошибк�
 
 ## Code examples
 
+### Redis-backed password reset: отдельный пример
+
 ```text
-Проблема → моё решение → почему так → failure mode → как проверил
-Граница опыта → что изучил бы перед production rollout
+Сценарий: Один reset URL меняет пароль повторно.
+
+Проверка:
+Random high-entropy token, server-side hash, TTL и atomic one-time invalidation; revoke sessions по policy.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный debugging example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

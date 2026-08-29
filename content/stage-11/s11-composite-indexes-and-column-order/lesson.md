@@ -38,14 +38,15 @@ Constraint защищает истину, transaction объединяет из�
 
 ## Code examples
 
+### Composite indexes and column order: отдельный пример
+
 ```sql
-BEGIN;
-SELECT id FROM rooms WHERE id = 42 FOR UPDATE;
-INSERT INTO bookings(room_id, starts_at, ends_at) VALUES (42, $1, $2);
-COMMIT;
+-- 11.6 · Composite indexes and column order
+-- Focus: leftmost prefix intuition, filter/order patterns, equality before range as a heuristic, not dogma
+SELECT 's11_composite_indexes_and_column_order' AS example_key;
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проверь invariant, конкурентный сценарий и фактический query plan вместо догадки.
 
 ## Common mistakes
 

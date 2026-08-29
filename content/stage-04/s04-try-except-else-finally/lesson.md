@@ -42,20 +42,23 @@ LEGB ищет имя в local, enclosing, global и builtins; assignment дел�
 
 ## Code examples
 
-```python
-from contextlib import contextmanager
+### `try/except/else/finally`: отдельный пример
 
-@contextmanager
-def transaction(session):
+```python
+def parse(value):
     try:
-        yield session
-        session.commit()
-    except Exception:
-        session.rollback()
-        raise
+        result = int(value)
+    except ValueError:
+        return None
+    else:
+        return result
+    finally:
+        print("parse finished")
+
+print(parse("7"))
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+`else` выполняется только без exception, `finally` — при любом пути выхода.
 
 ## Common mistakes
 

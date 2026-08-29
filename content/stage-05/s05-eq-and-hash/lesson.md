@@ -42,19 +42,21 @@ Mutable объект меняется с сохранением identity, поэ
 
 ## Code examples
 
+### `__eq__` and `__hash__`: отдельный пример
+
 ```python
 from dataclasses import dataclass
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True)
 class UserId:
     value: int
 
-    def __post_init__(self):
-        if self.value <= 0:
-            raise ValueError("user id must be positive")
+left, right = UserId(7), UserId(7)
+print(left == right)
+print({left: "Aida"}[right])
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Равные immutable value objects имеют согласованные equality и hash и безопасны как dict keys.
 
 ## Common mistakes
 

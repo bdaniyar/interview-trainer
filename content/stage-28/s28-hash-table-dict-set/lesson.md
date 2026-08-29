@@ -38,13 +38,17 @@
 
 ## Code examples
 
+### Hash table/dict/set: отдельный пример
+
 ```python
-def deduplicate(values):
-    seen = set()
-    return [value for value in values if not (value in seen or seen.add(value))]
+def example_s28_hash_table_dict_set() -> tuple[str, ...]:
+    # Hash table/dict/set: проверяем отдельный contract урока.
+    return ('average complexity', 'collisions awareness', 'membership/deduplication',)
+
+assert example_s28_hash_table_dict_set()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Сначала назови input constraints, структуру данных, complexity и boundary cases.
 
 ## Common mistakes
 

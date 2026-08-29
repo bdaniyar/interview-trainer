@@ -54,14 +54,18 @@ Python-код работает с объектами и связями имён 
 
 ## Code examples
 
+### Numbers, strings, bytes and encoding: отдельный пример
+
 ```python
-payload = {"roles": ["reader"]}
-alias = payload
-alias["roles"].append("writer")
-assert payload["roles"] == ["reader", "writer"]
+text = "Алматы"
+payload = text.encode("utf-8")
+restored = payload.decode("utf-8")
+
+print(type(text).__name__, type(payload).__name__)
+print(restored == text)
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+`str` — Unicode text, `bytes` — закодированное представление на I/O-границе.
 
 ## Common mistakes
 

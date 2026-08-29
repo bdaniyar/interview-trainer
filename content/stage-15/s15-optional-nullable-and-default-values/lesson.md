@@ -42,15 +42,15 @@ Pydantic v2 преобразует и валидирует данные на г�
 
 ## Code examples
 
-```python
-from pydantic import BaseModel, Field
+### Optional, nullable and default values: отдельный пример
 
-class BookingCreate(BaseModel):
-    room_id: int = Field(gt=0)
-    guests: int = Field(ge=1, le=8)
+```python
+from pydantic import BaseModel
+
+# Создай UserPatch.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это публичный starter contract практики «Patch semantics». Реализация и hidden assertions в lesson Markdown не раскрываются.
 
 ## Common mistakes
 

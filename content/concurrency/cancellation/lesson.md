@@ -42,18 +42,30 @@ Event loop планирует готовые tasks; await не создаёт о
 
 ## Code examples
 
+### Cancellation: отдельный пример
+
 ```python
 import asyncio
 
-async def load_pair(client):
-    first, second = await asyncio.gather(
-        client.get("/users/1"),
-        client.get("/users/2"),
-    )
-    return first, second
+async def worker():
+    try:
+        await asyncio.sleep(10)
+    finally:
+        print("cleanup")
+
+async def main():
+    task = asyncio.create_task(worker())
+    await asyncio.sleep(0)
+    task.cancel()
+    try:
+        await task
+    except asyncio.CancelledError:
+        print("cancelled")
+
+asyncio.run(main())
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Cancellation проходит через await, выполняет `finally` и обычно повторно распространяется caller.
 
 ## Common mistakes
 

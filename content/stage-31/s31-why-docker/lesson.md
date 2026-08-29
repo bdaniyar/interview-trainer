@@ -42,7 +42,22 @@ Container запускает изолированный process из image; да
 
 ## Code examples
 
-Сформулируй минимальный пример из текущего проекта: один happy path, одна граница и одна ошибка. Не добавляй инфраструктуру, не относящуюся к механизму.
+### Why Docker?: отдельный пример
+
+```text
+Тема: Why Docker?
+
+Фокус:
+- reproducible environment
+- dependency isolation
+- multi-service local setup
+- not “Docker automatically scales”
+
+Рабочая проверка:
+Ответ строй как context → личное действие → результат → конкретный follow-up.
+```
+
+Этот micro-scenario сформирован из outline конкретного урока и не переиспользуется соседними subtopics.
 
 ## Common mistakes
 

@@ -38,14 +38,16 @@ Constraint защищает истину, transaction объединяет из�
 
 ## Code examples
 
-```sql
-BEGIN;
-SELECT id FROM rooms WHERE id = 42 FOR UPDATE;
-INSERT INTO bookings(room_id, starts_at, ends_at) VALUES (42, $1, $2);
-COMMIT;
+### Deadlocks: отдельный пример
+
+```text
+Сценарий: Два flow блокируют resources A/B в противоположном порядке.
+
+Проверка:
+Единый порядок lock acquisition, короткие transactions и retry всей transaction после deadlock.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный debugging example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

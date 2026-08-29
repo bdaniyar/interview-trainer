@@ -46,19 +46,18 @@ Constraint хранит invariant рядом с данными и защищае
 
 ## Code examples
 
-```python
-from sqlalchemy import select
-from sqlalchemy.orm import selectinload
+### Declarative models: отдельный пример
 
-statement = (
-    select(User)
-    .options(selectinload(User.roles))
-    .where(User.active.is_(True))
-)
-users = session.scalars(statement).all()
+```python
+from sqlalchemy.orm import DeclarativeBase
+
+class Base(DeclarativeBase):
+    pass
+
+# Создай User.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это публичный starter contract практики «Declarative User model». Реализация и hidden assertions в lesson Markdown не раскрываются.
 
 ## Common mistakes
 

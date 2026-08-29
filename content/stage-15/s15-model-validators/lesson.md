@@ -33,15 +33,15 @@ Pydantic v2 преобразует и валидирует данные на г�
 
 ## Code examples
 
-```python
-from pydantic import BaseModel, Field
+### Model validators: отдельный пример
 
-class BookingCreate(BaseModel):
-    room_id: int = Field(gt=0)
-    guests: int = Field(ge=1, le=8)
+```python
+from pydantic import BaseModel
+
+# Создай BookingPeriod.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это публичный starter contract практики «Cross-field validator». Реализация и hidden assertions в lesson Markdown не раскрываются.
 
 ## Common mistakes
 

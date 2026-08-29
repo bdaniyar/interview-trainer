@@ -38,14 +38,15 @@ Constraint защищает истину, transaction объединяет из�
 
 ## Code examples
 
+### PostgreSQL B-tree: отдельный пример
+
 ```sql
-BEGIN;
-SELECT id FROM rooms WHERE id = 42 FOR UPDATE;
-INSERT INTO bookings(room_id, starts_at, ends_at) VALUES (42, $1, $2);
-COMMIT;
+-- 11.5 · PostgreSQL B-tree
+-- Focus: equality/range/order, common default, no deep page internals required
+SELECT 's11_postgresql_b_tree' AS example_key;
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проверь invariant, конкурентный сценарий и фактический query plan вместо догадки.
 
 ## Common mistakes
 

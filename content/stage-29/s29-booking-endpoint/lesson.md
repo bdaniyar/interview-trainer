@@ -54,13 +54,16 @@ Transaction задаёт атомарную границу: либо все св
 
 ## Code examples
 
+### Booking endpoint: отдельный пример
+
 ```text
-Client → reverse proxy → FastAPI → service → PostgreSQL
-                                  ↘ Redis
-                                  ↘ outbox → worker
+Сценарий: Спроектируй POST booking.
+
+Проверка:
+Validation, auth, transaction, 201/409, idempotency.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный architecture example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

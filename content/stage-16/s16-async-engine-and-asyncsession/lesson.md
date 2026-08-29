@@ -42,19 +42,16 @@ Session владеет identity map и transaction state; после ошибк�
 
 ## Code examples
 
-```python
-from sqlalchemy import select
-from sqlalchemy.orm import selectinload
+### Async engine and AsyncSession: отдельный пример
 
-statement = (
-    select(User)
-    .options(selectinload(User.roles))
-    .where(User.active.is_(True))
-)
-users = session.scalars(statement).all()
+```text
+Сценарий: Две tasks используют одну AsyncSession.
+
+Проверка:
+Session per concurrent task/use case.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный debugging example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

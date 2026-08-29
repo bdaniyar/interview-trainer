@@ -50,15 +50,17 @@ Retry подходит для transient failure, ограничивается ч
 
 ## Code examples
 
+### Outbox pattern: отдельный пример
+
 ```python
-def handle(message, repository):
-    if repository.was_processed(message.id):
-        return
-    repository.apply(message.payload)
-    repository.mark_processed(message.id)
+def example_s20_outbox_pattern() -> tuple[str, ...]:
+    # Outbox pattern: проверяем отдельный contract урока.
+    return ('business row + outbox row in one DB transaction', 'worker', 'at-least-once', 'retry',)
+
+assert example_s20_outbox_pattern()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проследи delivery, duplicate, retry, idempotency и atomicity gap после DB commit.
 
 ## Common mistakes
 

@@ -50,12 +50,16 @@ Session владеет identity map и transaction state; после ошибк�
 
 ## Code examples
 
-```python
-def can_edit(user, article) -> bool:
-    return user.id == article.author_id or "moderator" in user.roles
+### Access and refresh tokens: отдельный пример
+
+```text
+Сценарий: Украденный access действует месяц без возможности быстро ограничить ущерб.
+
+Проверка:
+Короткий access, controlled refresh session/rotation/revocation; threat-based TTL.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный debugging example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

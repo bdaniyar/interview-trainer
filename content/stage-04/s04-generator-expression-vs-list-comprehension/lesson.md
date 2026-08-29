@@ -42,20 +42,18 @@
 
 ## Code examples
 
-```python
-from contextlib import contextmanager
+### Generator expression vs list comprehension: отдельный пример
 
-@contextmanager
-def transaction(session):
-    try:
-        yield session
-        session.commit()
-    except Exception:
-        session.rollback()
-        raise
+```python
+source = range(1_000_000)
+lazy_squares = (value * value for value in source)
+eager_squares = [value * value for value in range(3)]
+
+print(next(lazy_squares))
+print(eager_squares)
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Generator expression вычисляет элементы по запросу; list comprehension сразу материализует результат.
 
 ## Common mistakes
 

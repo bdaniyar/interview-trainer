@@ -38,13 +38,25 @@
 
 ## Code examples
 
+### Multiple decorators and order: отдельный пример
+
 ```python
-def list_users(limit: int = 20, *, active: bool | None = None) -> list[dict]:
-    """Явный API: active нельзя передать случайно позиционно."""
-    return []
+def mark(name):
+    def decorate(function):
+        def wrapper():
+            return f"{name}({function()})"
+        return wrapper
+    return decorate
+
+@mark("outer")
+@mark("inner")
+def value():
+    return "core"
+
+print(value())
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Декораторы применяются снизу вверх, а wrappers вызываются снаружи внутрь.
 
 ## Common mistakes
 

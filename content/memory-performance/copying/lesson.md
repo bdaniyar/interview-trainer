@@ -54,14 +54,21 @@ Mutable объект меняется с сохранением identity, поэ
 
 ## Code examples
 
+### Shallow and deep copy: отдельный пример
+
 ```python
-payload = {"roles": ["reader"]}
-alias = payload
-alias["roles"].append("writer")
-assert payload["roles"] == ["reader", "writer"]
+from copy import copy, deepcopy
+
+source = {"profile": {"roles": ["reader"]}}
+shallow = copy(source)
+deep = deepcopy(source)
+source["profile"]["roles"].append("writer")
+
+print(shallow["profile"]["roles"])
+print(deep["profile"]["roles"])
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Shallow copy разделяет вложенный graph, а deep copy рекурсивно создаёт независимые containers.
 
 ## Common mistakes
 

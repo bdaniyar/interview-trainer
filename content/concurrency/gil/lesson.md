@@ -42,7 +42,20 @@ CPython GIL допускает выполнение Python bytecode одним t
 
 ## Code examples
 
-Сформулируй минимальный пример из текущего проекта: один happy path, одна граница и одна ошибка. Не добавляй инфраструктуру, не относящуюся к механизму.
+### GIL: отдельный пример
+
+```python
+from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
+
+# Blocking I/O часто удобно отправить в threads.
+with ThreadPoolExecutor(max_workers=4) as pool:
+    io_results = list(pool.map(str.upper, ["a", "b"]))
+
+# CPU-bound pure Python оценивают для processes, учитывая IPC.
+print(io_results, ProcessPoolExecutor)
+```
+
+GIL не заменяет выбор workload: threads полезны для blocking I/O, processes обходят общий interpreter lock ценой IPC.
 
 ## Common mistakes
 

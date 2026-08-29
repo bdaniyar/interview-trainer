@@ -38,19 +38,16 @@ SQLAlchemy 2.x управляет SQL, identity map, unit of work и transaction
 
 ## Code examples
 
-```python
-from sqlalchemy import select
-from sqlalchemy.orm import selectinload
+### Async lazy-loading pitfalls: отдельный пример
 
-statement = (
-    select(User)
-    .options(selectinload(User.roles))
-    .where(User.active.is_(True))
-)
-users = session.scalars(statement).all()
+```text
+Сценарий: Response validation выполняет queries после service return.
+
+Проверка:
+Map ORM to response data при открытой session; query-count test обнаруживает hidden I/O.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный debugging example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

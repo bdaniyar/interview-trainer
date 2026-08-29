@@ -42,15 +42,17 @@ SQL описывает требуемый набор строк; коррект�
 
 ## Code examples
 
+### SELECT, aliases and expressions: отдельный пример
+
 ```sql
-SELECT u.id, u.email, COUNT(o.id) AS orders_count
-FROM users AS u
-LEFT JOIN orders AS o ON o.user_id = u.id
-GROUP BY u.id, u.email
-ORDER BY u.id;
+SELECT
+    id AS product_id,
+    price,
+    price * 1.12 AS price_with_tax
+FROM products;
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+SELECT формирует projection: alias меняет имя result column, expression вычисляется для каждой строки.
 
 ## Common mistakes
 

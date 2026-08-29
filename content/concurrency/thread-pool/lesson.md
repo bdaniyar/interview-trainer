@@ -38,14 +38,20 @@ Thread разделяет память процесса; process изолиро�
 
 ## Code examples
 
-```python
-from concurrent.futures import ThreadPoolExecutor
+### ThreadPoolExecutor: отдельный пример
 
-with ThreadPoolExecutor(max_workers=4) as pool:
-    results = list(pool.map(read_remote_resource, urls))
+```python
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
+def fetch(url):
+    return url.upper()
+
+with ThreadPoolExecutor(max_workers=2) as pool:
+    futures = [pool.submit(fetch, url) for url in ["/a", "/b"]]
+    print([future.result() for future in as_completed(futures)])
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Executor управляет bounded pool и Future objects; порядок `as_completed` зависит от завершения, не input.
 
 ## Common mistakes
 

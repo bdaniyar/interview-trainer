@@ -38,15 +38,15 @@ SQL описывает требуемый набор строк; коррект�
 
 ## Code examples
 
+### Self join: отдельный пример
+
 ```sql
-SELECT u.id, u.email, COUNT(o.id) AS orders_count
-FROM users AS u
-LEFT JOIN orders AS o ON o.user_id = u.id
-GROUP BY u.id, u.email
-ORDER BY u.id;
+SELECT employee.name, manager.name AS manager_name
+FROM employees AS employee
+LEFT JOIN employees AS manager ON manager.id = employee.manager_id;
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Self join использует два aliases одной таблицы, чтобы представить и employee, и его manager.
 
 ## Common mistakes
 

@@ -46,13 +46,25 @@
 
 ## Code examples
 
+### `functools.wraps`: отдельный пример
+
 ```python
-def list_users(limit: int = 20, *, active: bool | None = None) -> list[dict]:
-    """Явный API: active нельзя передать случайно позиционно."""
-    return []
+from functools import wraps
+
+def traced(function):
+    @wraps(function)
+    def wrapper(*args, **kwargs):
+        return function(*args, **kwargs)
+    return wrapper
+
+@traced
+def health() -> dict[str, str]:
+    return {"status": "ok"}
+
+print(health.__name__, health.__annotations__)
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+`wraps` сохраняет metadata и `__wrapped__`, нужные introspection и framework-коду.
 
 ## Common mistakes
 

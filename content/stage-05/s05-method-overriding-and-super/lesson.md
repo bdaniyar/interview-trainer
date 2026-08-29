@@ -38,19 +38,22 @@ Inheritance выражает отношение is-a и участвует в MR
 
 ## Code examples
 
+### Method overriding and `super()`: отдельный пример
+
 ```python
-from dataclasses import dataclass
+class Serializer:
+    def dump(self, value):
+        return str(value)
 
-@dataclass(frozen=True, slots=True)
-class UserId:
-    value: int
+class JsonSerializer(Serializer):
+    def dump(self, value):
+        base = super().dump(value)
+        return f'{{"value": "{base}"}}'
 
-    def __post_init__(self):
-        if self.value <= 0:
-            raise ValueError("user id must be positive")
+print(JsonSerializer().dump(7))
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Override заменяет behavior, а `super()` продолжает реализацию по MRO.
 
 ## Common mistakes
 

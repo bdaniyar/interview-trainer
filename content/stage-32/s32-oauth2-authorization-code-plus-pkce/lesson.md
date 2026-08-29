@@ -38,12 +38,21 @@ Resume Defense проверяет каждую заявленную технол
 
 ## Code examples
 
+### OAuth2 Authorization Code + PKCE: отдельный пример
+
 ```text
-Проблема → моё решение → почему так → failure mode → как проверил
-Граница опыта → что изучил бы перед production rollout
+Тема: OAuth2 Authorization Code + PKCE
+
+Фокус:
+- verifier/challenge
+- intercepted code cannot be exchanged without verifier
+- state/redirect validation still needed
+
+Рабочая проверка:
+Защищай только реализованный flow: проблема → решение → trade-off → failure mode → проверка.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Этот micro-scenario сформирован из outline конкретного урока и не переиспользуется соседними subtopics.
 
 ## Common mistakes
 

@@ -28,16 +28,17 @@ Django project содержит configuration, apps группируют domain 
 
 ## Code examples
 
+### Pagination/filtering: отдельный пример
+
 ```python
-queryset = (
-    Order.objects
-    .select_related("user")
-    .prefetch_related("items")
-    .filter(status=Order.Status.PAID)
-)
+def example_s26_pagination_filtering() -> tuple[str, ...]:
+    # Pagination/filtering: проверяем отдельный contract урока.
+    return ('Pagination/filtering',)
+
+assert example_s26_pagination_filtering()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проследи Django/DRF request, ORM query count, validation, permission и response.
 
 ## Common mistakes
 

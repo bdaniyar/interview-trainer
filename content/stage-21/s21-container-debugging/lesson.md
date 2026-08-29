@@ -54,16 +54,20 @@ Processes изолируют память и подходят для CPU-bound P
 
 ## Code examples
 
-```dockerfile
-FROM python:3.12-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
-CMD ["python", "-m", "app"]
+### Container debugging: отдельный пример
+
+```yaml
+# 21.16 · Container debugging
+lesson:
+  key: s21_container_debugging
+  checks:
+    - logs
+    - inspect env
+    - process
+    - port
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Разделяй build-time image и runtime container: DNS, ports, mounts, env и readiness.
 
 ## Common mistakes
 

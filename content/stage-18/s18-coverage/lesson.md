@@ -38,15 +38,17 @@ Arrange создаёт условия, Act выполняет одно пове�
 
 ## Code examples
 
-```python
-import pytest
+### Coverage: отдельный пример
 
-@pytest.mark.parametrize(("value", "expected"), [(0, False), (1, True)])
-def test_is_positive(value, expected):
-    assert is_positive(value) is expected
+```python
+def example_s18_coverage() -> tuple[str, ...]:
+    # Coverage: проверяем отдельный contract урока.
+    return ('coverage is a signal', 'branch/critical path', '80% does not mean 80% quality',)
+
+assert example_s18_coverage()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Тестируй observable contract, failure path и изоляцию между cases.
 
 ## Common mistakes
 

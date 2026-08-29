@@ -42,19 +42,25 @@
 
 ## Code examples
 
+### `classmethod` and `staticmethod`: отдельный пример
+
 ```python
-from dataclasses import dataclass
-
-@dataclass(frozen=True, slots=True)
 class UserId:
-    value: int
+    def __init__(self, value):
+        self.value = value
 
-    def __post_init__(self):
-        if self.value <= 0:
-            raise ValueError("user id must be positive")
+    @classmethod
+    def from_text(cls, raw):
+        return cls(int(raw))
+
+    @staticmethod
+    def is_valid(raw):
+        return raw.isdigit()
+
+print(UserId.from_text("7").value, UserId.is_valid("7"))
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Classmethod создаёт объект через polymorphic `cls`; staticmethod — namespaced helper без implicit receiver.
 
 ## Common mistakes
 

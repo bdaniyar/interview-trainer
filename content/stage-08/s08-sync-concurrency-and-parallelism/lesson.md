@@ -46,18 +46,22 @@ Event loop планирует готовые tasks; await не создаёт о
 
 ## Code examples
 
+### Sync, concurrency and parallelism: отдельный пример
+
 ```python
 import asyncio
 
-async def load_pair(client):
-    first, second = await asyncio.gather(
-        client.get("/users/1"),
-        client.get("/users/2"),
-    )
-    return first, second
+async def fetch(name, delay):
+    await asyncio.sleep(delay)
+    return name
+
+async def main():
+    print(await asyncio.gather(fetch("a", 0.02), fetch("b", 0.01)))
+
+asyncio.run(main())
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Concurrency перекрывает ожидание двух I/O операций; это не параллельное выполнение CPU-bound Python.
 
 ## Common mistakes
 

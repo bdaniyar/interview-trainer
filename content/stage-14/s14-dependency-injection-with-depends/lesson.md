@@ -42,18 +42,16 @@ Path operation — внешний адаптер; бизнес-правила л
 
 ## Code examples
 
+### Dependency injection with `Depends`: отдельный пример
+
 ```python
-from typing import Annotated
-from fastapi import APIRouter, Depends
+from fastapi import FastAPI
 
-router = APIRouter(prefix="/users")
-
-@router.get("/{user_id}")
-def get_user(user_id: int, service: Annotated[UserService, Depends()]):
-    return service.get_or_404(user_id)
+app = FastAPI()
+# Добавь dependency и endpoint.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это публичный starter contract практики «Authorization dependency». Реализация и hidden assertions в lesson Markdown не раскрываются.
 
 ## Common mistakes
 

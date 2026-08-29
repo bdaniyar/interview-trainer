@@ -38,18 +38,22 @@ Event loop планирует готовые tasks; await не создаёт о
 
 ## Code examples
 
+### Timeouts: отдельный пример
+
 ```python
 import asyncio
 
-async def load_pair(client):
-    first, second = await asyncio.gather(
-        client.get("/users/1"),
-        client.get("/users/2"),
-    )
-    return first, second
+async def main():
+    try:
+        async with asyncio.timeout(0.01):
+            await asyncio.sleep(1)
+    except TimeoutError:
+        print("deadline exceeded")
+
+asyncio.run(main())
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Timeout задаёт deadline scope, отменяет затянувшееся ожидание и сообщает caller через `TimeoutError`.
 
 ## Common mistakes
 

@@ -46,13 +46,18 @@
 
 ## Code examples
 
+### Tuple: отдельный пример
+
 ```python
-records = [{"id": 2}, {"id": 1}, {"id": 2}]
-by_id = {record["id"]: record for record in records}
-ordered = sorted(by_id.values(), key=lambda row: row["id"] )
+point = (43.2389, 76.8897)
+latitude, longitude = point
+locations = {point: "Almaty"}
+
+print(latitude, longitude)
+print(locations[point])
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Tuple выражает фиксированную запись и может быть dict key, если все элементы hashable.
 
 ## Common mistakes
 

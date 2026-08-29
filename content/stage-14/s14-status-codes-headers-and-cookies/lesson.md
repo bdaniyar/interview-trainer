@@ -28,18 +28,16 @@ Path operation — внешний адаптер; бизнес-правила л
 
 ## Code examples
 
-```python
-from typing import Annotated
-from fastapi import APIRouter, Depends
+### Status codes, headers and cookies: отдельный пример
 
-router = APIRouter(prefix="/users")
+```text
+Сценарий: API отдаёт 403 пользователю без валидной authentication.
 
-@router.get("/{user_id}")
-def get_user(user_id: int, service: Annotated[UserService, Depends()]):
-    return service.get_or_404(user_id)
+Проверка:
+401 — нет/невалидна authentication (с challenge), 403 — identity известна, permission недостаточно.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный debugging example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

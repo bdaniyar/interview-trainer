@@ -46,13 +46,16 @@ Signature — публичный контракт вызова: kinds парам
 
 ## Code examples
 
+### Positional-only and keyword-only parameters: отдельный пример
+
 ```python
-def list_users(limit: int = 20, *, active: bool | None = None) -> list[dict]:
-    """Явный API: active нельзя передать случайно позиционно."""
-    return []
+def paginate(resource, /, *, limit=20, offset=0):
+    return resource[offset : offset + limit]
+
+print(paginate([1, 2, 3], limit=2))
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+`resource` скрывает имя positional-only параметра, а параметры pagination требуют явных keywords.
 
 ## Common mistakes
 

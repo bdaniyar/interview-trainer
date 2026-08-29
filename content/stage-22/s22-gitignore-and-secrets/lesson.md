@@ -33,14 +33,16 @@ Git хранит snapshots и граф commits; working tree, index, local branc
 
 ## Code examples
 
-```bash
-git status
-git add backend/app.py tests/test_app.py
-git commit -m "fix booking conflict handling"
-git push -u origin fix/booking-conflict
+### `.gitignore` and secrets: отдельный пример
+
+```text
+Сценарий: Secret удалён из file.
+
+Проверка:
+Rotate; audit; history cleanup отдельно.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный operations example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

@@ -50,13 +50,16 @@ Lock сериализует критическую секцию, но корре
 
 ## Code examples
 
+### Database bottlenecks: отдельный пример
+
 ```text
-Client → reverse proxy → FastAPI → service → PostgreSQL
-                                  ↘ Redis
-                                  ↘ outbox → worker
+Сценарий: p95 вырос, DB CPU высокий.
+
+Проверка:
+Slow queries, pool, plans, indexes, N+1.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный architecture example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

@@ -46,19 +46,23 @@
 
 ## Code examples
 
+### Abstract base classes: отдельный пример
+
 ```python
-from dataclasses import dataclass
+from abc import ABC, abstractmethod
 
-@dataclass(frozen=True, slots=True)
-class UserId:
-    value: int
+class Repository(ABC):
+    @abstractmethod
+    def get(self, item_id): ...
 
-    def __post_init__(self):
-        if self.value <= 0:
-            raise ValueError("user id must be positive")
+class MemoryRepository(Repository):
+    def get(self, item_id):
+        return {"id": item_id}
+
+print(MemoryRepository().get(1))
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+ABC запрещает создать неполную реализацию и документирует nominal interface.
 
 ## Common mistakes
 

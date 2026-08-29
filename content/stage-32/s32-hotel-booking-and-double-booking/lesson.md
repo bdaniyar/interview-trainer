@@ -46,12 +46,16 @@ Transaction задаёт атомарную границу: либо все св
 
 ## Code examples
 
+### Hotel Booking and double booking: отдельный пример
+
 ```text
-Проблема → моё решение → почему так → failure mode → как проверил
-Граница опыта → что изучил бы перед production rollout
+Сценарий: Не допустить double booking.
+
+Проверка:
+DB invariant, short transaction, concurrent test.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный architecture example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

@@ -10,6 +10,13 @@ import json
 import re
 from pathlib import Path
 
+try:
+    from .personalize_examples import CURATED as CURATED_EXAMPLES
+    from .personalize_examples import fallback_example
+except ImportError:  # direct `python tools/populate_curriculum.py` execution
+    from personalize_examples import CURATED as CURATED_EXAMPLES
+    from personalize_examples import fallback_example
+
 
 ROOT = Path(__file__).resolve().parents[1]
 CONTENT = ROOT / "content"
@@ -154,39 +161,6 @@ SOURCES = {
     30: [("NGINX documentation", "https://nginx.org/en/docs/"), ("Kubernetes concepts", "https://kubernetes.io/docs/concepts/"), ("Terraform documentation", "https://developer.hashicorp.com/terraform/docs")],
     31: [("GitHub code review guide", "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests")],
     32: [("FastAPI documentation", "https://fastapi.tiangolo.com/"), ("PostgreSQL documentation", "https://www.postgresql.org/docs/current/"), ("Redis documentation", "https://redis.io/docs/latest/")],
-}
-
-EXAMPLES = {
-    1: ("python", "payload = {\"roles\": [\"reader\"]}\nalias = payload\nalias[\"roles\"].append(\"writer\")\nassert payload[\"roles\"] == [\"reader\", \"writer\"]"),
-    2: ("python", "records = [{\"id\": 2}, {\"id\": 1}, {\"id\": 2}]\nby_id = {record[\"id\"]: record for record in records}\nordered = sorted(by_id.values(), key=lambda row: row[\"id\"] )"),
-    3: ("python", "def list_users(limit: int = 20, *, active: bool | None = None) -> list[dict]:\n    \"\"\"Явный API: active нельзя передать случайно позиционно.\"\"\"\n    return []"),
-    4: ("python", "from contextlib import contextmanager\n\n@contextmanager\ndef transaction(session):\n    try:\n        yield session\n        session.commit()\n    except Exception:\n        session.rollback()\n        raise"),
-    5: ("python", "from dataclasses import dataclass\n\n@dataclass(frozen=True, slots=True)\nclass UserId:\n    value: int\n\n    def __post_init__(self):\n        if self.value <= 0:\n            raise ValueError(\"user id must be positive\")"),
-    6: ("python", "from typing import Protocol\n\nclass UserReader(Protocol):\n    def get(self, user_id: int) -> dict | None: ...\n\ndef load_name(repo: UserReader, user_id: int) -> str | None:\n    user = repo.get(user_id)\n    return user[\"name\"] if user else None"),
-    8: ("python", "import asyncio\n\nasync def load_pair(client):\n    first, second = await asyncio.gather(\n        client.get(\"/users/1\"),\n        client.get(\"/users/2\"),\n    )\n    return first, second"),
-    9: ("python", "from concurrent.futures import ThreadPoolExecutor\n\nwith ThreadPoolExecutor(max_workers=4) as pool:\n    results = list(pool.map(read_remote_resource, urls))"),
-    10: ("sql", "SELECT u.id, u.email, COUNT(o.id) AS orders_count\nFROM users AS u\nLEFT JOIN orders AS o ON o.user_id = u.id\nGROUP BY u.id, u.email\nORDER BY u.id;"),
-    11: ("sql", "BEGIN;\nSELECT id FROM rooms WHERE id = 42 FOR UPDATE;\nINSERT INTO bookings(room_id, starts_at, ends_at) VALUES (42, $1, $2);\nCOMMIT;"),
-    12: ("http", "PATCH /users/42 HTTP/1.1\nContent-Type: application/json\nIf-Match: \"user-v7\"\n\n{\"display_name\": \"Aida\"}"),
-    13: ("python", "def can_edit(user, article) -> bool:\n    return user.id == article.author_id or \"moderator\" in user.roles"),
-    14: ("python", "from typing import Annotated\nfrom fastapi import APIRouter, Depends\n\nrouter = APIRouter(prefix=\"/users\")\n\n@router.get(\"/{user_id}\")\ndef get_user(user_id: int, service: Annotated[UserService, Depends()]):\n    return service.get_or_404(user_id)"),
-    15: ("python", "from pydantic import BaseModel, Field\n\nclass BookingCreate(BaseModel):\n    room_id: int = Field(gt=0)\n    guests: int = Field(ge=1, le=8)"),
-    16: ("python", "from sqlalchemy import select\nfrom sqlalchemy.orm import selectinload\n\nstatement = (\n    select(User)\n    .options(selectinload(User.roles))\n    .where(User.active.is_(True))\n)\nusers = session.scalars(statement).all()"),
-    17: ("bash", "alembic revision --autogenerate -m \"add booking status\"\nalembic upgrade head\nalembic current"),
-    18: ("python", "import pytest\n\n@pytest.mark.parametrize((\"value\", \"expected\"), [(0, False), (1, True)])\ndef test_is_positive(value, expected):\n    assert is_positive(value) is expected"),
-    19: ("text", "GET cache:user:42 → miss\nSELECT user FROM PostgreSQL\nSET cache:user:42 value EX 60\nUPDATE user → COMMIT → DEL cache:user:42"),
-    20: ("python", "def handle(message, repository):\n    if repository.was_processed(message.id):\n        return\n    repository.apply(message.payload)\n    repository.mark_processed(message.id)"),
-    21: ("dockerfile", "FROM python:3.12-slim\nWORKDIR /app\nCOPY requirements.txt .\nRUN pip install --no-cache-dir -r requirements.txt\nCOPY . .\nCMD [\"python\", \"-m\", \"app\"]"),
-    22: ("bash", "git status\ngit add backend/app.py tests/test_app.py\ngit commit -m \"fix booking conflict handling\"\ngit push -u origin fix/booking-conflict"),
-    23: ("bash", "ps aux | rg uvicorn\nss -ltnp | rg 8000\ntail -n 100 /var/log/app.log\nprintf '%s\\n' \"$APP_ENV\""),
-    24: ("yaml", "steps:\n  - run: python -m pytest\n  - run: ruff check .\n  - run: docker build -t app:${GITHUB_SHA} ."),
-    25: ("python", "logger.info(\n    \"booking_created\",\n    extra={\"booking_id\": booking.id, \"request_id\": request_id},\n)"),
-    26: ("python", "queryset = (\n    Order.objects\n    .select_related(\"user\")\n    .prefetch_related(\"items\")\n    .filter(status=Order.Status.PAID)\n)"),
-    27: ("python", "class BookingService:\n    def __init__(self, repository, clock):\n        self.repository = repository\n        self.clock = clock\n\n    def cancel(self, booking_id):\n        booking = self.repository.get(booking_id)\n        booking.cancel(at=self.clock.now())"),
-    28: ("python", "def deduplicate(values):\n    seen = set()\n    return [value for value in values if not (value in seen or seen.add(value))]"),
-    29: ("text", "Client → reverse proxy → FastAPI → service → PostgreSQL\n                                  ↘ Redis\n                                  ↘ outbox → worker"),
-    30: ("nginx", "location /api/ {\n    proxy_pass http://api:8000;\n    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n}"),
-    32: ("text", "Проблема → моё решение → почему так → failure mode → как проверил\nГраница опыта → что изучил бы перед production rollout"),
 }
 
 POINT_EXPLANATIONS = [
@@ -394,11 +368,10 @@ def lesson_markdown(lesson: dict, stage: dict, existing_theory: str | None, exis
         [guide[0], f"В теме **{lesson['title']}** важно уверенно объяснять следующие части:"]
         + [f"### {point.rstrip('.')}\n\n{explain_point(point, guide, stage_number)}" for point in outline[:7]]
     )
-    example = EXAMPLES.get(stage_number)
+    example = CURATED_EXAMPLES.get(lesson["number"]) or fallback_example({**lesson, "stage_number": stage_number})
     example_block = (
-        f"```{example[0]}\n{example[1]}\n```\n\nРазбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path."
-        if example
-        else "Сформулируй минимальный пример из текущего проекта: один happy path, одна граница и одна ошибка. Не добавляй инфраструктуру, не относящуюся к механизму."
+        f"### {lesson['title']}: отдельный пример\n\n"
+        f"```{example[0]}\n{example[1]}\n```\n\n{example[2]}"
     )
     task = existing_task or (
         f"Разбери backend-сценарий: **{guide[3]}**\n\n"

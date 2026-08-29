@@ -50,13 +50,22 @@
 
 ## Code examples
 
+### LEGB: отдельный пример
+
 ```python
-def list_users(limit: int = 20, *, active: bool | None = None) -> list[dict]:
-    """Явный API: active нельзя передать случайно позиционно."""
-    return []
+label = "global"
+
+def outer():
+    label = "enclosing"
+    def inner():
+        label = "local"
+        return label
+    return inner(), label
+
+print(outer(), label)
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Три разных bindings с одним именем находятся на local, enclosing и global уровнях.
 
 ## Common mistakes
 

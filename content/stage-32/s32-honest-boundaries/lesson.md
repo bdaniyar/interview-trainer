@@ -54,12 +54,16 @@ Resume Defense проверяет каждую заявленную технол
 
 ## Code examples
 
+### Honest boundaries: отдельный пример
+
 ```text
-Проблема → моё решение → почему так → failure mode → как проверил
-Граница опыта → что изучил бы перед production rollout
+Сценарий: Спросили Kafka/Kubernetes/AWS.
+
+Проверка:
+Не заявлять опыт; learning plan; factual stack.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный architecture example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

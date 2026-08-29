@@ -46,12 +46,22 @@ JWT подписан, но обычно не зашифрован; сервер 
 
 ## Code examples
 
+### Roles and permissions: отдельный пример
+
 ```text
-Проблема → моё решение → почему так → failure mode → как проверил
-Граница опыта → что изучил бы перед production rollout
+Тема: Roles and permissions
+
+Фокус:
+- DB role
+- dependency/service policy
+- object-level checks
+- JWT claims may become stale
+
+Рабочая проверка:
+Защищай только реализованный flow: проблема → решение → trade-off → failure mode → проверка.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Этот micro-scenario сформирован из outline конкретного урока и не переиспользуется соседними subtopics.
 
 ## Common mistakes
 

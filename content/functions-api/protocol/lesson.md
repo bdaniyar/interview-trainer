@@ -38,18 +38,25 @@ Dependency объявляет вход handler/service явно; FastAPI раз�
 
 ## Code examples
 
+### Protocol: отдельный пример
+
 ```python
 from typing import Protocol
 
 class UserReader(Protocol):
     def get(self, user_id: int) -> dict | None: ...
 
-def load_name(repo: UserReader, user_id: int) -> str | None:
-    user = repo.get(user_id)
-    return user["name"] if user else None
+class MemoryUsers:
+    def get(self, user_id: int) -> dict | None:
+        return {"id": user_id}
+
+def load(repo: UserReader, user_id: int):
+    return repo.get(user_id)
+
+print(load(MemoryUsers(), 7))
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Structural Protocol принимает объект по доступному behavior без общего base class.
 
 ## Common mistakes
 

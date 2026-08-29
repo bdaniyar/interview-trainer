@@ -28,14 +28,16 @@ Git хранит snapshots и граф commits; working tree, index, local branc
 
 ## Code examples
 
+### branch and switch: отдельный пример
+
 ```bash
-git status
-git add backend/app.py tests/test_app.py
-git commit -m "fix booking conflict handling"
-git push -u origin fix/booking-conflict
+# 22.3 · branch and switch
+# Focus: branch and switch
+printf '%s
+' 's22_branch_and_switch'
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Перед командой назови изменяемое состояние: files, index, branch pointer или shared history.
 
 ## Common mistakes
 

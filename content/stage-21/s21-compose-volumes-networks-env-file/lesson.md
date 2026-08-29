@@ -28,16 +28,17 @@ Docker image — неизменяемый шаблон filesystem, container —
 
 ## Code examples
 
-```dockerfile
-FROM python:3.12-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
-CMD ["python", "-m", "app"]
+### Compose volumes/networks/env_file: отдельный пример
+
+```yaml
+# 21.14 · Compose volumes/networks/env_file
+lesson:
+  key: s21_compose_volumes_networks_env_file
+  checks:
+    - Compose volumes/networks/env_file
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Разделяй build-time image и runtime container: DNS, ports, mounts, env и readiness.
 
 ## Common mistakes
 

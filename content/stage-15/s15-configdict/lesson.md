@@ -42,15 +42,17 @@ Pydantic v2 преобразует и валидирует данные на г�
 
 ## Code examples
 
-```python
-from pydantic import BaseModel, Field
+### ConfigDict: отдельный пример
 
-class BookingCreate(BaseModel):
-    room_id: int = Field(gt=0)
-    guests: int = Field(ge=1, le=8)
+```python
+def example_s15_configdict() -> tuple[str, ...]:
+    # ConfigDict: проверяем отдельный contract урока.
+    return ('`from_attributes`', 'strictness', 'extra fields', 'aliases',)
+
+assert example_s15_configdict()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проверь missing, explicit null, invalid input и serialized output Pydantic v2.
 
 ## Common mistakes
 

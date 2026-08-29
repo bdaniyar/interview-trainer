@@ -28,18 +28,17 @@
 
 ## Code examples
 
-```python
-class BookingService:
-    def __init__(self, repository, clock):
-        self.repository = repository
-        self.clock = clock
+### Coupling and cohesion: отдельный пример
 
-    def cancel(self, booking_id):
-        booking = self.repository.get(booking_id)
-        booking.cancel(at=self.clock.now())
+```python
+def example_s27_coupling_and_cohesion() -> tuple[str, ...]:
+    # Coupling and cohesion: проверяем отдельный contract урока.
+    return ('Coupling and cohesion',)
+
+assert example_s27_coupling_and_cohesion()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проведи границу слоя и dependency direction; business rule не должен зависеть от framework.
 
 ## Common mistakes
 

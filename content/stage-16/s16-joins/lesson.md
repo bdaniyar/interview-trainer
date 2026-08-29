@@ -38,19 +38,14 @@ JOIN соединяет строки по условию и может изме�
 
 ## Code examples
 
-```python
-from sqlalchemy import select
-from sqlalchemy.orm import selectinload
+### Joins: отдельный пример
 
-statement = (
-    select(User)
-    .options(selectinload(User.roles))
-    .where(User.active.is_(True))
-)
-users = session.scalars(statement).all()
+```python
+def orders_for_email(User, Order, email):
+    raise NotImplementedError
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это публичный starter contract практики «ORM join». Реализация и hidden assertions в lesson Markdown не раскрываются.
 
 ## Common mistakes
 

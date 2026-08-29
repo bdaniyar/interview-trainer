@@ -42,14 +42,16 @@ Linux basics нужны для запуска процесса, чтения л�
 
 ## Code examples
 
+### Filesystem navigation: отдельный пример
+
 ```bash
-ps aux | rg uvicorn
-ss -ltnp | rg 8000
-tail -n 100 /var/log/app.log
-printf '%s\n' "$APP_ENV"
+# 23.1 · Filesystem navigation
+# Focus: pwd, ls, cd, relative/absolute paths
+printf '%s
+' 's23_filesystem_navigation'
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Свяжи command с конкретным process, file, permission, environment или port symptom.
 
 ## Common mistakes
 

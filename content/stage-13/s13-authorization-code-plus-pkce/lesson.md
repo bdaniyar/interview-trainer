@@ -50,12 +50,17 @@ PKCE отправляет challenge в authorize request и verifier при toke
 
 ## Code examples
 
+### Authorization Code + PKCE: отдельный пример
+
 ```python
-def can_edit(user, article) -> bool:
-    return user.id == article.author_id or "moderator" in user.roles
+def example_s13_authorization_code_plus_pkce() -> tuple[str, ...]:
+    # Authorization Code + PKCE: проверяем отдельный contract урока.
+    return ('verifier', 'challenge', 'code interception', '`state`',)
+
+assert example_s13_authorization_code_plus_pkce()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Назови threat, trust boundary, server-side check и безопасный отказ.
 
 ## Common mistakes
 

@@ -42,19 +42,24 @@
 
 ## Code examples
 
+### Encapsulation, abstraction and polymorphism: отдельный пример
+
 ```python
-from dataclasses import dataclass
+class JsonRenderable:
+    def render(self):
+        raise NotImplementedError
 
-@dataclass(frozen=True, slots=True)
-class UserId:
-    value: int
+class User(JsonRenderable):
+    def render(self):
+        return {"type": "user"}
 
-    def __post_init__(self):
-        if self.value <= 0:
-            raise ValueError("user id must be positive")
+def response(item: JsonRenderable):
+    return item.render()
+
+print(response(User()))
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Polymorphism позволяет caller работать через behavior contract, не проверяя конкретный класс.
 
 ## Common mistakes
 

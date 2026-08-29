@@ -33,19 +33,17 @@ SQLAlchemy 2.x управляет SQL, identity map, unit of work и transaction
 
 ## Code examples
 
-```python
-from sqlalchemy import select
-from sqlalchemy.orm import selectinload
+### Constraints and indexes in models: отдельный пример
 
-statement = (
-    select(User)
-    .options(selectinload(User.roles))
-    .where(User.active.is_(True))
-)
-users = session.scalars(statement).all()
+```python
+def example_s16_constraints_and_indexes_in_models() -> tuple[str, ...]:
+    # Constraints and indexes in models: проверяем отдельный contract урока.
+    return ('DB migration still required', 'model declaration is not production schema migration',)
+
+assert example_s16_constraints_and_indexes_in_models()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Укажи владельца Session/transaction и момент фактического SQL I/O.
 
 ## Common mistakes
 

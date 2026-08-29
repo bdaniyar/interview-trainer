@@ -38,16 +38,16 @@ Container — изолированный process из image, а не VM; сет�
 
 ## Code examples
 
-```dockerfile
-FROM python:3.12-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
-CMD ["python", "-m", "app"]
+### Port mapping: отдельный пример
+
+```text
+Сценарий: Host открывает 5433, какой port использует API container?
+
+Проверка:
+service:5432; host mapping только для host client.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный operations example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

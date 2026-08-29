@@ -38,14 +38,16 @@ Index — отдельная структура доступа с ценой з�
 
 ## Code examples
 
-```bash
-git status
-git add backend/app.py tests/test_app.py
-git commit -m "fix booking conflict handling"
-git push -u origin fix/booking-conflict
+### reset vs revert: отдельный пример
+
+```text
+Сценарий: Ошибка уже в main.
+
+Проверка:
+git revert; не rewrite shared history.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный operations example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

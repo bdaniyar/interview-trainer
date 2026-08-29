@@ -46,13 +46,22 @@
 
 ## Code examples
 
+### Basic decorators: отдельный пример
+
 ```python
-def list_users(limit: int = 20, *, active: bool | None = None) -> list[dict]:
-    """Явный API: active нельзя передать случайно позиционно."""
-    return []
+def require_active(function):
+    def wrapper(user):
+        if not user["active"]:
+            raise PermissionError
+        return function(user)
+    return wrapper
+
+@require_active
+def profile(user):
+    return user["name"]
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Decorator заменяет имя `profile` на wrapper, который проверяет условие перед исходным вызовом.
 
 ## Common mistakes
 

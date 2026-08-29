@@ -38,18 +38,19 @@ Path operation — внешний адаптер; бизнес-правила л
 
 ## Code examples
 
+### Path parameters: отдельный пример
+
 ```python
-from typing import Annotated
-from fastapi import APIRouter, Depends
+from fastapi import FastAPI, Path
 
-router = APIRouter(prefix="/users")
+app = FastAPI()
 
-@router.get("/{user_id}")
-def get_user(user_id: int, service: Annotated[UserService, Depends()]):
-    return service.get_or_404(user_id)
+@app.get("/articles/{article_id}")
+def article(article_id: int = Path(gt=0)):
+    return {"article_id": article_id}
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Router сначала сопоставляет path, затем FastAPI преобразует segment в `int` и применяет constraint `gt=0`.
 
 ## Common mistakes
 

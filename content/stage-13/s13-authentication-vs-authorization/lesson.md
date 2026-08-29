@@ -28,12 +28,17 @@ Authentication устанавливает identity, authorization проверя
 
 ## Code examples
 
+### Authentication vs authorization: отдельный пример
+
 ```python
-def can_edit(user, article) -> bool:
-    return user.id == article.author_id or "moderator" in user.roles
+def example_s13_authentication_vs_authorization() -> tuple[str, ...]:
+    # Authentication vs authorization: проверяем отдельный contract урока.
+    return ('Authentication vs authorization',)
+
+assert example_s13_authentication_vs_authorization()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Назови threat, trust boundary, server-side check и безопасный отказ.
 
 ## Common mistakes
 

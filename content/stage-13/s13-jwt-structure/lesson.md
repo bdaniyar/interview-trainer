@@ -50,12 +50,17 @@ Signature — публичный контракт вызова: kinds парам
 
 ## Code examples
 
+### JWT structure: отдельный пример
+
 ```python
-def can_edit(user, article) -> bool:
-    return user.id == article.author_id or "moderator" in user.roles
+def example_s13_jwt_structure() -> tuple[str, ...]:
+    # JWT structure: проверяем отдельный contract урока.
+    return ('header', 'payload', 'signature', 'encoded is not encrypted',)
+
+assert example_s13_jwt_structure()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Назови threat, trust boundary, server-side check и безопасный отказ.
 
 ## Common mistakes
 

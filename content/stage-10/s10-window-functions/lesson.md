@@ -38,15 +38,18 @@ Window function считает значение по partition, не свора�
 
 ## Code examples
 
+### Window functions: отдельный пример
+
 ```sql
-SELECT u.id, u.email, COUNT(o.id) AS orders_count
-FROM users AS u
-LEFT JOIN orders AS o ON o.user_id = u.id
-GROUP BY u.id, u.email
-ORDER BY u.id;
+SELECT id, account_id, amount,
+       SUM(amount) OVER (
+           PARTITION BY account_id
+           ORDER BY created_at, id
+       ) AS running_balance
+FROM ledger_entries;
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Window aggregate сохраняет каждую ledger row и добавляет накопительный итог в пределах account.
 
 ## Common mistakes
 

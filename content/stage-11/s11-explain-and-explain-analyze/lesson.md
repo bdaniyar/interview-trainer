@@ -50,14 +50,16 @@ Constraint защищает истину, transaction объединяет из�
 
 ## Code examples
 
-```sql
-BEGIN;
-SELECT id FROM rooms WHERE id = 42 FOR UPDATE;
-INSERT INTO bookings(room_id, starts_at, ends_at) VALUES (42, $1, $2);
-COMMIT;
+### EXPLAIN and EXPLAIN ANALYZE: отдельный пример
+
+```text
+Сценарий: Planner выбирает Seq Scan для boolean active, хотя index существует.
+
+Проверка:
+При высокой доле совпадений Seq Scan может быть дешевле; сравнить estimates/actual rows, не принуждать index вслепую.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный debugging example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

@@ -38,14 +38,17 @@ Observability отвечает на вопросы о поведении сис�
 
 ## Code examples
 
+### Logs vs metrics vs traces: отдельный пример
+
 ```python
-logger.info(
-    "booking_created",
-    extra={"booking_id": booking.id, "request_id": request_id},
-)
+def example_s25_logs_vs_metrics_vs_traces() -> tuple[str, ...]:
+    # Logs vs metrics vs traces: проверяем отдельный contract урока.
+    return ('discrete events', 'numeric time series', 'request path across components',)
+
+assert example_s25_logs_vs_metrics_vs_traces()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Сигнал полезен, когда содержит контекст, correlation и ведёт к конкретному действию.
 
 ## Common mistakes
 

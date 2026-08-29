@@ -38,20 +38,20 @@
 
 ## Code examples
 
-```python
-from contextlib import contextmanager
+### Exception chaining: отдельный пример
 
-@contextmanager
-def transaction(session):
+```python
+class InvalidUserId(ValueError):
+    pass
+
+def parse_user_id(raw):
     try:
-        yield session
-        session.commit()
-    except Exception:
-        session.rollback()
-        raise
+        return int(raw)
+    except ValueError as exc:
+        raise InvalidUserId(raw) from exc
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+`raise from` добавляет domain context и сохраняет исходную причину в exception chain.
 
 ## Common mistakes
 

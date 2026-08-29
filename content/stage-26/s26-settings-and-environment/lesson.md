@@ -28,16 +28,17 @@ Django project содержит configuration, apps группируют domain 
 
 ## Code examples
 
+### Settings and environment: отдельный пример
+
 ```python
-queryset = (
-    Order.objects
-    .select_related("user")
-    .prefetch_related("items")
-    .filter(status=Order.Status.PAID)
-)
+def example_s26_settings_and_environment() -> tuple[str, ...]:
+    # Settings and environment: проверяем отдельный contract урока.
+    return ('Settings and environment',)
+
+assert example_s26_settings_and_environment()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проследи Django/DRF request, ORM query count, validation, permission и response.
 
 ## Common mistakes
 

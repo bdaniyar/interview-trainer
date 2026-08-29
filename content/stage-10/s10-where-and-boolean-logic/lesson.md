@@ -46,15 +46,16 @@ SQL описывает требуемый набор строк; коррект�
 
 ## Code examples
 
+### WHERE and boolean logic: отдельный пример
+
 ```sql
-SELECT u.id, u.email, COUNT(o.id) AS orders_count
-FROM users AS u
-LEFT JOIN orders AS o ON o.user_id = u.id
-GROUP BY u.id, u.email
-ORDER BY u.id;
+SELECT id, email
+FROM users
+WHERE active IS TRUE
+  AND created_at >= DATE '2026-01-01';
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+WHERE оставляет только строки, для которых всё boolean expression истинно.
 
 ## Common mistakes
 

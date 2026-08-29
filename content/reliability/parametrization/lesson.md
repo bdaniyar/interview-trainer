@@ -38,15 +38,16 @@ Arrange создаёт условия, Act выполняет одно пове�
 
 ## Code examples
 
+### Parametrization: отдельный пример
+
 ```python
 import pytest
-
-@pytest.mark.parametrize(("value", "expected"), [(0, False), (1, True)])
-def test_is_positive(value, expected):
-    assert is_positive(value) is expected
+@pytest.mark.parametrize('value', [1, 2, 3])
+def test_positive(value):
+    assert value > 0
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Expected: `3 passed`. pytest создаёт отдельный test case для каждого параметра; точное оформление строки зависит от verbosity.
 
 ## Common mistakes
 

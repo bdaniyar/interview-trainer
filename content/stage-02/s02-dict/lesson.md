@@ -54,13 +54,20 @@
 
 ## Code examples
 
+### Dict: отдельный пример
+
 ```python
-records = [{"id": 2}, {"id": 1}, {"id": 2}]
-by_id = {record["id"]: record for record in records}
-ordered = sorted(by_id.values(), key=lambda row: row["id"] )
+users = {
+    7: {"name": "Aida"},
+    9: {"name": "Daniyar"},
+}
+users[7]["active"] = True
+
+print(users.get(8))
+print(users[7])
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Dict моделирует lookup по уникальному ключу; `.get` явно выражает допустимое отсутствие.
 
 ## Common mistakes
 

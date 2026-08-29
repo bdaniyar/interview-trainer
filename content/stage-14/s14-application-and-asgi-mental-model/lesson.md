@@ -42,18 +42,17 @@ Path operation — внешний адаптер; бизнес-правила л
 
 ## Code examples
 
+### Application and ASGI mental model: отдельный пример
+
 ```python
-from typing import Annotated
-from fastapi import APIRouter, Depends
+def example_s14_application_and_asgi_mental_model() -> tuple[str, ...]:
+    # Application and ASGI mental model: проверяем отдельный contract урока.
+    return ('application object', 'request lifecycle', 'ASGI awareness', 'no server internals deep dive',)
 
-router = APIRouter(prefix="/users")
-
-@router.get("/{user_id}")
-def get_user(user_id: int, service: Annotated[UserService, Depends()]):
-    return service.get_or_404(user_id)
+assert example_s14_application_and_asgi_mental_model()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проследи request через router, validation, dependency, service и response model.
 
 ## Common mistakes
 

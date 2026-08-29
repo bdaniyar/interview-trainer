@@ -38,12 +38,16 @@ Event loop запускает ready callbacks/tasks и ждёт I/O; cooperative
 
 ## Code examples
 
+### Why async?: отдельный пример
+
 ```text
-Проблема → моё решение → почему так → failure mode → как проверил
-Граница опыта → что изучил бы перед production rollout
+Сценарий: Зачем async?
+
+Проверка:
+Concurrent I/O; not CPU speed; no blocking.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный architecture example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

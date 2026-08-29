@@ -50,15 +50,17 @@ SQL описывает требуемый набор строк; коррект�
 
 ## Code examples
 
+### Aggregates: отдельный пример
+
 ```sql
-SELECT u.id, u.email, COUNT(o.id) AS orders_count
-FROM users AS u
-LEFT JOIN orders AS o ON o.user_id = u.id
-GROUP BY u.id, u.email
-ORDER BY u.id;
+SELECT
+    COUNT(*) AS order_count,
+    AVG(total) AS average_total,
+    SUM(total) FILTER (WHERE status = 'paid') AS paid_total
+FROM orders;
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Aggregates сворачивают набор строк; FILTER считает условную метрику без отдельного запроса.
 
 ## Common mistakes
 

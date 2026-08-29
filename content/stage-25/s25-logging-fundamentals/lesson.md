@@ -38,14 +38,17 @@ Observability отвечает на вопросы о поведении сис�
 
 ## Code examples
 
+### Logging fundamentals: отдельный пример
+
 ```python
-logger.info(
-    "booking_created",
-    extra={"booking_id": booking.id, "request_id": request_id},
-)
+def example_s25_logging_fundamentals() -> tuple[str, ...]:
+    # Logging fundamentals: проверяем отдельный contract урока.
+    return ('debug/info/warning/error/exception', 'no print-debugging as final solution', 'no secrets/PII',)
+
+assert example_s25_logging_fundamentals()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Сигнал полезен, когда содержит контекст, correlation и ведёт к конкретному действию.
 
 ## Common mistakes
 

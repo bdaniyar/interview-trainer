@@ -42,13 +42,16 @@ Junior system design начинается с требований, request path,
 
 ## Code examples
 
+### Background jobs: отдельный пример
+
 ```text
-Client → reverse proxy → FastAPI → service → PostgreSQL
-                                  ↘ Redis
-                                  ↘ outbox → worker
+Сценарий: Email без latency/loss.
+
+Проверка:
+Outbox/durable queue, retry, idempotency.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный architecture example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

@@ -38,13 +38,14 @@ Migration — воспроизводимый переход между верс�
 
 ## Code examples
 
-```bash
-alembic revision --autogenerate -m "add booking status"
-alembic upgrade head
-alembic current
+### Autogenerate: отдельный пример
+
+```python
+def unsafe_operations(operations):
+    raise NotImplementedError
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это публичный starter contract практики «Review autogenerate». Реализация и hidden assertions в lesson Markdown не раскрываются.
 
 ## Common mistakes
 

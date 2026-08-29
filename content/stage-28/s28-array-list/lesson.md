@@ -28,13 +28,14 @@
 
 ## Code examples
 
+### Array/list: отдельный пример
+
 ```python
-def deduplicate(values):
-    seen = set()
-    return [value for value in values if not (value in seen or seen.add(value))]
+rows = [('a', 2), ('b', 1), ('c', 2)]
+print(sorted(rows, key=lambda row: row[1]))
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Expected: `[('b', 1), ('a', 2), ('c', 2)]`. При равных keys sorted сохраняет исходный относительный порядок элементов.
 
 ## Common mistakes
 

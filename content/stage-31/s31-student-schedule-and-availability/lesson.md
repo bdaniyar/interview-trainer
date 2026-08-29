@@ -42,7 +42,22 @@
 
 ## Code examples
 
-Сформулируй минимальный пример из текущего проекта: один happy path, одна граница и одна ошибка. Не добавляй инфраструктуру, не относящуюся к механизму.
+### Student schedule and availability: отдельный пример
+
+```text
+Тема: Student schedule and availability
+
+Фокус:
+- honest availability
+- part-time/flexible preference
+- clear commitment
+- no promises impossible to combine with study
+
+Рабочая проверка:
+Ответ строй как context → личное действие → результат → конкретный follow-up.
+```
+
+Этот micro-scenario сформирован из outline конкретного урока и не переиспользуется соседними subtopics.
 
 ## Common mistakes
 

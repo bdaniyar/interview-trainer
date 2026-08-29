@@ -46,14 +46,16 @@ Git хранит snapshots и граф commits; working tree, index, local branc
 
 ## Code examples
 
+### Pull request and code review: отдельный пример
+
 ```bash
-git status
-git add backend/app.py tests/test_app.py
-git commit -m "fix booking conflict handling"
-git push -u origin fix/booking-conflict
+# 22.11 · Pull request and code review
+# Focus: focused change, description, tests, responding to comments
+printf '%s
+' 's22_pull_request_and_code_review'
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Перед командой назови изменяемое состояние: files, index, branch pointer или shared history.
 
 ## Common mistakes
 

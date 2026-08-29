@@ -28,16 +28,17 @@ Container — изолированный process из image, а не VM; сет�
 
 ## Code examples
 
-```dockerfile
-FROM python:3.12-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
-CMD ["python", "-m", "app"]
+### Image vs container: отдельный пример
+
+```yaml
+# 21.1 · Image vs container
+lesson:
+  key: s21_image_vs_container
+  checks:
+    - Image vs container
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Разделяй build-time image и runtime container: DNS, ports, mounts, env и readiness.
 
 ## Common mistakes
 

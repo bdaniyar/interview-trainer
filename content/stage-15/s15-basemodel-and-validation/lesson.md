@@ -28,15 +28,15 @@ Pydantic `BaseModel` превращает недоверенный input в ти
 
 ## Code examples
 
-```python
-from pydantic import BaseModel, Field
+### BaseModel and validation: отдельный пример
 
-class BookingCreate(BaseModel):
-    room_id: int = Field(gt=0)
-    guests: int = Field(ge=1, le=8)
+```python
+from pydantic import BaseModel
+
+# Создай UserCreate.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это публичный starter contract практики «UserCreate model». Реализация и hidden assertions в lesson Markdown не раскрываются.
 
 ## Common mistakes
 

@@ -38,13 +38,16 @@ Session владеет identity map и transaction state; после ошибк�
 
 ## Code examples
 
+### Stateless API and horizontal scaling: отдельный пример
+
 ```text
-Client → reverse proxy → FastAPI → service → PostgreSQL
-                                  ↘ Redis
-                                  ↘ outbox → worker
+Сценарий: Что мешает второму API instance?
+
+Проверка:
+Local state; shared DB/cache/storage.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный architecture example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

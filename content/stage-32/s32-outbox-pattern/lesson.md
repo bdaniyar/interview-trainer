@@ -46,12 +46,16 @@ Processes изолируют память и подходят для CPU-bound P
 
 ## Code examples
 
+### Outbox pattern: отдельный пример
+
 ```text
-Проблема → моё решение → почему так → failure mode → как проверил
-Граница опыта → что изучил бы перед production rollout
+Сценарий: Почему outbox?
+
+Проверка:
+Atomicity gap; at-least-once/idempotency.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный architecture example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

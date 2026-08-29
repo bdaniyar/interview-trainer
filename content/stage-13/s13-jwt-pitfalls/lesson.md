@@ -50,12 +50,16 @@ Security строится слоями: аутентификация, автор
 
 ## Code examples
 
-```python
-def can_edit(user, article) -> bool:
-    return user.id == article.author_id or "moderator" in user.roles
+### JWT pitfalls: отдельный пример
+
+```text
+Сценарий: API декодирует payload без проверки signature/issuer/audience/exp.
+
+Проверка:
+Полная verification с разрешённым algorithm и claims; invalid token всегда безопасно отклоняется.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный debugging example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

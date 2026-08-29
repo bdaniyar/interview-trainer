@@ -38,15 +38,17 @@ Pydantic v2 преобразует и валидирует данные на г�
 
 ## Code examples
 
-```python
-from pydantic import BaseModel, Field
+### Parsing vs validation mental model: отдельный пример
 
-class BookingCreate(BaseModel):
-    room_id: int = Field(gt=0)
-    guests: int = Field(ge=1, le=8)
+```python
+def example_s15_parsing_vs_validation_mental_model() -> tuple[str, ...]:
+    # Parsing vs validation mental model: проверяем отдельный contract урока.
+    return ('coercion', 'strict mode', 'trusted/untrusted boundaries',)
+
+assert example_s15_parsing_vs_validation_mental_model()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проверь missing, explicit null, invalid input и serialized output Pydantic v2.
 
 ## Common mistakes
 

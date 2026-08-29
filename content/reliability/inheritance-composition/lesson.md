@@ -46,19 +46,24 @@ Inheritance выражает отношение is-a и участвует в MR
 
 ## Code examples
 
+### Inheritance vs composition: отдельный пример
+
 ```python
-from dataclasses import dataclass
+class EmailSender:
+    def send(self, message):
+        return f"sent: {message}"
 
-@dataclass(frozen=True, slots=True)
-class UserId:
-    value: int
+class RegistrationService:
+    def __init__(self, sender):
+        self.sender = sender
 
-    def __post_init__(self):
-        if self.value <= 0:
-            raise ValueError("user id must be positive")
+    def register(self, email):
+        return self.sender.send(email)
+
+print(RegistrationService(EmailSender()).register("a@example.com"))
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Composition передаёт collaborator явно и не заставляет service наследоваться от sender.
 
 ## Common mistakes
 

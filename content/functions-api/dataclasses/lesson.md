@@ -50,19 +50,22 @@ Mutable объект меняется с сохранением identity, поэ
 
 ## Code examples
 
+### Dataclasses: отдельный пример
+
 ```python
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
-@dataclass(frozen=True, slots=True)
-class UserId:
-    value: int
+@dataclass(slots=True)
+class User:
+    email: str
+    roles: list[str] = field(default_factory=list)
 
-    def __post_init__(self):
-        if self.value <= 0:
-            raise ValueError("user id must be positive")
+a, b = User("a@example.com"), User("b@example.com")
+a.roles.append("admin")
+print(b.roles)
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+`default_factory` создаёт независимый mutable default для каждого dataclass instance.
 
 ## Common mistakes
 

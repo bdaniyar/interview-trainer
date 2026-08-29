@@ -42,14 +42,15 @@ Redis — быстрый in-memory data store для cache и временног
 
 ## Code examples
 
+### Redis mental model: отдельный пример
+
 ```text
-GET cache:user:42 → miss
-SELECT user FROM PostgreSQL
-SET cache:user:42 value EX 60
-UPDATE user → COMMIT → DEL cache:user:42
+SET lesson:19.1:s19_redis_mental_model value EX 60
+GET lesson:19.1:s19_redis_mental_model
+TTL lesson:19.1:s19_redis_mental_model
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Определи key, value, TTL, invalidation, concurrency и outage fallback.
 
 ## Common mistakes
 

@@ -33,18 +33,17 @@
 
 ## Code examples
 
-```python
-class BookingService:
-    def __init__(self, repository, clock):
-        self.repository = repository
-        self.clock = clock
+### Modular monolith: отдельный пример
 
-    def cancel(self, booking_id):
-        booking = self.repository.get(booking_id)
-        booking.cancel(at=self.clock.now())
+```python
+def example_s27_modular_monolith() -> tuple[str, ...]:
+    # Modular monolith: проверяем отдельный contract урока.
+    return ('boundaries inside one deployable', 'lower operational complexity',)
+
+assert example_s27_modular_monolith()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проведи границу слоя и dependency direction; business rule не должен зависеть от framework.
 
 ## Common mistakes
 

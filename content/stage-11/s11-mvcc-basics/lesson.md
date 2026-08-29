@@ -42,14 +42,15 @@ Constraint защищает истину, transaction объединяет из�
 
 ## Code examples
 
+### MVCC basics: отдельный пример
+
 ```sql
-BEGIN;
-SELECT id FROM rooms WHERE id = 42 FOR UPDATE;
-INSERT INTO bookings(room_id, starts_at, ends_at) VALUES (42, $1, $2);
-COMMIT;
+-- 11.11 · MVCC basics
+-- Focus: snapshots, readers/writers, old row versions, vacuum awareness
+SELECT 's11_mvcc_basics' AS example_key;
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проверь invariant, конкурентный сценарий и фактический query plan вместо догадки.
 
 ## Common mistakes
 

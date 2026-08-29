@@ -42,14 +42,15 @@ Constraint защищает истину, transaction объединяет из�
 
 ## Code examples
 
+### Normalization: отдельный пример
+
 ```sql
-BEGIN;
-SELECT id FROM rooms WHERE id = 42 FOR UPDATE;
-INSERT INTO bookings(room_id, starts_at, ends_at) VALUES (42, $1, $2);
-COMMIT;
+-- 11.3 · Normalization
+-- Focus: duplication, update anomalies, 1NF/2NF/3NF at practical Junior depth, deliberate denormalization only with reason
+SELECT 's11_normalization' AS example_key;
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проверь invariant, конкурентный сценарий и фактический query plan вместо догадки.
 
 ## Common mistakes
 

@@ -42,18 +42,20 @@ Event loop планирует готовые tasks; await не создаёт о
 
 ## Code examples
 
+### Coroutine function and coroutine object: отдельный пример
+
 ```python
 import asyncio
 
-async def load_pair(client):
-    first, second = await asyncio.gather(
-        client.get("/users/1"),
-        client.get("/users/2"),
-    )
-    return first, second
+async def answer():
+    return 42
+
+coroutine = answer()
+print(type(coroutine).__name__)
+print(asyncio.run(coroutine))
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Вызов `async def` создаёт coroutine object; event loop выполняет его до результата.
 
 ## Common mistakes
 

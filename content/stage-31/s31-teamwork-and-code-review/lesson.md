@@ -42,7 +42,22 @@
 
 ## Code examples
 
-Сформулируй минимальный пример из текущего проекта: один happy path, одна граница и одна ошибка. Не добавляй инфраструктуру, не относящуюся к механизму.
+### Teamwork and code review: отдельный пример
+
+```text
+Тема: Teamwork and code review
+
+Фокус:
+- accepting feedback
+- explaining trade-offs
+- focused PR
+- conflict resolution
+
+Рабочая проверка:
+Ответ строй как context → личное действие → результат → конкретный follow-up.
+```
+
+Этот micro-scenario сформирован из outline конкретного урока и не переиспользуется соседними subtopics.
 
 ## Common mistakes
 

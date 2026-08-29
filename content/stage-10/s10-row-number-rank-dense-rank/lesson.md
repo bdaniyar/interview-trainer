@@ -33,15 +33,16 @@ GROUP BY формирует группы до вычисления aggregates, �
 
 ## Code examples
 
+### `ROW_NUMBER`, `RANK`, `DENSE_RANK`: отдельный пример
+
 ```sql
-SELECT u.id, u.email, COUNT(o.id) AS orders_count
-FROM users AS u
-LEFT JOIN orders AS o ON o.user_id = u.id
-GROUP BY u.id, u.email
-ORDER BY u.id;
+SELECT player_id, score,
+       ROW_NUMBER() OVER (ORDER BY score DESC, player_id) AS position,
+       DENSE_RANK() OVER (ORDER BY score DESC) AS score_rank
+FROM leaderboard;
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+ROW_NUMBER всегда уникален, а DENSE_RANK даёт одинаковый rank равным scores без пропусков.
 
 ## Common mistakes
 

@@ -50,12 +50,16 @@ Authorization выполняется server-side на каждом resource/acti
 
 ## Code examples
 
+### MinIO and presigned URLs: отдельный пример
+
 ```text
-Проблема → моё решение → почему так → failure mode → как проверил
-Граница опыта → что изучил бы перед production rollout
+Сценарий: Слишком большой file.
+
+Проверка:
+Policy, size validation, delete/reject.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный architecture example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

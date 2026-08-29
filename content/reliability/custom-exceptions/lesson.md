@@ -42,20 +42,21 @@
 
 ## Code examples
 
-```python
-from contextlib import contextmanager
+### Custom exceptions: отдельный пример
 
-@contextmanager
-def transaction(session):
-    try:
-        yield session
-        session.commit()
-    except Exception:
-        session.rollback()
-        raise
+```python
+class BookingConflict(Exception):
+    def __init__(self, room_id):
+        self.room_id = room_id
+        super().__init__(f"room {room_id} is already booked")
+
+try:
+    raise BookingConflict(42)
+except BookingConflict as exc:
+    print(exc.room_id)
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Custom exception несёт стабильный domain type и данные, а не заставляет caller разбирать строку.
 
 ## Common mistakes
 

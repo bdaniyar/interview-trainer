@@ -46,14 +46,15 @@ Constraint защищает истину, transaction объединяет из�
 
 ## Code examples
 
+### Isolation levels: отдельный пример
+
 ```sql
-BEGIN;
-SELECT id FROM rooms WHERE id = 42 FOR UPDATE;
-INSERT INTO bookings(room_id, starts_at, ends_at) VALUES (42, $1, $2);
-COMMIT;
+-- 11.10 · Isolation levels
+-- Focus: read committed, repeatable read, serializable, anomalies at reasonable depth
+SELECT 's11_isolation_levels' AS example_key;
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проверь invariant, конкурентный сценарий и фактический query plan вместо догадки.
 
 ## Common mistakes
 

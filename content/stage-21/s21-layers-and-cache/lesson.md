@@ -38,16 +38,19 @@ Dependency объявляет вход handler/service явно; FastAPI раз�
 
 ## Code examples
 
-```dockerfile
-FROM python:3.12-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
-CMD ["python", "-m", "app"]
+### Layers and cache: отдельный пример
+
+```yaml
+# 21.3 · Layers and cache
+lesson:
+  key: s21_layers_and_cache
+  checks:
+    - dependency files first
+    - source later
+    - cache invalidation
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Разделяй build-time image и runtime container: DNS, ports, mounts, env и readiness.
 
 ## Common mistakes
 

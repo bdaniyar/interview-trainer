@@ -42,18 +42,17 @@ Type hint описывает контракт для checker/IDE; обычный
 
 ## Code examples
 
+### Static hints vs runtime behavior: отдельный пример
+
 ```python
-from typing import Protocol
+def double(value: int) -> int:
+    return value * 2
 
-class UserReader(Protocol):
-    def get(self, user_id: int) -> dict | None: ...
-
-def load_name(repo: UserReader, user_id: int) -> str | None:
-    user = repo.get(user_id)
-    return user["name"] if user else None
+print(double(3))
+print(double("a"))
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Type checker отклонит второй вызов, но runtime Python выполнит operator строки без автоматической validation.
 
 ## Common mistakes
 

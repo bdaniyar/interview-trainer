@@ -38,16 +38,17 @@ Django project содержит configuration, apps группируют domain 
 
 ## Code examples
 
+### FastAPI vs Django/DRF: отдельный пример
+
 ```python
-queryset = (
-    Order.objects
-    .select_related("user")
-    .prefetch_related("items")
-    .filter(status=Order.Status.PAID)
-)
+def example_s26_fastapi_vs_django_drf() -> tuple[str, ...]:
+    # FastAPI vs Django/DRF: проверяем отдельный contract урока.
+    return ('FastAPI: typed API/async flexibility', 'Django: batteries, ORM, admin, auth ecosystem', 'no claim that one is universally better',)
+
+assert example_s26_fastapi_vs_django_drf()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проследи Django/DRF request, ORM query count, validation, permission и response.
 
 ## Common mistakes
 

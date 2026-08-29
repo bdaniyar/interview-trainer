@@ -33,13 +33,15 @@ Migration — воспроизводимый переход между верс�
 
 ## Code examples
 
+### Why migrations exist: отдельный пример
+
 ```bash
-alembic revision --autogenerate -m "add booking status"
+alembic revision -m "s17_why_migrations_exist"
+# review upgrade/downgrade for: model code does not update an existing DB, versioned schema history
 alembic upgrade head
-alembic current
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Review migration как versioned schema transition; autogenerate — только кандидат.
 
 ## Common mistakes
 

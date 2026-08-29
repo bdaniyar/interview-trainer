@@ -38,18 +38,20 @@ Type hints улучшают статический анализ и контра�
 
 ## Code examples
 
+### Union, Optional and `|`: отдельный пример
+
 ```python
-from typing import Protocol
+def normalize(value: str | None) -> str:
+    return value.strip() if value is not None else ""
 
-class UserReader(Protocol):
-    def get(self, user_id: int) -> dict | None: ...
-
-def load_name(repo: UserReader, user_id: int) -> str | None:
-    user = repo.get(user_id)
-    return user["name"] if user else None
+print(normalize(None))
+try:
+    normalize()
+except TypeError:
+    print("argument is still required")
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Nullable type разрешает `None`, но отсутствие default не делает argument optional при вызове.
 
 ## Common mistakes
 

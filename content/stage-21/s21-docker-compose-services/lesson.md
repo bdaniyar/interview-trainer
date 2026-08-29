@@ -46,16 +46,20 @@ Redis хранит данные в памяти и полезен для cache/T
 
 ## Code examples
 
-```dockerfile
-FROM python:3.12-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
-CMD ["python", "-m", "app"]
+### Docker Compose services: отдельный пример
+
+```yaml
+# 21.11 · Docker Compose services
+lesson:
+  key: s21_docker_compose_services
+  checks:
+    - api
+    - db
+    - redis
+    - worker
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Разделяй build-time image и runtime container: DNS, ports, mounts, env и readiness.
 
 ## Common mistakes
 

@@ -38,19 +38,22 @@ Class attribute разделяется instances до тех пор, пока in
 
 ## Code examples
 
+### Instance vs class attributes: отдельный пример
+
 ```python
-from dataclasses import dataclass
+class BadCart:
+    items = []
 
-@dataclass(frozen=True, slots=True)
-class UserId:
-    value: int
+class Cart:
+    def __init__(self):
+        self.items = []
 
-    def __post_init__(self):
-        if self.value <= 0:
-            raise ValueError("user id must be positive")
+a, b = Cart(), Cart()
+a.items.append(1)
+print(b.items)
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Mutable instance state создают в `__init__`; иначе class attribute разделяется всеми instances.
 
 ## Common mistakes
 

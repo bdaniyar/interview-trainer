@@ -38,18 +38,23 @@ Event loop планирует готовые tasks; await не создаёт о
 
 ## Code examples
 
+### `await` and cooperative scheduling: отдельный пример
+
 ```python
 import asyncio
 
-async def load_pair(client):
-    first, second = await asyncio.gather(
-        client.get("/users/1"),
-        client.get("/users/2"),
-    )
-    return first, second
+async def worker(name):
+    print(name, "start")
+    await asyncio.sleep(0)
+    print(name, "resume")
+
+async def main():
+    await asyncio.gather(worker("a"), worker("b"))
+
+asyncio.run(main())
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Task уступает управление только в await point, после чего loop может продолжить другую ready task.
 
 ## Common mistakes
 

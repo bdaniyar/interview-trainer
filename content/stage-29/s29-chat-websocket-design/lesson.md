@@ -50,13 +50,16 @@ Redis хранит данные в памяти и полезен для cache/T
 
 ## Code examples
 
+### Chat/WebSocket design: отдельный пример
+
 ```text
-Client → reverse proxy → FastAPI → service → PostgreSQL
-                                  ↘ Redis
-                                  ↘ outbox → worker
+Сценарий: Fan-out между processes.
+
+Проверка:
+Redis Pub/Sub live + PostgreSQL history.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный architecture example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

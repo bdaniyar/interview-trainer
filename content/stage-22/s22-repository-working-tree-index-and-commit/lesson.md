@@ -28,14 +28,16 @@ Index — отдельная структура доступа с ценой з�
 
 ## Code examples
 
+### Repository, working tree, index and commit: отдельный пример
+
 ```bash
-git status
-git add backend/app.py tests/test_app.py
-git commit -m "fix booking conflict handling"
-git push -u origin fix/booking-conflict
+# 22.1 · Repository, working tree, index and commit
+# Focus: Repository, working tree, index and commit
+printf '%s
+' 's22_repository_working_tree_index_and_commit'
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Перед командой назови изменяемое состояние: files, index, branch pointer или shared history.
 
 ## Common mistakes
 

@@ -50,12 +50,16 @@ Session владеет identity map и transaction state; после ошибк�
 
 ## Code examples
 
+### JWT refresh sessions: отдельный пример
+
 ```text
-Проблема → моё решение → почему так → failure mode → как проверил
-Граница опыта → что изучил бы перед production rollout
+Сценарий: Отозвать stolen refresh.
+
+Проверка:
+Server session, rotation/revocation, short access.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный architecture example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

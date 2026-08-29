@@ -46,13 +46,16 @@ Lock сериализует критическую секцию, но корре
 
 ## Code examples
 
+### Outbox design: отдельный пример
+
 ```text
-Client → reverse proxy → FastAPI → service → PostgreSQL
-                                  ↘ Redis
-                                  ↘ outbox → worker
+Сценарий: Commit прошёл, publish упал.
+
+Проверка:
+Same transaction outbox; retry/idempotency.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный architecture example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

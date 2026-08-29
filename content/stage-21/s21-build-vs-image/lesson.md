@@ -28,16 +28,17 @@ Docker image — неизменяемый шаблон filesystem, container —
 
 ## Code examples
 
-```dockerfile
-FROM python:3.12-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
-CMD ["python", "-m", "app"]
+### `build` vs `image`: отдельный пример
+
+```yaml
+# 21.12 · `build` vs `image`
+lesson:
+  key: s21_build_vs_image
+  checks:
+    - `build` vs `image`
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Разделяй build-time image и runtime container: DNS, ports, mounts, env и readiness.
 
 ## Common mistakes
 

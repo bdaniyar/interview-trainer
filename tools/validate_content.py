@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -115,6 +116,7 @@ def validate(run_solutions: bool) -> None:
     tasks: list[Path] = []
     seen_slugs: set[str] = set()
     seen_ids: set[str] = set()
+    seen_example_sources: dict[str, str] = {}
     for metadata_path in metadata_paths:
         directory = metadata_path.parent
         try:
@@ -149,6 +151,33 @@ def validate(run_solutions: bool) -> None:
             for heading in REQUIRED_HEADINGS:
                 if heading not in markdown:
                     fail(errors, f"{slug}: missing heading {heading}")
+        example_section = re.search(
+            r"^## Code examples\n+(.*?)(?=^## |\Z)",
+            markdown,
+            re.MULTILINE | re.DOTALL,
+        )
+        if not example_section:
+            fail(errors, f"{slug}: Code examples section is empty")
+        else:
+            blocks = re.findall(r"```([^\n]*)\n(.*?)```", example_section.group(1), re.DOTALL)
+            if not blocks:
+                fail(errors, f"{slug}: Code examples has no fenced example")
+            else:
+                normalized_blocks = []
+                for language, source in blocks:
+                    if language.strip().lower() in {"python", "py"}:
+                        try:
+                            compile(source, f"<{slug}:Code examples>", "exec")
+                        except SyntaxError as exc:
+                            fail(errors, f"{slug}: invalid Python Code example: {exc.msg} at line {exc.lineno}")
+                    normalized_source = re.sub(r"\s+", " ", source).strip()
+                    normalized_blocks.append(f"{language.strip()}\n{normalized_source}")
+                signature = "\n---\n".join(normalized_blocks)
+                duplicate = seen_example_sources.get(signature)
+                if duplicate:
+                    fail(errors, f"duplicate Code examples in {duplicate} and {slug}")
+                else:
+                    seen_example_sources[signature] = slug
         interview_path = directory / "interview.json"
         if not interview_path.exists():
             fail(errors, f"published lesson has no interview rubric: {slug}")

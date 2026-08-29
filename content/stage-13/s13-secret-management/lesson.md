@@ -42,12 +42,17 @@ Security строится слоями: аутентификация, автор
 
 ## Code examples
 
+### Secret management: отдельный пример
+
 ```python
-def can_edit(user, article) -> bool:
-    return user.id == article.author_id or "moderator" in user.roles
+def example_s13_secret_management() -> tuple[str, ...]:
+    # Secret management: проверяем отдельный contract урока.
+    return ('environment/config', 'no secrets in image/repo', 'rotation', '`.env.example`',)
+
+assert example_s13_secret_management()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Назови threat, trust boundary, server-side check и безопасный отказ.
 
 ## Common mistakes
 

@@ -46,20 +46,23 @@
 
 ## Code examples
 
-```python
-from contextlib import contextmanager
+### Context manager protocol: отдельный пример
 
-@contextmanager
-def transaction(session):
-    try:
-        yield session
-        session.commit()
-    except Exception:
-        session.rollback()
-        raise
+```python
+class Transaction:
+    def __enter__(self):
+        print("begin")
+        return self
+
+    def __exit__(self, kind, value, traceback):
+        print("rollback" if kind else "commit")
+        return False
+
+with Transaction():
+    print("write")
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Context manager централизует acquire/cleanup и не подавляет исключение при `False`.
 
 ## Common mistakes
 

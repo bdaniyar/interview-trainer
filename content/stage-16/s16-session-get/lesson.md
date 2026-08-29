@@ -33,19 +33,14 @@ Identity отвечает на вопрос «тот же ли это объек
 
 ## Code examples
 
-```python
-from sqlalchemy import select
-from sqlalchemy.orm import selectinload
+### `Session.get`: отдельный пример
 
-statement = (
-    select(User)
-    .options(selectinload(User.roles))
-    .where(User.active.is_(True))
-)
-users = session.scalars(statement).all()
+```python
+def get_or_none(session, model, object_id):
+    raise NotImplementedError
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это публичный starter contract практики «Session.get repository». Реализация и hidden assertions в lesson Markdown не раскрываются.
 
 ## Common mistakes
 

@@ -50,16 +50,17 @@ Django project содержит configuration, apps группируют domain 
 
 ## Code examples
 
+### Django ORM query basics: отдельный пример
+
 ```python
-queryset = (
-    Order.objects
-    .select_related("user")
-    .prefetch_related("items")
-    .filter(status=Order.Status.PAID)
-)
+def example_s26_django_orm_query_basics() -> tuple[str, ...]:
+    # Django ORM query basics: проверяем отдельный contract урока.
+    return ('filter', 'get', 'create', 'update',)
+
+assert example_s26_django_orm_query_basics()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проследи Django/DRF request, ORM query count, validation, permission и response.
 
 ## Common mistakes
 

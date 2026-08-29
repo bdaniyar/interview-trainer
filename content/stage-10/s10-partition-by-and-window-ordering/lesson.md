@@ -33,15 +33,18 @@ Window function считает значение по partition, не свора�
 
 ## Code examples
 
+### `PARTITION BY` and window ordering: отдельный пример
+
 ```sql
-SELECT u.id, u.email, COUNT(o.id) AS orders_count
-FROM users AS u
-LEFT JOIN orders AS o ON o.user_id = u.id
-GROUP BY u.id, u.email
-ORDER BY u.id;
+SELECT id, project_id, created_at,
+       LAG(created_at) OVER (
+           PARTITION BY project_id
+           ORDER BY created_at, id
+       ) AS previous_event_at
+FROM project_events;
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+PARTITION перезапускает окно для каждого project, ordering определяет предыдущую строку для LAG.
 
 ## Common mistakes
 

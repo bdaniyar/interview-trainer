@@ -38,16 +38,16 @@ Container — изолированный process из image, а не VM; сет�
 
 ## Code examples
 
-```dockerfile
-FROM python:3.12-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
-CMD ["python", "-m", "app"]
+### Networks and service discovery: отдельный пример
+
+```text
+Сценарий: API config содержит DB_HOST=localhost.
+
+Проверка:
+Compose service name; shared network/DNS.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный operations example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

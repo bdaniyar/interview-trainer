@@ -50,13 +50,17 @@ Closure хранит ссылки на enclosing bindings, а не snapshot ка
 
 ## Code examples
 
+### Late binding: отдельный пример
+
 ```python
-def list_users(limit: int = 20, *, active: bool | None = None) -> list[dict]:
-    """Явный API: active нельзя передать случайно позиционно."""
-    return []
+bad = [lambda: value for value in range(3)]
+good = [lambda value=value: value for value in range(3)]
+
+print([fn() for fn in bad])
+print([fn() for fn in good])
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Late binding разрешает free variable при вызове; default argument фиксирует значение при создании lambda.
 
 ## Common mistakes
 

@@ -46,18 +46,18 @@ Iterable умеет создать iterator через `__iter__`; один iter
 
 ## Code examples
 
+### Collection and callable types: отдельный пример
+
 ```python
-from typing import Protocol
+from collections.abc import Callable, Iterable
 
-class UserReader(Protocol):
-    def get(self, user_id: int) -> dict | None: ...
+def transform(values: Iterable[int], operation: Callable[[int], str]) -> list[str]:
+    return [operation(value) for value in values]
 
-def load_name(repo: UserReader, user_id: int) -> str | None:
-    user = repo.get(user_id)
-    return user["name"] if user else None
+print(transform((1, 2), lambda value: f"id:{value}"))
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Types описывают не конкретный list/function, а iterable input и связь callable input/output.
 
 ## Common mistakes
 

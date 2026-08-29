@@ -50,13 +50,17 @@
 
 ## Code examples
 
+### Choosing a collection: отдельный пример
+
 ```python
-records = [{"id": 2}, {"id": 1}, {"id": 2}]
-by_id = {record["id"]: record for record in records}
-ordered = sorted(by_id.values(), key=lambda row: row["id"] )
+ordered_ids = [5, 3, 5]          # порядок и повторы
+unique_ids = set(ordered_ids)       # уникальность
+user_by_id = {value: {} for value in unique_ids}  # lookup
+
+print(ordered_ids, unique_ids, user_by_id.keys())
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Коллекцию выбирают по инварианту: порядок, повторы и доступ по ключу требуют разных структур.
 
 ## Common mistakes
 

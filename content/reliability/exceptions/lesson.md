@@ -42,20 +42,17 @@
 
 ## Code examples
 
-```python
-from contextlib import contextmanager
+### Exception hierarchy: отдельный пример
 
-@contextmanager
-def transaction(session):
-    try:
-        yield session
-        session.commit()
-    except Exception:
-        session.rollback()
-        raise
+```python
+try:
+    int("not-a-number")
+except ValueError as exc:
+    print(isinstance(exc, Exception))
+    print(type(exc).__mro__[:3])
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Иерархия позволяет перехватывать ожидаемый узкий тип, не скрывая системные и неожиданные ошибки.
 
 ## Common mistakes
 

@@ -50,20 +50,18 @@ Iterator возвращает себя из `__iter__` и сигнализиру
 
 ## Code examples
 
-```python
-from contextlib import contextmanager
+### Iterable vs iterator: отдельный пример
 
-@contextmanager
-def transaction(session):
-    try:
-        yield session
-        session.commit()
-    except Exception:
-        session.rollback()
-        raise
+```python
+numbers = [10, 20]
+iterator = iter(numbers)
+
+print(iter(numbers) is numbers)
+print(iter(iterator) is iterator)
+print(next(iterator))
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+List — iterable, создающий iterator; iterator хранит позицию и возвращает себя из `iter`.
 
 ## Common mistakes
 

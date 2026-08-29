@@ -33,6 +33,8 @@ Transaction задаёт атомарную границу: либо все св
 
 ## Code examples
 
+### `contextlib.contextmanager`: отдельный пример
+
 ```python
 from contextlib import contextmanager
 
@@ -46,7 +48,7 @@ def transaction(session):
         raise
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+`@contextmanager` превращает generator с одним `yield` в protocol `with`, сохраняя cleanup рядом с acquire.
 
 ## Common mistakes
 

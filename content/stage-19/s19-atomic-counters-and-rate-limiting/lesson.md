@@ -42,14 +42,16 @@ Redis — быстрый in-memory data store для cache и временног
 
 ## Code examples
 
+### Atomic counters and rate limiting: отдельный пример
+
 ```text
-GET cache:user:42 → miss
-SELECT user FROM PostgreSQL
-SET cache:user:42 value EX 60
-UPDATE user → COMMIT → DEL cache:user:42
+Сценарий: Два API process дают вдвое больший лимит.
+
+Проверка:
+Shared Redis counter + atomic operation/Lua, window semantics, TTL и fail-open/fail-closed policy.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный debugging example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

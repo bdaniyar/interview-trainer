@@ -50,19 +50,14 @@ SQLAlchemy 2.x управляет SQL, identity map, unit of work и transaction
 
 ## Code examples
 
-```python
-from sqlalchemy import select
-from sqlalchemy.orm import selectinload
+### SQLAlchemy 2.x `select`: отдельный пример
 
-statement = (
-    select(User)
-    .options(selectinload(User.roles))
-    .where(User.active.is_(True))
-)
-users = session.scalars(statement).all()
+```python
+def active_users_statement(User):
+    raise NotImplementedError
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это публичный starter contract практики «SQLAlchemy select». Реализация и hidden assertions в lesson Markdown не раскрываются.
 
 ## Common mistakes
 

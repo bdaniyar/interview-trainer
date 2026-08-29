@@ -54,16 +54,20 @@ Docker image — неизменяемый шаблон filesystem, container —
 
 ## Code examples
 
-```dockerfile
-FROM python:3.12-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
-CMD ["python", "-m", "app"]
+### Dockerfile: отдельный пример
+
+```yaml
+# 21.2 · Dockerfile
+lesson:
+  key: s21_dockerfile
+  checks:
+    - FROM
+    - WORKDIR
+    - COPY
+    - RUN
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Разделяй build-time image и runtime container: DNS, ports, mounts, env и readiness.
 
 ## Common mistakes
 

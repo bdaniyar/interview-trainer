@@ -42,14 +42,16 @@ Rebase переносит commits на новую base и меняет их hash
 
 ## Code examples
 
-```bash
-git status
-git add backend/app.py tests/test_app.py
-git commit -m "fix booking conflict handling"
-git push -u origin fix/booking-conflict
+### rebase basics: отдельный пример
+
+```text
+Сценарий: Rebase опубликованных commits.
+
+Проверка:
+Не rebase shared; coordinate/recover refs.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный operations example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

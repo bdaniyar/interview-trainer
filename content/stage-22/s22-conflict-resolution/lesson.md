@@ -42,14 +42,16 @@ Git хранит snapshots и граф commits; working tree, index, local branc
 
 ## Code examples
 
-```bash
-git status
-git add backend/app.py tests/test_app.py
-git commit -m "fix booking conflict handling"
-git push -u origin fix/booking-conflict
+### Conflict resolution: отдельный пример
+
+```text
+Сценарий: Markers удалены, tests не запускались.
+
+Проверка:
+Понять обе стороны, stage, test.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный operations example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

@@ -33,16 +33,17 @@ Django project содержит configuration, apps группируют domain 
 
 ## Code examples
 
+### `select_related` and `prefetch_related`: отдельный пример
+
 ```python
-queryset = (
-    Order.objects
-    .select_related("user")
-    .prefetch_related("items")
-    .filter(status=Order.Status.PAID)
-)
+def example_s26_select_related_and_prefetch_related() -> tuple[str, ...]:
+    # `select_related` and `prefetch_related`: проверяем отдельный contract урока.
+    return ('N+1', 'FK/one-to-one vs collections',)
+
+assert example_s26_select_related_and_prefetch_related()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проследи Django/DRF request, ORM query count, validation, permission и response.
 
 ## Common mistakes
 

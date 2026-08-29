@@ -38,15 +38,17 @@ GROUP BY формирует группы до вычисления aggregates, �
 
 ## Code examples
 
+### GROUP BY: отдельный пример
+
 ```sql
-SELECT u.id, u.email, COUNT(o.id) AS orders_count
-FROM users AS u
-LEFT JOIN orders AS o ON o.user_id = u.id
-GROUP BY u.id, u.email
-ORDER BY u.id;
+SELECT customer_id, SUM(total) AS revenue
+FROM invoices
+WHERE paid_at IS NOT NULL
+GROUP BY customer_id
+ORDER BY customer_id;
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+GROUP BY задаёт grain «одна строка на customer», после чего SUM считает значение внутри каждой группы.
 
 ## Common mistakes
 

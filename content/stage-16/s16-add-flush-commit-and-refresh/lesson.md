@@ -46,19 +46,16 @@ Flush синхронизирует pending ORM state с БД внутри тек
 
 ## Code examples
 
-```python
-from sqlalchemy import select
-from sqlalchemy.orm import selectinload
+### Add, flush, commit and refresh: отдельный пример
 
-statement = (
-    select(User)
-    .options(selectinload(User.roles))
-    .where(User.active.is_(True))
-)
-users = session.scalars(statement).all()
+```text
+Сценарий: repository.save неожиданно commit-ит половину use case.
+
+Проверка:
+Transaction boundary принадлежит service/use case; repository делает add/flush, caller решает commit/rollback.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный debugging example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

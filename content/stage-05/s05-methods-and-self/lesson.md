@@ -38,19 +38,22 @@ Descriptor с `__get__`/`__set__` управляет attribute access на ур�
 
 ## Code examples
 
+### Methods and `self`: отдельный пример
+
 ```python
-from dataclasses import dataclass
+class Counter:
+    def __init__(self):
+        self.value = 0
 
-@dataclass(frozen=True, slots=True)
-class UserId:
-    value: int
+    def increment(self, amount=1):
+        self.value += amount
+        return self.value
 
-    def __post_init__(self):
-        if self.value <= 0:
-            raise ValueError("user id must be positive")
+counter = Counter()
+print(counter.increment(2))
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+При вызове bound method instance автоматически передаётся как `self`.
 
 ## Common mistakes
 

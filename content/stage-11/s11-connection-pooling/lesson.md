@@ -42,14 +42,15 @@ Constraint защищает истину, transaction объединяет из�
 
 ## Code examples
 
+### Connection pooling: отдельный пример
+
 ```sql
-BEGIN;
-SELECT id FROM rooms WHERE id = 42 FOR UPDATE;
-INSERT INTO bookings(room_id, starts_at, ends_at) VALUES (42, $1, $2);
-COMMIT;
+-- 11.14 · Connection pooling
+-- Focus: connections are expensive/limited, pool size, async pool, leaking sessions/connections
+SELECT 's11_connection_pooling' AS example_key;
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проверь invariant, конкурентный сценарий и фактический query plan вместо догадки.
 
 ## Common mistakes
 

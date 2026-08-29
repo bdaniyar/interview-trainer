@@ -42,14 +42,16 @@ Inheritance выражает отношение is-a и участвует в MR
 
 ## Code examples
 
-```bash
-ps aux | rg uvicorn
-ss -ltnp | rg 8000
-tail -n 100 /var/log/app.log
-printf '%s\n' "$APP_ENV"
+### Environment variables: отдельный пример
+
+```text
+Сценарий: Local works, service KeyError APP_ENV.
+
+Проверка:
+Runtime env source, quoting, restart.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный operations example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

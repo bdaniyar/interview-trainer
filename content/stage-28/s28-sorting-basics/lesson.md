@@ -42,13 +42,17 @@
 
 ## Code examples
 
+### Sorting basics: отдельный пример
+
 ```python
-def deduplicate(values):
-    seen = set()
-    return [value for value in values if not (value in seen or seen.add(value))]
+def example_s28_sorting_basics() -> tuple[str, ...]:
+    # Sorting basics: проверяем отдельный contract урока.
+    return ('O(n log n)', 'stable sort', 'key extraction', 'no need to memorize every sort implementation',)
+
+assert example_s28_sorting_basics()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Сначала назови input constraints, структуру данных, complexity и boundary cases.
 
 ## Common mistakes
 

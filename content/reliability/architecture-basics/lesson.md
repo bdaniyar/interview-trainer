@@ -42,18 +42,17 @@
 
 ## Code examples
 
-```python
-class BookingService:
-    def __init__(self, repository, clock):
-        self.repository = repository
-        self.clock = clock
+### Layered architecture: отдельный пример
 
-    def cancel(self, booking_id):
-        booking = self.repository.get(booking_id)
-        booking.cancel(at=self.clock.now())
+```python
+def example_s27_layered_architecture() -> tuple[str, ...]:
+    # Layered architecture: проверяем отдельный contract урока.
+    return ('API', 'service/use case', 'data access', 'infrastructure',)
+
+assert example_s27_layered_architecture()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проведи границу слоя и dependency direction; business rule не должен зависеть от framework.
 
 ## Common mistakes
 

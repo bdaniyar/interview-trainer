@@ -46,7 +46,22 @@ CPython GIL допускает выполнение Python bytecode одним t
 
 ## Code examples
 
-Сформулируй минимальный пример из текущего проекта: один happy path, одна граница и одна ошибка. Не добавляй инфраструктуру, не относящуюся к механизму.
+### Race conditions and locks: отдельный пример
+
+```python
+from threading import Lock
+
+lock = Lock()
+balance = 0
+
+def deposit(amount):
+    global balance
+    with lock:
+        current = balance
+        balance = current + amount
+```
+
+Lock защищает всю read-modify-write critical section; отдельные операции чтения и записи недостаточны.
 
 ## Common mistakes
 

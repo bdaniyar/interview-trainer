@@ -38,13 +38,24 @@ Mutable объект меняется с сохранением identity, поэ
 
 ## Code examples
 
+### `global` and `nonlocal`: отдельный пример
+
 ```python
-def list_users(limit: int = 20, *, active: bool | None = None) -> list[dict]:
-    """Явный API: active нельзя передать случайно позиционно."""
-    return []
+attempts = 0
+
+def make_counter():
+    count = 0
+    def next_value():
+        nonlocal count
+        count += 1
+        return count
+    return next_value
+
+counter = make_counter()
+print(counter(), counter())
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+`nonlocal` меняет ближайший enclosing binding; global state для независимого counter не требуется.
 
 ## Common mistakes
 

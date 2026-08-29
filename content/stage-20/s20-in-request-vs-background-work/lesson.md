@@ -46,15 +46,17 @@ Transaction задаёт атомарную границу: либо все св
 
 ## Code examples
 
+### In-request vs background work: отдельный пример
+
 ```python
-def handle(message, repository):
-    if repository.was_processed(message.id):
-        return
-    repository.apply(message.payload)
-    repository.mark_processed(message.id)
+def example_s20_in_request_vs_background_work() -> tuple[str, ...]:
+    # In-request vs background work: проверяем отдельный contract урока.
+    return ('latency', 'reliability', 'user-visible result', 'retry',)
+
+assert example_s20_in_request_vs_background_work()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проследи delivery, duplicate, retry, idempotency и atomicity gap после DB commit.
 
 ## Common mistakes
 

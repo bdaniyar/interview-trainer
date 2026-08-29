@@ -46,19 +46,20 @@
 
 ## Code examples
 
+### Class, instance and attributes: отдельный пример
+
 ```python
-from dataclasses import dataclass
+class User:
+    kind = "account"
 
-@dataclass(frozen=True, slots=True)
-class UserId:
-    value: int
+    def __init__(self, email):
+        self.email = email
 
-    def __post_init__(self):
-        if self.value <= 0:
-            raise ValueError("user id must be positive")
+user = User("a@example.com")
+print(user.email, user.kind, type(user).__name__)
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Instance хранит собственный `email`, а attribute lookup находит общий `kind` в class.
 
 ## Common mistakes
 

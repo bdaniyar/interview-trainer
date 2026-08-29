@@ -38,18 +38,21 @@ Type hints улучшают статический анализ и контра�
 
 ## Code examples
 
+### Literal and TypedDict: отдельный пример
+
 ```python
-from typing import Protocol
+from typing import Literal, NotRequired, TypedDict
 
-class UserReader(Protocol):
-    def get(self, user_id: int) -> dict | None: ...
+class UserPayload(TypedDict):
+    email: str
+    role: Literal["reader", "writer"]
+    display_name: NotRequired[str]
 
-def load_name(repo: UserReader, user_id: int) -> str | None:
-    user = repo.get(user_id)
-    return user["name"] if user else None
+payload: UserPayload = {"email": "a@example.com", "role": "reader"}
+print(payload)
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+TypedDict проверяет статическую форму обычного dict, Literal сужает набор допустимых строк.
 
 ## Common mistakes
 

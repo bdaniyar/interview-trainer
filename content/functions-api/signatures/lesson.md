@@ -46,13 +46,17 @@ Binding — связь имени с объектом в namespace; assignment �
 
 ## Code examples
 
+### Parameters vs arguments: отдельный пример
+
 ```python
-def list_users(limit: int = 20, *, active: bool | None = None) -> list[dict]:
-    """Явный API: active нельзя передать случайно позиционно."""
-    return []
+def create_user(email, active=True):
+    return {"email": email, "active": active}
+
+user = create_user("a@example.com", active=False)
+print(user)
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+`email` и `active` — parameters определения; переданные значения — arguments конкретного вызова.
 
 ## Common mistakes
 

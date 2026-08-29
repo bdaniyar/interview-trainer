@@ -46,14 +46,20 @@ Thread разделяет память процесса; process изолиро�
 
 ## Code examples
 
-```python
-from concurrent.futures import ThreadPoolExecutor
+### Threading: отдельный пример
 
-with ThreadPoolExecutor(max_workers=4) as pool:
-    results = list(pool.map(read_remote_resource, urls))
+```python
+from threading import Thread, current_thread
+
+def work():
+    print(current_thread().name)
+
+thread = Thread(target=work, name="email-worker")
+thread.start()
+thread.join()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Thread разделяет память процесса; `join` задаёт явную точку ожидания завершения.
 
 ## Common mistakes
 

@@ -38,13 +38,15 @@ Migration — воспроизводимый переход между верс�
 
 ## Code examples
 
+### Migration history conflicts: отдельный пример
+
 ```bash
-alembic revision --autogenerate -m "add booking status"
+alembic revision -m "s17_migration_history_conflicts"
+# review upgrade/downgrade for: multiple heads, merge revision, team workflow
 alembic upgrade head
-alembic current
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Review migration как versioned schema transition; autogenerate — только кандидат.
 
 ## Common mistakes
 

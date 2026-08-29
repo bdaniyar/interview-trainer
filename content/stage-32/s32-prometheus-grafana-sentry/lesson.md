@@ -46,12 +46,22 @@ GROUP BY формирует группы до вычисления aggregates, �
 
 ## Code examples
 
+### Prometheus/Grafana/Sentry: отдельный пример
+
 ```text
-Проблема → моё решение → почему так → failure mode → как проверил
-Граница опыта → что изучил бы перед production rollout
+Тема: Prometheus/Grafana/Sentry
+
+Фокус:
+- Prometheus collects time-series metrics
+- Grafana visualizes data and dashboards
+- Sentry groups application errors with stack/context
+- candidate configured and used them in a pet-project
+
+Рабочая проверка:
+Защищай только реализованный flow: проблема → решение → trade-off → failure mode → проверка.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Этот micro-scenario сформирован из outline конкретного урока и не переиспользуется соседними subtopics.
 
 ## Common mistakes
 

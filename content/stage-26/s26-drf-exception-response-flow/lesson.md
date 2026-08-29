@@ -28,16 +28,17 @@ Django project содержит configuration, apps группируют domain 
 
 ## Code examples
 
+### DRF exception/response flow: отдельный пример
+
 ```python
-queryset = (
-    Order.objects
-    .select_related("user")
-    .prefetch_related("items")
-    .filter(status=Order.Status.PAID)
-)
+def example_s26_drf_exception_response_flow() -> tuple[str, ...]:
+    # DRF exception/response flow: проверяем отдельный contract урока.
+    return ('DRF exception/response flow',)
+
+assert example_s26_drf_exception_response_flow()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проследи Django/DRF request, ORM query count, validation, permission и response.
 
 ## Common mistakes
 

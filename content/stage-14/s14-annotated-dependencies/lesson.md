@@ -38,18 +38,17 @@ Path operation — внешний адаптер; бизнес-правила л
 
 ## Code examples
 
+### `Annotated` dependencies: отдельный пример
+
 ```python
-from typing import Annotated
-from fastapi import APIRouter, Depends
+def example_s14_annotated_dependencies() -> tuple[str, ...]:
+    # `Annotated` dependencies: проверяем отдельный contract урока.
+    return ('modern reusable alias', 'readability', 'typing',)
 
-router = APIRouter(prefix="/users")
-
-@router.get("/{user_id}")
-def get_user(user_id: int, service: Annotated[UserService, Depends()]):
-    return service.get_or_404(user_id)
+assert example_s14_annotated_dependencies()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проследи request через router, validation, dependency, service и response model.
 
 ## Common mistakes
 

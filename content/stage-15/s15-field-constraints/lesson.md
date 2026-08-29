@@ -46,15 +46,15 @@ Pydantic v2 преобразует и валидирует данные на г�
 
 ## Code examples
 
-```python
-from pydantic import BaseModel, Field
+### Field constraints: отдельный пример
 
-class BookingCreate(BaseModel):
-    room_id: int = Field(gt=0)
-    guests: int = Field(ge=1, le=8)
+```python
+from pydantic import BaseModel
+
+# Создай Product.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это публичный starter contract практики «Constrained Product». Реализация и hidden assertions в lesson Markdown не раскрываются.
 
 ## Common mistakes
 

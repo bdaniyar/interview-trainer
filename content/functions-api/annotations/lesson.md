@@ -42,13 +42,17 @@
 
 ## Code examples
 
+### Function annotations: отдельный пример
+
 ```python
-def list_users(limit: int = 20, *, active: bool | None = None) -> list[dict]:
-    """Явный API: active нельзя передать случайно позиционно."""
-    return []
+def find_user(user_id: int) -> dict[str, object] | None:
+    return None
+
+print(find_user.__annotations__)
+print(find_user("runtime is still dynamic"))
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Annotations доступны инструментам и runtime introspection, но сами не запрещают неверный тип аргумента.
 
 ## Common mistakes
 

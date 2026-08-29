@@ -42,19 +42,24 @@
 
 ## Code examples
 
+### `__repr__` and `__str__`: отдельный пример
+
 ```python
-from dataclasses import dataclass
+class User:
+    def __init__(self, email):
+        self.email = email
 
-@dataclass(frozen=True, slots=True)
-class UserId:
-    value: int
+    def __repr__(self):
+        return f"User(email={self.email!r})"
 
-    def __post_init__(self):
-        if self.value <= 0:
-            raise ValueError("user id must be positive")
+    def __str__(self):
+        return self.email
+
+user = User("a@example.com")
+print(str(user), repr(user))
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+`__repr__` помогает разработчику и отладке, `__str__` даёт удобное пользовательское представление.
 
 ## Common mistakes
 

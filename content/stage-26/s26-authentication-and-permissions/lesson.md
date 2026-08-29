@@ -33,16 +33,17 @@ Django project содержит configuration, apps группируют domain 
 
 ## Code examples
 
+### Authentication and permissions: отдельный пример
+
 ```python
-queryset = (
-    Order.objects
-    .select_related("user")
-    .prefetch_related("items")
-    .filter(status=Order.Status.PAID)
-)
+def example_s26_authentication_and_permissions() -> tuple[str, ...]:
+    # Authentication and permissions: проверяем отдельный contract урока.
+    return ('global vs per-view', 'object-level permission',)
+
+assert example_s26_authentication_and_permissions()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проследи Django/DRF request, ORM query count, validation, permission и response.
 
 ## Common mistakes
 

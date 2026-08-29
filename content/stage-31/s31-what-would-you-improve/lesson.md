@@ -38,7 +38,21 @@
 
 ## Code examples
 
-Сформулируй минимальный пример из текущего проекта: один happy path, одна граница и одна ошибка. Не добавляй инфраструктуру, не относящуюся к механизму.
+### What would you improve?: отдельный пример
+
+```text
+Тема: What would you improve?
+
+Фокус:
+- honest trade-off
+- measured next step
+- avoid pretending project is production-perfect
+
+Рабочая проверка:
+Ответ строй как context → личное действие → результат → конкретный follow-up.
+```
+
+Этот micro-scenario сформирован из outline конкретного урока и не переиспользуется соседними subtopics.
 
 ## Common mistakes
 

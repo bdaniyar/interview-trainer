@@ -42,18 +42,24 @@ Event loop планирует готовые tasks; await не создаёт о
 
 ## Code examples
 
+### Tasks and `asyncio.create_task`: отдельный пример
+
 ```python
 import asyncio
 
-async def load_pair(client):
-    first, second = await asyncio.gather(
-        client.get("/users/1"),
-        client.get("/users/2"),
-    )
-    return first, second
+async def save():
+    await asyncio.sleep(0)
+    return "saved"
+
+async def main():
+    task = asyncio.create_task(save(), name="save-user")
+    print(task.get_name())
+    print(await task)
+
+asyncio.run(main())
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Task планирует coroutine и хранит её completion/result; reference нужно сохранить и дождаться.
 
 ## Common mistakes
 

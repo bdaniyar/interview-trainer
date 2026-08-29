@@ -38,15 +38,19 @@ SQL описывает требуемый набор строк; коррект�
 
 ## Code examples
 
+### Correlated subquery: отдельный пример
+
 ```sql
-SELECT u.id, u.email, COUNT(o.id) AS orders_count
-FROM users AS u
-LEFT JOIN orders AS o ON o.user_id = u.id
-GROUP BY u.id, u.email
-ORDER BY u.id;
+SELECT p.id, p.title
+FROM posts AS p
+WHERE p.created_at = (
+    SELECT MAX(inner_post.created_at)
+    FROM posts AS inner_post
+    WHERE inner_post.author_id = p.author_id
+);
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Correlated subquery ссылается на текущего outer author и выбирает его последний post.
 
 ## Common mistakes
 

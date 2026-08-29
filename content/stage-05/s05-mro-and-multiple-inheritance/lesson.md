@@ -46,19 +46,25 @@ MRO задаёт детерминированный порядок поиска 
 
 ## Code examples
 
+### MRO and multiple inheritance: отдельный пример
+
 ```python
-from dataclasses import dataclass
+class TraceMixin:
+    def handle(self):
+        return ["trace", *super().handle()]
 
-@dataclass(frozen=True, slots=True)
-class UserId:
-    value: int
+class Handler:
+    def handle(self):
+        return ["handler"]
 
-    def __post_init__(self):
-        if self.value <= 0:
-            raise ValueError("user id must be positive")
+class ApiHandler(TraceMixin, Handler):
+    pass
+
+print(ApiHandler.__mro__)
+print(ApiHandler().handle())
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Cooperative `super()` следует MRO `ApiHandler → TraceMixin → Handler`, а не жёстко названному parent.
 
 ## Common mistakes
 

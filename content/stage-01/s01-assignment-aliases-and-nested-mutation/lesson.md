@@ -46,14 +46,19 @@ Python-код работает с объектами и связями имён 
 
 ## Code examples
 
+### Assignment, aliases and nested mutation: отдельный пример
+
 ```python
-payload = {"roles": ["reader"]}
-alias = payload
-alias["roles"].append("writer")
-assert payload["roles"] == ["reader", "writer"]
+matrix = [[0] * 2 for _ in range(3)]
+alias = matrix[0]
+alias.append(1)
+
+print(matrix)
+print(alias is matrix[0])
+print(alias is matrix[1])
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Comprehension создаёт независимые внутренние lists, а `alias` указывает только на первую строку.
 
 ## Common mistakes
 

@@ -46,7 +46,22 @@
 
 ## Code examples
 
-Сформулируй минимальный пример из текущего проекта: один happy path, одна граница и одна ошибка. Не добавляй инфраструктуру, не относящуюся к механизму.
+### English project explanation: отдельный пример
+
+```text
+Тема: English project explanation
+
+Фокус:
+- self-introduction
+- StudyHub summary
+- explaining a bug
+- explaining async/transaction trade-off
+
+Рабочая проверка:
+Ответ строй как context → личное действие → результат → конкретный follow-up.
+```
+
+Этот micro-scenario сформирован из outline конкретного урока и не переиспользуется соседними subtopics.
 
 ## Common mistakes
 

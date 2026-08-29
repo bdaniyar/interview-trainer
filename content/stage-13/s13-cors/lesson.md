@@ -46,12 +46,16 @@ Authentication устанавливает identity, authorization проверя
 
 ## Code examples
 
-```python
-def can_edit(user, article) -> bool:
-    return user.id == article.author_id or "moderator" in user.roles
+### CORS: отдельный пример
+
+```text
+Сценарий: Backend разрешает действие, полагаясь на blocked browser origin.
+
+Проверка:
+CORS — browser read policy; authentication/authorization проверяются на сервере для каждого request.
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Это отдельный debugging example для данного subtopic, а не общий пример stage.
 
 ## Common mistakes
 

@@ -50,13 +50,19 @@ LEGB ищет имя в local, enclosing, global и builtins; assignment дел�
 
 ## Code examples
 
+### Comprehensions: отдельный пример
+
 ```python
-records = [{"id": 2}, {"id": 1}, {"id": 2}]
-by_id = {record["id"]: record for record in records}
-ordered = sorted(by_id.values(), key=lambda row: row["id"] )
+rows = [
+    {"id": 1, "active": True},
+    {"id": 2, "active": False},
+]
+active_ids = [row["id"] for row in rows if row["active"]]
+
+print(active_ids)
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Comprehension объединяет преобразование и короткий filter без скрытых side effects.
 
 ## Common mistakes
 

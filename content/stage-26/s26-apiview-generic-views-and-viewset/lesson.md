@@ -33,16 +33,17 @@ Django project содержит configuration, apps группируют domain 
 
 ## Code examples
 
+### APIView, generic views and ViewSet: отдельный пример
+
 ```python
-queryset = (
-    Order.objects
-    .select_related("user")
-    .prefetch_related("items")
-    .filter(status=Order.Status.PAID)
-)
+def example_s26_apiview_generic_views_and_viewset() -> tuple[str, ...]:
+    # APIView, generic views and ViewSet: проверяем отдельный contract урока.
+    return ('trade-offs', 'routers',)
+
+assert example_s26_apiview_generic_views_and_viewset()
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Проследи Django/DRF request, ORM query count, validation, permission и response.
 
 ## Common mistakes
 

@@ -42,18 +42,19 @@ Path operation — внешний адаптер; бизнес-правила л
 
 ## Code examples
 
+### Query parameters: отдельный пример
+
 ```python
-from typing import Annotated
-from fastapi import APIRouter, Depends
+from fastapi import FastAPI, Query
 
-router = APIRouter(prefix="/users")
+app = FastAPI()
 
-@router.get("/{user_id}")
-def get_user(user_id: int, service: Annotated[UserService, Depends()]):
-    return service.get_or_404(user_id)
+@app.get("/articles")
+def articles(limit: int = Query(default=20, ge=1, le=100), offset: int = Query(default=0, ge=0)):
+    return {"limit": limit, "offset": offset}
 ```
 
-Разбирая пример, проговори вход, наблюдаемый результат, скрытое состояние и failure path.
+Query parameters имеют независимые defaults и boundary constraints; pagination contract виден в OpenAPI.
 
 ## Common mistakes
 
