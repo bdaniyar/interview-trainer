@@ -7,34 +7,47 @@
 
 После урока ты сможешь:
 
-- объяснить `JSON` своими словами и связать с backend-сценарием;
-- объяснить `charset` своими словами и связать с backend-сценарием;
-- объяснить `Accept` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Content negotiation and Content-Type**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `JSON`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-HTTP — контракт между клиентом и сервером: method, target, headers, body, status и cache semantics.
+### Что это
 
-В теме **Content negotiation and Content-Type** важно уверенно объяснять следующие части:
+`Content-Type` describes the representation sent in a body; `Accept` describes representations the client can receive.
 
-### JSON
+### Как работает
 
-Для `JSON` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
+For JSON APIs the sender normally uses `application/json`; charset matters for textual formats and body parsing follows the declared media type.
 
-### charset
 
-Для `charset` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
+### Важный нюанс / limitation
 
-### Accept
-
-Для `Accept` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
+A JSON-looking string with the wrong Content-Type is not the same protocol contract.
 
 ## Mental model
 
 Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- JSON
+- charset
+- Accept
+
+### Полезно
+
+- one short code/result example
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -50,19 +63,47 @@ X-Request-ID: req-12-10
 
 ## Common mistakes
 
-**Ошибка:** Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Confusing Accept with Content-Type produces 415/406 behavior or incorrect parsing.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `JSON` example and predict the result before running it.
+
+**B · Find the bug.** Find code that violates `charset` and explain the concrete consequence.
+
+**D · Small task.** Implement the smallest function/query that demonstrates `JSON` and add one edge-case test.
+
+**E · Interview explanation.** Explain Content negotiation and Content-Type in 45–60 seconds and include one limitation.
 
 ## Interview questions
 
-1. Объясни **Content negotiation and Content-Type** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Спроектируй request/response контракт и объясни retry, idempotency и error body. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Content negotiation and Content-Type и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Content negotiation and Content-Type?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+`Content-Type` describes the representation sent in a body; `Accept` describes representations the client can receive.
+
+### Нормальный Junior answer
+
+> `Content-Type` describes the representation sent in a body; `Accept` describes representations the client can receive. For JSON APIs the sender normally uses `application/json`; charset matters for textual formats and body parsing follows the declared media type. Важное ограничение: A JSON-looking string with the wrong Content-Type is not the same protocol contract.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Content negotiation and Content-Type?**
+
+Confusing Accept with Content-Type produces 415/406 behavior or incorrect parsing.
 
 ## Expected answer rubric
 
@@ -71,45 +112,34 @@ X-Request-ID: req-12-10
 - JSON
 - charset
 - Accept
-- Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне.
-- ответ из одного определения без механизма и failure mode.
+- Confusing Accept with Content-Type produces 415/406 behavior or incorrect parsing.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- JSON
-- charset
-- Accept
+- Какая типичная ошибка связана с Content negotiation and Content-Type?
 
 ## Задача
 
-Разбери backend-сценарий: **Спроектируй request/response контракт и объясни retry, idempotency и error body.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Content negotiation and Content-Type**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Content negotiation and Content-Type**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** `Content-Type` describes the representation sent in a body; `Accept` describes representations the client can receive.
+- **Механизм:** Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
+- **Ограничение:** Confusing Accept with Content-Type produces 415/406 behavior or incorrect parsing.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

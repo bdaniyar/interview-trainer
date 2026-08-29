@@ -16,7 +16,7 @@
     "ORM/framework relevance",
     "do not dive into descriptor internals before P0/P1."
   ],
-  "description": "P2 · Property and descriptors: mental model, interview rubric и backend-сценарий.",
+  "description": "P2 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
   "has_task": false,
   "has_solution": false,
   "priority": "P2",

@@ -7,38 +7,70 @@
 
 После урока ты сможешь:
 
-- объяснить ``WITH`` своими словами и связать с backend-сценарием;
-- объяснить `readability` своими словами и связать с backend-сценарием;
-- объяснить `multiple stages` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **CTE**, а не только запомнить термин;
+- прочитать и изменить короткий пример для ``WITH``;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-SQL описывает требуемый набор строк; корректность начинается с cardinality, NULL semantics и явного порядка.
+### Что это
 
-В теме **CTE** важно уверенно объяснять следующие части:
+CTE (common table expression) — именованный промежуточный result, объявленный через `WITH` и доступный основному statement. Он помогает разбить длинный SQL на последовательные понятные шаги.
 
-### `WITH`
+### Как работает
 
-Для ``WITH`` сначала определи grain/cardinality результата, затем NULL и ordering semantics.
+Каждый CTE имеет имя и query в скобках. Следующий CTE или основной SELECT обращается к нему как к таблице. Обычный CTE живёт только во время одного statement; recursive CTE может ссылаться на себя по специальным правилам.
 
-### readability
 
-Для `readability` сначала определи grain/cardinality результата, затем NULL и ordering semantics.
+### Пример
 
-### multiple stages
+```sql
+WITH paid_totals AS (
+    SELECT user_id, SUM(total) AS revenue
+    FROM orders
+    WHERE status = 'paid'
+    GROUP BY user_id
+)
+SELECT user_id, revenue
+FROM paid_totals
+WHERE revenue >= 100;
+```
 
-Для `multiple stages` сначала определи grain/cardinality результата, затем NULL и ordering semantics.
+Сначала `paid_totals` даёт одну строку на user, затем внешний query фильтрует уже рассчитанный revenue.
 
-### planner/version caveats
+### Важный нюанс / limitation
 
-Для `planner/version caveats` сначала определи grain/cardinality результата, затем NULL и ordering semantics.
+CTE — прежде всего средство выразительности, не гарантированная оптимизация. Современный PostgreSQL может встроить не recursive CTE в plan; `MATERIALIZED`/`NOT MATERIALIZED` влияют на это. Junior достаточно читать EXPLAIN, а не обещать ускорение.
+
+### Где используется в backend
+
+CTE удобно отделяет выбор paid orders, aggregation по пользователю и финальный фильтр отчёта в одном statement.
 
 ## Mental model
 
 Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- синтаксис WITH
+- scope одного statement
+- читаемые этапы
+- нет гарантии ускорения
+
+### Полезно
+
+- multiple CTE
+- recursive CTE на уровне идеи
+- planner/materialization caveat
+
+### Можно не учить глубоко
+
+- тонкости cost model materialization без EXPLAIN конкретного запроса
 
 ## Code examples
 
@@ -59,58 +91,27 @@ CTE именует промежуточный result и отделяет aggrega
 
 ## Common mistakes
 
-**Ошибка:** Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Считать, что `WITH` автоматически ускоряет запрос.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+### Ошибка 2
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+Спрятать неверную cardinality в цепочке CTE и не проверять результат каждого шага.
 
-## Interview questions
+### Ошибка 3
 
-1. Объясни **CTE** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Предскажи cardinality результата и проверь, не размножает ли JOIN строки. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+Использовать CTE из одного простого SELECT, когда он только увеличивает объём кода.
 
-## Expected answer rubric
+## Practice
 
-### Must mention
+**A · Result prediction.** Назови grain каждого шага monthly и итогового SELECT.
 
-- `WITH`
-- readability
-- multiple stages
-- planner/version caveats.
-- Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
+**B · Find the bug.** Найди фильтр, применённый до нужной aggregation.
 
-### Good additions
+**C · Rewrite.** Разбей вложенный отчёт на два именованных CTE.
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- `WITH`
-- readability
-- multiple stages
-- planner/version caveats.
-
-## Задача
-
-Разбери backend-сценарий: **Предскажи cardinality результата и проверь, не размножает ли JOIN строки.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**D · SQL task.** Найди users с paid revenue выше порога.
 
 ## SQL practice
 
@@ -224,15 +225,70 @@ Expected columns: id, depth. Comparison: ordered.
 
 SQL runner пока не подключён: выполни запрос в локальном PostgreSQL и сверь result с rubric.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое CTE и гарантирует ли он ускорение SQL-запроса?
+
+### Follow-up
+
+Чем CTE отличается от view?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+CTE — именованный промежуточный query через WITH; он улучшает структуру, но сам по себе не гарантирует производительность.
+
+### Нормальный Junior answer
+
+> CTE объявляется через `WITH name AS (...)` и доступен последующему query как временный result. Я использую его, чтобы дать имя этапу — например, сначала посчитать revenue по месяцу, затем отфильтровать итог. Это не обещание ускорения: PostgreSQL может встроить или материализовать CTE, поэтому производительность проверяют через EXPLAIN.
+
+### Углубление / follow-up
+
+**Чем CTE отличается от view?**
+
+CTE существует только в одном statement; view — сохранённое определение query в schema и может использоваться разными statements.
+
+## Expected answer rubric
+
+### Must mention
+
+- синтаксис WITH
+- scope одного statement
+- читаемые этапы
+- нет гарантии ускорения
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Считать, что `WITH` автоматически ускоряет запрос.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Чем CTE отличается от view?
+
+## Задача
+
+Сделай короткую письменную практику по теме **CTE**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **CTE**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** CTE — именованный промежуточный query через WITH; он улучшает структуру, но сам по себе не гарантирует производительность.
+- **Механизм:** Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
+- **Ограничение:** Считать, что `WITH` автоматически ускоряет запрос.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

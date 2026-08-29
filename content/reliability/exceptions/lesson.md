@@ -7,38 +7,52 @@
 
 После урока ты сможешь:
 
-- объяснить ``BaseException`` своими словами и связать с backend-сценарием;
-- объяснить ``Exception`` своими словами и связать с backend-сценарием;
-- объяснить `common built-ins` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Exception hierarchy**, а не только запомнить термин;
+- прочитать и изменить короткий пример для ``BaseException``;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Итерация, исключения и context managers — протоколы управления потоком и освобождением ресурсов.
+### Что это
 
-В теме **Exception hierarchy** важно уверенно объяснять следующие части:
+Exceptions are objects in a hierarchy; application errors usually derive from `Exception`, while `BaseException` also includes process-control signals such as `KeyboardInterrupt`.
 
-### `BaseException`
+### Как работает
 
-Для ``BaseException`` опиши protocol: кто инициирует шаг, какое состояние сохраняется, как выглядит завершение и error path.
+Python searches matching except clauses from top to bottom and unwinds stack frames until a handler is found; otherwise the traceback reaches the caller.
 
-### `Exception`
 
-Для ``Exception`` опиши protocol: кто инициирует шаг, какое состояние сохраняется, как выглядит завершение и error path.
+### Важный нюанс / limitation
 
-### common built-ins
+Catch the narrow type you can handle. A broad catch must normally log context and re-raise rather than report false success.
 
-Для `common built-ins` опиши protocol: кто инициирует шаг, какое состояние сохраняется, как выглядит завершение и error path.
+### Где используется в backend
 
-### why not catch bare `except`
-
-Для `why not catch bare `except`` опиши protocol: кто инициирует шаг, какое состояние сохраняется, как выглядит завершение и error path.
+Domain exceptions can be translated to stable HTTP errors at the API boundary.
 
 ## Mental model
 
 Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- `BaseException`
+- `Exception`
+- common built-ins
+- why not catch bare `except`
+
+### Полезно
+
+- one short code/result example
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -56,58 +70,19 @@ except ValueError as exc:
 
 ## Common mistakes
 
-**Ошибка:** Перехватывать Exception без стратегии либо удерживать весь поток данных в памяти.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Bare `except:` can swallow cancellation or shutdown signals and hide programming bugs.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the ``BaseException`` example and predict the result before running it.
 
-## Interview questions
+**B · Find the bug.** Find code that violates ``Exception`` and explain the concrete consequence.
 
-1. Объясни **Exception hierarchy** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Покажи happy path, завершение протокола и поведение при исключении. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+**D · Small task.** Implement the smallest function/query that demonstrates ``BaseException`` and add one edge-case test.
 
-## Expected answer rubric
-
-### Must mention
-
-- `BaseException`
-- `Exception`
-- common built-ins
-- why not catch bare `except`.
-- Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Перехватывать Exception без стратегии либо удерживать весь поток данных в памяти.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- `BaseException`
-- `Exception`
-- common built-ins
-- why not catch bare `except`.
-
-## Задача
-
-Разбери backend-сценарий: **Покажи happy path, завершение протокола и поведение при исключении.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Explain Exception hierarchy in 45–60 seconds and include one limitation.
 
 ## Code prediction
 
@@ -149,15 +124,70 @@ Misconception: `finally`.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое Exception hierarchy и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Exception hierarchy?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Exceptions are objects in a hierarchy; application errors usually derive from `Exception`, while `BaseException` also includes process-control signals such as `KeyboardInterrupt`.
+
+### Нормальный Junior answer
+
+> Exceptions are objects in a hierarchy; application errors usually derive from `Exception`, while `BaseException` also includes process-control signals such as `KeyboardInterrupt`. Python searches matching except clauses from top to bottom and unwinds stack frames until a handler is found; otherwise the traceback reaches the caller. Важное ограничение: Catch the narrow type you can handle. A broad catch must normally log context and re-raise rather than report false success.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Exception hierarchy?**
+
+Bare `except:` can swallow cancellation or shutdown signals and hide programming bugs.
+
+## Expected answer rubric
+
+### Must mention
+
+- `BaseException`
+- `Exception`
+- common built-ins
+- why not catch bare `except`
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Bare `except:` can swallow cancellation or shutdown signals and hide programming bugs.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какая типичная ошибка связана с Exception hierarchy?
+
+## Задача
+
+Сделай короткую письменную практику по теме **Exception hierarchy**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Exception hierarchy**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Exceptions are objects in a hierarchy; application errors usually derive from `Exception`, while `BaseException` also includes process-control signals such as `KeyboardInterrupt`.
+- **Механизм:** Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка.
+- **Ограничение:** Bare `except:` can swallow cancellation or shutdown signals and hide programming bugs.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

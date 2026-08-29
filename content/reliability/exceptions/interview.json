@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Exception hierarchy» как на Junior Python Backend interview.",
+    "question": "Что такое Exception hierarchy и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "`BaseException`",
       "`Exception`",
       "common built-ins",
-      "why not catch bare `except`.",
-      "Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка."
+      "why not catch bare `except`"
     ],
+    "short_answer": "Exceptions are objects in a hierarchy; application errors usually derive from `Exception`, while `BaseException` also includes process-control signals such as `KeyboardInterrupt`.",
+    "junior_answer": "Exceptions are objects in a hierarchy; application errors usually derive from `Exception`, while `BaseException` also includes process-control signals such as `KeyboardInterrupt`. Python searches matching except clauses from top to bottom and unwinds stack frames until a handler is found; otherwise the traceback reaches the caller. Важное ограничение: Catch the narrow type you can handle. A broad catch must normally log context and re-raise rather than report false success.",
+    "follow_up_question": "Какая типичная ошибка связана с Exception hierarchy?",
+    "follow_up_answer": "Bare `except:` can swallow cancellation or shutdown signals and hide programming bugs.",
     "expected_answer": {
       "must_mention": [
         "`BaseException`",
         "`Exception`",
         "common built-ins",
-        "why not catch bare `except`.",
-        "Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка."
+        "why not catch bare `except`"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Перехватывать Exception без стратегии либо удерживать весь поток данных в памяти.",
+        "Bare `except:` can swallow cancellation or shutdown signals and hide programming bugs.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Перехватывать Exception без стратегии либо удерживать весь поток данных в памяти."
+        "Bare `except:` can swallow cancellation or shutdown signals and hide programming bugs."
       ],
       "follow_up_questions": [
-        "Покажи happy path, завершение протокола и поведение при исключении."
+        "Какая типичная ошибка связана с Exception hierarchy?"
       ]
     },
     "follow_ups": [
-      "Покажи happy path, завершение протокола и поведение при исключении."
+      "Какая типичная ошибка связана с Exception hierarchy?"
     ],
     "tags": [
       "stage-04",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Exception hierarchy»: Покажи happy path, завершение протокола и поведение при исключении. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Exception hierarchy?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "one short code/result example",
+      "Bare `except:` can swallow cancellation or shutdown signals and hide programming bugs."
     ],
+    "short_answer": "Bare `except:` can swallow cancellation or shutdown signals and hide programming bugs.",
+    "junior_answer": "Bare `except:` can swallow cancellation or shutdown signals and hide programming bugs.",
+    "follow_up_question": "Что такое Exception hierarchy и как это работает?",
+    "follow_up_answer": "Exceptions are objects in a hierarchy; application errors usually derive from `Exception`, while `BaseException` also includes process-control signals such as `KeyboardInterrupt`. Python searches matching except clauses from top to bottom and unwinds stack frames until a handler is found; otherwise the traceback reaches the caller. Важное ограничение: Catch the narrow type you can handle. A broad catch must normally log context and re-raise rather than report false success.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "one short code/result example"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Bare `except:` can swallow cancellation or shutdown signals and hide programming bugs."
       ],
       "red_flags": [
-        "Перехватывать Exception без стратегии либо удерживать весь поток данных в памяти."
+        "Bare `except:` can swallow cancellation or shutdown signals and hide programming bugs."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Exception hierarchy и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Exception hierarchy и как это работает?"
     ],
     "tags": [
       "stage-04",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-04",

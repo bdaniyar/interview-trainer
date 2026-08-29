@@ -153,6 +153,7 @@ NEXT_PUBLIC_API_URL=http://localhost:8000 npm run dev
 │   └── <stage>/<lesson>/
 ├── scripts/smoke_test.py
 ├── tools/validate_content.py
+├── tools/learning_materials.py       # reviewed Learn copy and Junior answer levels
 ├── tools/personalize_examples.py
 ├── tools/export_course_snapshot.py
 ├── docs/CONTENT_INVENTORY.md
@@ -208,15 +209,42 @@ content/python-model/iterator-protocol/
 
 Backend сканирует `metadata.json` при запросе, поэтому новый материал появляется без правок в React. `slug` — неизменяемый persistence key для progress/code; `id` — стабильный curriculum identifier. `curriculum.json` хранит taxonomy и planning status, lesson directories — опубликованный material, а `course.json` является только generated snapshot.
 
+Lesson reader поддерживает два режима. **Learn** показывает теорию, примеры, характерные ошибки, практику и ответы с progressive disclosure. **Review** оставляет prediction/practice/task/interview blocks без подсказок; good answer и rubric раскрываются вручную.
+
+Обязательный порядок `lesson.md`:
+
+```text
+Learning objectives
+Theory
+  Что это
+  Как работает
+  Пример
+  Важный нюанс / limitation
+  Где используется в backend (только при естественной связи)
+Mental model
+Что нужно знать на Junior
+Code examples
+Common mistakes
+Practice
+Code prediction / SQL practice (если применимо)
+Interview questions
+Good answers
+Expected answer rubric
+Задача
+Cheat sheet
+Sources
+```
+
 ## Adding lessons
 
 1. Сначала найди тему по `id`, `slug` и title в `content/curriculum.json`; duplicate запрещён.
 2. Для planned record сохрани существующий ID/slug и переведи `content_status` в `complete` только после готовности материала.
 3. Создай/обнови lesson directory, `lesson.md`, `metadata.json`, `interview.json` и `starter/main.py`.
-4. Сохрани обязательные секции: objectives, theory, mental model, examples, mistakes, interview rubric, task, cheat sheet и official sources. `Code examples` обязан иллюстрировать именно этот subtopic: stage-wide дубликаты validator отклоняет.
+4. Сохрани обязательные секции из Learn-flow выше. Theory должна сама объяснять concept; rubric не заменяет материал. `Code examples` обязан иллюстрировать именно этот subtopic: stage-wide дубликаты validator отклоняет.
 5. Не переименовывай опубликованный slug: иначе потеряется связь с сохранённым progress/code.
-6. После массовой генерации запусти `python3 tools/personalize_examples.py`: tool использует curated core examples, публичный task starter и prediction/practice banks, чтобы соседние уроки не получали одинаковый пример и hidden solution не попадал в Markdown.
-7. Запусти `python3 tools/validate_content.py` и `python3 tools/export_course_snapshot.py`.
+6. Для high-frequency темы добавь reviewed dossier в `tools/learning_materials.py`: definition, mechanism, nuance, specific mistakes, Junior depth, practice и answer levels. Не добавляй stage-wide prompts вида «объясни X» вместо теории.
+7. После массовой генерации запусти `python3 tools/personalize_examples.py`: tool использует curated core examples, публичный task starter и prediction/practice banks, чтобы соседние уроки не получали одинаковый пример и hidden solution не попадал в Markdown.
+8. Запусти `python3 tools/validate_content.py` и `python3 tools/export_course_snapshot.py`.
 
 Для будущего импорта материала формата `TOPIC:` / `MATERIAL:` сначала ищи урок по slug/title, затем разделяй текст на theory, examples, interview notes и task. Не создавай второй урок с той же темой.
 
@@ -233,7 +261,7 @@ File API принимает максимум 24 файла, 100 KB на файл
 
 ## Adding interview questions
 
-`interview.json` хранит `question`, `level`, `priority`, `interview_probability`, краткий `answer`, структурированный `expected_answer`, follow-ups, tags и sets. `expected_answer` содержит `must_mention`, `good_additions`, `common_wrong_answers`, `red_flags` и `follow_up_questions`. ID вопроса формируется стабильно как `<lesson-slug>:<index>`, поэтому не переставляй существующие вопросы без миграции progress.
+`interview.json` хранит `question`, `level`, `priority`, `interview_probability`, `short_answer`, `junior_answer`, `follow_up_question`, `follow_up_answer`, краткий список `answer`, структурированный `expected_answer`, tags и sets. `expected_answer` содержит `must_mention`, `good_additions`, `common_wrong_answers`, `red_flags` и `follow_up_questions`. ID вопроса формируется стабильно как `<lesson-slug>:<index>`, поэтому не переставляй существующие вопросы без миграции progress.
 
 Тематические collections определены в `content/interview_sets.json`. Full Junior Interview содержит ровно 25 curated questions; frontend позволяет переключать набор без внешнего LLM.
 

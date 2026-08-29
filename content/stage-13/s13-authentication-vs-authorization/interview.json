@@ -1,35 +1,37 @@
 [
   {
-    "question": "Объясни тему «Authentication vs authorization» как на Junior Python Backend interview.",
+    "question": "Что такое Authentication vs authorization и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Authentication vs authorization",
-      "Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации."
+      "Authentication vs authorization"
     ],
+    "short_answer": "Authentication establishes who the requester is; authorization decides whether that identity may perform an action on a resource.",
+    "junior_answer": "Authentication establishes who the requester is; authorization decides whether that identity may perform an action on a resource. Credentials/token/session are verified first, then policy checks roles, permissions, ownership or attributes for the concrete operation. Важное ограничение: A logged-in user is not automatically allowed to read another user's object.",
+    "follow_up_question": "Какая типичная ошибка связана с Authentication vs authorization?",
+    "follow_up_answer": "Hiding an admin button in the frontend is neither authentication nor authorization; the API must enforce the rule.",
     "expected_answer": {
       "must_mention": [
-        "Authentication vs authorization",
-        "Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации."
+        "Authentication vs authorization"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Считать CORS авторизацией, JWT шифрованием или хранить пароль быстрым hash.",
+        "Hiding an admin button in the frontend is neither authentication nor authorization; the API must enforce the rule.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Считать CORS авторизацией, JWT шифрованием или хранить пароль быстрым hash."
+        "Hiding an admin button in the frontend is neither authentication nor authorization; the API must enforce the rule."
       ],
       "follow_up_questions": [
-        "Назови атакующего, актив, проверку на сервере и безопасный отказ."
+        "Какая типичная ошибка связана с Authentication vs authorization?"
       ]
     },
     "follow_ups": [
-      "Назови атакующего, актив, проверку на сервере и безопасный отказ."
+      "Какая типичная ошибка связана с Authentication vs authorization?"
     ],
     "tags": [
       "stage-13",
@@ -42,42 +44,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Authentication vs authorization»: Назови атакующего, актив, проверку на сервере и безопасный отказ. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Authentication vs authorization?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "one short code/result example",
+      "Hiding an admin button in the frontend is neither authentication nor authorization; the API must enforce the rule."
     ],
+    "short_answer": "Hiding an admin button in the frontend is neither authentication nor authorization; the API must enforce the rule.",
+    "junior_answer": "Hiding an admin button in the frontend is neither authentication nor authorization; the API must enforce the rule.",
+    "follow_up_question": "Что такое Authentication vs authorization и как это работает?",
+    "follow_up_answer": "Authentication establishes who the requester is; authorization decides whether that identity may perform an action on a resource. Credentials/token/session are verified first, then policy checks roles, permissions, ownership or attributes for the concrete operation. Важное ограничение: A logged-in user is not automatically allowed to read another user's object.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "one short code/result example"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Hiding an admin button in the frontend is neither authentication nor authorization; the API must enforce the rule."
       ],
       "red_flags": [
-        "Считать CORS авторизацией, JWT шифрованием или хранить пароль быстрым hash."
+        "Hiding an admin button in the frontend is neither authentication nor authorization; the API must enforce the rule."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Authentication vs authorization и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Authentication vs authorization и как это работает?"
     ],
     "tags": [
       "stage-13",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-13",

@@ -7,34 +7,57 @@
 
 После урока ты сможешь:
 
-- объяснить `ORM joins` своими словами и связать с backend-сценарием;
-- объяснить `explicit conditions` своими словами и связать с backend-сценарием;
-- объяснить `selecting entities/columns.` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Joins**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `ORM joins`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-SQLAlchemy 2.x управляет SQL, identity map, unit of work и transaction lifecycle; Session не является простым соединением.
+### Что это
 
-В теме **Joins** важно уверенно объяснять следующие части:
+Это часть SQLAlchemy 2.x data-access flow: statement, Session, identity map и transaction lifecycle.
 
-### ORM joins
+### Как работает
 
-JOIN соединяет строки по условию и может изменить cardinality; перед SELECT полезно оценить связь one-to-one/one-to-many.
+Укажи владельца Session/transaction, момент SQL I/O и state entity до и после flush/commit/rollback.
 
-### explicit conditions
+**ORM joins.** JOIN соединяет строки по условию и может изменить cardinality; перед SELECT полезно оценить связь one-to-one/one-to-many.
 
-Для `explicit conditions` укажи Session/transaction owner, момент SQL I/O и последствия rollback или lazy load.
+**explicit conditions.** `explicit conditions` влияет на SQLAlchemy Session/transaction state, момент фактического SQL I/O и поведение rollback или relationship loading.
 
-### selecting entities/columns
+**selecting entities/columns.** `SELECT` формирует result columns после FROM/JOIN/WHERE/GROUP/HAVING; порядок строк существует только при явном `ORDER BY`.
 
-`SELECT` формирует result columns после FROM/JOIN/WHERE/GROUP/HAVING; порядок строк существует только при явном `ORDER BY`.
+
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `ORM joins` и `explicit conditions` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `ORM joins`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- ORM joins
+- explicit conditions
+- selecting entities/columns
+
+### Полезно
+
+- связать Joins с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -49,19 +72,45 @@ def orders_for_email(User, Order, email):
 
 ## Common mistakes
 
-**Ошибка:** Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Скрыть commit внутри repository, допустить N+1 или продолжить Session без rollback после ошибки.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `ORM joins` до запуска.
+
+**B · Find the bug.** Найди нарушение `explicit conditions` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Joins за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Joins** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Опиши session scope, момент flush/commit и количество SQL-запросов. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Joins и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Joins?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Joins: Это часть SQLAlchemy 2.x data-access flow: statement, Session, identity map и transaction lifecycle.
+
+### Нормальный Junior answer
+
+> Joins — тема, в которой я сначала фиксирую `ORM joins`, затем объясняю `explicit conditions` на коротком примере. Ключевой механизм: Укажи владельца Session/transaction, момент SQL I/O и state entity до и после flush/commit/rollback. Главная практическая ошибка — Скрыть commit внутри repository, допустить N+1 или продолжить Session без rollback после ошибки.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Joins?**
+
+Скрыть commit внутри repository, допустить N+1 или продолжить Session без rollback после ошибки.
 
 ## Expected answer rubric
 
@@ -69,30 +118,22 @@ def orders_for_email(User, Order, email):
 
 - ORM joins
 - explicit conditions
-- selecting entities/columns.
-- Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
+- selecting entities/columns
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks.
-- ответ из одного определения без механизма и failure mode.
+- Скрыть commit внутри repository, допустить N+1 или продолжить Session без rollback после ошибки.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- ORM joins
-- explicit conditions
-- selecting entities/columns.
+- Какое ограничение или типичная ошибка относится именно к теме Joins?
 
 ## Задача
 
@@ -105,11 +146,10 @@ orders_for_email(User,Order,email): select Order join User, filter email, order 
 
 Перед собеседованием запомни:
 
-- дай точное определение **Joins**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Joins: Это часть SQLAlchemy 2.x data-access flow: statement, Session, identity map и transaction lifecycle.
+- **Механизм:** Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
+- **Ограничение:** Скрыть commit внутри repository, допустить N+1 или продолжить Session без rollback после ошибки.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

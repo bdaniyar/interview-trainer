@@ -7,38 +7,60 @@
 
 После урока ты сможешь:
 
-- объяснить ``UNION`` своими словами и связать с backend-сценарием;
-- объяснить ``UNION ALL`` своими словами и связать с backend-сценарием;
-- объяснить ``INTERSECT`` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Set operations**, а не только запомнить термин;
+- прочитать и изменить короткий пример для ``UNION``;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-SQL описывает требуемый набор строк; корректность начинается с cardinality, NULL semantics и явного порядка.
+### Что это
 
-В теме **Set operations** важно уверенно объяснять следующие части:
+Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.
 
-### `UNION`
+### Как работает
 
-Для ``UNION`` сначала определи grain/cardinality результата, затем NULL и ordering semantics.
+Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа.
 
-### `UNION ALL`
+**`UNION`.** ``UNION`` меняет набор SQL rows; его смысл проверяют через grain результата, cardinality, NULL semantics и явный ordering.
 
-Для ``UNION ALL`` сначала определи grain/cardinality результата, затем NULL и ordering semantics.
+**`UNION ALL`.** ``UNION ALL`` меняет набор SQL rows; его смысл проверяют через grain результата, cardinality, NULL semantics и явный ordering.
 
-### `INTERSECT`
+**`INTERSECT`.** ``INTERSECT`` меняет набор SQL rows; его смысл проверяют через grain результата, cardinality, NULL semantics и явный ordering.
 
-Для ``INTERSECT`` сначала определи grain/cardinality результата, затем NULL и ordering semantics.
+**`EXCEPT`.** ``EXCEPT`` меняет набор SQL rows; его смысл проверяют через grain результата, cardinality, NULL semantics и явный ordering.
 
-### `EXCEPT`
 
-Для ``EXCEPT`` сначала определи grain/cardinality результата, затем NULL и ordering semantics.
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй ``UNION`` и ``UNION ALL`` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется ``UNION``; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- `UNION`
+- `UNION ALL`
+- `INTERSECT`
+- `EXCEPT`
+
+### Полезно
+
+- связать Set operations с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -57,19 +79,45 @@ Set operations требуют совместимых columns; UNION удаляе
 
 ## Common mistakes
 
-**Ошибка:** Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Не определить cardinality результата и замаскировать неверный query через DISTINCT.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для ``UNION`` до запуска.
+
+**B · Find the bug.** Найди нарушение ``UNION ALL`` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Set operations за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Set operations** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Предскажи cardinality результата и проверь, не размножает ли JOIN строки. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Set operations и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Set operations?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Set operations: Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.
+
+### Нормальный Junior answer
+
+> Set operations — тема, в которой я сначала фиксирую ``UNION``, затем объясняю ``UNION ALL`` на коротком примере. Ключевой механизм: Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа. Главная практическая ошибка — Не определить cardinality результата и замаскировать неверный query через DISTINCT.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Set operations?**
+
+Не определить cardinality результата и замаскировать неверный query через DISTINCT.
 
 ## Expected answer rubric
 
@@ -78,47 +126,35 @@ Set operations требуют совместимых columns; UNION удаляе
 - `UNION`
 - `UNION ALL`
 - `INTERSECT`
-- `EXCEPT`.
-- Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
+- `EXCEPT`
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE.
-- ответ из одного определения без механизма и failure mode.
+- Не определить cardinality результата и замаскировать неверный query через DISTINCT.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- `UNION`
-- `UNION ALL`
-- `INTERSECT`
-- `EXCEPT`.
+- Какое ограничение или типичная ошибка относится именно к теме Set operations?
 
 ## Задача
 
-Разбери backend-сценарий: **Предскажи cardinality результата и проверь, не размножает ли JOIN строки.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Set operations**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Set operations**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Set operations: Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.
+- **Механизм:** Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
+- **Ограничение:** Не определить cardinality результата и замаскировать неверный query через DISTINCT.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

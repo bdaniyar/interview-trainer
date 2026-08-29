@@ -7,42 +7,58 @@
 
 После урока ты сможешь:
 
-- объяснить `preserving `__name__`` своими словами и связать с backend-сценарием;
-- объяснить `docstring` своими словами и связать с backend-сценарием;
-- объяснить `annotations` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **`functools.wraps`**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `preserving `__name__``;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Функция — объект с сигнатурой, областью видимости и состоянием замыкания; её контракт должен быть понятен вызывающему коду.
+### Что это
 
-В теме **`functools.wraps`** важно уверенно объяснять следующие части:
+Это часть контракта Python function: важно различать definition time, call time, signature и разрешение имён.
 
-### preserving `__name__`
+### Как работает
 
-Для `preserving `__name__`` отдели definition time от call time и покажи влияние на signature, scope или state функции.
+Отдели выполнение `def`, связывание arguments при вызове и разрешение names по LEGB.
 
-### docstring
+**preserving `__name__`.** `preserving `__name__`` влияет на function contract; результат определяется definition time, argument binding при вызове и разрешением names.
 
-Для `docstring` отдели definition time от call time и покажи влияние на signature, scope или state функции.
+**docstring.** `docstring` влияет на function contract; результат определяется definition time, argument binding при вызове и разрешением names.
 
-### annotations
+**annotations.** `annotations` влияет на function contract; результат определяется definition time, argument binding при вызове и разрешением names.
 
-Для `annotations` отдели definition time от call time и покажи влияние на signature, scope или state функции.
+**`__wrapped__`.** ``__wrapped__`` влияет на function contract; результат определяется definition time, argument binding при вызове и разрешением names.
 
-### `__wrapped__`
+**why frameworks/tools care.** `why frameworks/tools care` влияет на function contract; результат определяется definition time, argument binding при вызове и разрешением names.
 
-Для ``__wrapped__`` отдели definition time от call time и покажи влияние на signature, scope или state функции.
 
-### why frameworks/tools care
+### Важный нюанс / limitation
 
-Для `why frameworks/tools care` отдели definition time от call time и покажи влияние на signature, scope или state функции.
+Граница Junior: уверенно объясняй `preserving `__name__`` и `docstring` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
 ## Mental model
 
 Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- preserving `__name__`
+- docstring
+- annotations
+- `__wrapped__`
+
+### Полезно
+
+- why frameworks/tools care
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -68,61 +84,18 @@ print(health.__name__, health.__annotations__)
 
 ## Common mistakes
 
-**Ошибка:** Скрывать неясный API за **kwargs или забывать о времени вычисления defaults.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `preserving `__name__`` до запуска.
 
-## Interview questions
+**B · Find the bug.** Найди нарушение `docstring` и объясни конкретное последствие.
 
-1. Объясни **`functools.wraps`** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Разбери сигнатуру helper-функции и объясни, какие вызовы допустимы и почему. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+**E · Interview explanation.** Дай ответ про `functools.wraps` за 60 секунд: определение, механизм, пример, ограничение.
 
-## Expected answer rubric
-
-### Must mention
-
-- preserving `__name__`
-- docstring
-- annotations
-- `__wrapped__`
-- Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Скрывать неясный API за **kwargs или забывать о времени вычисления defaults.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- preserving `__name__`
-- docstring
-- annotations
-- `__wrapped__`
-- why frameworks/tools care.
-
-## Задача
-
-### Сохранить metadata wrapper
-
-Реализуй traced decorator через functools.wraps и добавь wrapper.traced = True.
-
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
 ## Code prediction
 
 ### Decorator меняет вызываемый объект
@@ -165,15 +138,73 @@ Misconception: `decorator`.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое `functools.wraps` и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме `functools.wraps`?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+`functools.wraps`: Это часть контракта Python function: важно различать definition time, call time, signature и разрешение имён.
+
+### Нормальный Junior answer
+
+> `functools.wraps` — тема, в которой я сначала фиксирую `preserving `__name__``, затем объясняю `docstring` на коротком примере. Ключевой механизм: Отдели выполнение `def`, связывание arguments при вызове и разрешение names по LEGB. Главная практическая ошибка — Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме `functools.wraps`?**
+
+Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
+
+## Expected answer rubric
+
+### Must mention
+
+- preserving `__name__`
+- docstring
+- annotations
+- `__wrapped__`
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какое ограничение или типичная ошибка относится именно к теме `functools.wraps`?
+
+## Задача
+
+### Сохранить metadata wrapper
+
+Реализуй traced decorator через functools.wraps и добавь wrapper.traced = True.
+
+Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **`functools.wraps`**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** `functools.wraps`: Это часть контракта Python function: важно различать definition time, call time, signature и разрешение имён.
+- **Механизм:** Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
+- **Ограничение:** Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

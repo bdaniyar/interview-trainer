@@ -7,38 +7,60 @@
 
 После урока ты сможешь:
 
-- объяснить `client → Nginx/proxy → application` своими словами и связать с backend-сценарием;
-- объяснить `TLS termination` своими словами и связать с backend-сценарием;
-- объяснить `headers` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Reverse proxy**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `client → Nginx/proxy → application`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-HTTP — контракт между клиентом и сервером: method, target, headers, body, status и cache semantics.
+### Что это
 
-В теме **Reverse proxy** важно уверенно объяснять следующие части:
+Это часть наблюдаемого HTTP contract: method/target/headers/body на входе и status/headers/body на выходе.
 
-### client → Nginx/proxy → application
+### Как работает
 
-Для `client → Nginx/proxy → application` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
+Опиши один request и один response, включая поведение retry, cache и error contract только там, где они относятся к теме.
 
-### TLS termination
+**client → Nginx/proxy → application.** `client → Nginx/proxy → application` является частью observable HTTP contract и влияет на request semantics, response status/body и допустимость повторного запроса.
 
-Для `TLS termination` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
+**TLS termination.** `TLS termination` является частью observable HTTP contract и влияет на request semantics, response status/body и допустимость повторного запроса.
 
-### headers
+**headers.** `headers` является частью observable HTTP contract и влияет на request semantics, response status/body и допустимость повторного запроса.
 
-Для `headers` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
+**load distribution.** `load distribution` является частью observable HTTP contract и влияет на request semantics, response status/body и допустимость повторного запроса.
 
-### load distribution
 
-Для `load distribution` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `client → Nginx/proxy → application` и `TLS termination` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `client → Nginx/proxy → application`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- client → Nginx/proxy → application
+- TLS termination
+- headers
+- load distribution
+
+### Полезно
+
+- связать Reverse proxy с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -54,19 +76,45 @@ X-Request-ID: req-12-17
 
 ## Common mistakes
 
-**Ошибка:** Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `client → Nginx/proxy → application` до запуска.
+
+**B · Find the bug.** Найди нарушение `TLS termination` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Reverse proxy за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Reverse proxy** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Спроектируй request/response контракт и объясни retry, idempotency и error body. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Reverse proxy и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Reverse proxy?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Reverse proxy: Это часть наблюдаемого HTTP contract: method/target/headers/body на входе и status/headers/body на выходе.
+
+### Нормальный Junior answer
+
+> Reverse proxy — тема, в которой я сначала фиксирую `client → Nginx/proxy → application`, затем объясняю `TLS termination` на коротком примере. Ключевой механизм: Опиши один request и один response, включая поведение retry, cache и error contract только там, где они относятся к теме. Главная практическая ошибка — Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Reverse proxy?**
+
+Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency.
 
 ## Expected answer rubric
 
@@ -75,47 +123,35 @@ X-Request-ID: req-12-17
 - client → Nginx/proxy → application
 - TLS termination
 - headers
-- load distribution.
-- Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
+- load distribution
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне.
-- ответ из одного определения без механизма и failure mode.
+- Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- client → Nginx/proxy → application
-- TLS termination
-- headers
-- load distribution.
+- Какое ограничение или типичная ошибка относится именно к теме Reverse proxy?
 
 ## Задача
 
-Разбери backend-сценарий: **Спроектируй request/response контракт и объясни retry, idempotency и error body.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Reverse proxy**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Reverse proxy**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Reverse proxy: Это часть наблюдаемого HTTP contract: method/target/headers/body на входе и status/headers/body на выходе.
+- **Механизм:** Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
+- **Ограничение:** Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

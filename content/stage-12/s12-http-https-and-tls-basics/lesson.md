@@ -7,42 +7,48 @@
 
 После урока ты сможешь:
 
-- объяснить `encryption` своими словами и связать с backend-сценарием;
-- объяснить `authentication` своими словами и связать с backend-сценарием;
-- объяснить `certificate` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **HTTP/HTTPS and TLS basics**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `encryption`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-HTTP — контракт между клиентом и сервером: method, target, headers, body, status и cache semantics.
+### Что это
 
-В теме **HTTP/HTTPS and TLS basics** важно уверенно объяснять следующие части:
+HTTPS is HTTP carried through TLS, providing encryption in transit, integrity and server authentication through certificates.
 
-### encryption
+### Как работает
 
-Для `encryption` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
+A TLS handshake negotiates keys and verifies the certificate chain; a reverse proxy may terminate TLS before forwarding to the app on a trusted network.
 
-### authentication
 
-Authentication устанавливает identity, authorization проверяет право этой identity выполнить конкретное действие над resource.
+### Важный нюанс / limitation
 
-### certificate
-
-Для `certificate` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
-
-### TLS termination
-
-Для `TLS termination` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
-
-### no cryptography deep dive
-
-Для `no cryptography deep dive` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
+HTTPS does not validate business permissions or encrypt data at rest.
 
 ## Mental model
 
 Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- encryption
+- authentication
+- certificate
+- TLS termination
+
+### Полезно
+
+- no cryptography deep dive
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -58,19 +64,47 @@ X-Request-ID: req-12-13
 
 ## Common mistakes
 
-**Ошибка:** Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Trusting forwarded scheme/client headers from arbitrary peers can make an app believe an insecure request was HTTPS.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `encryption` example and predict the result before running it.
+
+**B · Find the bug.** Find code that violates `authentication` and explain the concrete consequence.
+
+**D · Small task.** Implement the smallest function/query that demonstrates `encryption` and add one edge-case test.
+
+**E · Interview explanation.** Explain HTTP/HTTPS and TLS basics in 45–60 seconds and include one limitation.
 
 ## Interview questions
 
-1. Объясни **HTTP/HTTPS and TLS basics** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Спроектируй request/response контракт и объясни retry, idempotency и error body. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое HTTP/HTTPS and TLS basics и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с HTTP/HTTPS and TLS basics?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+HTTPS is HTTP carried through TLS, providing encryption in transit, integrity and server authentication through certificates.
+
+### Нормальный Junior answer
+
+> HTTPS is HTTP carried through TLS, providing encryption in transit, integrity and server authentication through certificates. A TLS handshake negotiates keys and verifies the certificate chain; a reverse proxy may terminate TLS before forwarding to the app on a trusted network. Важное ограничение: HTTPS does not validate business permissions or encrypt data at rest.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с HTTP/HTTPS and TLS basics?**
+
+Trusting forwarded scheme/client headers from arbitrary peers can make an app believe an insecure request was HTTPS.
 
 ## Expected answer rubric
 
@@ -80,47 +114,34 @@ X-Request-ID: req-12-13
 - authentication
 - certificate
 - TLS termination
-- Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне.
-- ответ из одного определения без механизма и failure mode.
+- Trusting forwarded scheme/client headers from arbitrary peers can make an app believe an insecure request was HTTPS.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- encryption
-- authentication
-- certificate
-- TLS termination
-- no cryptography deep dive.
+- Какая типичная ошибка связана с HTTP/HTTPS and TLS basics?
 
 ## Задача
 
-Разбери backend-сценарий: **Спроектируй request/response контракт и объясни retry, idempotency и error body.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **HTTP/HTTPS and TLS basics**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **HTTP/HTTPS and TLS basics**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** HTTPS is HTTP carried through TLS, providing encryption in transit, integrity and server authentication through certificates.
+- **Механизм:** Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
+- **Ограничение:** Trusting forwarded scheme/client headers from arbitrary peers can make an app believe an insecure request was HTTPS.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

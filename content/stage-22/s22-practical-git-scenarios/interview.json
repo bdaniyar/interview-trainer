@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Practical Git scenarios» как на Junior Python Backend interview.",
+    "question": "Что такое Practical Git scenarios и какой механизм здесь важно понимать Junior-разработчику?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "medium",
@@ -8,34 +8,36 @@
       "wrong branch",
       "accidental commit",
       "merge conflict",
-      "undo public change",
-      "Перед командой определяй, что именно меняется: файлы, index, branch pointer или shared history."
+      "undo public change"
     ],
+    "short_answer": "Practical Git scenarios: это отдельный технический контракт",
+    "junior_answer": "Practical Git scenarios — тема, в которой я сначала фиксирую `wrong branch`, затем объясняю `accidental commit` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
+    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Practical Git scenarios?",
+    "follow_up_answer": "Нужно назвать конкретный failure path и способ его проверить.",
     "expected_answer": {
       "must_mention": [
         "wrong branch",
         "accidental commit",
         "merge conflict",
-        "undo public change",
-        "Перед командой определяй, что именно меняется: файлы, index, branch pointer или shared history."
+        "undo public change"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Rebase shared commits или удалять secret из файла без ротации.",
+        "Игнорировать ограничение механизма и проверять только happy path.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Rebase shared commits или удалять secret из файла без ротации."
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "follow_up_questions": [
-        "Выбери безопасный способ отменить локальное и уже опубликованное изменение."
+        "Какое ограничение или типичная ошибка относится именно к теме Practical Git scenarios?"
       ]
     },
     "follow_ups": [
-      "Выбери безопасный способ отменить локальное и уже опубликованное изменение."
+      "Какое ограничение или типичная ошибка относится именно к теме Practical Git scenarios?"
     ],
     "tags": [
       "stage-22",
@@ -48,42 +50,43 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Practical Git scenarios»: Выбери безопасный способ отменить локальное и уже опубликованное изменение. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какое ограничение или типичная ошибка относится именно к теме Practical Git scenarios?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "medium",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Перед командой определяй, что именно меняется: файлы, index, branch pointer или shared history.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "recover stashed work",
+      "sync with main",
+      "Нужно назвать конкретный failure path и способ его проверить."
     ],
+    "short_answer": "Нужно назвать конкретный failure path и способ его проверить.",
+    "junior_answer": "Нужно назвать конкретный failure path и способ его проверить.",
+    "follow_up_question": "Что такое Practical Git scenarios и какой механизм здесь важно понимать Junior-разработчику?",
+    "follow_up_answer": "Practical Git scenarios — тема, в которой я сначала фиксирую `wrong branch`, затем объясняю `accidental commit` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "recover stashed work",
+        "sync with main"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "red_flags": [
-        "Rebase shared commits или удалять secret из файла без ротации."
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Practical Git scenarios и какой механизм здесь важно понимать Junior-разработчику?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Practical Git scenarios и какой механизм здесь важно понимать Junior-разработчику?"
     ],
     "tags": [
       "stage-22",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-22",

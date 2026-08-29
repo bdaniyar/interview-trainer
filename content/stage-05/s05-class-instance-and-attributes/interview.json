@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Class, instance and attributes» как на Junior Python Backend interview.",
+    "question": "Что такое Class, instance and attributes и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -8,34 +8,36 @@
       "class object",
       "instance",
       "instance namespace",
-      "class namespace",
-      "У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее."
+      "class namespace"
     ],
+    "short_answer": "A class is an object describing behavior and class attributes; an instance has its own identity and instance namespace.",
+    "junior_answer": "A class is an object describing behavior and class attributes; an instance has its own identity and instance namespace. Attribute lookup starts on the instance, then follows the class MRO; methods found on the class become bound methods when read through an instance. Важное ограничение: A mutable class attribute is shared by instances until an instance shadows the name.",
+    "follow_up_question": "Какая типичная ошибка связана с Class, instance and attributes?",
+    "follow_up_answer": "Defining `items = []` on the class for per-instance data leaks mutations between all instances.",
     "expected_answer": {
       "must_mention": [
         "class object",
         "instance",
         "instance namespace",
-        "class namespace",
-        "У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее."
+        "class namespace"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Создавать глубокую иерархию ради переиспользования нескольких строк.",
+        "Defining `items = []` on the class for per-instance data leaks mutations between all instances.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Создавать глубокую иерархию ради переиспользования нескольких строк."
+        "Defining `items = []` on the class for per-instance data leaks mutations between all instances."
       ],
       "follow_up_questions": [
-        "Сравни composition и inheritance для сервиса уведомлений и назови цену изменения."
+        "Какая типичная ошибка связана с Class, instance and attributes?"
       ]
     },
     "follow_ups": [
-      "Сравни composition и inheritance для сервиса уведомлений и назови цену изменения."
+      "Какая типичная ошибка связана с Class, instance and attributes?"
     ],
     "tags": [
       "stage-05",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Class, instance and attributes»: Сравни composition и inheritance для сервиса уведомлений и назови цену изменения. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Class, instance and attributes?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "attribute lookup",
+      "Defining `items = []` on the class for per-instance data leaks mutations between all instances."
     ],
+    "short_answer": "Defining `items = []` on the class for per-instance data leaks mutations between all instances.",
+    "junior_answer": "Defining `items = []` on the class for per-instance data leaks mutations between all instances.",
+    "follow_up_question": "Что такое Class, instance and attributes и как это работает?",
+    "follow_up_answer": "A class is an object describing behavior and class attributes; an instance has its own identity and instance namespace. Attribute lookup starts on the instance, then follows the class MRO; methods found on the class become bound methods when read through an instance. Важное ограничение: A mutable class attribute is shared by instances until an instance shadows the name.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "attribute lookup"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Defining `items = []` on the class for per-instance data leaks mutations between all instances."
       ],
       "red_flags": [
-        "Создавать глубокую иерархию ради переиспользования нескольких строк."
+        "Defining `items = []` on the class for per-instance data leaks mutations between all instances."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Class, instance and attributes и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Class, instance and attributes и как это работает?"
     ],
     "tags": [
       "stage-05",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-05",

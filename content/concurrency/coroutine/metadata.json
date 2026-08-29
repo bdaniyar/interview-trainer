@@ -15,7 +15,7 @@
     "coroutine object",
     "execution begins when awaited/scheduled."
   ],
-  "description": "P0 · Coroutine function and coroutine object: mental model, interview rubric и backend-сценарий.",
+  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
   "has_task": true,
   "has_solution": true,
   "priority": "P0",

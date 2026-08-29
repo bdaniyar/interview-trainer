@@ -16,7 +16,7 @@
     "idempotency",
     "locking."
   ],
-  "description": "P1 · Outbox design: mental model, interview rubric и backend-сценарий.",
+  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

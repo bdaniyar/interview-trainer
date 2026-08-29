@@ -1,41 +1,43 @@
 [
   {
-    "question": "Объясни тему «Basic decorators» как на Junior Python Backend interview.",
+    "question": "Как работает decorator функции и зачем нужен `functools.wraps`?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "wrapper",
-      "accepting `*args/**kwargs`",
-      "returning result",
-      "function replacement",
-      "Разделяй момент определения функции, момент вызова и момент разрешения свободного имени."
+      "эквивалентность `@decorator` присваиванию",
+      "wrapper args/result",
+      "definition time",
+      "`functools.wraps`"
     ],
+    "short_answer": "Decorator заменяет функцию результатом `decorator(function)`; wraps сохраняет metadata и ссылку на исходную функцию.",
+    "junior_answer": "Запись `@audit` выполняется при определении функции и равна `handler = audit(handler)`. Audit возвращает wrapper, который принимает arguments, вызывает исходную функцию и возвращает результат. `functools.wraps` сохраняет имя, docstring, annotations и `__wrapped__`, поэтому framework и отладчик продолжают видеть исходный контракт.",
+    "follow_up_question": "В каком порядке применяются два decorators?",
+    "follow_up_answer": "Применяются снизу вверх: `@a @b def f` даёт `f = a(b(f))`; при вызове внешний wrapper `a` начинает первым.",
     "expected_answer": {
       "must_mention": [
-        "wrapper",
-        "accepting `*args/**kwargs`",
-        "returning result",
-        "function replacement",
-        "Разделяй момент определения функции, момент вызова и момент разрешения свободного имени."
+        "эквивалентность `@decorator` присваиванию",
+        "wrapper args/result",
+        "definition time",
+        "`functools.wraps`"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Скрывать неясный API за **kwargs или забывать о времени вычисления defaults.",
+        "Wrapper вызывает `fn(*args, **kwargs)`, но забывает `return`, поэтому caller получает `None`.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Скрывать неясный API за **kwargs или забывать о времени вычисления defaults."
+        "Wrapper вызывает `fn(*args, **kwargs)`, но забывает `return`, поэтому caller получает `None`."
       ],
       "follow_up_questions": [
-        "Разбери сигнатуру helper-функции и объясни, какие вызовы допустимы и почему."
+        "В каком порядке применяются два decorators?"
       ]
     },
     "follow_ups": [
-      "Разбери сигнатуру helper-функции и объясни, какие вызовы допустимы и почему."
+      "В каком порядке применяются два decorators?"
     ],
     "tags": [
       "stage-03",
@@ -48,42 +50,45 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Basic decorators»: Разбери сигнатуру helper-функции и объясни, какие вызовы допустимы и почему. Что проверишь первым?",
-    "level": "scenario",
+    "question": "В каком порядке применяются два decorators?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "различать decorator и decorator factory",
+      "порядок нескольких decorators",
+      "Применяются снизу вверх: `@a @b def f` даёт `f = a(b(f))`; при вызове внешний wrapper `a` начинает первым."
     ],
+    "short_answer": "Применяются снизу вверх: `@a @b def f` даёт `f = a(b(f))`; при вызове внешний wrapper `a` начинает первым.",
+    "junior_answer": "Применяются снизу вверх: `@a @b def f` даёт `f = a(b(f))`; при вызове внешний wrapper `a` начинает первым.",
+    "follow_up_question": "Как работает decorator функции и зачем нужен `functools.wraps`?",
+    "follow_up_answer": "Запись `@audit` выполняется при определении функции и равна `handler = audit(handler)`. Audit возвращает wrapper, который принимает arguments, вызывает исходную функцию и возвращает результат. `functools.wraps` сохраняет имя, docstring, annotations и `__wrapped__`, поэтому framework и отладчик продолжают видеть исходный контракт.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "различать decorator и decorator factory",
+        "порядок нескольких decorators"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Wrapper вызывает `fn(*args, **kwargs)`, но забывает `return`, поэтому caller получает `None`.",
+        "Обычный sync wrapper вокруг `async def` возвращает coroutine object, но не ожидает его.",
+        "Decorator скрывает signature без `@wraps(fn)`."
       ],
       "red_flags": [
-        "Скрывать неясный API за **kwargs или забывать о времени вычисления defaults."
+        "Wrapper вызывает `fn(*args, **kwargs)`, но забывает `return`, поэтому caller получает `None`."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Как работает decorator функции и зачем нужен `functools.wraps`?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Как работает decorator функции и зачем нужен `functools.wraps`?"
     ],
     "tags": [
       "stage-03",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-03",

@@ -7,34 +7,47 @@
 
 После урока ты сможешь:
 
-- объяснить `grouping` своими словами и связать с backend-сценарием;
-- объяснить `selected non-aggregate columns` своими словами и связать с backend-сценарием;
-- объяснить `common errors.` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **GROUP BY**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `grouping`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-SQL описывает требуемый набор строк; корректность начинается с cardinality, NULL semantics и явного порядка.
+### Что это
 
-В теме **GROUP BY** важно уверенно объяснять следующие части:
+`GROUP BY` forms groups of rows and returns one result row per unique grouping key.
 
-### grouping
+### Как работает
 
-GROUP BY формирует группы до вычисления aggregates, а HAVING фильтрует уже агрегированные группы.
+Aggregate functions compute inside each group. Selected non-aggregate columns must normally appear in GROUP BY or be functionally determined under DB rules.
 
-### selected non-aggregate columns
 
-`SELECT` формирует result columns после FROM/JOIN/WHERE/GROUP/HAVING; порядок строк существует только при явном `ORDER BY`.
+### Важный нюанс / limitation
 
-### common errors
-
-Для `common errors` сначала определи grain/cardinality результата, затем NULL и ordering semantics.
+Always state the grain, such as one row per `user_id`, before adding joins that may multiply source rows.
 
 ## Mental model
 
 Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- grouping
+- selected non-aggregate columns
+- common errors
+
+### Полезно
+
+- one short code/result example
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -52,56 +65,19 @@ GROUP BY задаёт grain «одна строка на customer», после 
 
 ## Common mistakes
 
-**Ошибка:** Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Grouping after a one-to-many join can double-count totals if the join has a finer grain than the measure.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `grouping` example and predict the result before running it.
 
-## Interview questions
+**B · Find the bug.** Find code that violates `selected non-aggregate columns` and explain the concrete consequence.
 
-1. Объясни **GROUP BY** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Предскажи cardinality результата и проверь, не размножает ли JOIN строки. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+**D · Small task.** Implement the smallest function/query that demonstrates `grouping` and add one edge-case test.
 
-## Expected answer rubric
-
-### Must mention
-
-- grouping
-- selected non-aggregate columns
-- common errors.
-- Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- grouping
-- selected non-aggregate columns
-- common errors.
-
-## Задача
-
-Разбери backend-сценарий: **Предскажи cardinality результата и проверь, не размножает ли JOIN строки.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Explain GROUP BY in 45–60 seconds and include one limitation.
 
 ## SQL practice
 
@@ -288,15 +264,69 @@ SQL runner пока не подключён: выполни запрос в ло
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое GROUP BY и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с GROUP BY?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+`GROUP BY` forms groups of rows and returns one result row per unique grouping key.
+
+### Нормальный Junior answer
+
+> `GROUP BY` forms groups of rows and returns one result row per unique grouping key. Aggregate functions compute inside each group. Selected non-aggregate columns must normally appear in GROUP BY or be functionally determined under DB rules. Важное ограничение: Always state the grain, such as one row per `user_id`, before adding joins that may multiply source rows.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с GROUP BY?**
+
+Grouping after a one-to-many join can double-count totals if the join has a finer grain than the measure.
+
+## Expected answer rubric
+
+### Must mention
+
+- grouping
+- selected non-aggregate columns
+- common errors
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Grouping after a one-to-many join can double-count totals if the join has a finer grain than the measure.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какая типичная ошибка связана с GROUP BY?
+
+## Задача
+
+Сделай короткую письменную практику по теме **GROUP BY**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **GROUP BY**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** `GROUP BY` forms groups of rows and returns one result row per unique grouping key.
+- **Механизм:** Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
+- **Ограничение:** Grouping after a one-to-many join can double-count totals if the join has a finer grain than the measure.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

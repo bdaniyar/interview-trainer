@@ -7,50 +7,49 @@
 
 После урока ты сможешь:
 
-- объяснить `200` своими словами и связать с backend-сценарием;
-- объяснить `201` своими словами и связать с backend-сценарием;
-- объяснить `202` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Status codes**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `200`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-HTTP — контракт между клиентом и сервером: method, target, headers, body, status и cache semantics.
+### Что это
 
-В теме **Status codes** важно уверенно объяснять следующие части:
+HTTP status codes communicate the outcome category and specific result of processing a request.
 
-### 200
+### Как работает
 
-Для `200` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
+Typical API codes include 200, 201 with Location where useful, 204 without body, 400 malformed request, 401 unauthenticated, 403 forbidden, 404, 409 conflict, 422 validation and 500 unexpected server error.
 
-### 201
 
-Для `201` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
+### Важный нюанс / limitation
 
-### 202
-
-Для `202` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
-
-### 204
-
-Для `204` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
-
-### 304
-
-Для `304` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
-
-### 400
-
-Для `400` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
-
-### 401
-
-Для `401` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
+Use one consistent error body with a machine-readable code; do not leak stack traces.
 
 ## Mental model
 
 Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- 200
+- 201
+- 202
+- 204
+
+### Полезно
+
+- 304
+- 400
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -66,19 +65,47 @@ X-Request-ID: req-12-7
 
 ## Common mistakes
 
-**Ошибка:** Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Returning 200 for every error forces clients to reverse-engineer success from response text.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `200` example and predict the result before running it.
+
+**B · Find the bug.** Find code that violates `201` and explain the concrete consequence.
+
+**D · Small task.** Implement the smallest function/query that demonstrates `200` and add one edge-case test.
+
+**E · Interview explanation.** Explain Status codes in 45–60 seconds and include one limitation.
 
 ## Interview questions
 
-1. Объясни **Status codes** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Спроектируй request/response контракт и объясни retry, idempotency и error body. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Status codes и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Status codes?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+HTTP status codes communicate the outcome category and specific result of processing a request.
+
+### Нормальный Junior answer
+
+> HTTP status codes communicate the outcome category and specific result of processing a request. Typical API codes include 200, 201 with Location where useful, 204 without body, 400 malformed request, 401 unauthenticated, 403 forbidden, 404, 409 conflict, 422 validation and 500 unexpected server error. Важное ограничение: Use one consistent error body with a machine-readable code; do not leak stack traces.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Status codes?**
+
+Returning 200 for every error forces clients to reverse-engineer success from response text.
 
 ## Expected answer rubric
 
@@ -88,50 +115,34 @@ X-Request-ID: req-12-7
 - 201
 - 202
 - 204
-- Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне.
-- ответ из одного определения без механизма и failure mode.
+- Returning 200 for every error forces clients to reverse-engineer success from response text.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- 200
-- 201
-- 202
-- 204
-- 304
-- 400
-- 401
-- 403
+- Какая типичная ошибка связана с Status codes?
 
 ## Задача
 
-Разбери backend-сценарий: **Спроектируй request/response контракт и объясни retry, idempotency и error body.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Status codes**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Status codes**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** HTTP status codes communicate the outcome category and specific result of processing a request.
+- **Механизм:** Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
+- **Ограничение:** Returning 200 for every error forces clients to reverse-engineer success from response text.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

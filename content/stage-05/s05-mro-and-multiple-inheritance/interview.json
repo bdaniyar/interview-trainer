@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «MRO and multiple inheritance» как на Junior Python Backend interview.",
+    "question": "Что такое MRO and multiple inheritance и какой механизм здесь важно понимать Junior-разработчику?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "C3 linearization intuition",
       "`Class.__mro__`",
       "diamond problem",
-      "cooperative `super`",
-      "У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее."
+      "cooperative `super`"
     ],
+    "short_answer": "MRO and multiple inheritance: Это элемент Python object model, который определяет состояние объекта, поиск поведения или способ композиции типов.",
+    "junior_answer": "MRO and multiple inheritance — тема, в которой я сначала фиксирую `C3 linearization intuition`, затем объясняю ``Class.__mro__`` на коротком примере. Ключевой механизм: Проследи instance/class namespaces, attribute lookup и направление зависимости между объектами. Главная практическая ошибка — Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.",
+    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме MRO and multiple inheritance?",
+    "follow_up_answer": "Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.",
     "expected_answer": {
       "must_mention": [
         "C3 linearization intuition",
         "`Class.__mro__`",
         "diamond problem",
-        "cooperative `super`",
-        "У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее."
+        "cooperative `super`"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Создавать глубокую иерархию ради переиспользования нескольких строк.",
+        "Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Создавать глубокую иерархию ради переиспользования нескольких строк."
+        "Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов."
       ],
       "follow_up_questions": [
-        "Сравни composition и inheritance для сервиса уведомлений и назови цену изменения."
+        "Какое ограничение или типичная ошибка относится именно к теме MRO and multiple inheritance?"
       ]
     },
     "follow_ups": [
-      "Сравни composition и inheritance для сервиса уведомлений и назови цену изменения."
+      "Какое ограничение или типичная ошибка относится именно к теме MRO and multiple inheritance?"
     ],
     "tags": [
       "stage-05",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «MRO and multiple inheritance»: Сравни composition и inheritance для сервиса уведомлений и назови цену изменения. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какое ограничение или типичная ошибка относится именно к теме MRO and multiple inheritance?",
+    "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "common interview predictions",
+      "Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов."
     ],
+    "short_answer": "Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.",
+    "junior_answer": "Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.",
+    "follow_up_question": "Что такое MRO and multiple inheritance и какой механизм здесь важно понимать Junior-разработчику?",
+    "follow_up_answer": "MRO and multiple inheritance — тема, в которой я сначала фиксирую `C3 linearization intuition`, затем объясняю ``Class.__mro__`` на коротком примере. Ключевой механизм: Проследи instance/class namespaces, attribute lookup и направление зависимости между объектами. Главная практическая ошибка — Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "common interview predictions"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов."
       ],
       "red_flags": [
-        "Создавать глубокую иерархию ради переиспользования нескольких строк."
+        "Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое MRO and multiple inheritance и какой механизм здесь важно понимать Junior-разработчику?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое MRO and multiple inheritance и какой механизм здесь важно понимать Junior-разработчику?"
     ],
     "tags": [
       "stage-05",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-05",

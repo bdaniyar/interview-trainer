@@ -7,42 +7,62 @@
 
 После урока ты сможешь:
 
-- объяснить `separate SELECT is insufficient` своими словами и связать с backend-сценарием;
-- объяснить `DB constraint/conditional write/lock` своими словами и связать с backend-сценарием;
-- объяснить `short transaction` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Hotel Booking and double booking**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `separate SELECT is insufficient`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Resume Defense проверяет каждую заявленную технологию через конкретную роль в StudyHub, Hotel Booking или Share Recipe.
+### Что это
 
-В теме **Hotel Booking and double booking** важно уверенно объяснять следующие части:
+Тема **Hotel Booking and double booking** описывает отдельный контракт backend-разработки.
 
-### separate SELECT is insufficient
+### Как работает
 
-`SELECT` формирует result columns после FROM/JOIN/WHERE/GROUP/HAVING; порядок строк существует только при явном `ORDER BY`.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
 
-### DB constraint/conditional write/lock
+**separate SELECT is insufficient.** `SELECT` формирует result columns после FROM/JOIN/WHERE/GROUP/HAVING; порядок строк существует только при явном `ORDER BY`.
 
-Constraint хранит invariant рядом с данными и защищает его от всех writers; API переводит conflict в понятную domain/HTTP error.
+**DB constraint/conditional write/lock.** Constraint хранит invariant рядом с данными и защищает его от всех writers; API переводит conflict в понятную domain/HTTP error.
 
-### short transaction
+**short transaction.** Transaction задаёт атомарную границу: либо все связанные изменения становятся видимыми, либо выполняется rollback.
 
-Transaction задаёт атомарную границу: либо все связанные изменения становятся видимыми, либо выполняется rollback.
+**`409 Conflict`.** ``409 Conflict`` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
 
-### `409 Conflict`
+**idempotency where applicable.** Идемпотентность означает, что повтор одного логического запроса не создаёт новый эффект; обычно её поддерживают ключом и ограничением уникальности.
 
-Для ``409 Conflict`` отвечай только по реализованному flow: проблема, своё решение, trade-off, failure mode и test/metric.
 
-### idempotency where applicable
+### Важный нюанс / limitation
 
-`WHERE` фильтрует строки до grouping; SQL three-valued logic отбрасывает и `FALSE`, и `UNKNOWN`.
+Граница Junior: уверенно объясняй `separate SELECT is insufficient` и `DB constraint/conditional write/lock` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `separate SELECT is insufficient`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- separate SELECT is insufficient
+- DB constraint/conditional write/lock
+- short transaction
+- `409 Conflict`
+
+### Полезно
+
+- idempotency where applicable
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -59,59 +79,17 @@ DB invariant, short transaction, concurrent test.
 
 ## Common mistakes
 
-**Ошибка:** Приписывать себе production scale, AWS, Kubernetes, Kafka или RabbitMQ без фактического опыта.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Игнорировать ограничение механизма и проверять только happy path.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `separate SELECT is insufficient` до запуска.
 
-## Interview questions
+**B · Find the bug.** Найди нарушение `DB constraint/conditional write/lock` и объясни конкретное последствие.
 
-1. Объясни **Hotel Booking and double booking** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Защити один claim, назвав точный flow, failure mode и способ проверки. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
-
-## Expected answer rubric
-
-### Must mention
-
-- separate SELECT is insufficient
-- DB constraint/conditional write/lock
-- short transaction
-- `409 Conflict`
-- Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Приписывать себе production scale, AWS, Kubernetes, Kafka или RabbitMQ без фактического опыта.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- separate SELECT is insufficient
-- DB constraint/conditional write/lock
-- short transaction
-- `409 Conflict`
-- idempotency where applicable.
-
-## Задача
-
-Разбери backend-сценарий: **Защити один claim, назвав точный flow, failure mode и способ проверки.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Дай ответ про Hotel Booking and double booking за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Architecture practice
 
@@ -123,15 +101,70 @@ DB invariant, short transaction, concurrent test.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое Hotel Booking and double booking и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Hotel Booking and double booking?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Hotel Booking and double booking: это отдельный технический контракт
+
+### Нормальный Junior answer
+
+> Hotel Booking and double booking — тема, в которой я сначала фиксирую `separate SELECT is insufficient`, затем объясняю `DB constraint/conditional write/lock` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Hotel Booking and double booking?**
+
+Нужно назвать конкретный failure path и способ его проверить.
+
+## Expected answer rubric
+
+### Must mention
+
+- separate SELECT is insufficient
+- DB constraint/conditional write/lock
+- short transaction
+- `409 Conflict`
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Игнорировать ограничение механизма и проверять только happy path.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какое ограничение или типичная ошибка относится именно к теме Hotel Booking and double booking?
+
+## Задача
+
+Сделай короткую письменную практику по теме **Hotel Booking and double booking**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Hotel Booking and double booking**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Hotel Booking and double booking: это отдельный технический контракт
+- **Механизм:** Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

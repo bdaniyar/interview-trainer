@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Transactions and ACID» как на Junior Python Backend interview.",
+    "question": "Что такое Transactions and ACID и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -8,34 +8,36 @@
       "atomicity",
       "consistency",
       "isolation",
-      "durability",
-      "Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path."
+      "durability"
     ],
+    "short_answer": "A transaction groups operations into one atomic boundary; ACID describes atomicity, consistency, isolation and durability.",
+    "junior_answer": "A transaction groups operations into one atomic boundary; ACID describes atomicity, consistency, isolation and durability. Commit makes the transaction's changes durable/visible under DB rules; rollback discards them. Consistency comes from correct code plus constraints, not the letter C automatically. Важное ограничение: Keep transactions short and avoid network calls while locks/resources are held.",
+    "follow_up_question": "Какая типичная ошибка связана с Transactions and ACID?",
+    "follow_up_answer": "Committing inside each repository call can leave half a use case saved after a later failure.",
     "expected_answer": {
       "must_mention": [
         "atomicity",
         "consistency",
         "isolation",
-        "durability",
-        "Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path."
+        "durability"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова.",
+        "Committing inside each repository call can leave half a use case saved after a later failure.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова."
+        "Committing inside each repository call can leave half a use case saved after a later failure."
       ],
       "follow_up_questions": [
-        "Назови инвариант, конкурентный сценарий и точку, где его гарантирует база."
+        "Какая типичная ошибка связана с Transactions and ACID?"
       ]
     },
     "follow_ups": [
-      "Назови инвариант, конкурентный сценарий и точку, где его гарантирует база."
+      "Какая типичная ошибка связана с Transactions and ACID?"
     ],
     "tags": [
       "stage-11",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Transactions and ACID»: Назови инвариант, конкурентный сценарий и точку, где его гарантирует база. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Transactions and ACID?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "transaction boundary",
+      "Committing inside each repository call can leave half a use case saved after a later failure."
     ],
+    "short_answer": "Committing inside each repository call can leave half a use case saved after a later failure.",
+    "junior_answer": "Committing inside each repository call can leave half a use case saved after a later failure.",
+    "follow_up_question": "Что такое Transactions and ACID и как это работает?",
+    "follow_up_answer": "A transaction groups operations into one atomic boundary; ACID describes atomicity, consistency, isolation and durability. Commit makes the transaction's changes durable/visible under DB rules; rollback discards them. Consistency comes from correct code plus constraints, not the letter C automatically. Важное ограничение: Keep transactions short and avoid network calls while locks/resources are held.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "transaction boundary"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Committing inside each repository call can leave half a use case saved after a later failure."
       ],
       "red_flags": [
-        "Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова."
+        "Committing inside each repository call can leave half a use case saved after a later failure."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Transactions and ACID и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Transactions and ACID и как это работает?"
     ],
     "tags": [
       "stage-11",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-11",

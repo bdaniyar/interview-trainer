@@ -7,42 +7,62 @@
 
 После урока ты сможешь:
 
-- объяснить `decorator` своими словами и связать с backend-сценарием;
-- объяснить `APIRouter` своими словами и связать с backend-сценарием;
-- объяснить `prefix` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Routes and routers**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `decorator`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-FastAPI связывает ASGI request lifecycle, routing, validation, dependency graph и response serialization.
+### Что это
 
-В теме **Routes and routers** важно уверенно объяснять следующие части:
+Это часть FastAPI request lifecycle между routing, validation, dependencies, handler и response serialization.
 
-### decorator
+### Как работает
 
-Decorator получает callable и возвращает callable; для framework route decorator также регистрирует функцию и её metadata во время импорта модуля.
+Проследи request через router, Pydantic validation, dependency graph, service и response model.
 
-### APIRouter
+**decorator.** Decorator получает callable и возвращает callable; для framework route decorator также регистрирует функцию и её metadata во время импорта модуля.
 
-`APIRouter` группирует связанные path operations и их общие prefix, tags или dependencies; router подключают к приложению через `include_router`, не создавая второе приложение.
+**APIRouter.** `APIRouter` группирует связанные path operations и их общие prefix, tags или dependencies; router подключают к приложению через `include_router`, не создавая второе приложение.
 
-### prefix
+**prefix.** Router prefix добавляется ко всем путям группы и позволяет собирать модульный API без повторения `/users` или `/v1` в каждом decorator.
 
-Router prefix добавляется ко всем путям группы и позволяет собирать модульный API без повторения `/users` или `/v1` в каждом decorator.
+**tags.** `tags` занимает конкретный этап FastAPI request lifecycle между router, validation/dependencies, handler и response serialization.
 
-### tags
+**modular structure.** `modular structure` занимает конкретный этап FastAPI request lifecycle между router, validation/dependencies, handler и response serialization.
 
-Для `tags` проследи request через router, validation/dependencies, handler/service и response serialization.
 
-### modular structure
+### Важный нюанс / limitation
 
-Для `modular structure` проследи request через router, validation/dependencies, handler/service и response serialization.
+Граница Junior: уверенно объясняй `decorator` и `APIRouter` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `decorator`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- decorator
+- APIRouter
+- prefix
+- tags
+
+### Полезно
+
+- modular structure
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -59,19 +79,45 @@ app = FastAPI()
 
 ## Common mistakes
 
-**Ошибка:** Открывать Session глобально или выполнять blocking I/O в async route.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Открыть глобальный request resource или спрятать domain logic в framework hook.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `decorator` до запуска.
+
+**B · Find the bug.** Найди нарушение `APIRouter` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Routes and routers за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Routes and routers** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Проследи request от router через dependency и service до response model. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Routes and routers и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Routes and routers?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Routes and routers: Это часть FastAPI request lifecycle между routing, validation, dependencies, handler и response serialization.
+
+### Нормальный Junior answer
+
+> Routes and routers — тема, в которой я сначала фиксирую `decorator`, затем объясняю `APIRouter` на коротком примере. Ключевой механизм: Проследи request через router, Pydantic validation, dependency graph, service и response model. Главная практическая ошибка — Открыть глобальный request resource или спрятать domain logic в framework hook.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Routes and routers?**
+
+Открыть глобальный request resource или спрятать domain logic в framework hook.
 
 ## Expected answer rubric
 
@@ -81,31 +127,21 @@ app = FastAPI()
 - APIRouter
 - prefix
 - tags
-- Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Открывать Session глобально или выполнять blocking I/O в async route.
-- ответ из одного определения без механизма и failure mode.
+- Открыть глобальный request resource или спрятать domain logic в framework hook.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- decorator
-- APIRouter
-- prefix
-- tags
-- modular structure.
+- Какое ограничение или типичная ошибка относится именно к теме Routes and routers?
 
 ## Задача
 
@@ -118,11 +154,10 @@ app = FastAPI()
 
 Перед собеседованием запомни:
 
-- дай точное определение **Routes and routers**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Routes and routers: Это часть FastAPI request lifecycle между routing, validation, dependencies, handler и response serialization.
+- **Механизм:** Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
+- **Ограничение:** Открыть глобальный request resource или спрятать domain logic в framework hook.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

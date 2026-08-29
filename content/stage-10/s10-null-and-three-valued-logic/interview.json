@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «NULL and three-valued logic» как на Junior Python Backend interview.",
+    "question": "Что такое NULL and three-valued logic и какой механизм здесь важно понимать Junior-разработчику?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -8,34 +8,36 @@
       "`IS NULL`",
       "`IS NOT NULL`",
       "`NULL` comparisons",
-      "`COALESCE`",
-      "Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT."
+      "`COALESCE`"
     ],
+    "short_answer": "NULL and three-valued logic: Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.",
+    "junior_answer": "NULL and three-valued logic — тема, в которой я сначала фиксирую ``IS NULL``, затем объясняю ``IS NOT NULL`` на коротком примере. Ключевой механизм: Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа. Главная практическая ошибка — Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
+    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме NULL and three-valued logic?",
+    "follow_up_answer": "Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
     "expected_answer": {
       "must_mention": [
         "`IS NULL`",
         "`IS NOT NULL`",
         "`NULL` comparisons",
-        "`COALESCE`",
-        "Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT."
+        "`COALESCE`"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE.",
+        "Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE."
+        "Не определить cardinality результата и замаскировать неверный query через DISTINCT."
       ],
       "follow_up_questions": [
-        "Предскажи cardinality результата и проверь, не размножает ли JOIN строки."
+        "Какое ограничение или типичная ошибка относится именно к теме NULL and three-valued logic?"
       ]
     },
     "follow_ups": [
-      "Предскажи cardinality результата и проверь, не размножает ли JOIN строки."
+      "Какое ограничение или типичная ошибка относится именно к теме NULL and three-valued logic?"
     ],
     "tags": [
       "stage-10",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «NULL and three-valued logic»: Предскажи cardinality результата и проверь, не размножает ли JOIN строки. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какое ограничение или типичная ошибка относится именно к теме NULL and three-valued logic?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "aggregates and NULL",
+      "Не определить cardinality результата и замаскировать неверный query через DISTINCT."
     ],
+    "short_answer": "Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
+    "junior_answer": "Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
+    "follow_up_question": "Что такое NULL and three-valued logic и какой механизм здесь важно понимать Junior-разработчику?",
+    "follow_up_answer": "NULL and three-valued logic — тема, в которой я сначала фиксирую ``IS NULL``, затем объясняю ``IS NOT NULL`` на коротком примере. Ключевой механизм: Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа. Главная практическая ошибка — Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "aggregates and NULL"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Не определить cardinality результата и замаскировать неверный query через DISTINCT."
       ],
       "red_flags": [
-        "Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE."
+        "Не определить cardinality результата и замаскировать неверный query через DISTINCT."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое NULL and three-valued logic и какой механизм здесь важно понимать Junior-разработчику?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое NULL and three-valued logic и какой механизм здесь важно понимать Junior-разработчику?"
     ],
     "tags": [
       "stage-10",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-10",

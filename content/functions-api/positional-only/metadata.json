@@ -16,7 +16,7 @@
     "readable signatures",
     "backward compatibility."
   ],
-  "description": "P1 · Positional-only and keyword-only parameters: mental model, interview rubric и backend-сценарий.",
+  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
   "has_task": true,
   "has_solution": true,
   "priority": "P1",

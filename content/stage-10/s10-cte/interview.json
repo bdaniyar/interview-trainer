@@ -1,41 +1,43 @@
 [
   {
-    "question": "Объясни тему «CTE» как на Junior Python Backend interview.",
+    "question": "Что такое CTE и гарантирует ли он ускорение SQL-запроса?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "`WITH`",
-      "readability",
-      "multiple stages",
-      "planner/version caveats.",
-      "Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT."
+      "синтаксис WITH",
+      "scope одного statement",
+      "читаемые этапы",
+      "нет гарантии ускорения"
     ],
+    "short_answer": "CTE — именованный промежуточный query через WITH; он улучшает структуру, но сам по себе не гарантирует производительность.",
+    "junior_answer": "CTE объявляется через `WITH name AS (...)` и доступен последующему query как временный result. Я использую его, чтобы дать имя этапу — например, сначала посчитать revenue по месяцу, затем отфильтровать итог. Это не обещание ускорения: PostgreSQL может встроить или материализовать CTE, поэтому производительность проверяют через EXPLAIN.",
+    "follow_up_question": "Чем CTE отличается от view?",
+    "follow_up_answer": "CTE существует только в одном statement; view — сохранённое определение query в schema и может использоваться разными statements.",
     "expected_answer": {
       "must_mention": [
-        "`WITH`",
-        "readability",
-        "multiple stages",
-        "planner/version caveats.",
-        "Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT."
+        "синтаксис WITH",
+        "scope одного statement",
+        "читаемые этапы",
+        "нет гарантии ускорения"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE.",
+        "Считать, что `WITH` автоматически ускоряет запрос.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE."
+        "Считать, что `WITH` автоматически ускоряет запрос."
       ],
       "follow_up_questions": [
-        "Предскажи cardinality результата и проверь, не размножает ли JOIN строки."
+        "Чем CTE отличается от view?"
       ]
     },
     "follow_ups": [
-      "Предскажи cardinality результата и проверь, не размножает ли JOIN строки."
+      "Чем CTE отличается от view?"
     ],
     "tags": [
       "stage-10",
@@ -48,42 +50,47 @@
     ]
   },
   {
-    "question": "Сценарий по теме «CTE»: Предскажи cardinality результата и проверь, не размножает ли JOIN строки. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Чем CTE отличается от view?",
+    "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "multiple CTE",
+      "recursive CTE на уровне идеи",
+      "planner/materialization caveat",
+      "CTE существует только в одном statement; view — сохранённое определение query в schema и может использоваться разными statements."
     ],
+    "short_answer": "CTE существует только в одном statement; view — сохранённое определение query в schema и может использоваться разными statements.",
+    "junior_answer": "CTE существует только в одном statement; view — сохранённое определение query в schema и может использоваться разными statements.",
+    "follow_up_question": "Что такое CTE и гарантирует ли он ускорение SQL-запроса?",
+    "follow_up_answer": "CTE объявляется через `WITH name AS (...)` и доступен последующему query как временный result. Я использую его, чтобы дать имя этапу — например, сначала посчитать revenue по месяцу, затем отфильтровать итог. Это не обещание ускорения: PostgreSQL может встроить или материализовать CTE, поэтому производительность проверяют через EXPLAIN.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "multiple CTE",
+        "recursive CTE на уровне идеи",
+        "planner/materialization caveat"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Считать, что `WITH` автоматически ускоряет запрос.",
+        "Спрятать неверную cardinality в цепочке CTE и не проверять результат каждого шага.",
+        "Использовать CTE из одного простого SELECT, когда он только увеличивает объём кода."
       ],
       "red_flags": [
-        "Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE."
+        "Считать, что `WITH` автоматически ускоряет запрос."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое CTE и гарантирует ли он ускорение SQL-запроса?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое CTE и гарантирует ли он ускорение SQL-запроса?"
     ],
     "tags": [
       "stage-10",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-10",

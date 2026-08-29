@@ -7,46 +7,65 @@
 
 После урока ты сможешь:
 
-- объяснить `S3-compatible object storage` своими словами и связать с backend-сценарием;
-- объяснить `short-lived direct upload` своими словами и связать с backend-сценарием;
-- объяснить `metadata/key in PostgreSQL` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **MinIO and presigned URLs**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `S3-compatible object storage`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Resume Defense проверяет каждую заявленную технологию через конкретную роль в StudyHub, Hotel Booking или Share Recipe.
+### Что это
 
-В теме **MinIO and presigned URLs** важно уверенно объяснять следующие части:
+Тема **MinIO and presigned URLs** описывает отдельный контракт backend-разработки.
 
-### S3-compatible object storage
+### Как работает
 
-Для `S3-compatible object storage` отвечай только по реализованному flow: проблема, своё решение, trade-off, failure mode и test/metric.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
 
-### short-lived direct upload
+**S3-compatible object storage.** `S3-compatible object storage` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
 
-Для `short-lived direct upload` отвечай только по реализованному flow: проблема, своё решение, trade-off, failure mode и test/metric.
+**short-lived direct upload.** `short-lived direct upload` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
 
-### metadata/key in PostgreSQL
+**metadata/key in PostgreSQL.** `metadata/key in PostgreSQL` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
 
-Для `metadata/key in PostgreSQL` отвечай только по реализованному flow: проблема, своё решение, trade-off, failure mode и test/metric.
+**authorization.** Authorization выполняется server-side на каждом resource/action и не заменяется скрытой кнопкой, CORS или данными из непроверенного token.
 
-### authorization
+**finalize validation.** `finalize validation` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
 
-Authorization выполняется server-side на каждом resource/action и не заменяется скрытой кнопкой, CORS или данными из непроверенного token.
+**no raw binary in relational row.** `no raw binary in relational row` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
 
-### finalize validation
 
-Для `finalize validation` отвечай только по реализованному flow: проблема, своё решение, trade-off, failure mode и test/metric.
+### Важный нюанс / limitation
 
-### no raw binary in relational row
+Граница Junior: уверенно объясняй `S3-compatible object storage` и `short-lived direct upload` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
-Для `no raw binary in relational row` отвечай только по реализованному flow: проблема, своё решение, trade-off, failure mode и test/metric.
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `S3-compatible object storage`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- S3-compatible object storage
+- short-lived direct upload
+- metadata/key in PostgreSQL
+- authorization
+
+### Полезно
+
+- finalize validation
+- no raw binary in relational row
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -63,60 +82,17 @@ Policy, size validation, delete/reject.
 
 ## Common mistakes
 
-**Ошибка:** Приписывать себе production scale, AWS, Kubernetes, Kafka или RabbitMQ без фактического опыта.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Игнорировать ограничение механизма и проверять только happy path.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `S3-compatible object storage` до запуска.
 
-## Interview questions
+**B · Find the bug.** Найди нарушение `short-lived direct upload` и объясни конкретное последствие.
 
-1. Объясни **MinIO and presigned URLs** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Защити один claim, назвав точный flow, failure mode и способ проверки. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
-
-## Expected answer rubric
-
-### Must mention
-
-- S3-compatible object storage
-- short-lived direct upload
-- metadata/key in PostgreSQL
-- authorization
-- Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Приписывать себе production scale, AWS, Kubernetes, Kafka или RabbitMQ без фактического опыта.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- S3-compatible object storage
-- short-lived direct upload
-- metadata/key in PostgreSQL
-- authorization
-- finalize validation
-- no raw binary in relational row.
-
-## Задача
-
-Разбери backend-сценарий: **Защити один claim, назвав точный flow, failure mode и способ проверки.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Дай ответ про MinIO and presigned URLs за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Architecture practice
 
@@ -128,15 +104,70 @@ Policy, size validation, delete/reject.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое MinIO and presigned URLs и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме MinIO and presigned URLs?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+MinIO and presigned URLs: это отдельный технический контракт
+
+### Нормальный Junior answer
+
+> MinIO and presigned URLs — тема, в которой я сначала фиксирую `S3-compatible object storage`, затем объясняю `short-lived direct upload` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме MinIO and presigned URLs?**
+
+Нужно назвать конкретный failure path и способ его проверить.
+
+## Expected answer rubric
+
+### Must mention
+
+- S3-compatible object storage
+- short-lived direct upload
+- metadata/key in PostgreSQL
+- authorization
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Игнорировать ограничение механизма и проверять только happy path.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какое ограничение или типичная ошибка относится именно к теме MinIO and presigned URLs?
+
+## Задача
+
+Сделай короткую письменную практику по теме **MinIO and presigned URLs**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **MinIO and presigned URLs**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** MinIO and presigned URLs: это отдельный технический контракт
+- **Механизм:** Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

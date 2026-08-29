@@ -1,39 +1,41 @@
 [
   {
-    "question": "Объясни тему «Timeouts» как на Junior Python Backend interview.",
+    "question": "Что такое Timeouts и какой механизм здесь важно понимать Junior-разработчику?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
       "bounded waiting",
       "`asyncio.timeout` or version-appropriate API",
-      "cleanup.",
-      "Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код."
+      "cleanup"
     ],
+    "short_answer": "Timeouts: Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг await points.",
+    "junior_answer": "Timeouts — тема, в которой я сначала фиксирую `bounded waiting`, затем объясняю ``asyncio.timeout` or version-appropriate API` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и await points до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
+    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Timeouts?",
+    "follow_up_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
     "expected_answer": {
       "must_mention": [
         "bounded waiting",
         "`asyncio.timeout` or version-appropriate API",
-        "cleanup.",
-        "Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код."
+        "cleanup"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint.",
+        "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint."
+        "Выполнить blocking call в event loop или создать coroutine и не await/schedule её."
       ],
       "follow_up_questions": [
-        "Найди blocking участок, обозначь cancellation boundary и выбери способ конкурентного запуска."
+        "Какое ограничение или типичная ошибка относится именно к теме Timeouts?"
       ]
     },
     "follow_ups": [
-      "Найди blocking участок, обозначь cancellation boundary и выбери способ конкурентного запуска."
+      "Какое ограничение или типичная ошибка относится именно к теме Timeouts?"
     ],
     "tags": [
       "stage-08",
@@ -46,42 +48,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Timeouts»: Найди blocking участок, обозначь cancellation boundary и выбери способ конкурентного запуска. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какое ограничение или типичная ошибка относится именно к теме Timeouts?",
+    "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "связать Timeouts с коротким рабочим примером",
+      "Выполнить blocking call в event loop или создать coroutine и не await/schedule её."
     ],
+    "short_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
+    "junior_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
+    "follow_up_question": "Что такое Timeouts и какой механизм здесь важно понимать Junior-разработчику?",
+    "follow_up_answer": "Timeouts — тема, в которой я сначала фиксирую `bounded waiting`, затем объясняю ``asyncio.timeout` or version-appropriate API` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и await points до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "связать Timeouts с коротким рабочим примером"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Выполнить blocking call в event loop или создать coroutine и не await/schedule её."
       ],
       "red_flags": [
-        "Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint."
+        "Выполнить blocking call в event loop или создать coroutine и не await/schedule её."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Timeouts и какой механизм здесь важно понимать Junior-разработчику?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Timeouts и какой механизм здесь важно понимать Junior-разработчику?"
     ],
     "tags": [
       "stage-08",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-08",

@@ -7,42 +7,48 @@
 
 После урока ты сможешь:
 
-- объяснить `sequential execution` своими словами и связать с backend-сценарием;
-- объяснить `concurrency` своими словами и связать с backend-сценарием;
-- объяснить `parallelism` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Sync, concurrency and parallelism**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `sequential execution`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-asyncio даёт кооперативную конкурентность для I/O-bound работы: задача уступает loop только в await point.
+### Что это
 
-В теме **Sync, concurrency and parallelism** важно уверенно объяснять следующие части:
+Sequential code does one operation after another; concurrency makes progress on multiple tasks; parallelism executes work simultaneously.
 
-### sequential execution
+### Как работает
 
-Для `sequential execution` проследи coroutine/task по await points, cancellation и cleanup, не предполагая отдельный thread.
+Async and threads often provide concurrency for I/O waits, while processes can provide parallel execution for CPU-bound Python.
 
-### concurrency
 
-Для `concurrency` проследи coroutine/task по await points, cancellation и cleanup, не предполагая отдельный thread.
+### Важный нюанс / limitation
 
-### parallelism
-
-Для `parallelism` проследи coroutine/task по await points, cancellation и cleanup, не предполагая отдельный thread.
-
-### I/O-bound
-
-Для `I/O-bound` проследи coroutine/task по await points, cancellation и cleanup, не предполагая отдельный thread.
-
-### CPU-bound
-
-Для `CPU-bound` проследи coroutine/task по await points, cancellation и cleanup, не предполагая отдельный thread.
+Concurrency can reduce idle time but adds ordering, cancellation and shared-state concerns; it does not make a single CPU calculation faster by itself.
 
 ## Mental model
 
 Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- sequential execution
+- concurrency
+- parallelism
+- I/O-bound
+
+### Полезно
+
+- CPU-bound
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -65,19 +71,47 @@ Concurrency перекрывает ожидание двух I/O операци�
 
 ## Common mistakes
 
-**Ошибка:** Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Selecting async for CPU-heavy work without moving it off the event loop increases latency for every request.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `sequential execution` example and predict the result before running it.
+
+**B · Find the bug.** Find code that violates `concurrency` and explain the concrete consequence.
+
+**D · Small task.** Implement the smallest function/query that demonstrates `sequential execution` and add one edge-case test.
+
+**E · Interview explanation.** Explain Sync, concurrency and parallelism in 45–60 seconds and include one limitation.
 
 ## Interview questions
 
-1. Объясни **Sync, concurrency and parallelism** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Найди blocking участок, обозначь cancellation boundary и выбери способ конкурентного запуска. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Sync, concurrency and parallelism и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Sync, concurrency and parallelism?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Sequential code does one operation after another; concurrency makes progress on multiple tasks; parallelism executes work simultaneously.
+
+### Нормальный Junior answer
+
+> Sequential code does one operation after another; concurrency makes progress on multiple tasks; parallelism executes work simultaneously. Async and threads often provide concurrency for I/O waits, while processes can provide parallel execution for CPU-bound Python. Важное ограничение: Concurrency can reduce idle time but adds ordering, cancellation and shared-state concerns; it does not make a single CPU calculation faster by itself.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Sync, concurrency and parallelism?**
+
+Selecting async for CPU-heavy work without moving it off the event loop increases latency for every request.
 
 ## Expected answer rubric
 
@@ -87,31 +121,21 @@ Concurrency перекрывает ожидание двух I/O операци�
 - concurrency
 - parallelism
 - I/O-bound
-- Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint.
-- ответ из одного определения без механизма и failure mode.
+- Selecting async for CPU-heavy work without moving it off the event loop increases latency for every request.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- sequential execution
-- concurrency
-- parallelism
-- I/O-bound
-- CPU-bound.
+- Какая типичная ошибка связана с Sync, concurrency and parallelism?
 
 ## Задача
 
@@ -124,11 +148,10 @@ Concurrency перекрывает ожидание двух I/O операци�
 
 Перед собеседованием запомни:
 
-- дай точное определение **Sync, concurrency and parallelism**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Sequential code does one operation after another; concurrency makes progress on multiple tasks; parallelism executes work simultaneously.
+- **Механизм:** Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.
+- **Ограничение:** Selecting async for CPU-heavy work without moving it off the event loop increases latency for every request.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

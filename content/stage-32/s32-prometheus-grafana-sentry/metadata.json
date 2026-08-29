@@ -16,7 +16,7 @@
     "candidate configured and used them in a pet-project",
     "candidate did not administer a production monitoring cluster."
   ],
-  "description": "P1 · Prometheus/Grafana/Sentry: mental model, interview rubric и backend-сценарий.",
+  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

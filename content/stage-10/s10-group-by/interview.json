@@ -1,39 +1,41 @@
 [
   {
-    "question": "Объясни тему «GROUP BY» как на Junior Python Backend interview.",
+    "question": "Что такое GROUP BY и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
       "grouping",
       "selected non-aggregate columns",
-      "common errors.",
-      "Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT."
+      "common errors"
     ],
+    "short_answer": "`GROUP BY` forms groups of rows and returns one result row per unique grouping key.",
+    "junior_answer": "`GROUP BY` forms groups of rows and returns one result row per unique grouping key. Aggregate functions compute inside each group. Selected non-aggregate columns must normally appear in GROUP BY or be functionally determined under DB rules. Важное ограничение: Always state the grain, such as one row per `user_id`, before adding joins that may multiply source rows.",
+    "follow_up_question": "Какая типичная ошибка связана с GROUP BY?",
+    "follow_up_answer": "Grouping after a one-to-many join can double-count totals if the join has a finer grain than the measure.",
     "expected_answer": {
       "must_mention": [
         "grouping",
         "selected non-aggregate columns",
-        "common errors.",
-        "Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT."
+        "common errors"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE.",
+        "Grouping after a one-to-many join can double-count totals if the join has a finer grain than the measure.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE."
+        "Grouping after a one-to-many join can double-count totals if the join has a finer grain than the measure."
       ],
       "follow_up_questions": [
-        "Предскажи cardinality результата и проверь, не размножает ли JOIN строки."
+        "Какая типичная ошибка связана с GROUP BY?"
       ]
     },
     "follow_ups": [
-      "Предскажи cardinality результата и проверь, не размножает ли JOIN строки."
+      "Какая типичная ошибка связана с GROUP BY?"
     ],
     "tags": [
       "stage-10",
@@ -46,42 +48,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «GROUP BY»: Предскажи cardinality результата и проверь, не размножает ли JOIN строки. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с GROUP BY?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "one short code/result example",
+      "Grouping after a one-to-many join can double-count totals if the join has a finer grain than the measure."
     ],
+    "short_answer": "Grouping after a one-to-many join can double-count totals if the join has a finer grain than the measure.",
+    "junior_answer": "Grouping after a one-to-many join can double-count totals if the join has a finer grain than the measure.",
+    "follow_up_question": "Что такое GROUP BY и как это работает?",
+    "follow_up_answer": "`GROUP BY` forms groups of rows and returns one result row per unique grouping key. Aggregate functions compute inside each group. Selected non-aggregate columns must normally appear in GROUP BY or be functionally determined under DB rules. Важное ограничение: Always state the grain, such as one row per `user_id`, before adding joins that may multiply source rows.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "one short code/result example"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Grouping after a one-to-many join can double-count totals if the join has a finer grain than the measure."
       ],
       "red_flags": [
-        "Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE."
+        "Grouping after a one-to-many join can double-count totals if the join has a finer grain than the measure."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое GROUP BY и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое GROUP BY и как это работает?"
     ],
     "tags": [
       "stage-10",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-10",

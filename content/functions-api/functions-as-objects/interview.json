@@ -1,41 +1,43 @@
 [
   {
-    "question": "Объясни тему «Function objects and first-class functions» как на Junior Python Backend interview.",
+    "question": "Что значит, что функции в Python являются объектами первого класса?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "defining vs calling",
-      "function object",
+      "function object vs call",
+      "передача/возврат функций",
       "callable",
-      "passing/returning functions",
-      "Разделяй момент определения функции, момент вызова и момент разрешения свободного имени."
+      "higher-order function"
     ],
+    "short_answer": "Функцию можно хранить, передавать и возвращать как любое другое значение; вызывается она через `()`.",
+    "junior_answer": "При выполнении `def` Python создаёт function object и связывает его с именем. Этот объект можно передать callback-ом, сохранить в dict обработчиков или вернуть из factory. Пока я не добавил `()`, функция не вызывается. Так устроены decorators, route handlers и многие dependency APIs.",
+    "follow_up_question": "Чем callable object отличается от function?",
+    "follow_up_answer": "Function — конкретный встроенный тип callable. Экземпляр пользовательского класса тоже callable, если класс реализует `__call__`.",
     "expected_answer": {
       "must_mention": [
-        "defining vs calling",
-        "function object",
+        "function object vs call",
+        "передача/возврат функций",
         "callable",
-        "passing/returning functions",
-        "Разделяй момент определения функции, момент вызова и момент разрешения свободного имени."
+        "higher-order function"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Скрывать неясный API за **kwargs или забывать о времени вычисления defaults.",
+        "`handlers = {'created': send_email()}` вызывает функцию при создании dict и сохраняет результат вместо callable.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Скрывать неясный API за **kwargs или забывать о времени вычисления defaults."
+        "`handlers = {'created': send_email()}` вызывает функцию при создании dict и сохраняет результат вместо callable."
       ],
       "follow_up_questions": [
-        "Разбери сигнатуру helper-функции и объясни, какие вызовы допустимы и почему."
+        "Чем callable object отличается от function?"
       ]
     },
     "follow_ups": [
-      "Разбери сигнатуру helper-функции и объясни, какие вызовы допустимы и почему."
+      "Чем callable object отличается от function?"
     ],
     "tags": [
       "stage-03",
@@ -48,42 +50,42 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Function objects and first-class functions»: Разбери сигнатуру helper-функции и объясни, какие вызовы допустимы и почему. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Чем callable object отличается от function?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "атрибуты `__name__`, `__defaults__`, `__annotations__`",
+      "Function — конкретный встроенный тип callable. Экземпляр пользовательского класса тоже callable, если класс реализует `__call__`."
     ],
+    "short_answer": "Function — конкретный встроенный тип callable. Экземпляр пользовательского класса тоже callable, если класс реализует `__call__`.",
+    "junior_answer": "Function — конкретный встроенный тип callable. Экземпляр пользовательского класса тоже callable, если класс реализует `__call__`.",
+    "follow_up_question": "Что значит, что функции в Python являются объектами первого класса?",
+    "follow_up_answer": "При выполнении `def` Python создаёт function object и связывает его с именем. Этот объект можно передать callback-ом, сохранить в dict обработчиков или вернуть из factory. Пока я не добавил `()`, функция не вызывается. Так устроены decorators, route handlers и многие dependency APIs.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "атрибуты `__name__`, `__defaults__`, `__annotations__`"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "`handlers = {'created': send_email()}` вызывает функцию при создании dict и сохраняет результат вместо callable.",
+        "Скрывать несовместимые callback signatures за `Callable[..., Any]`."
       ],
       "red_flags": [
-        "Скрывать неясный API за **kwargs или забывать о времени вычисления defaults."
+        "`handlers = {'created': send_email()}` вызывает функцию при создании dict и сохраняет результат вместо callable."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что значит, что функции в Python являются объектами первого класса?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что значит, что функции в Python являются объектами первого класса?"
     ],
     "tags": [
       "stage-03",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-03",

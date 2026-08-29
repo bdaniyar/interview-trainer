@@ -7,42 +7,48 @@
 
 После урока ты сможешь:
 
-- объяснить `one-to-many` своими словами и связать с backend-сценарием;
-- объяснить `many-to-one` своими словами и связать с backend-сценарием;
-- объяснить `many-to-many` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Relationships**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `one-to-many`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-SQLAlchemy 2.x управляет SQL, identity map, unit of work и transaction lifecycle; Session не является простым соединением.
+### Что это
 
-В теме **Relationships** важно уверенно объяснять следующие части:
+A relationship describes ORM navigation between entities; the foreign key column remains the database source of referential truth.
 
-### one-to-many
+### Как работает
 
-Для `one-to-many` укажи Session/transaction owner, момент SQL I/O и последствия rollback или lazy load.
+`back_populates` connects both directions; one-to-many, many-to-one and many-to-many determine collection/scalar shape and loading behavior.
 
-### many-to-one
 
-Для `many-to-one` укажи Session/transaction owner, момент SQL I/O и последствия rollback или lazy load.
+### Важный нюанс / limitation
 
-### many-to-many
-
-Для `many-to-many` укажи Session/transaction owner, момент SQL I/O и последствия rollback или lazy load.
-
-### `back_populates`
-
-Для ``back_populates`` укажи Session/transaction owner, момент SQL I/O и последствия rollback или lazy load.
-
-### ownership vs navigation
-
-Для `ownership vs navigation` укажи Session/transaction owner, момент SQL I/O и последствия rollback или lazy load.
+Relationship does not automatically choose efficient eager loading or safe cascade semantics.
 
 ## Mental model
 
 Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- one-to-many
+- many-to-one
+- many-to-many
+- `back_populates`
+
+### Полезно
+
+- ownership vs navigation
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -60,19 +66,47 @@ assert example_s16_relationships()
 
 ## Common mistakes
 
-**Ошибка:** Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Confusing ORM relationship with database ownership can configure delete cascade that removes more data than intended.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `one-to-many` example and predict the result before running it.
+
+**B · Find the bug.** Find code that violates `many-to-one` and explain the concrete consequence.
+
+**D · Small task.** Implement the smallest function/query that demonstrates `one-to-many` and add one edge-case test.
+
+**E · Interview explanation.** Explain Relationships in 45–60 seconds and include one limitation.
 
 ## Interview questions
 
-1. Объясни **Relationships** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Опиши session scope, момент flush/commit и количество SQL-запросов. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Relationships и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Relationships?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+A relationship describes ORM navigation between entities; the foreign key column remains the database source of referential truth.
+
+### Нормальный Junior answer
+
+> A relationship describes ORM navigation between entities; the foreign key column remains the database source of referential truth. `back_populates` connects both directions; one-to-many, many-to-one and many-to-many determine collection/scalar shape and loading behavior. Важное ограничение: Relationship does not automatically choose efficient eager loading or safe cascade semantics.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Relationships?**
+
+Confusing ORM relationship with database ownership can configure delete cascade that removes more data than intended.
 
 ## Expected answer rubric
 
@@ -82,47 +116,34 @@ assert example_s16_relationships()
 - many-to-one
 - many-to-many
 - `back_populates`
-- Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks.
-- ответ из одного определения без механизма и failure mode.
+- Confusing ORM relationship with database ownership can configure delete cascade that removes more data than intended.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- one-to-many
-- many-to-one
-- many-to-many
-- `back_populates`
-- ownership vs navigation.
+- Какая типичная ошибка связана с Relationships?
 
 ## Задача
 
-Разбери backend-сценарий: **Опиши session scope, момент flush/commit и количество SQL-запросов.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Relationships**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Relationships**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** A relationship describes ORM navigation between entities; the foreign key column remains the database source of referential truth.
+- **Механизм:** Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
+- **Ограничение:** Confusing ORM relationship with database ownership can configure delete cascade that removes more data than intended.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

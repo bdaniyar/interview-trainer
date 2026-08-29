@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «WHERE and boolean logic» как на Junior Python Backend interview.",
+    "question": "Что такое WHERE and boolean logic и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -8,34 +8,36 @@
       "comparisons",
       "AND/OR/NOT",
       "parentheses",
-      "ranges",
-      "Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT."
+      "ranges"
     ],
+    "short_answer": "`WHERE` filters source rows using boolean predicates before grouping and aggregation.",
+    "junior_answer": "`WHERE` filters source rows using boolean predicates before grouping and aggregation. AND binds tighter than OR, so parentheses make intended logic explicit. NULL comparisons yield UNKNOWN and require `IS NULL`/`IS NOT NULL`. Важное ограничение: Functions applied to an indexed column can prevent a simple index access path; confirm with EXPLAIN rather than guessing.",
+    "follow_up_question": "Какая типичная ошибка связана с WHERE and boolean logic?",
+    "follow_up_answer": "`status = 'paid' OR status = 'new' AND active` usually means something different from the visually assumed grouping.",
     "expected_answer": {
       "must_mention": [
         "comparisons",
         "AND/OR/NOT",
         "parentheses",
-        "ranges",
-        "Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT."
+        "ranges"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE.",
+        "`status = 'paid' OR status = 'new' AND active` usually means something different from the visually assumed grouping.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE."
+        "`status = 'paid' OR status = 'new' AND active` usually means something different from the visually assumed grouping."
       ],
       "follow_up_questions": [
-        "Предскажи cardinality результата и проверь, не размножает ли JOIN строки."
+        "Какая типичная ошибка связана с WHERE and boolean logic?"
       ]
     },
     "follow_ups": [
-      "Предскажи cardinality результата и проверь, не размножает ли JOIN строки."
+      "Какая типичная ошибка связана с WHERE and boolean logic?"
     ],
     "tags": [
       "stage-10",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «WHERE and boolean logic»: Предскажи cardinality результата и проверь, не размножает ли JOIN строки. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с WHERE and boolean logic?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "pattern matching",
+      "`status = 'paid' OR status = 'new' AND active` usually means something different from the visually assumed grouping."
     ],
+    "short_answer": "`status = 'paid' OR status = 'new' AND active` usually means something different from the visually assumed grouping.",
+    "junior_answer": "`status = 'paid' OR status = 'new' AND active` usually means something different from the visually assumed grouping.",
+    "follow_up_question": "Что такое WHERE and boolean logic и как это работает?",
+    "follow_up_answer": "`WHERE` filters source rows using boolean predicates before grouping and aggregation. AND binds tighter than OR, so parentheses make intended logic explicit. NULL comparisons yield UNKNOWN and require `IS NULL`/`IS NOT NULL`. Важное ограничение: Functions applied to an indexed column can prevent a simple index access path; confirm with EXPLAIN rather than guessing.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "pattern matching"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "`status = 'paid' OR status = 'new' AND active` usually means something different from the visually assumed grouping."
       ],
       "red_flags": [
-        "Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE."
+        "`status = 'paid' OR status = 'new' AND active` usually means something different from the visually assumed grouping."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое WHERE and boolean logic и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое WHERE and boolean logic и как это работает?"
     ],
     "tags": [
       "stage-10",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-10",

@@ -7,34 +7,53 @@
 
 После урока ты сможешь:
 
-- объяснить `cooperative calls` своими словами и связать с backend-сценарием;
-- объяснить `avoiding direct parent naming` своими словами и связать с backend-сценарием;
-- объяснить `inheritance chains.` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Method overriding and `super()`**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `cooperative calls`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-ООП в backend полезно как способ выразить состояние, поведение и границы ответственности, а не как соревнование по наследованию.
+### Что это
 
-В теме **Method overriding and `super()`** важно уверенно объяснять следующие части:
+Это элемент Python object model, который определяет состояние объекта, поиск поведения или способ композиции типов.
 
-### cooperative calls
+### Как работает
 
-Для `cooperative calls` укажи, где хранится state, как Python ищет behavior и почему выбран composition/inheritance.
+Проследи instance/class namespaces, attribute lookup и направление зависимости между объектами.
 
-### avoiding direct parent naming
+**cooperative calls.** `cooperative calls` определяет, где хранится object state, как идёт attribute lookup и насколько сильно тип зависит от collaborators.
 
-Для `avoiding direct parent naming` укажи, где хранится state, как Python ищет behavior и почему выбран composition/inheritance.
+**avoiding direct parent naming.** `avoiding direct parent naming` определяет, где хранится object state, как идёт attribute lookup и насколько сильно тип зависит от collaborators.
 
-### inheritance chains
+**inheritance chains.** Inheritance выражает отношение is-a и участвует в MRO; если нужно только переиспользовать collaborator, composition обычно делает зависимость яснее.
 
-Inheritance выражает отношение is-a и участвует в MRO; если нужно только переиспользовать collaborator, composition обычно делает зависимость яснее.
+
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `cooperative calls` и `avoiding direct parent naming` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
 ## Mental model
 
 У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- cooperative calls
+- avoiding direct parent naming
+- inheritance chains
+
+### Полезно
+
+- связать Method overriding and `super()` с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -57,19 +76,45 @@ Override заменяет behavior, а `super()` продолжает реали
 
 ## Common mistakes
 
-**Ошибка:** Создавать глубокую иерархию ради переиспользования нескольких строк.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `cooperative calls` до запуска.
+
+**B · Find the bug.** Найди нарушение `avoiding direct parent naming` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Method overriding and `super()` за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Method overriding and `super()`** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Сравни composition и inheritance для сервиса уведомлений и назови цену изменения. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Method overriding and `super()` и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Method overriding and `super()`?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Method overriding and `super()`: Это элемент Python object model, который определяет состояние объекта, поиск поведения или способ композиции типов.
+
+### Нормальный Junior answer
+
+> Method overriding and `super()` — тема, в которой я сначала фиксирую `cooperative calls`, затем объясняю `avoiding direct parent naming` на коротком примере. Ключевой механизм: Проследи instance/class namespaces, attribute lookup и направление зависимости между объектами. Главная практическая ошибка — Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Method overriding and `super()`?**
+
+Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.
 
 ## Expected answer rubric
 
@@ -77,46 +122,35 @@ Override заменяет behavior, а `super()` продолжает реали
 
 - cooperative calls
 - avoiding direct parent naming
-- inheritance chains.
-- У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.
+- inheritance chains
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Создавать глубокую иерархию ради переиспользования нескольких строк.
-- ответ из одного определения без механизма и failure mode.
+- Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- cooperative calls
-- avoiding direct parent naming
-- inheritance chains.
+- Какое ограничение или типичная ошибка относится именно к теме Method overriding and `super()`?
 
 ## Задача
 
-Разбери backend-сценарий: **Сравни composition и inheritance для сервиса уведомлений и назови цену изменения.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Method overriding and `super()`**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Method overriding and `super()`**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Method overriding and `super()`: Это элемент Python object model, который определяет состояние объекта, поиск поведения или способ композиции типов.
+- **Механизм:** У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.
+- **Ограничение:** Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

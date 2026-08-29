@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Subqueries» как на Junior Python Backend interview.",
+    "question": "Что такое Subqueries и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "scalar",
       "table subquery",
       "`IN`",
-      "nested aggregation.",
-      "Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT."
+      "nested aggregation"
     ],
+    "short_answer": "A subquery is a query used as an expression or table source inside another statement.",
+    "junior_answer": "A subquery is a query used as an expression or table source inside another statement. A scalar subquery must return at most one row; `IN` compares against a set of values; a FROM subquery exposes a derived table with an alias. Важное ограничение: Prefer the form that expresses intent clearly. Performance depends on the planner and data, not a universal 'JOIN is faster' rule.",
+    "follow_up_question": "Какая типичная ошибка связана с Subqueries?",
+    "follow_up_answer": "A scalar subquery returning multiple rows raises an error; `NOT IN` with NULL can also produce surprising UNKNOWN results.",
     "expected_answer": {
       "must_mention": [
         "scalar",
         "table subquery",
         "`IN`",
-        "nested aggregation.",
-        "Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT."
+        "nested aggregation"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE.",
+        "A scalar subquery returning multiple rows raises an error; `NOT IN` with NULL can also produce surprising UNKNOWN results.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE."
+        "A scalar subquery returning multiple rows raises an error; `NOT IN` with NULL can also produce surprising UNKNOWN results."
       ],
       "follow_up_questions": [
-        "Предскажи cardinality результата и проверь, не размножает ли JOIN строки."
+        "Какая типичная ошибка связана с Subqueries?"
       ]
     },
     "follow_ups": [
-      "Предскажи cardinality результата и проверь, не размножает ли JOIN строки."
+      "Какая типичная ошибка связана с Subqueries?"
     ],
     "tags": [
       "stage-10",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Subqueries»: Предскажи cardinality результата и проверь, не размножает ли JOIN строки. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Subqueries?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "one short code/result example",
+      "A scalar subquery returning multiple rows raises an error; `NOT IN` with NULL can also produce surprising UNKNOWN results."
     ],
+    "short_answer": "A scalar subquery returning multiple rows raises an error; `NOT IN` with NULL can also produce surprising UNKNOWN results.",
+    "junior_answer": "A scalar subquery returning multiple rows raises an error; `NOT IN` with NULL can also produce surprising UNKNOWN results.",
+    "follow_up_question": "Что такое Subqueries и как это работает?",
+    "follow_up_answer": "A subquery is a query used as an expression or table source inside another statement. A scalar subquery must return at most one row; `IN` compares against a set of values; a FROM subquery exposes a derived table with an alias. Важное ограничение: Prefer the form that expresses intent clearly. Performance depends on the planner and data, not a universal 'JOIN is faster' rule.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "one short code/result example"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "A scalar subquery returning multiple rows raises an error; `NOT IN` with NULL can also produce surprising UNKNOWN results."
       ],
       "red_flags": [
-        "Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE."
+        "A scalar subquery returning multiple rows raises an error; `NOT IN` with NULL can also produce surprising UNKNOWN results."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Subqueries и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Subqueries и как это работает?"
     ],
     "tags": [
       "stage-10",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-10",

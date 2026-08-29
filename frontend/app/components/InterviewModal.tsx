@@ -83,12 +83,37 @@ export function InterviewModal({ onClose, onXp }: Props) {
             <label htmlFor="interview-answer">Твой ответ</label>
             <textarea id="interview-answer" value={answer} onChange={(event) => setAnswer(event.target.value)} placeholder="Объясни своими словами…" />
             {!revealed ? (
-              <button className="primary-button reveal-button" onClick={reveal}>Показать ответ</button>
+              <button className="primary-button reveal-button" onClick={reveal}>Показать хороший ответ</button>
             ) : (
               <div className="expected-answer">
-                <div className="expected-heading"><CheckCircle2 size={17} /> Ключевые пункты</div>
+                <div className="expected-heading"><CheckCircle2 size={17} /> Разбор ответа</div>
                 {question.expected ? <p><b>Expected:</b> {question.expected}</p> : null}
-                <ul>{question.answer.map((item) => <li key={item}>{item}</li>)}</ul>
+                {question.short_answer ? (
+                  <div className="answer-level">
+                    <b>Коротко</b>
+                    <p>{question.short_answer}</p>
+                  </div>
+                ) : null}
+                {question.junior_answer ? (
+                  <div className="answer-level primary-level">
+                    <b>Нормальный Junior answer</b>
+                    <p>{question.junior_answer}</p>
+                  </div>
+                ) : (
+                  <ul>{question.answer.map((item) => <li key={item}>{item}</li>)}</ul>
+                )}
+                {question.follow_up_question && question.follow_up_answer ? (
+                  <div className="answer-level">
+                    <b>Follow-up: {question.follow_up_question}</b>
+                    <p>{question.follow_up_answer}</p>
+                  </div>
+                ) : null}
+                {question.expected_answer?.must_mention?.length ? (
+                  <details className="interview-rubric">
+                    <summary>Expected answer rubric</summary>
+                    <ul>{question.expected_answer.must_mention.map((item) => <li key={item}>{item}</li>)}</ul>
+                  </details>
+                ) : null}
                 {question.reason ? <p><b>Причина:</b> {question.reason}</p> : null}
               </div>
             )}

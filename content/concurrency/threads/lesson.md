@@ -7,42 +7,48 @@
 
 После урока ты сможешь:
 
-- объяснить `shared process memory` своими словами и связать с backend-сценарием;
-- объяснить `I/O-bound` своими словами и связать с backend-сценарием;
-- объяснить `race conditions` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Threading**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `shared process memory`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Threads и processes решают разные задачи и имеют разную цену обмена состоянием.
+### Что это
 
-В теме **Threading** важно уверенно объяснять следующие части:
+A thread executes within one process and shares its memory, file descriptors and module state with other threads.
 
-### shared process memory
+### Как работает
 
-Processes изолируют память и подходят для CPU-bound Python, но требуют serialization/IPC и имеют более дорогой startup.
+Threads are useful for blocking I/O libraries. Shared mutable state needs Lock or another synchronization design; `join` waits for completion.
 
-### I/O-bound
 
-Для `I/O-bound` сравни shared memory, serialization, startup cost и подходящий I/O/CPU workload.
+### Важный нюанс / limitation
 
-### race conditions
-
-Для `race conditions` сравни shared memory, serialization, startup cost и подходящий I/O/CPU workload.
-
-### locks
-
-Lock сериализует критическую секцию, но корректность требует единого порядка захвата и короткого времени удержания.
-
-### GIL limitations
-
-CPython GIL допускает выполнение Python bytecode одним thread за раз, но отпускается вокруг части I/O/native calls и не защищает бизнес-инварианты от races.
+The GIL limits CPU-bound Python parallelism but does not prevent race conditions between multi-step operations.
 
 ## Mental model
 
 Thread разделяет память процесса; process изолирован и требует сериализации/IPC.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- shared process memory
+- I/O-bound
+- race conditions
+- locks
+
+### Полезно
+
+- GIL limitations
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -63,59 +69,19 @@ Thread разделяет память процесса; `join` задаёт я�
 
 ## Common mistakes
 
-**Ошибка:** Отправлять непиклируемый объект в process pool или делить mutable state без lock.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Updating shared state with check-then-act logic without a lock can lose changes even when individual operations appear atomic.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `shared process memory` example and predict the result before running it.
 
-## Interview questions
+**B · Find the bug.** Find code that violates `I/O-bound` and explain the concrete consequence.
 
-1. Объясни **Threading** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Выбери executor для I/O-bound и CPU-bound функций и объясни ограничения. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+**D · Small task.** Implement the smallest function/query that demonstrates `shared process memory` and add one edge-case test.
 
-## Expected answer rubric
-
-### Must mention
-
-- shared process memory
-- I/O-bound
-- race conditions
-- locks
-- Thread разделяет память процесса; process изолирован и требует сериализации/IPC.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Отправлять непиклируемый объект в process pool или делить mutable state без lock.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- shared process memory
-- I/O-bound
-- race conditions
-- locks
-- GIL limitations.
-
-## Задача
-
-Разбери backend-сценарий: **Выбери executor для I/O-bound и CPU-bound функций и объясни ограничения.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Explain Threading in 45–60 seconds and include one limitation.
 
 ## Code prediction
 
@@ -145,15 +111,70 @@ Misconception: `thread-shared-memory`.
 
 </details>
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое Threading и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Threading?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+A thread executes within one process and shares its memory, file descriptors and module state with other threads.
+
+### Нормальный Junior answer
+
+> A thread executes within one process and shares its memory, file descriptors and module state with other threads. Threads are useful for blocking I/O libraries. Shared mutable state needs Lock or another synchronization design; `join` waits for completion. Важное ограничение: The GIL limits CPU-bound Python parallelism but does not prevent race conditions between multi-step operations.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Threading?**
+
+Updating shared state with check-then-act logic without a lock can lose changes even when individual operations appear atomic.
+
+## Expected answer rubric
+
+### Must mention
+
+- shared process memory
+- I/O-bound
+- race conditions
+- locks
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Updating shared state with check-then-act logic without a lock can lose changes even when individual operations appear atomic.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какая типичная ошибка связана с Threading?
+
+## Задача
+
+Сделай короткую письменную практику по теме **Threading**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Threading**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** A thread executes within one process and shares its memory, file descriptors and module state with other threads.
+- **Механизм:** Thread разделяет память процесса; process изолирован и требует сериализации/IPC.
+- **Ограничение:** Updating shared state with check-then-act logic without a lock can lose changes even when individual operations appear atomic.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

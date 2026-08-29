@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Index mental model» как на Junior Python Backend interview.",
+    "question": "Что такое Index mental model и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -8,34 +8,36 @@
       "auxiliary data structure",
       "faster reads",
       "storage/write cost",
-      "index is not magic.",
-      "Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path."
+      "index is not magic"
     ],
+    "short_answer": "A database index is an auxiliary structure that can find ordered key ranges without scanning every table row.",
+    "junior_answer": "A database index is an auxiliary structure that can find ordered key ranges without scanning every table row. It speeds matching access paths but consumes storage and adds work to INSERT/UPDATE/DELETE. The planner may choose a sequential scan when many rows match. Важное ограничение: Design indexes from actual WHERE/JOIN/ORDER patterns and inspect EXPLAIN ANALYZE; an index on every column is harmful.",
+    "follow_up_question": "Какая типичная ошибка связана с Index mental model?",
+    "follow_up_answer": "Adding an index without the query shape or selectivity can increase write cost while never being selected.",
     "expected_answer": {
       "must_mention": [
         "auxiliary data structure",
         "faster reads",
         "storage/write cost",
-        "index is not magic.",
-        "Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path."
+        "index is not magic"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова.",
+        "Adding an index without the query shape or selectivity can increase write cost while never being selected.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова."
+        "Adding an index without the query shape or selectivity can increase write cost while never being selected."
       ],
       "follow_up_questions": [
-        "Назови инвариант, конкурентный сценарий и точку, где его гарантирует база."
+        "Какая типичная ошибка связана с Index mental model?"
       ]
     },
     "follow_ups": [
-      "Назови инвариант, конкурентный сценарий и точку, где его гарантирует база."
+      "Какая типичная ошибка связана с Index mental model?"
     ],
     "tags": [
       "stage-11",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Index mental model»: Назови инвариант, конкурентный сценарий и точку, где его гарантирует база. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Index mental model?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "one short code/result example",
+      "Adding an index without the query shape or selectivity can increase write cost while never being selected."
     ],
+    "short_answer": "Adding an index without the query shape or selectivity can increase write cost while never being selected.",
+    "junior_answer": "Adding an index without the query shape or selectivity can increase write cost while never being selected.",
+    "follow_up_question": "Что такое Index mental model и как это работает?",
+    "follow_up_answer": "A database index is an auxiliary structure that can find ordered key ranges without scanning every table row. It speeds matching access paths but consumes storage and adds work to INSERT/UPDATE/DELETE. The planner may choose a sequential scan when many rows match. Важное ограничение: Design indexes from actual WHERE/JOIN/ORDER patterns and inspect EXPLAIN ANALYZE; an index on every column is harmful.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "one short code/result example"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Adding an index without the query shape or selectivity can increase write cost while never being selected."
       ],
       "red_flags": [
-        "Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова."
+        "Adding an index without the query shape or selectivity can increase write cost while never being selected."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Index mental model и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Index mental model и как это работает?"
     ],
     "tags": [
       "stage-11",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-11",

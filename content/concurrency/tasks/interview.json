@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Tasks and `asyncio.create_task`» как на Junior Python Backend interview.",
+    "question": "Что такое Tasks and `asyncio.create_task` и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "scheduling",
       "keeping references",
       "awaiting completion",
-      "exception handling.",
-      "Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код."
+      "exception handling"
     ],
+    "short_answer": "An asyncio Task schedules one coroutine and stores its completion, result, exception or cancellation state.",
+    "junior_answer": "An asyncio Task schedules one coroutine and stores its completion, result, exception or cancellation state. `create_task` makes a coroutine eligible to run; the caller should keep a reference and eventually await it or otherwise handle its outcome. Важное ограничение: Fire-and-forget inside a web process is not durable: process shutdown can lose the task, and unobserved exceptions may surface only in logs.",
+    "follow_up_question": "Какая типичная ошибка связана с Tasks and `asyncio.create_task`?",
+    "follow_up_answer": "Creating a task and dropping the reference hides failures and does not guarantee completion before request/process shutdown.",
     "expected_answer": {
       "must_mention": [
         "scheduling",
         "keeping references",
         "awaiting completion",
-        "exception handling.",
-        "Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код."
+        "exception handling"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint.",
+        "Creating a task and dropping the reference hides failures and does not guarantee completion before request/process shutdown.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint."
+        "Creating a task and dropping the reference hides failures and does not guarantee completion before request/process shutdown."
       ],
       "follow_up_questions": [
-        "Найди blocking участок, обозначь cancellation boundary и выбери способ конкурентного запуска."
+        "Какая типичная ошибка связана с Tasks and `asyncio.create_task`?"
       ]
     },
     "follow_ups": [
-      "Найди blocking участок, обозначь cancellation boundary и выбери способ конкурентного запуска."
+      "Какая типичная ошибка связана с Tasks and `asyncio.create_task`?"
     ],
     "tags": [
       "stage-08",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Tasks and `asyncio.create_task`»: Найди blocking участок, обозначь cancellation boundary и выбери способ конкурентного запуска. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Tasks and `asyncio.create_task`?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "one short code/result example",
+      "Creating a task and dropping the reference hides failures and does not guarantee completion before request/process shutdown."
     ],
+    "short_answer": "Creating a task and dropping the reference hides failures and does not guarantee completion before request/process shutdown.",
+    "junior_answer": "Creating a task and dropping the reference hides failures and does not guarantee completion before request/process shutdown.",
+    "follow_up_question": "Что такое Tasks and `asyncio.create_task` и как это работает?",
+    "follow_up_answer": "An asyncio Task schedules one coroutine and stores its completion, result, exception or cancellation state. `create_task` makes a coroutine eligible to run; the caller should keep a reference and eventually await it or otherwise handle its outcome. Важное ограничение: Fire-and-forget inside a web process is not durable: process shutdown can lose the task, and unobserved exceptions may surface only in logs.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "one short code/result example"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Creating a task and dropping the reference hides failures and does not guarantee completion before request/process shutdown."
       ],
       "red_flags": [
-        "Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint."
+        "Creating a task and dropping the reference hides failures and does not guarantee completion before request/process shutdown."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Tasks and `asyncio.create_task` и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Tasks and `asyncio.create_task` и как это работает?"
     ],
     "tags": [
       "stage-08",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-08",

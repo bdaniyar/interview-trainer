@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Django ORM query basics» как на Junior Python Backend interview.",
+    "question": "Что такое Django ORM query basics и какой механизм здесь важно понимать Junior-разработчику?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "filter",
       "get",
       "create",
-      "update",
-      "Django project содержит configuration, apps группируют domain capability, DRF serializer задаёт API boundary."
+      "update"
     ],
+    "short_answer": "Django ORM query basics: это отдельный технический контракт",
+    "junior_answer": "Django ORM query basics — тема, в которой я сначала фиксирую `filter`, затем объясняю `get` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
+    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Django ORM query basics?",
+    "follow_up_answer": "Нужно назвать конкретный failure path и способ его проверить.",
     "expected_answer": {
       "must_mention": [
         "filter",
         "get",
         "create",
-        "update",
-        "Django project содержит configuration, apps группируют domain capability, DRF serializer задаёт API boundary."
+        "update"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Путать select_related и prefetch_related или переносить FastAPI patterns дословно.",
+        "Игнорировать ограничение механизма и проверять только happy path.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Путать select_related и prefetch_related или переносить FastAPI patterns дословно."
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "follow_up_questions": [
-        "Сравни request flow и data access одного endpoint в DRF и FastAPI."
+        "Какое ограничение или типичная ошибка относится именно к теме Django ORM query basics?"
       ]
     },
     "follow_ups": [
-      "Сравни request flow и data access одного endpoint в DRF и FastAPI."
+      "Какое ограничение или типичная ошибка относится именно к теме Django ORM query basics?"
     ],
     "tags": [
       "stage-26",
@@ -48,42 +50,43 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Django ORM query basics»: Сравни request flow и data access одного endpoint в DRF и FastAPI. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какое ограничение или типичная ошибка относится именно к теме Django ORM query basics?",
+    "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Django project содержит configuration, apps группируют domain capability, DRF serializer задаёт API boundary.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "delete",
+      "lazy QuerySet",
+      "Нужно назвать конкретный failure path и способ его проверить."
     ],
+    "short_answer": "Нужно назвать конкретный failure path и способ его проверить.",
+    "junior_answer": "Нужно назвать конкретный failure path и способ его проверить.",
+    "follow_up_question": "Что такое Django ORM query basics и какой механизм здесь важно понимать Junior-разработчику?",
+    "follow_up_answer": "Django ORM query basics — тема, в которой я сначала фиксирую `filter`, затем объясняю `get` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "delete",
+        "lazy QuerySet"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "red_flags": [
-        "Путать select_related и prefetch_related или переносить FastAPI patterns дословно."
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Django ORM query basics и какой механизм здесь важно понимать Junior-разработчику?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Django ORM query basics и какой механизм здесь важно понимать Junior-разработчику?"
     ],
     "tags": [
       "stage-26",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-26",

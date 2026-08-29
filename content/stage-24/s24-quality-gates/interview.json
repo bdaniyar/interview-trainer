@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Quality gates» как на Junior Python Backend interview.",
+    "question": "Что такое Quality gates и какой механизм здесь важно понимать Junior-разработчику?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "Ruff",
       "tests",
       "typecheck",
-      "coverage",
-      "Pipeline должен собирать один artifact и падать на воспроизводимой проверке с понятным log."
+      "coverage"
     ],
+    "short_answer": "Quality gates: это отдельный технический контракт",
+    "junior_answer": "Quality gates — тема, в которой я сначала фиксирую `Ruff`, затем объясняю `tests` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
+    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Quality gates?",
+    "follow_up_answer": "Нужно назвать конкретный failure path и способ его проверить.",
     "expected_answer": {
       "must_mention": [
         "Ruff",
         "tests",
         "typecheck",
-        "coverage",
-        "Pipeline должен собирать один artifact и падать на воспроизводимой проверке с понятным log."
+        "coverage"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Игнорировать flaky test или собирать другой код на каждом environment.",
+        "Игнорировать ограничение механизма и проверять только happy path.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Игнорировать flaky test или собирать другой код на каждом environment."
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "follow_up_questions": [
-        "Разбери failure по шагу, версии runtime, env и отличию от local run."
+        "Какое ограничение или типичная ошибка относится именно к теме Quality gates?"
       ]
     },
     "follow_ups": [
-      "Разбери failure по шагу, версии runtime, env и отличию от local run."
+      "Какое ограничение или типичная ошибка относится именно к теме Quality gates?"
     ],
     "tags": [
       "stage-24",
@@ -48,42 +50,43 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Quality gates»: Разбери failure по шагу, версии runtime, env и отличию от local run. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какое ограничение или типичная ошибка относится именно к теме Quality gates?",
+    "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Pipeline должен собирать один artifact и падать на воспроизводимой проверке с понятным log.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "build",
+      "gates do not guarantee correctness",
+      "Нужно назвать конкретный failure path и способ его проверить."
     ],
+    "short_answer": "Нужно назвать конкретный failure path и способ его проверить.",
+    "junior_answer": "Нужно назвать конкретный failure path и способ его проверить.",
+    "follow_up_question": "Что такое Quality gates и какой механизм здесь важно понимать Junior-разработчику?",
+    "follow_up_answer": "Quality gates — тема, в которой я сначала фиксирую `Ruff`, затем объясняю `tests` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "build",
+        "gates do not guarantee correctness"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "red_flags": [
-        "Игнорировать flaky test или собирать другой код на каждом environment."
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Quality gates и какой механизм здесь важно понимать Junior-разработчику?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Quality gates и какой механизм здесь важно понимать Junior-разработчику?"
     ],
     "tags": [
       "stage-24",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-24",

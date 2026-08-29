@@ -7,38 +7,52 @@
 
 После урока ты сможешь:
 
-- объяснить `one parent query plus per-row child query` своими словами и связать с backend-сценарием;
-- объяснить `detection` своими словами и связать с backend-сценарием;
-- объяснить `logs/query count` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **N+1**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `one parent query plus per-row child query`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-SQLAlchemy 2.x управляет SQL, identity map, unit of work и transaction lifecycle; Session не является простым соединением.
+### Что это
 
-В теме **N+1** важно уверенно объяснять следующие части:
+N+1 is one query for parent rows followed by one relationship query per parent.
 
-### one parent query plus per-row child query
+### Как работает
 
-Для `one parent query plus per-row child query` укажи Session/transaction owner, момент SQL I/O и последствия rollback или lazy load.
+Lazy loading triggers the repeated queries; detect it in SQL logs or a query-count test and choose `selectinload`, `joinedload` or explicit projection based on cardinality.
 
-### detection
 
-Для `detection` укажи Session/transaction owner, момент SQL I/O и последствия rollback или lazy load.
+### Важный нюанс / limitation
 
-### logs/query count
+Eager-load only data the use case needs; a giant joined graph can create row multiplication and memory cost.
 
-Для `logs/query count` укажи Session/transaction owner, момент SQL I/O и последствия rollback или lazy load.
+### Где используется в backend
 
-### eager loading
-
-Для `eager loading` укажи Session/transaction owner, момент SQL I/O и последствия rollback или lazy load.
+Listing users with roles is a common N+1 path when serialization touches each lazy relationship.
 
 ## Mental model
 
 Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- one parent query plus per-row child query
+- detection
+- logs/query count
+- eager loading
+
+### Полезно
+
+- one short code/result example
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -55,60 +69,20 @@ SQLAlchemy 2.x управляет SQL, identity map, unit of work и transaction
 
 ## Common mistakes
 
-**Ошибка:** Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Adding a cache does not fix an ORM query shape that issues hundreds of avoidable round trips.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `one parent query plus per-row child query` example and predict the result before running it.
 
-## Interview questions
+**B · Find the bug.** Find code that violates `detection` and explain the concrete consequence.
 
-1. Объясни **N+1** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Опиши session scope, момент flush/commit и количество SQL-запросов. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+**D · Small task.** Implement the smallest function/query that demonstrates `one parent query plus per-row child query` and add one edge-case test.
 
-## Expected answer rubric
+**E · Interview explanation.** Explain N+1 in 45–60 seconds and include one limitation.
 
-### Must mention
-
-- one parent query plus per-row child query
-- detection
-- logs/query count
-- eager loading.
-- Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- one parent query plus per-row child query
-- detection
-- logs/query count
-- eager loading.
-
-## Задача
-
-### Убрать N+1
-
-users_with_roles(User): select + selectinload(User.roles), order id.
-
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
 ## Debugging practice
 
 ### N+1
@@ -119,15 +93,73 @@ users_with_roles(User): select + selectinload(User.roles), order id.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое N+1 и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с N+1?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+N+1 is one query for parent rows followed by one relationship query per parent.
+
+### Нормальный Junior answer
+
+> N+1 is one query for parent rows followed by one relationship query per parent. Lazy loading triggers the repeated queries; detect it in SQL logs or a query-count test and choose `selectinload`, `joinedload` or explicit projection based on cardinality. Важное ограничение: Eager-load only data the use case needs; a giant joined graph can create row multiplication and memory cost.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с N+1?**
+
+Adding a cache does not fix an ORM query shape that issues hundreds of avoidable round trips.
+
+## Expected answer rubric
+
+### Must mention
+
+- one parent query plus per-row child query
+- detection
+- logs/query count
+- eager loading
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Adding a cache does not fix an ORM query shape that issues hundreds of avoidable round trips.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какая типичная ошибка связана с N+1?
+
+## Задача
+
+### Убрать N+1
+
+users_with_roles(User): select + selectinload(User.roles), order id.
+
+Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **N+1**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** N+1 is one query for parent rows followed by one relationship query per parent.
+- **Механизм:** Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
+- **Ограничение:** Adding a cache does not fix an ORM query shape that issues hundreds of avoidable round trips.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

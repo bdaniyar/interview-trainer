@@ -7,34 +7,57 @@
 
 После урока ты сможешь:
 
-- объяснить `unexpected I/O` своими словами и связать с backend-сценарием;
-- объяснить `missing greenlet-style problems` своими словами и связать с backend-сценарием;
-- объяснить `explicit eager loading.` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Async lazy-loading pitfalls**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `unexpected I/O`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-SQLAlchemy 2.x управляет SQL, identity map, unit of work и transaction lifecycle; Session не является простым соединением.
+### Что это
 
-В теме **Async lazy-loading pitfalls** важно уверенно объяснять следующие части:
+Это часть SQLAlchemy 2.x data-access flow: statement, Session, identity map и transaction lifecycle.
 
-### unexpected I/O
+### Как работает
 
-Для `unexpected I/O` укажи Session/transaction owner, момент SQL I/O и последствия rollback или lazy load.
+Укажи владельца Session/transaction, момент SQL I/O и state entity до и после flush/commit/rollback.
 
-### missing greenlet-style problems
+**unexpected I/O.** `unexpected I/O` влияет на SQLAlchemy Session/transaction state, момент фактического SQL I/O и поведение rollback или relationship loading.
 
-Для `missing greenlet-style problems` укажи Session/transaction owner, момент SQL I/O и последствия rollback или lazy load.
+**missing greenlet-style problems.** `missing greenlet-style problems` влияет на SQLAlchemy Session/transaction state, момент фактического SQL I/O и поведение rollback или relationship loading.
 
-### explicit eager loading
+**explicit eager loading.** `explicit eager loading` влияет на SQLAlchemy Session/transaction state, момент фактического SQL I/O и поведение rollback или relationship loading.
 
-Для `explicit eager loading` укажи Session/transaction owner, момент SQL I/O и последствия rollback или lazy load.
+
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `unexpected I/O` и `missing greenlet-style problems` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `unexpected I/O`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- unexpected I/O
+- missing greenlet-style problems
+- explicit eager loading
+
+### Полезно
+
+- связать Async lazy-loading pitfalls с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -51,56 +74,17 @@ Map ORM to response data при открытой session; query-count test об�
 
 ## Common mistakes
 
-**Ошибка:** Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Скрыть commit внутри repository, допустить N+1 или продолжить Session без rollback после ошибки.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `unexpected I/O` до запуска.
 
-## Interview questions
+**B · Find the bug.** Найди нарушение `missing greenlet-style problems` и объясни конкретное последствие.
 
-1. Объясни **Async lazy-loading pitfalls** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Опиши session scope, момент flush/commit и количество SQL-запросов. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
-
-## Expected answer rubric
-
-### Must mention
-
-- unexpected I/O
-- missing greenlet-style problems
-- explicit eager loading.
-- Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- unexpected I/O
-- missing greenlet-style problems
-- explicit eager loading.
-
-## Задача
-
-Разбери backend-сценарий: **Опиши session scope, момент flush/commit и количество SQL-запросов.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Дай ответ про Async lazy-loading pitfalls за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Debugging practice
 
@@ -112,15 +96,69 @@ Map ORM to response data при открытой session; query-count test об�
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое Async lazy-loading pitfalls и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Async lazy-loading pitfalls?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Async lazy-loading pitfalls: Это часть SQLAlchemy 2.x data-access flow: statement, Session, identity map и transaction lifecycle.
+
+### Нормальный Junior answer
+
+> Async lazy-loading pitfalls — тема, в которой я сначала фиксирую `unexpected I/O`, затем объясняю `missing greenlet-style problems` на коротком примере. Ключевой механизм: Укажи владельца Session/transaction, момент SQL I/O и state entity до и после flush/commit/rollback. Главная практическая ошибка — Скрыть commit внутри repository, допустить N+1 или продолжить Session без rollback после ошибки.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Async lazy-loading pitfalls?**
+
+Скрыть commit внутри repository, допустить N+1 или продолжить Session без rollback после ошибки.
+
+## Expected answer rubric
+
+### Must mention
+
+- unexpected I/O
+- missing greenlet-style problems
+- explicit eager loading
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Скрыть commit внутри repository, допустить N+1 или продолжить Session без rollback после ошибки.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какое ограничение или типичная ошибка относится именно к теме Async lazy-loading pitfalls?
+
+## Задача
+
+Сделай короткую письменную практику по теме **Async lazy-loading pitfalls**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Async lazy-loading pitfalls**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Async lazy-loading pitfalls: Это часть SQLAlchemy 2.x data-access flow: statement, Session, identity map и transaction lifecycle.
+- **Механизм:** Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
+- **Ограничение:** Скрыть commit внутри repository, допустить N+1 или продолжить Session без rollback после ошибки.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

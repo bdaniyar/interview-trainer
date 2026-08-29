@@ -7,38 +7,56 @@
 
 После урока ты сможешь:
 
-- объяснить `debugging representation` своими словами и связать с backend-сценарием;
-- объяснить `user-facing text` своими словами и связать с backend-сценарием;
-- объяснить `unambiguous repr` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **`__repr__` and `__str__`**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `debugging representation`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-ООП в backend полезно как способ выразить состояние, поведение и границы ответственности, а не как соревнование по наследованию.
+### Что это
 
-В теме **`__repr__` and `__str__`** важно уверенно объяснять следующие части:
+Это элемент Python object model, который определяет состояние объекта, поиск поведения или способ композиции типов.
 
-### debugging representation
+### Как работает
 
-Для `debugging representation` укажи, где хранится state, как Python ищет behavior и почему выбран composition/inheritance.
+Проследи instance/class namespaces, attribute lookup и направление зависимости между объектами.
 
-### user-facing text
+**debugging representation.** `debugging representation` определяет, где хранится object state, как идёт attribute lookup и насколько сильно тип зависит от collaborators.
 
-Для `user-facing text` укажи, где хранится state, как Python ищет behavior и почему выбран composition/inheritance.
+**user-facing text.** `user-facing text` определяет, где хранится object state, как идёт attribute lookup и насколько сильно тип зависит от collaborators.
 
-### unambiguous repr
+**unambiguous repr.** `unambiguous repr` определяет, где хранится object state, как идёт attribute lookup и насколько сильно тип зависит от collaborators.
 
-Для `unambiguous repr` укажи, где хранится state, как Python ищет behavior и почему выбран composition/inheritance.
+**avoiding secrets in logs.** `avoiding secrets in logs` определяет, где хранится object state, как идёт attribute lookup и насколько сильно тип зависит от collaborators.
 
-### avoiding secrets in logs
 
-Для `avoiding secrets in logs` укажи, где хранится state, как Python ищет behavior и почему выбран composition/inheritance.
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `debugging representation` и `user-facing text` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
 ## Mental model
 
 У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- debugging representation
+- user-facing text
+- unambiguous repr
+- avoiding secrets in logs
+
+### Полезно
+
+- связать `__repr__` and `__str__` с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -63,19 +81,45 @@ print(str(user), repr(user))
 
 ## Common mistakes
 
-**Ошибка:** Создавать глубокую иерархию ради переиспользования нескольких строк.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `debugging representation` до запуска.
+
+**B · Find the bug.** Найди нарушение `user-facing text` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про `__repr__` and `__str__` за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **`__repr__` and `__str__`** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Сравни composition и inheritance для сервиса уведомлений и назови цену изменения. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое `__repr__` and `__str__` и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме `__repr__` and `__str__`?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+`__repr__` and `__str__`: Это элемент Python object model, который определяет состояние объекта, поиск поведения или способ композиции типов.
+
+### Нормальный Junior answer
+
+> `__repr__` and `__str__` — тема, в которой я сначала фиксирую `debugging representation`, затем объясняю `user-facing text` на коротком примере. Ключевой механизм: Проследи instance/class namespaces, attribute lookup и направление зависимости между объектами. Главная практическая ошибка — Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме `__repr__` and `__str__`?**
+
+Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.
 
 ## Expected answer rubric
 
@@ -84,47 +128,35 @@ print(str(user), repr(user))
 - debugging representation
 - user-facing text
 - unambiguous repr
-- avoiding secrets in logs.
-- У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.
+- avoiding secrets in logs
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Создавать глубокую иерархию ради переиспользования нескольких строк.
-- ответ из одного определения без механизма и failure mode.
+- Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- debugging representation
-- user-facing text
-- unambiguous repr
-- avoiding secrets in logs.
+- Какое ограничение или типичная ошибка относится именно к теме `__repr__` and `__str__`?
 
 ## Задача
 
-Разбери backend-сценарий: **Сравни composition и inheritance для сервиса уведомлений и назови цену изменения.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **`__repr__` and `__str__`**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **`__repr__` and `__str__`**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** `__repr__` and `__str__`: Это элемент Python object model, который определяет состояние объекта, поиск поведения или способ композиции типов.
+- **Механизм:** У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.
+- **Ограничение:** Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

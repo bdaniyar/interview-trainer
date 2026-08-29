@@ -7,42 +7,62 @@
 
 После урока ты сможешь:
 
-- объяснить `offline subscribers miss events` своими словами и связать с backend-сценарием;
-- объяснить `no durable history` своими словами и связать с backend-сценарием;
-- объяснить `no acknowledgement/replay` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Why Pub/Sub is not storage**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `offline subscribers miss events`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Resume Defense проверяет каждую заявленную технологию через конкретную роль в StudyHub, Hotel Booking или Share Recipe.
+### Что это
 
-В теме **Why Pub/Sub is not storage** важно уверенно объяснять следующие части:
+Тема **Why Pub/Sub is not storage** описывает отдельный контракт backend-разработки.
 
-### offline subscribers miss events
+### Как работает
 
-Для `offline subscribers miss events` отвечай только по реализованному flow: проблема, своё решение, trade-off, failure mode и test/metric.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
 
-### no durable history
+**offline subscribers miss events.** `offline subscribers miss events` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
 
-Для `no durable history` отвечай только по реализованному flow: проблема, своё решение, trade-off, failure mode и test/metric.
+**no durable history.** `no durable history` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
 
-### no acknowledgement/replay
+**no acknowledgement/replay.** `no acknowledgement/replay` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
 
-Для `no acknowledgement/replay` отвечай только по реализованному flow: проблема, своё решение, trade-off, failure mode и test/metric.
+**history stored in PostgreSQL.** `history stored in PostgreSQL` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
 
-### history stored in PostgreSQL
+**reconnect fetches missed messages.** `reconnect fetches missed messages` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
 
-Для `history stored in PostgreSQL` отвечай только по реализованному flow: проблема, своё решение, trade-off, failure mode и test/metric.
 
-### reconnect fetches missed messages
+### Важный нюанс / limitation
 
-Для `reconnect fetches missed messages` отвечай только по реализованному flow: проблема, своё решение, trade-off, failure mode и test/metric.
+Граница Junior: уверенно объясняй `offline subscribers miss events` и `no durable history` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `offline subscribers miss events`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- offline subscribers miss events
+- no durable history
+- no acknowledgement/replay
+- history stored in PostgreSQL
+
+### Полезно
+
+- reconnect fetches missed messages
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -65,19 +85,45 @@ Resume Defense проверяет каждую заявленную технол
 
 ## Common mistakes
 
-**Ошибка:** Приписывать себе production scale, AWS, Kubernetes, Kafka или RabbitMQ без фактического опыта.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Игнорировать ограничение механизма и проверять только happy path.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `offline subscribers miss events` до запуска.
+
+**B · Find the bug.** Найди нарушение `no durable history` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Why Pub/Sub is not storage за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Why Pub/Sub is not storage** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Защити один claim, назвав точный flow, failure mode и способ проверки. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Why Pub/Sub is not storage и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Why Pub/Sub is not storage?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Why Pub/Sub is not storage: это отдельный технический контракт
+
+### Нормальный Junior answer
+
+> Why Pub/Sub is not storage — тема, в которой я сначала фиксирую `offline subscribers miss events`, затем объясняю `no durable history` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Why Pub/Sub is not storage?**
+
+Нужно назвать конкретный failure path и способ его проверить.
 
 ## Expected answer rubric
 
@@ -87,47 +133,34 @@ Resume Defense проверяет каждую заявленную технол
 - no durable history
 - no acknowledgement/replay
 - history stored in PostgreSQL
-- Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Приписывать себе production scale, AWS, Kubernetes, Kafka или RabbitMQ без фактического опыта.
-- ответ из одного определения без механизма и failure mode.
+- Игнорировать ограничение механизма и проверять только happy path.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- offline subscribers miss events
-- no durable history
-- no acknowledgement/replay
-- history stored in PostgreSQL
-- reconnect fetches missed messages.
+- Какое ограничение или типичная ошибка относится именно к теме Why Pub/Sub is not storage?
 
 ## Задача
 
-Разбери backend-сценарий: **Защити один claim, назвав точный flow, failure mode и способ проверки.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Why Pub/Sub is not storage**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Why Pub/Sub is not storage**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Why Pub/Sub is not storage: это отдельный технический контракт
+- **Механизм:** Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

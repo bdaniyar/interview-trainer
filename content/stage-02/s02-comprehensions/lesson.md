@@ -7,46 +7,49 @@
 
 После урока ты сможешь:
 
-- объяснить `list/dict/set comprehensions` своими словами и связать с backend-сценарием;
-- объяснить `generator expressions` своими словами и связать с backend-сценарием;
-- объяснить `nested comprehensions` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Comprehensions**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `list/dict/set comprehensions`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Коллекция выбирается по требуемым операциям: порядок, уникальность, доступ по ключу, мутабельность и стоимость поиска.
+### Что это
 
-В теме **Comprehensions** важно уверенно объяснять следующие части:
+A comprehension builds a list, dict or set from an expression, source iterable and optional filters; a generator expression stays lazy.
 
-### list/dict/set comprehensions
+### Как работает
 
-`list` — ordered mutable sequence: индекс и append удобны, а поиск значения и вставка в начало линейны; aliases видят общие mutations.
+The expression runs once per selected input item. Comprehension loop variables have their own scope in Python 3, while referenced outer names are read normally.
 
-### generator expressions
 
-Generator хранит suspended execution frame и выдаёт значения лениво; после исчерпания он не перезапускается.
+### Важный нюанс / limitation
 
-### nested comprehensions
-
-Comprehension создаёт новую коллекцию из явного source/filter/expression; nested comprehensions стоит заменять обычным циклом, когда теряется читаемость.
-
-### scope
-
-LEGB ищет имя в local, enclosing, global и builtins; assignment делает имя local, если не объявлены `global` или `nonlocal`.
-
-### readability
-
-Для `readability` назови поддерживаемые операции, порядок, уникальность, mutability и стоимость ключевого доступа.
-
-### when a regular loop is better
-
-Для `when a regular loop is better` назови поддерживаемые операции, порядок, уникальность, mutability и стоимость ключевого доступа.
+Prefer a regular loop when there are several branches, side effects or nested transformations that hide intent.
 
 ## Mental model
 
 Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- list/dict/set comprehensions
+- generator expressions
+- nested comprehensions
+- scope
+
+### Полезно
+
+- readability
+- when a regular loop is better
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -66,19 +69,47 @@ Comprehension объединяет преобразование и коротк�
 
 ## Common mistakes
 
-**Ошибка:** Выбирать коллекцию по привычке и игнорировать порядок, дубликаты или хешируемость.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+A dense nested comprehension can be syntactically valid but harder to review and debug than a four-line loop.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `list/dict/set comprehensions` example and predict the result before running it.
+
+**B · Find the bug.** Find code that violates `generator expressions` and explain the concrete consequence.
+
+**D · Small task.** Implement the smallest function/query that demonstrates `list/dict/set comprehensions` and add one edge-case test.
+
+**E · Interview explanation.** Explain Comprehensions in 45–60 seconds and include one limitation.
 
 ## Interview questions
 
-1. Объясни **Comprehensions** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Выбери структуру для набора API-записей и обоснуй lookup, порядок и дубликаты. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Comprehensions и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Comprehensions?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+A comprehension builds a list, dict or set from an expression, source iterable and optional filters; a generator expression stays lazy.
+
+### Нормальный Junior answer
+
+> A comprehension builds a list, dict or set from an expression, source iterable and optional filters; a generator expression stays lazy. The expression runs once per selected input item. Comprehension loop variables have their own scope in Python 3, while referenced outer names are read normally. Важное ограничение: Prefer a regular loop when there are several branches, side effects or nested transformations that hide intent.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Comprehensions?**
+
+A dense nested comprehension can be syntactically valid but harder to review and debug than a four-line loop.
 
 ## Expected answer rubric
 
@@ -88,32 +119,21 @@ Comprehension объединяет преобразование и коротк�
 - generator expressions
 - nested comprehensions
 - scope
-- Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Выбирать коллекцию по привычке и игнорировать порядок, дубликаты или хешируемость.
-- ответ из одного определения без механизма и failure mode.
+- A dense nested comprehension can be syntactically valid but harder to review and debug than a four-line loop.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- list/dict/set comprehensions
-- generator expressions
-- nested comprehensions
-- scope
-- readability
-- when a regular loop is better.
+- Какая типичная ошибка связана с Comprehensions?
 
 ## Задача
 
@@ -126,11 +146,10 @@ Comprehension объединяет преобразование и коротк�
 
 Перед собеседованием запомни:
 
-- дай точное определение **Comprehensions**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** A comprehension builds a list, dict or set from an expression, source iterable and optional filters; a generator expression stays lazy.
+- **Механизм:** Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set.
+- **Ограничение:** A dense nested comprehension can be syntactically valid but harder to review and debug than a four-line loop.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

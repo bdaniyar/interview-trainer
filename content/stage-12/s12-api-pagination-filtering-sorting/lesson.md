@@ -7,34 +7,57 @@
 
 После урока ты сможешь:
 
-- объяснить `stable contract` своими словами и связать с backend-сценарием;
-- объяснить `validation` своими словами и связать с backend-сценарием;
-- объяснить `default/max limits.` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **API pagination/filtering/sorting**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `stable contract`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-HTTP — контракт между клиентом и сервером: method, target, headers, body, status и cache semantics.
+### Что это
 
-В теме **API pagination/filtering/sorting** важно уверенно объяснять следующие части:
+Это часть наблюдаемого HTTP contract: method/target/headers/body на входе и status/headers/body на выходе.
 
-### stable contract
+### Как работает
 
-Для `stable contract` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
+Опиши один request и один response, включая поведение retry, cache и error contract только там, где они относятся к теме.
 
-### validation
+**stable contract.** `stable contract` является частью observable HTTP contract и влияет на request semantics, response status/body и допустимость повторного запроса.
 
-Для `validation` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
+**validation.** `validation` является частью observable HTTP contract и влияет на request semantics, response status/body и допустимость повторного запроса.
 
-### default/max limits
+**default/max limits.** `default/max limits` является частью observable HTTP contract и влияет на request semantics, response status/body и допустимость повторного запроса.
 
-Для `default/max limits` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
+
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `stable contract` и `validation` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `stable contract`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- stable contract
+- validation
+- default/max limits
+
+### Полезно
+
+- связать API pagination/filtering/sorting с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -50,19 +73,45 @@ X-Request-ID: req-12-19
 
 ## Common mistakes
 
-**Ошибка:** Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `stable contract` до запуска.
+
+**B · Find the bug.** Найди нарушение `validation` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про API pagination/filtering/sorting за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **API pagination/filtering/sorting** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Спроектируй request/response контракт и объясни retry, idempotency и error body. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое API pagination/filtering/sorting и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме API pagination/filtering/sorting?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+API pagination/filtering/sorting: Это часть наблюдаемого HTTP contract: method/target/headers/body на входе и status/headers/body на выходе.
+
+### Нормальный Junior answer
+
+> API pagination/filtering/sorting — тема, в которой я сначала фиксирую `stable contract`, затем объясняю `validation` на коротком примере. Ключевой механизм: Опиши один request и один response, включая поведение retry, cache и error contract только там, где они относятся к теме. Главная практическая ошибка — Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме API pagination/filtering/sorting?**
+
+Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency.
 
 ## Expected answer rubric
 
@@ -70,46 +119,35 @@ X-Request-ID: req-12-19
 
 - stable contract
 - validation
-- default/max limits.
-- Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
+- default/max limits
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне.
-- ответ из одного определения без механизма и failure mode.
+- Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- stable contract
-- validation
-- default/max limits.
+- Какое ограничение или типичная ошибка относится именно к теме API pagination/filtering/sorting?
 
 ## Задача
 
-Разбери backend-сценарий: **Спроектируй request/response контракт и объясни retry, idempotency и error body.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **API pagination/filtering/sorting**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **API pagination/filtering/sorting**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** API pagination/filtering/sorting: Это часть наблюдаемого HTTP contract: method/target/headers/body на входе и status/headers/body на выходе.
+- **Механизм:** Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
+- **Ограничение:** Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

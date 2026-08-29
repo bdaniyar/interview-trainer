@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Query parameters» как на Junior Python Backend interview.",
+    "question": "Что такое Query parameters и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -8,34 +8,36 @@
       "optional/required",
       "aliases",
       "constraints",
-      "pagination.",
-      "Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency."
+      "pagination"
     ],
+    "short_answer": "Query parameters describe optional or required modifiers such as pagination, filtering and sorting after `?`.",
+    "junior_answer": "Query parameters describe optional or required modifiers such as pagination, filtering and sorting after `?`. FastAPI reads annotations/defaults and applies `Query` constraints; the resulting contract appears in OpenAPI. Важное ограничение: Set maximum page sizes and allowlist sort fields rather than interpolating arbitrary user input into SQL.",
+    "follow_up_question": "Какая типичная ошибка связана с Query parameters?",
+    "follow_up_answer": "Treating `limit: int | None` as optional without a default still leaves it required.",
     "expected_answer": {
       "must_mention": [
         "optional/required",
         "aliases",
         "constraints",
-        "pagination.",
-        "Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency."
+        "pagination"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Открывать Session глобально или выполнять blocking I/O в async route.",
+        "Treating `limit: int | None` as optional without a default still leaves it required.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Открывать Session глобально или выполнять blocking I/O в async route."
+        "Treating `limit: int | None` as optional without a default still leaves it required."
       ],
       "follow_up_questions": [
-        "Проследи request от router через dependency и service до response model."
+        "Какая типичная ошибка связана с Query parameters?"
       ]
     },
     "follow_ups": [
-      "Проследи request от router через dependency и service до response model."
+      "Какая типичная ошибка связана с Query parameters?"
     ],
     "tags": [
       "stage-14",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Query parameters»: Проследи request от router через dependency и service до response model. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Query parameters?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "one short code/result example",
+      "Treating `limit: int | None` as optional without a default still leaves it required."
     ],
+    "short_answer": "Treating `limit: int | None` as optional without a default still leaves it required.",
+    "junior_answer": "Treating `limit: int | None` as optional without a default still leaves it required.",
+    "follow_up_question": "Что такое Query parameters и как это работает?",
+    "follow_up_answer": "Query parameters describe optional or required modifiers such as pagination, filtering and sorting after `?`. FastAPI reads annotations/defaults and applies `Query` constraints; the resulting contract appears in OpenAPI. Важное ограничение: Set maximum page sizes and allowlist sort fields rather than interpolating arbitrary user input into SQL.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "one short code/result example"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Treating `limit: int | None` as optional without a default still leaves it required."
       ],
       "red_flags": [
-        "Открывать Session глобально или выполнять blocking I/O в async route."
+        "Treating `limit: int | None` as optional without a default still leaves it required."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Query parameters и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Query parameters и как это работает?"
     ],
     "tags": [
       "stage-14",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-14",

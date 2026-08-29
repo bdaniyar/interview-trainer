@@ -7,38 +7,56 @@
 
 После урока ты сможешь:
 
-- объяснить `eager vs lazy` своими словами и связать с backend-сценарием;
-- объяснить `single-use` своими словами и связать с backend-сценарием;
-- объяснить `performance/memory` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Generator expression vs list comprehension**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `eager vs lazy`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Итерация, исключения и context managers — протоколы управления потоком и освобождением ресурсов.
+### Что это
 
-В теме **Generator expression vs list comprehension** важно уверенно объяснять следующие части:
+Это протокол управления потоком: consumer и объект договариваются о шагах, завершении и обработке ошибок.
 
-### eager vs lazy
+### Как работает
 
-Для `eager vs lazy` опиши protocol: кто инициирует шаг, какое состояние сохраняется, как выглядит завершение и error path.
+Определи инициатора шага, сохраняемое state, сигнал нормального завершения и cleanup при exception.
 
-### single-use
+**eager vs lazy.** `eager vs lazy` участвует в protocol управления потоком: объект хранит state, consumer делает шаги, а завершение и error path имеют явный сигнал.
 
-Для `single-use` опиши protocol: кто инициирует шаг, какое состояние сохраняется, как выглядит завершение и error path.
+**single-use.** `single-use` участвует в protocol управления потоком: объект хранит state, consumer делает шаги, а завершение и error path имеют явный сигнал.
 
-### performance/memory
+**performance/memory.** `performance/memory` участвует в protocol управления потоком: объект хранит state, consumer делает шаги, а завершение и error path имеют явный сигнал.
 
-Для `performance/memory` опиши protocol: кто инициирует шаг, какое состояние сохраняется, как выглядит завершение и error path.
+**when list is preferable.** `list` — ordered mutable sequence: индекс и append удобны, а поиск значения и вставка в начало линейны; aliases видят общие mutations.
 
-### when list is preferable
 
-`list` — ordered mutable sequence: индекс и append удобны, а поиск значения и вставка в начало линейны; aliases видят общие mutations.
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `eager vs lazy` и `single-use` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
 ## Mental model
 
 Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- eager vs lazy
+- single-use
+- performance/memory
+- when list is preferable
+
+### Полезно
+
+- связать Generator expression vs list comprehension с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -57,19 +75,45 @@ Generator expression вычисляет элементы по запросу; li
 
 ## Common mistakes
 
-**Ошибка:** Перехватывать Exception без стратегии либо удерживать весь поток данных в памяти.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Забыть состояние protocol, сигнал завершения или cleanup при exception.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `eager vs lazy` до запуска.
+
+**B · Find the bug.** Найди нарушение `single-use` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Generator expression vs list comprehension за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Generator expression vs list comprehension** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Покажи happy path, завершение протокола и поведение при исключении. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Generator expression vs list comprehension и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Generator expression vs list comprehension?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Generator expression vs list comprehension: Это протокол управления потоком: consumer и объект договариваются о шагах, завершении и обработке ошибок.
+
+### Нормальный Junior answer
+
+> Generator expression vs list comprehension — тема, в которой я сначала фиксирую `eager vs lazy`, затем объясняю `single-use` на коротком примере. Ключевой механизм: Определи инициатора шага, сохраняемое state, сигнал нормального завершения и cleanup при exception. Главная практическая ошибка — Забыть состояние protocol, сигнал завершения или cleanup при exception.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Generator expression vs list comprehension?**
+
+Забыть состояние protocol, сигнал завершения или cleanup при exception.
 
 ## Expected answer rubric
 
@@ -78,47 +122,35 @@ Generator expression вычисляет элементы по запросу; li
 - eager vs lazy
 - single-use
 - performance/memory
-- when list is preferable.
-- Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка.
+- when list is preferable
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Перехватывать Exception без стратегии либо удерживать весь поток данных в памяти.
-- ответ из одного определения без механизма и failure mode.
+- Забыть состояние protocol, сигнал завершения или cleanup при exception.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- eager vs lazy
-- single-use
-- performance/memory
-- when list is preferable.
+- Какое ограничение или типичная ошибка относится именно к теме Generator expression vs list comprehension?
 
 ## Задача
 
-Разбери backend-сценарий: **Покажи happy path, завершение протокола и поведение при исключении.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Generator expression vs list comprehension**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Generator expression vs list comprehension**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Generator expression vs list comprehension: Это протокол управления потоком: consumer и объект договариваются о шагах, завершении и обработке ошибок.
+- **Механизм:** Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка.
+- **Ограничение:** Забыть состояние protocol, сигнал завершения или cleanup при exception.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

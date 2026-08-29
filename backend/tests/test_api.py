@@ -22,6 +22,30 @@ def test_full_interview_and_thematic_sets(client):
     assert all(question["stage_slug"] == "stage-10" for question in sql["questions"])
 
 
+def test_lesson_exposes_learn_flow_and_answer_levels(client):
+    payload = client.get("/api/lessons/s02-dict").json()
+    markdown = payload["markdown"]
+    headings = [
+        "## Theory",
+        "### Что это",
+        "### Как работает",
+        "### Пример",
+        "## Что нужно знать на Junior",
+        "## Common mistakes",
+        "## Practice",
+        "## Interview questions",
+        "## Good answers",
+        "## Expected answer rubric",
+    ]
+    positions = [markdown.index(heading) for heading in headings]
+    assert positions == sorted(positions)
+    question = payload["interview"][0]
+    assert question["short_answer"]
+    assert question["junior_answer"]
+    assert question["follow_up_question"]
+    assert question["follow_up_answer"]
+
+
 def test_user_files_survive_lesson_reload(client):
     files = {"main.py": "print('saved')\n", "service.py": "VALUE = 42\n"}
     saved = client.put("/api/lessons/is-vs-eq/files", json={"files": files})

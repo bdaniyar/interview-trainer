@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «LEGB» как на Junior Python Backend interview.",
+    "question": "Что такое LEGB и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -8,34 +8,36 @@
       "Local",
       "Enclosing",
       "Global",
-      "Builtins",
-      "Разделяй момент определения функции, момент вызова и момент разрешения свободного имени."
+      "Builtins"
     ],
+    "short_answer": "LEGB is Python's name lookup order: Local, Enclosing, Global, Builtins.",
+    "junior_answer": "LEGB is Python's name lookup order: Local, Enclosing, Global, Builtins. A read searches those scopes in order. Assignment inside a function makes the name local unless declared `global` or `nonlocal`, which can cause `UnboundLocalError` when the name is read before local assignment. Важное ограничение: Shadowing `list`, `id` or another builtin works but makes later calls confusing or broken.",
+    "follow_up_question": "Какая типичная ошибка связана с LEGB?",
+    "follow_up_answer": "Assuming assignment updates a global while Python created a new local binding causes wrong state and `UnboundLocalError`.",
     "expected_answer": {
       "must_mention": [
         "Local",
         "Enclosing",
         "Global",
-        "Builtins",
-        "Разделяй момент определения функции, момент вызова и момент разрешения свободного имени."
+        "Builtins"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Скрывать неясный API за **kwargs или забывать о времени вычисления defaults.",
+        "Assuming assignment updates a global while Python created a new local binding causes wrong state and `UnboundLocalError`.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Скрывать неясный API за **kwargs или забывать о времени вычисления defaults."
+        "Assuming assignment updates a global while Python created a new local binding causes wrong state and `UnboundLocalError`."
       ],
       "follow_up_questions": [
-        "Разбери сигнатуру helper-функции и объясни, какие вызовы допустимы и почему."
+        "Какая типичная ошибка связана с LEGB?"
       ]
     },
     "follow_ups": [
-      "Разбери сигнатуру helper-функции и объясни, какие вызовы допустимы и почему."
+      "Какая типичная ошибка связана с LEGB?"
     ],
     "tags": [
       "stage-03",
@@ -48,42 +50,43 @@
     ]
   },
   {
-    "question": "Сценарий по теме «LEGB»: Разбери сигнатуру helper-функции и объясни, какие вызовы допустимы и почему. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с LEGB?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "name lookup",
+      "shadowing",
+      "Assuming assignment updates a global while Python created a new local binding causes wrong state and `UnboundLocalError`."
     ],
+    "short_answer": "Assuming assignment updates a global while Python created a new local binding causes wrong state and `UnboundLocalError`.",
+    "junior_answer": "Assuming assignment updates a global while Python created a new local binding causes wrong state and `UnboundLocalError`.",
+    "follow_up_question": "Что такое LEGB и как это работает?",
+    "follow_up_answer": "LEGB is Python's name lookup order: Local, Enclosing, Global, Builtins. A read searches those scopes in order. Assignment inside a function makes the name local unless declared `global` or `nonlocal`, which can cause `UnboundLocalError` when the name is read before local assignment. Важное ограничение: Shadowing `list`, `id` or another builtin works but makes later calls confusing or broken.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "name lookup",
+        "shadowing"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Assuming assignment updates a global while Python created a new local binding causes wrong state and `UnboundLocalError`."
       ],
       "red_flags": [
-        "Скрывать неясный API за **kwargs или забывать о времени вычисления defaults."
+        "Assuming assignment updates a global while Python created a new local binding causes wrong state and `UnboundLocalError`."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое LEGB и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое LEGB и как это работает?"
     ],
     "tags": [
       "stage-03",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-03",

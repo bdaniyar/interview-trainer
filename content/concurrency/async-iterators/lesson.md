@@ -7,38 +7,60 @@
 
 После урока ты сможешь:
 
-- объяснить ``async for`` своими словами и связать с backend-сценарием;
-- объяснить `streaming` своими словами и связать с backend-сценарием;
-- объяснить `paginated I/O` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Async iterators and generators**, а не только запомнить термин;
+- прочитать и изменить короткий пример для ``async for``;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-asyncio даёт кооперативную конкурентность для I/O-bound работы: задача уступает loop только в await point.
+### Что это
 
-В теме **Async iterators and generators** важно уверенно объяснять следующие части:
+Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг await points.
 
-### `async for`
+### Как работает
 
-Для ``async for`` проследи coroutine/task по await points, cancellation и cleanup, не предполагая отдельный thread.
+Проследи coroutine от создания через scheduling и await points до result, cancellation и cleanup.
 
-### streaming
+**`async for`.** ``async for`` является частью lifecycle coroutine/task между scheduling, await points, cancellation и cleanup; отдельный thread автоматически не появляется.
 
-Для `streaming` проследи coroutine/task по await points, cancellation и cleanup, не предполагая отдельный thread.
+**streaming.** `streaming` является частью lifecycle coroutine/task между scheduling, await points, cancellation и cleanup; отдельный thread автоматически не появляется.
 
-### paginated I/O
+**paginated I/O.** `paginated I/O` является частью lifecycle coroutine/task между scheduling, await points, cancellation и cleanup; отдельный thread автоматически не появляется.
 
-Для `paginated I/O` проследи coroutine/task по await points, cancellation и cleanup, не предполагая отдельный thread.
+**cleanup.** `cleanup` является частью lifecycle coroutine/task между scheduling, await points, cancellation и cleanup; отдельный thread автоматически не появляется.
 
-### cleanup
 
-Для `cleanup` проследи coroutine/task по await points, cancellation и cleanup, не предполагая отдельный thread.
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй ``async for`` и `streaming` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется ``async for``; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- `async for`
+- streaming
+- paginated I/O
+- cleanup
+
+### Полезно
+
+- связать Async iterators and generators с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -63,19 +85,45 @@ Async generator лениво выдаёт значения и может ожи�
 
 ## Common mistakes
 
-**Ошибка:** Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Выполнить blocking call в event loop или создать coroutine и не await/schedule её.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для ``async for`` до запуска.
+
+**B · Find the bug.** Найди нарушение `streaming` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Async iterators and generators за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Async iterators and generators** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Найди blocking участок, обозначь cancellation boundary и выбери способ конкурентного запуска. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Async iterators and generators и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Async iterators and generators?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Async iterators and generators: Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг await points.
+
+### Нормальный Junior answer
+
+> Async iterators and generators — тема, в которой я сначала фиксирую ``async for``, затем объясняю `streaming` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и await points до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Async iterators and generators?**
+
+Выполнить blocking call в event loop или создать coroutine и не await/schedule её.
 
 ## Expected answer rubric
 
@@ -84,31 +132,22 @@ Async generator лениво выдаёт значения и может ожи�
 - `async for`
 - streaming
 - paginated I/O
-- cleanup.
-- Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.
+- cleanup
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint.
-- ответ из одного определения без механизма и failure mode.
+- Выполнить blocking call в event loop или создать coroutine и не await/schedule её.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- `async for`
-- streaming
-- paginated I/O
-- cleanup.
+- Какое ограничение или типичная ошибка относится именно к теме Async iterators and generators?
 
 ## Задача
 
@@ -121,11 +160,10 @@ Async generator лениво выдаёт значения и может ожи�
 
 Перед собеседованием запомни:
 
-- дай точное определение **Async iterators and generators**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Async iterators and generators: Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг await points.
+- **Механизм:** Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.
+- **Ограничение:** Выполнить blocking call в event loop или создать coroutine и не await/schedule её.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

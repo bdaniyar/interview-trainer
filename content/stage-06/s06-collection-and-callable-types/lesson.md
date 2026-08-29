@@ -7,42 +7,58 @@
 
 После урока ты сможешь:
 
-- объяснить ``list[str]`` своими словами и связать с backend-сценарием;
-- объяснить ``dict[str, int]`` своими словами и связать с backend-сценарием;
-- объяснить ``Sequence`` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Collection and callable types**, а не только запомнить термин;
+- прочитать и изменить короткий пример для ``list[str]``;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Type hints улучшают статический анализ и контракты, но сами по себе не валидируют runtime-данные.
+### Что это
 
-В теме **Collection and callable types** важно уверенно объяснять следующие части:
+Это статический контракт для checker и IDE; runtime-поведение Python и validation остаются отдельными слоями.
 
-### `list[str]`
+### Как работает
 
-`list` — ordered mutable sequence: индекс и append удобны, а поиск значения и вставка в начало линейны; aliases видят общие mutations.
+Покажи, что проверит static analyzer, что произойдёт runtime и где boundary должна добавить validation.
 
-### `dict[str, int]`
+**`list[str]`.** `list` — ordered mutable sequence: индекс и append удобны, а поиск значения и вставка в начало линейны; aliases видят общие mutations.
 
-`dict` хранит mapping hashable keys к values и сохраняет insertion order; lookup в среднем O(1), но correctness опирается на equality/hash contract.
+**`dict[str, int]`.** `dict` хранит mapping hashable keys к values и сохраняет insertion order; lookup в среднем O(1), но correctness опирается на equality/hash contract.
 
-### `Sequence`
+**`Sequence`.** ``Sequence`` описывает статическую часть type contract; runtime остаётся динамическим, а недоверенные данные требуют отдельной validation.
 
-Для ``Sequence`` покажи, что видит static checker, что реально происходит runtime и где нужна отдельная validation.
+**`Iterable`.** Iterable умеет создать iterator через `__iter__`; один iterable может создавать новые независимые iterators для повторных обходов.
 
-### `Iterable`
+**`Callable`.** ``Callable`` описывает статическую часть type contract; runtime остаётся динамическим, а недоверенные данные требуют отдельной validation.
 
-Iterable умеет создать iterator через `__iter__`; один iterable может создавать новые независимые iterators для повторных обходов.
 
-### `Callable`
+### Важный нюанс / limitation
 
-Для ``Callable`` покажи, что видит static checker, что реально происходит runtime и где нужна отдельная validation.
+Граница Junior: уверенно объясняй ``list[str]`` и ``dict[str, int]`` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
 ## Mental model
 
 Аннотация — описание для инструментов; runtime validation выполняет отдельный код или библиотека.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- `list[str]`
+- `dict[str, int]`
+- `Sequence`
+- `Iterable`
+
+### Полезно
+
+- `Callable`
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -61,19 +77,45 @@ Types описывают не конкретный list/function, а iterable in
 
 ## Common mistakes
 
-**Ошибка:** Считать Any безопасным escape hatch либо путать Optional с необязательным аргументом.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Считать type hint runtime validation или использовать `Any`, скрывая ошибку contract.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для ``list[str]`` до запуска.
+
+**B · Find the bug.** Найди нарушение ``dict[str, int]`` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Collection and callable types за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Collection and callable types** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Опиши тип входа API helper так, чтобы mypy видел ошибочный вызов до запуска. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Collection and callable types и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Collection and callable types?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Collection and callable types: Это статический контракт для checker и IDE; runtime-поведение Python и validation остаются отдельными слоями.
+
+### Нормальный Junior answer
+
+> Collection and callable types — тема, в которой я сначала фиксирую ``list[str]``, затем объясняю ``dict[str, int]`` на коротком примере. Ключевой механизм: Покажи, что проверит static analyzer, что произойдёт runtime и где boundary должна добавить validation. Главная практическая ошибка — Считать type hint runtime validation или использовать `Any`, скрывая ошибку contract.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Collection and callable types?**
+
+Считать type hint runtime validation или использовать `Any`, скрывая ошибку contract.
 
 ## Expected answer rubric
 
@@ -83,47 +125,34 @@ Types описывают не конкретный list/function, а iterable in
 - `dict[str, int]`
 - `Sequence`
 - `Iterable`
-- Аннотация — описание для инструментов; runtime validation выполняет отдельный код или библиотека.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Считать Any безопасным escape hatch либо путать Optional с необязательным аргументом.
-- ответ из одного определения без механизма и failure mode.
+- Считать type hint runtime validation или использовать `Any`, скрывая ошибку contract.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- `list[str]`
-- `dict[str, int]`
-- `Sequence`
-- `Iterable`
-- `Callable`.
+- Какое ограничение или типичная ошибка относится именно к теме Collection and callable types?
 
 ## Задача
 
-Разбери backend-сценарий: **Опиши тип входа API helper так, чтобы mypy видел ошибочный вызов до запуска.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Collection and callable types**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Collection and callable types**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Collection and callable types: Это статический контракт для checker и IDE; runtime-поведение Python и validation остаются отдельными слоями.
+- **Механизм:** Аннотация — описание для инструментов; runtime validation выполняет отдельный код или библиотека.
+- **Ограничение:** Считать type hint runtime validation или использовать `Any`, скрывая ошибку contract.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

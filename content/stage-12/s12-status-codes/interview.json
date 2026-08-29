@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Status codes» как на Junior Python Backend interview.",
+    "question": "Что такое Status codes и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -8,34 +8,36 @@
       "200",
       "201",
       "202",
-      "204",
-      "Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса."
+      "204"
     ],
+    "short_answer": "HTTP status codes communicate the outcome category and specific result of processing a request.",
+    "junior_answer": "HTTP status codes communicate the outcome category and specific result of processing a request. Typical API codes include 200, 201 with Location where useful, 204 without body, 400 malformed request, 401 unauthenticated, 403 forbidden, 404, 409 conflict, 422 validation and 500 unexpected server error. Важное ограничение: Use one consistent error body with a machine-readable code; do not leak stack traces.",
+    "follow_up_question": "Какая типичная ошибка связана с Status codes?",
+    "follow_up_answer": "Returning 200 for every error forces clients to reverse-engineer success from response text.",
     "expected_answer": {
       "must_mention": [
         "200",
         "201",
         "202",
-        "204",
-        "Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса."
+        "204"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне.",
+        "Returning 200 for every error forces clients to reverse-engineer success from response text.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне."
+        "Returning 200 for every error forces clients to reverse-engineer success from response text."
       ],
       "follow_up_questions": [
-        "Спроектируй request/response контракт и объясни retry, idempotency и error body."
+        "Какая типичная ошибка связана с Status codes?"
       ]
     },
     "follow_ups": [
-      "Спроектируй request/response контракт и объясни retry, idempotency и error body."
+      "Какая типичная ошибка связана с Status codes?"
     ],
     "tags": [
       "stage-12",
@@ -48,42 +50,43 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Status codes»: Спроектируй request/response контракт и объясни retry, idempotency и error body. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Status codes?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "304",
+      "400",
+      "Returning 200 for every error forces clients to reverse-engineer success from response text."
     ],
+    "short_answer": "Returning 200 for every error forces clients to reverse-engineer success from response text.",
+    "junior_answer": "Returning 200 for every error forces clients to reverse-engineer success from response text.",
+    "follow_up_question": "Что такое Status codes и как это работает?",
+    "follow_up_answer": "HTTP status codes communicate the outcome category and specific result of processing a request. Typical API codes include 200, 201 with Location where useful, 204 without body, 400 malformed request, 401 unauthenticated, 403 forbidden, 404, 409 conflict, 422 validation and 500 unexpected server error. Важное ограничение: Use one consistent error body with a machine-readable code; do not leak stack traces.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "304",
+        "400"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Returning 200 for every error forces clients to reverse-engineer success from response text."
       ],
       "red_flags": [
-        "Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне."
+        "Returning 200 for every error forces clients to reverse-engineer success from response text."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Status codes и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Status codes и как это работает?"
     ],
     "tags": [
       "stage-12",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-12",

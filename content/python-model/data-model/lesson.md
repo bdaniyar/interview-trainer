@@ -7,38 +7,56 @@
 
 После урока ты сможешь:
 
-- объяснить `protocol-driven behavior` своими словами и связать с backend-сценарием;
-- объяснить `truthiness` своими словами и связать с backend-сценарием;
-- объяснить `membership` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **`__len__`, `__bool__`, `__contains__`, `__getitem__`**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `protocol-driven behavior`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-ООП в backend полезно как способ выразить состояние, поведение и границы ответственности, а не как соревнование по наследованию.
+### Что это
 
-В теме **`__len__`, `__bool__`, `__contains__`, `__getitem__`** важно уверенно объяснять следующие части:
+Это элемент Python object model, который определяет состояние объекта, поиск поведения или способ композиции типов.
 
-### protocol-driven behavior
+### Как работает
 
-`Protocol` задаёт structural contract: объект подходит по доступным методам и атрибутам, даже без наследования от общего base class.
+Проследи instance/class namespaces, attribute lookup и направление зависимости между объектами.
 
-### truthiness
+**protocol-driven behavior.** `Protocol` задаёт structural contract: объект подходит по доступным методам и атрибутам, даже без наследования от общего base class.
 
-Truthiness определяется `__bool__`, затем `__len__`, а при отсутствии обоих объект считается truthy; это протокол, не проверка типа.
+**truthiness.** Truthiness определяется `__bool__`, затем `__len__`, а при отсутствии обоих объект считается truthy; это протокол, не проверка типа.
 
-### membership
+**membership.** `membership` определяет, где хранится object state, как идёт attribute lookup и насколько сильно тип зависит от collaborators.
 
-Для `membership` укажи, где хранится state, как Python ищет behavior и почему выбран composition/inheritance.
+**indexing/iteration fallback.** Index — отдельная структура доступа с ценой записи и хранения; полезность зависит от конкретного predicate, ordering и selectivity.
 
-### indexing/iteration fallback
 
-Index — отдельная структура доступа с ценой записи и хранения; полезность зависит от конкретного predicate, ordering и selectivity.
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `protocol-driven behavior` и `truthiness` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
 ## Mental model
 
 У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- protocol-driven behavior
+- truthiness
+- membership
+- indexing/iteration fallback
+
+### Полезно
+
+- связать `__len__`, `__bool__`, `__contains__`, `__getitem__` с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -62,58 +80,17 @@ print(len(page), bool(page), 20 in page, page[0])
 
 ## Common mistakes
 
-**Ошибка:** Создавать глубокую иерархию ради переиспользования нескольких строк.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `protocol-driven behavior` до запуска.
 
-## Interview questions
+**B · Find the bug.** Найди нарушение `truthiness` и объясни конкретное последствие.
 
-1. Объясни **`__len__`, `__bool__`, `__contains__`, `__getitem__`** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Сравни composition и inheritance для сервиса уведомлений и назови цену изменения. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
-
-## Expected answer rubric
-
-### Must mention
-
-- protocol-driven behavior
-- truthiness
-- membership
-- indexing/iteration fallback.
-- У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Создавать глубокую иерархию ради переиспользования нескольких строк.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- protocol-driven behavior
-- truthiness
-- membership
-- indexing/iteration fallback.
-
-## Задача
-
-Разбери backend-сценарий: **Сравни composition и inheritance для сервиса уведомлений и назови цену изменения.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Дай ответ про `__len__`, `__bool__`, `__contains__`, `__getitem__` за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Code prediction
 
@@ -146,15 +123,70 @@ Misconception: `descriptor-property`.
 
 </details>
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое `__len__`, `__bool__`, `__contains__`, `__getitem__` и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме `__len__`, `__bool__`, `__contains__`, `__getitem__`?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+`__len__`, `__bool__`, `__contains__`, `__getitem__`: Это элемент Python object model, который определяет состояние объекта, поиск поведения или способ композиции типов.
+
+### Нормальный Junior answer
+
+> `__len__`, `__bool__`, `__contains__`, `__getitem__` — тема, в которой я сначала фиксирую `protocol-driven behavior`, затем объясняю `truthiness` на коротком примере. Ключевой механизм: Проследи instance/class namespaces, attribute lookup и направление зависимости между объектами. Главная практическая ошибка — Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме `__len__`, `__bool__`, `__contains__`, `__getitem__`?**
+
+Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.
+
+## Expected answer rubric
+
+### Must mention
+
+- protocol-driven behavior
+- truthiness
+- membership
+- indexing/iteration fallback
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какое ограничение или типичная ошибка относится именно к теме `__len__`, `__bool__`, `__contains__`, `__getitem__`?
+
+## Задача
+
+Сделай короткую письменную практику по теме **`__len__`, `__bool__`, `__contains__`, `__getitem__`**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **`__len__`, `__bool__`, `__contains__`, `__getitem__`**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** `__len__`, `__bool__`, `__contains__`, `__getitem__`: Это элемент Python object model, который определяет состояние объекта, поиск поведения или способ композиции типов.
+- **Механизм:** У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.
+- **Ограничение:** Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

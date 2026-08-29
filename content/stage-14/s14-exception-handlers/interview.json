@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Exception handlers» как на Junior Python Backend interview.",
+    "question": "Что такое Exception handlers и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "domain exception",
       "HTTP mapping",
       "global handler",
-      "avoid leaking internals.",
-      "Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency."
+      "avoid leaking internals"
     ],
+    "short_answer": "An exception handler translates an exception type into a consistent HTTP response at an application/router boundary.",
+    "junior_answer": "An exception handler translates an exception type into a consistent HTTP response at an application/router boundary. Domain code raises a meaningful domain exception; FastAPI handler maps it to status and safe payload while unexpected errors remain server failures. Важное ограничение: Do not catch every exception and convert programming bugs into 400 responses.",
+    "follow_up_question": "Какая типичная ошибка связана с Exception handlers?",
+    "follow_up_answer": "Leaking `str(database_error)` to clients exposes schema/SQL details and creates an unstable contract.",
     "expected_answer": {
       "must_mention": [
         "domain exception",
         "HTTP mapping",
         "global handler",
-        "avoid leaking internals.",
-        "Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency."
+        "avoid leaking internals"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Открывать Session глобально или выполнять blocking I/O в async route.",
+        "Leaking `str(database_error)` to clients exposes schema/SQL details and creates an unstable contract.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Открывать Session глобально или выполнять blocking I/O в async route."
+        "Leaking `str(database_error)` to clients exposes schema/SQL details and creates an unstable contract."
       ],
       "follow_up_questions": [
-        "Проследи request от router через dependency и service до response model."
+        "Какая типичная ошибка связана с Exception handlers?"
       ]
     },
     "follow_ups": [
-      "Проследи request от router через dependency и service до response model."
+      "Какая типичная ошибка связана с Exception handlers?"
     ],
     "tags": [
       "stage-14",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Exception handlers»: Проследи request от router через dependency и service до response model. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Exception handlers?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "one short code/result example",
+      "Leaking `str(database_error)` to clients exposes schema/SQL details and creates an unstable contract."
     ],
+    "short_answer": "Leaking `str(database_error)` to clients exposes schema/SQL details and creates an unstable contract.",
+    "junior_answer": "Leaking `str(database_error)` to clients exposes schema/SQL details and creates an unstable contract.",
+    "follow_up_question": "Что такое Exception handlers и как это работает?",
+    "follow_up_answer": "An exception handler translates an exception type into a consistent HTTP response at an application/router boundary. Domain code raises a meaningful domain exception; FastAPI handler maps it to status and safe payload while unexpected errors remain server failures. Важное ограничение: Do not catch every exception and convert programming bugs into 400 responses.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "one short code/result example"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Leaking `str(database_error)` to clients exposes schema/SQL details and creates an unstable contract."
       ],
       "red_flags": [
-        "Открывать Session глобально или выполнять blocking I/O в async route."
+        "Leaking `str(database_error)` to clients exposes schema/SQL details and creates an unstable contract."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Exception handlers и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Exception handlers и как это работает?"
     ],
     "tags": [
       "stage-14",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-14",

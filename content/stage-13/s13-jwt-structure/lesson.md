@@ -7,46 +7,49 @@
 
 После урока ты сможешь:
 
-- объяснить `header` своими словами и связать с backend-сценарием;
-- объяснить `payload` своими словами и связать с backend-сценарием;
-- объяснить `signature` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **JWT structure**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `header`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Security строится слоями: аутентификация, авторизация, validation, безопасное хранение секретов и ограничение злоупотреблений.
+### Что это
 
-В теме **JWT structure** важно уверенно объяснять следующие части:
+JWT is a signed token format with header, payload claims and signature; it is normally encoded, not encrypted.
 
-### header
+### Как работает
 
-Для `header` назови threat, trust boundary, server-side check и безопасный failure response.
+The server verifies signature, allowed algorithm, issuer, audience and time claims before trusting identity/permissions.
 
-### payload
 
-Для `payload` назови threat, trust boundary, server-side check и безопасный failure response.
+### Важный нюанс / limitation
 
-### signature
-
-Signature — публичный контракт вызова: kinds параметров, defaults и annotations определяют допустимые positional/keyword arguments и помогают introspection.
-
-### encoded is not encrypted
-
-Для `encoded is not encrypted` назови threat, trust boundary, server-side check и безопасный failure response.
-
-### claims
-
-Для `claims` назови threat, trust boundary, server-side check и безопасный failure response.
-
-### verification
-
-Для `verification` назови threat, trust boundary, server-side check и безопасный failure response.
+Revocation and refresh lifecycle still need design; a long-lived access JWT is not automatically secure or stateless in the operational sense.
 
 ## Mental model
 
 Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- header
+- payload
+- signature
+- encoded is not encrypted
+
+### Полезно
+
+- claims
+- verification
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -64,19 +67,47 @@ assert example_s13_jwt_structure()
 
 ## Common mistakes
 
-**Ошибка:** Считать CORS авторизацией, JWT шифрованием или хранить пароль быстрым hash.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Decoding payload without signature/claim verification lets an attacker supply arbitrary identity data.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `header` example and predict the result before running it.
+
+**B · Find the bug.** Find code that violates `payload` and explain the concrete consequence.
+
+**D · Small task.** Implement the smallest function/query that demonstrates `header` and add one edge-case test.
+
+**E · Interview explanation.** Explain JWT structure in 45–60 seconds and include one limitation.
 
 ## Interview questions
 
-1. Объясни **JWT structure** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Назови атакующего, актив, проверку на сервере и безопасный отказ. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое JWT structure и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с JWT structure?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+JWT is a signed token format with header, payload claims and signature; it is normally encoded, not encrypted.
+
+### Нормальный Junior answer
+
+> JWT is a signed token format with header, payload claims and signature; it is normally encoded, not encrypted. The server verifies signature, allowed algorithm, issuer, audience and time claims before trusting identity/permissions. Важное ограничение: Revocation and refresh lifecycle still need design; a long-lived access JWT is not automatically secure or stateless in the operational sense.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с JWT structure?**
+
+Decoding payload without signature/claim verification lets an attacker supply arbitrary identity data.
 
 ## Expected answer rubric
 
@@ -86,48 +117,34 @@ assert example_s13_jwt_structure()
 - payload
 - signature
 - encoded is not encrypted
-- Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Считать CORS авторизацией, JWT шифрованием или хранить пароль быстрым hash.
-- ответ из одного определения без механизма и failure mode.
+- Decoding payload without signature/claim verification lets an attacker supply arbitrary identity data.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- header
-- payload
-- signature
-- encoded is not encrypted
-- claims
-- verification.
+- Какая типичная ошибка связана с JWT structure?
 
 ## Задача
 
-Разбери backend-сценарий: **Назови атакующего, актив, проверку на сервере и безопасный отказ.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **JWT structure**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **JWT structure**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** JWT is a signed token format with header, payload claims and signature; it is normally encoded, not encrypted.
+- **Механизм:** Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации.
+- **Ограничение:** Decoding payload without signature/claim verification lets an attacker supply arbitrary identity data.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

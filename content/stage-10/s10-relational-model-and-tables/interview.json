@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Relational model and tables» как на Junior Python Backend interview.",
+    "question": "Что такое Relational model and tables и какой механизм здесь важно понимать Junior-разработчику?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -8,34 +8,36 @@
       "row",
       "column",
       "relation",
-      "schema",
-      "Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT."
+      "schema"
     ],
+    "short_answer": "Relational model and tables: Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.",
+    "junior_answer": "Relational model and tables — тема, в которой я сначала фиксирую `row`, затем объясняю `column` на коротком примере. Ключевой механизм: Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа. Главная практическая ошибка — Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
+    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Relational model and tables?",
+    "follow_up_answer": "Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
     "expected_answer": {
       "must_mention": [
         "row",
         "column",
         "relation",
-        "schema",
-        "Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT."
+        "schema"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE.",
+        "Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE."
+        "Не определить cardinality результата и замаскировать неверный query через DISTINCT."
       ],
       "follow_up_questions": [
-        "Предскажи cardinality результата и проверь, не размножает ли JOIN строки."
+        "Какое ограничение или типичная ошибка относится именно к теме Relational model and tables?"
       ]
     },
     "follow_ups": [
-      "Предскажи cardinality результата и проверь, не размножает ли JOIN строки."
+      "Какое ограничение или типичная ошибка относится именно к теме Relational model and tables?"
     ],
     "tags": [
       "stage-10",
@@ -48,42 +50,43 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Relational model and tables»: Предскажи cardinality результата и проверь, не размножает ли JOIN строки. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какое ограничение или типичная ошибка относится именно к теме Relational model and tables?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "data types",
+      "relational thinking",
+      "Не определить cardinality результата и замаскировать неверный query через DISTINCT."
     ],
+    "short_answer": "Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
+    "junior_answer": "Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
+    "follow_up_question": "Что такое Relational model and tables и какой механизм здесь важно понимать Junior-разработчику?",
+    "follow_up_answer": "Relational model and tables — тема, в которой я сначала фиксирую `row`, затем объясняю `column` на коротком примере. Ключевой механизм: Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа. Главная практическая ошибка — Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "data types",
+        "relational thinking"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Не определить cardinality результата и замаскировать неверный query через DISTINCT."
       ],
       "red_flags": [
-        "Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE."
+        "Не определить cardinality результата и замаскировать неверный query через DISTINCT."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Relational model and tables и какой механизм здесь важно понимать Junior-разработчику?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Relational model and tables и какой механизм здесь важно понимать Junior-разработчику?"
     ],
     "tags": [
       "stage-10",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-10",

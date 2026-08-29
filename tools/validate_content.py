@@ -37,15 +37,25 @@ REQUIRED_HEADINGS = {
     "## Learning objectives",
     "## Theory",
     "## Mental model",
+    "## Что нужно знать на Junior",
     "## Code examples",
     "## Common mistakes",
+    "## Practice",
     "## Interview questions",
+    "## Good answers",
     "## Expected answer rubric",
     "## Задача",
     "## Cheat sheet",
     "## Sources",
 }
 PLACEHOLDERS = {"Материал урока пока не добавлен", "Задача будет добавлена позже", "Учебный блок:"}
+BOILERPLATE = {
+    "своими словами и связать с backend-сценарием",
+    "код проходит простой happy path, но ломается при повторном вызове",
+    "Как изменится решение при повторном запросе, ошибке dependency",
+    "ответ по схеме «определение → механизм → пример → ограничение»",
+    "Проверь модель вопросами: кто владеет состоянием",
+}
 
 
 def fail(errors: list[str], message: str) -> None:
@@ -147,10 +157,16 @@ def validate(run_solutions: bool) -> None:
         for marker in PLACEHOLDERS:
             if marker in markdown:
                 fail(errors, f"placeholder in published lesson {slug}: {marker}")
+        for marker in BOILERPLATE:
+            if marker in markdown:
+                fail(errors, f"generic boilerplate in published lesson {slug}: {marker}")
         if metadata.get("generated_by"):
             for heading in REQUIRED_HEADINGS:
                 if heading not in markdown:
                     fail(errors, f"{slug}: missing heading {heading}")
+            for subheading in ("### Что это", "### Как работает", "### Важный нюанс / limitation", "### Обязательно"):
+                if subheading not in markdown:
+                    fail(errors, f"{slug}: missing educational block {subheading}")
         example_section = re.search(
             r"^## Code examples\n+(.*?)(?=^## |\Z)",
             markdown,
@@ -186,6 +202,9 @@ def validate(run_solutions: bool) -> None:
                 questions = json.loads(interview_path.read_text(encoding="utf-8"))
                 if not questions or any(not item.get("question") or not item.get("answer") for item in questions):
                     fail(errors, f"invalid interview questions: {slug}")
+                for item in questions:
+                    if not item.get("short_answer") or not item.get("junior_answer") or not item.get("follow_up_answer"):
+                        fail(errors, f"interview answer levels are incomplete: {slug}")
             except json.JSONDecodeError as exc:
                 fail(errors, f"invalid interview JSON {slug}: {exc}")
         if metadata.get("has_task"):

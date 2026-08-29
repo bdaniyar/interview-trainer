@@ -13,7 +13,7 @@
     "model code does not update an existing DB",
     "versioned schema history."
   ],
-  "description": "P0 · Why migrations exist: mental model, interview rubric и backend-сценарий.",
+  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
   "has_task": false,
   "has_solution": false,
   "priority": "P0",

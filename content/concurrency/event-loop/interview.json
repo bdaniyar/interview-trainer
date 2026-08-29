@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Event loop» как на Junior Python Backend interview.",
+    "question": "Что такое Event loop и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -8,34 +8,36 @@
       "scheduling",
       "readiness",
       "callbacks/tasks",
-      "one blocking call stalls the loop.",
-      "Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код."
+      "one blocking call stalls the loop"
     ],
+    "short_answer": "The event loop schedules ready callbacks/tasks and waits for I/O readiness or timers when nothing is ready.",
+    "junior_answer": "The event loop schedules ready callbacks/tasks and waits for I/O readiness or timers when nothing is ready. A task runs cooperatively until it awaits. The loop then resumes another ready task and later returns to the suspended one. Важное ограничение: One blocking function in the event-loop thread delays every other task on that loop.",
+    "follow_up_question": "Какая типичная ошибка связана с Event loop?",
+    "follow_up_answer": "Calling blocking network/DB code directly from an async endpoint stalls unrelated requests.",
     "expected_answer": {
       "must_mention": [
         "scheduling",
         "readiness",
         "callbacks/tasks",
-        "one blocking call stalls the loop.",
-        "Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код."
+        "one blocking call stalls the loop"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint.",
+        "Calling blocking network/DB code directly from an async endpoint stalls unrelated requests.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint."
+        "Calling blocking network/DB code directly from an async endpoint stalls unrelated requests."
       ],
       "follow_up_questions": [
-        "Найди blocking участок, обозначь cancellation boundary и выбери способ конкурентного запуска."
+        "Какая типичная ошибка связана с Event loop?"
       ]
     },
     "follow_ups": [
-      "Найди blocking участок, обозначь cancellation boundary и выбери способ конкурентного запуска."
+      "Какая типичная ошибка связана с Event loop?"
     ],
     "tags": [
       "stage-08",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Event loop»: Найди blocking участок, обозначь cancellation boundary и выбери способ конкурентного запуска. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Event loop?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "one short code/result example",
+      "Calling blocking network/DB code directly from an async endpoint stalls unrelated requests."
     ],
+    "short_answer": "Calling blocking network/DB code directly from an async endpoint stalls unrelated requests.",
+    "junior_answer": "Calling blocking network/DB code directly from an async endpoint stalls unrelated requests.",
+    "follow_up_question": "Что такое Event loop и как это работает?",
+    "follow_up_answer": "The event loop schedules ready callbacks/tasks and waits for I/O readiness or timers when nothing is ready. A task runs cooperatively until it awaits. The loop then resumes another ready task and later returns to the suspended one. Важное ограничение: One blocking function in the event-loop thread delays every other task on that loop.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "one short code/result example"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Calling blocking network/DB code directly from an async endpoint stalls unrelated requests."
       ],
       "red_flags": [
-        "Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint."
+        "Calling blocking network/DB code directly from an async endpoint stalls unrelated requests."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Event loop и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Event loop и как это работает?"
     ],
     "tags": [
       "stage-08",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-08",

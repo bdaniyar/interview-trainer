@@ -7,34 +7,57 @@
 
 После урока ты сможешь:
 
-- объяснить `read cache` своими словами и связать с backend-сценарием;
-- объяснить `miss → DB → cache` своими словами и связать с backend-сценарием;
-- объяснить `source of truth remains DB.` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Cache-aside**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `read cache`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Redis — быстрый in-memory data store для cache и временного состояния, но источник истины выбирается по durability requirements.
+### Что это
 
-В теме **Cache-aside** важно уверенно объяснять следующие части:
+Тема **Cache-aside** описывает отдельный контракт backend-разработки.
 
-### read cache
+### Как работает
 
-Для cache заранее определяют key, TTL, invalidation и fallback, иначе ускорение создаёт stale-data bug.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
 
-### miss → DB → cache
+**read cache.** Для cache заранее определяют key, TTL, invalidation и fallback, иначе ускорение создаёт stale-data bug.
 
-Для cache заранее определяют key, TTL, invalidation и fallback, иначе ускорение создаёт stale-data bug.
+**miss → DB → cache.** Для cache заранее определяют key, TTL, invalidation и fallback, иначе ускорение создаёт stale-data bug.
 
-### source of truth remains DB
+**source of truth remains DB.** `source of truth remains DB` влияет на Redis key/value lifecycle; корректная схема заранее определяет TTL, invalidation, concurrency и outage fallback.
 
-Для `source of truth remains DB` определи Redis key/value, TTL, invalidation, concurrency и fallback при outage.
+
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `read cache` и `miss → DB → cache` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `read cache`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Для cache всегда определяй key, value, TTL, invalidation и fallback.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- read cache
+- miss → DB → cache
+- source of truth remains DB
+
+### Полезно
+
+- связать Cache-aside с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -50,19 +73,45 @@ TTL lesson:19.4:s19_cache_aside
 
 ## Common mistakes
 
-**Ошибка:** Использовать Pub/Sub как историю или забыть TTL и invalidation.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Игнорировать ограничение механизма и проверять только happy path.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `read cache` до запуска.
+
+**B · Find the bug.** Найди нарушение `miss → DB → cache` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Cache-aside за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Cache-aside** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Разбери cache miss, stale value, Redis outage и concurrent refill. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Cache-aside и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Cache-aside?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Cache-aside: это отдельный технический контракт
+
+### Нормальный Junior answer
+
+> Cache-aside — тема, в которой я сначала фиксирую `read cache`, затем объясняю `miss → DB → cache` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Cache-aside?**
+
+Нужно назвать конкретный failure path и способ его проверить.
 
 ## Expected answer rubric
 
@@ -70,46 +119,35 @@ TTL lesson:19.4:s19_cache_aside
 
 - read cache
 - miss → DB → cache
-- source of truth remains DB.
-- Для cache всегда определяй key, value, TTL, invalidation и fallback.
+- source of truth remains DB
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Использовать Pub/Sub как историю или забыть TTL и invalidation.
-- ответ из одного определения без механизма и failure mode.
+- Игнорировать ограничение механизма и проверять только happy path.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- read cache
-- miss → DB → cache
-- source of truth remains DB.
+- Какое ограничение или типичная ошибка относится именно к теме Cache-aside?
 
 ## Задача
 
-Разбери backend-сценарий: **Разбери cache miss, stale value, Redis outage и concurrent refill.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Cache-aside**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Cache-aside**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Cache-aside: это отдельный технический контракт
+- **Механизм:** Для cache всегда определяй key, value, TTL, invalidation и fallback.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

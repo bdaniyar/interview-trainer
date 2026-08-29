@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Race conditions and locks» как на Junior Python Backend interview.",
+    "question": "Что такое Race conditions and locks и какой механизм здесь важно понимать Junior-разработчику?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "check-then-act",
       "shared mutable state",
       "`Lock`",
-      "deadlock basics",
-      "Разделяй спецификацию Python и конкретную реализацию CPython; GIL относится к выполнению bytecode, не к бизнес-инвариантам."
+      "deadlock basics"
     ],
+    "short_answer": "Race conditions and locks: Это практическая модель CPython для lifetime, памяти или конкурентности; детали реализации нужно отделять от спецификации языка.",
+    "junior_answer": "Race conditions and locks — тема, в которой я сначала фиксирую `check-then-act`, затем объясняю `shared mutable state` на коротком примере. Ключевой механизм: Сначала измерь lifetime, allocations или contention и только затем связывай symptom с особенностью CPython. Главная практическая ошибка — Принять деталь CPython за гарантию языка или оптимизировать без измерения.",
+    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Race conditions and locks?",
+    "follow_up_answer": "Принять деталь CPython за гарантию языка или оптимизировать без измерения.",
     "expected_answer": {
       "must_mention": [
         "check-then-act",
         "shared mutable state",
         "`Lock`",
-        "deadlock basics",
-        "Разделяй спецификацию Python и конкретную реализацию CPython; GIL относится к выполнению bytecode, не к бизнес-инвариантам."
+        "deadlock basics"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Считать GIL автоматической защитой shared state или вызывать gc.collect как универсальную оптимизацию.",
+        "Принять деталь CPython за гарантию языка или оптимизировать без измерения.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Считать GIL автоматической защитой shared state или вызывать gc.collect как универсальную оптимизацию."
+        "Принять деталь CPython за гарантию языка или оптимизировать без измерения."
       ],
       "follow_up_questions": [
-        "Классифицируй проблему как lifetime, allocation, race или CPU contention перед выбором инструмента."
+        "Какое ограничение или типичная ошибка относится именно к теме Race conditions and locks?"
       ]
     },
     "follow_ups": [
-      "Классифицируй проблему как lifetime, allocation, race или CPU contention перед выбором инструмента."
+      "Какое ограничение или типичная ошибка относится именно к теме Race conditions and locks?"
     ],
     "tags": [
       "stage-07",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Race conditions and locks»: Классифицируй проблему как lifetime, allocation, race или CPU contention перед выбором инструмента. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какое ограничение или типичная ошибка относится именно к теме Race conditions and locks?",
+    "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Разделяй спецификацию Python и конкретную реализацию CPython; GIL относится к выполнению bytecode, не к бизнес-инвариантам.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "database race conditions are separate from Python GIL",
+      "Принять деталь CPython за гарантию языка или оптимизировать без измерения."
     ],
+    "short_answer": "Принять деталь CPython за гарантию языка или оптимизировать без измерения.",
+    "junior_answer": "Принять деталь CPython за гарантию языка или оптимизировать без измерения.",
+    "follow_up_question": "Что такое Race conditions and locks и какой механизм здесь важно понимать Junior-разработчику?",
+    "follow_up_answer": "Race conditions and locks — тема, в которой я сначала фиксирую `check-then-act`, затем объясняю `shared mutable state` на коротком примере. Ключевой механизм: Сначала измерь lifetime, allocations или contention и только затем связывай symptom с особенностью CPython. Главная практическая ошибка — Принять деталь CPython за гарантию языка или оптимизировать без измерения.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "database race conditions are separate from Python GIL"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Принять деталь CPython за гарантию языка или оптимизировать без измерения."
       ],
       "red_flags": [
-        "Считать GIL автоматической защитой shared state или вызывать gc.collect как универсальную оптимизацию."
+        "Принять деталь CPython за гарантию языка или оптимизировать без измерения."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Race conditions and locks и какой механизм здесь важно понимать Junior-разработчику?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Race conditions and locks и какой механизм здесь важно понимать Junior-разработчику?"
     ],
     "tags": [
       "stage-07",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-07",

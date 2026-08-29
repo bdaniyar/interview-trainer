@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Positional-only and keyword-only parameters» как на Junior Python Backend interview.",
+    "question": "Что такое Positional-only and keyword-only parameters и какой механизм здесь важно понимать Junior-разработчику?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "`/`",
       "`*`",
       "API design",
-      "readable signatures",
-      "Разделяй момент определения функции, момент вызова и момент разрешения свободного имени."
+      "readable signatures"
     ],
+    "short_answer": "Positional-only and keyword-only parameters: Это часть контракта Python function: важно различать definition time, call time, signature и разрешение имён.",
+    "junior_answer": "Positional-only and keyword-only parameters — тема, в которой я сначала фиксирую ``/``, затем объясняю ``*`` на коротком примере. Ключевой механизм: Отдели выполнение `def`, связывание arguments при вызове и разрешение names по LEGB. Главная практическая ошибка — Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.",
+    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Positional-only and keyword-only parameters?",
+    "follow_up_answer": "Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.",
     "expected_answer": {
       "must_mention": [
         "`/`",
         "`*`",
         "API design",
-        "readable signatures",
-        "Разделяй момент определения функции, момент вызова и момент разрешения свободного имени."
+        "readable signatures"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Скрывать неясный API за **kwargs или забывать о времени вычисления defaults.",
+        "Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Скрывать неясный API за **kwargs или забывать о времени вычисления defaults."
+        "Смешать definition time и call time либо скрыть неясную signature за `**kwargs`."
       ],
       "follow_up_questions": [
-        "Разбери сигнатуру helper-функции и объясни, какие вызовы допустимы и почему."
+        "Какое ограничение или типичная ошибка относится именно к теме Positional-only and keyword-only parameters?"
       ]
     },
     "follow_ups": [
-      "Разбери сигнатуру helper-функции и объясни, какие вызовы допустимы и почему."
+      "Какое ограничение или типичная ошибка относится именно к теме Positional-only and keyword-only parameters?"
     ],
     "tags": [
       "stage-03",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Positional-only and keyword-only parameters»: Разбери сигнатуру helper-функции и объясни, какие вызовы допустимы и почему. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какое ограничение или типичная ошибка относится именно к теме Positional-only and keyword-only parameters?",
+    "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "backward compatibility",
+      "Смешать definition time и call time либо скрыть неясную signature за `**kwargs`."
     ],
+    "short_answer": "Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.",
+    "junior_answer": "Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.",
+    "follow_up_question": "Что такое Positional-only and keyword-only parameters и какой механизм здесь важно понимать Junior-разработчику?",
+    "follow_up_answer": "Positional-only and keyword-only parameters — тема, в которой я сначала фиксирую ``/``, затем объясняю ``*`` на коротком примере. Ключевой механизм: Отдели выполнение `def`, связывание arguments при вызове и разрешение names по LEGB. Главная практическая ошибка — Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "backward compatibility"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Смешать definition time и call time либо скрыть неясную signature за `**kwargs`."
       ],
       "red_flags": [
-        "Скрывать неясный API за **kwargs или забывать о времени вычисления defaults."
+        "Смешать definition time и call time либо скрыть неясную signature за `**kwargs`."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Positional-only and keyword-only parameters и какой механизм здесь важно понимать Junior-разработчику?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Positional-only and keyword-only parameters и какой механизм здесь важно понимать Junior-разработчику?"
     ],
     "tags": [
       "stage-03",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-03",

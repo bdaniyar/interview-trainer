@@ -7,38 +7,60 @@
 
 После урока ты сможешь:
 
-- объяснить `many network waits → async` своими словами и связать с backend-сценарием;
-- объяснить `blocking I/O library → thread pool` своими словами и связать с backend-сценарием;
-- объяснить `CPU-bound pure Python → process pool/worker` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Threads vs processes vs async**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `many network waits → async`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-asyncio даёт кооперативную конкурентность для I/O-bound работы: задача уступает loop только в await point.
+### Что это
 
-В теме **Threads vs processes vs async** важно уверенно объяснять следующие части:
+Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг await points.
 
-### many network waits → async
+### Как работает
 
-Для `many network waits → async` проследи coroutine/task по await points, cancellation и cleanup, не предполагая отдельный thread.
+Проследи coroutine от создания через scheduling и await points до result, cancellation и cleanup.
 
-### blocking I/O library → thread pool
+**many network waits → async.** `many network waits → async` является частью lifecycle coroutine/task между scheduling, await points, cancellation и cleanup; отдельный thread автоматически не появляется.
 
-Threads разделяют память процесса и удобны для blocking I/O, но shared mutable state требует synchronization и корректной lifetime management.
+**blocking I/O library → thread pool.** Threads разделяют память процесса и удобны для blocking I/O, но shared mutable state требует synchronization и корректной lifetime management.
 
-### CPU-bound pure Python → process pool/worker
+**CPU-bound pure Python → process pool/worker.** Processes изолируют память и подходят для CPU-bound Python, но требуют serialization/IPC и имеют более дорогой startup.
 
-Processes изолируют память и подходят для CPU-bound Python, но требуют serialization/IPC и имеют более дорогой startup.
+**durable background job → queue/worker.** `durable background job → queue/worker` является частью lifecycle coroutine/task между scheduling, await points, cancellation и cleanup; отдельный thread автоматически не появляется.
 
-### durable background job → queue/worker
 
-Для `durable background job → queue/worker` проследи coroutine/task по await points, cancellation и cleanup, не предполагая отдельный thread.
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `many network waits → async` и `blocking I/O library → thread pool` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `many network waits → async`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- many network waits → async
+- blocking I/O library → thread pool
+- CPU-bound pure Python → process pool/worker
+- durable background job → queue/worker
+
+### Полезно
+
+- связать Threads vs processes vs async с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -57,19 +79,45 @@ print(decision)
 
 ## Common mistakes
 
-**Ошибка:** Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Выполнить blocking call в event loop или создать coroutine и не await/schedule её.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `many network waits → async` до запуска.
+
+**B · Find the bug.** Найди нарушение `blocking I/O library → thread pool` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Threads vs processes vs async за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Threads vs processes vs async** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Найди blocking участок, обозначь cancellation boundary и выбери способ конкурентного запуска. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Threads vs processes vs async и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Threads vs processes vs async?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Threads vs processes vs async: Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг await points.
+
+### Нормальный Junior answer
+
+> Threads vs processes vs async — тема, в которой я сначала фиксирую `many network waits → async`, затем объясняю `blocking I/O library → thread pool` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и await points до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Threads vs processes vs async?**
+
+Выполнить blocking call в event loop или создать coroutine и не await/schedule её.
 
 ## Expected answer rubric
 
@@ -78,31 +126,22 @@ print(decision)
 - many network waits → async
 - blocking I/O library → thread pool
 - CPU-bound pure Python → process pool/worker
-- durable background job → queue/worker.
-- Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.
+- durable background job → queue/worker
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint.
-- ответ из одного определения без механизма и failure mode.
+- Выполнить blocking call в event loop или создать coroutine и не await/schedule её.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- many network waits → async
-- blocking I/O library → thread pool
-- CPU-bound pure Python → process pool/worker
-- durable background job → queue/worker.
+- Какое ограничение или типичная ошибка относится именно к теме Threads vs processes vs async?
 
 ## Задача
 
@@ -115,11 +154,10 @@ print(decision)
 
 Перед собеседованием запомни:
 
-- дай точное определение **Threads vs processes vs async**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Threads vs processes vs async: Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг await points.
+- **Механизм:** Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.
+- **Ограничение:** Выполнить blocking call в event loop или создать coroutine и не await/schedule её.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

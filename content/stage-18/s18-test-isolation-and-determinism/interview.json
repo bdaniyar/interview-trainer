@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Test isolation and determinism» как на Junior Python Backend interview.",
+    "question": "Что такое Test isolation and determinism и какой механизм здесь важно понимать Junior-разработчику?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "time",
       "randomness",
       "external services",
-      "cleanup",
-      "Arrange создаёт условия, Act выполняет одно поведение, Assert проверяет значимый результат."
+      "cleanup"
     ],
+    "short_answer": "Test isolation and determinism: Это инструмент проверки observable contract с контролируемым setup, failure и cleanup.",
+    "junior_answer": "Test isolation and determinism — тема, в которой я сначала фиксирую `time`, затем объясняю `randomness` на коротком примере. Ключевой механизм: Сформулируй observable behavior, выбери isolation boundary и добавь case, который падает при реальном regression. Главная практическая ошибка — Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior.",
+    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Test isolation and determinism?",
+    "follow_up_answer": "Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior.",
     "expected_answer": {
       "must_mention": [
         "time",
         "randomness",
         "external services",
-        "cleanup",
-        "Arrange создаёт условия, Act выполняет одно поведение, Assert проверяет значимый результат."
+        "cleanup"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Mock не в том namespace, shared fixture state или тест только happy path.",
+        "Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Mock не в том namespace, shared fixture state или тест только happy path."
+        "Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior."
       ],
       "follow_up_questions": [
-        "Выдели unit boundary, integration boundary и критичный failure case."
+        "Какое ограничение или типичная ошибка относится именно к теме Test isolation and determinism?"
       ]
     },
     "follow_ups": [
-      "Выдели unit boundary, integration boundary и критичный failure case."
+      "Какое ограничение или типичная ошибка относится именно к теме Test isolation and determinism?"
     ],
     "tags": [
       "stage-18",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Test isolation and determinism»: Выдели unit boundary, integration boundary и критичный failure case. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какое ограничение или типичная ошибка относится именно к теме Test isolation and determinism?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Arrange создаёт условия, Act выполняет одно поведение, Assert проверяет значимый результат.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "order independence",
+      "Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior."
     ],
+    "short_answer": "Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior.",
+    "junior_answer": "Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior.",
+    "follow_up_question": "Что такое Test isolation and determinism и какой механизм здесь важно понимать Junior-разработчику?",
+    "follow_up_answer": "Test isolation and determinism — тема, в которой я сначала фиксирую `time`, затем объясняю `randomness` на коротком примере. Ключевой механизм: Сформулируй observable behavior, выбери isolation boundary и добавь case, который падает при реальном regression. Главная практическая ошибка — Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "order independence"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior."
       ],
       "red_flags": [
-        "Mock не в том namespace, shared fixture state или тест только happy path."
+        "Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Test isolation and determinism и какой механизм здесь важно понимать Junior-разработчику?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Test isolation and determinism и какой механизм здесь важно понимать Junior-разработчику?"
     ],
     "tags": [
       "stage-18",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-18",

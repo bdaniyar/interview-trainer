@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Request bodies» как на Junior Python Backend interview.",
+    "question": "Что такое Request bodies и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -8,34 +8,36 @@
       "Pydantic model",
       "JSON",
       "nested models",
-      "validation.",
-      "Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency."
+      "validation"
     ],
+    "short_answer": "A request body carries structured input; FastAPI commonly validates JSON through a Pydantic model.",
+    "junior_answer": "A request body carries structured input; FastAPI commonly validates JSON through a Pydantic model. Body bytes are decoded by media type, parsed as JSON and validated recursively before the endpoint receives a typed model. Важное ограничение: Schema validation handles shape/ranges; database-dependent business invariants belong in service logic/constraints.",
+    "follow_up_question": "Какая типичная ошибка связана с Request bodies?",
+    "follow_up_answer": "Using a raw dict everywhere loses generated schema, typed access and precise field errors.",
     "expected_answer": {
       "must_mention": [
         "Pydantic model",
         "JSON",
         "nested models",
-        "validation.",
-        "Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency."
+        "validation"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Открывать Session глобально или выполнять blocking I/O в async route.",
+        "Using a raw dict everywhere loses generated schema, typed access and precise field errors.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Открывать Session глобально или выполнять blocking I/O в async route."
+        "Using a raw dict everywhere loses generated schema, typed access and precise field errors."
       ],
       "follow_up_questions": [
-        "Проследи request от router через dependency и service до response model."
+        "Какая типичная ошибка связана с Request bodies?"
       ]
     },
     "follow_ups": [
-      "Проследи request от router через dependency и service до response model."
+      "Какая типичная ошибка связана с Request bodies?"
     ],
     "tags": [
       "stage-14",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Request bodies»: Проследи request от router через dependency и service до response model. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Request bodies?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "one short code/result example",
+      "Using a raw dict everywhere loses generated schema, typed access and precise field errors."
     ],
+    "short_answer": "Using a raw dict everywhere loses generated schema, typed access and precise field errors.",
+    "junior_answer": "Using a raw dict everywhere loses generated schema, typed access and precise field errors.",
+    "follow_up_question": "Что такое Request bodies и как это работает?",
+    "follow_up_answer": "A request body carries structured input; FastAPI commonly validates JSON through a Pydantic model. Body bytes are decoded by media type, parsed as JSON and validated recursively before the endpoint receives a typed model. Важное ограничение: Schema validation handles shape/ranges; database-dependent business invariants belong in service logic/constraints.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "one short code/result example"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Using a raw dict everywhere loses generated schema, typed access and precise field errors."
       ],
       "red_flags": [
-        "Открывать Session глобально или выполнять blocking I/O в async route."
+        "Using a raw dict everywhere loses generated schema, typed access and precise field errors."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Request bodies и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Request bodies и как это работает?"
     ],
     "tags": [
       "stage-14",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-14",

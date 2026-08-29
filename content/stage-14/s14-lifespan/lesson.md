@@ -7,38 +7,48 @@
 
 После урока ты сможешь:
 
-- объяснить `startup/shutdown` своими словами и связать с backend-сценарием;
-- объяснить `shared client/pool initialization` своими словами и связать с backend-сценарием;
-- объяснить `cleanup` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Lifespan**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `startup/shutdown`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-FastAPI связывает ASGI request lifecycle, routing, validation, dependency graph и response serialization.
+### Что это
 
-В теме **Lifespan** важно уверенно объяснять следующие части:
+FastAPI lifespan manages resources that live for the application process, such as connection pools and shared HTTP clients.
 
-### startup/shutdown
+### Как работает
 
-Для `startup/shutdown` проследи request через router, validation/dependencies, handler/service и response serialization.
+An async context manager runs setup before yield and cleanup after yield during shutdown; tests should enter lifespan too.
 
-### shared client/pool initialization
 
-Для `shared client/pool initialization` проследи request через router, validation/dependencies, handler/service и response serialization.
+### Важный нюанс / limitation
 
-### cleanup
-
-Для `cleanup` проследи request через router, validation/dependencies, handler/service и response serialization.
-
-### modern lifespan over scattered legacy hooks
-
-Lifespan управляет ресурсами уровня приложения: код до `yield` создаёт client/pool, код после `yield` гарантированно закрывает их при shutdown.
+Application-level resources are shared, but request-specific Session/user state must not be stored in them.
 
 ## Mental model
 
 Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- startup/shutdown
+- shared client/pool initialization
+- cleanup
+- modern lifespan over scattered legacy hooks
+
+### Полезно
+
+- one short code/result example
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -55,58 +65,19 @@ Lifespan async context manager с cleanup в finally; test lifespan and close st
 
 ## Common mistakes
 
-**Ошибка:** Открывать Session глобально или выполнять blocking I/O в async route.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Creating a new expensive client per request wastes pools, while never closing a shared client leaks resources at shutdown.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `startup/shutdown` example and predict the result before running it.
 
-## Interview questions
+**B · Find the bug.** Find code that violates `shared client/pool initialization` and explain the concrete consequence.
 
-1. Объясни **Lifespan** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Проследи request от router через dependency и service до response model. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+**D · Small task.** Implement the smallest function/query that demonstrates `startup/shutdown` and add one edge-case test.
 
-## Expected answer rubric
-
-### Must mention
-
-- startup/shutdown
-- shared client/pool initialization
-- cleanup
-- modern lifespan over scattered legacy hooks.
-- Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Открывать Session глобально или выполнять blocking I/O в async route.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- startup/shutdown
-- shared client/pool initialization
-- cleanup
-- modern lifespan over scattered legacy hooks.
-
-## Задача
-
-Разбери backend-сценарий: **Проследи request от router через dependency и service до response model.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Explain Lifespan in 45–60 seconds and include one limitation.
 
 ## Debugging practice
 
@@ -118,15 +89,70 @@ Lifespan async context manager с cleanup в finally; test lifespan and close st
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое Lifespan и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Lifespan?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+FastAPI lifespan manages resources that live for the application process, such as connection pools and shared HTTP clients.
+
+### Нормальный Junior answer
+
+> FastAPI lifespan manages resources that live for the application process, such as connection pools and shared HTTP clients. An async context manager runs setup before yield and cleanup after yield during shutdown; tests should enter lifespan too. Важное ограничение: Application-level resources are shared, but request-specific Session/user state must not be stored in them.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Lifespan?**
+
+Creating a new expensive client per request wastes pools, while never closing a shared client leaks resources at shutdown.
+
+## Expected answer rubric
+
+### Must mention
+
+- startup/shutdown
+- shared client/pool initialization
+- cleanup
+- modern lifespan over scattered legacy hooks
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Creating a new expensive client per request wastes pools, while never closing a shared client leaks resources at shutdown.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какая типичная ошибка связана с Lifespan?
+
+## Задача
+
+Сделай короткую письменную практику по теме **Lifespan**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Lifespan**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** FastAPI lifespan manages resources that live for the application process, such as connection pools and shared HTTP clients.
+- **Механизм:** Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
+- **Ограничение:** Creating a new expensive client per request wastes pools, while never closing a shared client leaks resources at shutdown.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

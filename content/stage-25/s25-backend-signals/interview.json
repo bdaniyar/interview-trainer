@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Backend signals» как на Junior Python Backend interview.",
+    "question": "Что такое Backend signals и какой механизм здесь важно понимать Junior-разработчику?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "request rate",
       "error rate",
       "latency/p95",
-      "DB errors",
-      "Сначала сформулируй вопрос, затем выбери signal и labels с контролируемой cardinality."
+      "DB errors"
     ],
+    "short_answer": "Backend signals: это отдельный технический контракт",
+    "junior_answer": "Backend signals — тема, в которой я сначала фиксирую `request rate`, затем объясняю `error rate` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
+    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Backend signals?",
+    "follow_up_answer": "Нужно назвать конкретный failure path и способ его проверить.",
     "expected_answer": {
       "must_mention": [
         "request rate",
         "error rate",
         "latency/p95",
-        "DB errors",
-        "Сначала сформулируй вопрос, затем выбери signal и labels с контролируемой cardinality."
+        "DB errors"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Логировать secrets или использовать user_id как Prometheus label.",
+        "Игнорировать ограничение механизма и проверять только happy path.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Логировать secrets или использовать user_id как Prometheus label."
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "follow_up_questions": [
-        "По росту p95 при стабильной средней выбери следующие metrics и logs."
+        "Какое ограничение или типичная ошибка относится именно к теме Backend signals?"
       ]
     },
     "follow_ups": [
-      "По росту p95 при стабильной средней выбери следующие metrics и logs."
+      "Какое ограничение или типичная ошибка относится именно к теме Backend signals?"
     ],
     "tags": [
       "stage-25",
@@ -48,42 +50,43 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Backend signals»: По росту p95 при стабильной средней выбери следующие metrics и logs. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какое ограничение или типичная ошибка относится именно к теме Backend signals?",
+    "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Сначала сформулируй вопрос, затем выбери signal и labels с контролируемой cardinality.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "worker failures",
+      "queue backlog",
+      "Нужно назвать конкретный failure path и способ его проверить."
     ],
+    "short_answer": "Нужно назвать конкретный failure path и способ его проверить.",
+    "junior_answer": "Нужно назвать конкретный failure path и способ его проверить.",
+    "follow_up_question": "Что такое Backend signals и какой механизм здесь важно понимать Junior-разработчику?",
+    "follow_up_answer": "Backend signals — тема, в которой я сначала фиксирую `request rate`, затем объясняю `error rate` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "worker failures",
+        "queue backlog"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "red_flags": [
-        "Логировать secrets или использовать user_id как Prometheus label."
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Backend signals и какой механизм здесь важно понимать Junior-разработчику?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Backend signals и какой механизм здесь важно понимать Junior-разработчику?"
     ],
     "tags": [
       "stage-25",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-25",

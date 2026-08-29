@@ -7,46 +7,65 @@
 
 После урока ты сможешь:
 
-- объяснить `defining vs calling` своими словами и связать с backend-сценарием;
-- объяснить `function object` своими словами и связать с backend-сценарием;
-- объяснить `callable` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Function objects and first-class functions**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `defining vs calling`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Функция — объект с сигнатурой, областью видимости и состоянием замыкания; её контракт должен быть понятен вызывающему коду.
+### Что это
 
-В теме **Function objects and first-class functions** важно уверенно объяснять следующие части:
+Функция в Python — обычный first-class object. Её можно присвоить имени, положить в коллекцию, передать аргументом и вернуть из другой функции. Вызов происходит только при добавлении `()`.
 
-### defining vs calling
+### Как работает
 
-Для `defining vs calling` отдели definition time от call time и покажи влияние на signature, scope или state функции.
+Выполнение `def` создаёт function object и связывает его с именем. Object хранит code, globals, defaults, annotations и closure. Любой объект с `__call__` является callable; higher-order function принимает или возвращает callable.
 
-### function object
 
-Для `function object` отдели definition time от call time и покажи влияние на signature, scope или state функции.
+### Пример
 
-### callable
+```python
+def normalize_email(value: str) -> str:
+    return value.strip().lower()
 
-Для `callable` отдели definition time от call time и покажи влияние на signature, scope или state функции.
+pipeline = [normalize_email]
+step = pipeline[0]
 
-### passing/returning functions
+print(step(" A@EXAMPLE.COM "))
+# a@example.com
+```
 
-Для `passing/returning functions` отдели definition time от call time и покажи влияние на signature, scope или state функции.
+### Важный нюанс / limitation
 
-### storing functions
+Передавай саму функцию как `handler`, а не результат `handler()`. Type hints для callback описывают через `Callable[[ArgType], ReturnType]`; для сложной сигнатуры часто понятнее `Protocol` с `__call__`.
 
-Для `storing functions` отдели definition time от call time и покажи влияние на signature, scope или state функции.
+### Где используется в backend
 
-### higher-order functions
-
-Для `higher-order functions` отдели definition time от call time и покажи влияние на signature, scope или state функции.
+Router, dependency и middleware получают callables; таблица обработчиков команд может отображать имя события в функцию.
 
 ## Mental model
 
 Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- function object vs call
+- передача/возврат функций
+- callable
+- higher-order function
+
+### Полезно
+
+- атрибуты `__name__`, `__defaults__`, `__annotations__`
+
+### Можно не учить глубоко
+
+- bytecode и внутреннее устройство PyFunctionObject
 
 ## Code examples
 
@@ -64,70 +83,88 @@ print([handler(" A@EXAMPLE.COM ") for handler in handlers])
 
 ## Common mistakes
 
-**Ошибка:** Скрывать неясный API за **kwargs или забывать о времени вычисления defaults.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+`handlers = {'created': send_email()}` вызывает функцию при создании dict и сохраняет результат вместо callable.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+### Ошибка 2
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+Скрывать несовместимые callback signatures за `Callable[..., Any]`.
+
+## Practice
+
+**A · Code prediction.** Сравни `registry['job']` и `registry['job']()`.
+
+**B · Find the bug.** Найди преждевременный вызов callback при построении registry.
+
+**D · Small task.** Реализуй `apply_twice(fn, value)`.
+
+**E · Interview explanation.** Приведи два признака first-class function.
 
 ## Interview questions
 
-1. Объясни **Function objects and first-class functions** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Разбери сигнатуру helper-функции и объясни, какие вызовы допустимы и почему. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что значит, что функции в Python являются объектами первого класса?
+
+### Follow-up
+
+Чем callable object отличается от function?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Функцию можно хранить, передавать и возвращать как любое другое значение; вызывается она через `()`.
+
+### Нормальный Junior answer
+
+> При выполнении `def` Python создаёт function object и связывает его с именем. Этот объект можно передать callback-ом, сохранить в dict обработчиков или вернуть из factory. Пока я не добавил `()`, функция не вызывается. Так устроены decorators, route handlers и многие dependency APIs.
+
+### Углубление / follow-up
+
+**Чем callable object отличается от function?**
+
+Function — конкретный встроенный тип callable. Экземпляр пользовательского класса тоже callable, если класс реализует `__call__`.
 
 ## Expected answer rubric
 
 ### Must mention
 
-- defining vs calling
-- function object
+- function object vs call
+- передача/возврат функций
 - callable
-- passing/returning functions
-- Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
+- higher-order function
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Скрывать неясный API за **kwargs или забывать о времени вычисления defaults.
-- ответ из одного определения без механизма и failure mode.
+- `handlers = {'created': send_email()}` вызывает функцию при создании dict и сохраняет результат вместо callable.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- defining vs calling
-- function object
-- callable
-- passing/returning functions
-- storing functions
-- higher-order functions.
+- Чем callable object отличается от function?
 
 ## Задача
 
-Разбери backend-сценарий: **Разбери сигнатуру helper-функции и объясни, какие вызовы допустимы и почему.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Function objects and first-class functions**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Function objects and first-class functions**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Функцию можно хранить, передавать и возвращать как любое другое значение; вызывается она через `()`.
+- **Механизм:** Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
+- **Ограничение:** `handlers = {'created': send_email()}` вызывает функцию при создании dict и сохраняет результат вместо callable.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

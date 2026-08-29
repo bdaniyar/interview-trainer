@@ -7,34 +7,57 @@
 
 После урока ты сможешь:
 
-- объяснить `setup/cleanup` своими словами и связать с backend-сценарием;
-- объяснить `session lifecycle` своими словами и связать с backend-сценарием;
-- объяснить `exception behavior.` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Yield dependencies**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `setup/cleanup`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-FastAPI связывает ASGI request lifecycle, routing, validation, dependency graph и response serialization.
+### Что это
 
-В теме **Yield dependencies** важно уверенно объяснять следующие части:
+Это часть FastAPI request lifecycle между routing, validation, dependencies, handler и response serialization.
 
-### setup/cleanup
+### Как работает
 
-Для `setup/cleanup` проследи request через router, validation/dependencies, handler/service и response serialization.
+Проследи request через router, Pydantic validation, dependency graph, service и response model.
 
-### session lifecycle
+**setup/cleanup.** `setup/cleanup` занимает конкретный этап FastAPI request lifecycle между router, validation/dependencies, handler и response serialization.
 
-Session владеет identity map и transaction state; после ошибки flush требуется rollback до дальнейшей работы.
+**session lifecycle.** Session владеет identity map и transaction state; после ошибки flush требуется rollback до дальнейшей работы.
 
-### exception behavior
+**exception behavior.** `exception behavior` занимает конкретный этап FastAPI request lifecycle между router, validation/dependencies, handler и response serialization.
 
-Для `exception behavior` проследи request через router, validation/dependencies, handler/service и response serialization.
+
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `setup/cleanup` и `session lifecycle` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `setup/cleanup`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- setup/cleanup
+- session lifecycle
+- exception behavior
+
+### Полезно
+
+- связать Yield dependencies с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -52,19 +75,45 @@ events = []
 
 ## Common mistakes
 
-**Ошибка:** Открывать Session глобально или выполнять blocking I/O в async route.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Открыть глобальный request resource или спрятать domain logic в framework hook.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `setup/cleanup` до запуска.
+
+**B · Find the bug.** Найди нарушение `session lifecycle` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Yield dependencies за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Yield dependencies** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Проследи request от router через dependency и service до response model. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Yield dependencies и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Yield dependencies?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Yield dependencies: Это часть FastAPI request lifecycle между routing, validation, dependencies, handler и response serialization.
+
+### Нормальный Junior answer
+
+> Yield dependencies — тема, в которой я сначала фиксирую `setup/cleanup`, затем объясняю `session lifecycle` на коротком примере. Ключевой механизм: Проследи request через router, Pydantic validation, dependency graph, service и response model. Главная практическая ошибка — Открыть глобальный request resource или спрятать domain logic в framework hook.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Yield dependencies?**
+
+Открыть глобальный request resource или спрятать domain logic в framework hook.
 
 ## Expected answer rubric
 
@@ -72,30 +121,22 @@ events = []
 
 - setup/cleanup
 - session lifecycle
-- exception behavior.
-- Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
+- exception behavior
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Открывать Session глобально или выполнять blocking I/O в async route.
-- ответ из одного определения без механизма и failure mode.
+- Открыть глобальный request resource или спрятать domain logic в framework hook.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- setup/cleanup
-- session lifecycle
-- exception behavior.
+- Какое ограничение или типичная ошибка относится именно к теме Yield dependencies?
 
 ## Задача
 
@@ -108,11 +149,10 @@ get_resource пишет open/close в events; GET /resource получает yie
 
 Перед собеседованием запомни:
 
-- дай точное определение **Yield dependencies**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Yield dependencies: Это часть FastAPI request lifecycle между routing, validation, dependencies, handler и response serialization.
+- **Механизм:** Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
+- **Ограничение:** Открыть глобальный request resource или спрятать domain logic в framework hook.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

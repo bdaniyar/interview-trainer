@@ -15,7 +15,7 @@
     "outbox closes atomicity gap",
     "Celery may still be delivery/execution layer."
   ],
-  "description": "P1 · Why outbox instead of direct Celery publish: mental model, interview rubric и backend-сценарий.",
+  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

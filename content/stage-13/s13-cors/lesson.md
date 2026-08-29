@@ -7,42 +7,48 @@
 
 После урока ты сможешь:
 
-- объяснить `browser policy` своими словами и связать с backend-сценарием;
-- объяснить `origin` своими словами и связать с backend-сценарием;
-- объяснить `preflight` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **CORS**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `browser policy`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Security строится слоями: аутентификация, авторизация, validation, безопасное хранение секретов и ограничение злоупотреблений.
+### Что это
 
-В теме **CORS** важно уверенно объяснять следующие части:
+CORS is a browser policy controlling whether frontend JavaScript from one origin may read responses from another origin.
 
-### browser policy
+### Как работает
 
-Для `browser policy` назови threat, trust boundary, server-side check и безопасный failure response.
+For non-simple requests the browser sends a preflight OPTIONS request; the server returns allowed origins, methods, headers and credentials policy.
 
-### origin
 
-Для `origin` назови threat, trust boundary, server-side check и безопасный failure response.
+### Важный нюанс / limitation
 
-### preflight
-
-Для `preflight` назови threat, trust boundary, server-side check и безопасный failure response.
-
-### credentials
-
-Для `credentials` назови threat, trust boundary, server-side check и безопасный failure response.
-
-### CORS is not authentication
-
-Authentication устанавливает identity, authorization проверяет право этой identity выполнить конкретное действие над resource.
+CORS is not authentication and does not block curl or server-to-server clients.
 
 ## Mental model
 
 Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- browser policy
+- origin
+- preflight
+- credentials
+
+### Полезно
+
+- CORS is not authentication
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -59,59 +65,19 @@ CORS — browser read policy; authentication/authorization проверяютс�
 
 ## Common mistakes
 
-**Ошибка:** Считать CORS авторизацией, JWT шифрованием или хранить пароль быстрым hash.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Using wildcard origin with credentials is invalid/unsafe; allowed origins should be explicit.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `browser policy` example and predict the result before running it.
 
-## Interview questions
+**B · Find the bug.** Find code that violates `origin` and explain the concrete consequence.
 
-1. Объясни **CORS** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Назови атакующего, актив, проверку на сервере и безопасный отказ. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+**D · Small task.** Implement the smallest function/query that demonstrates `browser policy` and add one edge-case test.
 
-## Expected answer rubric
-
-### Must mention
-
-- browser policy
-- origin
-- preflight
-- credentials
-- Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Считать CORS авторизацией, JWT шифрованием или хранить пароль быстрым hash.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- browser policy
-- origin
-- preflight
-- credentials
-- CORS is not authentication.
-
-## Задача
-
-Разбери backend-сценарий: **Назови атакующего, актив, проверку на сервере и безопасный отказ.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Explain CORS in 45–60 seconds and include one limitation.
 
 ## Debugging practice
 
@@ -123,15 +89,70 @@ CORS — browser read policy; authentication/authorization проверяютс�
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое CORS и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с CORS?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+CORS is a browser policy controlling whether frontend JavaScript from one origin may read responses from another origin.
+
+### Нормальный Junior answer
+
+> CORS is a browser policy controlling whether frontend JavaScript from one origin may read responses from another origin. For non-simple requests the browser sends a preflight OPTIONS request; the server returns allowed origins, methods, headers and credentials policy. Важное ограничение: CORS is not authentication and does not block curl or server-to-server clients.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с CORS?**
+
+Using wildcard origin with credentials is invalid/unsafe; allowed origins should be explicit.
+
+## Expected answer rubric
+
+### Must mention
+
+- browser policy
+- origin
+- preflight
+- credentials
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Using wildcard origin with credentials is invalid/unsafe; allowed origins should be explicit.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какая типичная ошибка связана с CORS?
+
+## Задача
+
+Сделай короткую письменную практику по теме **CORS**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **CORS**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** CORS is a browser policy controlling whether frontend JavaScript from one origin may read responses from another origin.
+- **Механизм:** Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации.
+- **Ограничение:** Using wildcard origin with credentials is invalid/unsafe; allowed origins should be explicit.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

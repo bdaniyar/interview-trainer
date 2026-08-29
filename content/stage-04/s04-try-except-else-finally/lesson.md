@@ -7,38 +7,48 @@
 
 После урока ты сможешь:
 
-- объяснить `control flow` своими словами и связать с backend-сценарием;
-- объяснить `cleanup` своими словами и связать с backend-сценарием;
-- объяснить `return inside try/finally` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **`try/except/else/finally`**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `control flow`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Итерация, исключения и context managers — протоколы управления потоком и освобождением ресурсов.
+### Что это
 
-В теме **`try/except/else/finally`** важно уверенно объяснять следующие части:
+`try/except/else/finally` separates risky work, recovery, success-only work and unconditional cleanup.
 
-### control flow
+### Как работает
 
-Для `control flow` опиши protocol: кто инициирует шаг, какое состояние сохраняется, как выглядит завершение и error path.
+`except` runs for a matching exception, `else` only when the try block succeeds, and `finally` runs before control leaves by success, return or exception.
 
-### cleanup
 
-Для `cleanup` опиши protocol: кто инициирует шаг, какое состояние сохраняется, как выглядит завершение и error path.
+### Важный нюанс / limitation
 
-### return inside try/finally
-
-`finally` выполняет cleanup при normal return и exception; он не должен без необходимости подавлять исходную ошибку новым return/raise.
-
-### narrow exception scope
-
-LEGB ищет имя в local, enclosing, global и builtins; assignment делает имя local, если не объявлены `global` или `nonlocal`.
+Keep the try block narrow so unrelated bugs are not mistaken for the expected failure.
 
 ## Mental model
 
 Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- control flow
+- cleanup
+- return inside try/finally
+- narrow exception scope
+
+### Полезно
+
+- one short code/result example
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -62,19 +72,47 @@ print(parse("7"))
 
 ## Common mistakes
 
-**Ошибка:** Перехватывать Exception без стратегии либо удерживать весь поток данных в памяти.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+A return inside finally overrides an earlier return or exception and can silently destroy diagnostic information.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `control flow` example and predict the result before running it.
+
+**B · Find the bug.** Find code that violates `cleanup` and explain the concrete consequence.
+
+**D · Small task.** Implement the smallest function/query that demonstrates `control flow` and add one edge-case test.
+
+**E · Interview explanation.** Explain `try/except/else/finally` in 45–60 seconds and include one limitation.
 
 ## Interview questions
 
-1. Объясни **`try/except/else/finally`** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Покажи happy path, завершение протокола и поведение при исключении. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое `try/except/else/finally` и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с `try/except/else/finally`?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+`try/except/else/finally` separates risky work, recovery, success-only work and unconditional cleanup.
+
+### Нормальный Junior answer
+
+> `try/except/else/finally` separates risky work, recovery, success-only work and unconditional cleanup. `except` runs for a matching exception, `else` only when the try block succeeds, and `finally` runs before control leaves by success, return or exception. Важное ограничение: Keep the try block narrow so unrelated bugs are not mistaken for the expected failure.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с `try/except/else/finally`?**
+
+A return inside finally overrides an earlier return or exception and can silently destroy diagnostic information.
 
 ## Expected answer rubric
 
@@ -83,31 +121,22 @@ print(parse("7"))
 - control flow
 - cleanup
 - return inside try/finally
-- narrow exception scope.
-- Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка.
+- narrow exception scope
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Перехватывать Exception без стратегии либо удерживать весь поток данных в памяти.
-- ответ из одного определения без механизма и failure mode.
+- A return inside finally overrides an earlier return or exception and can silently destroy diagnostic information.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- control flow
-- cleanup
-- return inside try/finally
-- narrow exception scope.
+- Какая типичная ошибка связана с `try/except/else/finally`?
 
 ## Задача
 
@@ -120,11 +149,10 @@ None и пустая строка дают None; str/int преобразуют�
 
 Перед собеседованием запомни:
 
-- дай точное определение **`try/except/else/finally`**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** `try/except/else/finally` separates risky work, recovery, success-only work and unconditional cleanup.
+- **Механизм:** Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка.
+- **Ограничение:** A return inside finally overrides an earlier return or exception and can silently destroy diagnostic information.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

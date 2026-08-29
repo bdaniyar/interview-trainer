@@ -1,39 +1,41 @@
 [
   {
-    "question": "Объясни тему «Path parameters» как на Junior Python Backend interview.",
+    "question": "Что такое Path parameters и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
       "type conversion",
       "validation",
-      "routing order pitfalls.",
-      "Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency."
+      "routing order pitfalls"
     ],
+    "short_answer": "A path parameter identifies part of the routed resource path and is converted/validated from text using the endpoint annotation.",
+    "junior_answer": "A path parameter identifies part of the routed resource path and is converted/validated from text using the endpoint annotation. `/users/{user_id}` binds the segment; constraints can reject invalid values before handler execution. Static routes must not be accidentally shadowed by a broad dynamic route. Важное ограничение: Path parameters are required by the matched path; optional filters belong in query parameters.",
+    "follow_up_question": "Какая типичная ошибка связана с Path parameters?",
+    "follow_up_answer": "Registering `/users/{user_id}` before a conflicting `/users/me` design can route `me` into integer validation instead of the intended handler.",
     "expected_answer": {
       "must_mention": [
         "type conversion",
         "validation",
-        "routing order pitfalls.",
-        "Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency."
+        "routing order pitfalls"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Открывать Session глобально или выполнять blocking I/O в async route.",
+        "Registering `/users/{user_id}` before a conflicting `/users/me` design can route `me` into integer validation instead of the intended handler.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Открывать Session глобально или выполнять blocking I/O в async route."
+        "Registering `/users/{user_id}` before a conflicting `/users/me` design can route `me` into integer validation instead of the intended handler."
       ],
       "follow_up_questions": [
-        "Проследи request от router через dependency и service до response model."
+        "Какая типичная ошибка связана с Path parameters?"
       ]
     },
     "follow_ups": [
-      "Проследи request от router через dependency и service до response model."
+      "Какая типичная ошибка связана с Path parameters?"
     ],
     "tags": [
       "stage-14",
@@ -46,42 +48,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Path parameters»: Проследи request от router через dependency и service до response model. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Path parameters?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "one short code/result example",
+      "Registering `/users/{user_id}` before a conflicting `/users/me` design can route `me` into integer validation instead of the intended handler."
     ],
+    "short_answer": "Registering `/users/{user_id}` before a conflicting `/users/me` design can route `me` into integer validation instead of the intended handler.",
+    "junior_answer": "Registering `/users/{user_id}` before a conflicting `/users/me` design can route `me` into integer validation instead of the intended handler.",
+    "follow_up_question": "Что такое Path parameters и как это работает?",
+    "follow_up_answer": "A path parameter identifies part of the routed resource path and is converted/validated from text using the endpoint annotation. `/users/{user_id}` binds the segment; constraints can reject invalid values before handler execution. Static routes must not be accidentally shadowed by a broad dynamic route. Важное ограничение: Path parameters are required by the matched path; optional filters belong in query parameters.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "one short code/result example"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Registering `/users/{user_id}` before a conflicting `/users/me` design can route `me` into integer validation instead of the intended handler."
       ],
       "red_flags": [
-        "Открывать Session глобально или выполнять blocking I/O в async route."
+        "Registering `/users/{user_id}` before a conflicting `/users/me` design can route `me` into integer validation instead of the intended handler."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Path parameters и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Path parameters и как это работает?"
     ],
     "tags": [
       "stage-14",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-14",

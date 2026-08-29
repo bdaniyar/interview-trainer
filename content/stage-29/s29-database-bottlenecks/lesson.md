@@ -7,46 +7,65 @@
 
 После урока ты сможешь:
 
-- объяснить `slow query` своими словами и связать с backend-сценарием;
-- объяснить `missing index` своими словами и связать с backend-сценарием;
-- объяснить `N+1` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Database bottlenecks**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `slow query`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Junior system design начинается с требований, request path, source of truth и failure modes.
+### Что это
 
-В теме **Database bottlenecks** важно уверенно объяснять следующие части:
+Тема **Database bottlenecks** описывает отдельный контракт backend-разработки.
 
-### slow query
+### Как работает
 
-Для `slow query` начни с requirements/source of truth и только затем добавляй component под измеримый failure mode.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
 
-### missing index
+**slow query.** `slow query` является компонентом system design только при наличии требования, source of truth и измеримого failure mode.
 
-Index — отдельная структура доступа с ценой записи и хранения; полезность зависит от конкретного predicate, ordering и selectivity.
+**missing index.** Index — отдельная структура доступа с ценой записи и хранения; полезность зависит от конкретного predicate, ordering и selectivity.
 
-### N+1
+**N+1.** N+1 возникает, когда список загружается одним query, а relationship каждого объекта — отдельным; query-count test и eager-loading делают проблему видимой.
 
-N+1 возникает, когда список загружается одним query, а relationship каждого объекта — отдельным; query-count test и eager-loading делают проблему видимой.
+**too many connections.** `too many connections` является компонентом system design только при наличии требования, source of truth и измеримого failure mode.
 
-### too many connections
+**lock contention.** Lock сериализует критическую секцию, но корректность требует единого порядка захвата и короткого времени удержания.
 
-Для `too many connections` начни с requirements/source of truth и только затем добавляй component под измеримый failure mode.
+**measure first.** `measure first` является компонентом system design только при наличии требования, source of truth и измеримого failure mode.
 
-### lock contention
 
-Lock сериализует критическую секцию, но корректность требует единого порядка захвата и короткого времени удержания.
+### Важный нюанс / limitation
 
-### measure first
+Граница Junior: уверенно объясняй `slow query` и `missing index` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
-Для `measure first` начни с requirements/source of truth и только затем добавляй component под измеримый failure mode.
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `slow query`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Сначала обеспечь корректность простого монолита; масштабируй измеренный bottleneck.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- slow query
+- missing index
+- N+1
+- too many connections
+
+### Полезно
+
+- lock contention
+- measure first
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -63,60 +82,17 @@ Slow queries, pool, plans, indexes, N+1.
 
 ## Common mistakes
 
-**Ошибка:** Начинать с microservices, не определив нагрузку, consistency и ownership.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Игнорировать ограничение механизма и проверять только happy path.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `slow query` до запуска.
 
-## Interview questions
+**B · Find the bug.** Найди нарушение `missing index` и объясни конкретное последствие.
 
-1. Объясни **Database bottlenecks** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Уточни traffic, consistency, latency и failure behavior перед схемой компонентов. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
-
-## Expected answer rubric
-
-### Must mention
-
-- slow query
-- missing index
-- N+1
-- too many connections
-- Сначала обеспечь корректность простого монолита; масштабируй измеренный bottleneck.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Начинать с microservices, не определив нагрузку, consistency и ownership.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- slow query
-- missing index
-- N+1
-- too many connections
-- lock contention
-- measure first.
-
-## Задача
-
-Разбери backend-сценарий: **Уточни traffic, consistency, latency и failure behavior перед схемой компонентов.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Дай ответ про Database bottlenecks за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Architecture practice
 
@@ -128,15 +104,70 @@ Slow queries, pool, plans, indexes, N+1.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое Database bottlenecks и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Database bottlenecks?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Database bottlenecks: это отдельный технический контракт
+
+### Нормальный Junior answer
+
+> Database bottlenecks — тема, в которой я сначала фиксирую `slow query`, затем объясняю `missing index` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Database bottlenecks?**
+
+Нужно назвать конкретный failure path и способ его проверить.
+
+## Expected answer rubric
+
+### Must mention
+
+- slow query
+- missing index
+- N+1
+- too many connections
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Игнорировать ограничение механизма и проверять только happy path.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какое ограничение или типичная ошибка относится именно к теме Database bottlenecks?
+
+## Задача
+
+Сделай короткую письменную практику по теме **Database bottlenecks**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Database bottlenecks**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Database bottlenecks: это отдельный технический контракт
+- **Механизм:** Сначала обеспечь корректность простого монолита; масштабируй измеренный bottleneck.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

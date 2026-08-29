@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «HTTP/HTTPS and TLS basics» как на Junior Python Backend interview.",
+    "question": "Что такое HTTP/HTTPS and TLS basics и как это работает?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "encryption",
       "authentication",
       "certificate",
-      "TLS termination",
-      "Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса."
+      "TLS termination"
     ],
+    "short_answer": "HTTPS is HTTP carried through TLS, providing encryption in transit, integrity and server authentication through certificates.",
+    "junior_answer": "HTTPS is HTTP carried through TLS, providing encryption in transit, integrity and server authentication through certificates. A TLS handshake negotiates keys and verifies the certificate chain; a reverse proxy may terminate TLS before forwarding to the app on a trusted network. Важное ограничение: HTTPS does not validate business permissions or encrypt data at rest.",
+    "follow_up_question": "Какая типичная ошибка связана с HTTP/HTTPS and TLS basics?",
+    "follow_up_answer": "Trusting forwarded scheme/client headers from arbitrary peers can make an app believe an insecure request was HTTPS.",
     "expected_answer": {
       "must_mention": [
         "encryption",
         "authentication",
         "certificate",
-        "TLS termination",
-        "Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса."
+        "TLS termination"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне.",
+        "Trusting forwarded scheme/client headers from arbitrary peers can make an app believe an insecure request was HTTPS.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне."
+        "Trusting forwarded scheme/client headers from arbitrary peers can make an app believe an insecure request was HTTPS."
       ],
       "follow_up_questions": [
-        "Спроектируй request/response контракт и объясни retry, idempotency и error body."
+        "Какая типичная ошибка связана с HTTP/HTTPS and TLS basics?"
       ]
     },
     "follow_ups": [
-      "Спроектируй request/response контракт и объясни retry, idempotency и error body."
+      "Какая типичная ошибка связана с HTTP/HTTPS and TLS basics?"
     ],
     "tags": [
       "stage-12",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «HTTP/HTTPS and TLS basics»: Спроектируй request/response контракт и объясни retry, idempotency и error body. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с HTTP/HTTPS and TLS basics?",
+    "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "no cryptography deep dive",
+      "Trusting forwarded scheme/client headers from arbitrary peers can make an app believe an insecure request was HTTPS."
     ],
+    "short_answer": "Trusting forwarded scheme/client headers from arbitrary peers can make an app believe an insecure request was HTTPS.",
+    "junior_answer": "Trusting forwarded scheme/client headers from arbitrary peers can make an app believe an insecure request was HTTPS.",
+    "follow_up_question": "Что такое HTTP/HTTPS and TLS basics и как это работает?",
+    "follow_up_answer": "HTTPS is HTTP carried through TLS, providing encryption in transit, integrity and server authentication through certificates. A TLS handshake negotiates keys and verifies the certificate chain; a reverse proxy may terminate TLS before forwarding to the app on a trusted network. Важное ограничение: HTTPS does not validate business permissions or encrypt data at rest.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "no cryptography deep dive"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Trusting forwarded scheme/client headers from arbitrary peers can make an app believe an insecure request was HTTPS."
       ],
       "red_flags": [
-        "Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне."
+        "Trusting forwarded scheme/client headers from arbitrary peers can make an app believe an insecure request was HTTPS."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое HTTP/HTTPS and TLS basics и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое HTTP/HTTPS and TLS basics и как это работает?"
     ],
     "tags": [
       "stage-12",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-12",

@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Sync, concurrency and parallelism» как на Junior Python Backend interview.",
+    "question": "Что такое Sync, concurrency and parallelism и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -8,34 +8,36 @@
       "sequential execution",
       "concurrency",
       "parallelism",
-      "I/O-bound",
-      "Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код."
+      "I/O-bound"
     ],
+    "short_answer": "Sequential code does one operation after another; concurrency makes progress on multiple tasks; parallelism executes work simultaneously.",
+    "junior_answer": "Sequential code does one operation after another; concurrency makes progress on multiple tasks; parallelism executes work simultaneously. Async and threads often provide concurrency for I/O waits, while processes can provide parallel execution for CPU-bound Python. Важное ограничение: Concurrency can reduce idle time but adds ordering, cancellation and shared-state concerns; it does not make a single CPU calculation faster by itself.",
+    "follow_up_question": "Какая типичная ошибка связана с Sync, concurrency and parallelism?",
+    "follow_up_answer": "Selecting async for CPU-heavy work without moving it off the event loop increases latency for every request.",
     "expected_answer": {
       "must_mention": [
         "sequential execution",
         "concurrency",
         "parallelism",
-        "I/O-bound",
-        "Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код."
+        "I/O-bound"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint.",
+        "Selecting async for CPU-heavy work without moving it off the event loop increases latency for every request.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint."
+        "Selecting async for CPU-heavy work without moving it off the event loop increases latency for every request."
       ],
       "follow_up_questions": [
-        "Найди blocking участок, обозначь cancellation boundary и выбери способ конкурентного запуска."
+        "Какая типичная ошибка связана с Sync, concurrency and parallelism?"
       ]
     },
     "follow_ups": [
-      "Найди blocking участок, обозначь cancellation boundary и выбери способ конкурентного запуска."
+      "Какая типичная ошибка связана с Sync, concurrency and parallelism?"
     ],
     "tags": [
       "stage-08",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Sync, concurrency and parallelism»: Найди blocking участок, обозначь cancellation boundary и выбери способ конкурентного запуска. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Sync, concurrency and parallelism?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "CPU-bound",
+      "Selecting async for CPU-heavy work without moving it off the event loop increases latency for every request."
     ],
+    "short_answer": "Selecting async for CPU-heavy work without moving it off the event loop increases latency for every request.",
+    "junior_answer": "Selecting async for CPU-heavy work without moving it off the event loop increases latency for every request.",
+    "follow_up_question": "Что такое Sync, concurrency and parallelism и как это работает?",
+    "follow_up_answer": "Sequential code does one operation after another; concurrency makes progress on multiple tasks; parallelism executes work simultaneously. Async and threads often provide concurrency for I/O waits, while processes can provide parallel execution for CPU-bound Python. Важное ограничение: Concurrency can reduce idle time but adds ordering, cancellation and shared-state concerns; it does not make a single CPU calculation faster by itself.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "CPU-bound"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Selecting async for CPU-heavy work without moving it off the event loop increases latency for every request."
       ],
       "red_flags": [
-        "Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint."
+        "Selecting async for CPU-heavy work without moving it off the event loop increases latency for every request."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Sync, concurrency and parallelism и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Sync, concurrency and parallelism и как это работает?"
     ],
     "tags": [
       "stage-08",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-08",

@@ -7,42 +7,62 @@
 
 После урока ты сможешь:
 
-- объяснить `request/response` своими словами и связать с backend-сценарием;
-- объяснить `auth` своими словами и связать с backend-сценарием;
-- объяснить `validation` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **FastAPI tests**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `request/response`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Тест подтверждает observable contract в изолированном сценарии; хорошие tests детерминированы и объясняют failure.
+### Что это
 
-В теме **FastAPI tests** важно уверенно объяснять следующие части:
+Это инструмент проверки observable contract с контролируемым setup, failure и cleanup.
 
-### request/response
+### Как работает
 
-Для `request/response` сформулируй observable contract, isolation boundary и failure, который обязан поймать test.
+Сформулируй observable behavior, выбери isolation boundary и добавь case, который падает при реальном regression.
 
-### auth
+**request/response.** `request/response` помогает проверить observable contract; test задаёт isolation boundary, конкретный input и ожидаемый success/failure result.
 
-Для `auth` сформулируй observable contract, isolation boundary и failure, который обязан поймать test.
+**auth.** `auth` помогает проверить observable contract; test задаёт isolation boundary, конкретный input и ожидаемый success/failure result.
 
-### validation
+**validation.** `validation` помогает проверить observable contract; test задаёт isolation boundary, конкретный input и ожидаемый success/failure result.
 
-Для `validation` сформулируй observable contract, isolation boundary и failure, который обязан поймать test.
+**dependency overrides.** Dependency объявляет вход handler/service явно; FastAPI разрешает graph зависимостей на request, cache-ит результат в его рамках и выполняет cleanup yield-dependency.
 
-### dependency overrides
+**lifespan.** Lifespan управляет ресурсами уровня приложения: код до `yield` создаёт client/pool, код после `yield` гарантированно закрывает их при shutdown.
 
-Dependency объявляет вход handler/service явно; FastAPI разрешает graph зависимостей на request, cache-ит результат в его рамках и выполняет cleanup yield-dependency.
 
-### lifespan
+### Важный нюанс / limitation
 
-Lifespan управляет ресурсами уровня приложения: код до `yield` создаёт client/pool, код после `yield` гарантированно закрывает их при shutdown.
+Граница Junior: уверенно объясняй `request/response` и `auth` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `request/response`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Arrange создаёт условия, Act выполняет одно поведение, Assert проверяет значимый результат.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- request/response
+- auth
+- validation
+- dependency overrides
+
+### Полезно
+
+- lifespan
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -59,59 +79,17 @@ app.dependency_overrides и cleanup.
 
 ## Common mistakes
 
-**Ошибка:** Mock не в том namespace, shared fixture state или тест только happy path.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `request/response` до запуска.
 
-## Interview questions
+**B · Find the bug.** Найди нарушение `auth` и объясни конкретное последствие.
 
-1. Объясни **FastAPI tests** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Выдели unit boundary, integration boundary и критичный failure case. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
-
-## Expected answer rubric
-
-### Must mention
-
-- request/response
-- auth
-- validation
-- dependency overrides
-- Arrange создаёт условия, Act выполняет одно поведение, Assert проверяет значимый результат.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Mock не в том namespace, shared fixture state или тест только happy path.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- request/response
-- auth
-- validation
-- dependency overrides
-- lifespan.
-
-## Задача
-
-Разбери backend-сценарий: **Выдели unit boundary, integration boundary и критичный failure case.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Дай ответ про FastAPI tests за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Testing practice
 
@@ -123,15 +101,70 @@ app.dependency_overrides и cleanup.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое FastAPI tests и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме FastAPI tests?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+FastAPI tests: Это инструмент проверки observable contract с контролируемым setup, failure и cleanup.
+
+### Нормальный Junior answer
+
+> FastAPI tests — тема, в которой я сначала фиксирую `request/response`, затем объясняю `auth` на коротком примере. Ключевой механизм: Сформулируй observable behavior, выбери isolation boundary и добавь case, который падает при реальном regression. Главная практическая ошибка — Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме FastAPI tests?**
+
+Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior.
+
+## Expected answer rubric
+
+### Must mention
+
+- request/response
+- auth
+- validation
+- dependency overrides
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какое ограничение или типичная ошибка относится именно к теме FastAPI tests?
+
+## Задача
+
+Сделай короткую письменную практику по теме **FastAPI tests**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **FastAPI tests**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** FastAPI tests: Это инструмент проверки observable contract с контролируемым setup, failure и cleanup.
+- **Механизм:** Arrange создаёт условия, Act выполняет одно поведение, Assert проверяет значимый результат.
+- **Ограничение:** Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

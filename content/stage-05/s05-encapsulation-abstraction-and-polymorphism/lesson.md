@@ -7,38 +7,52 @@
 
 После урока ты сможешь:
 
-- объяснить `practical Python meaning` своими словами и связать с backend-сценарием;
-- объяснить `duck typing` своими словами и связать с backend-сценарием;
-- объяснить `contracts` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Encapsulation, abstraction and polymorphism**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `practical Python meaning`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-ООП в backend полезно как способ выразить состояние, поведение и границы ответственности, а не как соревнование по наследованию.
+### Что это
 
-В теме **Encapsulation, abstraction and polymorphism** важно уверенно объяснять следующие части:
+Encapsulation groups state and behavior, abstraction exposes a relevant contract, and polymorphism lets different objects satisfy that contract.
 
-### practical Python meaning
+### Как работает
 
-Для `practical Python meaning` укажи, где хранится state, как Python ищет behavior и почему выбран composition/inheritance.
+Python often uses duck typing: caller depends on available behavior rather than a concrete inheritance tree. ABC and Protocol can make the contract explicit when useful.
 
-### duck typing
 
-Для `duck typing` укажи, где хранится state, как Python ищет behavior и почему выбран composition/inheritance.
+### Важный нюанс / limitation
 
-### contracts
+Leading underscores communicate non-public API but are not access control; invariants still need methods/properties and tests.
 
-Для `contracts` укажи, где хранится state, как Python ищет behavior и почему выбран composition/inheritance.
+### Где используется в backend
 
-### avoid Java-style ceremony
-
-Для `avoid Java-style ceremony` укажи, где хранится state, как Python ищет behavior и почему выбран composition/inheritance.
+A service can accept any notifier implementing `send`, allowing a fake in tests and different providers in production.
 
 ## Mental model
 
 У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- practical Python meaning
+- duck typing
+- contracts
+- avoid Java-style ceremony
+
+### Полезно
+
+- one short code/result example
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -63,58 +77,19 @@ Polymorphism позволяет caller работать через behavior cont
 
 ## Common mistakes
 
-**Ошибка:** Создавать глубокую иерархию ради переиспользования нескольких строк.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Checking `type(obj) is ConcreteClass` blocks valid substitutes and defeats polymorphism.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `practical Python meaning` example and predict the result before running it.
 
-## Interview questions
+**B · Find the bug.** Find code that violates `duck typing` and explain the concrete consequence.
 
-1. Объясни **Encapsulation, abstraction and polymorphism** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Сравни composition и inheritance для сервиса уведомлений и назови цену изменения. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+**D · Small task.** Implement the smallest function/query that demonstrates `practical Python meaning` and add one edge-case test.
 
-## Expected answer rubric
-
-### Must mention
-
-- practical Python meaning
-- duck typing
-- contracts
-- avoid Java-style ceremony.
-- У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Создавать глубокую иерархию ради переиспользования нескольких строк.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- practical Python meaning
-- duck typing
-- contracts
-- avoid Java-style ceremony.
-
-## Задача
-
-Разбери backend-сценарий: **Сравни composition и inheritance для сервиса уведомлений и назови цену изменения.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Explain Encapsulation, abstraction and polymorphism in 45–60 seconds and include one limitation.
 
 ## Code prediction
 
@@ -145,15 +120,70 @@ Misconception: `mro`.
 
 </details>
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое Encapsulation, abstraction and polymorphism и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Encapsulation, abstraction and polymorphism?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Encapsulation groups state and behavior, abstraction exposes a relevant contract, and polymorphism lets different objects satisfy that contract.
+
+### Нормальный Junior answer
+
+> Encapsulation groups state and behavior, abstraction exposes a relevant contract, and polymorphism lets different objects satisfy that contract. Python often uses duck typing: caller depends on available behavior rather than a concrete inheritance tree. ABC and Protocol can make the contract explicit when useful. Важное ограничение: Leading underscores communicate non-public API but are not access control; invariants still need methods/properties and tests.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Encapsulation, abstraction and polymorphism?**
+
+Checking `type(obj) is ConcreteClass` blocks valid substitutes and defeats polymorphism.
+
+## Expected answer rubric
+
+### Must mention
+
+- practical Python meaning
+- duck typing
+- contracts
+- avoid Java-style ceremony
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Checking `type(obj) is ConcreteClass` blocks valid substitutes and defeats polymorphism.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какая типичная ошибка связана с Encapsulation, abstraction and polymorphism?
+
+## Задача
+
+Сделай короткую письменную практику по теме **Encapsulation, abstraction and polymorphism**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Encapsulation, abstraction and polymorphism**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Encapsulation groups state and behavior, abstraction exposes a relevant contract, and polymorphism lets different objects satisfy that contract.
+- **Механизм:** У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.
+- **Ограничение:** Checking `type(obj) is ConcreteClass` blocks valid substitutes and defeats polymorphism.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

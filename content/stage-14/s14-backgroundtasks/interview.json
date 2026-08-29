@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «BackgroundTasks» как на Junior Python Backend interview.",
+    "question": "Что такое BackgroundTasks и как это работает?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "runs after response in same application process",
       "small non-critical work",
       "not durable",
-      "lost on crash",
-      "Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency."
+      "lost on crash"
     ],
+    "short_answer": "FastAPI `BackgroundTasks` schedules small in-process work after the response is sent.",
+    "junior_answer": "FastAPI `BackgroundTasks` schedules small in-process work after the response is sent. The task runs in the same application process and has no durable delivery, distributed retry or crash recovery guarantee. Важное ограничение: Use it for small non-critical actions; use a queue/worker and idempotency for durable jobs.",
+    "follow_up_question": "Какая типичная ошибка связана с BackgroundTasks?",
+    "follow_up_answer": "Sending a critical payment/email only via BackgroundTasks can lose it on process restart.",
     "expected_answer": {
       "must_mention": [
         "runs after response in same application process",
         "small non-critical work",
         "not durable",
-        "lost on crash",
-        "Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency."
+        "lost on crash"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Открывать Session глобально или выполнять blocking I/O в async route.",
+        "Sending a critical payment/email only via BackgroundTasks can lose it on process restart.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Открывать Session глобально или выполнять blocking I/O в async route."
+        "Sending a critical payment/email only via BackgroundTasks can lose it on process restart."
       ],
       "follow_up_questions": [
-        "Проследи request от router через dependency и service до response model."
+        "Какая типичная ошибка связана с BackgroundTasks?"
       ]
     },
     "follow_ups": [
-      "Проследи request от router через dependency и service до response model."
+      "Какая типичная ошибка связана с BackgroundTasks?"
     ],
     "tags": [
       "stage-14",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «BackgroundTasks»: Проследи request от router через dependency и service до response model. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с BackgroundTasks?",
+    "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "not a replacement for Celery/outbox",
+      "Sending a critical payment/email only via BackgroundTasks can lose it on process restart."
     ],
+    "short_answer": "Sending a critical payment/email only via BackgroundTasks can lose it on process restart.",
+    "junior_answer": "Sending a critical payment/email only via BackgroundTasks can lose it on process restart.",
+    "follow_up_question": "Что такое BackgroundTasks и как это работает?",
+    "follow_up_answer": "FastAPI `BackgroundTasks` schedules small in-process work after the response is sent. The task runs in the same application process and has no durable delivery, distributed retry or crash recovery guarantee. Важное ограничение: Use it for small non-critical actions; use a queue/worker and idempotency for durable jobs.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "not a replacement for Celery/outbox"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Sending a critical payment/email only via BackgroundTasks can lose it on process restart."
       ],
       "red_flags": [
-        "Открывать Session глобально или выполнять blocking I/O в async route."
+        "Sending a critical payment/email only via BackgroundTasks can lose it on process restart."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое BackgroundTasks и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое BackgroundTasks и как это работает?"
     ],
     "tags": [
       "stage-14",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-14",

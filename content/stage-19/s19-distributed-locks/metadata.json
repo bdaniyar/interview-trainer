@@ -16,7 +16,7 @@
     "DB constraints often stronger for business invariants",
     "no claims of perfect distributed correctness."
   ],
-  "description": "P2 · Distributed locks: mental model, interview rubric и backend-сценарий.",
+  "description": "P2 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
   "has_task": false,
   "has_solution": false,
   "priority": "P2",

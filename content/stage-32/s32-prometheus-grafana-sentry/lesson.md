@@ -7,42 +7,62 @@
 
 После урока ты сможешь:
 
-- объяснить `Prometheus collects time-series metrics` своими словами и связать с backend-сценарием;
-- объяснить `Grafana visualizes data and dashboards` своими словами и связать с backend-сценарием;
-- объяснить `Sentry groups application errors with stack/context` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Prometheus/Grafana/Sentry**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `Prometheus collects time-series metrics`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Resume Defense проверяет каждую заявленную технологию через конкретную роль в StudyHub, Hotel Booking или Share Recipe.
+### Что это
 
-В теме **Prometheus/Grafana/Sentry** важно уверенно объяснять следующие части:
+Тема **Prometheus/Grafana/Sentry** описывает отдельный контракт backend-разработки.
 
-### Prometheus collects time-series metrics
+### Как работает
 
-Для `Prometheus collects time-series metrics` отвечай только по реализованному flow: проблема, своё решение, trade-off, failure mode и test/metric.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
 
-### Grafana visualizes data and dashboards
+**Prometheus collects time-series metrics.** `Prometheus collects time-series metrics` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
 
-Для `Grafana visualizes data and dashboards` отвечай только по реализованному flow: проблема, своё решение, trade-off, failure mode и test/metric.
+**Grafana visualizes data and dashboards.** `Grafana visualizes data and dashboards` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
 
-### Sentry groups application errors with stack/context
+**Sentry groups application errors with stack/context.** GROUP BY формирует группы до вычисления aggregates, а HAVING фильтрует уже агрегированные группы.
 
-GROUP BY формирует группы до вычисления aggregates, а HAVING фильтрует уже агрегированные группы.
+**candidate configured and used them in a pet-project.** `candidate configured and used them in a pet-project` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
 
-### candidate configured and used them in a pet-project
+**candidate did not administer a production monitoring cluster.** `candidate did not administer a production monitoring cluster` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
 
-Для `candidate configured and used them in a pet-project` отвечай только по реализованному flow: проблема, своё решение, trade-off, failure mode и test/metric.
 
-### candidate did not administer a production monitoring cluster
+### Важный нюанс / limitation
 
-Для `candidate did not administer a production monitoring cluster` отвечай только по реализованному flow: проблема, своё решение, trade-off, failure mode и test/metric.
+Граница Junior: уверенно объясняй `Prometheus collects time-series metrics` и `Grafana visualizes data and dashboards` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `Prometheus collects time-series metrics`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- Prometheus collects time-series metrics
+- Grafana visualizes data and dashboards
+- Sentry groups application errors with stack/context
+- candidate configured and used them in a pet-project
+
+### Полезно
+
+- candidate did not administer a production monitoring cluster
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -65,19 +85,45 @@ GROUP BY формирует группы до вычисления aggregates, �
 
 ## Common mistakes
 
-**Ошибка:** Приписывать себе production scale, AWS, Kubernetes, Kafka или RabbitMQ без фактического опыта.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Игнорировать ограничение механизма и проверять только happy path.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `Prometheus collects time-series metrics` до запуска.
+
+**B · Find the bug.** Найди нарушение `Grafana visualizes data and dashboards` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Prometheus/Grafana/Sentry за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Prometheus/Grafana/Sentry** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Защити один claim, назвав точный flow, failure mode и способ проверки. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Prometheus/Grafana/Sentry и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Prometheus/Grafana/Sentry?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Prometheus/Grafana/Sentry: это отдельный технический контракт
+
+### Нормальный Junior answer
+
+> Prometheus/Grafana/Sentry — тема, в которой я сначала фиксирую `Prometheus collects time-series metrics`, затем объясняю `Grafana visualizes data and dashboards` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Prometheus/Grafana/Sentry?**
+
+Нужно назвать конкретный failure path и способ его проверить.
 
 ## Expected answer rubric
 
@@ -87,47 +133,34 @@ GROUP BY формирует группы до вычисления aggregates, �
 - Grafana visualizes data and dashboards
 - Sentry groups application errors with stack/context
 - candidate configured and used them in a pet-project
-- Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Приписывать себе production scale, AWS, Kubernetes, Kafka или RabbitMQ без фактического опыта.
-- ответ из одного определения без механизма и failure mode.
+- Игнорировать ограничение механизма и проверять только happy path.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- Prometheus collects time-series metrics
-- Grafana visualizes data and dashboards
-- Sentry groups application errors with stack/context
-- candidate configured and used them in a pet-project
-- candidate did not administer a production monitoring cluster.
+- Какое ограничение или типичная ошибка относится именно к теме Prometheus/Grafana/Sentry?
 
 ## Задача
 
-Разбери backend-сценарий: **Защити один claim, назвав точный flow, failure mode и способ проверки.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Prometheus/Grafana/Sentry**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Prometheus/Grafana/Sentry**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Prometheus/Grafana/Sentry: это отдельный технический контракт
+- **Механизм:** Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

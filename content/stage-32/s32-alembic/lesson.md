@@ -7,38 +7,60 @@
 
 После урока ты сможешь:
 
-- объяснить `versioned schema` своими словами и связать с backend-сценарием;
-- объяснить `autogenerate review` своими словами и связать с backend-сценарием;
-- объяснить `expand/contract` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Alembic**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `versioned schema`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Resume Defense проверяет каждую заявленную технологию через конкретную роль в StudyHub, Hotel Booking или Share Recipe.
+### Что это
 
-В теме **Alembic** важно уверенно объяснять следующие части:
+Тема **Alembic** описывает отдельный контракт backend-разработки.
 
-### versioned schema
+### Как работает
 
-Для `versioned schema` отвечай только по реализованному flow: проблема, своё решение, trade-off, failure mode и test/metric.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
 
-### autogenerate review
+**versioned schema.** `versioned schema` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
 
-Для `autogenerate review` отвечай только по реализованному flow: проблема, своё решение, trade-off, failure mode и test/metric.
+**autogenerate review.** `autogenerate review` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
 
-### expand/contract
+**expand/contract.** `expand/contract` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
 
-Для `expand/contract` отвечай только по реализованному flow: проблема, своё решение, trade-off, failure mode и test/metric.
+**data migration/rollback awareness.** Rollback отменяет текущую transaction и возвращает Session в usable state; после flush error продолжать без rollback нельзя.
 
-### data migration/rollback awareness
 
-Rollback отменяет текущую transaction и возвращает Session в usable state; после flush error продолжать без rollback нельзя.
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `versioned schema` и `autogenerate review` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `versioned schema`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- versioned schema
+- autogenerate review
+- expand/contract
+- data migration/rollback awareness
+
+### Полезно
+
+- связать Alembic с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -61,19 +83,45 @@ Rollback отменяет текущую transaction и возвращает Ses
 
 ## Common mistakes
 
-**Ошибка:** Приписывать себе production scale, AWS, Kubernetes, Kafka или RabbitMQ без фактического опыта.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Игнорировать ограничение механизма и проверять только happy path.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `versioned schema` до запуска.
+
+**B · Find the bug.** Найди нарушение `autogenerate review` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Alembic за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Alembic** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Защити один claim, назвав точный flow, failure mode и способ проверки. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Alembic и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Alembic?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Alembic: это отдельный технический контракт
+
+### Нормальный Junior answer
+
+> Alembic — тема, в которой я сначала фиксирую `versioned schema`, затем объясняю `autogenerate review` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Alembic?**
+
+Нужно назвать конкретный failure path и способ его проверить.
 
 ## Expected answer rubric
 
@@ -82,47 +130,35 @@ Rollback отменяет текущую transaction и возвращает Ses
 - versioned schema
 - autogenerate review
 - expand/contract
-- data migration/rollback awareness.
-- Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы.
+- data migration/rollback awareness
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Приписывать себе production scale, AWS, Kubernetes, Kafka или RabbitMQ без фактического опыта.
-- ответ из одного определения без механизма и failure mode.
+- Игнорировать ограничение механизма и проверять только happy path.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- versioned schema
-- autogenerate review
-- expand/contract
-- data migration/rollback awareness.
+- Какое ограничение или типичная ошибка относится именно к теме Alembic?
 
 ## Задача
 
-Разбери backend-сценарий: **Защити один claim, назвав точный flow, failure mode и способ проверки.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Alembic**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Alembic**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Alembic: это отдельный технический контракт
+- **Механизм:** Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

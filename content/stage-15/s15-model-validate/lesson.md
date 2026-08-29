@@ -7,29 +7,54 @@
 
 После урока ты сможешь:
 
-- объяснить `validating objects/data` своими словами и связать с backend-сценарием;
-- объяснить `ORM attributes.` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **`model_validate`**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `validating objects/data`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Pydantic v2 преобразует и валидирует данные на границе; модель должна явно описывать required, nullable и default semantics.
+### Что это
 
-В теме **`model_validate`** важно уверенно объяснять следующие части:
+Это часть Pydantic v2 boundary между недоверенным input, validated model и serialized output.
 
-### validating objects/data
+### Как работает
 
-Для `validating objects/data` различай missing, explicit null, invalid input и serialized output Pydantic v2.
+Проверь четыре состояния: missing, explicit null, invalid type/value и сериализованный результат.
 
-### ORM attributes
+**validating objects/data.** `validating objects/data` влияет на Pydantic v2 validation/serialization и должен различать missing, explicit null, invalid input и output representation.
 
-Для `ORM attributes` различай missing, explicit null, invalid input и serialized output Pydantic v2.
+**ORM attributes.** `ORM attributes` влияет на Pydantic v2 validation/serialization и должен различать missing, explicit null, invalid input и output representation.
+
+
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `validating objects/data` и `ORM attributes` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `validating objects/data`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Сначала приходит недоверенный input, затем core schema выполняет validation, после чего model_dump управляет serialization.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- validating objects/data
+- ORM attributes
+
+### Полезно
+
+- связать `model_validate` с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -47,64 +72,80 @@ assert example_s15_model_validate()
 
 ## Common mistakes
 
-**Ошибка:** Путать str | None с полем, которое можно полностью не передать.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Смешать missing и explicit null либо считать coercion бизнес-валидацией.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `validating objects/data` до запуска.
+
+**B · Find the bug.** Найди нарушение `ORM attributes` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про `model_validate` за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **`model_validate`** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Проверь missing, explicit null, неверный тип и сериализованный результат. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое `model_validate` и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме `model_validate`?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+`model_validate`: Это часть Pydantic v2 boundary между недоверенным input, validated model и serialized output.
+
+### Нормальный Junior answer
+
+> `model_validate` — тема, в которой я сначала фиксирую `validating objects/data`, затем объясняю `ORM attributes` на коротком примере. Ключевой механизм: Проверь четыре состояния: missing, explicit null, invalid type/value и сериализованный результат. Главная практическая ошибка — Смешать missing и explicit null либо считать coercion бизнес-валидацией.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме `model_validate`?**
+
+Смешать missing и explicit null либо считать coercion бизнес-валидацией.
 
 ## Expected answer rubric
 
 ### Must mention
 
 - validating objects/data
-- ORM attributes.
-- Сначала приходит недоверенный input, затем core schema выполняет validation, после чего model_dump управляет serialization.
+- ORM attributes
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Путать str | None с полем, которое можно полностью не передать.
-- ответ из одного определения без механизма и failure mode.
+- Смешать missing и explicit null либо считать coercion бизнес-валидацией.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- validating objects/data
-- ORM attributes.
+- Какое ограничение или типичная ошибка относится именно к теме `model_validate`?
 
 ## Задача
 
-Разбери backend-сценарий: **Проверь missing, explicit null, неверный тип и сериализованный результат.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **`model_validate`**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **`model_validate`**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** `model_validate`: Это часть Pydantic v2 boundary между недоверенным input, validated model и serialized output.
+- **Механизм:** Сначала приходит недоверенный input, затем core schema выполняет validation, после чего model_dump управляет serialization.
+- **Ограничение:** Смешать missing и explicit null либо считать coercion бизнес-валидацией.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

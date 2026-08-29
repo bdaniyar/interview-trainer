@@ -7,34 +7,57 @@
 
 После урока ты сможешь:
 
-- объяснить `backfill` своими словами и связать с backend-сценарием;
-- объяснить `batching` своими словами и связать с backend-сценарием;
-- объяснить `transaction/runtime concerns.` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Data migrations**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `backfill`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Alembic хранит версионированную историю изменений схемы; autogenerate создаёт кандидат на migration, а не доказательство корректности.
+### Что это
 
-В теме **Data migrations** важно уверенно объяснять следующие части:
+Это версионированный переход schema, который должен безопасно работать с кодом во время deploy.
 
-### backfill
+### Как работает
 
-Для `backfill` опиши проверяемый schema transition и отдельно риски upgrade, deploy compatibility и rollback.
+Раздели upgrade, совместимость старого/нового кода, backfill и rollback; autogenerate обязательно review.
 
-### batching
+**backfill.** `backfill` является частью versioned schema transition; безопасный вариант учитывает upgrade, deploy compatibility, backfill и rollback.
 
-Для `batching` опиши проверяемый schema transition и отдельно риски upgrade, deploy compatibility и rollback.
+**batching.** `batching` является частью versioned schema transition; безопасный вариант учитывает upgrade, deploy compatibility, backfill и rollback.
 
-### transaction/runtime concerns
+**transaction/runtime concerns.** Transaction задаёт атомарную границу: либо все связанные изменения становятся видимыми, либо выполняется rollback.
 
-Transaction задаёт атомарную границу: либо все связанные изменения становятся видимыми, либо выполняется rollback.
+
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `backfill` и `batching` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `backfill`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Migration — воспроизводимый переход между версиями, который нужно review, test и безопасно раскатывать.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- backfill
+- batching
+- transaction/runtime concerns
+
+### Полезно
+
+- связать Data migrations с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -50,19 +73,45 @@ Review migration как versioned schema transition; autogenerate — тольк
 
 ## Common mistakes
 
-**Ошибка:** Слепо принимать autogenerate или совмещать несовместимое изменение в один deploy.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Принять autogenerate без review или выпустить несовместимые schema/code изменения одним шагом.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `backfill` до запуска.
+
+**B · Find the bug.** Найди нарушение `batching` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Data migrations за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Data migrations** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Предложи expand/contract sequence для изменения schema без остановки API. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Data migrations и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Data migrations?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Data migrations: Это версионированный переход schema, который должен безопасно работать с кодом во время deploy.
+
+### Нормальный Junior answer
+
+> Data migrations — тема, в которой я сначала фиксирую `backfill`, затем объясняю `batching` на коротком примере. Ключевой механизм: Раздели upgrade, совместимость старого/нового кода, backfill и rollback; autogenerate обязательно review. Главная практическая ошибка — Принять autogenerate без review или выпустить несовместимые schema/code изменения одним шагом.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Data migrations?**
+
+Принять autogenerate без review или выпустить несовместимые schema/code изменения одним шагом.
 
 ## Expected answer rubric
 
@@ -70,46 +119,35 @@ Review migration как versioned schema transition; autogenerate — тольк
 
 - backfill
 - batching
-- transaction/runtime concerns.
-- Migration — воспроизводимый переход между версиями, который нужно review, test и безопасно раскатывать.
+- transaction/runtime concerns
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Слепо принимать autogenerate или совмещать несовместимое изменение в один deploy.
-- ответ из одного определения без механизма и failure mode.
+- Принять autogenerate без review или выпустить несовместимые schema/code изменения одним шагом.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- backfill
-- batching
-- transaction/runtime concerns.
+- Какое ограничение или типичная ошибка относится именно к теме Data migrations?
 
 ## Задача
 
-Разбери backend-сценарий: **Предложи expand/contract sequence для изменения schema без остановки API.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Data migrations**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Data migrations**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Data migrations: Это версионированный переход schema, который должен безопасно работать с кодом во время deploy.
+- **Механизм:** Migration — воспроизводимый переход между версиями, который нужно review, test и безопасно раскатывать.
+- **Ограничение:** Принять autogenerate без review или выпустить несовместимые schema/code изменения одним шагом.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

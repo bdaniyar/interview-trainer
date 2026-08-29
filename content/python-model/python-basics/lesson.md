@@ -7,106 +7,49 @@
 
 После урока ты сможешь:
 
-- объяснить `object` своими словами и связать с backend-сценарием;
-- объяснить `type` своими словами и связать с backend-сценарием;
-- объяснить `name` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Object, type, name and binding**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `object`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Добро пожаловать в курс Python для опытных разработчиков. Здесь мы не учимся писать `if` и `for` — мы разбираем, почему Python ведёт себя именно так, и как использовать это в реальном backend-коде.
+### Что это
 
-На платформе можно читать теорию и сразу применять её на практике, редактировать файлы в браузере, запускать решение и проверять его тестами.
+Python name is a label in a namespace bound to an object; assignment binds a name and normally does not copy the object.
 
-### Как Python смотрит на объекты
+### Как работает
 
-В Python почти всё — объекты: числа, строки, функции, классы и даже сами классы классов.
+Each object has a type, identity and value. `a = b` makes both names refer to the same object; later rebinding `a = ...` changes only name `a`, while mutation is visible through every alias.
 
-```python
-message = "Learn with Pythoria"
-```
 
-Переменная `message` не хранит строку внутри себя. Она связывает имя с объектом строки.
+### Важный нюанс / limitation
 
-```python
-a = [1, 2]
-b = a  # b ссылается на тот же список
-b.append(3)
-
-print(a)  # [1, 2, 3]
-print(b)  # [1, 2, 3]
-```
-
-> [!NOTE]
-> Имя связывается с объектом, а не «копирует значение» автоматически.
-
-### Пространства имён
-
-Пространство имён хранит соответствие между именем и объектом. Чаще всего встречаются локальное пространство функции, глобальное пространство модуля и встроенное пространство.
-
-```python
-title = "Backend powers the world"
-
-def show():
-    title = "Coding is magic"
-    print(title)
-
-show()
-print(title)
-```
-
-### Mutability и immutability
-
-`list`, `dict`, `set` изменяемы; `int`, `str`, `tuple` обычно неизменяемы.
-
-| Тип | Изменяемость | Хешируемость |
-| --- | --- | --- |
-| `list` | да | нет |
-| `dict` | да | нет |
-| `str` | нет | да |
-| `tuple` | нет | зависит от элементов |
-
-### Data model и dunder-методы
-
-Когда ты пишешь `len(obj)`, `print(obj)` или `obj[0]`, Python использует протоколы data model и специальные методы.
-
-```python
-class LessonBox:
-    def __init__(self, topic):
-        self.topic = topic
-
-    def __repr__(self):
-        return f"LessonBox(topic={self.topic!r})"
-
-    def __str__(self):
-        return f"Урок: {self.topic}"
-```
-
-### MRO и поиск атрибутов
-
-MRO определяет порядок поиска методов при наследовании. Для `class D(B, C)` Python пройдёт цепочку `D -> B -> C -> A -> object` согласно C3-линеаризации.
-
-### Дескрипторы
-
-Дескриптор управляет доступом к атрибуту через `__get__`, `__set__` и `__delete__`. На этой идее построены `property`, методы и многие ORM.
-
-### Метаклассы
-
-Обычный объект создаётся классом, а класс обычно создаётся метаклассом `type`.
-
-```python
-class Event:
-    pass
-
-print(type(Event))    # <class 'type'>
-print(type(Event()))  # <class '__main__.Event'>
-```
+Function arguments use the same object-reference model: a function can mutate a passed list, but rebinding its local parameter does not rebind the caller's name.
 
 ## Mental model
 
 Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- object
+- type
+- name
+- binding
+
+### Полезно
+
+- переменная как имя, связанное с объектом
+- assignment не копирует объект
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -127,19 +70,47 @@ print(message, alias)
 
 ## Common mistakes
 
-**Ошибка:** Объяснять переменную как коробку, которая всегда содержит независимое значение.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Treating a variable as an independent box leads to wrong predictions for aliases and function arguments.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `object` example and predict the result before running it.
+
+**B · Find the bug.** Find code that violates `type` and explain the concrete consequence.
+
+**D · Small task.** Implement the smallest function/query that demonstrates `object` and add one edge-case test.
+
+**E · Interview explanation.** Explain Object, type, name and binding in 45–60 seconds and include one limitation.
 
 ## Interview questions
 
-1. Объясни **Object, type, name and binding** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Проследи identity и состояние объекта после двух присваиваний и одной мутации. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Object, type, name and binding и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Object, type, name and binding?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Python name is a label in a namespace bound to an object; assignment binds a name and normally does not copy the object.
+
+### Нормальный Junior answer
+
+> Python name is a label in a namespace bound to an object; assignment binds a name and normally does not copy the object. Each object has a type, identity and value. `a = b` makes both names refer to the same object; later rebinding `a = ...` changes only name `a`, while mutation is visible through every alias. Важное ограничение: Function arguments use the same object-reference model: a function can mutate a passed list, but rebinding its local parameter does not rebind the caller's name.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Object, type, name and binding?**
+
+Treating a variable as an independent box leads to wrong predictions for aliases and function arguments.
 
 ## Expected answer rubric
 
@@ -149,56 +120,34 @@ print(message, alias)
 - type
 - name
 - binding
-- Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Объяснять переменную как коробку, которая всегда содержит независимое значение.
-- ответ из одного определения без механизма и failure mode.
+- Treating a variable as an independent box leads to wrong predictions for aliases and function arguments.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- object
-- type
-- name
-- binding
-- переменная как имя, связанное с объектом
-- assignment не копирует объект
-- rebinding
-- multiple names for one object.
+- Какая типичная ошибка связана с Object, type, name and binding?
 
 ## Задача
 
-В `main.py` создай класс `MagicBox`:
-
-- конструктор принимает строку `text`;
-- `__str__` возвращает `Message: <text>`;
-- `__repr__` возвращает `MagicBox(text='<text>')`;
-- `__len__` возвращает длину `text`;
-- `__bool__` возвращает `False` для пустой строки, иначе `True`.
-
-Создай объекты `filled = MagicBox("Coding is magic")` и `empty = MagicBox("")`, затем переменные `filled_str`, `filled_repr`, `filled_len`, `filled_bool`, `empty_bool`. Ничего не печатай: тесты проверят переменные модуля.
+Сделай короткую письменную практику по теме **Object, type, name and binding**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Object, type, name and binding**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Python name is a label in a namespace bound to an object; assignment binds a name and normally does not copy the object.
+- **Механизм:** Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию.
+- **Ограничение:** Treating a variable as an independent box leads to wrong predictions for aliases and function arguments.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

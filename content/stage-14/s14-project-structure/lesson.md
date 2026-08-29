@@ -7,50 +7,49 @@
 
 После урока ты сможешь:
 
-- объяснить `routers` своими словами и связать с backend-сценарием;
-- объяснить `schemas` своими словами и связать с backend-сценарием;
-- объяснить `services` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Project structure**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `routers`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-FastAPI связывает ASGI request lifecycle, routing, validation, dependency graph и response serialization.
+### Что это
 
-В теме **Project structure** важно уверенно объяснять следующие части:
+A practical FastAPI structure separates HTTP routers/schemas from use-case services and data-access details.
 
-### routers
+### Как работает
 
-Для `routers` проследи request через router, validation/dependencies, handler/service и response serialization.
+Routers adapt request/response, services hold business workflows/transaction decisions, repositories or query modules isolate persistence when they add value.
 
-### schemas
 
-Для `schemas` проследи request через router, validation/dependencies, handler/service и response serialization.
+### Важный нюанс / limitation
 
-### services
-
-Для `services` проследи request через router, validation/dependencies, handler/service и response serialization.
-
-### repositories/data access
-
-Для `repositories/data access` проследи request через router, validation/dependencies, handler/service и response serialization.
-
-### dependencies
-
-Для `dependencies` проследи request через router, validation/dependencies, handler/service и response serialization.
-
-### settings
-
-Для `settings` проследи request через router, validation/dependencies, handler/service и response serialization.
-
-### tests
-
-Для `tests` проследи request через router, validation/dependencies, handler/service и response serialization.
+Avoid pass-through layers with no behavior; boundaries should correspond to change/test seams.
 
 ## Mental model
 
 Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- routers
+- schemas
+- services
+- repositories/data access
+
+### Полезно
+
+- dependencies
+- settings
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -68,19 +67,47 @@ assert example_s14_project_structure()
 
 ## Common mistakes
 
-**Ошибка:** Открывать Session глобально или выполнять blocking I/O в async route.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Putting every concern into routes makes transaction testing and framework-independent business tests difficult.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `routers` example and predict the result before running it.
+
+**B · Find the bug.** Find code that violates `schemas` and explain the concrete consequence.
+
+**D · Small task.** Implement the smallest function/query that demonstrates `routers` and add one edge-case test.
+
+**E · Interview explanation.** Explain Project structure in 45–60 seconds and include one limitation.
 
 ## Interview questions
 
-1. Объясни **Project structure** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Проследи request от router через dependency и service до response model. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Project structure и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Project structure?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+A practical FastAPI structure separates HTTP routers/schemas from use-case services and data-access details.
+
+### Нормальный Junior answer
+
+> A practical FastAPI structure separates HTTP routers/schemas from use-case services and data-access details. Routers adapt request/response, services hold business workflows/transaction decisions, repositories or query modules isolate persistence when they add value. Важное ограничение: Avoid pass-through layers with no behavior; boundaries should correspond to change/test seams.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Project structure?**
+
+Putting every concern into routes makes transaction testing and framework-independent business tests difficult.
 
 ## Expected answer rubric
 
@@ -90,50 +117,34 @@ assert example_s14_project_structure()
 - schemas
 - services
 - repositories/data access
-- Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Открывать Session глобально или выполнять blocking I/O в async route.
-- ответ из одного определения без механизма и failure mode.
+- Putting every concern into routes makes transaction testing and framework-independent business tests difficult.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- routers
-- schemas
-- services
-- repositories/data access
-- dependencies
-- settings
-- tests
-- migrations
+- Какая типичная ошибка связана с Project structure?
 
 ## Задача
 
-Разбери backend-сценарий: **Проследи request от router через dependency и service до response model.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Project structure**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Project structure**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** A practical FastAPI structure separates HTTP routers/schemas from use-case services and data-access details.
+- **Механизм:** Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
+- **Ограничение:** Putting every concern into routes makes transaction testing and framework-independent business tests difficult.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

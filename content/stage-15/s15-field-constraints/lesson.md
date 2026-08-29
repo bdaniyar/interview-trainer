@@ -7,42 +7,62 @@
 
 После урока ты сможешь:
 
-- объяснить `length` своими словами и связать с backend-сценарием;
-- объяснить `range` своими словами и связать с backend-сценарием;
-- объяснить `pattern` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Field constraints**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `length`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Pydantic v2 преобразует и валидирует данные на границе; модель должна явно описывать required, nullable и default semantics.
+### Что это
 
-В теме **Field constraints** важно уверенно объяснять следующие части:
+Это часть Pydantic v2 boundary между недоверенным input, validated model и serialized output.
 
-### length
+### Как работает
 
-Для `length` различай missing, explicit null, invalid input и serialized output Pydantic v2.
+Проверь четыре состояния: missing, explicit null, invalid type/value и сериализованный результат.
 
-### range
+**length.** `length` влияет на Pydantic v2 validation/serialization и должен различать missing, explicit null, invalid input и output representation.
 
-Для `range` различай missing, explicit null, invalid input и serialized output Pydantic v2.
+**range.** `range` влияет на Pydantic v2 validation/serialization и должен различать missing, explicit null, invalid input и output representation.
 
-### pattern
+**pattern.** `pattern` влияет на Pydantic v2 validation/serialization и должен различать missing, explicit null, invalid input и output representation.
 
-Для `pattern` различай missing, explicit null, invalid input и serialized output Pydantic v2.
+**aliases.** `aliases` влияет на Pydantic v2 validation/serialization и должен различать missing, explicit null, invalid input и output representation.
 
-### aliases
+**Field.** `Field` влияет на Pydantic v2 validation/serialization и должен различать missing, explicit null, invalid input и output representation.
 
-Для `aliases` различай missing, explicit null, invalid input и serialized output Pydantic v2.
 
-### Field
+### Важный нюанс / limitation
 
-Для `Field` различай missing, explicit null, invalid input и serialized output Pydantic v2.
+Граница Junior: уверенно объясняй `length` и `range` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `length`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Сначала приходит недоверенный input, затем core schema выполняет validation, после чего model_dump управляет serialization.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- length
+- range
+- pattern
+- aliases
+
+### Полезно
+
+- Field
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -58,19 +78,45 @@ from pydantic import BaseModel
 
 ## Common mistakes
 
-**Ошибка:** Путать str | None с полем, которое можно полностью не передать.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Смешать missing и explicit null либо считать coercion бизнес-валидацией.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `length` до запуска.
+
+**B · Find the bug.** Найди нарушение `range` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Field constraints за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Field constraints** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Проверь missing, explicit null, неверный тип и сериализованный результат. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Field constraints и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Field constraints?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Field constraints: Это часть Pydantic v2 boundary между недоверенным input, validated model и serialized output.
+
+### Нормальный Junior answer
+
+> Field constraints — тема, в которой я сначала фиксирую `length`, затем объясняю `range` на коротком примере. Ключевой механизм: Проверь четыре состояния: missing, explicit null, invalid type/value и сериализованный результат. Главная практическая ошибка — Смешать missing и explicit null либо считать coercion бизнес-валидацией.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Field constraints?**
+
+Смешать missing и explicit null либо считать coercion бизнес-валидацией.
 
 ## Expected answer rubric
 
@@ -80,31 +126,21 @@ from pydantic import BaseModel
 - range
 - pattern
 - aliases
-- Сначала приходит недоверенный input, затем core schema выполняет validation, после чего model_dump управляет serialization.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Путать str | None с полем, которое можно полностью не передать.
-- ответ из одного определения без механизма и failure mode.
+- Смешать missing и explicit null либо считать coercion бизнес-валидацией.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- length
-- range
-- pattern
-- aliases
-- Field.
+- Какое ограничение или типичная ошибка относится именно к теме Field constraints?
 
 ## Задача
 
@@ -117,11 +153,10 @@ Product: sku ABC-1234 pattern, Decimal price > 0, quantity >= 0.
 
 Перед собеседованием запомни:
 
-- дай точное определение **Field constraints**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Field constraints: Это часть Pydantic v2 boundary между недоверенным input, validated model и serialized output.
+- **Механизм:** Сначала приходит недоверенный input, затем core schema выполняет validation, после чего model_dump управляет serialization.
+- **Ограничение:** Смешать missing и explicit null либо считать coercion бизнес-валидацией.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

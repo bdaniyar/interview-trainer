@@ -7,50 +7,65 @@
 
 После урока ты сможешь:
 
-- объяснить `update/delete invalidation` своими словами и связать с backend-сценарием;
-- объяснить `TTL` своими словами и связать с backend-сценарием;
-- объяснить `stale cache` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Cache invalidation**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `update/delete invalidation`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Redis — быстрый in-memory data store для cache и временного состояния, но источник истины выбирается по durability requirements.
+### Что это
 
-В теме **Cache invalidation** важно уверенно объяснять следующие части:
+Тема **Cache invalidation** описывает отдельный контракт backend-разработки.
 
-### update/delete invalidation
+### Как работает
 
-Для `update/delete invalidation` определи Redis key/value, TTL, invalidation, concurrency и fallback при outage.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
 
-### TTL
+**update/delete invalidation.** `update/delete invalidation` влияет на Redis key/value lifecycle; корректная схема заранее определяет TTL, invalidation, concurrency и outage fallback.
 
-Для `TTL` определи Redis key/value, TTL, invalidation, concurrency и fallback при outage.
+**TTL.** `TTL` влияет на Redis key/value lifecycle; корректная схема заранее определяет TTL, invalidation, concurrency и outage fallback.
 
-### stale cache
+**stale cache.** Для cache заранее определяют key, TTL, invalidation и fallback, иначе ускорение создаёт stale-data bug.
 
-Для cache заранее определяют key, TTL, invalidation и fallback, иначе ускорение создаёт stale-data bug.
+**race windows.** Window function считает значение по partition, не сворачивая строки как GROUP BY; порядок внутри `OVER` задаёт frame/ranking semantics.
 
-### race windows
+**versioned keys.** `versioned keys` влияет на Redis key/value lifecycle; корректная схема заранее определяет TTL, invalidation, concurrency и outage fallback.
 
-Window function считает значение по partition, не сворачивая строки как GROUP BY; порядок внутри `OVER` задаёт frame/ranking semantics.
+**GET обычно read-heavy и повторяемый.** `GET обычно read-heavy и повторяемый` влияет на Redis key/value lifecycle; корректная схема заранее определяет TTL, invalidation, concurrency и outage fallback.
 
-### versioned keys
 
-Для `versioned keys` определи Redis key/value, TTL, invalidation, concurrency и fallback при outage.
+### Важный нюанс / limitation
 
-### GET обычно read-heavy и повторяемый
+Граница Junior: уверенно объясняй `update/delete invalidation` и `TTL` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
-Для `GET обычно read-heavy и повторяемый` определи Redis key/value, TTL, invalidation, concurrency и fallback при outage.
+### Где используется в backend
 
-### mutations меняют состояние
-
-Для `mutations меняют состояние` определи Redis key/value, TTL, invalidation, concurrency и fallback при outage.
+В backend эта тема важна в том месте, где применяется `update/delete invalidation`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Для cache всегда определяй key, value, TTL, invalidation и fallback.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- update/delete invalidation
+- TTL
+- stale cache
+- race windows
+
+### Полезно
+
+- versioned keys
+- GET обычно read-heavy и повторяемый
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -67,62 +82,17 @@ Invalidate/update after commit; key ownership, TTL, race.
 
 ## Common mistakes
 
-**Ошибка:** Использовать Pub/Sub как историю или забыть TTL и invalidation.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Игнорировать ограничение механизма и проверять только happy path.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `update/delete invalidation` до запуска.
 
-## Interview questions
+**B · Find the bug.** Найди нарушение `TTL` и объясни конкретное последствие.
 
-1. Объясни **Cache invalidation** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Разбери cache miss, stale value, Redis outage и concurrent refill. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
-
-## Expected answer rubric
-
-### Must mention
-
-- update/delete invalidation
-- TTL
-- stale cache
-- race windows
-- Для cache всегда определяй key, value, TTL, invalidation и fallback.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Использовать Pub/Sub как историю или забыть TTL и invalidation.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- update/delete invalidation
-- TTL
-- stale cache
-- race windows
-- versioned keys.
-- GET обычно read-heavy и повторяемый
-- mutations меняют состояние
-- после mutation связанные read cache keys нужно invalidation/update
-
-## Задача
-
-Разбери backend-сценарий: **Разбери cache miss, stale value, Redis outage и concurrent refill.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Дай ответ про Cache invalidation за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Debugging practice
 
@@ -134,15 +104,70 @@ Invalidate/update after commit; key ownership, TTL, race.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое Cache invalidation и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Cache invalidation?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Cache invalidation: это отдельный технический контракт
+
+### Нормальный Junior answer
+
+> Cache invalidation — тема, в которой я сначала фиксирую `update/delete invalidation`, затем объясняю `TTL` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Cache invalidation?**
+
+Нужно назвать конкретный failure path и способ его проверить.
+
+## Expected answer rubric
+
+### Must mention
+
+- update/delete invalidation
+- TTL
+- stale cache
+- race windows
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Игнорировать ограничение механизма и проверять только happy path.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какое ограничение или типичная ошибка относится именно к теме Cache invalidation?
+
+## Задача
+
+Сделай короткую письменную практику по теме **Cache invalidation**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Cache invalidation**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Cache invalidation: это отдельный технический контракт
+- **Механизм:** Для cache всегда определяй key, value, TTL, invalidation и fallback.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

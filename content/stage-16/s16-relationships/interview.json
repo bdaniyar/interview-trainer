@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Relationships» как на Junior Python Backend interview.",
+    "question": "Что такое Relationships и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "one-to-many",
       "many-to-one",
       "many-to-many",
-      "`back_populates`",
-      "Один request/use case обычно владеет одной Session и явно завершает commit или rollback."
+      "`back_populates`"
     ],
+    "short_answer": "A relationship describes ORM navigation between entities; the foreign key column remains the database source of referential truth.",
+    "junior_answer": "A relationship describes ORM navigation between entities; the foreign key column remains the database source of referential truth. `back_populates` connects both directions; one-to-many, many-to-one and many-to-many determine collection/scalar shape and loading behavior. Важное ограничение: Relationship does not automatically choose efficient eager loading or safe cascade semantics.",
+    "follow_up_question": "Какая типичная ошибка связана с Relationships?",
+    "follow_up_answer": "Confusing ORM relationship with database ownership can configure delete cascade that removes more data than intended.",
     "expected_answer": {
       "must_mention": [
         "one-to-many",
         "many-to-one",
         "many-to-many",
-        "`back_populates`",
-        "Один request/use case обычно владеет одной Session и явно завершает commit или rollback."
+        "`back_populates`"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks.",
+        "Confusing ORM relationship with database ownership can configure delete cascade that removes more data than intended.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks."
+        "Confusing ORM relationship with database ownership can configure delete cascade that removes more data than intended."
       ],
       "follow_up_questions": [
-        "Опиши session scope, момент flush/commit и количество SQL-запросов."
+        "Какая типичная ошибка связана с Relationships?"
       ]
     },
     "follow_ups": [
-      "Опиши session scope, момент flush/commit и количество SQL-запросов."
+      "Какая типичная ошибка связана с Relationships?"
     ],
     "tags": [
       "stage-16",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Relationships»: Опиши session scope, момент flush/commit и количество SQL-запросов. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Relationships?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Один request/use case обычно владеет одной Session и явно завершает commit или rollback.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "ownership vs navigation",
+      "Confusing ORM relationship with database ownership can configure delete cascade that removes more data than intended."
     ],
+    "short_answer": "Confusing ORM relationship with database ownership can configure delete cascade that removes more data than intended.",
+    "junior_answer": "Confusing ORM relationship with database ownership can configure delete cascade that removes more data than intended.",
+    "follow_up_question": "Что такое Relationships и как это работает?",
+    "follow_up_answer": "A relationship describes ORM navigation between entities; the foreign key column remains the database source of referential truth. `back_populates` connects both directions; one-to-many, many-to-one and many-to-many determine collection/scalar shape and loading behavior. Важное ограничение: Relationship does not automatically choose efficient eager loading or safe cascade semantics.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "ownership vs navigation"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Confusing ORM relationship with database ownership can configure delete cascade that removes more data than intended."
       ],
       "red_flags": [
-        "Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks."
+        "Confusing ORM relationship with database ownership can configure delete cascade that removes more data than intended."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Relationships и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Relationships и как это работает?"
     ],
     "tags": [
       "stage-16",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-16",

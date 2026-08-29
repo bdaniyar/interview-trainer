@@ -7,42 +7,58 @@
 
 После урока ты сможешь:
 
-- объяснить ``/`` своими словами и связать с backend-сценарием;
-- объяснить ``*`` своими словами и связать с backend-сценарием;
-- объяснить `API design` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Positional-only and keyword-only parameters**, а не только запомнить термин;
+- прочитать и изменить короткий пример для ``/``;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Функция — объект с сигнатурой, областью видимости и состоянием замыкания; её контракт должен быть понятен вызывающему коду.
+### Что это
 
-В теме **Positional-only and keyword-only parameters** важно уверенно объяснять следующие части:
+Это часть контракта Python function: важно различать definition time, call time, signature и разрешение имён.
 
-### `/`
+### Как работает
 
-Для ``/`` отдели definition time от call time и покажи влияние на signature, scope или state функции.
+Отдели выполнение `def`, связывание arguments при вызове и разрешение names по LEGB.
 
-### `*`
+**`/`.** ``/`` влияет на function contract; результат определяется definition time, argument binding при вызове и разрешением names.
 
-Для ``*`` отдели definition time от call time и покажи влияние на signature, scope или state функции.
+**`*`.** ``*`` влияет на function contract; результат определяется definition time, argument binding при вызове и разрешением names.
 
-### API design
+**API design.** `API design` влияет на function contract; результат определяется definition time, argument binding при вызове и разрешением names.
 
-Для `API design` отдели definition time от call time и покажи влияние на signature, scope или state функции.
+**readable signatures.** Signature — публичный контракт вызова: kinds параметров, defaults и annotations определяют допустимые positional/keyword arguments и помогают introspection.
 
-### readable signatures
+**backward compatibility.** `backward compatibility` влияет на function contract; результат определяется definition time, argument binding при вызове и разрешением names.
 
-Signature — публичный контракт вызова: kinds параметров, defaults и annotations определяют допустимые positional/keyword arguments и помогают introspection.
 
-### backward compatibility
+### Важный нюанс / limitation
 
-Для `backward compatibility` отдели definition time от call time и покажи влияние на signature, scope или state функции.
+Граница Junior: уверенно объясняй ``/`` и ``*`` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
 ## Mental model
 
 Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- `/`
+- `*`
+- API design
+- readable signatures
+
+### Полезно
+
+- backward compatibility
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -59,61 +75,18 @@ print(paginate([1, 2, 3], limit=2))
 
 ## Common mistakes
 
-**Ошибка:** Скрывать неясный API за **kwargs или забывать о времени вычисления defaults.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для ``/`` до запуска.
 
-## Interview questions
+**B · Find the bug.** Найди нарушение ``*`` и объясни конкретное последствие.
 
-1. Объясни **Positional-only and keyword-only parameters** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Разбери сигнатуру helper-функции и объясни, какие вызовы допустимы и почему. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+**E · Interview explanation.** Дай ответ про Positional-only and keyword-only parameters за 60 секунд: определение, механизм, пример, ограничение.
 
-## Expected answer rubric
-
-### Must mention
-
-- `/`
-- `*`
-- API design
-- readable signatures
-- Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Скрывать неясный API за **kwargs или забывать о времени вычисления defaults.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- `/`
-- `*`
-- API design
-- readable signatures
-- backward compatibility.
-
-## Задача
-
-### Явная сигнатура pagination helper
-
-Реализуй build_page_query: resource positional-only; limit и offset keyword-only. Проверь resource, limit 1..100 и offset >= 0.
-
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
 ## Code prediction
 
 ### Keyword-only argument
@@ -140,15 +113,73 @@ Misconception: `keyword-only`.
 
 </details>
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое Positional-only and keyword-only parameters и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Positional-only and keyword-only parameters?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Positional-only and keyword-only parameters: Это часть контракта Python function: важно различать definition time, call time, signature и разрешение имён.
+
+### Нормальный Junior answer
+
+> Positional-only and keyword-only parameters — тема, в которой я сначала фиксирую ``/``, затем объясняю ``*`` на коротком примере. Ключевой механизм: Отдели выполнение `def`, связывание arguments при вызове и разрешение names по LEGB. Главная практическая ошибка — Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Positional-only and keyword-only parameters?**
+
+Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
+
+## Expected answer rubric
+
+### Must mention
+
+- `/`
+- `*`
+- API design
+- readable signatures
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какое ограничение или типичная ошибка относится именно к теме Positional-only and keyword-only parameters?
+
+## Задача
+
+### Явная сигнатура pagination helper
+
+Реализуй build_page_query: resource positional-only; limit и offset keyword-only. Проверь resource, limit 1..100 и offset >= 0.
+
+Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Positional-only and keyword-only parameters**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Positional-only and keyword-only parameters: Это часть контракта Python function: важно различать definition time, call time, signature и разрешение имён.
+- **Механизм:** Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
+- **Ограничение:** Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

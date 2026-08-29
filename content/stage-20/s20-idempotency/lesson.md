@@ -7,42 +7,62 @@
 
 После урока ты сможешь:
 
-- объяснить `duplicate delivery` своими словами и связать с backend-сценарием;
-- объяснить `idempotency key` своими словами и связать с backend-сценарием;
-- объяснить `unique constraint` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Idempotency**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `duplicate delivery`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Background work отделяет latency запроса от выполнения, но добавляет delivery, retry и idempotency concerns.
+### Что это
 
-В теме **Idempotency** важно уверенно объяснять следующие части:
+Тема **Idempotency** описывает отдельный контракт backend-разработки.
 
-### duplicate delivery
+### Как работает
 
-Для `duplicate delivery` проследи delivery от commit до side effect, включая duplicate, retry и idempotency.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
 
-### idempotency key
+**duplicate delivery.** `duplicate delivery` является этапом delivery от DB commit до side effect, где возможны duplicate, retry и idempotency requirements.
 
-Идемпотентность означает, что повтор одного логического запроса не создаёт новый эффект; обычно её поддерживают ключом и ограничением уникальности.
+**idempotency key.** Идемпотентность означает, что повтор одного логического запроса не создаёт новый эффект; обычно её поддерживают ключом и ограничением уникальности.
 
-### unique constraint
+**unique constraint.** Constraint хранит invariant рядом с данными и защищает его от всех writers; API переводит conflict в понятную domain/HTTP error.
 
-Constraint хранит invariant рядом с данными и защищает его от всех writers; API переводит conflict в понятную domain/HTTP error.
+**state transition.** `state transition` является этапом delivery от DB commit до side effect, где возможны duplicate, retry и idempotency requirements.
 
-### state transition
+**side-effect deduplication.** `side-effect deduplication` является этапом delivery от DB commit до side effect, где возможны duplicate, retry и idempotency requirements.
 
-Для `state transition` проследи delivery от commit до side effect, включая duplicate, retry и idempotency.
 
-### side-effect deduplication
+### Важный нюанс / limitation
 
-Для `side-effect deduplication` проследи delivery от commit до side effect, включая duplicate, retry и idempotency.
+Граница Junior: уверенно объясняй `duplicate delivery` и `idempotency key` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `duplicate delivery`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Между DB commit и publish есть atomicity gap; outbox переносит событие в ту же transaction.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- duplicate delivery
+- idempotency key
+- unique constraint
+- state transition
+
+### Полезно
+
+- side-effect deduplication
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -60,19 +80,45 @@ assert example_s20_idempotency()
 
 ## Common mistakes
 
-**Ошибка:** Повторять side effect без idempotency или считать exactly-once свойством одного флага.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Игнорировать ограничение механизма и проверять только happy path.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `duplicate delivery` до запуска.
+
+**B · Find the bug.** Найди нарушение `idempotency key` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Idempotency за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Idempotency** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Проследи событие от commit через broker/worker до повторной доставки. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Idempotency и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Idempotency?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Idempotency: это отдельный технический контракт
+
+### Нормальный Junior answer
+
+> Idempotency — тема, в которой я сначала фиксирую `duplicate delivery`, затем объясняю `idempotency key` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Idempotency?**
+
+Нужно назвать конкретный failure path и способ его проверить.
 
 ## Expected answer rubric
 
@@ -82,47 +128,34 @@ assert example_s20_idempotency()
 - idempotency key
 - unique constraint
 - state transition
-- Между DB commit и publish есть atomicity gap; outbox переносит событие в ту же transaction.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Повторять side effect без idempotency или считать exactly-once свойством одного флага.
-- ответ из одного определения без механизма и failure mode.
+- Игнорировать ограничение механизма и проверять только happy path.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- duplicate delivery
-- idempotency key
-- unique constraint
-- state transition
-- side-effect deduplication.
+- Какое ограничение или типичная ошибка относится именно к теме Idempotency?
 
 ## Задача
 
-Разбери backend-сценарий: **Проследи событие от commit через broker/worker до повторной доставки.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Idempotency**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Idempotency**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Idempotency: это отдельный технический контракт
+- **Механизм:** Между DB commit и publish есть atomicity gap; outbox переносит событие в ту же transaction.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

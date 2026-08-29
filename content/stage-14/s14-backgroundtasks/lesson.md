@@ -7,42 +7,48 @@
 
 После урока ты сможешь:
 
-- объяснить `runs after response in same application process` своими словами и связать с backend-сценарием;
-- объяснить `small non-critical work` своими словами и связать с backend-сценарием;
-- объяснить `not durable` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **BackgroundTasks**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `runs after response in same application process`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-FastAPI связывает ASGI request lifecycle, routing, validation, dependency graph и response serialization.
+### Что это
 
-В теме **BackgroundTasks** важно уверенно объяснять следующие части:
+FastAPI `BackgroundTasks` schedules small in-process work after the response is sent.
 
-### runs after response in same application process
+### Как работает
 
-Processes изолируют память и подходят для CPU-bound Python, но требуют serialization/IPC и имеют более дорогой startup.
+The task runs in the same application process and has no durable delivery, distributed retry or crash recovery guarantee.
 
-### small non-critical work
 
-Для `small non-critical work` проследи request через router, validation/dependencies, handler/service и response serialization.
+### Важный нюанс / limitation
 
-### not durable
-
-Для `not durable` проследи request через router, validation/dependencies, handler/service и response serialization.
-
-### lost on crash
-
-Для `lost on crash` проследи request через router, validation/dependencies, handler/service и response serialization.
-
-### not a replacement for Celery/outbox
-
-Для `not a replacement for Celery/outbox` проследи request через router, validation/dependencies, handler/service и response serialization.
+Use it for small non-critical actions; use a queue/worker and idempotency for durable jobs.
 
 ## Mental model
 
 Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- runs after response in same application process
+- small non-critical work
+- not durable
+- lost on crash
+
+### Полезно
+
+- not a replacement for Celery/outbox
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -60,19 +66,47 @@ assert example_s14_backgroundtasks()
 
 ## Common mistakes
 
-**Ошибка:** Открывать Session глобально или выполнять blocking I/O в async route.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Sending a critical payment/email only via BackgroundTasks can lose it on process restart.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `runs after response in same application process` example and predict the result before running it.
+
+**B · Find the bug.** Find code that violates `small non-critical work` and explain the concrete consequence.
+
+**D · Small task.** Implement the smallest function/query that demonstrates `runs after response in same application process` and add one edge-case test.
+
+**E · Interview explanation.** Explain BackgroundTasks in 45–60 seconds and include one limitation.
 
 ## Interview questions
 
-1. Объясни **BackgroundTasks** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Проследи request от router через dependency и service до response model. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое BackgroundTasks и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с BackgroundTasks?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+FastAPI `BackgroundTasks` schedules small in-process work after the response is sent.
+
+### Нормальный Junior answer
+
+> FastAPI `BackgroundTasks` schedules small in-process work after the response is sent. The task runs in the same application process and has no durable delivery, distributed retry or crash recovery guarantee. Важное ограничение: Use it for small non-critical actions; use a queue/worker and idempotency for durable jobs.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с BackgroundTasks?**
+
+Sending a critical payment/email only via BackgroundTasks can lose it on process restart.
 
 ## Expected answer rubric
 
@@ -82,47 +116,34 @@ assert example_s14_backgroundtasks()
 - small non-critical work
 - not durable
 - lost on crash
-- Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Открывать Session глобально или выполнять blocking I/O в async route.
-- ответ из одного определения без механизма и failure mode.
+- Sending a critical payment/email only via BackgroundTasks can lose it on process restart.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- runs after response in same application process
-- small non-critical work
-- not durable
-- lost on crash
-- not a replacement for Celery/outbox.
+- Какая типичная ошибка связана с BackgroundTasks?
 
 ## Задача
 
-Разбери backend-сценарий: **Проследи request от router через dependency и service до response model.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **BackgroundTasks**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **BackgroundTasks**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** FastAPI `BackgroundTasks` schedules small in-process work after the response is sent.
+- **Механизм:** Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
+- **Ограничение:** Sending a critical payment/email only via BackgroundTasks can lose it on process restart.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

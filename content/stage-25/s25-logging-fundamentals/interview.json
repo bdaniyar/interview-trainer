@@ -1,39 +1,41 @@
 [
   {
-    "question": "Объясни тему «Logging fundamentals» как на Junior Python Backend interview.",
+    "question": "Что такое Logging fundamentals и какой механизм здесь важно понимать Junior-разработчику?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
       "debug/info/warning/error/exception",
       "no print-debugging as final solution",
-      "no secrets/PII.",
-      "Сначала сформулируй вопрос, затем выбери signal и labels с контролируемой cardinality."
+      "no secrets/PII"
     ],
+    "short_answer": "Logging fundamentals: это отдельный технический контракт",
+    "junior_answer": "Logging fundamentals — тема, в которой я сначала фиксирую `debug/info/warning/error/exception`, затем объясняю `no print-debugging as final solution` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
+    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Logging fundamentals?",
+    "follow_up_answer": "Нужно назвать конкретный failure path и способ его проверить.",
     "expected_answer": {
       "must_mention": [
         "debug/info/warning/error/exception",
         "no print-debugging as final solution",
-        "no secrets/PII.",
-        "Сначала сформулируй вопрос, затем выбери signal и labels с контролируемой cardinality."
+        "no secrets/PII"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Логировать secrets или использовать user_id как Prometheus label.",
+        "Игнорировать ограничение механизма и проверять только happy path.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Логировать secrets или использовать user_id как Prometheus label."
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "follow_up_questions": [
-        "По росту p95 при стабильной средней выбери следующие metrics и logs."
+        "Какое ограничение или типичная ошибка относится именно к теме Logging fundamentals?"
       ]
     },
     "follow_ups": [
-      "По росту p95 при стабильной средней выбери следующие metrics и logs."
+      "Какое ограничение или типичная ошибка относится именно к теме Logging fundamentals?"
     ],
     "tags": [
       "stage-25",
@@ -46,42 +48,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Logging fundamentals»: По росту p95 при стабильной средней выбери следующие metrics и logs. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какое ограничение или типичная ошибка относится именно к теме Logging fundamentals?",
+    "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Сначала сформулируй вопрос, затем выбери signal и labels с контролируемой cardinality.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "связать Logging fundamentals с коротким рабочим примером",
+      "Нужно назвать конкретный failure path и способ его проверить."
     ],
+    "short_answer": "Нужно назвать конкретный failure path и способ его проверить.",
+    "junior_answer": "Нужно назвать конкретный failure path и способ его проверить.",
+    "follow_up_question": "Что такое Logging fundamentals и какой механизм здесь важно понимать Junior-разработчику?",
+    "follow_up_answer": "Logging fundamentals — тема, в которой я сначала фиксирую `debug/info/warning/error/exception`, затем объясняю `no print-debugging as final solution` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "связать Logging fundamentals с коротким рабочим примером"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "red_flags": [
-        "Логировать secrets или использовать user_id как Prometheus label."
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Logging fundamentals и какой механизм здесь важно понимать Junior-разработчику?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Logging fundamentals и какой механизм здесь важно понимать Junior-разработчику?"
     ],
     "tags": [
       "stage-25",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-25",

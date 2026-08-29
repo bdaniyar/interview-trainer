@@ -7,50 +7,65 @@
 
 После урока ты сможешь:
 
-- объяснить `publisher` своими словами и связать с backend-сценарием;
-- объяснить `subscriber` своими словами и связать с backend-сценарием;
-- объяснить `channel` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Redis Pub/Sub**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `publisher`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Redis — быстрый in-memory data store для cache и временного состояния, но источник истины выбирается по durability requirements.
+### Что это
 
-В теме **Redis Pub/Sub** важно уверенно объяснять следующие части:
+Тема **Redis Pub/Sub** описывает отдельный контракт backend-разработки.
 
-### publisher
+### Как работает
 
-Для `publisher` определи Redis key/value, TTL, invalidation, concurrency и fallback при outage.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
 
-### subscriber
+**publisher.** `publisher` влияет на Redis key/value lifecycle; корректная схема заранее определяет TTL, invalidation, concurrency и outage fallback.
 
-Для `subscriber` определи Redis key/value, TTL, invalidation, concurrency и fallback при outage.
+**subscriber.** `subscriber` влияет на Redis key/value lifecycle; корректная схема заранее определяет TTL, invalidation, concurrency и outage fallback.
 
-### channel
+**channel.** `channel` влияет на Redis key/value lifecycle; корректная схема заранее определяет TTL, invalidation, concurrency и outage fallback.
 
-Для `channel` определи Redis key/value, TTL, invalidation, concurrency и fallback при outage.
+**live delivery.** `live delivery` влияет на Redis key/value lifecycle; корректная схема заранее определяет TTL, invalidation, concurrency и outage fallback.
 
-### live delivery
+**no durable history.** `no durable history` влияет на Redis key/value lifecycle; корректная схема заранее определяет TTL, invalidation, concurrency и outage fallback.
 
-Для `live delivery` определи Redis key/value, TTL, invalidation, concurrency и fallback при outage.
+**offline subscriber misses message.** `offline subscriber misses message` влияет на Redis key/value lifecycle; корректная схема заранее определяет TTL, invalidation, concurrency и outage fallback.
 
-### no durable history
 
-Для `no durable history` определи Redis key/value, TTL, invalidation, concurrency и fallback при outage.
+### Важный нюанс / limitation
 
-### offline subscriber misses message
+Граница Junior: уверенно объясняй `publisher` и `subscriber` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
-Для `offline subscriber misses message` определи Redis key/value, TTL, invalidation, concurrency и fallback при outage.
+### Где используется в backend
 
-### no acknowledgement/replay
-
-Для `no acknowledgement/replay` определи Redis key/value, TTL, invalidation, concurrency и fallback при outage.
+В backend эта тема важна в том месте, где применяется `publisher`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Для cache всегда определяй key, value, TTL, invalidation и fallback.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- publisher
+- subscriber
+- channel
+- live delivery
+
+### Полезно
+
+- no durable history
+- offline subscriber misses message
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -67,61 +82,17 @@ Pub/Sub только live fan-out; durable history/read state хранить в 
 
 ## Common mistakes
 
-**Ошибка:** Использовать Pub/Sub как историю или забыть TTL и invalidation.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Игнорировать ограничение механизма и проверять только happy path.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `publisher` до запуска.
 
-## Interview questions
+**B · Find the bug.** Найди нарушение `subscriber` и объясни конкретное последствие.
 
-1. Объясни **Redis Pub/Sub** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Разбери cache miss, stale value, Redis outage и concurrent refill. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
-
-## Expected answer rubric
-
-### Must mention
-
-- publisher
-- subscriber
-- channel
-- live delivery
-- Для cache всегда определяй key, value, TTL, invalidation и fallback.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Использовать Pub/Sub как историю или забыть TTL и invalidation.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- publisher
-- subscriber
-- channel
-- live delivery
-- no durable history
-- offline subscriber misses message
-- no acknowledgement/replay.
-
-## Задача
-
-Разбери backend-сценарий: **Разбери cache miss, stale value, Redis outage и concurrent refill.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Дай ответ про Redis Pub/Sub за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Debugging practice
 
@@ -133,15 +104,70 @@ Pub/Sub только live fan-out; durable history/read state хранить в 
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое Redis Pub/Sub и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Redis Pub/Sub?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Redis Pub/Sub: это отдельный технический контракт
+
+### Нормальный Junior answer
+
+> Redis Pub/Sub — тема, в которой я сначала фиксирую `publisher`, затем объясняю `subscriber` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Redis Pub/Sub?**
+
+Нужно назвать конкретный failure path и способ его проверить.
+
+## Expected answer rubric
+
+### Must mention
+
+- publisher
+- subscriber
+- channel
+- live delivery
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Игнорировать ограничение механизма и проверять только happy path.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какое ограничение или типичная ошибка относится именно к теме Redis Pub/Sub?
+
+## Задача
+
+Сделай короткую письменную практику по теме **Redis Pub/Sub**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Redis Pub/Sub**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Redis Pub/Sub: это отдельный технический контракт
+- **Механизм:** Для cache всегда определяй key, value, TTL, invalidation и fallback.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

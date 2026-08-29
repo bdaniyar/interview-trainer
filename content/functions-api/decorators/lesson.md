@@ -7,42 +7,72 @@
 
 После урока ты сможешь:
 
-- объяснить `wrapper` своими словами и связать с backend-сценарием;
-- объяснить `accepting `*args/**kwargs`` своими словами и связать с backend-сценарием;
-- объяснить `returning result` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Basic decorators**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `wrapper`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Функция — объект с сигнатурой, областью видимости и состоянием замыкания; её контракт должен быть понятен вызывающему коду.
+### Что это
 
-В теме **Basic decorators** важно уверенно объяснять следующие части:
+Decorator — callable, который получает декорируемый объект и возвращает объект-замену. Для функции заменой обычно служит wrapper, добавляющий поведение до и после исходного вызова.
 
-### wrapper
+### Как работает
 
-Для `wrapper` отдели definition time от call time и покажи влияние на signature, scope или state функции.
+`@audit` над `def save` эквивалентен `save = audit(save)` и выполняется при definition/import time. Wrapper должен принять совместимые arguments, вызвать исходную функцию и вернуть её результат. Для async function нужен async wrapper с await.
 
-### accepting `*args/**kwargs`
 
-`*args` собирает лишние positional arguments в tuple, а `**kwargs` — keyword arguments в dict; они не должны скрывать неясный публичный контракт.
+### Пример
 
-### returning result
+```python
+from functools import wraps
 
-Для `returning result` отдели definition time от call time и покажи влияние на signature, scope или state функции.
+def audit(fn):
+    @wraps(fn)
+    def wrapper(*args, **kwargs):
+        print(f"calling {fn.__name__}")
+        return fn(*args, **kwargs)
+    return wrapper
 
-### function replacement
+@audit
+def total(values):
+    return sum(values)
 
-Для `function replacement` отдели definition time от call time и покажи влияние на signature, scope или state функции.
+print(total([2, 3]))  # 5
+```
 
-### backend use cases
+### Важный нюанс / limitation
 
-Для `backend use cases` отдели definition time от call time и покажи влияние на signature, scope или state функции.
+Используй `functools.wraps`, иначе теряются `__name__`, annotations, signature metadata и `__wrapped__`; это мешает FastAPI, introspection и debugging. Decorator не должен случайно проглатывать return value или exceptions.
+
+### Где используется в backend
+
+Декораторы естественны для регистрации routes и технического tracing; доменную авторизацию часто яснее выразить dependency/service policy.
 
 ## Mental model
 
 Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- эквивалентность `@decorator` присваиванию
+- wrapper args/result
+- definition time
+- `functools.wraps`
+
+### Полезно
+
+- различать decorator и decorator factory
+- порядок нескольких decorators
+
+### Можно не учить глубоко
+
+- переписывание signatures через `inspect.Signature`
 
 ## Code examples
 
@@ -65,53 +95,79 @@ Decorator заменяет имя `profile` на wrapper, который про�
 
 ## Common mistakes
 
-**Ошибка:** Скрывать неясный API за **kwargs или забывать о времени вычисления defaults.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Wrapper вызывает `fn(*args, **kwargs)`, но забывает `return`, поэтому caller получает `None`.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+### Ошибка 2
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+Обычный sync wrapper вокруг `async def` возвращает coroutine object, но не ожидает его.
+
+### Ошибка 3
+
+Decorator скрывает signature без `@wraps(fn)`.
+
+## Practice
+
+**A · Code prediction.** Определи порядок `before/original/after`.
+
+**B · Find the bug.** Верни потерянный результат из wrapper.
+
+**C · Rewrite.** Добавь `@wraps` и async-compatible вариант.
+
+**D · Small task.** Напиши decorator, считающий число вызовов.
 
 ## Interview questions
 
-1. Объясни **Basic decorators** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Разбери сигнатуру helper-функции и объясни, какие вызовы допустимы и почему. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Как работает decorator функции и зачем нужен `functools.wraps`?
+
+### Follow-up
+
+В каком порядке применяются два decorators?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Decorator заменяет функцию результатом `decorator(function)`; wraps сохраняет metadata и ссылку на исходную функцию.
+
+### Нормальный Junior answer
+
+> Запись `@audit` выполняется при определении функции и равна `handler = audit(handler)`. Audit возвращает wrapper, который принимает arguments, вызывает исходную функцию и возвращает результат. `functools.wraps` сохраняет имя, docstring, annotations и `__wrapped__`, поэтому framework и отладчик продолжают видеть исходный контракт.
+
+### Углубление / follow-up
+
+**В каком порядке применяются два decorators?**
+
+Применяются снизу вверх: `@a @b def f` даёт `f = a(b(f))`; при вызове внешний wrapper `a` начинает первым.
 
 ## Expected answer rubric
 
 ### Must mention
 
-- wrapper
-- accepting `*args/**kwargs`
-- returning result
-- function replacement
-- Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
+- эквивалентность `@decorator` присваиванию
+- wrapper args/result
+- definition time
+- `functools.wraps`
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Скрывать неясный API за **kwargs или забывать о времени вычисления defaults.
-- ответ из одного определения без механизма и failure mode.
+- Wrapper вызывает `fn(*args, **kwargs)`, но забывает `return`, поэтому caller получает `None`.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- wrapper
-- accepting `*args/**kwargs`
-- returning result
-- function replacement
-- backend use cases.
+- В каком порядке применяются два decorators?
 
 ## Задача
 
@@ -124,11 +180,10 @@ Decorator заменяет имя `profile` на wrapper, который про�
 
 Перед собеседованием запомни:
 
-- дай точное определение **Basic decorators**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Decorator заменяет функцию результатом `decorator(function)`; wraps сохраняет metadata и ссылку на исходную функцию.
+- **Механизм:** Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
+- **Ограничение:** Wrapper вызывает `fn(*args, **kwargs)`, но забывает `return`, поэтому caller получает `None`.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

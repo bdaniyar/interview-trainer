@@ -18,7 +18,7 @@
     "почему нельзя полагаться на interning",
     "custom `__eq__`."
   ],
-  "description": "P0 · Identity and equality: mental model, interview rubric и backend-сценарий.",
+  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
   "has_task": true,
   "has_solution": true,
   "priority": "P0",

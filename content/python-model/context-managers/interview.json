@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Context manager protocol» как на Junior Python Backend interview.",
+    "question": "Что такое Context manager protocol и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "`with`",
       "`__enter__`",
       "`__exit__`",
-      "resource cleanup",
-      "Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка."
+      "resource cleanup"
     ],
+    "short_answer": "A context manager defines a reliable acquire/use/release boundary used by the `with` statement.",
+    "junior_answer": "A context manager defines a reliable acquire/use/release boundary used by the `with` statement. `__enter__` returns the value bound after `as`; `__exit__` receives exception information and cleanup runs even when the body fails. A truthy `__exit__` return suppresses the exception. Важное ограничение: Suppress only errors the context manager intentionally handles; returning True accidentally can hide real failures.",
+    "follow_up_question": "Какая типичная ошибка связана с Context manager protocol?",
+    "follow_up_answer": "Manual open/close without finally leaks resources on an exception path.",
     "expected_answer": {
       "must_mention": [
         "`with`",
         "`__enter__`",
         "`__exit__`",
-        "resource cleanup",
-        "Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка."
+        "resource cleanup"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Перехватывать Exception без стратегии либо удерживать весь поток данных в памяти.",
+        "Manual open/close without finally leaks resources on an exception path.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Перехватывать Exception без стратегии либо удерживать весь поток данных в памяти."
+        "Manual open/close without finally leaks resources on an exception path."
       ],
       "follow_up_questions": [
-        "Покажи happy path, завершение протокола и поведение при исключении."
+        "Какая типичная ошибка связана с Context manager protocol?"
       ]
     },
     "follow_ups": [
-      "Покажи happy path, завершение протокола и поведение при исключении."
+      "Какая типичная ошибка связана с Context manager protocol?"
     ],
     "tags": [
       "stage-04",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Context manager protocol»: Покажи happy path, завершение протокола и поведение при исключении. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Context manager protocol?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "exception suppression",
+      "Manual open/close without finally leaks resources on an exception path."
     ],
+    "short_answer": "Manual open/close without finally leaks resources on an exception path.",
+    "junior_answer": "Manual open/close without finally leaks resources on an exception path.",
+    "follow_up_question": "Что такое Context manager protocol и как это работает?",
+    "follow_up_answer": "A context manager defines a reliable acquire/use/release boundary used by the `with` statement. `__enter__` returns the value bound after `as`; `__exit__` receives exception information and cleanup runs even when the body fails. A truthy `__exit__` return suppresses the exception. Важное ограничение: Suppress only errors the context manager intentionally handles; returning True accidentally can hide real failures.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "exception suppression"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Manual open/close without finally leaks resources on an exception path."
       ],
       "red_flags": [
-        "Перехватывать Exception без стратегии либо удерживать весь поток данных в памяти."
+        "Manual open/close without finally leaks resources on an exception path."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Context manager protocol и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Context manager protocol и как это работает?"
     ],
     "tags": [
       "stage-04",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-04",

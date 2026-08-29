@@ -7,46 +7,49 @@
 
 После урока ты сможешь:
 
-- объяснить `iterable` своими словами и связать с backend-сценарием;
-- объяснить `iterator` своими словами и связать с backend-сценарием;
-- объяснить ``iter`` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Iterable vs iterator**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `iterable`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Итерация, исключения и context managers — протоколы управления потоком и освобождением ресурсов.
+### Что это
 
-В теме **Iterable vs iterator** важно уверенно объяснять следующие части:
+An iterable can produce an iterator; an iterator is a stateful object that yields next values and is consumed.
 
-### iterable
+### Как работает
 
-Iterable умеет создать iterator через `__iter__`; один iterable может создавать новые независимые iterators для повторных обходов.
+`iter(obj)` obtains the iterator and `next(it)` asks for one item. A list can create a fresh iterator for each loop, while a generator object is typically its own single-pass iterator.
 
-### iterator
 
-Iterator возвращает себя из `__iter__` и сигнализирует завершение через `StopIteration`.
+### Важный нюанс / limitation
 
-### `iter`
-
-Для ``iter`` опиши protocol: кто инициирует шаг, какое состояние сохраняется, как выглядит завершение и error path.
-
-### `next`
-
-Для ``next`` опиши protocol: кто инициирует шаг, какое состояние сохраняется, как выглядит завершение и error path.
-
-### single-pass state
-
-Для `single-pass state` опиши protocol: кто инициирует шаг, какое состояние сохраняется, как выглядит завершение и error path.
-
-### exhaustion
-
-Для `exhaustion` опиши protocol: кто инициирует шаг, какое состояние сохраняется, как выглядит завершение и error path.
+After exhaustion, an iterator stays exhausted; call the iterable again to obtain a new traversal when supported.
 
 ## Mental model
 
 Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- iterable
+- iterator
+- `iter`
+- `next`
+
+### Полезно
+
+- single-pass state
+- exhaustion
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -65,19 +68,47 @@ List — iterable, создающий iterator; iterator хранит позиц
 
 ## Common mistakes
 
-**Ошибка:** Перехватывать Exception без стратегии либо удерживать весь поток данных в памяти.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Storing one generator and iterating it twice gives an empty second pass, unlike iterating the original list twice.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `iterable` example and predict the result before running it.
+
+**B · Find the bug.** Find code that violates `iterator` and explain the concrete consequence.
+
+**D · Small task.** Implement the smallest function/query that demonstrates `iterable` and add one edge-case test.
+
+**E · Interview explanation.** Explain Iterable vs iterator in 45–60 seconds and include one limitation.
 
 ## Interview questions
 
-1. Объясни **Iterable vs iterator** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Покажи happy path, завершение протокола и поведение при исключении. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Iterable vs iterator и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Iterable vs iterator?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+An iterable can produce an iterator; an iterator is a stateful object that yields next values and is consumed.
+
+### Нормальный Junior answer
+
+> An iterable can produce an iterator; an iterator is a stateful object that yields next values and is consumed. `iter(obj)` obtains the iterator and `next(it)` asks for one item. A list can create a fresh iterator for each loop, while a generator object is typically its own single-pass iterator. Важное ограничение: After exhaustion, an iterator stays exhausted; call the iterable again to obtain a new traversal when supported.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Iterable vs iterator?**
+
+Storing one generator and iterating it twice gives an empty second pass, unlike iterating the original list twice.
 
 ## Expected answer rubric
 
@@ -87,32 +118,21 @@ List — iterable, создающий iterator; iterator хранит позиц
 - iterator
 - `iter`
 - `next`
-- Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Перехватывать Exception без стратегии либо удерживать весь поток данных в памяти.
-- ответ из одного определения без механизма и failure mode.
+- Storing one generator and iterating it twice gives an empty second pass, unlike iterating the original list twice.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- iterable
-- iterator
-- `iter`
-- `next`
-- single-pass state
-- exhaustion.
+- Какая типичная ошибка связана с Iterable vs iterator?
 
 ## Задача
 
@@ -125,11 +145,10 @@ List — iterable, создающий iterator; iterator хранит позиц
 
 Перед собеседованием запомни:
 
-- дай точное определение **Iterable vs iterator**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** An iterable can produce an iterator; an iterator is a stateful object that yields next values and is consumed.
+- **Механизм:** Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка.
+- **Ограничение:** Storing one generator and iterating it twice gives an empty second pass, unlike iterating the original list twice.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

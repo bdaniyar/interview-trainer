@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Comprehensions» как на Junior Python Backend interview.",
+    "question": "Что такое Comprehensions и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "list/dict/set comprehensions",
       "generator expressions",
       "nested comprehensions",
-      "scope",
-      "Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set."
+      "scope"
     ],
+    "short_answer": "A comprehension builds a list, dict or set from an expression, source iterable and optional filters; a generator expression stays lazy.",
+    "junior_answer": "A comprehension builds a list, dict or set from an expression, source iterable and optional filters; a generator expression stays lazy. The expression runs once per selected input item. Comprehension loop variables have their own scope in Python 3, while referenced outer names are read normally. Важное ограничение: Prefer a regular loop when there are several branches, side effects or nested transformations that hide intent.",
+    "follow_up_question": "Какая типичная ошибка связана с Comprehensions?",
+    "follow_up_answer": "A dense nested comprehension can be syntactically valid but harder to review and debug than a four-line loop.",
     "expected_answer": {
       "must_mention": [
         "list/dict/set comprehensions",
         "generator expressions",
         "nested comprehensions",
-        "scope",
-        "Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set."
+        "scope"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Выбирать коллекцию по привычке и игнорировать порядок, дубликаты или хешируемость.",
+        "A dense nested comprehension can be syntactically valid but harder to review and debug than a four-line loop.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Выбирать коллекцию по привычке и игнорировать порядок, дубликаты или хешируемость."
+        "A dense nested comprehension can be syntactically valid but harder to review and debug than a four-line loop."
       ],
       "follow_up_questions": [
-        "Выбери структуру для набора API-записей и обоснуй lookup, порядок и дубликаты."
+        "Какая типичная ошибка связана с Comprehensions?"
       ]
     },
     "follow_ups": [
-      "Выбери структуру для набора API-записей и обоснуй lookup, порядок и дубликаты."
+      "Какая типичная ошибка связана с Comprehensions?"
     ],
     "tags": [
       "stage-02",
@@ -48,42 +50,43 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Comprehensions»: Выбери структуру для набора API-записей и обоснуй lookup, порядок и дубликаты. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Comprehensions?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "readability",
+      "when a regular loop is better",
+      "A dense nested comprehension can be syntactically valid but harder to review and debug than a four-line loop."
     ],
+    "short_answer": "A dense nested comprehension can be syntactically valid but harder to review and debug than a four-line loop.",
+    "junior_answer": "A dense nested comprehension can be syntactically valid but harder to review and debug than a four-line loop.",
+    "follow_up_question": "Что такое Comprehensions и как это работает?",
+    "follow_up_answer": "A comprehension builds a list, dict or set from an expression, source iterable and optional filters; a generator expression stays lazy. The expression runs once per selected input item. Comprehension loop variables have their own scope in Python 3, while referenced outer names are read normally. Важное ограничение: Prefer a regular loop when there are several branches, side effects or nested transformations that hide intent.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "readability",
+        "when a regular loop is better"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "A dense nested comprehension can be syntactically valid but harder to review and debug than a four-line loop."
       ],
       "red_flags": [
-        "Выбирать коллекцию по привычке и игнорировать порядок, дубликаты или хешируемость."
+        "A dense nested comprehension can be syntactically valid but harder to review and debug than a four-line loop."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Comprehensions и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Comprehensions и как это работает?"
     ],
     "tags": [
       "stage-02",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-02",

@@ -7,46 +7,65 @@
 
 После урока ты сможешь:
 
-- объяснить `check-then-insert race` своими словами и связать с backend-сценарием;
-- объяснить `unique/exclusion constraint` своими словами и связать с backend-сценарием;
-- объяснить `conditional update` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Booking concurrency**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `check-then-insert race`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-PostgreSQL обеспечивает ограничения и конкурентную работу ближе к данным; индекс и transaction boundary проектируются под запросы и инварианты.
+### Что это
 
-В теме **Booking concurrency** важно уверенно объяснять следующие части:
+Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.
 
-### check-then-insert race
+### Как работает
 
-Для `check-then-insert race` назови защищаемый invariant, concurrent transaction и evidence из constraint или query plan.
+Назови invariant и concurrent scenario, затем проверь constraint, transaction boundary и фактический query plan.
 
-### unique/exclusion constraint
+**check-then-insert race.** `check-then-insert race` влияет на database invariant, concurrent transactions или access path; правильность подтверждают constraint и фактический query plan.
 
-Constraint хранит invariant рядом с данными и защищает его от всех writers; API переводит conflict в понятную domain/HTTP error.
+**unique/exclusion constraint.** Constraint хранит invariant рядом с данными и защищает его от всех writers; API переводит conflict в понятную domain/HTTP error.
 
-### conditional update
+**conditional update.** `conditional update` влияет на database invariant, concurrent transactions или access path; правильность подтверждают constraint и фактический query plan.
 
-Для `conditional update` назови защищаемый invariant, concurrent transaction и evidence из constraint или query plan.
+**row/advisory locks.** Lock сериализует критическую секцию, но корректность требует единого порядка захвата и короткого времени удержания.
 
-### row/advisory locks
+**transaction.** Transaction задаёт атомарную границу: либо все связанные изменения становятся видимыми, либо выполняется rollback.
 
-Lock сериализует критическую секцию, но корректность требует единого порядка захвата и короткого времени удержания.
+**`409 Conflict`.** ``409 Conflict`` влияет на database invariant, concurrent transactions или access path; правильность подтверждают constraint и фактический query plan.
 
-### transaction
 
-Transaction задаёт атомарную границу: либо все связанные изменения становятся видимыми, либо выполняется rollback.
+### Важный нюанс / limitation
 
-### `409 Conflict`
+Граница Junior: уверенно объясняй `check-then-insert race` и `unique/exclusion constraint` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
-Для ``409 Conflict`` назови защищаемый invariant, concurrent transaction и evidence из constraint или query plan.
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `check-then-insert race`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- check-then-insert race
+- unique/exclusion constraint
+- conditional update
+- row/advisory locks
+
+### Полезно
+
+- transaction
+- `409 Conflict`
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -62,19 +81,45 @@ SELECT 's11_booking_concurrency' AS example_key;
 
 ## Common mistakes
 
-**Ошибка:** Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `check-then-insert race` до запуска.
+
+**B · Find the bug.** Найди нарушение `unique/exclusion constraint` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Booking concurrency за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Booking concurrency** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Назови инвариант, конкурентный сценарий и точку, где его гарантирует база. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Booking concurrency и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Booking concurrency?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Booking concurrency: Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.
+
+### Нормальный Junior answer
+
+> Booking concurrency — тема, в которой я сначала фиксирую `check-then-insert race`, затем объясняю `unique/exclusion constraint` на коротком примере. Ключевой механизм: Назови invariant и concurrent scenario, затем проверь constraint, transaction boundary и фактический query plan. Главная практическая ошибка — Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Booking concurrency?**
+
+Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
 
 ## Expected answer rubric
 
@@ -84,48 +129,34 @@ SELECT 's11_booking_concurrency' AS example_key;
 - unique/exclusion constraint
 - conditional update
 - row/advisory locks
-- Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова.
-- ответ из одного определения без механизма и failure mode.
+- Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- check-then-insert race
-- unique/exclusion constraint
-- conditional update
-- row/advisory locks
-- transaction
-- `409 Conflict`.
+- Какое ограничение или типичная ошибка относится именно к теме Booking concurrency?
 
 ## Задача
 
-Разбери backend-сценарий: **Назови инвариант, конкурентный сценарий и точку, где его гарантирует база.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Booking concurrency**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Booking concurrency**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Booking concurrency: Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.
+- **Механизм:** Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
+- **Ограничение:** Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

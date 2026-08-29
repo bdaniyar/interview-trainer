@@ -14,7 +14,7 @@
     "critical failure cases",
     "coverage gate is not quality proof."
   ],
-  "description": "P0 · pytest and 80% coverage gate: mental model, interview rubric и backend-сценарий.",
+  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
   "has_task": false,
   "has_solution": false,
   "priority": "P0",

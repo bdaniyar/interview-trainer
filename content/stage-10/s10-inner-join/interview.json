@@ -1,41 +1,43 @@
 [
   {
-    "question": "Объясни тему «INNER JOIN» как на Junior Python Backend interview.",
+    "question": "Как работает INNER JOIN и почему он может увеличить число строк?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "join condition",
-      "cardinality",
-      "duplicates",
-      "missing condition/cartesian product.",
-      "Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT."
+      "условие ON",
+      "только matched rows",
+      "one-to-many cardinality",
+      "Cartesian product"
     ],
+    "short_answer": "INNER JOIN оставляет пары, удовлетворяющие ON; one-to-many даёт несколько rows на одну строку стороны one.",
+    "junior_answer": "INNER JOIN объединяет только совпавшие строки по условию `ON`. Перед запросом я определяю grain: например, одна строка результата на order. Если у user несколько orders, user повторится для каждого заказа — это не SQL duplicate, а cardinality связи. Отсутствующее условие создаёт Cartesian product, и `DISTINCT` не должен маскировать такую ошибку.",
+    "follow_up_question": "Когда вместо INNER JOIN нужен LEFT JOIN?",
+    "follow_up_answer": "Когда нужно сохранить все строки левой таблицы, включая те, для которых связь не найдена; поля правой стороны тогда будут NULL.",
     "expected_answer": {
       "must_mention": [
-        "join condition",
-        "cardinality",
-        "duplicates",
-        "missing condition/cartesian product.",
-        "Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT."
+        "условие ON",
+        "только matched rows",
+        "one-to-many cardinality",
+        "Cartesian product"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE.",
+        "Забыть `ON` или часть composite key и получить резкий рост числа строк.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE."
+        "Забыть `ON` или часть composite key и получить резкий рост числа строк."
       ],
       "follow_up_questions": [
-        "Предскажи cardinality результата и проверь, не размножает ли JOIN строки."
+        "Когда вместо INNER JOIN нужен LEFT JOIN?"
       ]
     },
     "follow_ups": [
-      "Предскажи cardinality результата и проверь, не размножает ли JOIN строки."
+      "Когда вместо INNER JOIN нужен LEFT JOIN?"
     ],
     "tags": [
       "stage-10",
@@ -48,42 +50,47 @@
     ]
   },
   {
-    "question": "Сценарий по теме «INNER JOIN»: Предскажи cardinality результата и проверь, не размножает ли JOIN строки. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Когда вместо INNER JOIN нужен LEFT JOIN?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "aliases",
+      "оценка grain",
+      "проверка FK/index по join key",
+      "Когда нужно сохранить все строки левой таблицы, включая те, для которых связь не найдена; поля правой стороны тогда будут NULL."
     ],
+    "short_answer": "Когда нужно сохранить все строки левой таблицы, включая те, для которых связь не найдена; поля правой стороны тогда будут NULL.",
+    "junior_answer": "Когда нужно сохранить все строки левой таблицы, включая те, для которых связь не найдена; поля правой стороны тогда будут NULL.",
+    "follow_up_question": "Как работает INNER JOIN и почему он может увеличить число строк?",
+    "follow_up_answer": "INNER JOIN объединяет только совпавшие строки по условию `ON`. Перед запросом я определяю grain: например, одна строка результата на order. Если у user несколько orders, user повторится для каждого заказа — это не SQL duplicate, а cardinality связи. Отсутствующее условие создаёт Cartesian product, и `DISTINCT` не должен маскировать такую ошибку.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "aliases",
+        "оценка grain",
+        "проверка FK/index по join key"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Забыть `ON` или часть composite key и получить резкий рост числа строк.",
+        "Добавить `DISTINCT` вместо проверки one-to-many cardinality.",
+        "Выбрать INNER JOIN, когда бизнес-требование должно сохранить users без orders."
       ],
       "red_flags": [
-        "Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE."
+        "Забыть `ON` или часть composite key и получить резкий рост числа строк."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Как работает INNER JOIN и почему он может увеличить число строк?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Как работает INNER JOIN и почему он может увеличить число строк?"
     ],
     "tags": [
       "stage-10",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-10",

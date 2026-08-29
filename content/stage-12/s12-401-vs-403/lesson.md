@@ -7,34 +7,57 @@
 
 После урока ты сможешь:
 
-- объяснить `authentication absent/invalid` своими словами и связать с backend-сценарием;
-- объяснить `authenticated but forbidden` своими словами и связать с backend-сценарием;
-- объяснить `appropriate challenge/header context.` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **401 vs 403**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `authentication absent/invalid`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-HTTP — контракт между клиентом и сервером: method, target, headers, body, status и cache semantics.
+### Что это
 
-В теме **401 vs 403** важно уверенно объяснять следующие части:
+Это часть наблюдаемого HTTP contract: method/target/headers/body на входе и status/headers/body на выходе.
 
-### authentication absent/invalid
+### Как работает
 
-Authentication устанавливает identity, authorization проверяет право этой identity выполнить конкретное действие над resource.
+Опиши один request и один response, включая поведение retry, cache и error contract только там, где они относятся к теме.
 
-### authenticated but forbidden
+**authentication absent/invalid.** Authentication устанавливает identity, authorization проверяет право этой identity выполнить конкретное действие над resource.
 
-Для `authenticated but forbidden` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
+**authenticated but forbidden.** `authenticated but forbidden` является частью observable HTTP contract и влияет на request semantics, response status/body и допустимость повторного запроса.
 
-### appropriate challenge/header context
+**appropriate challenge/header context.** `appropriate challenge/header context` является частью observable HTTP contract и влияет на request semantics, response status/body и допустимость повторного запроса.
 
-Для `appropriate challenge/header context` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
+
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `authentication absent/invalid` и `authenticated but forbidden` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `authentication absent/invalid`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- authentication absent/invalid
+- authenticated but forbidden
+- appropriate challenge/header context
+
+### Полезно
+
+- связать 401 vs 403 с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -50,19 +73,45 @@ X-Request-ID: req-12-8
 
 ## Common mistakes
 
-**Ошибка:** Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `authentication absent/invalid` до запуска.
+
+**B · Find the bug.** Найди нарушение `authenticated but forbidden` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про 401 vs 403 за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **401 vs 403** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Спроектируй request/response контракт и объясни retry, idempotency и error body. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое 401 vs 403 и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме 401 vs 403?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+401 vs 403: Это часть наблюдаемого HTTP contract: method/target/headers/body на входе и status/headers/body на выходе.
+
+### Нормальный Junior answer
+
+> 401 vs 403 — тема, в которой я сначала фиксирую `authentication absent/invalid`, затем объясняю `authenticated but forbidden` на коротком примере. Ключевой механизм: Опиши один request и один response, включая поведение retry, cache и error contract только там, где они относятся к теме. Главная практическая ошибка — Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме 401 vs 403?**
+
+Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency.
 
 ## Expected answer rubric
 
@@ -70,46 +119,35 @@ X-Request-ID: req-12-8
 
 - authentication absent/invalid
 - authenticated but forbidden
-- appropriate challenge/header context.
-- Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
+- appropriate challenge/header context
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне.
-- ответ из одного определения без механизма и failure mode.
+- Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- authentication absent/invalid
-- authenticated but forbidden
-- appropriate challenge/header context.
+- Какое ограничение или типичная ошибка относится именно к теме 401 vs 403?
 
 ## Задача
 
-Разбери backend-сценарий: **Спроектируй request/response контракт и объясни retry, idempotency и error body.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **401 vs 403**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **401 vs 403**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** 401 vs 403: Это часть наблюдаемого HTTP contract: method/target/headers/body на входе и status/headers/body на выходе.
+- **Механизм:** Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
+- **Ограничение:** Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

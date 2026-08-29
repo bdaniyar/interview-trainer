@@ -7,46 +7,49 @@
 
 После урока ты сможешь:
 
-- объяснить `estimated vs actual` своими словами и связать с backend-сценарием;
-- объяснить `scan types` своими словами и связать с backend-сценарием;
-- объяснить `rows` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **EXPLAIN and EXPLAIN ANALYZE**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `estimated vs actual`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-PostgreSQL обеспечивает ограничения и конкурентную работу ближе к данным; индекс и transaction boundary проектируются под запросы и инварианты.
+### Что это
 
-В теме **EXPLAIN and EXPLAIN ANALYZE** важно уверенно объяснять следующие части:
+`EXPLAIN` shows the planned operations and estimates; `EXPLAIN ANALYZE` executes the statement and adds actual rows/timing.
 
-### estimated vs actual
+### Как работает
 
-Для `estimated vs actual` назови защищаемый invariant, concurrent transaction и evidence из constraint или query plan.
+Read plan nodes from children upward and compare estimated vs actual rows, loops, scan type and buffers when requested.
 
-### scan types
 
-Для `scan types` назови защищаемый invariant, concurrent transaction и evidence из constraint или query plan.
+### Важный нюанс / limitation
 
-### rows
-
-Для `rows` назови защищаемый invariant, concurrent transaction и evidence из constraint или query plan.
-
-### loops
-
-Для `loops` назови защищаемый invariant, concurrent transaction и evidence из constraint или query plan.
-
-### timing
-
-Для `timing` назови защищаемый invariant, concurrent transaction и evidence из constraint или query plan.
-
-### ANALYZE executes the query
-
-Для `ANALYZE executes the query` назови защищаемый invariant, concurrent transaction и evidence из constraint или query plan.
+ANALYZE really executes data-changing statements unless wrapped and rolled back; test safely.
 
 ## Mental model
 
 Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- estimated vs actual
+- scan types
+- rows
+- loops
+
+### Полезно
+
+- timing
+- ANALYZE executes the query
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -63,60 +66,19 @@ Constraint защищает истину, transaction объединяет из�
 
 ## Common mistakes
 
-**Ошибка:** Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Looking only at total time misses a severe estimate error or loop count that becomes expensive on larger data.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `estimated vs actual` example and predict the result before running it.
 
-## Interview questions
+**B · Find the bug.** Find code that violates `scan types` and explain the concrete consequence.
 
-1. Объясни **EXPLAIN and EXPLAIN ANALYZE** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Назови инвариант, конкурентный сценарий и точку, где его гарантирует база. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+**D · Small task.** Implement the smallest function/query that demonstrates `estimated vs actual` and add one edge-case test.
 
-## Expected answer rubric
-
-### Must mention
-
-- estimated vs actual
-- scan types
-- rows
-- loops
-- Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- estimated vs actual
-- scan types
-- rows
-- loops
-- timing
-- ANALYZE executes the query.
-
-## Задача
-
-Разбери backend-сценарий: **Назови инвариант, конкурентный сценарий и точку, где его гарантирует база.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Explain EXPLAIN and EXPLAIN ANALYZE in 45–60 seconds and include one limitation.
 
 ## SQL practice
 
@@ -164,15 +126,70 @@ SQL runner пока не подключён: выполни запрос в ло
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое EXPLAIN and EXPLAIN ANALYZE и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с EXPLAIN and EXPLAIN ANALYZE?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+`EXPLAIN` shows the planned operations and estimates; `EXPLAIN ANALYZE` executes the statement and adds actual rows/timing.
+
+### Нормальный Junior answer
+
+> `EXPLAIN` shows the planned operations and estimates; `EXPLAIN ANALYZE` executes the statement and adds actual rows/timing. Read plan nodes from children upward and compare estimated vs actual rows, loops, scan type and buffers when requested. Важное ограничение: ANALYZE really executes data-changing statements unless wrapped and rolled back; test safely.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с EXPLAIN and EXPLAIN ANALYZE?**
+
+Looking only at total time misses a severe estimate error or loop count that becomes expensive on larger data.
+
+## Expected answer rubric
+
+### Must mention
+
+- estimated vs actual
+- scan types
+- rows
+- loops
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Looking only at total time misses a severe estimate error or loop count that becomes expensive on larger data.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какая типичная ошибка связана с EXPLAIN and EXPLAIN ANALYZE?
+
+## Задача
+
+Сделай короткую письменную практику по теме **EXPLAIN and EXPLAIN ANALYZE**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **EXPLAIN and EXPLAIN ANALYZE**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** `EXPLAIN` shows the planned operations and estimates; `EXPLAIN ANALYZE` executes the statement and adds actual rows/timing.
+- **Механизм:** Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
+- **Ограничение:** Looking only at total time misses a severe estimate error or loop count that becomes expensive on larger data.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

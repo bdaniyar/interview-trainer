@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Set and frozenset» как на Junior Python Backend interview.",
+    "question": "Что такое Set and frozenset и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "uniqueness",
       "membership",
       "union/intersection/difference",
-      "deduplication",
-      "Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set."
+      "deduplication"
     ],
+    "short_answer": "`set` is a mutable unordered collection of unique hashable elements; `frozenset` is its immutable hashable variant.",
+    "junior_answer": "`set` is a mutable unordered collection of unique hashable elements; `frozenset` is its immutable hashable variant. Membership, add and remove are average O(1) through hashing. Union `|`, intersection `&` and difference `-` express standard set operations. Важное ограничение: Set iteration order is not a business contract. Sorting is required when output order matters; converting to set also discards duplicates.",
+    "follow_up_question": "Какая типичная ошибка связана с Set and frozenset?",
+    "follow_up_answer": "Returning `list(set(values))` from an API silently loses deterministic ordering.",
     "expected_answer": {
       "must_mention": [
         "uniqueness",
         "membership",
         "union/intersection/difference",
-        "deduplication",
-        "Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set."
+        "deduplication"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Выбирать коллекцию по привычке и игнорировать порядок, дубликаты или хешируемость.",
+        "Returning `list(set(values))` from an API silently loses deterministic ordering.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Выбирать коллекцию по привычке и игнорировать порядок, дубликаты или хешируемость."
+        "Returning `list(set(values))` from an API silently loses deterministic ordering."
       ],
       "follow_up_questions": [
-        "Выбери структуру для набора API-записей и обоснуй lookup, порядок и дубликаты."
+        "Какая типичная ошибка связана с Set and frozenset?"
       ]
     },
     "follow_ups": [
-      "Выбери структуру для набора API-записей и обоснуй lookup, порядок и дубликаты."
+      "Какая типичная ошибка связана с Set and frozenset?"
     ],
     "tags": [
       "stage-02",
@@ -48,42 +50,43 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Set and frozenset»: Выбери структуру для набора API-записей и обоснуй lookup, порядок и дубликаты. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Set and frozenset?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "set vs list",
+      "frozenset",
+      "Returning `list(set(values))` from an API silently loses deterministic ordering."
     ],
+    "short_answer": "Returning `list(set(values))` from an API silently loses deterministic ordering.",
+    "junior_answer": "Returning `list(set(values))` from an API silently loses deterministic ordering.",
+    "follow_up_question": "Что такое Set and frozenset и как это работает?",
+    "follow_up_answer": "`set` is a mutable unordered collection of unique hashable elements; `frozenset` is its immutable hashable variant. Membership, add and remove are average O(1) through hashing. Union `|`, intersection `&` and difference `-` express standard set operations. Важное ограничение: Set iteration order is not a business contract. Sorting is required when output order matters; converting to set also discards duplicates.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "set vs list",
+        "frozenset"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Returning `list(set(values))` from an API silently loses deterministic ordering."
       ],
       "red_flags": [
-        "Выбирать коллекцию по привычке и игнорировать порядок, дубликаты или хешируемость."
+        "Returning `list(set(values))` from an API silently loses deterministic ordering."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Set and frozenset и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Set and frozenset и как это работает?"
     ],
     "tags": [
       "stage-02",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-02",

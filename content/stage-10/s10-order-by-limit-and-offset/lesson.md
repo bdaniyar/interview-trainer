@@ -7,34 +7,47 @@
 
 После урока ты сможешь:
 
-- объяснить `deterministic ordering` своими словами и связать с backend-сценарием;
-- объяснить `multi-column ordering` своими словами и связать с backend-сценарием;
-- объяснить `pagination caveats.` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **ORDER BY, LIMIT and OFFSET**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `deterministic ordering`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-SQL описывает требуемый набор строк; корректность начинается с cardinality, NULL semantics и явного порядка.
+### Что это
 
-В теме **ORDER BY, LIMIT and OFFSET** важно уверенно объяснять следующие части:
+`ORDER BY` defines result order; `LIMIT` bounds rows and `OFFSET` skips rows for simple pagination.
 
-### deterministic ordering
+### Как работает
 
-Для `deterministic ordering` сначала определи grain/cardinality результата, затем NULL и ordering semantics.
+Multiple order columns are evaluated left to right. A unique tie-breaker such as id is needed for deterministic pages when primary sort values tie.
 
-### multi-column ordering
 
-Для `multi-column ordering` сначала определи grain/cardinality результата, затем NULL и ordering semantics.
+### Важный нюанс / limitation
 
-### pagination caveats
-
-Для `pagination caveats` сначала определи grain/cardinality результата, затем NULL и ordering semantics.
+Large OFFSET makes the database scan/discard earlier rows and concurrent inserts can shift page boundaries; keyset pagination scales better.
 
 ## Mental model
 
 Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- deterministic ordering
+- multi-column ordering
+- pagination caveats
+
+### Полезно
+
+- one short code/result example
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -51,56 +64,19 @@ LIMIT 20 OFFSET 20;
 
 ## Common mistakes
 
-**Ошибка:** Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Using LIMIT/OFFSET without a stable unique ordering returns duplicated or missing rows across pages.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `deterministic ordering` example and predict the result before running it.
 
-## Interview questions
+**B · Find the bug.** Find code that violates `multi-column ordering` and explain the concrete consequence.
 
-1. Объясни **ORDER BY, LIMIT and OFFSET** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Предскажи cardinality результата и проверь, не размножает ли JOIN строки. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+**D · Small task.** Implement the smallest function/query that demonstrates `deterministic ordering` and add one edge-case test.
 
-## Expected answer rubric
-
-### Must mention
-
-- deterministic ordering
-- multi-column ordering
-- pagination caveats.
-- Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- deterministic ordering
-- multi-column ordering
-- pagination caveats.
-
-## Задача
-
-Разбери backend-сценарий: **Предскажи cardinality результата и проверь, не размножает ли JOIN строки.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Explain ORDER BY, LIMIT and OFFSET in 45–60 seconds and include one limitation.
 
 ## SQL practice
 
@@ -224,15 +200,69 @@ SQL runner пока не подключён: выполни запрос в ло
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое ORDER BY, LIMIT and OFFSET и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с ORDER BY, LIMIT and OFFSET?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+`ORDER BY` defines result order; `LIMIT` bounds rows and `OFFSET` skips rows for simple pagination.
+
+### Нормальный Junior answer
+
+> `ORDER BY` defines result order; `LIMIT` bounds rows and `OFFSET` skips rows for simple pagination. Multiple order columns are evaluated left to right. A unique tie-breaker such as id is needed for deterministic pages when primary sort values tie. Важное ограничение: Large OFFSET makes the database scan/discard earlier rows and concurrent inserts can shift page boundaries; keyset pagination scales better.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с ORDER BY, LIMIT and OFFSET?**
+
+Using LIMIT/OFFSET without a stable unique ordering returns duplicated or missing rows across pages.
+
+## Expected answer rubric
+
+### Must mention
+
+- deterministic ordering
+- multi-column ordering
+- pagination caveats
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Using LIMIT/OFFSET without a stable unique ordering returns duplicated or missing rows across pages.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какая типичная ошибка связана с ORDER BY, LIMIT and OFFSET?
+
+## Задача
+
+Сделай короткую письменную практику по теме **ORDER BY, LIMIT and OFFSET**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **ORDER BY, LIMIT and OFFSET**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** `ORDER BY` defines result order; `LIMIT` bounds rows and `OFFSET` skips rows for simple pagination.
+- **Механизм:** Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
+- **Ограничение:** Using LIMIT/OFFSET without a stable unique ordering returns duplicated or missing rows across pages.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

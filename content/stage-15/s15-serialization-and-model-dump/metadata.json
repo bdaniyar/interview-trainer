@@ -15,7 +15,7 @@
     "aliases",
     "secret fields."
   ],
-  "description": "P0 · Serialization and `model_dump`: mental model, interview rubric и backend-сценарий.",
+  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
   "has_task": false,
   "has_solution": false,
   "priority": "P0",

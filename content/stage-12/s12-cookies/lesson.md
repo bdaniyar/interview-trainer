@@ -7,46 +7,49 @@
 
 После урока ты сможешь:
 
-- объяснить `request/response headers` своими словами и связать с backend-сценарием;
-- объяснить `domain/path` своими словами и связать с backend-сценарием;
-- объяснить `expiration` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Cookies**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `request/response headers`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-HTTP — контракт между клиентом и сервером: method, target, headers, body, status и cache semantics.
+### Что это
 
-В теме **Cookies** важно уверенно объяснять следующие части:
+A cookie is a name/value set by response header and automatically returned by a browser according to domain, path, expiry and security attributes.
 
-### request/response headers
+### Как работает
 
-Для `request/response headers` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
+HttpOnly blocks JavaScript reads, Secure restricts HTTPS transport and SameSite limits cross-site sending; none replaces server-side authorization.
 
-### domain/path
 
-Для `domain/path` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
+### Важный нюанс / limitation
 
-### expiration
-
-Для `expiration` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
-
-### HttpOnly
-
-Для `HttpOnly` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
-
-### Secure
-
-Для `Secure` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
-
-### SameSite
-
-Для `SameSite` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
+Cookie authentication needs CSRF considerations because the browser attaches cookies automatically.
 
 ## Mental model
 
 Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- request/response headers
+- domain/path
+- expiration
+- HttpOnly
+
+### Полезно
+
+- Secure
+- SameSite
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -62,19 +65,47 @@ X-Request-ID: req-12-11
 
 ## Common mistakes
 
-**Ошибка:** Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Putting a session cookie without HttpOnly/Secure/SameSite defaults unnecessarily expands the attack surface.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `request/response headers` example and predict the result before running it.
+
+**B · Find the bug.** Find code that violates `domain/path` and explain the concrete consequence.
+
+**D · Small task.** Implement the smallest function/query that demonstrates `request/response headers` and add one edge-case test.
+
+**E · Interview explanation.** Explain Cookies in 45–60 seconds and include one limitation.
 
 ## Interview questions
 
-1. Объясни **Cookies** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Спроектируй request/response контракт и объясни retry, idempotency и error body. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Cookies и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Cookies?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+A cookie is a name/value set by response header and automatically returned by a browser according to domain, path, expiry and security attributes.
+
+### Нормальный Junior answer
+
+> A cookie is a name/value set by response header and automatically returned by a browser according to domain, path, expiry and security attributes. HttpOnly blocks JavaScript reads, Secure restricts HTTPS transport and SameSite limits cross-site sending; none replaces server-side authorization. Важное ограничение: Cookie authentication needs CSRF considerations because the browser attaches cookies automatically.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Cookies?**
+
+Putting a session cookie without HttpOnly/Secure/SameSite defaults unnecessarily expands the attack surface.
 
 ## Expected answer rubric
 
@@ -84,48 +115,34 @@ X-Request-ID: req-12-11
 - domain/path
 - expiration
 - HttpOnly
-- Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне.
-- ответ из одного определения без механизма и failure mode.
+- Putting a session cookie without HttpOnly/Secure/SameSite defaults unnecessarily expands the attack surface.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- request/response headers
-- domain/path
-- expiration
-- HttpOnly
-- Secure
-- SameSite.
+- Какая типичная ошибка связана с Cookies?
 
 ## Задача
 
-Разбери backend-сценарий: **Спроектируй request/response контракт и объясни retry, idempotency и error body.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Cookies**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Cookies**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** A cookie is a name/value set by response header and automatically returned by a browser according to domain, path, expiry and security attributes.
+- **Механизм:** Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
+- **Ограничение:** Putting a session cookie without HttpOnly/Secure/SameSite defaults unnecessarily expands the attack surface.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

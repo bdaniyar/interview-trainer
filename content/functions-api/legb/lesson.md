@@ -7,46 +7,49 @@
 
 После урока ты сможешь:
 
-- объяснить `Local` своими словами и связать с backend-сценарием;
-- объяснить `Enclosing` своими словами и связать с backend-сценарием;
-- объяснить `Global` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **LEGB**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `Local`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Функция — объект с сигнатурой, областью видимости и состоянием замыкания; её контракт должен быть понятен вызывающему коду.
+### Что это
 
-В теме **LEGB** важно уверенно объяснять следующие части:
+LEGB is Python's name lookup order: Local, Enclosing, Global, Builtins.
 
-### Local
+### Как работает
 
-Для `Local` отдели definition time от call time и покажи влияние на signature, scope или state функции.
+A read searches those scopes in order. Assignment inside a function makes the name local unless declared `global` or `nonlocal`, which can cause `UnboundLocalError` when the name is read before local assignment.
 
-### Enclosing
 
-Для `Enclosing` отдели definition time от call time и покажи влияние на signature, scope или state функции.
+### Важный нюанс / limitation
 
-### Global
-
-Для `Global` отдели definition time от call time и покажи влияние на signature, scope или state функции.
-
-### Builtins
-
-Для `Builtins` отдели definition time от call time и покажи влияние на signature, scope или state функции.
-
-### name lookup
-
-Для `name lookup` отдели definition time от call time и покажи влияние на signature, scope или state функции.
-
-### shadowing
-
-Для `shadowing` отдели definition time от call time и покажи влияние на signature, scope или state функции.
+Shadowing `list`, `id` or another builtin works but makes later calls confusing or broken.
 
 ## Mental model
 
 Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- Local
+- Enclosing
+- Global
+- Builtins
+
+### Полезно
+
+- name lookup
+- shadowing
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -69,60 +72,19 @@ print(outer(), label)
 
 ## Common mistakes
 
-**Ошибка:** Скрывать неясный API за **kwargs или забывать о времени вычисления defaults.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Assuming assignment updates a global while Python created a new local binding causes wrong state and `UnboundLocalError`.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `Local` example and predict the result before running it.
 
-## Interview questions
+**B · Find the bug.** Find code that violates `Enclosing` and explain the concrete consequence.
 
-1. Объясни **LEGB** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Разбери сигнатуру helper-функции и объясни, какие вызовы допустимы и почему. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+**D · Small task.** Implement the smallest function/query that demonstrates `Local` and add one edge-case test.
 
-## Expected answer rubric
-
-### Must mention
-
-- Local
-- Enclosing
-- Global
-- Builtins
-- Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Скрывать неясный API за **kwargs или забывать о времени вычисления defaults.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- Local
-- Enclosing
-- Global
-- Builtins
-- name lookup
-- shadowing.
-
-## Задача
-
-Разбери backend-сценарий: **Разбери сигнатуру helper-функции и объясни, какие вызовы допустимы и почему.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Explain LEGB in 45–60 seconds and include one limitation.
 
 ## Code prediction
 
@@ -152,15 +114,70 @@ Misconception: `legb`.
 
 </details>
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое LEGB и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с LEGB?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+LEGB is Python's name lookup order: Local, Enclosing, Global, Builtins.
+
+### Нормальный Junior answer
+
+> LEGB is Python's name lookup order: Local, Enclosing, Global, Builtins. A read searches those scopes in order. Assignment inside a function makes the name local unless declared `global` or `nonlocal`, which can cause `UnboundLocalError` when the name is read before local assignment. Важное ограничение: Shadowing `list`, `id` or another builtin works but makes later calls confusing or broken.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с LEGB?**
+
+Assuming assignment updates a global while Python created a new local binding causes wrong state and `UnboundLocalError`.
+
+## Expected answer rubric
+
+### Must mention
+
+- Local
+- Enclosing
+- Global
+- Builtins
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Assuming assignment updates a global while Python created a new local binding causes wrong state and `UnboundLocalError`.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какая типичная ошибка связана с LEGB?
+
+## Задача
+
+Сделай короткую письменную практику по теме **LEGB**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **LEGB**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** LEGB is Python's name lookup order: Local, Enclosing, Global, Builtins.
+- **Механизм:** Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
+- **Ограничение:** Assuming assignment updates a global while Python created a new local binding causes wrong state and `UnboundLocalError`.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

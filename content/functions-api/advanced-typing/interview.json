@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Static hints vs runtime behavior» как на Junior Python Backend interview.",
+    "question": "Что такое Static hints vs runtime behavior и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "type hints",
       "static checker",
       "Python remains dynamic",
-      "FastAPI/Pydantic use hints at runtime.",
-      "Аннотация — описание для инструментов; runtime validation выполняет отдельный код или библиотека."
+      "FastAPI/Pydantic use hints at runtime"
     ],
+    "short_answer": "Type hints describe contracts for static checkers, IDEs and readers; Python remains dynamically typed at runtime.",
+    "junior_answer": "Type hints describe contracts for static checkers, IDEs and readers; Python remains dynamically typed at runtime. Annotations are stored as metadata and do not automatically insert type checks. Frameworks such as FastAPI/Pydantic explicitly inspect them to build validation/schema behavior. Важное ограничение: A passing type check is not input validation, and a runtime-valid coercion may still be undesirable for a domain rule.",
+    "follow_up_question": "Какая типичная ошибка связана с Static hints vs runtime behavior?",
+    "follow_up_answer": "Assuming `value: int` prevents a caller from passing a string leads to runtime surprises.",
     "expected_answer": {
       "must_mention": [
         "type hints",
         "static checker",
         "Python remains dynamic",
-        "FastAPI/Pydantic use hints at runtime.",
-        "Аннотация — описание для инструментов; runtime validation выполняет отдельный код или библиотека."
+        "FastAPI/Pydantic use hints at runtime"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Считать Any безопасным escape hatch либо путать Optional с необязательным аргументом.",
+        "Assuming `value: int` prevents a caller from passing a string leads to runtime surprises.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Считать Any безопасным escape hatch либо путать Optional с необязательным аргументом."
+        "Assuming `value: int` prevents a caller from passing a string leads to runtime surprises."
       ],
       "follow_up_questions": [
-        "Опиши тип входа API helper так, чтобы mypy видел ошибочный вызов до запуска."
+        "Какая типичная ошибка связана с Static hints vs runtime behavior?"
       ]
     },
     "follow_ups": [
-      "Опиши тип входа API helper так, чтобы mypy видел ошибочный вызов до запуска."
+      "Какая типичная ошибка связана с Static hints vs runtime behavior?"
     ],
     "tags": [
       "stage-06",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Static hints vs runtime behavior»: Опиши тип входа API helper так, чтобы mypy видел ошибочный вызов до запуска. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Static hints vs runtime behavior?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Аннотация — описание для инструментов; runtime validation выполняет отдельный код или библиотека.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "one short code/result example",
+      "Assuming `value: int` prevents a caller from passing a string leads to runtime surprises."
     ],
+    "short_answer": "Assuming `value: int` prevents a caller from passing a string leads to runtime surprises.",
+    "junior_answer": "Assuming `value: int` prevents a caller from passing a string leads to runtime surprises.",
+    "follow_up_question": "Что такое Static hints vs runtime behavior и как это работает?",
+    "follow_up_answer": "Type hints describe contracts for static checkers, IDEs and readers; Python remains dynamically typed at runtime. Annotations are stored as metadata and do not automatically insert type checks. Frameworks such as FastAPI/Pydantic explicitly inspect them to build validation/schema behavior. Важное ограничение: A passing type check is not input validation, and a runtime-valid coercion may still be undesirable for a domain rule.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "one short code/result example"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Assuming `value: int` prevents a caller from passing a string leads to runtime surprises."
       ],
       "red_flags": [
-        "Считать Any безопасным escape hatch либо путать Optional с необязательным аргументом."
+        "Assuming `value: int` prevents a caller from passing a string leads to runtime surprises."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Static hints vs runtime behavior и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Static hints vs runtime behavior и как это работает?"
     ],
     "tags": [
       "stage-06",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-06",

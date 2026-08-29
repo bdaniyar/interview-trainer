@@ -1,37 +1,39 @@
 [
   {
-    "question": "Объясни тему «Why migrations exist» как на Junior Python Backend interview.",
+    "question": "Что такое Why migrations exist и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
       "model code does not update an existing DB",
-      "versioned schema history.",
-      "Migration — воспроизводимый переход между версиями, который нужно review, test и безопасно раскатывать."
+      "versioned schema history"
     ],
+    "short_answer": "A migration is a versioned, reviewable transition of an existing database schema/data; changing ORM model code alone does not update deployed databases.",
+    "junior_answer": "A migration is a versioned, reviewable transition of an existing database schema/data; changing ORM model code alone does not update deployed databases. Alembic revisions define upgrade/downgrade steps and form an ordered history applied consistently across environments. Важное ограничение: Schema changes must stay compatible with old/new application versions during rolling deploys.",
+    "follow_up_question": "Какая типичная ошибка связана с Why migrations exist?",
+    "follow_up_answer": "Running `create_all` on startup cannot safely express rename, backfill or staged constraint changes.",
     "expected_answer": {
       "must_mention": [
         "model code does not update an existing DB",
-        "versioned schema history.",
-        "Migration — воспроизводимый переход между версиями, который нужно review, test и безопасно раскатывать."
+        "versioned schema history"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Слепо принимать autogenerate или совмещать несовместимое изменение в один deploy.",
+        "Running `create_all` on startup cannot safely express rename, backfill or staged constraint changes.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Слепо принимать autogenerate или совмещать несовместимое изменение в один deploy."
+        "Running `create_all` on startup cannot safely express rename, backfill or staged constraint changes."
       ],
       "follow_up_questions": [
-        "Предложи expand/contract sequence для изменения schema без остановки API."
+        "Какая типичная ошибка связана с Why migrations exist?"
       ]
     },
     "follow_ups": [
-      "Предложи expand/contract sequence для изменения schema без остановки API."
+      "Какая типичная ошибка связана с Why migrations exist?"
     ],
     "tags": [
       "stage-17",
@@ -44,42 +46,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Why migrations exist»: Предложи expand/contract sequence для изменения schema без остановки API. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Why migrations exist?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Migration — воспроизводимый переход между версиями, который нужно review, test и безопасно раскатывать.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "one short code/result example",
+      "Running `create_all` on startup cannot safely express rename, backfill or staged constraint changes."
     ],
+    "short_answer": "Running `create_all` on startup cannot safely express rename, backfill or staged constraint changes.",
+    "junior_answer": "Running `create_all` on startup cannot safely express rename, backfill or staged constraint changes.",
+    "follow_up_question": "Что такое Why migrations exist и как это работает?",
+    "follow_up_answer": "A migration is a versioned, reviewable transition of an existing database schema/data; changing ORM model code alone does not update deployed databases. Alembic revisions define upgrade/downgrade steps and form an ordered history applied consistently across environments. Важное ограничение: Schema changes must stay compatible with old/new application versions during rolling deploys.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "one short code/result example"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Running `create_all` on startup cannot safely express rename, backfill or staged constraint changes."
       ],
       "red_flags": [
-        "Слепо принимать autogenerate или совмещать несовместимое изменение в один deploy."
+        "Running `create_all` on startup cannot safely express rename, backfill or staged constraint changes."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Why migrations exist и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Why migrations exist и как это работает?"
     ],
     "tags": [
       "stage-17",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-17",

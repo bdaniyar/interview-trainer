@@ -7,42 +7,62 @@
 
 После урока ты сможешь:
 
-- объяснить `DB role` своими словами и связать с backend-сценарием;
-- объяснить `dependency/service policy` своими словами и связать с backend-сценарием;
-- объяснить `object-level checks` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Roles and permissions**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `DB role`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Resume Defense проверяет каждую заявленную технологию через конкретную роль в StudyHub, Hotel Booking или Share Recipe.
+### Что это
 
-В теме **Roles and permissions** важно уверенно объяснять следующие части:
+Тема **Roles and permissions** описывает отдельный контракт backend-разработки.
 
-### DB role
+### Как работает
 
-Для `DB role` отвечай только по реализованному flow: проблема, своё решение, trade-off, failure mode и test/metric.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
 
-### dependency/service policy
+**DB role.** `DB role` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
 
-Dependency объявляет вход handler/service явно; FastAPI разрешает graph зависимостей на request, cache-ит результат в его рамках и выполняет cleanup yield-dependency.
+**dependency/service policy.** Dependency объявляет вход handler/service явно; FastAPI разрешает graph зависимостей на request, cache-ит результат в его рамках и выполняет cleanup yield-dependency.
 
-### object-level checks
+**object-level checks.** `object-level checks` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
 
-Для `object-level checks` отвечай только по реализованному flow: проблема, своё решение, trade-off, failure mode и test/metric.
+**JWT claims may become stale.** JWT подписан, но обычно не зашифрован; сервер обязан проверить signature, issuer, audience и время действия.
 
-### JWT claims may become stale
+**UI is not security boundary.** `UI is not security boundary` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
 
-JWT подписан, но обычно не зашифрован; сервер обязан проверить signature, issuer, audience и время действия.
 
-### UI is not security boundary
+### Важный нюанс / limitation
 
-Для `UI is not security boundary` отвечай только по реализованному flow: проблема, своё решение, trade-off, failure mode и test/metric.
+Граница Junior: уверенно объясняй `DB role` и `dependency/service policy` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `DB role`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- DB role
+- dependency/service policy
+- object-level checks
+- JWT claims may become stale
+
+### Полезно
+
+- UI is not security boundary
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -65,19 +85,45 @@ JWT подписан, но обычно не зашифрован; сервер 
 
 ## Common mistakes
 
-**Ошибка:** Приписывать себе production scale, AWS, Kubernetes, Kafka или RabbitMQ без фактического опыта.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Игнорировать ограничение механизма и проверять только happy path.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `DB role` до запуска.
+
+**B · Find the bug.** Найди нарушение `dependency/service policy` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Roles and permissions за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Roles and permissions** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Защити один claim, назвав точный flow, failure mode и способ проверки. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Roles and permissions и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Roles and permissions?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Roles and permissions: это отдельный технический контракт
+
+### Нормальный Junior answer
+
+> Roles and permissions — тема, в которой я сначала фиксирую `DB role`, затем объясняю `dependency/service policy` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Roles and permissions?**
+
+Нужно назвать конкретный failure path и способ его проверить.
 
 ## Expected answer rubric
 
@@ -87,47 +133,34 @@ JWT подписан, но обычно не зашифрован; сервер 
 - dependency/service policy
 - object-level checks
 - JWT claims may become stale
-- Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Приписывать себе production scale, AWS, Kubernetes, Kafka или RabbitMQ без фактического опыта.
-- ответ из одного определения без механизма и failure mode.
+- Игнорировать ограничение механизма и проверять только happy path.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- DB role
-- dependency/service policy
-- object-level checks
-- JWT claims may become stale
-- UI is not security boundary.
+- Какое ограничение или типичная ошибка относится именно к теме Roles and permissions?
 
 ## Задача
 
-Разбери backend-сценарий: **Защити один claim, назвав точный flow, failure mode и способ проверки.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Roles and permissions**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Roles and permissions**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Roles and permissions: это отдельный технический контракт
+- **Механизм:** Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

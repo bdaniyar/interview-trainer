@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Error contracts» как на Junior Python Backend interview.",
+    "question": "Что такое Error contracts и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "stable shape",
       "machine-readable code",
       "human message",
-      "field errors",
-      "Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса."
+      "field errors"
     ],
+    "short_answer": "An API error contract is a stable response shape for failures, usually containing a machine code, human message and optional field details.",
+    "junior_answer": "An API error contract is a stable response shape for failures, usually containing a machine code, human message and optional field details. Domain/infrastructure exceptions are translated at the boundary to an appropriate status and safe payload; internal trace and secrets remain in protected logs. Важное ограничение: Clients should branch on stable code/status, not exact human wording.",
+    "follow_up_question": "Какая типичная ошибка связана с Error contracts?",
+    "follow_up_answer": "Returning raw exception strings leaks implementation details and creates an unstable public contract.",
     "expected_answer": {
       "must_mention": [
         "stable shape",
         "machine-readable code",
         "human message",
-        "field errors",
-        "Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса."
+        "field errors"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне.",
+        "Returning raw exception strings leaks implementation details and creates an unstable public contract.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне."
+        "Returning raw exception strings leaks implementation details and creates an unstable public contract."
       ],
       "follow_up_questions": [
-        "Спроектируй request/response контракт и объясни retry, idempotency и error body."
+        "Какая типичная ошибка связана с Error contracts?"
       ]
     },
     "follow_ups": [
-      "Спроектируй request/response контракт и объясни retry, idempotency и error body."
+      "Какая типичная ошибка связана с Error contracts?"
     ],
     "tags": [
       "stage-12",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Error contracts»: Спроектируй request/response контракт и объясни retry, idempotency и error body. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Error contracts?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "no internal traces",
+      "Returning raw exception strings leaks implementation details and creates an unstable public contract."
     ],
+    "short_answer": "Returning raw exception strings leaks implementation details and creates an unstable public contract.",
+    "junior_answer": "Returning raw exception strings leaks implementation details and creates an unstable public contract.",
+    "follow_up_question": "Что такое Error contracts и как это работает?",
+    "follow_up_answer": "An API error contract is a stable response shape for failures, usually containing a machine code, human message and optional field details. Domain/infrastructure exceptions are translated at the boundary to an appropriate status and safe payload; internal trace and secrets remain in protected logs. Важное ограничение: Clients should branch on stable code/status, not exact human wording.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "no internal traces"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Returning raw exception strings leaks implementation details and creates an unstable public contract."
       ],
       "red_flags": [
-        "Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне."
+        "Returning raw exception strings leaks implementation details and creates an unstable public contract."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Error contracts и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Error contracts и как это работает?"
     ],
     "tags": [
       "stage-12",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-12",

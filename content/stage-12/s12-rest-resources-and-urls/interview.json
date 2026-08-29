@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «REST resources and URLs» как на Junior Python Backend interview.",
+    "question": "Что такое REST resources and URLs и какой механизм здесь важно понимать Junior-разработчику?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -8,34 +8,36 @@
       "nouns",
       "collections/items",
       "nested resources",
-      "actions only when appropriate.",
-      "Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса."
+      "actions only when appropriate"
     ],
+    "short_answer": "REST resources and URLs: Это часть наблюдаемого HTTP contract: method/target/headers/body на входе и status/headers/body на выходе.",
+    "junior_answer": "REST resources and URLs — тема, в которой я сначала фиксирую `nouns`, затем объясняю `collections/items` на коротком примере. Ключевой механизм: Опиши один request и один response, включая поведение retry, cache и error contract только там, где они относятся к теме. Главная практическая ошибка — Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency.",
+    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме REST resources and URLs?",
+    "follow_up_answer": "Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency.",
     "expected_answer": {
       "must_mention": [
         "nouns",
         "collections/items",
         "nested resources",
-        "actions only when appropriate.",
-        "Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса."
+        "actions only when appropriate"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне.",
+        "Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне."
+        "Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency."
       ],
       "follow_up_questions": [
-        "Спроектируй request/response контракт и объясни retry, idempotency и error body."
+        "Какое ограничение или типичная ошибка относится именно к теме REST resources and URLs?"
       ]
     },
     "follow_ups": [
-      "Спроектируй request/response контракт и объясни retry, idempotency и error body."
+      "Какое ограничение или типичная ошибка относится именно к теме REST resources and URLs?"
     ],
     "tags": [
       "stage-12",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «REST resources and URLs»: Спроектируй request/response контракт и объясни retry, idempotency и error body. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какое ограничение или типичная ошибка относится именно к теме REST resources and URLs?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "связать REST resources and URLs с коротким рабочим примером",
+      "Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency."
     ],
+    "short_answer": "Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency.",
+    "junior_answer": "Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency.",
+    "follow_up_question": "Что такое REST resources and URLs и какой механизм здесь важно понимать Junior-разработчику?",
+    "follow_up_answer": "REST resources and URLs — тема, в которой я сначала фиксирую `nouns`, затем объясняю `collections/items` на коротком примере. Ключевой механизм: Опиши один request и один response, включая поведение retry, cache и error contract только там, где они относятся к теме. Главная практическая ошибка — Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "связать REST resources and URLs с коротким рабочим примером"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency."
       ],
       "red_flags": [
-        "Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне."
+        "Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое REST resources and URLs и какой механизм здесь важно понимать Junior-разработчику?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое REST resources and URLs и какой механизм здесь важно понимать Junior-разработчику?"
     ],
     "tags": [
       "stage-12",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-12",

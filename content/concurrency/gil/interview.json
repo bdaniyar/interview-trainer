@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «GIL» как на Junior Python Backend interview.",
+    "question": "Что такое GIL и как это работает?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "one thread executing Python bytecode in one CPython process",
       "threads still useful for I/O",
       "processes/native code for CPU work",
-      "GIL is not a general lock for application data.",
-      "Разделяй спецификацию Python и конкретную реализацию CPython; GIL относится к выполнению bytecode, не к бизнес-инвариантам."
+      "GIL is not a general lock for application data"
     ],
+    "short_answer": "The CPython GIL allows one thread at a time to execute Python bytecode in a process.",
+    "junior_answer": "The CPython GIL allows one thread at a time to execute Python bytecode in a process. Threads can still overlap waiting I/O because the GIL is released around many blocking/native operations. CPU-bound pure Python usually needs processes, native code that releases the GIL or external workers. Важное ограничение: The GIL is not an application lock: multi-step shared-state operations and database invariants still race.",
+    "follow_up_question": "Какая типичная ошибка связана с GIL?",
+    "follow_up_answer": "Claiming that threads cannot race because of the GIL confuses bytecode scheduling with atomic business operations.",
     "expected_answer": {
       "must_mention": [
         "one thread executing Python bytecode in one CPython process",
         "threads still useful for I/O",
         "processes/native code for CPU work",
-        "GIL is not a general lock for application data.",
-        "Разделяй спецификацию Python и конкретную реализацию CPython; GIL относится к выполнению bytecode, не к бизнес-инвариантам."
+        "GIL is not a general lock for application data"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Считать GIL автоматической защитой shared state или вызывать gc.collect как универсальную оптимизацию.",
+        "Claiming that threads cannot race because of the GIL confuses bytecode scheduling with atomic business operations.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Считать GIL автоматической защитой shared state или вызывать gc.collect как универсальную оптимизацию."
+        "Claiming that threads cannot race because of the GIL confuses bytecode scheduling with atomic business operations."
       ],
       "follow_up_questions": [
-        "Классифицируй проблему как lifetime, allocation, race или CPU contention перед выбором инструмента."
+        "Какая типичная ошибка связана с GIL?"
       ]
     },
     "follow_ups": [
-      "Классифицируй проблему как lifetime, allocation, race или CPU contention перед выбором инструмента."
+      "Какая типичная ошибка связана с GIL?"
     ],
     "tags": [
       "stage-07",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «GIL»: Классифицируй проблему как lifetime, allocation, race или CPU contention перед выбором инструмента. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с GIL?",
+    "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Разделяй спецификацию Python и конкретную реализацию CPython; GIL относится к выполнению bytecode, не к бизнес-инвариантам.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "one short code/result example",
+      "Claiming that threads cannot race because of the GIL confuses bytecode scheduling with atomic business operations."
     ],
+    "short_answer": "Claiming that threads cannot race because of the GIL confuses bytecode scheduling with atomic business operations.",
+    "junior_answer": "Claiming that threads cannot race because of the GIL confuses bytecode scheduling with atomic business operations.",
+    "follow_up_question": "Что такое GIL и как это работает?",
+    "follow_up_answer": "The CPython GIL allows one thread at a time to execute Python bytecode in a process. Threads can still overlap waiting I/O because the GIL is released around many blocking/native operations. CPU-bound pure Python usually needs processes, native code that releases the GIL or external workers. Важное ограничение: The GIL is not an application lock: multi-step shared-state operations and database invariants still race.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "one short code/result example"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Claiming that threads cannot race because of the GIL confuses bytecode scheduling with atomic business operations."
       ],
       "red_flags": [
-        "Считать GIL автоматической защитой shared state или вызывать gc.collect как универсальную оптимизацию."
+        "Claiming that threads cannot race because of the GIL confuses bytecode scheduling with atomic business operations."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое GIL и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое GIL и как это работает?"
     ],
     "tags": [
       "stage-07",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-07",

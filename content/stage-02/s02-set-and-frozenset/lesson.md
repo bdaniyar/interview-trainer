@@ -7,46 +7,53 @@
 
 После урока ты сможешь:
 
-- объяснить `uniqueness` своими словами и связать с backend-сценарием;
-- объяснить `membership` своими словами и связать с backend-сценарием;
-- объяснить `union/intersection/difference` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Set and frozenset**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `uniqueness`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Коллекция выбирается по требуемым операциям: порядок, уникальность, доступ по ключу, мутабельность и стоимость поиска.
+### Что это
 
-В теме **Set and frozenset** важно уверенно объяснять следующие части:
+`set` is a mutable unordered collection of unique hashable elements; `frozenset` is its immutable hashable variant.
 
-### uniqueness
+### Как работает
 
-Для `uniqueness` назови поддерживаемые операции, порядок, уникальность, mutability и стоимость ключевого доступа.
+Membership, add and remove are average O(1) through hashing. Union `|`, intersection `&` and difference `-` express standard set operations.
 
-### membership
 
-Для `membership` назови поддерживаемые операции, порядок, уникальность, mutability и стоимость ключевого доступа.
+### Важный нюанс / limitation
 
-### union/intersection/difference
+Set iteration order is not a business contract. Sorting is required when output order matters; converting to set also discards duplicates.
 
-Для `union/intersection/difference` назови поддерживаемые операции, порядок, уникальность, mutability и стоимость ключевого доступа.
+### Где используется в backend
 
-### deduplication
-
-Для `deduplication` назови поддерживаемые операции, порядок, уникальность, mutability и стоимость ключевого доступа.
-
-### set vs list
-
-`list` — ordered mutable sequence: индекс и append удобны, а поиск значения и вставка в начало линейны; aliases видят общие mutations.
-
-### frozenset
-
-`frozenset` — immutable hashable set и подходит как key или элемент другого set, если требуется множество без mutations.
+Sets are useful for permission membership or deduplication when original order is not required.
 
 ## Mental model
 
 Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- uniqueness
+- membership
+- union/intersection/difference
+- deduplication
+
+### Полезно
+
+- set vs list
+- frozenset
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -64,62 +71,20 @@ Set operations прямо выражают пересечение и прове�
 
 ## Common mistakes
 
-**Ошибка:** Выбирать коллекцию по привычке и игнорировать порядок, дубликаты или хешируемость.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Returning `list(set(values))` from an API silently loses deterministic ordering.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `uniqueness` example and predict the result before running it.
 
-## Interview questions
+**B · Find the bug.** Find code that violates `membership` and explain the concrete consequence.
 
-1. Объясни **Set and frozenset** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Выбери структуру для набора API-записей и обоснуй lookup, порядок и дубликаты. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+**D · Small task.** Implement the smallest function/query that demonstrates `uniqueness` and add one edge-case test.
 
-## Expected answer rubric
+**E · Interview explanation.** Explain Set and frozenset in 45–60 seconds and include one limitation.
 
-### Must mention
-
-- uniqueness
-- membership
-- union/intersection/difference
-- deduplication
-- Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Выбирать коллекцию по привычке и игнорировать порядок, дубликаты или хешируемость.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- uniqueness
-- membership
-- union/intersection/difference
-- deduplication
-- set vs list
-- frozenset.
-
-## Задача
-
-### Нормализовать scopes
-
-Верни frozenset непустых scopes в lower-case без пробелов и дублей.
-
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
 ## Code prediction
 
 ### set удаляет дубликаты
@@ -145,15 +110,73 @@ Misconception: `set-order`.
 
 </details>
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое Set and frozenset и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Set and frozenset?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+`set` is a mutable unordered collection of unique hashable elements; `frozenset` is its immutable hashable variant.
+
+### Нормальный Junior answer
+
+> `set` is a mutable unordered collection of unique hashable elements; `frozenset` is its immutable hashable variant. Membership, add and remove are average O(1) through hashing. Union `|`, intersection `&` and difference `-` express standard set operations. Важное ограничение: Set iteration order is not a business contract. Sorting is required when output order matters; converting to set also discards duplicates.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Set and frozenset?**
+
+Returning `list(set(values))` from an API silently loses deterministic ordering.
+
+## Expected answer rubric
+
+### Must mention
+
+- uniqueness
+- membership
+- union/intersection/difference
+- deduplication
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Returning `list(set(values))` from an API silently loses deterministic ordering.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какая типичная ошибка связана с Set and frozenset?
+
+## Задача
+
+### Нормализовать scopes
+
+Верни frozenset непустых scopes в lower-case без пробелов и дублей.
+
+Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Set and frozenset**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** `set` is a mutable unordered collection of unique hashable elements; `frozenset` is its immutable hashable variant.
+- **Механизм:** Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set.
+- **Ограничение:** Returning `list(set(values))` from an API silently loses deterministic ordering.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

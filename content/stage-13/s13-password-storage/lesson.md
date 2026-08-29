@@ -7,42 +7,62 @@
 
 После урока ты сможешь:
 
-- объяснить `password hashing` своими словами и связать с backend-сценарием;
-- объяснить `salt` своими словами и связать с backend-сценарием;
-- объяснить `work factor` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Password storage**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `password hashing`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Security строится слоями: аутентификация, авторизация, validation, безопасное хранение секретов и ограничение злоупотреблений.
+### Что это
 
-В теме **Password storage** важно уверенно объяснять следующие части:
+Это security boundary: сервер проверяет утверждение и безопасно отказывает, не доверяя клиентскому UI.
 
-### password hashing
+### Как работает
 
-Пароль хранят через специализированный медленный password hash с солью, а не через быстрый общий hash.
+Назови asset, threat, trust boundary, server-side verification и безопасный failure result.
 
-### salt
+**password hashing.** Пароль хранят через специализированный медленный password hash с солью, а не через быстрый общий hash.
 
-Для `salt` назови threat, trust boundary, server-side check и безопасный failure response.
+**salt.** `salt` закрывает конкретную threat на trust boundary; проверка выполняется server-side, а отказ не раскрывает лишних данных.
 
-### work factor
+**work factor.** `work factor` закрывает конкретную threat на trust boundary; проверка выполняется server-side, а отказ не раскрывает лишних данных.
 
-Для `work factor` назови threat, trust boundary, server-side check и безопасный failure response.
+**Argon2/bcrypt concepts.** `Argon2/bcrypt concepts` закрывает конкретную threat на trust boundary; проверка выполняется server-side, а отказ не раскрывает лишних данных.
 
-### Argon2/bcrypt concepts
+**never reversible encryption/plain hash.** Равные hashable-объекты обязаны иметь одинаковый hash, а состояние, влияющее на equality, не должно меняться в ключе.
 
-Для `Argon2/bcrypt concepts` назови threat, trust boundary, server-side check и безопасный failure response.
 
-### never reversible encryption/plain hash
+### Важный нюанс / limitation
 
-Равные hashable-объекты обязаны иметь одинаковый hash, а состояние, влияющее на equality, не должно меняться в ключе.
+Граница Junior: уверенно объясняй `password hashing` и `salt` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `password hashing`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- password hashing
+- salt
+- work factor
+- Argon2/bcrypt concepts
+
+### Полезно
+
+- never reversible encryption/plain hash
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -59,59 +79,17 @@ Argon2id/bcrypt/scrypt с индивидуальной солью и cost; те�
 
 ## Common mistakes
 
-**Ошибка:** Считать CORS авторизацией, JWT шифрованием или хранить пароль быстрым hash.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `password hashing` до запуска.
 
-## Interview questions
+**B · Find the bug.** Найди нарушение `salt` и объясни конкретное последствие.
 
-1. Объясни **Password storage** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Назови атакующего, актив, проверку на сервере и безопасный отказ. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
-
-## Expected answer rubric
-
-### Must mention
-
-- password hashing
-- salt
-- work factor
-- Argon2/bcrypt concepts
-- Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Считать CORS авторизацией, JWT шифрованием или хранить пароль быстрым hash.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- password hashing
-- salt
-- work factor
-- Argon2/bcrypt concepts
-- never reversible encryption/plain hash.
-
-## Задача
-
-Разбери backend-сценарий: **Назови атакующего, актив, проверку на сервере и безопасный отказ.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Дай ответ про Password storage за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Debugging practice
 
@@ -123,15 +101,70 @@ Argon2id/bcrypt/scrypt с индивидуальной солью и cost; те�
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое Password storage и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Password storage?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Password storage: Это security boundary: сервер проверяет утверждение и безопасно отказывает, не доверяя клиентскому UI.
+
+### Нормальный Junior answer
+
+> Password storage — тема, в которой я сначала фиксирую `password hashing`, затем объясняю `salt` на коротком примере. Ключевой механизм: Назови asset, threat, trust boundary, server-side verification и безопасный failure result. Главная практическая ошибка — Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Password storage?**
+
+Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.
+
+## Expected answer rubric
+
+### Must mention
+
+- password hashing
+- salt
+- work factor
+- Argon2/bcrypt concepts
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какое ограничение или типичная ошибка относится именно к теме Password storage?
+
+## Задача
+
+Сделай короткую письменную практику по теме **Password storage**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Password storage**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Password storage: Это security boundary: сервер проверяет утверждение и безопасно отказывает, не доверяя клиентскому UI.
+- **Механизм:** Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации.
+- **Ограничение:** Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

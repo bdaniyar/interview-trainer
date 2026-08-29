@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Response models» как на Junior Python Backend interview.",
+    "question": "Что такое Response models и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -8,34 +8,36 @@
       "contract",
       "serialization",
       "filtering fields",
-      "avoiding secret leakage.",
-      "Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency."
+      "avoiding secret leakage"
     ],
+    "short_answer": "A response model defines the public output schema and filters/serializes endpoint results.",
+    "junior_answer": "A response model defines the public output schema and filters/serializes endpoint results. FastAPI validates the returned value against the model and emits the declared representation in OpenAPI. Важное ограничение: Use a separate public schema so password hashes and internal flags cannot leak from an ORM object.",
+    "follow_up_question": "Какая типичная ошибка связана с Response models?",
+    "follow_up_answer": "Returning ORM `__dict__` or an unrestricted model can expose secret/internal fields.",
     "expected_answer": {
       "must_mention": [
         "contract",
         "serialization",
         "filtering fields",
-        "avoiding secret leakage.",
-        "Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency."
+        "avoiding secret leakage"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Открывать Session глобально или выполнять blocking I/O в async route.",
+        "Returning ORM `__dict__` or an unrestricted model can expose secret/internal fields.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Открывать Session глобально или выполнять blocking I/O в async route."
+        "Returning ORM `__dict__` or an unrestricted model can expose secret/internal fields."
       ],
       "follow_up_questions": [
-        "Проследи request от router через dependency и service до response model."
+        "Какая типичная ошибка связана с Response models?"
       ]
     },
     "follow_ups": [
-      "Проследи request от router через dependency и service до response model."
+      "Какая типичная ошибка связана с Response models?"
     ],
     "tags": [
       "stage-14",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Response models»: Проследи request от router через dependency и service до response model. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Response models?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "one short code/result example",
+      "Returning ORM `__dict__` or an unrestricted model can expose secret/internal fields."
     ],
+    "short_answer": "Returning ORM `__dict__` or an unrestricted model can expose secret/internal fields.",
+    "junior_answer": "Returning ORM `__dict__` or an unrestricted model can expose secret/internal fields.",
+    "follow_up_question": "Что такое Response models и как это работает?",
+    "follow_up_answer": "A response model defines the public output schema and filters/serializes endpoint results. FastAPI validates the returned value against the model and emits the declared representation in OpenAPI. Важное ограничение: Use a separate public schema so password hashes and internal flags cannot leak from an ORM object.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "one short code/result example"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Returning ORM `__dict__` or an unrestricted model can expose secret/internal fields."
       ],
       "red_flags": [
-        "Открывать Session глобально или выполнять blocking I/O в async route."
+        "Returning ORM `__dict__` or an unrestricted model can expose secret/internal fields."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Response models и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Response models и как это работает?"
     ],
     "tags": [
       "stage-14",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-14",

@@ -7,34 +7,57 @@
 
 После урока ты сможешь:
 
-- объяснить `separate IN query` своими словами и связать с backend-сценарием;
-- объяснить `collections` своими словами и связать с backend-сценарием;
-- объяснить `common safe default.` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **`selectinload`**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `separate IN query`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-SQLAlchemy 2.x управляет SQL, identity map, unit of work и transaction lifecycle; Session не является простым соединением.
+### Что это
 
-В теме **`selectinload`** важно уверенно объяснять следующие части:
+Это часть SQLAlchemy 2.x data-access flow: statement, Session, identity map и transaction lifecycle.
 
-### separate IN query
+### Как работает
 
-Для `separate IN query` укажи Session/transaction owner, момент SQL I/O и последствия rollback или lazy load.
+Укажи владельца Session/transaction, момент SQL I/O и state entity до и после flush/commit/rollback.
 
-### collections
+**separate IN query.** `separate IN query` влияет на SQLAlchemy Session/transaction state, момент фактического SQL I/O и поведение rollback или relationship loading.
 
-Для `collections` укажи Session/transaction owner, момент SQL I/O и последствия rollback или lazy load.
+**collections.** `collections` влияет на SQLAlchemy Session/transaction state, момент фактического SQL I/O и поведение rollback или relationship loading.
 
-### common safe default
+**common safe default.** `common safe default` влияет на SQLAlchemy Session/transaction state, момент фактического SQL I/O и поведение rollback или relationship loading.
 
-Для `common safe default` укажи Session/transaction owner, момент SQL I/O и последствия rollback или lazy load.
+
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `separate IN query` и `collections` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `separate IN query`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- separate IN query
+- collections
+- common safe default
+
+### Полезно
+
+- связать `selectinload` с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -49,19 +72,45 @@ def projects_with_tasks(Project):
 
 ## Common mistakes
 
-**Ошибка:** Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Скрыть commit внутри repository, допустить N+1 или продолжить Session без rollback после ошибки.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `separate IN query` до запуска.
+
+**B · Find the bug.** Найди нарушение `collections` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про `selectinload` за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **`selectinload`** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Опиши session scope, момент flush/commit и количество SQL-запросов. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое `selectinload` и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме `selectinload`?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+`selectinload`: Это часть SQLAlchemy 2.x data-access flow: statement, Session, identity map и transaction lifecycle.
+
+### Нормальный Junior answer
+
+> `selectinload` — тема, в которой я сначала фиксирую `separate IN query`, затем объясняю `collections` на коротком примере. Ключевой механизм: Укажи владельца Session/transaction, момент SQL I/O и state entity до и после flush/commit/rollback. Главная практическая ошибка — Скрыть commit внутри repository, допустить N+1 или продолжить Session без rollback после ошибки.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме `selectinload`?**
+
+Скрыть commit внутри repository, допустить N+1 или продолжить Session без rollback после ошибки.
 
 ## Expected answer rubric
 
@@ -69,30 +118,22 @@ def projects_with_tasks(Project):
 
 - separate IN query
 - collections
-- common safe default.
-- Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
+- common safe default
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks.
-- ответ из одного определения без механизма и failure mode.
+- Скрыть commit внутри repository, допустить N+1 или продолжить Session без rollback после ошибки.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- separate IN query
-- collections
-- common safe default.
+- Какое ограничение или типичная ошибка относится именно к теме `selectinload`?
 
 ## Задача
 
@@ -105,11 +146,10 @@ projects_with_tasks(Project): selectinload(Project.tasks), order id.
 
 Перед собеседованием запомни:
 
-- дай точное определение **`selectinload`**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** `selectinload`: Это часть SQLAlchemy 2.x data-access flow: statement, Session, identity map и transaction lifecycle.
+- **Механизм:** Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
+- **Ограничение:** Скрыть commit внутри repository, допустить N+1 или продолжить Session без rollback после ошибки.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

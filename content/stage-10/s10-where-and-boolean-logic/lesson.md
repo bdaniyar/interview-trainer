@@ -7,42 +7,48 @@
 
 После урока ты сможешь:
 
-- объяснить `comparisons` своими словами и связать с backend-сценарием;
-- объяснить `AND/OR/NOT` своими словами и связать с backend-сценарием;
-- объяснить `parentheses` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **WHERE and boolean logic**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `comparisons`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-SQL описывает требуемый набор строк; корректность начинается с cardinality, NULL semantics и явного порядка.
+### Что это
 
-В теме **WHERE and boolean logic** важно уверенно объяснять следующие части:
+`WHERE` filters source rows using boolean predicates before grouping and aggregation.
 
-### comparisons
+### Как работает
 
-Для `comparisons` сначала определи grain/cardinality результата, затем NULL и ordering semantics.
+AND binds tighter than OR, so parentheses make intended logic explicit. NULL comparisons yield UNKNOWN and require `IS NULL`/`IS NOT NULL`.
 
-### AND/OR/NOT
 
-Для `AND/OR/NOT` сначала определи grain/cardinality результата, затем NULL и ordering semantics.
+### Важный нюанс / limitation
 
-### parentheses
-
-Для `parentheses` сначала определи grain/cardinality результата, затем NULL и ordering semantics.
-
-### ranges
-
-Для `ranges` сначала определи grain/cardinality результата, затем NULL и ordering semantics.
-
-### pattern matching
-
-Для `pattern matching` сначала определи grain/cardinality результата, затем NULL и ordering semantics.
+Functions applied to an indexed column can prevent a simple index access path; confirm with EXPLAIN rather than guessing.
 
 ## Mental model
 
 Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- comparisons
+- AND/OR/NOT
+- parentheses
+- ranges
+
+### Полезно
+
+- pattern matching
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -59,59 +65,19 @@ WHERE оставляет только строки, для которых всё
 
 ## Common mistakes
 
-**Ошибка:** Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+`status = 'paid' OR status = 'new' AND active` usually means something different from the visually assumed grouping.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `comparisons` example and predict the result before running it.
 
-## Interview questions
+**B · Find the bug.** Find code that violates `AND/OR/NOT` and explain the concrete consequence.
 
-1. Объясни **WHERE and boolean logic** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Предскажи cardinality результата и проверь, не размножает ли JOIN строки. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+**D · Small task.** Implement the smallest function/query that demonstrates `comparisons` and add one edge-case test.
 
-## Expected answer rubric
-
-### Must mention
-
-- comparisons
-- AND/OR/NOT
-- parentheses
-- ranges
-- Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- comparisons
-- AND/OR/NOT
-- parentheses
-- ranges
-- pattern matching.
-
-## Задача
-
-Разбери backend-сценарий: **Предскажи cardinality результата и проверь, не размножает ли JOIN строки.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Explain WHERE and boolean logic in 45–60 seconds and include one limitation.
 
 ## SQL practice
 
@@ -225,15 +191,70 @@ Expected columns: id. Comparison: unordered.
 
 SQL runner пока не подключён: выполни запрос в локальном PostgreSQL и сверь result с rubric.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое WHERE and boolean logic и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с WHERE and boolean logic?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+`WHERE` filters source rows using boolean predicates before grouping and aggregation.
+
+### Нормальный Junior answer
+
+> `WHERE` filters source rows using boolean predicates before grouping and aggregation. AND binds tighter than OR, so parentheses make intended logic explicit. NULL comparisons yield UNKNOWN and require `IS NULL`/`IS NOT NULL`. Важное ограничение: Functions applied to an indexed column can prevent a simple index access path; confirm with EXPLAIN rather than guessing.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с WHERE and boolean logic?**
+
+`status = 'paid' OR status = 'new' AND active` usually means something different from the visually assumed grouping.
+
+## Expected answer rubric
+
+### Must mention
+
+- comparisons
+- AND/OR/NOT
+- parentheses
+- ranges
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- `status = 'paid' OR status = 'new' AND active` usually means something different from the visually assumed grouping.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какая типичная ошибка связана с WHERE and boolean logic?
+
+## Задача
+
+Сделай короткую письменную практику по теме **WHERE and boolean logic**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **WHERE and boolean logic**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** `WHERE` filters source rows using boolean predicates before grouping and aggregation.
+- **Механизм:** Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
+- **Ограничение:** `status = 'paid' OR status = 'new' AND active` usually means something different from the visually assumed grouping.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

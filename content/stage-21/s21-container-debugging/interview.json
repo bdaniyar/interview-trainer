@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Container debugging» как на Junior Python Backend interview.",
+    "question": "Что такое Container debugging и какой механизм здесь важно понимать Junior-разработчику?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "logs",
       "inspect env",
       "process",
-      "port",
-      "Разделяй build-time layers, runtime config, network DNS и persistent volumes."
+      "port"
     ],
+    "short_answer": "Container debugging: это отдельный технический контракт",
+    "junior_answer": "Container debugging — тема, в которой я сначала фиксирую `logs`, затем объясняю `inspect env` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
+    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Container debugging?",
+    "follow_up_answer": "Нужно назвать конкретный failure path и способ его проверить.",
     "expected_answer": {
       "must_mention": [
         "logs",
         "inspect env",
         "process",
-        "port",
-        "Разделяй build-time layers, runtime config, network DNS и persistent volumes."
+        "port"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Использовать localhost между containers или считать depends_on проверкой readiness.",
+        "Игнорировать ограничение механизма и проверять только happy path.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Использовать localhost между containers или считать depends_on проверкой readiness."
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "follow_up_questions": [
-        "Диагностируй container через logs, env, DNS, port и healthcheck по порядку."
+        "Какое ограничение или типичная ошибка относится именно к теме Container debugging?"
       ]
     },
     "follow_ups": [
-      "Диагностируй container через logs, env, DNS, port и healthcheck по порядку."
+      "Какое ограничение или типичная ошибка относится именно к теме Container debugging?"
     ],
     "tags": [
       "stage-21",
@@ -48,42 +50,43 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Container debugging»: Диагностируй container через logs, env, DNS, port и healthcheck по порядку. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какое ограничение или типичная ошибка относится именно к теме Container debugging?",
+    "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Разделяй build-time layers, runtime config, network DNS и persistent volumes.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "DNS",
+      "healthcheck",
+      "Нужно назвать конкретный failure path и способ его проверить."
     ],
+    "short_answer": "Нужно назвать конкретный failure path и способ его проверить.",
+    "junior_answer": "Нужно назвать конкретный failure path и способ его проверить.",
+    "follow_up_question": "Что такое Container debugging и какой механизм здесь важно понимать Junior-разработчику?",
+    "follow_up_answer": "Container debugging — тема, в которой я сначала фиксирую `logs`, затем объясняю `inspect env` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "DNS",
+        "healthcheck"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "red_flags": [
-        "Использовать localhost между containers или считать depends_on проверкой readiness."
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Container debugging и какой механизм здесь важно понимать Junior-разработчику?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Container debugging и какой механизм здесь важно понимать Junior-разработчику?"
     ],
     "tags": [
       "stage-21",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-21",

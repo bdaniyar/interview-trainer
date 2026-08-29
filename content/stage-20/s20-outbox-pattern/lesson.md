@@ -7,46 +7,65 @@
 
 После урока ты сможешь:
 
-- объяснить `business row + outbox row in one DB transaction` своими словами и связать с backend-сценарием;
-- объяснить `worker` своими словами и связать с backend-сценарием;
-- объяснить `at-least-once` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Outbox pattern**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `business row + outbox row in one DB transaction`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Background work отделяет latency запроса от выполнения, но добавляет delivery, retry и idempotency concerns.
+### Что это
 
-В теме **Outbox pattern** важно уверенно объяснять следующие части:
+Тема **Outbox pattern** описывает отдельный контракт backend-разработки.
 
-### business row + outbox row in one DB transaction
+### Как работает
 
-Transaction задаёт атомарную границу: либо все связанные изменения становятся видимыми, либо выполняется rollback.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
 
-### worker
+**business row + outbox row in one DB transaction.** Transaction задаёт атомарную границу: либо все связанные изменения становятся видимыми, либо выполняется rollback.
 
-Для `worker` проследи delivery от commit до side effect, включая duplicate, retry и idempotency.
+**worker.** `worker` является этапом delivery от DB commit до side effect, где возможны duplicate, retry и idempotency requirements.
 
-### at-least-once
+**at-least-once.** `at-least-once` является этапом delivery от DB commit до side effect, где возможны duplicate, retry и idempotency requirements.
 
-Для `at-least-once` проследи delivery от commit до side effect, включая duplicate, retry и idempotency.
+**retry.** Retry подходит для transient failure, ограничивается числом попыток и backoff с jitter; permanent errors нужно возвращать сразу.
 
-### retry
+**idempotent consumer.** Идемпотентность означает, что повтор одного логического запроса не создаёт новый эффект; обычно её поддерживают ключом и ограничением уникальности.
 
-Retry подходит для transient failure, ограничивается числом попыток и backoff с jitter; permanent errors нужно возвращать сразу.
+**dual-write problem.** `dual-write problem` является этапом delivery от DB commit до side effect, где возможны duplicate, retry и idempotency requirements.
 
-### idempotent consumer
 
-Идемпотентность означает, что повтор одного логического запроса не создаёт новый эффект; обычно её поддерживают ключом и ограничением уникальности.
+### Важный нюанс / limitation
 
-### dual-write problem
+Граница Junior: уверенно объясняй `business row + outbox row in one DB transaction` и `worker` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
-Для `dual-write problem` проследи delivery от commit до side effect, включая duplicate, retry и idempotency.
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `business row + outbox row in one DB transaction`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Между DB commit и publish есть atomicity gap; outbox переносит событие в ту же transaction.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- business row + outbox row in one DB transaction
+- worker
+- at-least-once
+- retry
+
+### Полезно
+
+- idempotent consumer
+- dual-write problem
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -64,19 +83,45 @@ assert example_s20_outbox_pattern()
 
 ## Common mistakes
 
-**Ошибка:** Повторять side effect без idempotency или считать exactly-once свойством одного флага.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Игнорировать ограничение механизма и проверять только happy path.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `business row + outbox row in one DB transaction` до запуска.
+
+**B · Find the bug.** Найди нарушение `worker` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Outbox pattern за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Outbox pattern** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Проследи событие от commit через broker/worker до повторной доставки. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Outbox pattern и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Outbox pattern?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Outbox pattern: это отдельный технический контракт
+
+### Нормальный Junior answer
+
+> Outbox pattern — тема, в которой я сначала фиксирую `business row + outbox row in one DB transaction`, затем объясняю `worker` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Outbox pattern?**
+
+Нужно назвать конкретный failure path и способ его проверить.
 
 ## Expected answer rubric
 
@@ -86,48 +131,34 @@ assert example_s20_outbox_pattern()
 - worker
 - at-least-once
 - retry
-- Между DB commit и publish есть atomicity gap; outbox переносит событие в ту же transaction.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Повторять side effect без idempotency или считать exactly-once свойством одного флага.
-- ответ из одного определения без механизма и failure mode.
+- Игнорировать ограничение механизма и проверять только happy path.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- business row + outbox row in one DB transaction
-- worker
-- at-least-once
-- retry
-- idempotent consumer
-- dual-write problem.
+- Какое ограничение или типичная ошибка относится именно к теме Outbox pattern?
 
 ## Задача
 
-Разбери backend-сценарий: **Проследи событие от commit через broker/worker до повторной доставки.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Outbox pattern**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Outbox pattern**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Outbox pattern: это отдельный технический контракт
+- **Механизм:** Между DB commit и publish есть atomicity gap; outbox переносит событие в ту же transaction.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

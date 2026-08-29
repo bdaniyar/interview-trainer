@@ -7,38 +7,60 @@
 
 После урока ты сможешь:
 
-- объяснить `missing` своими словами и связать с backend-сценарием;
-- объяснить `present with null` своими словами и связать с backend-сценарием;
-- объяснить `default` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Optional, nullable and default values**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `missing`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Pydantic v2 преобразует и валидирует данные на границе; модель должна явно описывать required, nullable и default semantics.
+### Что это
 
-В теме **Optional, nullable and default values** важно уверенно объяснять следующие части:
+Это часть Pydantic v2 boundary между недоверенным input, validated model и serialized output.
 
-### missing
+### Как работает
 
-Для `missing` различай missing, explicit null, invalid input и serialized output Pydantic v2.
+Проверь четыре состояния: missing, explicit null, invalid type/value и сериализованный результат.
 
-### present with null
+**missing.** `missing` влияет на Pydantic v2 validation/serialization и должен различать missing, explicit null, invalid input и output representation.
 
-`NULL` означает отсутствие известного значения; сравнение с ним делают через `IS NULL`, а многие выражения дают `UNKNOWN`.
+**present with null.** `NULL` означает отсутствие известного значения; сравнение с ним делают через `IS NULL`, а многие выражения дают `UNKNOWN`.
 
-### default
+**default.** `default` влияет на Pydantic v2 validation/serialization и должен различать missing, explicit null, invalid input и output representation.
 
-Для `default` различай missing, explicit null, invalid input и serialized output Pydantic v2.
+**PATCH semantics.** `PATCH semantics` влияет на Pydantic v2 validation/serialization и должен различать missing, explicit null, invalid input и output representation.
 
-### PATCH semantics
 
-Для `PATCH semantics` различай missing, explicit null, invalid input и serialized output Pydantic v2.
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `missing` и `present with null` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `missing`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Сначала приходит недоверенный input, затем core schema выполняет validation, после чего model_dump управляет serialization.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- missing
+- present with null
+- default
+- PATCH semantics
+
+### Полезно
+
+- связать Optional, nullable and default values с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -54,19 +76,45 @@ from pydantic import BaseModel
 
 ## Common mistakes
 
-**Ошибка:** Путать str | None с полем, которое можно полностью не передать.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Смешать missing и explicit null либо считать coercion бизнес-валидацией.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `missing` до запуска.
+
+**B · Find the bug.** Найди нарушение `present with null` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Optional, nullable and default values за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Optional, nullable and default values** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Проверь missing, explicit null, неверный тип и сериализованный результат. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Optional, nullable and default values и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Optional, nullable and default values?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Optional, nullable and default values: Это часть Pydantic v2 boundary между недоверенным input, validated model и serialized output.
+
+### Нормальный Junior answer
+
+> Optional, nullable and default values — тема, в которой я сначала фиксирую `missing`, затем объясняю `present with null` на коротком примере. Ключевой механизм: Проверь четыре состояния: missing, explicit null, invalid type/value и сериализованный результат. Главная практическая ошибка — Смешать missing и explicit null либо считать coercion бизнес-валидацией.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Optional, nullable and default values?**
+
+Смешать missing и explicit null либо считать coercion бизнес-валидацией.
 
 ## Expected answer rubric
 
@@ -75,31 +123,22 @@ from pydantic import BaseModel
 - missing
 - present with null
 - default
-- PATCH semantics.
-- Сначала приходит недоверенный input, затем core schema выполняет validation, после чего model_dump управляет serialization.
+- PATCH semantics
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Путать str | None с полем, которое можно полностью не передать.
-- ответ из одного определения без механизма и failure mode.
+- Смешать missing и explicit null либо считать coercion бизнес-валидацией.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- missing
-- present with null
-- default
-- PATCH semantics.
+- Какое ограничение или типичная ошибка относится именно к теме Optional, nullable and default values?
 
 ## Задача
 
@@ -112,11 +151,10 @@ UserPatch: display_name и age можно не передать или пере�
 
 Перед собеседованием запомни:
 
-- дай точное определение **Optional, nullable and default values**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Optional, nullable and default values: Это часть Pydantic v2 boundary между недоверенным input, validated model и serialized output.
+- **Механизм:** Сначала приходит недоверенный input, затем core schema выполняет validation, после чего model_dump управляет serialization.
+- **Ограничение:** Смешать missing и explicit null либо считать coercion бизнес-валидацией.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

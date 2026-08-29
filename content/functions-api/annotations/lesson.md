@@ -7,38 +7,56 @@
 
 После урока ты сможешь:
 
-- объяснить `annotations are metadata` своими словами и связать с backend-сценарием;
-- объяснить `not runtime validation by default` своими словами и связать с backend-сценарием;
-- объяснить `relationship with FastAPI/Pydantic` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Function annotations**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `annotations are metadata`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Функция — объект с сигнатурой, областью видимости и состоянием замыкания; её контракт должен быть понятен вызывающему коду.
+### Что это
 
-В теме **Function annotations** важно уверенно объяснять следующие части:
+Это часть контракта Python function: важно различать definition time, call time, signature и разрешение имён.
 
-### annotations are metadata
+### Как работает
 
-Для `annotations are metadata` отдели definition time от call time и покажи влияние на signature, scope или state функции.
+Отдели выполнение `def`, связывание arguments при вызове и разрешение names по LEGB.
 
-### not runtime validation by default
+**annotations are metadata.** `annotations are metadata` влияет на function contract; результат определяется definition time, argument binding при вызове и разрешением names.
 
-Для `not runtime validation by default` отдели definition time от call time и покажи влияние на signature, scope или state функции.
+**not runtime validation by default.** `not runtime validation by default` влияет на function contract; результат определяется definition time, argument binding при вызове и разрешением names.
 
-### relationship with FastAPI/Pydantic
+**relationship with FastAPI/Pydantic.** `relationship with FastAPI/Pydantic` влияет на function contract; результат определяется definition time, argument binding при вызове и разрешением names.
 
-Для `relationship with FastAPI/Pydantic` отдели definition time от call time и покажи влияние на signature, scope или state функции.
+**return annotations.** `return annotations` влияет на function contract; результат определяется definition time, argument binding при вызове и разрешением names.
 
-### return annotations
 
-Для `return annotations` отдели definition time от call time и покажи влияние на signature, scope или state функции.
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `annotations are metadata` и `not runtime validation by default` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
 ## Mental model
 
 Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- annotations are metadata
+- not runtime validation by default
+- relationship with FastAPI/Pydantic
+- return annotations
+
+### Полезно
+
+- связать Function annotations с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -56,19 +74,45 @@ Annotations доступны инструментам и runtime introspection, 
 
 ## Common mistakes
 
-**Ошибка:** Скрывать неясный API за **kwargs или забывать о времени вычисления defaults.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `annotations are metadata` до запуска.
+
+**B · Find the bug.** Найди нарушение `not runtime validation by default` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Function annotations за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Function annotations** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Разбери сигнатуру helper-функции и объясни, какие вызовы допустимы и почему. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Function annotations и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Function annotations?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Function annotations: Это часть контракта Python function: важно различать definition time, call time, signature и разрешение имён.
+
+### Нормальный Junior answer
+
+> Function annotations — тема, в которой я сначала фиксирую `annotations are metadata`, затем объясняю `not runtime validation by default` на коротком примере. Ключевой механизм: Отдели выполнение `def`, связывание arguments при вызове и разрешение names по LEGB. Главная практическая ошибка — Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Function annotations?**
+
+Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
 
 ## Expected answer rubric
 
@@ -77,47 +121,35 @@ Annotations доступны инструментам и runtime introspection, 
 - annotations are metadata
 - not runtime validation by default
 - relationship with FastAPI/Pydantic
-- return annotations.
-- Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
+- return annotations
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Скрывать неясный API за **kwargs или забывать о времени вычисления defaults.
-- ответ из одного определения без механизма и failure mode.
+- Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- annotations are metadata
-- not runtime validation by default
-- relationship with FastAPI/Pydantic
-- return annotations.
+- Какое ограничение или типичная ошибка относится именно к теме Function annotations?
 
 ## Задача
 
-Разбери backend-сценарий: **Разбери сигнатуру helper-функции и объясни, какие вызовы допустимы и почему.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Function annotations**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Function annotations**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Function annotations: Это часть контракта Python function: важно различать definition time, call time, signature и разрешение имён.
+- **Механизм:** Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
+- **Ограничение:** Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

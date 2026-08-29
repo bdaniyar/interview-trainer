@@ -15,7 +15,7 @@
     "optional persistence modes",
     "not a relational source of truth by default."
   ],
-  "description": "P1 · Redis mental model: mental model, interview rubric и backend-сценарий.",
+  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

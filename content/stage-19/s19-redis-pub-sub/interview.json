@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Redis Pub/Sub» как на Junior Python Backend interview.",
+    "question": "Что такое Redis Pub/Sub и какой механизм здесь важно понимать Junior-разработчику?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "publisher",
       "subscriber",
       "channel",
-      "live delivery",
-      "Для cache всегда определяй key, value, TTL, invalidation и fallback."
+      "live delivery"
     ],
+    "short_answer": "Redis Pub/Sub: это отдельный технический контракт",
+    "junior_answer": "Redis Pub/Sub — тема, в которой я сначала фиксирую `publisher`, затем объясняю `subscriber` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
+    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Redis Pub/Sub?",
+    "follow_up_answer": "Нужно назвать конкретный failure path и способ его проверить.",
     "expected_answer": {
       "must_mention": [
         "publisher",
         "subscriber",
         "channel",
-        "live delivery",
-        "Для cache всегда определяй key, value, TTL, invalidation и fallback."
+        "live delivery"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Использовать Pub/Sub как историю или забыть TTL и invalidation.",
+        "Игнорировать ограничение механизма и проверять только happy path.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Использовать Pub/Sub как историю или забыть TTL и invalidation."
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "follow_up_questions": [
-        "Разбери cache miss, stale value, Redis outage и concurrent refill."
+        "Какое ограничение или типичная ошибка относится именно к теме Redis Pub/Sub?"
       ]
     },
     "follow_ups": [
-      "Разбери cache miss, stale value, Redis outage и concurrent refill."
+      "Какое ограничение или типичная ошибка относится именно к теме Redis Pub/Sub?"
     ],
     "tags": [
       "stage-19",
@@ -48,42 +50,43 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Redis Pub/Sub»: Разбери cache miss, stale value, Redis outage и concurrent refill. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какое ограничение или типичная ошибка относится именно к теме Redis Pub/Sub?",
+    "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Для cache всегда определяй key, value, TTL, invalidation и fallback.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "no durable history",
+      "offline subscriber misses message",
+      "Нужно назвать конкретный failure path и способ его проверить."
     ],
+    "short_answer": "Нужно назвать конкретный failure path и способ его проверить.",
+    "junior_answer": "Нужно назвать конкретный failure path и способ его проверить.",
+    "follow_up_question": "Что такое Redis Pub/Sub и какой механизм здесь важно понимать Junior-разработчику?",
+    "follow_up_answer": "Redis Pub/Sub — тема, в которой я сначала фиксирую `publisher`, затем объясняю `subscriber` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "no durable history",
+        "offline subscriber misses message"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "red_flags": [
-        "Использовать Pub/Sub как историю или забыть TTL и invalidation."
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Redis Pub/Sub и какой механизм здесь важно понимать Junior-разработчику?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Redis Pub/Sub и какой механизм здесь важно понимать Junior-разработчику?"
     ],
     "tags": [
       "stage-19",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-19",

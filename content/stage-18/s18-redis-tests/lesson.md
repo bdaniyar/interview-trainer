@@ -7,34 +7,57 @@
 
 После урока ты сможешь:
 
-- объяснить `real disposable Redis for integration boundary` своими словами и связать с backend-сценарием;
-- объяснить `fakes only when semantics are sufficient` своими словами и связать с backend-сценарием;
-- объяснить `TTL/invalidation.` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Redis tests**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `real disposable Redis for integration boundary`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Тест подтверждает observable contract в изолированном сценарии; хорошие tests детерминированы и объясняют failure.
+### Что это
 
-В теме **Redis tests** важно уверенно объяснять следующие части:
+Это инструмент проверки observable contract с контролируемым setup, failure и cleanup.
 
-### real disposable Redis for integration boundary
+### Как работает
 
-Redis хранит данные в памяти и полезен для cache/TTL/atomic counters, но durability, eviction и outage policy нужно проектировать явно.
+Сформулируй observable behavior, выбери isolation boundary и добавь case, который падает при реальном regression.
 
-### fakes only when semantics are sufficient
+**real disposable Redis for integration boundary.** Redis хранит данные в памяти и полезен для cache/TTL/atomic counters, но durability, eviction и outage policy нужно проектировать явно.
 
-Для `fakes only when semantics are sufficient` сформулируй observable contract, isolation boundary и failure, который обязан поймать test.
+**fakes only when semantics are sufficient.** `fakes only when semantics are sufficient` помогает проверить observable contract; test задаёт isolation boundary, конкретный input и ожидаемый success/failure result.
 
-### TTL/invalidation
+**TTL/invalidation.** `TTL/invalidation` помогает проверить observable contract; test задаёт isolation boundary, конкретный input и ожидаемый success/failure result.
 
-Для `TTL/invalidation` сформулируй observable contract, isolation boundary и failure, который обязан поймать test.
+
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `real disposable Redis for integration boundary` и `fakes only when semantics are sufficient` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `real disposable Redis for integration boundary`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Arrange создаёт условия, Act выполняет одно поведение, Assert проверяет значимый результат.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- real disposable Redis for integration boundary
+- fakes only when semantics are sufficient
+- TTL/invalidation
+
+### Полезно
+
+- связать Redis tests с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -51,56 +74,17 @@ Arrange создаёт условия, Act выполняет одно пове�
 
 ## Common mistakes
 
-**Ошибка:** Mock не в том namespace, shared fixture state или тест только happy path.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `real disposable Redis for integration boundary` до запуска.
 
-## Interview questions
+**B · Find the bug.** Найди нарушение `fakes only when semantics are sufficient` и объясни конкретное последствие.
 
-1. Объясни **Redis tests** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Выдели unit boundary, integration boundary и критичный failure case. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
-
-## Expected answer rubric
-
-### Must mention
-
-- real disposable Redis for integration boundary
-- fakes only when semantics are sufficient
-- TTL/invalidation.
-- Arrange создаёт условия, Act выполняет одно поведение, Assert проверяет значимый результат.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Mock не в том namespace, shared fixture state или тест только happy path.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- real disposable Redis for integration boundary
-- fakes only when semantics are sufficient
-- TTL/invalidation.
-
-## Задача
-
-Разбери backend-сценарий: **Выдели unit boundary, integration boundary и критичный failure case.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Дай ответ про Redis tests за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Testing practice
 
@@ -112,15 +96,69 @@ Arrange создаёт условия, Act выполняет одно пове�
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое Redis tests и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Redis tests?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Redis tests: Это инструмент проверки observable contract с контролируемым setup, failure и cleanup.
+
+### Нормальный Junior answer
+
+> Redis tests — тема, в которой я сначала фиксирую `real disposable Redis for integration boundary`, затем объясняю `fakes only when semantics are sufficient` на коротком примере. Ключевой механизм: Сформулируй observable behavior, выбери isolation boundary и добавь case, который падает при реальном regression. Главная практическая ошибка — Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Redis tests?**
+
+Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior.
+
+## Expected answer rubric
+
+### Must mention
+
+- real disposable Redis for integration boundary
+- fakes only when semantics are sufficient
+- TTL/invalidation
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какое ограничение или типичная ошибка относится именно к теме Redis tests?
+
+## Задача
+
+Сделай короткую письменную практику по теме **Redis tests**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Redis tests**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Redis tests: Это инструмент проверки observable contract с контролируемым setup, failure и cleanup.
+- **Механизм:** Arrange создаёт условия, Act выполняет одно поведение, Assert проверяет значимый результат.
+- **Ограничение:** Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

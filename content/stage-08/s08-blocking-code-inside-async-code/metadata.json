@@ -16,7 +16,7 @@
     "CPU-heavy loop",
     "alternatives: async client, `to_thread`, worker/process."
   ],
-  "description": "P0 · Blocking code inside async code: mental model, interview rubric и backend-сценарий.",
+  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
   "has_task": true,
   "has_solution": true,
   "priority": "P0",

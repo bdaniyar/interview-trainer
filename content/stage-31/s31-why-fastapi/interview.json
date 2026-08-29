@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Why FastAPI?» как на Junior Python Backend interview.",
+    "question": "Что такое Why FastAPI? и какой механизм здесь важно понимать Junior-разработчику?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -8,34 +8,36 @@
       "type hints",
       "Pydantic",
       "OpenAPI",
-      "async stack",
-      "Используй STAR для поведения и context → decision → trade-off → verification для техники."
+      "async stack"
     ],
+    "short_answer": "Why FastAPI?: это отдельный технический контракт",
+    "junior_answer": "Why FastAPI? — тема, в которой я сначала фиксирую `type hints`, затем объясняю `Pydantic` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
+    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Why FastAPI??",
+    "follow_up_answer": "Нужно назвать конкретный failure path и способ его проверить.",
     "expected_answer": {
       "must_mention": [
         "type hints",
         "Pydantic",
         "OpenAPI",
-        "async stack",
-        "Используй STAR для поведения и context → decision → trade-off → verification для техники."
+        "async stack"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Читать заученный список технологий без результата и личного вклада.",
+        "Игнорировать ограничение механизма и проверять только happy path.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Читать заученный список технологий без результата и личного вклада."
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "follow_up_questions": [
-        "Сформулируй ответ на 60–90 секунд и подготовь один проверяемый follow-up."
+        "Какое ограничение или типичная ошибка относится именно к теме Why FastAPI??"
       ]
     },
     "follow_ups": [
-      "Сформулируй ответ на 60–90 секунд и подготовь один проверяемый follow-up."
+      "Какое ограничение или типичная ошибка относится именно к теме Why FastAPI??"
     ],
     "tags": [
       "stage-31",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Why FastAPI?»: Сформулируй ответ на 60–90 секунд и подготовь один проверяемый follow-up. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какое ограничение или типичная ошибка относится именно к теме Why FastAPI??",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Используй STAR для поведения и context → decision → trade-off → verification для техники.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "comparison with Django without tribalism",
+      "Нужно назвать конкретный failure path и способ его проверить."
     ],
+    "short_answer": "Нужно назвать конкретный failure path и способ его проверить.",
+    "junior_answer": "Нужно назвать конкретный failure path и способ его проверить.",
+    "follow_up_question": "Что такое Why FastAPI? и какой механизм здесь важно понимать Junior-разработчику?",
+    "follow_up_answer": "Why FastAPI? — тема, в которой я сначала фиксирую `type hints`, затем объясняю `Pydantic` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "comparison with Django without tribalism"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "red_flags": [
-        "Читать заученный список технологий без результата и личного вклада."
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Why FastAPI? и какой механизм здесь важно понимать Junior-разработчику?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Why FastAPI? и какой механизм здесь важно понимать Junior-разработчику?"
     ],
     "tags": [
       "stage-31",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-31",

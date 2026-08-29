@@ -1,41 +1,43 @@
 [
   {
-    "question": "Объясни тему «Tuple» как на Junior Python Backend interview.",
+    "question": "Чем tuple отличается от list и когда tuple можно использовать как ключ dict?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
       "immutability",
       "packing/unpacking",
-      "single-element tuple",
-      "tuple as key",
-      "Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set."
+      "одиночный tuple",
+      "условия hashability"
     ],
+    "short_answer": "Tuple неизменяем и может быть ключом dict, если все его элементы hashable; list изменяем и не hashable.",
+    "junior_answer": "Tuple — ordered immutable sequence. Его структуру нельзя изменить после создания, поэтому tuple из hashable элементов сам hashable и может быть ключом dict. Но tuple с list внутри уже не hashable, и внутренний list можно мутировать. Одноэлементный tuple записывается с запятой: `(value,)`.",
+    "follow_up_question": "Почему tuple с list внутри не является hashable?",
+    "follow_up_answer": "Hash ключа должен оставаться стабильным; list меняется и не имеет hash, поэтому содержащий его tuple тоже нельзя хешировать.",
     "expected_answer": {
       "must_mention": [
         "immutability",
         "packing/unpacking",
-        "single-element tuple",
-        "tuple as key",
-        "Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set."
+        "одиночный tuple",
+        "условия hashability"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Выбирать коллекцию по привычке и игнорировать порядок, дубликаты или хешируемость.",
+        "`single = (42)` создаёт int, не tuple; нужна запятая: `(42,)`.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Выбирать коллекцию по привычке и игнорировать порядок, дубликаты или хешируемость."
+        "`single = (42)` создаёт int, не tuple; нужна запятая: `(42,)`."
       ],
       "follow_up_questions": [
-        "Выбери структуру для набора API-записей и обоснуй lookup, порядок и дубликаты."
+        "Почему tuple с list внутри не является hashable?"
       ]
     },
     "follow_ups": [
-      "Выбери структуру для набора API-записей и обоснуй lookup, порядок и дубликаты."
+      "Почему tuple с list внутри не является hashable?"
     ],
     "tags": [
       "stage-02",
@@ -48,42 +50,42 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Tuple»: Выбери структуру для набора API-записей и обоснуй lookup, порядок и дубликаты. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Почему tuple с list внутри не является hashable?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "понимать, когда dataclass яснее tuple",
+      "Hash ключа должен оставаться стабильным; list меняется и не имеет hash, поэтому содержащий его tuple тоже нельзя хешировать."
     ],
+    "short_answer": "Hash ключа должен оставаться стабильным; list меняется и не имеет hash, поэтому содержащий его tuple тоже нельзя хешировать.",
+    "junior_answer": "Hash ключа должен оставаться стабильным; list меняется и не имеет hash, поэтому содержащий его tuple тоже нельзя хешировать.",
+    "follow_up_question": "Чем tuple отличается от list и когда tuple можно использовать как ключ dict?",
+    "follow_up_answer": "Tuple — ordered immutable sequence. Его структуру нельзя изменить после создания, поэтому tuple из hashable элементов сам hashable и может быть ключом dict. Но tuple с list внутри уже не hashable, и внутренний list можно мутировать. Одноэлементный tuple записывается с запятой: `(value,)`.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "понимать, когда dataclass яснее tuple"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "`single = (42)` создаёт int, не tuple; нужна запятая: `(42,)`.",
+        "Считать любой tuple hashable: `([1],)` содержит unhashable list."
       ],
       "red_flags": [
-        "Выбирать коллекцию по привычке и игнорировать порядок, дубликаты или хешируемость."
+        "`single = (42)` создаёт int, не tuple; нужна запятая: `(42,)`."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Чем tuple отличается от list и когда tuple можно использовать как ключ dict?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Чем tuple отличается от list и когда tuple можно использовать как ключ dict?"
     ],
     "tags": [
       "stage-02",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-02",

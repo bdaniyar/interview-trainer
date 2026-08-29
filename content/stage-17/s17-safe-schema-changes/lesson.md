@@ -7,38 +7,60 @@
 
 После урока ты сможешь:
 
-- объяснить `expand/contract` своими словами и связать с backend-сценарием;
-- объяснить `nullable → backfill → constraint` своими словами и связать с backend-сценарием;
-- объяснить `indexes on large tables` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Safe schema changes**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `expand/contract`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Alembic хранит версионированную историю изменений схемы; autogenerate создаёт кандидат на migration, а не доказательство корректности.
+### Что это
 
-В теме **Safe schema changes** важно уверенно объяснять следующие части:
+Это версионированный переход schema, который должен безопасно работать с кодом во время deploy.
 
-### expand/contract
+### Как работает
 
-Для `expand/contract` опиши проверяемый schema transition и отдельно риски upgrade, deploy compatibility и rollback.
+Раздели upgrade, совместимость старого/нового кода, backfill и rollback; autogenerate обязательно review.
 
-### nullable → backfill → constraint
+**expand/contract.** `expand/contract` является частью versioned schema transition; безопасный вариант учитывает upgrade, deploy compatibility, backfill и rollback.
 
-Constraint хранит invariant рядом с данными и защищает его от всех writers; API переводит conflict в понятную domain/HTTP error.
+**nullable → backfill → constraint.** Constraint хранит invariant рядом с данными и защищает его от всех writers; API переводит conflict в понятную domain/HTTP error.
 
-### indexes on large tables
+**indexes on large tables.** Index — отдельная структура доступа с ценой записи и хранения; полезность зависит от конкретного predicate, ordering и selectivity.
 
-Index — отдельная структура доступа с ценой записи и хранения; полезность зависит от конкретного predicate, ordering и selectivity.
+**backward compatibility.** `backward compatibility` является частью versioned schema transition; безопасный вариант учитывает upgrade, deploy compatibility, backfill и rollback.
 
-### backward compatibility
 
-Для `backward compatibility` опиши проверяемый schema transition и отдельно риски upgrade, deploy compatibility и rollback.
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `expand/contract` и `nullable → backfill → constraint` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `expand/contract`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Migration — воспроизводимый переход между версиями, который нужно review, test и безопасно раскатывать.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- expand/contract
+- nullable → backfill → constraint
+- indexes on large tables
+- backward compatibility
+
+### Полезно
+
+- связать Safe schema changes с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -54,19 +76,45 @@ Review migration как versioned schema transition; autogenerate — тольк
 
 ## Common mistakes
 
-**Ошибка:** Слепо принимать autogenerate или совмещать несовместимое изменение в один deploy.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Принять autogenerate без review или выпустить несовместимые schema/code изменения одним шагом.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `expand/contract` до запуска.
+
+**B · Find the bug.** Найди нарушение `nullable → backfill → constraint` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Safe schema changes за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Safe schema changes** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Предложи expand/contract sequence для изменения schema без остановки API. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Safe schema changes и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Safe schema changes?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Safe schema changes: Это версионированный переход schema, который должен безопасно работать с кодом во время deploy.
+
+### Нормальный Junior answer
+
+> Safe schema changes — тема, в которой я сначала фиксирую `expand/contract`, затем объясняю `nullable → backfill → constraint` на коротком примере. Ключевой механизм: Раздели upgrade, совместимость старого/нового кода, backfill и rollback; autogenerate обязательно review. Главная практическая ошибка — Принять autogenerate без review или выпустить несовместимые schema/code изменения одним шагом.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Safe schema changes?**
+
+Принять autogenerate без review или выпустить несовместимые schema/code изменения одним шагом.
 
 ## Expected answer rubric
 
@@ -75,47 +123,35 @@ Review migration как versioned schema transition; autogenerate — тольк
 - expand/contract
 - nullable → backfill → constraint
 - indexes on large tables
-- backward compatibility.
-- Migration — воспроизводимый переход между версиями, который нужно review, test и безопасно раскатывать.
+- backward compatibility
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Слепо принимать autogenerate или совмещать несовместимое изменение в один deploy.
-- ответ из одного определения без механизма и failure mode.
+- Принять autogenerate без review или выпустить несовместимые schema/code изменения одним шагом.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- expand/contract
-- nullable → backfill → constraint
-- indexes on large tables
-- backward compatibility.
+- Какое ограничение или типичная ошибка относится именно к теме Safe schema changes?
 
 ## Задача
 
-Разбери backend-сценарий: **Предложи expand/contract sequence для изменения schema без остановки API.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Safe schema changes**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Safe schema changes**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Safe schema changes: Это версионированный переход schema, который должен безопасно работать с кодом во время deploy.
+- **Механизм:** Migration — воспроизводимый переход между версиями, который нужно review, test и безопасно раскатывать.
+- **Ограничение:** Принять autogenerate без review или выпустить несовместимые schema/code изменения одним шагом.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

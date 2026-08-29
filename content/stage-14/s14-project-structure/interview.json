@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Project structure» как на Junior Python Backend interview.",
+    "question": "Что такое Project structure и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "routers",
       "schemas",
       "services",
-      "repositories/data access",
-      "Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency."
+      "repositories/data access"
     ],
+    "short_answer": "A practical FastAPI structure separates HTTP routers/schemas from use-case services and data-access details.",
+    "junior_answer": "A practical FastAPI structure separates HTTP routers/schemas from use-case services and data-access details. Routers adapt request/response, services hold business workflows/transaction decisions, repositories or query modules isolate persistence when they add value. Важное ограничение: Avoid pass-through layers with no behavior; boundaries should correspond to change/test seams.",
+    "follow_up_question": "Какая типичная ошибка связана с Project structure?",
+    "follow_up_answer": "Putting every concern into routes makes transaction testing and framework-independent business tests difficult.",
     "expected_answer": {
       "must_mention": [
         "routers",
         "schemas",
         "services",
-        "repositories/data access",
-        "Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency."
+        "repositories/data access"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Открывать Session глобально или выполнять blocking I/O в async route.",
+        "Putting every concern into routes makes transaction testing and framework-independent business tests difficult.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Открывать Session глобально или выполнять blocking I/O в async route."
+        "Putting every concern into routes makes transaction testing and framework-independent business tests difficult."
       ],
       "follow_up_questions": [
-        "Проследи request от router через dependency и service до response model."
+        "Какая типичная ошибка связана с Project structure?"
       ]
     },
     "follow_ups": [
-      "Проследи request от router через dependency и service до response model."
+      "Какая типичная ошибка связана с Project structure?"
     ],
     "tags": [
       "stage-14",
@@ -48,42 +50,43 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Project structure»: Проследи request от router через dependency и service до response model. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Project structure?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "dependencies",
+      "settings",
+      "Putting every concern into routes makes transaction testing and framework-independent business tests difficult."
     ],
+    "short_answer": "Putting every concern into routes makes transaction testing and framework-independent business tests difficult.",
+    "junior_answer": "Putting every concern into routes makes transaction testing and framework-independent business tests difficult.",
+    "follow_up_question": "Что такое Project structure и как это работает?",
+    "follow_up_answer": "A practical FastAPI structure separates HTTP routers/schemas from use-case services and data-access details. Routers adapt request/response, services hold business workflows/transaction decisions, repositories or query modules isolate persistence when they add value. Важное ограничение: Avoid pass-through layers with no behavior; boundaries should correspond to change/test seams.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "dependencies",
+        "settings"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Putting every concern into routes makes transaction testing and framework-independent business tests difficult."
       ],
       "red_flags": [
-        "Открывать Session глобально или выполнять blocking I/O в async route."
+        "Putting every concern into routes makes transaction testing and framework-independent business tests difficult."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Project structure и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Project structure и как это работает?"
     ],
     "tags": [
       "stage-14",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-14",

@@ -7,46 +7,49 @@
 
 После урока ты сможешь:
 
-- объяснить `generated methods` своими словами и связать с backend-сценарием;
-- объяснить `equality/repr` своими словами и связать с backend-сценарием;
-- объяснить `mutable fields` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Dataclasses**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `generated methods`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-ООП в backend полезно как способ выразить состояние, поведение и границы ответственности, а не как соревнование по наследованию.
+### Что это
 
-В теме **Dataclasses** важно уверенно объяснять следующие части:
+`@dataclass` generates methods such as `__init__`, `__repr__` and equality from declared fields.
 
-### generated methods
+### Как работает
 
-Для `generated methods` укажи, где хранится state, как Python ищет behavior и почему выбран composition/inheritance.
+Fields are processed in order; `field(default_factory=list)` creates a fresh mutable default per instance. `frozen=True` blocks normal field assignment but is not deep immutability.
 
-### equality/repr
 
-Для `equality/repr` укажи, где хранится state, как Python ищет behavior и почему выбран composition/inheritance.
+### Важный нюанс / limitation
 
-### mutable fields
-
-Mutable объект меняется с сохранением identity, поэтому alias наблюдает ту же мутацию.
-
-### `field(default_factory=...)`
-
-Для ``field(default_factory=...)`` укажи, где хранится state, как Python ищет behavior и почему выбран composition/inheritance.
-
-### frozen
-
-Для `frozen` укажи, где хранится state, как Python ищет behavior и почему выбран composition/inheritance.
-
-### domain data vs ORM/Pydantic models
-
-Для `domain data vs ORM/Pydantic models` укажи, где хранится state, как Python ищет behavior и почему выбран composition/inheritance.
+Dataclass is good for internal data/value objects; Pydantic handles untrusted validation and ORM models handle persistence.
 
 ## Mental model
 
 У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- generated methods
+- equality/repr
+- mutable fields
+- `field(default_factory=...)`
+
+### Полезно
+
+- frozen
+- domain data vs ORM/Pydantic models
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -69,62 +72,20 @@ print(b.roles)
 
 ## Common mistakes
 
-**Ошибка:** Создавать глубокую иерархию ради переиспользования нескольких строк.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Using `items: list = []` is rejected/unsafe; mutable defaults need `default_factory`.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `generated methods` example and predict the result before running it.
 
-## Interview questions
+**B · Find the bug.** Find code that violates `equality/repr` and explain the concrete consequence.
 
-1. Объясни **Dataclasses** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Сравни composition и inheritance для сервиса уведомлений и назови цену изменения. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+**D · Small task.** Implement the smallest function/query that demonstrates `generated methods` and add one edge-case test.
 
-## Expected answer rubric
+**E · Interview explanation.** Explain Dataclasses in 45–60 seconds and include one limitation.
 
-### Must mention
-
-- generated methods
-- equality/repr
-- mutable fields
-- `field(default_factory=...)`
-- У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Создавать глубокую иерархию ради переиспользования нескольких строк.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- generated methods
-- equality/repr
-- mutable fields
-- `field(default_factory=...)`
-- frozen
-- domain data vs ORM/Pydantic models.
-
-## Задача
-
-### Immutable BookingWindow
-
-Создай frozen slots dataclass BookingWindow(start,end); end строго больше start; duration возвращает разницу.
-
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
 ## Code prediction
 
 ### dataclass equality
@@ -153,15 +114,73 @@ Misconception: `dataclass-equality`.
 
 </details>
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое Dataclasses и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Dataclasses?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+`@dataclass` generates methods such as `__init__`, `__repr__` and equality from declared fields.
+
+### Нормальный Junior answer
+
+> `@dataclass` generates methods such as `__init__`, `__repr__` and equality from declared fields. Fields are processed in order; `field(default_factory=list)` creates a fresh mutable default per instance. `frozen=True` blocks normal field assignment but is not deep immutability. Важное ограничение: Dataclass is good for internal data/value objects; Pydantic handles untrusted validation and ORM models handle persistence.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Dataclasses?**
+
+Using `items: list = []` is rejected/unsafe; mutable defaults need `default_factory`.
+
+## Expected answer rubric
+
+### Must mention
+
+- generated methods
+- equality/repr
+- mutable fields
+- `field(default_factory=...)`
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Using `items: list = []` is rejected/unsafe; mutable defaults need `default_factory`.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какая типичная ошибка связана с Dataclasses?
+
+## Задача
+
+### Immutable BookingWindow
+
+Создай frozen slots dataclass BookingWindow(start,end); end строго больше start; duration возвращает разницу.
+
+Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Dataclasses**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** `@dataclass` generates methods such as `__init__`, `__repr__` and equality from declared fields.
+- **Механизм:** У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.
+- **Ограничение:** Using `items: list = []` is rejected/unsafe; mutable defaults need `default_factory`.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

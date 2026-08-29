@@ -7,42 +7,62 @@
 
 После урока ты сможешь:
 
-- объяснить `opaque identifier` своими словами и связать с backend-сценарием;
-- объяснить `server-side state` своими словами и связать с backend-сценарием;
-- объяснить `cookie` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Sessions**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `opaque identifier`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Security строится слоями: аутентификация, авторизация, validation, безопасное хранение секретов и ограничение злоупотреблений.
+### Что это
 
-В теме **Sessions** важно уверенно объяснять следующие части:
+Это security boundary: сервер проверяет утверждение и безопасно отказывает, не доверяя клиентскому UI.
 
-### opaque identifier
+### Как работает
 
-Для `opaque identifier` назови threat, trust boundary, server-side check и безопасный failure response.
+Назови asset, threat, trust boundary, server-side verification и безопасный failure result.
 
-### server-side state
+**opaque identifier.** `opaque identifier` закрывает конкретную threat на trust boundary; проверка выполняется server-side, а отказ не раскрывает лишних данных.
 
-Для `server-side state` назови threat, trust boundary, server-side check и безопасный failure response.
+**server-side state.** `server-side state` закрывает конкретную threat на trust boundary; проверка выполняется server-side, а отказ не раскрывает лишних данных.
 
-### cookie
+**cookie.** `cookie` закрывает конкретную threat на trust boundary; проверка выполняется server-side, а отказ не раскрывает лишних данных.
 
-Для `cookie` назови threat, trust boundary, server-side check и безопасный failure response.
+**revocation.** `revocation` закрывает конкретную threat на trust boundary; проверка выполняется server-side, а отказ не раскрывает лишних данных.
 
-### revocation
+**scaling/storage.** `scaling/storage` закрывает конкретную threat на trust boundary; проверка выполняется server-side, а отказ не раскрывает лишних данных.
 
-Для `revocation` назови threat, trust boundary, server-side check и безопасный failure response.
 
-### scaling/storage
+### Важный нюанс / limitation
 
-Для `scaling/storage` назови threat, trust boundary, server-side check и безопасный failure response.
+Граница Junior: уверенно объясняй `opaque identifier` и `server-side state` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `opaque identifier`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- opaque identifier
+- server-side state
+- cookie
+- revocation
+
+### Полезно
+
+- scaling/storage
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -60,19 +80,45 @@ assert example_s13_sessions()
 
 ## Common mistakes
 
-**Ошибка:** Считать CORS авторизацией, JWT шифрованием или хранить пароль быстрым hash.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `opaque identifier` до запуска.
+
+**B · Find the bug.** Найди нарушение `server-side state` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Sessions за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Sessions** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Назови атакующего, актив, проверку на сервере и безопасный отказ. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Sessions и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Sessions?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Sessions: Это security boundary: сервер проверяет утверждение и безопасно отказывает, не доверяя клиентскому UI.
+
+### Нормальный Junior answer
+
+> Sessions — тема, в которой я сначала фиксирую `opaque identifier`, затем объясняю `server-side state` на коротком примере. Ключевой механизм: Назови asset, threat, trust boundary, server-side verification и безопасный failure result. Главная практическая ошибка — Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Sessions?**
+
+Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.
 
 ## Expected answer rubric
 
@@ -82,47 +128,34 @@ assert example_s13_sessions()
 - server-side state
 - cookie
 - revocation
-- Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Считать CORS авторизацией, JWT шифрованием или хранить пароль быстрым hash.
-- ответ из одного определения без механизма и failure mode.
+- Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- opaque identifier
-- server-side state
-- cookie
-- revocation
-- scaling/storage.
+- Какое ограничение или типичная ошибка относится именно к теме Sessions?
 
 ## Задача
 
-Разбери backend-сценарий: **Назови атакующего, актив, проверку на сервере и безопасный отказ.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Sessions**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Sessions**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Sessions: Это security boundary: сервер проверяет утверждение и безопасно отказывает, не доверяя клиентскому UI.
+- **Механизм:** Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации.
+- **Ограничение:** Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

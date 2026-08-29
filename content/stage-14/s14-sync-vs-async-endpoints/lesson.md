@@ -7,34 +7,47 @@
 
 После урока ты сможешь:
 
-- объяснить `threadpool behavior for sync endpoint` своими словами и связать с backend-сценарием;
-- объяснить `blocking inside async` своими словами и связать с backend-сценарием;
-- объяснить `async only when dependency stack benefits.` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Sync vs async endpoints**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `threadpool behavior for sync endpoint`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-FastAPI связывает ASGI request lifecycle, routing, validation, dependency graph и response serialization.
+### Что это
 
-В теме **Sync vs async endpoints** важно уверенно объяснять следующие части:
+FastAPI supports sync and async endpoints; async is useful when the dependency stack performs awaitable I/O.
 
-### threadpool behavior for sync endpoint
+### Как работает
 
-Threads разделяют память процесса и удобны для blocking I/O, но shared mutable state требует synchronization и корректной lifetime management.
+Async endpoints run on the event loop, while sync endpoints are normally dispatched through a thread pool so blocking work does not directly block the loop.
 
-### blocking inside async
 
-Lock сериализует критическую секцию, но корректность требует единого порядка захвата и короткого времени удержания.
+### Важный нюанс / limitation
 
-### async only when dependency stack benefits
-
-Dependency объявляет вход handler/service явно; FastAPI разрешает graph зависимостей на request, cache-ит результат в его рамках и выполняет cleanup yield-dependency.
+Declaring `async def` does not make sync drivers non-blocking; use an async driver/client or deliberately offload work.
 
 ## Mental model
 
 Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- threadpool behavior for sync endpoint
+- blocking inside async
+- async only when dependency stack benefits
+
+### Полезно
+
+- one short code/result example
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -51,56 +64,19 @@ Path operation — внешний адаптер; бизнес-правила л
 
 ## Common mistakes
 
-**Ошибка:** Открывать Session глобально или выполнять blocking I/O в async route.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Calling `requests` or a sync DB driver inside async endpoint blocks the loop despite the async function declaration.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `threadpool behavior for sync endpoint` example and predict the result before running it.
 
-## Interview questions
+**B · Find the bug.** Find code that violates `blocking inside async` and explain the concrete consequence.
 
-1. Объясни **Sync vs async endpoints** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Проследи request от router через dependency и service до response model. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+**D · Small task.** Implement the smallest function/query that demonstrates `threadpool behavior for sync endpoint` and add one edge-case test.
 
-## Expected answer rubric
-
-### Must mention
-
-- threadpool behavior for sync endpoint
-- blocking inside async
-- async only when dependency stack benefits.
-- Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Открывать Session глобально или выполнять blocking I/O в async route.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- threadpool behavior for sync endpoint
-- blocking inside async
-- async only when dependency stack benefits.
-
-## Задача
-
-Разбери backend-сценарий: **Проследи request от router через dependency и service до response model.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Explain Sync vs async endpoints in 45–60 seconds and include one limitation.
 
 ## Debugging practice
 
@@ -112,15 +88,69 @@ Path operation — внешний адаптер; бизнес-правила л
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое Sync vs async endpoints и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Sync vs async endpoints?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+FastAPI supports sync and async endpoints; async is useful when the dependency stack performs awaitable I/O.
+
+### Нормальный Junior answer
+
+> FastAPI supports sync and async endpoints; async is useful when the dependency stack performs awaitable I/O. Async endpoints run on the event loop, while sync endpoints are normally dispatched through a thread pool so blocking work does not directly block the loop. Важное ограничение: Declaring `async def` does not make sync drivers non-blocking; use an async driver/client or deliberately offload work.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Sync vs async endpoints?**
+
+Calling `requests` or a sync DB driver inside async endpoint blocks the loop despite the async function declaration.
+
+## Expected answer rubric
+
+### Must mention
+
+- threadpool behavior for sync endpoint
+- blocking inside async
+- async only when dependency stack benefits
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Calling `requests` or a sync DB driver inside async endpoint blocks the loop despite the async function declaration.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какая типичная ошибка связана с Sync vs async endpoints?
+
+## Задача
+
+Сделай короткую письменную практику по теме **Sync vs async endpoints**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Sync vs async endpoints**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** FastAPI supports sync and async endpoints; async is useful when the dependency stack performs awaitable I/O.
+- **Механизм:** Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
+- **Ограничение:** Calling `requests` or a sync DB driver inside async endpoint blocks the loop despite the async function declaration.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

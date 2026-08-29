@@ -7,34 +7,57 @@
 
 После урока ты сможешь:
 
-- объяснить `local history movement` своими словами и связать с backend-сценарием;
-- объяснить `working/index effects` своими словами и связать с backend-сценарием;
-- объяснить `safe public-history undo.` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **reset vs revert**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `local history movement`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Git хранит snapshots и граф commits; working tree, index, local branch и remote-tracking branch — разные состояния.
+### Что это
 
-В теме **reset vs revert** важно уверенно объяснять следующие части:
+Тема **reset vs revert** описывает отдельный контракт backend-разработки.
 
-### local history movement
+### Как работает
 
-Для `local history movement` сначала назови изменяемое состояние Git: working tree, index, branch pointer или shared history.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
 
-### working/index effects
+**local history movement.** `local history movement` меняет одно из состояний Git: working tree, index, branch pointer или shared history; эти эффекты нельзя смешивать.
 
-Index — отдельная структура доступа с ценой записи и хранения; полезность зависит от конкретного predicate, ordering и selectivity.
+**working/index effects.** Index — отдельная структура доступа с ценой записи и хранения; полезность зависит от конкретного predicate, ordering и selectivity.
 
-### safe public-history undo
+**safe public-history undo.** `safe public-history undo` меняет одно из состояний Git: working tree, index, branch pointer или shared history; эти эффекты нельзя смешивать.
 
-Для `safe public-history undo` сначала назови изменяемое состояние Git: working tree, index, branch pointer или shared history.
+
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `local history movement` и `working/index effects` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `local history movement`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Перед командой определяй, что именно меняется: файлы, index, branch pointer или shared history.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- local history movement
+- working/index effects
+- safe public-history undo
+
+### Полезно
+
+- связать reset vs revert с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -51,56 +74,17 @@ git revert; не rewrite shared history.
 
 ## Common mistakes
 
-**Ошибка:** Rebase shared commits или удалять secret из файла без ротации.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Игнорировать ограничение механизма и проверять только happy path.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `local history movement` до запуска.
 
-## Interview questions
+**B · Find the bug.** Найди нарушение `working/index effects` и объясни конкретное последствие.
 
-1. Объясни **reset vs revert** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Выбери безопасный способ отменить локальное и уже опубликованное изменение. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
-
-## Expected answer rubric
-
-### Must mention
-
-- local history movement
-- working/index effects
-- safe public-history undo.
-- Перед командой определяй, что именно меняется: файлы, index, branch pointer или shared history.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Rebase shared commits или удалять secret из файла без ротации.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- local history movement
-- working/index effects
-- safe public-history undo.
-
-## Задача
-
-Разбери backend-сценарий: **Выбери безопасный способ отменить локальное и уже опубликованное изменение.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Дай ответ про reset vs revert за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Operations practice
 
@@ -122,15 +106,69 @@ git revert; не rewrite shared history.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое reset vs revert и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме reset vs revert?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+reset vs revert: это отдельный технический контракт
+
+### Нормальный Junior answer
+
+> reset vs revert — тема, в которой я сначала фиксирую `local history movement`, затем объясняю `working/index effects` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме reset vs revert?**
+
+Нужно назвать конкретный failure path и способ его проверить.
+
+## Expected answer rubric
+
+### Must mention
+
+- local history movement
+- working/index effects
+- safe public-history undo
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Игнорировать ограничение механизма и проверять только happy path.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какое ограничение или типичная ошибка относится именно к теме reset vs revert?
+
+## Задача
+
+Сделай короткую письменную практику по теме **reset vs revert**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **reset vs revert**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** reset vs revert: это отдельный технический контракт
+- **Механизм:** Перед командой определяй, что именно меняется: файлы, index, branch pointer или shared history.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

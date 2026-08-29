@@ -1,39 +1,41 @@
 [
   {
-    "question": "Объясни тему «Explicit transactions» как на Junior Python Backend interview.",
+    "question": "Что такое Explicit transactions и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
       "`begin`",
       "atomic service operation",
-      "avoid commits hidden across repository calls.",
-      "Один request/use case обычно владеет одной Session и явно завершает commit или rollback."
+      "avoid commits hidden across repository calls"
     ],
+    "short_answer": "An explicit transaction boundary groups all database changes of one use case into one commit/rollback decision.",
+    "junior_answer": "An explicit transaction boundary groups all database changes of one use case into one commit/rollback decision. `with session.begin()` commits on normal exit and rolls back on exception; repositories should not secretly finalize independent parts. Важное ограничение: Keep external network calls outside the transaction when possible to reduce lock/connection time.",
+    "follow_up_question": "Какая типичная ошибка связана с Explicit transactions?",
+    "follow_up_answer": "Multiple hidden repository commits make partial data durable when a later step fails.",
     "expected_answer": {
       "must_mention": [
         "`begin`",
         "atomic service operation",
-        "avoid commits hidden across repository calls.",
-        "Один request/use case обычно владеет одной Session и явно завершает commit или rollback."
+        "avoid commits hidden across repository calls"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks.",
+        "Multiple hidden repository commits make partial data durable when a later step fails.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks."
+        "Multiple hidden repository commits make partial data durable when a later step fails."
       ],
       "follow_up_questions": [
-        "Опиши session scope, момент flush/commit и количество SQL-запросов."
+        "Какая типичная ошибка связана с Explicit transactions?"
       ]
     },
     "follow_ups": [
-      "Опиши session scope, момент flush/commit и количество SQL-запросов."
+      "Какая типичная ошибка связана с Explicit transactions?"
     ],
     "tags": [
       "stage-16",
@@ -46,42 +48,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Explicit transactions»: Опиши session scope, момент flush/commit и количество SQL-запросов. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Explicit transactions?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Один request/use case обычно владеет одной Session и явно завершает commit или rollback.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "one short code/result example",
+      "Multiple hidden repository commits make partial data durable when a later step fails."
     ],
+    "short_answer": "Multiple hidden repository commits make partial data durable when a later step fails.",
+    "junior_answer": "Multiple hidden repository commits make partial data durable when a later step fails.",
+    "follow_up_question": "Что такое Explicit transactions и как это работает?",
+    "follow_up_answer": "An explicit transaction boundary groups all database changes of one use case into one commit/rollback decision. `with session.begin()` commits on normal exit and rolls back on exception; repositories should not secretly finalize independent parts. Важное ограничение: Keep external network calls outside the transaction when possible to reduce lock/connection time.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "one short code/result example"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Multiple hidden repository commits make partial data durable when a later step fails."
       ],
       "red_flags": [
-        "Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks."
+        "Multiple hidden repository commits make partial data durable when a later step fails."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Explicit transactions и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Explicit transactions и как это работает?"
     ],
     "tags": [
       "stage-16",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-16",

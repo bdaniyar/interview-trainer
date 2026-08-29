@@ -1,41 +1,43 @@
 [
   {
-    "question": "Объясни тему «Dependency injection with `Depends`» как на Junior Python Backend interview.",
+    "question": "Как работает `Depends` в FastAPI и каков lifecycle dependency?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
+      "зачем DI",
       "dependency graph",
-      "request-scoped lifecycle",
-      "auth/session/settings",
-      "caching per request.",
-      "Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency."
+      "per-request cache",
+      "yield cleanup"
     ],
+    "short_answer": "Depends объявляет dependency graph; FastAPI разрешает его на request, кэширует одинаковые dependencies и выполняет cleanup yield-dependency.",
+    "junior_answer": "`Depends` позволяет endpoint явно объявить, что ему нужны user, Session или settings. FastAPI строит graph по signatures, вызывает dependencies и передаёт результаты в handler. Внутри одного request одинаковая dependency обычно выполняется один раз. Если dependency использует `yield`, код после yield работает как cleanup. В тестах dependency можно override-нуть.",
+    "follow_up_question": "Чем request cache dependency отличается от singleton?",
+    "follow_up_answer": "Результат переиспользуется только внутри одного request; следующий request разрешает dependency заново. Singleton живёт между requests на уровне приложения.",
     "expected_answer": {
       "must_mention": [
+        "зачем DI",
         "dependency graph",
-        "request-scoped lifecycle",
-        "auth/session/settings",
-        "caching per request.",
-        "Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency."
+        "per-request cache",
+        "yield cleanup"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Открывать Session глобально или выполнять blocking I/O в async route.",
+        "Вызвать dependency вручную как обычную функцию и ожидать, что FastAPI разрешит её sub-dependencies.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Открывать Session глобально или выполнять blocking I/O в async route."
+        "Вызвать dependency вручную как обычную функцию и ожидать, что FastAPI разрешит её sub-dependencies."
       ],
       "follow_up_questions": [
-        "Проследи request от router через dependency и service до response model."
+        "Чем request cache dependency отличается от singleton?"
       ]
     },
     "follow_ups": [
-      "Проследи request от router через dependency и service до response model."
+      "Чем request cache dependency отличается от singleton?"
     ],
     "tags": [
       "stage-14",
@@ -48,42 +50,47 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Dependency injection with `Depends`»: Проследи request от router через dependency и service до response model. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Чем request cache dependency отличается от singleton?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "`Annotated` aliases",
+      "`use_cache=False`",
+      "граница dependency/service",
+      "Результат переиспользуется только внутри одного request; следующий request разрешает dependency заново. Singleton живёт между requests на уровне приложения."
     ],
+    "short_answer": "Результат переиспользуется только внутри одного request; следующий request разрешает dependency заново. Singleton живёт между requests на уровне приложения.",
+    "junior_answer": "Результат переиспользуется только внутри одного request; следующий request разрешает dependency заново. Singleton живёт между requests на уровне приложения.",
+    "follow_up_question": "Как работает `Depends` в FastAPI и каков lifecycle dependency?",
+    "follow_up_answer": "`Depends` позволяет endpoint явно объявить, что ему нужны user, Session или settings. FastAPI строит graph по signatures, вызывает dependencies и передаёт результаты в handler. Внутри одного request одинаковая dependency обычно выполняется один раз. Если dependency использует `yield`, код после yield работает как cleanup. В тестах dependency можно override-нуть.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "`Annotated` aliases",
+        "`use_cache=False`",
+        "граница dependency/service"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Вызвать dependency вручную как обычную функцию и ожидать, что FastAPI разрешит её sub-dependencies.",
+        "Создать глобальную SQLAlchemy Session и возвращать её всем requests.",
+        "Поместить всю бизнес-логику в огромную dependency graph, которую трудно тестировать отдельно."
       ],
       "red_flags": [
-        "Открывать Session глобально или выполнять blocking I/O в async route."
+        "Вызвать dependency вручную как обычную функцию и ожидать, что FastAPI разрешит её sub-dependencies."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Как работает `Depends` в FastAPI и каков lifecycle dependency?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Как работает `Depends` в FastAPI и каков lifecycle dependency?"
     ],
     "tags": [
       "stage-14",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-14",

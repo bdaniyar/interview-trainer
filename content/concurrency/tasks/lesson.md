@@ -7,38 +7,48 @@
 
 После урока ты сможешь:
 
-- объяснить `scheduling` своими словами и связать с backend-сценарием;
-- объяснить `keeping references` своими словами и связать с backend-сценарием;
-- объяснить `awaiting completion` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Tasks and `asyncio.create_task`**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `scheduling`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-asyncio даёт кооперативную конкурентность для I/O-bound работы: задача уступает loop только в await point.
+### Что это
 
-В теме **Tasks and `asyncio.create_task`** важно уверенно объяснять следующие части:
+An asyncio Task schedules one coroutine and stores its completion, result, exception or cancellation state.
 
-### scheduling
+### Как работает
 
-Для `scheduling` проследи coroutine/task по await points, cancellation и cleanup, не предполагая отдельный thread.
+`create_task` makes a coroutine eligible to run; the caller should keep a reference and eventually await it or otherwise handle its outcome.
 
-### keeping references
 
-Для `keeping references` проследи coroutine/task по await points, cancellation и cleanup, не предполагая отдельный thread.
+### Важный нюанс / limitation
 
-### awaiting completion
-
-`await` приостанавливает текущую coroutine и отдаёт управление event loop, пока awaitable не станет готов.
-
-### exception handling
-
-Для `exception handling` проследи coroutine/task по await points, cancellation и cleanup, не предполагая отдельный thread.
+Fire-and-forget inside a web process is not durable: process shutdown can lose the task, and unobserved exceptions may surface only in logs.
 
 ## Mental model
 
 Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- scheduling
+- keeping references
+- awaiting completion
+- exception handling
+
+### Полезно
+
+- one short code/result example
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -63,60 +73,20 @@ Task планирует coroutine и хранит её completion/result; refere
 
 ## Common mistakes
 
-**Ошибка:** Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Creating a task and dropping the reference hides failures and does not guarantee completion before request/process shutdown.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `scheduling` example and predict the result before running it.
 
-## Interview questions
+**B · Find the bug.** Find code that violates `keeping references` and explain the concrete consequence.
 
-1. Объясни **Tasks and `asyncio.create_task`** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Найди blocking участок, обозначь cancellation boundary и выбери способ конкурентного запуска. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+**D · Small task.** Implement the smallest function/query that demonstrates `scheduling` and add one edge-case test.
 
-## Expected answer rubric
+**E · Interview explanation.** Explain Tasks and `asyncio.create_task` in 45–60 seconds and include one limitation.
 
-### Must mention
-
-- scheduling
-- keeping references
-- awaiting completion
-- exception handling.
-- Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- scheduling
-- keeping references
-- awaiting completion
-- exception handling.
-
-## Задача
-
-### Task lifecycle registry
-
-Создай task, добавь в registry set, удали done callback и верни task.
-
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
 ## Code prediction
 
 ### create_task планирует работу
@@ -159,15 +129,73 @@ Misconception: `task-scheduling`.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое Tasks and `asyncio.create_task` и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Tasks and `asyncio.create_task`?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+An asyncio Task schedules one coroutine and stores its completion, result, exception or cancellation state.
+
+### Нормальный Junior answer
+
+> An asyncio Task schedules one coroutine and stores its completion, result, exception or cancellation state. `create_task` makes a coroutine eligible to run; the caller should keep a reference and eventually await it or otherwise handle its outcome. Важное ограничение: Fire-and-forget inside a web process is not durable: process shutdown can lose the task, and unobserved exceptions may surface only in logs.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Tasks and `asyncio.create_task`?**
+
+Creating a task and dropping the reference hides failures and does not guarantee completion before request/process shutdown.
+
+## Expected answer rubric
+
+### Must mention
+
+- scheduling
+- keeping references
+- awaiting completion
+- exception handling
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Creating a task and dropping the reference hides failures and does not guarantee completion before request/process shutdown.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какая типичная ошибка связана с Tasks and `asyncio.create_task`?
+
+## Задача
+
+### Task lifecycle registry
+
+Создай task, добавь в registry set, удали done callback и верни task.
+
+Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Tasks and `asyncio.create_task`**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** An asyncio Task schedules one coroutine and stores its completion, result, exception or cancellation state.
+- **Механизм:** Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.
+- **Ограничение:** Creating a task and dropping the reference hides failures and does not guarantee completion before request/process shutdown.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «File upload design» как на Junior Python Backend interview.",
+    "question": "Что такое File upload design и какой механизм здесь важно понимать Junior-разработчику?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "presigned URL",
       "object storage",
       "metadata in PostgreSQL",
-      "validation/finalize",
-      "Сначала обеспечь корректность простого монолита; масштабируй измеренный bottleneck."
+      "validation/finalize"
     ],
+    "short_answer": "File upload design: это отдельный технический контракт",
+    "junior_answer": "File upload design — тема, в которой я сначала фиксирую `presigned URL`, затем объясняю `object storage` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
+    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме File upload design?",
+    "follow_up_answer": "Нужно назвать конкретный failure path и способ его проверить.",
     "expected_answer": {
       "must_mention": [
         "presigned URL",
         "object storage",
         "metadata in PostgreSQL",
-        "validation/finalize",
-        "Сначала обеспечь корректность простого монолита; масштабируй измеренный bottleneck."
+        "validation/finalize"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Начинать с microservices, не определив нагрузку, consistency и ownership.",
+        "Игнорировать ограничение механизма и проверять только happy path.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Начинать с microservices, не определив нагрузку, consistency и ownership."
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "follow_up_questions": [
-        "Уточни traffic, consistency, latency и failure behavior перед схемой компонентов."
+        "Какое ограничение или типичная ошибка относится именно к теме File upload design?"
       ]
     },
     "follow_ups": [
-      "Уточни traffic, consistency, latency и failure behavior перед схемой компонентов."
+      "Какое ограничение или типичная ошибка относится именно к теме File upload design?"
     ],
     "tags": [
       "stage-29",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «File upload design»: Уточни traffic, consistency, latency и failure behavior перед схемой компонентов. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какое ограничение или типичная ошибка относится именно к теме File upload design?",
+    "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Сначала обеспечь корректность простого монолита; масштабируй измеренный bottleneck.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "orphan cleanup",
+      "Нужно назвать конкретный failure path и способ его проверить."
     ],
+    "short_answer": "Нужно назвать конкретный failure path и способ его проверить.",
+    "junior_answer": "Нужно назвать конкретный failure path и способ его проверить.",
+    "follow_up_question": "Что такое File upload design и какой механизм здесь важно понимать Junior-разработчику?",
+    "follow_up_answer": "File upload design — тема, в которой я сначала фиксирую `presigned URL`, затем объясняю `object storage` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "orphan cleanup"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "red_flags": [
-        "Начинать с microservices, не определив нагрузку, consistency и ownership."
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое File upload design и какой механизм здесь важно понимать Junior-разработчику?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое File upload design и какой механизм здесь важно понимать Junior-разработчику?"
     ],
     "tags": [
       "stage-29",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-29",

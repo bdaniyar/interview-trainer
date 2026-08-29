@@ -7,38 +7,60 @@
 
 После урока ты сможешь:
 
-- объяснить `environment variables` своими словами и связать с backend-сценарием;
-- объяснить `typed settings` своими словами и связать с backend-сценарием;
-- объяснить `test overrides` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Settings/configuration**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `environment variables`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-FastAPI связывает ASGI request lifecycle, routing, validation, dependency graph и response serialization.
+### Что это
 
-В теме **Settings/configuration** важно уверенно объяснять следующие части:
+Это часть FastAPI request lifecycle между routing, validation, dependencies, handler и response serialization.
 
-### environment variables
+### Как работает
 
-Для `environment variables` проследи request через router, validation/dependencies, handler/service и response serialization.
+Проследи request через router, Pydantic validation, dependency graph, service и response model.
 
-### typed settings
+**environment variables.** `environment variables` занимает конкретный этап FastAPI request lifecycle между router, validation/dependencies, handler и response serialization.
 
-Для `typed settings` проследи request через router, validation/dependencies, handler/service и response serialization.
+**typed settings.** `typed settings` занимает конкретный этап FastAPI request lifecycle между router, validation/dependencies, handler и response serialization.
 
-### test overrides
+**test overrides.** `test overrides` занимает конкретный этап FastAPI request lifecycle между router, validation/dependencies, handler и response serialization.
 
-Для `test overrides` проследи request через router, validation/dependencies, handler/service и response serialization.
+**secrets.** `secrets` занимает конкретный этап FastAPI request lifecycle между router, validation/dependencies, handler и response serialization.
 
-### secrets
 
-Для `secrets` проследи request через router, validation/dependencies, handler/service и response serialization.
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `environment variables` и `typed settings` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `environment variables`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- environment variables
+- typed settings
+- test overrides
+- secrets
+
+### Полезно
+
+- связать Settings/configuration с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -56,19 +78,45 @@ assert example_s14_settings_configuration()
 
 ## Common mistakes
 
-**Ошибка:** Открывать Session глобально или выполнять blocking I/O в async route.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Открыть глобальный request resource или спрятать domain logic в framework hook.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `environment variables` до запуска.
+
+**B · Find the bug.** Найди нарушение `typed settings` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Settings/configuration за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Settings/configuration** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Проследи request от router через dependency и service до response model. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Settings/configuration и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Settings/configuration?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Settings/configuration: Это часть FastAPI request lifecycle между routing, validation, dependencies, handler и response serialization.
+
+### Нормальный Junior answer
+
+> Settings/configuration — тема, в которой я сначала фиксирую `environment variables`, затем объясняю `typed settings` на коротком примере. Ключевой механизм: Проследи request через router, Pydantic validation, dependency graph, service и response model. Главная практическая ошибка — Открыть глобальный request resource или спрятать domain logic в framework hook.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Settings/configuration?**
+
+Открыть глобальный request resource или спрятать domain logic в framework hook.
 
 ## Expected answer rubric
 
@@ -77,47 +125,35 @@ assert example_s14_settings_configuration()
 - environment variables
 - typed settings
 - test overrides
-- secrets.
-- Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
+- secrets
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Открывать Session глобально или выполнять blocking I/O в async route.
-- ответ из одного определения без механизма и failure mode.
+- Открыть глобальный request resource или спрятать domain logic в framework hook.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- environment variables
-- typed settings
-- test overrides
-- secrets.
+- Какое ограничение или типичная ошибка относится именно к теме Settings/configuration?
 
 ## Задача
 
-Разбери backend-сценарий: **Проследи request от router через dependency и service до response model.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Settings/configuration**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Settings/configuration**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Settings/configuration: Это часть FastAPI request lifecycle между routing, validation, dependencies, handler и response serialization.
+- **Механизм:** Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
+- **Ограничение:** Открыть глобальный request resource или спрятать domain logic в framework hook.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

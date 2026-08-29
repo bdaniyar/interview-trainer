@@ -7,46 +7,65 @@
 
 После урока ты сможешь:
 
-- объяснить `INSERT` своими словами и связать с backend-сценарием;
-- объяснить `UPDATE` своими словами и связать с backend-сценарием;
-- объяснить `DELETE` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Data modification**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `INSERT`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-SQL описывает требуемый набор строк; корректность начинается с cardinality, NULL semantics и явного порядка.
+### Что это
 
-В теме **Data modification** важно уверенно объяснять следующие части:
+Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.
 
-### INSERT
+### Как работает
 
-Для `INSERT` сначала определи grain/cardinality результата, затем NULL и ordering semantics.
+Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа.
 
-### UPDATE
+**INSERT.** `INSERT` меняет набор SQL rows; его смысл проверяют через grain результата, cardinality, NULL semantics и явный ordering.
 
-Для `UPDATE` сначала определи grain/cardinality результата, затем NULL и ordering semantics.
+**UPDATE.** `UPDATE` меняет набор SQL rows; его смысл проверяют через grain результата, cardinality, NULL semantics и явный ordering.
 
-### DELETE
+**DELETE.** `DELETE` меняет набор SQL rows; его смысл проверяют через grain результата, cardinality, NULL semantics и явный ordering.
 
-Для `DELETE` сначала определи grain/cardinality результата, затем NULL и ordering semantics.
+**`RETURNING`.** ``RETURNING`` меняет набор SQL rows; его смысл проверяют через grain результата, cardinality, NULL semantics и явный ordering.
 
-### `RETURNING`
+**safe WHERE.** `WHERE` фильтрует строки до grouping; SQL three-valued logic отбрасывает и `FALSE`, и `UNKNOWN`.
 
-Для ``RETURNING`` сначала определи grain/cardinality результата, затем NULL и ordering semantics.
+**upsert basics.** `upsert basics` меняет набор SQL rows; его смысл проверяют через grain результата, cardinality, NULL semantics и явный ordering.
 
-### safe WHERE
 
-`WHERE` фильтрует строки до grouping; SQL three-valued logic отбрасывает и `FALSE`, и `UNKNOWN`.
+### Важный нюанс / limitation
 
-### upsert basics
+Граница Junior: уверенно объясняй `INSERT` и `UPDATE` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
-Для `upsert basics` сначала определи grain/cardinality результата, затем NULL и ordering semantics.
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `INSERT`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- INSERT
+- UPDATE
+- DELETE
+- `RETURNING`
+
+### Полезно
+
+- safe WHERE
+- upsert basics
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -63,19 +82,45 @@ Conditional UPDATE объединяет проверку текущего state 
 
 ## Common mistakes
 
-**Ошибка:** Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Не определить cardinality результата и замаскировать неверный query через DISTINCT.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `INSERT` до запуска.
+
+**B · Find the bug.** Найди нарушение `UPDATE` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Data modification за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Data modification** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Предскажи cardinality результата и проверь, не размножает ли JOIN строки. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Data modification и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Data modification?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Data modification: Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.
+
+### Нормальный Junior answer
+
+> Data modification — тема, в которой я сначала фиксирую `INSERT`, затем объясняю `UPDATE` на коротком примере. Ключевой механизм: Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа. Главная практическая ошибка — Не определить cardinality результата и замаскировать неверный query через DISTINCT.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Data modification?**
+
+Не определить cardinality результата и замаскировать неверный query через DISTINCT.
 
 ## Expected answer rubric
 
@@ -85,48 +130,34 @@ Conditional UPDATE объединяет проверку текущего state 
 - UPDATE
 - DELETE
 - `RETURNING`
-- Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE.
-- ответ из одного определения без механизма и failure mode.
+- Не определить cardinality результата и замаскировать неверный query через DISTINCT.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- INSERT
-- UPDATE
-- DELETE
-- `RETURNING`
-- safe WHERE
-- upsert basics.
+- Какое ограничение или типичная ошибка относится именно к теме Data modification?
 
 ## Задача
 
-Разбери backend-сценарий: **Предскажи cardinality результата и проверь, не размножает ли JOIN строки.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Data modification**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Data modification**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Data modification: Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.
+- **Механизм:** Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
+- **Ограничение:** Не определить cardinality результата и замаскировать неверный query через DISTINCT.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

@@ -1,35 +1,37 @@
 [
   {
-    "question": "Объясни тему «Engine and connection pool» как на Junior Python Backend interview.",
+    "question": "Что такое Engine and connection pool и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "Engine and connection pool",
-      "Один request/use case обычно владеет одной Session и явно завершает commit или rollback."
+      "Engine and connection pool"
     ],
+    "short_answer": "SQLAlchemy Engine owns the SQL dialect and connection pool; it is a long-lived application-level factory, not an ORM Session.",
+    "junior_answer": "SQLAlchemy Engine owns the SQL dialect and connection pool; it is a long-lived application-level factory, not an ORM Session. A Session checks out a connection when SQL is needed and returns it according to transaction/session lifecycle. Важное ограничение: Pool size must match database capacity and workload; creating an engine per request defeats pooling.",
+    "follow_up_question": "Какая типичная ошибка связана с Engine and connection pool?",
+    "follow_up_answer": "A leaked Session can keep a transaction/connection checked out until the pool is exhausted.",
     "expected_answer": {
       "must_mention": [
-        "Engine and connection pool",
-        "Один request/use case обычно владеет одной Session и явно завершает commit или rollback."
+        "Engine and connection pool"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks.",
+        "A leaked Session can keep a transaction/connection checked out until the pool is exhausted.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks."
+        "A leaked Session can keep a transaction/connection checked out until the pool is exhausted."
       ],
       "follow_up_questions": [
-        "Опиши session scope, момент flush/commit и количество SQL-запросов."
+        "Какая типичная ошибка связана с Engine and connection pool?"
       ]
     },
     "follow_ups": [
-      "Опиши session scope, момент flush/commit и количество SQL-запросов."
+      "Какая типичная ошибка связана с Engine and connection pool?"
     ],
     "tags": [
       "stage-16",
@@ -42,42 +44,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Engine and connection pool»: Опиши session scope, момент flush/commit и количество SQL-запросов. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Engine and connection pool?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Один request/use case обычно владеет одной Session и явно завершает commit или rollback.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "one short code/result example",
+      "A leaked Session can keep a transaction/connection checked out until the pool is exhausted."
     ],
+    "short_answer": "A leaked Session can keep a transaction/connection checked out until the pool is exhausted.",
+    "junior_answer": "A leaked Session can keep a transaction/connection checked out until the pool is exhausted.",
+    "follow_up_question": "Что такое Engine and connection pool и как это работает?",
+    "follow_up_answer": "SQLAlchemy Engine owns the SQL dialect and connection pool; it is a long-lived application-level factory, not an ORM Session. A Session checks out a connection when SQL is needed and returns it according to transaction/session lifecycle. Важное ограничение: Pool size must match database capacity and workload; creating an engine per request defeats pooling.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "one short code/result example"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "A leaked Session can keep a transaction/connection checked out until the pool is exhausted."
       ],
       "red_flags": [
-        "Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks."
+        "A leaked Session can keep a transaction/connection checked out until the pool is exhausted."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Engine and connection pool и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Engine and connection pool и как это работает?"
     ],
     "tags": [
       "stage-16",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-16",

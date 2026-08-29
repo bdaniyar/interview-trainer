@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Multiprocessing» как на Junior Python Backend interview.",
+    "question": "Что такое Multiprocessing и как это работает?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "medium",
@@ -8,34 +8,36 @@
       "separate processes",
       "serialization",
       "process startup/overhead",
-      "CPU-bound work.",
-      "Thread разделяет память процесса; process изолирован и требует сериализации/IPC."
+      "CPU-bound work"
     ],
+    "short_answer": "Multiprocessing runs work in separate processes with isolated memory and separate Python interpreters.",
+    "junior_answer": "Multiprocessing runs work in separate processes with isolated memory and separate Python interpreters. Inputs/results cross process boundaries through serialization and IPC. This enables CPU parallelism but adds startup, memory and communication cost. Важное ограничение: Worker targets and arguments generally must be pickleable, and process startup behavior differs by platform.",
+    "follow_up_question": "Какая типичная ошибка связана с Multiprocessing?",
+    "follow_up_answer": "Passing a live Session, lock-bound client or local closure to a process often fails serialization or creates invalid copied state.",
     "expected_answer": {
       "must_mention": [
         "separate processes",
         "serialization",
         "process startup/overhead",
-        "CPU-bound work.",
-        "Thread разделяет память процесса; process изолирован и требует сериализации/IPC."
+        "CPU-bound work"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Отправлять непиклируемый объект в process pool или делить mutable state без lock.",
+        "Passing a live Session, lock-bound client or local closure to a process often fails serialization or creates invalid copied state.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Отправлять непиклируемый объект в process pool или делить mutable state без lock."
+        "Passing a live Session, lock-bound client or local closure to a process often fails serialization or creates invalid copied state."
       ],
       "follow_up_questions": [
-        "Выбери executor для I/O-bound и CPU-bound функций и объясни ограничения."
+        "Какая типичная ошибка связана с Multiprocessing?"
       ]
     },
     "follow_ups": [
-      "Выбери executor для I/O-bound и CPU-bound функций и объясни ограничения."
+      "Какая типичная ошибка связана с Multiprocessing?"
     ],
     "tags": [
       "stage-09",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Multiprocessing»: Выбери executor для I/O-bound и CPU-bound функций и объясни ограничения. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Multiprocessing?",
+    "level": "follow_up",
     "priority": "P1",
     "interview_probability": "medium",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Thread разделяет память процесса; process изолирован и требует сериализации/IPC.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "one short code/result example",
+      "Passing a live Session, lock-bound client or local closure to a process often fails serialization or creates invalid copied state."
     ],
+    "short_answer": "Passing a live Session, lock-bound client or local closure to a process often fails serialization or creates invalid copied state.",
+    "junior_answer": "Passing a live Session, lock-bound client or local closure to a process often fails serialization or creates invalid copied state.",
+    "follow_up_question": "Что такое Multiprocessing и как это работает?",
+    "follow_up_answer": "Multiprocessing runs work in separate processes with isolated memory and separate Python interpreters. Inputs/results cross process boundaries through serialization and IPC. This enables CPU parallelism but adds startup, memory and communication cost. Важное ограничение: Worker targets and arguments generally must be pickleable, and process startup behavior differs by platform.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "one short code/result example"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Passing a live Session, lock-bound client or local closure to a process often fails serialization or creates invalid copied state."
       ],
       "red_flags": [
-        "Отправлять непиклируемый объект в process pool или делить mutable state без lock."
+        "Passing a live Session, lock-bound client or local closure to a process often fails serialization or creates invalid copied state."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Multiprocessing и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Multiprocessing и как это работает?"
     ],
     "tags": [
       "stage-09",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-09",

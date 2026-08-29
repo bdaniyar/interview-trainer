@@ -7,42 +7,48 @@
 
 После урока ты сможешь:
 
-- объяснить `stable shape` своими словами и связать с backend-сценарием;
-- объяснить `machine-readable code` своими словами и связать с backend-сценарием;
-- объяснить `human message` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Error contracts**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `stable shape`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-HTTP — контракт между клиентом и сервером: method, target, headers, body, status и cache semantics.
+### Что это
 
-В теме **Error contracts** важно уверенно объяснять следующие части:
+An API error contract is a stable response shape for failures, usually containing a machine code, human message and optional field details.
 
-### stable shape
+### Как работает
 
-Для `stable shape` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
+Domain/infrastructure exceptions are translated at the boundary to an appropriate status and safe payload; internal trace and secrets remain in protected logs.
 
-### machine-readable code
 
-Для `machine-readable code` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
+### Важный нюанс / limitation
 
-### human message
-
-Для `human message` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
-
-### field errors
-
-Для `field errors` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
-
-### no internal traces
-
-Для `no internal traces` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
+Clients should branch on stable code/status, not exact human wording.
 
 ## Mental model
 
 Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- stable shape
+- machine-readable code
+- human message
+- field errors
+
+### Полезно
+
+- no internal traces
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -58,19 +64,47 @@ X-Request-ID: req-12-20
 
 ## Common mistakes
 
-**Ошибка:** Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Returning raw exception strings leaks implementation details and creates an unstable public contract.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `stable shape` example and predict the result before running it.
+
+**B · Find the bug.** Find code that violates `machine-readable code` and explain the concrete consequence.
+
+**D · Small task.** Implement the smallest function/query that demonstrates `stable shape` and add one edge-case test.
+
+**E · Interview explanation.** Explain Error contracts in 45–60 seconds and include one limitation.
 
 ## Interview questions
 
-1. Объясни **Error contracts** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Спроектируй request/response контракт и объясни retry, idempotency и error body. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Error contracts и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Error contracts?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+An API error contract is a stable response shape for failures, usually containing a machine code, human message and optional field details.
+
+### Нормальный Junior answer
+
+> An API error contract is a stable response shape for failures, usually containing a machine code, human message and optional field details. Domain/infrastructure exceptions are translated at the boundary to an appropriate status and safe payload; internal trace and secrets remain in protected logs. Важное ограничение: Clients should branch on stable code/status, not exact human wording.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Error contracts?**
+
+Returning raw exception strings leaks implementation details and creates an unstable public contract.
 
 ## Expected answer rubric
 
@@ -80,47 +114,34 @@ X-Request-ID: req-12-20
 - machine-readable code
 - human message
 - field errors
-- Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне.
-- ответ из одного определения без механизма и failure mode.
+- Returning raw exception strings leaks implementation details and creates an unstable public contract.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- stable shape
-- machine-readable code
-- human message
-- field errors
-- no internal traces.
+- Какая типичная ошибка связана с Error contracts?
 
 ## Задача
 
-Разбери backend-сценарий: **Спроектируй request/response контракт и объясни retry, idempotency и error body.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Error contracts**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Error contracts**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** An API error contract is a stable response shape for failures, usually containing a machine code, human message and optional field details.
+- **Механизм:** Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
+- **Ограничение:** Returning raw exception strings leaks implementation details and creates an unstable public contract.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

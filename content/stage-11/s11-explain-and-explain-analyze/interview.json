@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «EXPLAIN and EXPLAIN ANALYZE» как на Junior Python Backend interview.",
+    "question": "Что такое EXPLAIN and EXPLAIN ANALYZE и как это работает?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "estimated vs actual",
       "scan types",
       "rows",
-      "loops",
-      "Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path."
+      "loops"
     ],
+    "short_answer": "`EXPLAIN` shows the planned operations and estimates; `EXPLAIN ANALYZE` executes the statement and adds actual rows/timing.",
+    "junior_answer": "`EXPLAIN` shows the planned operations and estimates; `EXPLAIN ANALYZE` executes the statement and adds actual rows/timing. Read plan nodes from children upward and compare estimated vs actual rows, loops, scan type and buffers when requested. Важное ограничение: ANALYZE really executes data-changing statements unless wrapped and rolled back; test safely.",
+    "follow_up_question": "Какая типичная ошибка связана с EXPLAIN and EXPLAIN ANALYZE?",
+    "follow_up_answer": "Looking only at total time misses a severe estimate error or loop count that becomes expensive on larger data.",
     "expected_answer": {
       "must_mention": [
         "estimated vs actual",
         "scan types",
         "rows",
-        "loops",
-        "Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path."
+        "loops"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова.",
+        "Looking only at total time misses a severe estimate error or loop count that becomes expensive on larger data.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова."
+        "Looking only at total time misses a severe estimate error or loop count that becomes expensive on larger data."
       ],
       "follow_up_questions": [
-        "Назови инвариант, конкурентный сценарий и точку, где его гарантирует база."
+        "Какая типичная ошибка связана с EXPLAIN and EXPLAIN ANALYZE?"
       ]
     },
     "follow_ups": [
-      "Назови инвариант, конкурентный сценарий и точку, где его гарантирует база."
+      "Какая типичная ошибка связана с EXPLAIN and EXPLAIN ANALYZE?"
     ],
     "tags": [
       "stage-11",
@@ -48,42 +50,43 @@
     ]
   },
   {
-    "question": "Сценарий по теме «EXPLAIN and EXPLAIN ANALYZE»: Назови инвариант, конкурентный сценарий и точку, где его гарантирует база. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с EXPLAIN and EXPLAIN ANALYZE?",
+    "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "timing",
+      "ANALYZE executes the query",
+      "Looking only at total time misses a severe estimate error or loop count that becomes expensive on larger data."
     ],
+    "short_answer": "Looking only at total time misses a severe estimate error or loop count that becomes expensive on larger data.",
+    "junior_answer": "Looking only at total time misses a severe estimate error or loop count that becomes expensive on larger data.",
+    "follow_up_question": "Что такое EXPLAIN and EXPLAIN ANALYZE и как это работает?",
+    "follow_up_answer": "`EXPLAIN` shows the planned operations and estimates; `EXPLAIN ANALYZE` executes the statement and adds actual rows/timing. Read plan nodes from children upward and compare estimated vs actual rows, loops, scan type and buffers when requested. Важное ограничение: ANALYZE really executes data-changing statements unless wrapped and rolled back; test safely.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "timing",
+        "ANALYZE executes the query"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Looking only at total time misses a severe estimate error or loop count that becomes expensive on larger data."
       ],
       "red_flags": [
-        "Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова."
+        "Looking only at total time misses a severe estimate error or loop count that becomes expensive on larger data."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое EXPLAIN and EXPLAIN ANALYZE и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое EXPLAIN and EXPLAIN ANALYZE и как это работает?"
     ],
     "tags": [
       "stage-11",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-11",

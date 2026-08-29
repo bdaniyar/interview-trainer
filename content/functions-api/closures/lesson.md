@@ -7,42 +7,52 @@
 
 После урока ты сможешь:
 
-- объяснить `closure` своими словами и связать с backend-сценарием;
-- объяснить `enclosing scope` своими словами и связать с backend-сценарием;
-- объяснить `free variable` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Closures and free variables**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `closure`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Функция — объект с сигнатурой, областью видимости и состоянием замыкания; её контракт должен быть понятен вызывающему коду.
+### Что это
 
-В теме **Closures and free variables** важно уверенно объяснять следующие части:
+A closure is an inner function that retains access to free variables from its enclosing scope after the outer function returns.
 
-### closure
+### Как работает
 
-Closure хранит ссылки на enclosing bindings, а не snapshot каждого значения; late binding особенно заметен в callbacks, созданных в цикле.
+The function stores references to enclosing cells, not a frozen copy of every value. A factory can therefore capture configuration or deliberately retain mutable state.
 
-### enclosing scope
 
-LEGB ищет имя в local, enclosing, global и builtins; assignment делает имя local, если не объявлены `global` или `nonlocal`.
+### Важный нюанс / limitation
 
-### free variable
+Closures created in a loop exhibit late binding unless the current value is bound through a factory, default argument or `partial`.
 
-Для `free variable` отдели definition time от call time и покажи влияние на signature, scope или state функции.
+### Где используется в backend
 
-### retained state
-
-Для `retained state` отдели definition time от call time и покажи влияние на signature, scope или state функции.
-
-### practical factory/callback examples
-
-Для `practical factory/callback examples` отдели definition time от call time и покажи влияние на signature, scope или state функции.
+A validator or callback factory can capture immutable configuration without global state.
 
 ## Mental model
 
 Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- closure
+- enclosing scope
+- free variable
+- retained state
+
+### Полезно
+
+- practical factory/callback examples
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -62,61 +72,20 @@ Closure продолжает видеть binding `prefix` после завер
 
 ## Common mistakes
 
-**Ошибка:** Скрывать неясный API за **kwargs или забывать о времени вычисления defaults.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Expecting each loop-created lambda to remember its loop iteration usually produces the final loop value for all callbacks.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `closure` example and predict the result before running it.
 
-## Interview questions
+**B · Find the bug.** Find code that violates `enclosing scope` and explain the concrete consequence.
 
-1. Объясни **Closures and free variables** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Разбери сигнатуру helper-функции и объясни, какие вызовы допустимы и почему. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+**D · Small task.** Implement the smallest function/query that demonstrates `closure` and add one edge-case test.
 
-## Expected answer rubric
+**E · Interview explanation.** Explain Closures and free variables in 45–60 seconds and include one limitation.
 
-### Must mention
-
-- closure
-- enclosing scope
-- free variable
-- retained state
-- Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Скрывать неясный API за **kwargs или забывать о времени вычисления defaults.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- closure
-- enclosing scope
-- free variable
-- retained state
-- practical factory/callback examples.
-
-## Задача
-
-### Stateful closure
-
-Верни next_value closure: начальное состояние start; каждый вызов увеличивает его на step и возвращает новое значение.
-
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
 ## Code prediction
 
 ### Closure хранит binding
@@ -145,15 +114,73 @@ Misconception: `closure`.
 
 </details>
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое Closures and free variables и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Closures and free variables?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+A closure is an inner function that retains access to free variables from its enclosing scope after the outer function returns.
+
+### Нормальный Junior answer
+
+> A closure is an inner function that retains access to free variables from its enclosing scope after the outer function returns. The function stores references to enclosing cells, not a frozen copy of every value. A factory can therefore capture configuration or deliberately retain mutable state. Важное ограничение: Closures created in a loop exhibit late binding unless the current value is bound through a factory, default argument or `partial`.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Closures and free variables?**
+
+Expecting each loop-created lambda to remember its loop iteration usually produces the final loop value for all callbacks.
+
+## Expected answer rubric
+
+### Must mention
+
+- closure
+- enclosing scope
+- free variable
+- retained state
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Expecting each loop-created lambda to remember its loop iteration usually produces the final loop value for all callbacks.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какая типичная ошибка связана с Closures and free variables?
+
+## Задача
+
+### Stateful closure
+
+Верни next_value closure: начальное состояние start; каждый вызов увеличивает его на step и возвращает новое значение.
+
+Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Closures and free variables**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** A closure is an inner function that retains access to free variables from its enclosing scope after the outer function returns.
+- **Механизм:** Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
+- **Ограничение:** Expecting each loop-created lambda to remember its loop iteration usually produces the final loop value for all callbacks.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Booking concurrency» как на Junior Python Backend interview.",
+    "question": "Что такое Booking concurrency и какой механизм здесь важно понимать Junior-разработчику?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -8,34 +8,36 @@
       "check-then-insert race",
       "unique/exclusion constraint",
       "conditional update",
-      "row/advisory locks",
-      "Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path."
+      "row/advisory locks"
     ],
+    "short_answer": "Booking concurrency: Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.",
+    "junior_answer": "Booking concurrency — тема, в которой я сначала фиксирую `check-then-insert race`, затем объясняю `unique/exclusion constraint` на коротком примере. Ключевой механизм: Назови invariant и concurrent scenario, затем проверь constraint, transaction boundary и фактический query plan. Главная практическая ошибка — Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
+    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Booking concurrency?",
+    "follow_up_answer": "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
     "expected_answer": {
       "must_mention": [
         "check-then-insert race",
         "unique/exclusion constraint",
         "conditional update",
-        "row/advisory locks",
-        "Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path."
+        "row/advisory locks"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова.",
+        "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова."
+        "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case."
       ],
       "follow_up_questions": [
-        "Назови инвариант, конкурентный сценарий и точку, где его гарантирует база."
+        "Какое ограничение или типичная ошибка относится именно к теме Booking concurrency?"
       ]
     },
     "follow_ups": [
-      "Назови инвариант, конкурентный сценарий и точку, где его гарантирует база."
+      "Какое ограничение или типичная ошибка относится именно к теме Booking concurrency?"
     ],
     "tags": [
       "stage-11",
@@ -48,42 +50,43 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Booking concurrency»: Назови инвариант, конкурентный сценарий и точку, где его гарантирует база. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какое ограничение или типичная ошибка относится именно к теме Booking concurrency?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "transaction",
+      "`409 Conflict`",
+      "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case."
     ],
+    "short_answer": "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
+    "junior_answer": "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
+    "follow_up_question": "Что такое Booking concurrency и какой механизм здесь важно понимать Junior-разработчику?",
+    "follow_up_answer": "Booking concurrency — тема, в которой я сначала фиксирую `check-then-insert race`, затем объясняю `unique/exclusion constraint` на коротком примере. Ключевой механизм: Назови invariant и concurrent scenario, затем проверь constraint, transaction boundary и фактический query plan. Главная практическая ошибка — Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "transaction",
+        "`409 Conflict`"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case."
       ],
       "red_flags": [
-        "Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова."
+        "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Booking concurrency и какой механизм здесь важно понимать Junior-разработчику?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Booking concurrency и какой механизм здесь важно понимать Junior-разработчику?"
     ],
     "tags": [
       "stage-11",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-11",

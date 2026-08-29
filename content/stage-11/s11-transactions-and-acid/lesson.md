@@ -7,42 +7,52 @@
 
 После урока ты сможешь:
 
-- объяснить `atomicity` своими словами и связать с backend-сценарием;
-- объяснить `consistency` своими словами и связать с backend-сценарием;
-- объяснить `isolation` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Transactions and ACID**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `atomicity`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-PostgreSQL обеспечивает ограничения и конкурентную работу ближе к данным; индекс и transaction boundary проектируются под запросы и инварианты.
+### Что это
 
-В теме **Transactions and ACID** важно уверенно объяснять следующие части:
+A transaction groups operations into one atomic boundary; ACID describes atomicity, consistency, isolation and durability.
 
-### atomicity
+### Как работает
 
-Для `atomicity` назови защищаемый invariant, concurrent transaction и evidence из constraint или query plan.
+Commit makes the transaction's changes durable/visible under DB rules; rollback discards them. Consistency comes from correct code plus constraints, not the letter C automatically.
 
-### consistency
 
-Для `consistency` назови защищаемый invariant, concurrent transaction и evidence из constraint или query plan.
+### Важный нюанс / limitation
 
-### isolation
+Keep transactions short and avoid network calls while locks/resources are held.
 
-Для `isolation` назови защищаемый invariant, concurrent transaction и evidence из constraint или query plan.
+### Где используется в backend
 
-### durability
-
-Для `durability` назови защищаемый invariant, concurrent transaction и evidence из constraint или query plan.
-
-### transaction boundary
-
-Transaction задаёт атомарную границу: либо все связанные изменения становятся видимыми, либо выполняется rollback.
+A service operation that creates an order and reserves inventory should commit or rollback as one unit where invariants require it.
 
 ## Mental model
 
 Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- atomicity
+- consistency
+- isolation
+- durability
+
+### Полезно
+
+- transaction boundary
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -59,59 +69,19 @@ Constraint защищает истину, transaction объединяет из�
 
 ## Common mistakes
 
-**Ошибка:** Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Committing inside each repository call can leave half a use case saved after a later failure.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `atomicity` example and predict the result before running it.
 
-## Interview questions
+**B · Find the bug.** Find code that violates `consistency` and explain the concrete consequence.
 
-1. Объясни **Transactions and ACID** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Назови инвариант, конкурентный сценарий и точку, где его гарантирует база. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+**D · Small task.** Implement the smallest function/query that demonstrates `atomicity` and add one edge-case test.
 
-## Expected answer rubric
-
-### Must mention
-
-- atomicity
-- consistency
-- isolation
-- durability
-- Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- atomicity
-- consistency
-- isolation
-- durability
-- transaction boundary.
-
-## Задача
-
-Разбери backend-сценарий: **Назови инвариант, конкурентный сценарий и точку, где его гарантирует база.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Explain Transactions and ACID in 45–60 seconds and include one limitation.
 
 ## SQL practice
 
@@ -167,15 +137,70 @@ SQL runner пока не подключён: выполни запрос в ло
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое Transactions and ACID и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Transactions and ACID?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+A transaction groups operations into one atomic boundary; ACID describes atomicity, consistency, isolation and durability.
+
+### Нормальный Junior answer
+
+> A transaction groups operations into one atomic boundary; ACID describes atomicity, consistency, isolation and durability. Commit makes the transaction's changes durable/visible under DB rules; rollback discards them. Consistency comes from correct code plus constraints, not the letter C automatically. Важное ограничение: Keep transactions short and avoid network calls while locks/resources are held.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Transactions and ACID?**
+
+Committing inside each repository call can leave half a use case saved after a later failure.
+
+## Expected answer rubric
+
+### Must mention
+
+- atomicity
+- consistency
+- isolation
+- durability
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Committing inside each repository call can leave half a use case saved after a later failure.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какая типичная ошибка связана с Transactions and ACID?
+
+## Задача
+
+Сделай короткую письменную практику по теме **Transactions and ACID**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Transactions and ACID**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** A transaction groups operations into one atomic boundary; ACID describes atomicity, consistency, isolation and durability.
+- **Механизм:** Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
+- **Ограничение:** Committing inside each repository call can leave half a use case saved after a later failure.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

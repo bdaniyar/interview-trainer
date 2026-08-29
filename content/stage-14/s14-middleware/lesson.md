@@ -7,38 +7,48 @@
 
 После урока ты сможешь:
 
-- объяснить `request/response wrapper` своими словами и связать с backend-сценарием;
-- объяснить `timing/request ID` своими словами и связать с backend-сценарием;
-- объяснить `ordering` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Middleware**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `request/response wrapper`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-FastAPI связывает ASGI request lifecycle, routing, validation, dependency graph и response serialization.
+### Что это
 
-В теме **Middleware** важно уверенно объяснять следующие части:
+Middleware wraps the request/response flow for cross-cutting behavior such as request IDs, timing or security headers.
 
-### request/response wrapper
+### Как работает
 
-Для `request/response wrapper` проследи request через router, validation/dependencies, handler/service и response serialization.
+Each middleware runs before the inner app and after it returns; order therefore changes observation and error behavior.
 
-### timing/request ID
 
-Для `timing/request ID` проследи request через router, validation/dependencies, handler/service и response serialization.
+### Важный нюанс / limitation
 
-### ordering
-
-Для `ordering` проследи request через router, validation/dependencies, handler/service и response serialization.
-
-### not for domain logic
-
-Для `not for domain logic` проследи request через router, validation/dependencies, handler/service и response serialization.
+Domain authorization usually needs resolved user/resource context and belongs in dependencies/services, not generic middleware.
 
 ## Mental model
 
 Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- request/response wrapper
+- timing/request ID
+- ordering
+- not for domain logic
+
+### Полезно
+
+- one short code/result example
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -55,19 +65,47 @@ app = FastAPI()
 
 ## Common mistakes
 
-**Ошибка:** Открывать Session глобально или выполнять blocking I/O в async route.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Reading a streaming request body in middleware without replaying it can leave the endpoint with no body.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `request/response wrapper` example and predict the result before running it.
+
+**B · Find the bug.** Find code that violates `timing/request ID` and explain the concrete consequence.
+
+**D · Small task.** Implement the smallest function/query that demonstrates `request/response wrapper` and add one edge-case test.
+
+**E · Interview explanation.** Explain Middleware in 45–60 seconds and include one limitation.
 
 ## Interview questions
 
-1. Объясни **Middleware** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Проследи request от router через dependency и service до response model. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Middleware и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Middleware?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Middleware wraps the request/response flow for cross-cutting behavior such as request IDs, timing or security headers.
+
+### Нормальный Junior answer
+
+> Middleware wraps the request/response flow for cross-cutting behavior such as request IDs, timing or security headers. Each middleware runs before the inner app and after it returns; order therefore changes observation and error behavior. Важное ограничение: Domain authorization usually needs resolved user/resource context and belongs in dependencies/services, not generic middleware.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Middleware?**
+
+Reading a streaming request body in middleware without replaying it can leave the endpoint with no body.
 
 ## Expected answer rubric
 
@@ -76,31 +114,22 @@ app = FastAPI()
 - request/response wrapper
 - timing/request ID
 - ordering
-- not for domain logic.
-- Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
+- not for domain logic
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Открывать Session глобально или выполнять blocking I/O в async route.
-- ответ из одного определения без механизма и failure mode.
+- Reading a streaming request body in middleware without replaying it can leave the endpoint with no body.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- request/response wrapper
-- timing/request ID
-- ordering
-- not for domain logic.
+- Какая типичная ошибка связана с Middleware?
 
 ## Задача
 
@@ -113,11 +142,10 @@ Response X-Request-ID равен входному header либо новому U
 
 Перед собеседованием запомни:
 
-- дай точное определение **Middleware**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Middleware wraps the request/response flow for cross-cutting behavior such as request IDs, timing or security headers.
+- **Механизм:** Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
+- **Ограничение:** Reading a streaming request body in middleware without replaying it can leave the endpoint with no body.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

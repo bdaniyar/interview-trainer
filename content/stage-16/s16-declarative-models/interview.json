@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Declarative models» как на Junior Python Backend interview.",
+    "question": "Что такое Declarative models и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -8,34 +8,36 @@
       "`Mapped`",
       "`mapped_column`",
       "types",
-      "primary keys",
-      "Один request/use case обычно владеет одной Session и явно завершает commit или rollback."
+      "primary keys"
     ],
+    "short_answer": "Declarative ORM models map Python classes/attributes to tables/columns using `Mapped` and `mapped_column` in SQLAlchemy 2.x.",
+    "junior_answer": "Declarative ORM models map Python classes/attributes to tables/columns using `Mapped` and `mapped_column` in SQLAlchemy 2.x. Class metadata builds a SQL schema description used by ORM statements and migrations tooling; instances represent rows within Session state. Важное ограничение: Changing model code does not migrate an existing production database; Alembic revision must apply the schema transition.",
+    "follow_up_question": "Какая типичная ошибка связана с Declarative models?",
+    "follow_up_answer": "Calling `create_all` as a production migration strategy loses versioned, reviewable schema history.",
     "expected_answer": {
       "must_mention": [
         "`Mapped`",
         "`mapped_column`",
         "types",
-        "primary keys",
-        "Один request/use case обычно владеет одной Session и явно завершает commit или rollback."
+        "primary keys"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks.",
+        "Calling `create_all` as a production migration strategy loses versioned, reviewable schema history.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks."
+        "Calling `create_all` as a production migration strategy loses versioned, reviewable schema history."
       ],
       "follow_up_questions": [
-        "Опиши session scope, момент flush/commit и количество SQL-запросов."
+        "Какая типичная ошибка связана с Declarative models?"
       ]
     },
     "follow_ups": [
-      "Опиши session scope, момент flush/commit и количество SQL-запросов."
+      "Какая типичная ошибка связана с Declarative models?"
     ],
     "tags": [
       "stage-16",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Declarative models»: Опиши session scope, момент flush/commit и количество SQL-запросов. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Declarative models?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Один request/use case обычно владеет одной Session и явно завершает commit или rollback.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "constraints",
+      "Calling `create_all` as a production migration strategy loses versioned, reviewable schema history."
     ],
+    "short_answer": "Calling `create_all` as a production migration strategy loses versioned, reviewable schema history.",
+    "junior_answer": "Calling `create_all` as a production migration strategy loses versioned, reviewable schema history.",
+    "follow_up_question": "Что такое Declarative models и как это работает?",
+    "follow_up_answer": "Declarative ORM models map Python classes/attributes to tables/columns using `Mapped` and `mapped_column` in SQLAlchemy 2.x. Class metadata builds a SQL schema description used by ORM statements and migrations tooling; instances represent rows within Session state. Важное ограничение: Changing model code does not migrate an existing production database; Alembic revision must apply the schema transition.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "constraints"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Calling `create_all` as a production migration strategy loses versioned, reviewable schema history."
       ],
       "red_flags": [
-        "Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks."
+        "Calling `create_all` as a production migration strategy loses versioned, reviewable schema history."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Declarative models и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Declarative models и как это работает?"
     ],
     "tags": [
       "stage-16",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-16",

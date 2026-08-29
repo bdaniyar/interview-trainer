@@ -7,46 +7,49 @@
 
 После урока ты сможешь:
 
-- объяснить `start line` своими словами и связать с backend-сценарием;
-- объяснить `method` своими словами и связать с backend-сценарием;
-- объяснить `path` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **HTTP request and response**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `start line`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-HTTP — контракт между клиентом и сервером: method, target, headers, body, status и cache semantics.
+### Что это
 
-В теме **HTTP request and response** важно уверенно объяснять следующие части:
+HTTP is a request/response application protocol: a request contains method, target, headers and optional body; a response contains status, headers and optional body.
 
-### start line
+### Как работает
 
-Для `start line` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
+The server parses the request, routes it, applies application logic and serializes a response. HTTP semantics remain distinct from JSON and framework implementation.
 
-### method
 
-Для `method` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
+### Важный нюанс / limitation
 
-### path
-
-Для `path` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
-
-### headers
-
-Для `headers` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
-
-### body
-
-Для `body` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
-
-### status
-
-Для `status` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
+Transport success does not mean business success; status and body must describe the application result.
 
 ## Mental model
 
 Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- start line
+- method
+- path
+- headers
+
+### Полезно
+
+- body
+- status
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -62,19 +65,47 @@ X-Request-ID: req-12-1
 
 ## Common mistakes
 
-**Ошибка:** Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Returning 200 with an error hidden in JSON breaks clients, monitoring and standard retry/cache behavior.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `start line` example and predict the result before running it.
+
+**B · Find the bug.** Find code that violates `method` and explain the concrete consequence.
+
+**D · Small task.** Implement the smallest function/query that demonstrates `start line` and add one edge-case test.
+
+**E · Interview explanation.** Explain HTTP request and response in 45–60 seconds and include one limitation.
 
 ## Interview questions
 
-1. Объясни **HTTP request and response** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Спроектируй request/response контракт и объясни retry, idempotency и error body. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое HTTP request and response и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с HTTP request and response?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+HTTP is a request/response application protocol: a request contains method, target, headers and optional body; a response contains status, headers and optional body.
+
+### Нормальный Junior answer
+
+> HTTP is a request/response application protocol: a request contains method, target, headers and optional body; a response contains status, headers and optional body. The server parses the request, routes it, applies application logic and serializes a response. HTTP semantics remain distinct from JSON and framework implementation. Важное ограничение: Transport success does not mean business success; status and body must describe the application result.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с HTTP request and response?**
+
+Returning 200 with an error hidden in JSON breaks clients, monitoring and standard retry/cache behavior.
 
 ## Expected answer rubric
 
@@ -84,48 +115,34 @@ X-Request-ID: req-12-1
 - method
 - path
 - headers
-- Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне.
-- ответ из одного определения без механизма и failure mode.
+- Returning 200 with an error hidden in JSON breaks clients, monitoring and standard retry/cache behavior.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- start line
-- method
-- path
-- headers
-- body
-- status.
+- Какая типичная ошибка связана с HTTP request and response?
 
 ## Задача
 
-Разбери backend-сценарий: **Спроектируй request/response контракт и объясни retry, idempotency и error body.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **HTTP request and response**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **HTTP request and response**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** HTTP is a request/response application protocol: a request contains method, target, headers and optional body; a response contains status, headers and optional body.
+- **Механизм:** Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
+- **Ограничение:** Returning 200 with an error hidden in JSON breaks clients, monitoring and standard retry/cache behavior.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

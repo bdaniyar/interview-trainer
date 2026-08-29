@@ -7,42 +7,62 @@
 
 После урока ты сможешь:
 
-- объяснить ``time.sleep`` своими словами и связать с backend-сценарием;
-- объяснить ``requests`` своими словами и связать с backend-сценарием;
-- объяснить `synchronous DB driver` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Blocking code inside async code**, а не только запомнить термин;
+- прочитать и изменить короткий пример для ``time.sleep``;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-asyncio даёт кооперативную конкурентность для I/O-bound работы: задача уступает loop только в await point.
+### Что это
 
-В теме **Blocking code inside async code** важно уверенно объяснять следующие части:
+Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг await points.
 
-### `time.sleep`
+### Как работает
 
-Для ``time.sleep`` проследи coroutine/task по await points, cancellation и cleanup, не предполагая отдельный thread.
+Проследи coroutine от создания через scheduling и await points до result, cancellation и cleanup.
 
-### `requests`
+**`time.sleep`.** ``time.sleep`` является частью lifecycle coroutine/task между scheduling, await points, cancellation и cleanup; отдельный thread автоматически не появляется.
 
-Для ``requests`` проследи coroutine/task по await points, cancellation и cleanup, не предполагая отдельный thread.
+**`requests`.** ``requests`` является частью lifecycle coroutine/task между scheduling, await points, cancellation и cleanup; отдельный thread автоматически не появляется.
 
-### synchronous DB driver
+**synchronous DB driver.** `synchronous DB driver` является частью lifecycle coroutine/task между scheduling, await points, cancellation и cleanup; отдельный thread автоматически не появляется.
 
-Для `synchronous DB driver` проследи coroutine/task по await points, cancellation и cleanup, не предполагая отдельный thread.
+**CPU-heavy loop.** `CPU-heavy loop` является частью lifecycle coroutine/task между scheduling, await points, cancellation и cleanup; отдельный thread автоматически не появляется.
 
-### CPU-heavy loop
+**alternatives: async client, `to_thread`, worker/process.** Processes изолируют память и подходят для CPU-bound Python, но требуют serialization/IPC и имеют более дорогой startup.
 
-Для `CPU-heavy loop` проследи coroutine/task по await points, cancellation и cleanup, не предполагая отдельный thread.
 
-### alternatives: async client, `to_thread`, worker/process
+### Важный нюанс / limitation
 
-Threads разделяют память процесса и удобны для blocking I/O, но shared mutable state требует synchronization и корректной lifetime management.
+Граница Junior: уверенно объясняй ``time.sleep`` и ``requests`` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется ``time.sleep``; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- `time.sleep`
+- `requests`
+- synchronous DB driver
+- CPU-heavy loop
+
+### Полезно
+
+- alternatives: async client, `to_thread`, worker/process
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -67,61 +87,18 @@ asyncio.run(main())
 
 ## Common mistakes
 
-**Ошибка:** Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Выполнить blocking call в event loop или создать coroutine и не await/schedule её.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для ``time.sleep`` до запуска.
 
-## Interview questions
+**B · Find the bug.** Найди нарушение ``requests`` и объясни конкретное последствие.
 
-1. Объясни **Blocking code inside async code** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Найди blocking участок, обозначь cancellation boundary и выбери способ конкурентного запуска. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+**E · Interview explanation.** Дай ответ про Blocking code inside async code за 60 секунд: определение, механизм, пример, ограничение.
 
-## Expected answer rubric
-
-### Must mention
-
-- `time.sleep`
-- `requests`
-- synchronous DB driver
-- CPU-heavy loop
-- Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- `time.sleep`
-- `requests`
-- synchronous DB driver
-- CPU-heavy loop
-- alternatives: async client, `to_thread`, worker/process.
-
-## Задача
-
-### Вынести blocking call
-
-Реализуй async call_blocking(function,*args,**kwargs) через asyncio.to_thread.
-
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
 ## Debugging practice
 
 ### Blocking HTTP
@@ -140,15 +117,73 @@ asyncio.run(main())
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое Blocking code inside async code и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Blocking code inside async code?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Blocking code inside async code: Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг await points.
+
+### Нормальный Junior answer
+
+> Blocking code inside async code — тема, в которой я сначала фиксирую ``time.sleep``, затем объясняю ``requests`` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и await points до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Blocking code inside async code?**
+
+Выполнить blocking call в event loop или создать coroutine и не await/schedule её.
+
+## Expected answer rubric
+
+### Must mention
+
+- `time.sleep`
+- `requests`
+- synchronous DB driver
+- CPU-heavy loop
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Выполнить blocking call в event loop или создать coroutine и не await/schedule её.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какое ограничение или типичная ошибка относится именно к теме Blocking code inside async code?
+
+## Задача
+
+### Вынести blocking call
+
+Реализуй async call_blocking(function,*args,**kwargs) через asyncio.to_thread.
+
+Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Blocking code inside async code**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Blocking code inside async code: Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг await points.
+- **Механизм:** Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.
+- **Ограничение:** Выполнить blocking call в event loop или создать coroutine и не await/schedule её.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

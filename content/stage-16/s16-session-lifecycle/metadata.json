@@ -17,7 +17,7 @@
     "request-scoped session",
     "never share one session globally."
   ],
-  "description": "P0 · Session lifecycle: mental model, interview rubric и backend-сценарий.",
+  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
   "has_task": false,
   "has_solution": false,
   "priority": "P0",

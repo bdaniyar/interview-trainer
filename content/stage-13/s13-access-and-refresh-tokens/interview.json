@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Access and refresh tokens» как на Junior Python Backend interview.",
+    "question": "Что такое Access and refresh tokens и какой механизм здесь важно понимать Junior-разработчику?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -8,34 +8,36 @@
       "short-lived access",
       "longer refresh",
       "rotation",
-      "revocation",
-      "Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации."
+      "revocation"
     ],
+    "short_answer": "Access and refresh tokens: Это security boundary: сервер проверяет утверждение и безопасно отказывает, не доверяя клиентскому UI.",
+    "junior_answer": "Access and refresh tokens — тема, в которой я сначала фиксирую `short-lived access`, затем объясняю `longer refresh` на коротком примере. Ключевой механизм: Назови asset, threat, trust boundary, server-side verification и безопасный failure result. Главная практическая ошибка — Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.",
+    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Access and refresh tokens?",
+    "follow_up_answer": "Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.",
     "expected_answer": {
       "must_mention": [
         "short-lived access",
         "longer refresh",
         "rotation",
-        "revocation",
-        "Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации."
+        "revocation"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Считать CORS авторизацией, JWT шифрованием или хранить пароль быстрым hash.",
+        "Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Считать CORS авторизацией, JWT шифрованием или хранить пароль быстрым hash."
+        "Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией."
       ],
       "follow_up_questions": [
-        "Назови атакующего, актив, проверку на сервере и безопасный отказ."
+        "Какое ограничение или типичная ошибка относится именно к теме Access and refresh tokens?"
       ]
     },
     "follow_ups": [
-      "Назови атакующего, актив, проверку на сервере и безопасный отказ."
+      "Какое ограничение или типичная ошибка относится именно к теме Access and refresh tokens?"
     ],
     "tags": [
       "stage-13",
@@ -48,42 +50,43 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Access and refresh tokens»: Назови атакующего, актив, проверку на сервере и безопасный отказ. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какое ограничение или типичная ошибка относится именно к теме Access and refresh tokens?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "reuse detection",
+      "server-side refresh session",
+      "Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией."
     ],
+    "short_answer": "Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.",
+    "junior_answer": "Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.",
+    "follow_up_question": "Что такое Access and refresh tokens и какой механизм здесь важно понимать Junior-разработчику?",
+    "follow_up_answer": "Access and refresh tokens — тема, в которой я сначала фиксирую `short-lived access`, затем объясняю `longer refresh` на коротком примере. Ключевой механизм: Назови asset, threat, trust boundary, server-side verification и безопасный failure result. Главная практическая ошибка — Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "reuse detection",
+        "server-side refresh session"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией."
       ],
       "red_flags": [
-        "Считать CORS авторизацией, JWT шифрованием или хранить пароль быстрым hash."
+        "Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Access and refresh tokens и какой механизм здесь важно понимать Junior-разработчику?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Access and refresh tokens и какой механизм здесь важно понимать Junior-разработчику?"
     ],
     "tags": [
       "stage-13",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-13",

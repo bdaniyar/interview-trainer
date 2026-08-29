@@ -7,46 +7,49 @@
 
 После урока ты сможешь:
 
-- объяснить ``select`` своими словами и связать с backend-сценарием;
-- объяснить ``where`` своими словами и связать с backend-сценарием;
-- объяснить `result/scalars` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **SQLAlchemy 2.x `select`**, а не только запомнить термин;
+- прочитать и изменить короткий пример для ``select``;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-SQLAlchemy 2.x управляет SQL, identity map, unit of work и transaction lifecycle; Session не является простым соединением.
+### Что это
 
-В теме **SQLAlchemy 2.x `select`** важно уверенно объяснять следующие части:
+SQLAlchemy 2.x `select()` builds an explicit SQL expression executed through Session.
 
-### `select`
+### Как работает
 
-`SELECT` формирует result columns после FROM/JOIN/WHERE/GROUP/HAVING; порядок строк существует только при явном `ORDER BY`.
+`where` adds predicates; `session.scalars(statement)` returns the first selected entity/value column; `one_or_none` enforces at most one row while `first` merely takes one.
 
-### `where`
 
-`WHERE` фильтрует строки до grouping; SQL three-valued logic отбрасывает и `FALSE`, и `UNKNOWN`.
+### Важный нюанс / limitation
 
-### result/scalars
-
-Для `result/scalars` укажи Session/transaction owner, момент SQL I/O и последствия rollback или lazy load.
-
-### `.one_or_none`
-
-Для ``.one_or_none`` укажи Session/transaction owner, момент SQL I/O и последствия rollback или lazy load.
-
-### `.first`
-
-Для ``.first`` укажи Session/transaction owner, момент SQL I/O и последствия rollback или lazy load.
-
-### multiple rows
-
-Для `multiple rows` укажи Session/transaction owner, момент SQL I/O и последствия rollback или lazy load.
+Choose result method according to cardinality instead of silently ignoring duplicate rows.
 
 ## Mental model
 
 Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- `select`
+- `where`
+- result/scalars
+- `.one_or_none`
+
+### Полезно
+
+- `.first`
+- multiple rows
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -61,19 +64,47 @@ def active_users_statement(User):
 
 ## Common mistakes
 
-**Ошибка:** Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Using `.first()` where uniqueness is required hides duplicate-data bugs that `.one_or_none()` would expose.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the ``select`` example and predict the result before running it.
+
+**B · Find the bug.** Find code that violates ``where`` and explain the concrete consequence.
+
+**D · Small task.** Implement the smallest function/query that demonstrates ``select`` and add one edge-case test.
+
+**E · Interview explanation.** Explain SQLAlchemy 2.x `select` in 45–60 seconds and include one limitation.
 
 ## Interview questions
 
-1. Объясни **SQLAlchemy 2.x `select`** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Опиши session scope, момент flush/commit и количество SQL-запросов. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое SQLAlchemy 2.x `select` и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с SQLAlchemy 2.x `select`?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+SQLAlchemy 2.x `select()` builds an explicit SQL expression executed through Session.
+
+### Нормальный Junior answer
+
+> SQLAlchemy 2.x `select()` builds an explicit SQL expression executed through Session. `where` adds predicates; `session.scalars(statement)` returns the first selected entity/value column; `one_or_none` enforces at most one row while `first` merely takes one. Важное ограничение: Choose result method according to cardinality instead of silently ignoring duplicate rows.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с SQLAlchemy 2.x `select`?**
+
+Using `.first()` where uniqueness is required hides duplicate-data bugs that `.one_or_none()` would expose.
 
 ## Expected answer rubric
 
@@ -83,32 +114,21 @@ def active_users_statement(User):
 - `where`
 - result/scalars
 - `.one_or_none`
-- Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks.
-- ответ из одного определения без механизма и failure mode.
+- Using `.first()` where uniqueness is required hides duplicate-data bugs that `.one_or_none()` would expose.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- `select`
-- `where`
-- result/scalars
-- `.one_or_none`
-- `.first`
-- multiple rows.
+- Какая типичная ошибка связана с SQLAlchemy 2.x `select`?
 
 ## Задача
 
@@ -121,11 +141,10 @@ active_users_statement(User): select active true, order by id.
 
 Перед собеседованием запомни:
 
-- дай точное определение **SQLAlchemy 2.x `select`**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** SQLAlchemy 2.x `select()` builds an explicit SQL expression executed through Session.
+- **Механизм:** Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
+- **Ограничение:** Using `.first()` where uniqueness is required hides duplicate-data bugs that `.one_or_none()` would expose.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

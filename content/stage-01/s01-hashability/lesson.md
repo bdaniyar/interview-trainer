@@ -7,46 +7,49 @@
 
 После урока ты сможешь:
 
-- объяснить `hashable object` своими словами и связать с backend-сценарием;
-- объяснить `dict key/set member` своими словами и связать с backend-сценарием;
-- объяснить `equality/hash contract` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Hashability**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `hashable object`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Python-код работает с объектами и связями имён с объектами; это основа мутаций, аргументов функций и ключей словаря.
+### Что это
 
-В теме **Hashability** важно уверенно объяснять следующие части:
+A hashable object has a stable hash and equality behavior, so it can be a dict key or set element.
 
-### hashable object
+### Как работает
 
-Равные hashable-объекты обязаны иметь одинаковый hash, а состояние, влияющее на equality, не должно меняться в ключе.
+A hash table uses `hash(key)` to find candidates and `==` to confirm a match. Objects that compare equal must have equal hashes; state involved in equality must not change while used as a key.
 
-### dict key/set member
 
-`dict` хранит mapping hashable keys к values и сохраняет insertion order; lookup в среднем O(1), но correctness опирается на equality/hash contract.
+### Важный нюанс / limitation
 
-### equality/hash contract
-
-Равные hashable-объекты обязаны иметь одинаковый hash, а состояние, влияющее на equality, не должно меняться в ключе.
-
-### mutable object as key
-
-Mutable объект меняется с сохранением identity, поэтому alias наблюдает ту же мутацию.
-
-### tuple hashability
-
-`tuple` — immutable sequence; hashability зависит от всех элементов, а неизменяемость контейнера не делает mutable элементы неизменяемыми.
-
-### custom `__hash__`
-
-Равные hashable-объекты обязаны иметь одинаковый hash, а состояние, влияющее на equality, не должно меняться в ключе.
+A tuple is hashable only when all elements are hashable. Custom equality often requires an explicit, consistent `__hash__` decision.
 
 ## Mental model
 
 Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- hashable object
+- dict key/set member
+- equality/hash contract
+- mutable object as key
+
+### Полезно
+
+- tuple hashability
+- custom `__hash__`
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -66,60 +69,19 @@ Tuple из hashable элементов допустим как ключ, mutable
 
 ## Common mistakes
 
-**Ошибка:** Объяснять переменную как коробку, которая всегда содержит независимое значение.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Using list or dict as a key raises `TypeError: unhashable type`; making mutable state hashable can corrupt lookup semantics.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `hashable object` example and predict the result before running it.
 
-## Interview questions
+**B · Find the bug.** Find code that violates `dict key/set member` and explain the concrete consequence.
 
-1. Объясни **Hashability** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Проследи identity и состояние объекта после двух присваиваний и одной мутации. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+**D · Small task.** Implement the smallest function/query that demonstrates `hashable object` and add one edge-case test.
 
-## Expected answer rubric
-
-### Must mention
-
-- hashable object
-- dict key/set member
-- equality/hash contract
-- mutable object as key
-- Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Объяснять переменную как коробку, которая всегда содержит независимое значение.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- hashable object
-- dict key/set member
-- equality/hash contract
-- mutable object as key
-- tuple hashability
-- custom `__hash__`.
-
-## Задача
-
-Разбери backend-сценарий: **Проследи identity и состояние объекта после двух присваиваний и одной мутации.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Explain Hashability in 45–60 seconds and include one limitation.
 
 ## Code prediction
 
@@ -146,15 +108,70 @@ Misconception: `hash-equality-contract`.
 
 </details>
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое Hashability и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Hashability?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+A hashable object has a stable hash and equality behavior, so it can be a dict key or set element.
+
+### Нормальный Junior answer
+
+> A hashable object has a stable hash and equality behavior, so it can be a dict key or set element. A hash table uses `hash(key)` to find candidates and `==` to confirm a match. Objects that compare equal must have equal hashes; state involved in equality must not change while used as a key. Важное ограничение: A tuple is hashable only when all elements are hashable. Custom equality often requires an explicit, consistent `__hash__` decision.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Hashability?**
+
+Using list or dict as a key raises `TypeError: unhashable type`; making mutable state hashable can corrupt lookup semantics.
+
+## Expected answer rubric
+
+### Must mention
+
+- hashable object
+- dict key/set member
+- equality/hash contract
+- mutable object as key
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Using list or dict as a key raises `TypeError: unhashable type`; making mutable state hashable can corrupt lookup semantics.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какая типичная ошибка связана с Hashability?
+
+## Задача
+
+Сделай короткую письменную практику по теме **Hashability**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Hashability**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** A hashable object has a stable hash and equality behavior, so it can be a dict key or set element.
+- **Механизм:** Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию.
+- **Ограничение:** Using list or dict as a key raises `TypeError: unhashable type`; making mutable state hashable can corrupt lookup semantics.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

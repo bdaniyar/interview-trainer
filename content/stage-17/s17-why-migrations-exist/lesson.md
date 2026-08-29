@@ -7,29 +7,46 @@
 
 После урока ты сможешь:
 
-- объяснить `model code does not update an existing DB` своими словами и связать с backend-сценарием;
-- объяснить `versioned schema history.` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Why migrations exist**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `model code does not update an existing DB`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Alembic хранит версионированную историю изменений схемы; autogenerate создаёт кандидат на migration, а не доказательство корректности.
+### Что это
 
-В теме **Why migrations exist** важно уверенно объяснять следующие части:
+A migration is a versioned, reviewable transition of an existing database schema/data; changing ORM model code alone does not update deployed databases.
 
-### model code does not update an existing DB
+### Как работает
 
-Для `model code does not update an existing DB` опиши проверяемый schema transition и отдельно риски upgrade, deploy compatibility и rollback.
+Alembic revisions define upgrade/downgrade steps and form an ordered history applied consistently across environments.
 
-### versioned schema history
 
-Для `versioned schema history` опиши проверяемый schema transition и отдельно риски upgrade, deploy compatibility и rollback.
+### Важный нюанс / limitation
+
+Schema changes must stay compatible with old/new application versions during rolling deploys.
 
 ## Mental model
 
 Migration — воспроизводимый переход между версиями, который нужно review, test и безопасно раскатывать.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- model code does not update an existing DB
+- versioned schema history
+
+### Полезно
+
+- one short code/result example
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -45,64 +62,82 @@ Review migration как versioned schema transition; autogenerate — тольк
 
 ## Common mistakes
 
-**Ошибка:** Слепо принимать autogenerate или совмещать несовместимое изменение в один deploy.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Running `create_all` on startup cannot safely express rename, backfill or staged constraint changes.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `model code does not update an existing DB` example and predict the result before running it.
+
+**B · Find the bug.** Find code that violates `versioned schema history` and explain the concrete consequence.
+
+**D · Small task.** Implement the smallest function/query that demonstrates `model code does not update an existing DB` and add one edge-case test.
+
+**E · Interview explanation.** Explain Why migrations exist in 45–60 seconds and include one limitation.
 
 ## Interview questions
 
-1. Объясни **Why migrations exist** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Предложи expand/contract sequence для изменения schema без остановки API. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Why migrations exist и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Why migrations exist?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+A migration is a versioned, reviewable transition of an existing database schema/data; changing ORM model code alone does not update deployed databases.
+
+### Нормальный Junior answer
+
+> A migration is a versioned, reviewable transition of an existing database schema/data; changing ORM model code alone does not update deployed databases. Alembic revisions define upgrade/downgrade steps and form an ordered history applied consistently across environments. Важное ограничение: Schema changes must stay compatible with old/new application versions during rolling deploys.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Why migrations exist?**
+
+Running `create_all` on startup cannot safely express rename, backfill or staged constraint changes.
 
 ## Expected answer rubric
 
 ### Must mention
 
 - model code does not update an existing DB
-- versioned schema history.
-- Migration — воспроизводимый переход между версиями, который нужно review, test и безопасно раскатывать.
+- versioned schema history
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Слепо принимать autogenerate или совмещать несовместимое изменение в один deploy.
-- ответ из одного определения без механизма и failure mode.
+- Running `create_all` on startup cannot safely express rename, backfill or staged constraint changes.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- model code does not update an existing DB
-- versioned schema history.
+- Какая типичная ошибка связана с Why migrations exist?
 
 ## Задача
 
-Разбери backend-сценарий: **Предложи expand/contract sequence для изменения schema без остановки API.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Why migrations exist**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Why migrations exist**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** A migration is a versioned, reviewable transition of an existing database schema/data; changing ORM model code alone does not update deployed databases.
+- **Механизм:** Migration — воспроизводимый переход между версиями, который нужно review, test и безопасно раскатывать.
+- **Ограничение:** Running `create_all` on startup cannot safely express rename, backfill or staged constraint changes.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

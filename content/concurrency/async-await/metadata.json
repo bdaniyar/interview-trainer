@@ -14,7 +14,7 @@
     "event loop can run other tasks",
     "await does not automatically create parallelism."
   ],
-  "description": "P0 · `await` and cooperative scheduling: mental model, interview rubric и backend-сценарий.",
+  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
   "has_task": true,
   "has_solution": true,
   "priority": "P0",

@@ -7,50 +7,49 @@
 
 После урока ты сможешь:
 
-- объяснить `GET` своими словами и связать с backend-сценарием;
-- объяснить `POST` своими словами и связать с backend-сценарием;
-- объяснить `PUT` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **HTTP methods**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `GET`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-HTTP — контракт между клиентом и сервером: method, target, headers, body, status и cache semantics.
+### Что это
 
-В теме **HTTP methods** важно уверенно объяснять следующие части:
+HTTP methods express intent: GET reads, POST submits/creates/actions, PUT replaces at a known target, PATCH partially changes and DELETE removes.
 
-### GET
+### Как работает
 
-Для `GET` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
+Safety means no requested state change; idempotency means repeating the same request has the same intended effect. These are semantics, not automatic framework enforcement.
 
-### POST
 
-Для `POST` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
+### Важный нюанс / limitation
 
-### PUT
-
-Для `PUT` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
-
-### PATCH
-
-Для `PATCH` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
-
-### DELETE
-
-Для `DELETE` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
-
-### OPTIONS
-
-Для `OPTIONS` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
-
-### HEAD basics
-
-Для `HEAD basics` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.
+POST can be made retry-safe with an idempotency key, while a badly designed PUT can still have extra side effects.
 
 ## Mental model
 
 Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- GET
+- POST
+- PUT
+- PATCH
+
+### Полезно
+
+- DELETE
+- OPTIONS
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -66,19 +65,47 @@ X-Request-ID: req-12-3
 
 ## Common mistakes
 
-**Ошибка:** Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Choosing a method only by whether it has a body ignores caching, retries and client expectations.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `GET` example and predict the result before running it.
+
+**B · Find the bug.** Find code that violates `POST` and explain the concrete consequence.
+
+**D · Small task.** Implement the smallest function/query that demonstrates `GET` and add one edge-case test.
+
+**E · Interview explanation.** Explain HTTP methods in 45–60 seconds and include one limitation.
 
 ## Interview questions
 
-1. Объясни **HTTP methods** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Спроектируй request/response контракт и объясни retry, idempotency и error body. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое HTTP methods и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с HTTP methods?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+HTTP methods express intent: GET reads, POST submits/creates/actions, PUT replaces at a known target, PATCH partially changes and DELETE removes.
+
+### Нормальный Junior answer
+
+> HTTP methods express intent: GET reads, POST submits/creates/actions, PUT replaces at a known target, PATCH partially changes and DELETE removes. Safety means no requested state change; idempotency means repeating the same request has the same intended effect. These are semantics, not automatic framework enforcement. Важное ограничение: POST can be made retry-safe with an idempotency key, while a badly designed PUT can still have extra side effects.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с HTTP methods?**
+
+Choosing a method only by whether it has a body ignores caching, retries and client expectations.
 
 ## Expected answer rubric
 
@@ -88,49 +115,34 @@ X-Request-ID: req-12-3
 - POST
 - PUT
 - PATCH
-- Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне.
-- ответ из одного определения без механизма и failure mode.
+- Choosing a method only by whether it has a body ignores caching, retries and client expectations.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- GET
-- POST
-- PUT
-- PATCH
-- DELETE
-- OPTIONS
-- HEAD basics.
+- Какая типичная ошибка связана с HTTP methods?
 
 ## Задача
 
-Разбери backend-сценарий: **Спроектируй request/response контракт и объясни retry, idempotency и error body.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **HTTP methods**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **HTTP methods**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** HTTP methods express intent: GET reads, POST submits/creates/actions, PUT replaces at a known target, PATCH partially changes and DELETE removes.
+- **Механизм:** Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
+- **Ограничение:** Choosing a method only by whether it has a body ignores caching, retries and client expectations.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

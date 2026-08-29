@@ -7,28 +7,52 @@
 
 После урока ты сможешь:
 
-- объяснить `generator object` своими словами и связать с backend-сценарием;
-- объяснить `suspension/resume` своими словами и связать с backend-сценарием;
-- объяснить `lazy evaluation` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Generator function and `yield`**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `generator object`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Функция с `yield` возвращает generator object. Её выполнение приостанавливается между значениями, поэтому весь результат не нужно держать в памяти.
+### Что это
 
-```python
-def squares(limit):
-    for value in range(limit):
-        yield value ** 2
-```
+A generator function contains `yield`; calling it returns a generator object without running the body immediately.
 
-Генератор одноразовый: после исчерпания продолжить его нельзя. Для нового обхода вызови generator-функцию заново.
+### Как работает
+
+Each `next` resumes execution until the next `yield`, preserving local variables and instruction position. Return or falling off the end raises `StopIteration` to the consumer.
+
+
+### Важный нюанс / limitation
+
+Laziness reduces peak memory but generators are single-use and defer exceptions until iteration reaches the failing line.
+
+### Где используется в backend
+
+Generators naturally stream rows or chunks instead of collecting the entire result in memory.
 
 ## Mental model
 
 Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- generator object
+- suspension/resume
+- lazy evaluation
+- generator state
+
+### Полезно
+
+- memory use
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -48,57 +72,19 @@ Generator сохраняет suspended frame между `yield` и лениво 
 
 ## Common mistakes
 
-**Ошибка:** Перехватывать Exception без стратегии либо удерживать весь поток данных в памяти.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Converting a generator to list for logging before real use accidentally exhausts it.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `generator object` example and predict the result before running it.
 
-## Interview questions
+**B · Find the bug.** Find code that violates `suspension/resume` and explain the concrete consequence.
 
-1. Объясни **Generator function and `yield`** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Покажи happy path, завершение протокола и поведение при исключении. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+**D · Small task.** Implement the smallest function/query that demonstrates `generator object` and add one edge-case test.
 
-## Expected answer rubric
-
-### Must mention
-
-- generator object
-- suspension/resume
-- lazy evaluation
-- generator state
-- Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Перехватывать Exception без стратегии либо удерживать весь поток данных в памяти.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- generator object
-- suspension/resume
-- lazy evaluation
-- generator state
-- memory use.
-
-## Задача
-
-Реализуй генератор `batched(iterable, size)`, который лениво группирует элементы в списки размера `size`. Последняя группа может быть короче. При `size <= 0` подними `ValueError`.
+**E · Interview explanation.** Explain Generator function and `yield` in 45–60 seconds and include one limitation.
 
 ## Code prediction
 
@@ -156,15 +142,70 @@ Misconception: `yield-from`.
 
 </details>
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое Generator function and `yield` и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Generator function and `yield`?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+A generator function contains `yield`; calling it returns a generator object without running the body immediately.
+
+### Нормальный Junior answer
+
+> A generator function contains `yield`; calling it returns a generator object without running the body immediately. Each `next` resumes execution until the next `yield`, preserving local variables and instruction position. Return or falling off the end raises `StopIteration` to the consumer. Важное ограничение: Laziness reduces peak memory but generators are single-use and defer exceptions until iteration reaches the failing line.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Generator function and `yield`?**
+
+Converting a generator to list for logging before real use accidentally exhausts it.
+
+## Expected answer rubric
+
+### Must mention
+
+- generator object
+- suspension/resume
+- lazy evaluation
+- generator state
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Converting a generator to list for logging before real use accidentally exhausts it.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какая типичная ошибка связана с Generator function and `yield`?
+
+## Задача
+
+Сделай короткую письменную практику по теме **Generator function and `yield`**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Generator function and `yield`**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** A generator function contains `yield`; calling it returns a generator object without running the body immediately.
+- **Механизм:** Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка.
+- **Ограничение:** Converting a generator to list for logging before real use accidentally exhausts it.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

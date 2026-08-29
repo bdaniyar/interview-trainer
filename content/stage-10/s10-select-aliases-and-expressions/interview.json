@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «SELECT, aliases and expressions» как на Junior Python Backend interview.",
+    "question": "Что такое SELECT, aliases and expressions и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -8,34 +8,36 @@
       "selecting columns",
       "computed fields",
       "aliases",
-      "readable formatting.",
-      "Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT."
+      "readable formatting"
     ],
+    "short_answer": "`SELECT` chooses result columns or expressions; aliases name output fields without changing stored schema.",
+    "junior_answer": "`SELECT` chooses result columns or expressions; aliases name output fields without changing stored schema. Expressions are evaluated for rows produced by FROM/JOIN/filter/group stages. `SELECT *` couples callers to schema changes and transfers unused data. Важное ограничение: SQL result order is undefined without `ORDER BY`, even when a local test appears stable.",
+    "follow_up_question": "Какая типичная ошибка связана с SELECT, aliases and expressions?",
+    "follow_up_answer": "Relying on implicit row order or ambiguous duplicate column names makes pagination and mapping unstable.",
     "expected_answer": {
       "must_mention": [
         "selecting columns",
         "computed fields",
         "aliases",
-        "readable formatting.",
-        "Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT."
+        "readable formatting"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE.",
+        "Relying on implicit row order or ambiguous duplicate column names makes pagination and mapping unstable.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE."
+        "Relying on implicit row order or ambiguous duplicate column names makes pagination and mapping unstable."
       ],
       "follow_up_questions": [
-        "Предскажи cardinality результата и проверь, не размножает ли JOIN строки."
+        "Какая типичная ошибка связана с SELECT, aliases and expressions?"
       ]
     },
     "follow_ups": [
-      "Предскажи cardinality результата и проверь, не размножает ли JOIN строки."
+      "Какая типичная ошибка связана с SELECT, aliases and expressions?"
     ],
     "tags": [
       "stage-10",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «SELECT, aliases and expressions»: Предскажи cardinality результата и проверь, не размножает ли JOIN строки. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с SELECT, aliases and expressions?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "one short code/result example",
+      "Relying on implicit row order or ambiguous duplicate column names makes pagination and mapping unstable."
     ],
+    "short_answer": "Relying on implicit row order or ambiguous duplicate column names makes pagination and mapping unstable.",
+    "junior_answer": "Relying on implicit row order or ambiguous duplicate column names makes pagination and mapping unstable.",
+    "follow_up_question": "Что такое SELECT, aliases and expressions и как это работает?",
+    "follow_up_answer": "`SELECT` chooses result columns or expressions; aliases name output fields without changing stored schema. Expressions are evaluated for rows produced by FROM/JOIN/filter/group stages. `SELECT *` couples callers to schema changes and transfers unused data. Важное ограничение: SQL result order is undefined without `ORDER BY`, even when a local test appears stable.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "one short code/result example"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Relying on implicit row order or ambiguous duplicate column names makes pagination and mapping unstable."
       ],
       "red_flags": [
-        "Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE."
+        "Relying on implicit row order or ambiguous duplicate column names makes pagination and mapping unstable."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое SELECT, aliases and expressions и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое SELECT, aliases and expressions и как это работает?"
     ],
     "tags": [
       "stage-10",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-10",

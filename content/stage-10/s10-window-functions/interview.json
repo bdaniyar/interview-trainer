@@ -1,39 +1,41 @@
 [
   {
-    "question": "Объясни тему «Window functions» как на Junior Python Backend interview.",
+    "question": "Что такое Window functions и как это работает?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
       "rows remain visible",
       "difference from GROUP BY",
-      "window definition.",
-      "Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT."
+      "window definition"
     ],
+    "short_answer": "A window function computes across related rows while keeping each original row visible, unlike GROUP BY.",
+    "junior_answer": "A window function computes across related rows while keeping each original row visible, unlike GROUP BY. `OVER` defines partition, order and frame. Ranking, running totals and comparisons to previous rows are common uses. Важное ограничение: Ordering inside OVER controls the window calculation; final output order still requires a separate ORDER BY.",
+    "follow_up_question": "Какая типичная ошибка связана с Window functions?",
+    "follow_up_answer": "Omitting a tie-breaker from window ordering can make row_number results nondeterministic.",
     "expected_answer": {
       "must_mention": [
         "rows remain visible",
         "difference from GROUP BY",
-        "window definition.",
-        "Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT."
+        "window definition"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE.",
+        "Omitting a tie-breaker from window ordering can make row_number results nondeterministic.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE."
+        "Omitting a tie-breaker from window ordering can make row_number results nondeterministic."
       ],
       "follow_up_questions": [
-        "Предскажи cardinality результата и проверь, не размножает ли JOIN строки."
+        "Какая типичная ошибка связана с Window functions?"
       ]
     },
     "follow_ups": [
-      "Предскажи cardinality результата и проверь, не размножает ли JOIN строки."
+      "Какая типичная ошибка связана с Window functions?"
     ],
     "tags": [
       "stage-10",
@@ -46,42 +48,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Window functions»: Предскажи cardinality результата и проверь, не размножает ли JOIN строки. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Window functions?",
+    "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "one short code/result example",
+      "Omitting a tie-breaker from window ordering can make row_number results nondeterministic."
     ],
+    "short_answer": "Omitting a tie-breaker from window ordering can make row_number results nondeterministic.",
+    "junior_answer": "Omitting a tie-breaker from window ordering can make row_number results nondeterministic.",
+    "follow_up_question": "Что такое Window functions и как это работает?",
+    "follow_up_answer": "A window function computes across related rows while keeping each original row visible, unlike GROUP BY. `OVER` defines partition, order and frame. Ranking, running totals and comparisons to previous rows are common uses. Важное ограничение: Ordering inside OVER controls the window calculation; final output order still requires a separate ORDER BY.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "one short code/result example"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Omitting a tie-breaker from window ordering can make row_number results nondeterministic."
       ],
       "red_flags": [
-        "Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE."
+        "Omitting a tie-breaker from window ordering can make row_number results nondeterministic."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Window functions и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Window functions и как это работает?"
     ],
     "tags": [
       "stage-10",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-10",

@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Sorting» как на Junior Python Backend interview.",
+    "question": "Что такое Sorting и какой механизм здесь важно понимать Junior-разработчику?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "`sorted` vs `.sort`",
       "`key`",
       "stability",
-      "multiple fields",
-      "Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set."
+      "multiple fields"
     ],
+    "short_answer": "Sorting: Это операция или гарантия стандартной коллекции Python; выбор структуры зависит от порядка, уникальности и стоимости основных операций.",
+    "junior_answer": "Sorting — тема, в которой я сначала фиксирую ``sorted` vs `.sort``, затем объясняю ``key`` на коротком примере. Ключевой механизм: Сравни порядок, duplicates, mutability, lookup/membership и стоимость изменения; затем проверь edge cases коротким кодом. Главная практическая ошибка — Выбрать collection по привычке и не проверить duplicates, order или lookup cost.",
+    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Sorting?",
+    "follow_up_answer": "Выбрать collection по привычке и не проверить duplicates, order или lookup cost.",
     "expected_answer": {
       "must_mention": [
         "`sorted` vs `.sort`",
         "`key`",
         "stability",
-        "multiple fields",
-        "Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set."
+        "multiple fields"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Выбирать коллекцию по привычке и игнорировать порядок, дубликаты или хешируемость.",
+        "Выбрать collection по привычке и не проверить duplicates, order или lookup cost.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Выбирать коллекцию по привычке и игнорировать порядок, дубликаты или хешируемость."
+        "Выбрать collection по привычке и не проверить duplicates, order или lookup cost."
       ],
       "follow_up_questions": [
-        "Выбери структуру для набора API-записей и обоснуй lookup, порядок и дубликаты."
+        "Какое ограничение или типичная ошибка относится именно к теме Sorting?"
       ]
     },
     "follow_ups": [
-      "Выбери структуру для набора API-записей и обоснуй lookup, порядок и дубликаты."
+      "Какое ограничение или типичная ошибка относится именно к теме Sorting?"
     ],
     "tags": [
       "stage-02",
@@ -48,42 +50,43 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Sorting»: Выбери структуру для набора API-записей и обоснуй lookup, порядок и дубликаты. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какое ограничение или типичная ошибка относится именно к теме Sorting?",
+    "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "`reverse`",
+      "sorting dictionaries/objects",
+      "Выбрать collection по привычке и не проверить duplicates, order или lookup cost."
     ],
+    "short_answer": "Выбрать collection по привычке и не проверить duplicates, order или lookup cost.",
+    "junior_answer": "Выбрать collection по привычке и не проверить duplicates, order или lookup cost.",
+    "follow_up_question": "Что такое Sorting и какой механизм здесь важно понимать Junior-разработчику?",
+    "follow_up_answer": "Sorting — тема, в которой я сначала фиксирую ``sorted` vs `.sort``, затем объясняю ``key`` на коротком примере. Ключевой механизм: Сравни порядок, duplicates, mutability, lookup/membership и стоимость изменения; затем проверь edge cases коротким кодом. Главная практическая ошибка — Выбрать collection по привычке и не проверить duplicates, order или lookup cost.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "`reverse`",
+        "sorting dictionaries/objects"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Выбрать collection по привычке и не проверить duplicates, order или lookup cost."
       ],
       "red_flags": [
-        "Выбирать коллекцию по привычке и игнорировать порядок, дубликаты или хешируемость."
+        "Выбрать collection по привычке и не проверить duplicates, order или lookup cost."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Sorting и какой механизм здесь важно понимать Junior-разработчику?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Sorting и какой механизм здесь важно понимать Junior-разработчику?"
     ],
     "tags": [
       "stage-02",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-02",

@@ -7,38 +7,48 @@
 
 После урока ты сможешь:
 
-- объяснить `separate processes` своими словами и связать с backend-сценарием;
-- объяснить `serialization` своими словами и связать с backend-сценарием;
-- объяснить `process startup/overhead` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Multiprocessing**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `separate processes`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Threads и processes решают разные задачи и имеют разную цену обмена состоянием.
+### Что это
 
-В теме **Multiprocessing** важно уверенно объяснять следующие части:
+Multiprocessing runs work in separate processes with isolated memory and separate Python interpreters.
 
-### separate processes
+### Как работает
 
-Processes изолируют память и подходят для CPU-bound Python, но требуют serialization/IPC и имеют более дорогой startup.
+Inputs/results cross process boundaries through serialization and IPC. This enables CPU parallelism but adds startup, memory and communication cost.
 
-### serialization
 
-Для `serialization` сравни shared memory, serialization, startup cost и подходящий I/O/CPU workload.
+### Важный нюанс / limitation
 
-### process startup/overhead
-
-Processes изолируют память и подходят для CPU-bound Python, но требуют serialization/IPC и имеют более дорогой startup.
-
-### CPU-bound work
-
-Для `CPU-bound work` сравни shared memory, serialization, startup cost и подходящий I/O/CPU workload.
+Worker targets and arguments generally must be pickleable, and process startup behavior differs by platform.
 
 ## Mental model
 
 Thread разделяет память процесса; process изолирован и требует сериализации/IPC.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- separate processes
+- serialization
+- process startup/overhead
+- CPU-bound work
+
+### Полезно
+
+- one short code/result example
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -60,19 +70,47 @@ Process имеет отдельную память, поэтому резуль�
 
 ## Common mistakes
 
-**Ошибка:** Отправлять непиклируемый объект в process pool или делить mutable state без lock.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Passing a live Session, lock-bound client or local closure to a process often fails serialization or creates invalid copied state.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `separate processes` example and predict the result before running it.
+
+**B · Find the bug.** Find code that violates `serialization` and explain the concrete consequence.
+
+**D · Small task.** Implement the smallest function/query that demonstrates `separate processes` and add one edge-case test.
+
+**E · Interview explanation.** Explain Multiprocessing in 45–60 seconds and include one limitation.
 
 ## Interview questions
 
-1. Объясни **Multiprocessing** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Выбери executor для I/O-bound и CPU-bound функций и объясни ограничения. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Multiprocessing и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Multiprocessing?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Multiprocessing runs work in separate processes with isolated memory and separate Python interpreters.
+
+### Нормальный Junior answer
+
+> Multiprocessing runs work in separate processes with isolated memory and separate Python interpreters. Inputs/results cross process boundaries through serialization and IPC. This enables CPU parallelism but adds startup, memory and communication cost. Важное ограничение: Worker targets and arguments generally must be pickleable, and process startup behavior differs by platform.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Multiprocessing?**
+
+Passing a live Session, lock-bound client or local closure to a process often fails serialization or creates invalid copied state.
 
 ## Expected answer rubric
 
@@ -81,47 +119,35 @@ Process имеет отдельную память, поэтому резуль�
 - separate processes
 - serialization
 - process startup/overhead
-- CPU-bound work.
-- Thread разделяет память процесса; process изолирован и требует сериализации/IPC.
+- CPU-bound work
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Отправлять непиклируемый объект в process pool или делить mutable state без lock.
-- ответ из одного определения без механизма и failure mode.
+- Passing a live Session, lock-bound client or local closure to a process often fails serialization or creates invalid copied state.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- separate processes
-- serialization
-- process startup/overhead
-- CPU-bound work.
+- Какая типичная ошибка связана с Multiprocessing?
 
 ## Задача
 
-Разбери backend-сценарий: **Выбери executor для I/O-bound и CPU-bound функций и объясни ограничения.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Multiprocessing**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Multiprocessing**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Multiprocessing runs work in separate processes with isolated memory and separate Python interpreters.
+- **Механизм:** Thread разделяет память процесса; process изолирован и требует сериализации/IPC.
+- **Ограничение:** Passing a live Session, lock-bound client or local closure to a process often fails serialization or creates invalid copied state.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

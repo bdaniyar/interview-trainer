@@ -7,38 +7,48 @@
 
 После урока ты сможешь:
 
-- объяснить `domain exception` своими словами и связать с backend-сценарием;
-- объяснить `HTTP mapping` своими словами и связать с backend-сценарием;
-- объяснить `global handler` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Exception handlers**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `domain exception`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-FastAPI связывает ASGI request lifecycle, routing, validation, dependency graph и response serialization.
+### Что это
 
-В теме **Exception handlers** важно уверенно объяснять следующие части:
+An exception handler translates an exception type into a consistent HTTP response at an application/router boundary.
 
-### domain exception
+### Как работает
 
-Для `domain exception` проследи request через router, validation/dependencies, handler/service и response serialization.
+Domain code raises a meaningful domain exception; FastAPI handler maps it to status and safe payload while unexpected errors remain server failures.
 
-### HTTP mapping
 
-Для `HTTP mapping` проследи request через router, validation/dependencies, handler/service и response serialization.
+### Важный нюанс / limitation
 
-### global handler
-
-Для `global handler` проследи request через router, validation/dependencies, handler/service и response serialization.
-
-### avoid leaking internals
-
-Для `avoid leaking internals` проследи request через router, validation/dependencies, handler/service и response serialization.
+Do not catch every exception and convert programming bugs into 400 responses.
 
 ## Mental model
 
 Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- domain exception
+- HTTP mapping
+- global handler
+- avoid leaking internals
+
+### Полезно
+
+- one short code/result example
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -55,19 +65,47 @@ app = FastAPI()
 
 ## Common mistakes
 
-**Ошибка:** Открывать Session глобально или выполнять blocking I/O в async route.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Leaking `str(database_error)` to clients exposes schema/SQL details and creates an unstable contract.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `domain exception` example and predict the result before running it.
+
+**B · Find the bug.** Find code that violates `HTTP mapping` and explain the concrete consequence.
+
+**D · Small task.** Implement the smallest function/query that demonstrates `domain exception` and add one edge-case test.
+
+**E · Interview explanation.** Explain Exception handlers in 45–60 seconds and include one limitation.
 
 ## Interview questions
 
-1. Объясни **Exception handlers** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Проследи request от router через dependency и service до response model. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Exception handlers и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Exception handlers?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+An exception handler translates an exception type into a consistent HTTP response at an application/router boundary.
+
+### Нормальный Junior answer
+
+> An exception handler translates an exception type into a consistent HTTP response at an application/router boundary. Domain code raises a meaningful domain exception; FastAPI handler maps it to status and safe payload while unexpected errors remain server failures. Важное ограничение: Do not catch every exception and convert programming bugs into 400 responses.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Exception handlers?**
+
+Leaking `str(database_error)` to clients exposes schema/SQL details and creates an unstable contract.
 
 ## Expected answer rubric
 
@@ -76,31 +114,22 @@ app = FastAPI()
 - domain exception
 - HTTP mapping
 - global handler
-- avoid leaking internals.
-- Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
+- avoid leaking internals
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Открывать Session глобально или выполнять blocking I/O в async route.
-- ответ из одного определения без механизма и failure mode.
+- Leaking `str(database_error)` to clients exposes schema/SQL details and creates an unstable contract.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- domain exception
-- HTTP mapping
-- global handler
-- avoid leaking internals.
+- Какая типичная ошибка связана с Exception handlers?
 
 ## Задача
 
@@ -113,11 +142,10 @@ DomainConflict handler возвращает status 409 и JSON error; GET /confl
 
 Перед собеседованием запомни:
 
-- дай точное определение **Exception handlers**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** An exception handler translates an exception type into a consistent HTTP response at an application/router boundary.
+- **Механизм:** Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
+- **Ограничение:** Leaking `str(database_error)` to clients exposes schema/SQL details and creates an unstable contract.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

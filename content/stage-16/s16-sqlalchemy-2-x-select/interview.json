@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «SQLAlchemy 2.x `select`» как на Junior Python Backend interview.",
+    "question": "Что такое SQLAlchemy 2.x `select` и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -8,34 +8,36 @@
       "`select`",
       "`where`",
       "result/scalars",
-      "`.one_or_none`",
-      "Один request/use case обычно владеет одной Session и явно завершает commit или rollback."
+      "`.one_or_none`"
     ],
+    "short_answer": "SQLAlchemy 2.x `select()` builds an explicit SQL expression executed through Session.",
+    "junior_answer": "SQLAlchemy 2.x `select()` builds an explicit SQL expression executed through Session. `where` adds predicates; `session.scalars(statement)` returns the first selected entity/value column; `one_or_none` enforces at most one row while `first` merely takes one. Важное ограничение: Choose result method according to cardinality instead of silently ignoring duplicate rows.",
+    "follow_up_question": "Какая типичная ошибка связана с SQLAlchemy 2.x `select`?",
+    "follow_up_answer": "Using `.first()` where uniqueness is required hides duplicate-data bugs that `.one_or_none()` would expose.",
     "expected_answer": {
       "must_mention": [
         "`select`",
         "`where`",
         "result/scalars",
-        "`.one_or_none`",
-        "Один request/use case обычно владеет одной Session и явно завершает commit или rollback."
+        "`.one_or_none`"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks.",
+        "Using `.first()` where uniqueness is required hides duplicate-data bugs that `.one_or_none()` would expose.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks."
+        "Using `.first()` where uniqueness is required hides duplicate-data bugs that `.one_or_none()` would expose."
       ],
       "follow_up_questions": [
-        "Опиши session scope, момент flush/commit и количество SQL-запросов."
+        "Какая типичная ошибка связана с SQLAlchemy 2.x `select`?"
       ]
     },
     "follow_ups": [
-      "Опиши session scope, момент flush/commit и количество SQL-запросов."
+      "Какая типичная ошибка связана с SQLAlchemy 2.x `select`?"
     ],
     "tags": [
       "stage-16",
@@ -48,42 +50,43 @@
     ]
   },
   {
-    "question": "Сценарий по теме «SQLAlchemy 2.x `select`»: Опиши session scope, момент flush/commit и количество SQL-запросов. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с SQLAlchemy 2.x `select`?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Один request/use case обычно владеет одной Session и явно завершает commit или rollback.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "`.first`",
+      "multiple rows",
+      "Using `.first()` where uniqueness is required hides duplicate-data bugs that `.one_or_none()` would expose."
     ],
+    "short_answer": "Using `.first()` where uniqueness is required hides duplicate-data bugs that `.one_or_none()` would expose.",
+    "junior_answer": "Using `.first()` where uniqueness is required hides duplicate-data bugs that `.one_or_none()` would expose.",
+    "follow_up_question": "Что такое SQLAlchemy 2.x `select` и как это работает?",
+    "follow_up_answer": "SQLAlchemy 2.x `select()` builds an explicit SQL expression executed through Session. `where` adds predicates; `session.scalars(statement)` returns the first selected entity/value column; `one_or_none` enforces at most one row while `first` merely takes one. Важное ограничение: Choose result method according to cardinality instead of silently ignoring duplicate rows.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "`.first`",
+        "multiple rows"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Using `.first()` where uniqueness is required hides duplicate-data bugs that `.one_or_none()` would expose."
       ],
       "red_flags": [
-        "Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks."
+        "Using `.first()` where uniqueness is required hides duplicate-data bugs that `.one_or_none()` would expose."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое SQLAlchemy 2.x `select` и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое SQLAlchemy 2.x `select` и как это работает?"
     ],
     "tags": [
       "stage-16",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-16",

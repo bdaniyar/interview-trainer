@@ -7,42 +7,48 @@
 
 После урока ты сможешь:
 
-- объяснить `collection` своими словами и связать с backend-сценарием;
-- объяснить `forwarding` своими словами и связать с backend-сценарием;
-- объяснить `iterable/dict unpacking` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **`*args`, `**kwargs` and unpacking**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `collection`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Функция — объект с сигнатурой, областью видимости и состоянием замыкания; её контракт должен быть понятен вызывающему коду.
+### Что это
 
-В теме **`*args`, `**kwargs` and unpacking** важно уверенно объяснять следующие части:
+`*args` collects extra positional arguments into a tuple, `**kwargs` collects extra keyword arguments into a dict; the same stars unpack values at a call site.
 
-### collection
+### Как работает
 
-Для `collection` отдели definition time от call time и покажи влияние на signature, scope или state функции.
+Argument binding still enforces the signature. Forwarding wrappers commonly call `fn(*args, **kwargs)`, and duplicate values for one parameter raise `TypeError`.
 
-### forwarding
 
-Для `forwarding` отдели definition time от call time и покажи влияние на signature, scope или state функции.
+### Важный нюанс / limitation
 
-### iterable/dict unpacking
-
-`dict` хранит mapping hashable keys к values и сохраняет insertion order; lookup в среднем O(1), но correctness опирается на equality/hash contract.
-
-### duplicate arguments
-
-Для `duplicate arguments` отдели definition time от call time и покажи влияние на signature, scope или state функции.
-
-### wrapper functions
-
-Для `wrapper functions` отдели definition time от call time и покажи влияние на signature, scope или state функции.
+Do not replace a clear public signature with unlimited kwargs. Explicit keyword-only parameters produce better typing and API errors.
 
 ## Mental model
 
 Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- collection
+- forwarding
+- iterable/dict unpacking
+- duplicate arguments
+
+### Полезно
+
+- wrapper functions
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -60,19 +66,47 @@ print(audit("updated", 10, 11, **context))
 
 ## Common mistakes
 
-**Ошибка:** Скрывать неясный API за **kwargs или забывать о времени вычисления defaults.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Forwarding `fn(value, **{'value': other})` passes the same parameter twice and raises `TypeError`.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `collection` example and predict the result before running it.
+
+**B · Find the bug.** Find code that violates `forwarding` and explain the concrete consequence.
+
+**D · Small task.** Implement the smallest function/query that demonstrates `collection` and add one edge-case test.
+
+**E · Interview explanation.** Explain `*args`, `**kwargs` and unpacking in 45–60 seconds and include one limitation.
 
 ## Interview questions
 
-1. Объясни **`*args`, `**kwargs` and unpacking** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Разбери сигнатуру helper-функции и объясни, какие вызовы допустимы и почему. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое `*args`, `**kwargs` and unpacking и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с `*args`, `**kwargs` and unpacking?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+`*args` collects extra positional arguments into a tuple, `**kwargs` collects extra keyword arguments into a dict; the same stars unpack values at a call site.
+
+### Нормальный Junior answer
+
+> `*args` collects extra positional arguments into a tuple, `**kwargs` collects extra keyword arguments into a dict; the same stars unpack values at a call site. Argument binding still enforces the signature. Forwarding wrappers commonly call `fn(*args, **kwargs)`, and duplicate values for one parameter raise `TypeError`. Важное ограничение: Do not replace a clear public signature with unlimited kwargs. Explicit keyword-only parameters produce better typing and API errors.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с `*args`, `**kwargs` and unpacking?**
+
+Forwarding `fn(value, **{'value': other})` passes the same parameter twice and raises `TypeError`.
 
 ## Expected answer rubric
 
@@ -82,31 +116,21 @@ print(audit("updated", 10, 11, **context))
 - forwarding
 - iterable/dict unpacking
 - duplicate arguments
-- Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Скрывать неясный API за **kwargs или забывать о времени вычисления defaults.
-- ответ из одного определения без механизма и failure mode.
+- Forwarding `fn(value, **{'value': other})` passes the same parameter twice and raises `TypeError`.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- collection
-- forwarding
-- iterable/dict unpacking
-- duplicate arguments
-- wrapper functions.
+- Какая типичная ошибка связана с `*args`, `**kwargs` and unpacking?
 
 ## Задача
 
@@ -119,11 +143,10 @@ print(audit("updated", 10, 11, **context))
 
 Перед собеседованием запомни:
 
-- дай точное определение **`*args`, `**kwargs` and unpacking**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** `*args` collects extra positional arguments into a tuple, `**kwargs` collects extra keyword arguments into a dict; the same stars unpack values at a call site.
+- **Механизм:** Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
+- **Ограничение:** Forwarding `fn(value, **{'value': other})` passes the same parameter twice and raises `TypeError`.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

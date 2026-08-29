@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Coroutine function and coroutine object» как на Junior Python Backend interview.",
+    "question": "Что такое Coroutine function and coroutine object и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -8,34 +8,36 @@
       "`async def`",
       "calling async function",
       "coroutine object",
-      "execution begins when awaited/scheduled.",
-      "Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код."
+      "execution begins when awaited/scheduled"
     ],
+    "short_answer": "A coroutine function is declared with `async def`; calling it creates a coroutine object rather than executing the body to completion.",
+    "junior_answer": "A coroutine function is declared with `async def`; calling it creates a coroutine object rather than executing the body to completion. The object runs when awaited or scheduled as a Task. Dropping it without either usually produces a 'coroutine was never awaited' warning. Важное ограничение: A coroutine object is single-use and cannot be awaited again after completion.",
+    "follow_up_question": "Какая типичная ошибка связана с Coroutine function and coroutine object?",
+    "follow_up_answer": "Returning a coroutine object from code that promised a final value leaks the async boundary to the wrong caller.",
     "expected_answer": {
       "must_mention": [
         "`async def`",
         "calling async function",
         "coroutine object",
-        "execution begins when awaited/scheduled.",
-        "Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код."
+        "execution begins when awaited/scheduled"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint.",
+        "Returning a coroutine object from code that promised a final value leaks the async boundary to the wrong caller.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint."
+        "Returning a coroutine object from code that promised a final value leaks the async boundary to the wrong caller."
       ],
       "follow_up_questions": [
-        "Найди blocking участок, обозначь cancellation boundary и выбери способ конкурентного запуска."
+        "Какая типичная ошибка связана с Coroutine function and coroutine object?"
       ]
     },
     "follow_ups": [
-      "Найди blocking участок, обозначь cancellation boundary и выбери способ конкурентного запуска."
+      "Какая типичная ошибка связана с Coroutine function and coroutine object?"
     ],
     "tags": [
       "stage-08",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Coroutine function and coroutine object»: Найди blocking участок, обозначь cancellation boundary и выбери способ конкурентного запуска. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Coroutine function and coroutine object?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "one short code/result example",
+      "Returning a coroutine object from code that promised a final value leaks the async boundary to the wrong caller."
     ],
+    "short_answer": "Returning a coroutine object from code that promised a final value leaks the async boundary to the wrong caller.",
+    "junior_answer": "Returning a coroutine object from code that promised a final value leaks the async boundary to the wrong caller.",
+    "follow_up_question": "Что такое Coroutine function and coroutine object и как это работает?",
+    "follow_up_answer": "A coroutine function is declared with `async def`; calling it creates a coroutine object rather than executing the body to completion. The object runs when awaited or scheduled as a Task. Dropping it without either usually produces a 'coroutine was never awaited' warning. Важное ограничение: A coroutine object is single-use and cannot be awaited again after completion.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "one short code/result example"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Returning a coroutine object from code that promised a final value leaks the async boundary to the wrong caller."
       ],
       "red_flags": [
-        "Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint."
+        "Returning a coroutine object from code that promised a final value leaks the async boundary to the wrong caller."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Coroutine function and coroutine object и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Coroutine function and coroutine object и как это работает?"
     ],
     "tags": [
       "stage-08",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-08",

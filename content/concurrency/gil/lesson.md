@@ -7,38 +7,48 @@
 
 После урока ты сможешь:
 
-- объяснить `one thread executing Python bytecode in one CPython process` своими словами и связать с backend-сценарием;
-- объяснить `threads still useful for I/O` своими словами и связать с backend-сценарием;
-- объяснить `processes/native code for CPU work` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **GIL**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `one thread executing Python bytecode in one CPython process`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Детали CPython помогают объяснять lifetime, memory и ограничения потоков, но не заменяют измерения.
+### Что это
 
-В теме **GIL** важно уверенно объяснять следующие части:
+The CPython GIL allows one thread at a time to execute Python bytecode in a process.
 
-### one thread executing Python bytecode in one CPython process
+### Как работает
 
-Threads разделяют память процесса и удобны для blocking I/O, но shared mutable state требует synchronization и корректной lifetime management.
+Threads can still overlap waiting I/O because the GIL is released around many blocking/native operations. CPU-bound pure Python usually needs processes, native code that releases the GIL or external workers.
 
-### threads still useful for I/O
 
-Threads разделяют память процесса и удобны для blocking I/O, но shared mutable state требует synchronization и корректной lifetime management.
+### Важный нюанс / limitation
 
-### processes/native code for CPU work
-
-Processes изолируют память и подходят для CPU-bound Python, но требуют serialization/IPC и имеют более дорогой startup.
-
-### GIL is not a general lock for application data
-
-CPython GIL допускает выполнение Python bytecode одним thread за раз, но отпускается вокруг части I/O/native calls и не защищает бизнес-инварианты от races.
+The GIL is not an application lock: multi-step shared-state operations and database invariants still race.
 
 ## Mental model
 
 Разделяй спецификацию Python и конкретную реализацию CPython; GIL относится к выполнению bytecode, не к бизнес-инвариантам.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- one thread executing Python bytecode in one CPython process
+- threads still useful for I/O
+- processes/native code for CPU work
+- GIL is not a general lock for application data
+
+### Полезно
+
+- one short code/result example
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -59,19 +69,47 @@ GIL не заменяет выбор workload: threads полезны для blo
 
 ## Common mistakes
 
-**Ошибка:** Считать GIL автоматической защитой shared state или вызывать gc.collect как универсальную оптимизацию.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Claiming that threads cannot race because of the GIL confuses bytecode scheduling with atomic business operations.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `one thread executing Python bytecode in one CPython process` example and predict the result before running it.
+
+**B · Find the bug.** Find code that violates `threads still useful for I/O` and explain the concrete consequence.
+
+**D · Small task.** Implement the smallest function/query that demonstrates `one thread executing Python bytecode in one CPython process` and add one edge-case test.
+
+**E · Interview explanation.** Explain GIL in 45–60 seconds and include one limitation.
 
 ## Interview questions
 
-1. Объясни **GIL** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Классифицируй проблему как lifetime, allocation, race или CPU contention перед выбором инструмента. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое GIL и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с GIL?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+The CPython GIL allows one thread at a time to execute Python bytecode in a process.
+
+### Нормальный Junior answer
+
+> The CPython GIL allows one thread at a time to execute Python bytecode in a process. Threads can still overlap waiting I/O because the GIL is released around many blocking/native operations. CPU-bound pure Python usually needs processes, native code that releases the GIL or external workers. Важное ограничение: The GIL is not an application lock: multi-step shared-state operations and database invariants still race.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с GIL?**
+
+Claiming that threads cannot race because of the GIL confuses bytecode scheduling with atomic business operations.
 
 ## Expected answer rubric
 
@@ -80,47 +118,35 @@ GIL не заменяет выбор workload: threads полезны для blo
 - one thread executing Python bytecode in one CPython process
 - threads still useful for I/O
 - processes/native code for CPU work
-- GIL is not a general lock for application data.
-- Разделяй спецификацию Python и конкретную реализацию CPython; GIL относится к выполнению bytecode, не к бизнес-инвариантам.
+- GIL is not a general lock for application data
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Считать GIL автоматической защитой shared state или вызывать gc.collect как универсальную оптимизацию.
-- ответ из одного определения без механизма и failure mode.
+- Claiming that threads cannot race because of the GIL confuses bytecode scheduling with atomic business operations.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- one thread executing Python bytecode in one CPython process
-- threads still useful for I/O
-- processes/native code for CPU work
-- GIL is not a general lock for application data.
+- Какая типичная ошибка связана с GIL?
 
 ## Задача
 
-Разбери backend-сценарий: **Классифицируй проблему как lifetime, allocation, race или CPU contention перед выбором инструмента.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **GIL**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **GIL**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** The CPython GIL allows one thread at a time to execute Python bytecode in a process.
+- **Механизм:** Разделяй спецификацию Python и конкретную реализацию CPython; GIL относится к выполнению bytecode, не к бизнес-инвариантам.
+- **Ограничение:** Claiming that threads cannot race because of the GIL confuses bytecode scheduling with atomic business operations.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

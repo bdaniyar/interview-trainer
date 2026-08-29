@@ -7,29 +7,54 @@
 
 После урока ты сможешь:
 
-- объяснить `cross-field invariant` своими словами и связать с backend-сценарием;
-- объяснить `validation ordering.` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Model validators**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `cross-field invariant`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Pydantic v2 преобразует и валидирует данные на границе; модель должна явно описывать required, nullable и default semantics.
+### Что это
 
-В теме **Model validators** важно уверенно объяснять следующие части:
+Это часть Pydantic v2 boundary между недоверенным input, validated model и serialized output.
 
-### cross-field invariant
+### Как работает
 
-Для `cross-field invariant` различай missing, explicit null, invalid input и serialized output Pydantic v2.
+Проверь четыре состояния: missing, explicit null, invalid type/value и сериализованный результат.
 
-### validation ordering
+**cross-field invariant.** `cross-field invariant` влияет на Pydantic v2 validation/serialization и должен различать missing, explicit null, invalid input и output representation.
 
-Для `validation ordering` различай missing, explicit null, invalid input и serialized output Pydantic v2.
+**validation ordering.** `validation ordering` влияет на Pydantic v2 validation/serialization и должен различать missing, explicit null, invalid input и output representation.
+
+
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `cross-field invariant` и `validation ordering` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `cross-field invariant`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Сначала приходит недоверенный input, затем core schema выполняет validation, после чего model_dump управляет serialization.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- cross-field invariant
+- validation ordering
+
+### Полезно
+
+- связать Model validators с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -45,48 +70,67 @@ from pydantic import BaseModel
 
 ## Common mistakes
 
-**Ошибка:** Путать str | None с полем, которое можно полностью не передать.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Смешать missing и explicit null либо считать coercion бизнес-валидацией.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `cross-field invariant` до запуска.
+
+**B · Find the bug.** Найди нарушение `validation ordering` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Model validators за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Model validators** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Проверь missing, explicit null, неверный тип и сериализованный результат. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Model validators и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Model validators?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Model validators: Это часть Pydantic v2 boundary между недоверенным input, validated model и serialized output.
+
+### Нормальный Junior answer
+
+> Model validators — тема, в которой я сначала фиксирую `cross-field invariant`, затем объясняю `validation ordering` на коротком примере. Ключевой механизм: Проверь четыре состояния: missing, explicit null, invalid type/value и сериализованный результат. Главная практическая ошибка — Смешать missing и explicit null либо считать coercion бизнес-валидацией.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Model validators?**
+
+Смешать missing и explicit null либо считать coercion бизнес-валидацией.
 
 ## Expected answer rubric
 
 ### Must mention
 
 - cross-field invariant
-- validation ordering.
-- Сначала приходит недоверенный input, затем core schema выполняет validation, после чего model_dump управляет serialization.
+- validation ordering
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Путать str | None с полем, которое можно полностью не передать.
-- ответ из одного определения без механизма и failure mode.
+- Смешать missing и explicit null либо считать coercion бизнес-валидацией.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- cross-field invariant
-- validation ordering.
+- Какое ограничение или типичная ошибка относится именно к теме Model validators?
 
 ## Задача
 
@@ -99,11 +143,10 @@ BookingPeriod(start,end) с model_validator: end строго больше start
 
 Перед собеседованием запомни:
 
-- дай точное определение **Model validators**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Model validators: Это часть Pydantic v2 boundary между недоверенным input, validated model и serialized output.
+- **Механизм:** Сначала приходит недоверенный input, затем core schema выполняет validation, после чего model_dump управляет serialization.
+- **Ограничение:** Смешать missing и explicit null либо считать coercion бизнес-валидацией.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

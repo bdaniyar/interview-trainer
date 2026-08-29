@@ -77,6 +77,16 @@ export interface InterviewQuestion {
   lesson_title: string;
   question: string;
   answer: string[];
+  short_answer?: string;
+  junior_answer?: string;
+  follow_up_question?: string;
+  follow_up_answer?: string;
+  expected_answer?: {
+    must_mention?: string[];
+    good_additions?: string[];
+    common_wrong_answers?: string[];
+    follow_up_questions?: string[];
+  };
   completed: boolean;
   code?: string;
   expected?: string;

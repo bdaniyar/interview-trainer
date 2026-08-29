@@ -1,41 +1,41 @@
 [
   {
-    "question": "Объясни тему «Shallow and deep copy» как на Junior Python Backend interview.",
+    "question": "Чем shallow copy отличается от deep copy?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "slicing",
-      "`list.copy`",
-      "`dict.copy`",
-      "`copy.copy`",
-      "Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию."
+      "видеть разницу shallow/deep",
+      "предсказывать nested mutation",
+      "знать `copy.copy` и `copy.deepcopy`"
     ],
+    "short_answer": "Shallow copy создаёт новый внешний контейнер, но делит вложенные объекты; deep copy рекурсивно копирует graph.",
+    "junior_answer": "При shallow copy внешний list или dict новый, а его элементы — те же объекты. Поэтому изменение вложенного списка видно и в оригинале. `deepcopy` рекурсивно копирует graph, но дороже и не всегда соответствует смыслу domain data. Для сложных объектов я предпочту явное построение нужной копии.",
+    "follow_up_question": "Почему `deepcopy` может быть плохим выбором для SQLAlchemy model?",
+    "follow_up_answer": "ORM entity связана с Session, lazy relationships и identity map; механическое копирование graph не создаёт корректную новую запись и может загрузить лишние данные.",
     "expected_answer": {
       "must_mention": [
-        "slicing",
-        "`list.copy`",
-        "`dict.copy`",
-        "`copy.copy`",
-        "Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию."
+        "видеть разницу shallow/deep",
+        "предсказывать nested mutation",
+        "знать `copy.copy` и `copy.deepcopy`"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Объяснять переменную как коробку, которая всегда содержит независимое значение.",
+        "Считать `payload.copy()` независимой копией всех вложенных данных.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Объяснять переменную как коробку, которая всегда содержит независимое значение."
+        "Считать `payload.copy()` независимой копией всех вложенных данных."
       ],
       "follow_up_questions": [
-        "Проследи identity и состояние объекта после двух присваиваний и одной мутации."
+        "Почему `deepcopy` может быть плохим выбором для SQLAlchemy model?"
       ]
     },
     "follow_ups": [
-      "Проследи identity и состояние объекта после двух присваиваний и одной мутации."
+      "Почему `deepcopy` может быть плохим выбором для SQLAlchemy model?"
     ],
     "tags": [
       "stage-01",
@@ -48,42 +48,42 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Shallow and deep copy»: Проследи identity и состояние объекта после двух присваиваний и одной мутации. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Почему `deepcopy` может быть плохим выбором для SQLAlchemy model?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "понимать memo и циклические ссылки на уровне идеи",
+      "ORM entity связана с Session, lazy relationships и identity map; механическое копирование graph не создаёт корректную новую запись и может загрузить лишние данные."
     ],
+    "short_answer": "ORM entity связана с Session, lazy relationships и identity map; механическое копирование graph не создаёт корректную новую запись и может загрузить лишние данные.",
+    "junior_answer": "ORM entity связана с Session, lazy relationships и identity map; механическое копирование graph не создаёт корректную новую запись и может загрузить лишние данные.",
+    "follow_up_question": "Чем shallow copy отличается от deep copy?",
+    "follow_up_answer": "При shallow copy внешний list или dict новый, а его элементы — те же объекты. Поэтому изменение вложенного списка видно и в оригинале. `deepcopy` рекурсивно копирует graph, но дороже и не всегда соответствует смыслу domain data. Для сложных объектов я предпочту явное построение нужной копии.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "понимать memo и циклические ссылки на уровне идеи"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Считать `payload.copy()` независимой копией всех вложенных данных.",
+        "Применять `deepcopy()` к ORM graph вместо явного DTO/serialization boundary."
       ],
       "red_flags": [
-        "Объяснять переменную как коробку, которая всегда содержит независимое значение."
+        "Считать `payload.copy()` независимой копией всех вложенных данных."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Чем shallow copy отличается от deep copy?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Чем shallow copy отличается от deep copy?"
     ],
     "tags": [
       "stage-01",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-01",

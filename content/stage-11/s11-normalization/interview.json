@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Normalization» как на Junior Python Backend interview.",
+    "question": "Что такое Normalization и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "duplication",
       "update anomalies",
       "1NF/2NF/3NF at practical Junior depth",
-      "deliberate denormalization only with reason.",
-      "Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path."
+      "deliberate denormalization only with reason"
     ],
+    "short_answer": "Normalization structures relations to reduce duplicated facts and update anomalies; Junior depth focuses on practical 1NF–3NF intuition.",
+    "junior_answer": "Normalization structures relations to reduce duplicated facts and update anomalies; Junior depth focuses on practical 1NF–3NF intuition. Separate entities and connect them by keys so one fact has one authoritative storage location. Denormalization intentionally duplicates derived/read data for a measured need. Важное ограничение: Normalization is not maximum table count; boundaries follow data meaning and update dependencies.",
+    "follow_up_question": "Какая типичная ошибка связана с Normalization?",
+    "follow_up_answer": "Storing the same user email in many order rows makes updates inconsistent and obscures the source of truth.",
     "expected_answer": {
       "must_mention": [
         "duplication",
         "update anomalies",
         "1NF/2NF/3NF at practical Junior depth",
-        "deliberate denormalization only with reason.",
-        "Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path."
+        "deliberate denormalization only with reason"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова.",
+        "Storing the same user email in many order rows makes updates inconsistent and obscures the source of truth.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова."
+        "Storing the same user email in many order rows makes updates inconsistent and obscures the source of truth."
       ],
       "follow_up_questions": [
-        "Назови инвариант, конкурентный сценарий и точку, где его гарантирует база."
+        "Какая типичная ошибка связана с Normalization?"
       ]
     },
     "follow_ups": [
-      "Назови инвариант, конкурентный сценарий и точку, где его гарантирует база."
+      "Какая типичная ошибка связана с Normalization?"
     ],
     "tags": [
       "stage-11",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Normalization»: Назови инвариант, конкурентный сценарий и точку, где его гарантирует база. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Normalization?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "one short code/result example",
+      "Storing the same user email in many order rows makes updates inconsistent and obscures the source of truth."
     ],
+    "short_answer": "Storing the same user email in many order rows makes updates inconsistent and obscures the source of truth.",
+    "junior_answer": "Storing the same user email in many order rows makes updates inconsistent and obscures the source of truth.",
+    "follow_up_question": "Что такое Normalization и как это работает?",
+    "follow_up_answer": "Normalization structures relations to reduce duplicated facts and update anomalies; Junior depth focuses on practical 1NF–3NF intuition. Separate entities and connect them by keys so one fact has one authoritative storage location. Denormalization intentionally duplicates derived/read data for a measured need. Важное ограничение: Normalization is not maximum table count; boundaries follow data meaning and update dependencies.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "one short code/result example"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Storing the same user email in many order rows makes updates inconsistent and obscures the source of truth."
       ],
       "red_flags": [
-        "Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова."
+        "Storing the same user email in many order rows makes updates inconsistent and obscures the source of truth."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Normalization и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Normalization и как это работает?"
     ],
     "tags": [
       "stage-11",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-11",

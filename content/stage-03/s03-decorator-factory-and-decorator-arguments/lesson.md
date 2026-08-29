@@ -7,34 +7,53 @@
 
 После урока ты сможешь:
 
-- объяснить `three levels of functions` своими словами и связать с backend-сценарием;
-- объяснить `configuration captured by closure` своими словами и связать с backend-сценарием;
-- объяснить `retry/timing/permission examples.` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Decorator factory and decorator arguments**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `three levels of functions`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Функция — объект с сигнатурой, областью видимости и состоянием замыкания; её контракт должен быть понятен вызывающему коду.
+### Что это
 
-В теме **Decorator factory and decorator arguments** важно уверенно объяснять следующие части:
+Это часть контракта Python function: важно различать definition time, call time, signature и разрешение имён.
 
-### three levels of functions
+### Как работает
 
-Для `three levels of functions` отдели definition time от call time и покажи влияние на signature, scope или state функции.
+Отдели выполнение `def`, связывание arguments при вызове и разрешение names по LEGB.
 
-### configuration captured by closure
+**three levels of functions.** `three levels of functions` влияет на function contract; результат определяется definition time, argument binding при вызове и разрешением names.
 
-Closure хранит ссылки на enclosing bindings, а не snapshot каждого значения; late binding особенно заметен в callbacks, созданных в цикле.
+**configuration captured by closure.** Closure хранит ссылки на enclosing bindings, а не snapshot каждого значения; late binding особенно заметен в callbacks, созданных в цикле.
 
-### retry/timing/permission examples
+**retry/timing/permission examples.** Retry подходит для transient failure, ограничивается числом попыток и backoff с jitter; permanent errors нужно возвращать сразу.
 
-Retry подходит для transient failure, ограничивается числом попыток и backoff с jitter; permanent errors нужно возвращать сразу.
+
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `three levels of functions` и `configuration captured by closure` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
 ## Mental model
 
 Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- three levels of functions
+- configuration captured by closure
+- retry/timing/permission examples
+
+### Полезно
+
+- связать Decorator factory and decorator arguments с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -58,19 +77,45 @@ Decorator factory сначала фиксирует configuration, затем п
 
 ## Common mistakes
 
-**Ошибка:** Скрывать неясный API за **kwargs или забывать о времени вычисления defaults.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `three levels of functions` до запуска.
+
+**B · Find the bug.** Найди нарушение `configuration captured by closure` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Decorator factory and decorator arguments за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Decorator factory and decorator arguments** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Разбери сигнатуру helper-функции и объясни, какие вызовы допустимы и почему. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Decorator factory and decorator arguments и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Decorator factory and decorator arguments?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Decorator factory and decorator arguments: Это часть контракта Python function: важно различать definition time, call time, signature и разрешение имён.
+
+### Нормальный Junior answer
+
+> Decorator factory and decorator arguments — тема, в которой я сначала фиксирую `three levels of functions`, затем объясняю `configuration captured by closure` на коротком примере. Ключевой механизм: Отдели выполнение `def`, связывание arguments при вызове и разрешение names по LEGB. Главная практическая ошибка — Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Decorator factory and decorator arguments?**
+
+Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
 
 ## Expected answer rubric
 
@@ -78,30 +123,22 @@ Decorator factory сначала фиксирует configuration, затем п
 
 - three levels of functions
 - configuration captured by closure
-- retry/timing/permission examples.
-- Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
+- retry/timing/permission examples
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Скрывать неясный API за **kwargs или забывать о времени вычисления defaults.
-- ответ из одного определения без механизма и failure mode.
+- Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- three levels of functions
-- configuration captured by closure
-- retry/timing/permission examples.
+- Какое ограничение или типичная ошибка относится именно к теме Decorator factory and decorator arguments?
 
 ## Задача
 
@@ -114,11 +151,10 @@ Decorator factory сначала фиксирует configuration, затем п
 
 Перед собеседованием запомни:
 
-- дай точное определение **Decorator factory and decorator arguments**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Decorator factory and decorator arguments: Это часть контракта Python function: важно различать definition time, call time, signature и разрешение имён.
+- **Механизм:** Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
+- **Ограничение:** Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

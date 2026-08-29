@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «JWT structure» как на Junior Python Backend interview.",
+    "question": "Что такое JWT structure и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -8,34 +8,36 @@
       "header",
       "payload",
       "signature",
-      "encoded is not encrypted",
-      "Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации."
+      "encoded is not encrypted"
     ],
+    "short_answer": "JWT is a signed token format with header, payload claims and signature; it is normally encoded, not encrypted.",
+    "junior_answer": "JWT is a signed token format with header, payload claims and signature; it is normally encoded, not encrypted. The server verifies signature, allowed algorithm, issuer, audience and time claims before trusting identity/permissions. Важное ограничение: Revocation and refresh lifecycle still need design; a long-lived access JWT is not automatically secure or stateless in the operational sense.",
+    "follow_up_question": "Какая типичная ошибка связана с JWT structure?",
+    "follow_up_answer": "Decoding payload without signature/claim verification lets an attacker supply arbitrary identity data.",
     "expected_answer": {
       "must_mention": [
         "header",
         "payload",
         "signature",
-        "encoded is not encrypted",
-        "Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации."
+        "encoded is not encrypted"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Считать CORS авторизацией, JWT шифрованием или хранить пароль быстрым hash.",
+        "Decoding payload without signature/claim verification lets an attacker supply arbitrary identity data.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Считать CORS авторизацией, JWT шифрованием или хранить пароль быстрым hash."
+        "Decoding payload without signature/claim verification lets an attacker supply arbitrary identity data."
       ],
       "follow_up_questions": [
-        "Назови атакующего, актив, проверку на сервере и безопасный отказ."
+        "Какая типичная ошибка связана с JWT structure?"
       ]
     },
     "follow_ups": [
-      "Назови атакующего, актив, проверку на сервере и безопасный отказ."
+      "Какая типичная ошибка связана с JWT structure?"
     ],
     "tags": [
       "stage-13",
@@ -48,42 +50,43 @@
     ]
   },
   {
-    "question": "Сценарий по теме «JWT structure»: Назови атакующего, актив, проверку на сервере и безопасный отказ. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с JWT structure?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "claims",
+      "verification",
+      "Decoding payload without signature/claim verification lets an attacker supply arbitrary identity data."
     ],
+    "short_answer": "Decoding payload without signature/claim verification lets an attacker supply arbitrary identity data.",
+    "junior_answer": "Decoding payload without signature/claim verification lets an attacker supply arbitrary identity data.",
+    "follow_up_question": "Что такое JWT structure и как это работает?",
+    "follow_up_answer": "JWT is a signed token format with header, payload claims and signature; it is normally encoded, not encrypted. The server verifies signature, allowed algorithm, issuer, audience and time claims before trusting identity/permissions. Важное ограничение: Revocation and refresh lifecycle still need design; a long-lived access JWT is not automatically secure or stateless in the operational sense.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
+        "claims",
         "verification"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Decoding payload without signature/claim verification lets an attacker supply arbitrary identity data."
       ],
       "red_flags": [
-        "Считать CORS авторизацией, JWT шифрованием или хранить пароль быстрым hash."
+        "Decoding payload without signature/claim verification lets an attacker supply arbitrary identity data."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое JWT structure и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое JWT structure и как это работает?"
     ],
     "tags": [
       "stage-13",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-13",

@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «N+1» как на Junior Python Backend interview.",
+    "question": "Что такое N+1 и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -8,34 +8,36 @@
       "one parent query plus per-row child query",
       "detection",
       "logs/query count",
-      "eager loading.",
-      "Один request/use case обычно владеет одной Session и явно завершает commit или rollback."
+      "eager loading"
     ],
+    "short_answer": "N+1 is one query for parent rows followed by one relationship query per parent.",
+    "junior_answer": "N+1 is one query for parent rows followed by one relationship query per parent. Lazy loading triggers the repeated queries; detect it in SQL logs or a query-count test and choose `selectinload`, `joinedload` or explicit projection based on cardinality. Важное ограничение: Eager-load only data the use case needs; a giant joined graph can create row multiplication and memory cost.",
+    "follow_up_question": "Какая типичная ошибка связана с N+1?",
+    "follow_up_answer": "Adding a cache does not fix an ORM query shape that issues hundreds of avoidable round trips.",
     "expected_answer": {
       "must_mention": [
         "one parent query plus per-row child query",
         "detection",
         "logs/query count",
-        "eager loading.",
-        "Один request/use case обычно владеет одной Session и явно завершает commit или rollback."
+        "eager loading"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks.",
+        "Adding a cache does not fix an ORM query shape that issues hundreds of avoidable round trips.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks."
+        "Adding a cache does not fix an ORM query shape that issues hundreds of avoidable round trips."
       ],
       "follow_up_questions": [
-        "Опиши session scope, момент flush/commit и количество SQL-запросов."
+        "Какая типичная ошибка связана с N+1?"
       ]
     },
     "follow_ups": [
-      "Опиши session scope, момент flush/commit и количество SQL-запросов."
+      "Какая типичная ошибка связана с N+1?"
     ],
     "tags": [
       "stage-16",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «N+1»: Опиши session scope, момент flush/commit и количество SQL-запросов. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с N+1?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Один request/use case обычно владеет одной Session и явно завершает commit или rollback.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "one short code/result example",
+      "Adding a cache does not fix an ORM query shape that issues hundreds of avoidable round trips."
     ],
+    "short_answer": "Adding a cache does not fix an ORM query shape that issues hundreds of avoidable round trips.",
+    "junior_answer": "Adding a cache does not fix an ORM query shape that issues hundreds of avoidable round trips.",
+    "follow_up_question": "Что такое N+1 и как это работает?",
+    "follow_up_answer": "N+1 is one query for parent rows followed by one relationship query per parent. Lazy loading triggers the repeated queries; detect it in SQL logs or a query-count test and choose `selectinload`, `joinedload` or explicit projection based on cardinality. Важное ограничение: Eager-load only data the use case needs; a giant joined graph can create row multiplication and memory cost.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "one short code/result example"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Adding a cache does not fix an ORM query shape that issues hundreds of avoidable round trips."
       ],
       "red_flags": [
-        "Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks."
+        "Adding a cache does not fix an ORM query shape that issues hundreds of avoidable round trips."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое N+1 и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое N+1 и как это работает?"
     ],
     "tags": [
       "stage-16",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-16",

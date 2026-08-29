@@ -16,7 +16,7 @@
     "history stored in PostgreSQL",
     "reconnect fetches missed messages."
   ],
-  "description": "P0 · Why Pub/Sub is not storage: mental model, interview rubric и backend-сценарий.",
+  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
   "has_task": false,
   "has_solution": false,
   "priority": "P0",

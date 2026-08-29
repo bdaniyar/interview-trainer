@@ -7,24 +7,45 @@
 
 После урока ты сможешь:
 
-- объяснить `Authentication vs authorization` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Authentication vs authorization**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `Authentication vs authorization`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Security строится слоями: аутентификация, авторизация, validation, безопасное хранение секретов и ограничение злоупотреблений.
+### Что это
 
-В теме **Authentication vs authorization** важно уверенно объяснять следующие части:
+Authentication establishes who the requester is; authorization decides whether that identity may perform an action on a resource.
 
-### Authentication vs authorization
+### Как работает
 
-Authentication устанавливает identity, authorization проверяет право этой identity выполнить конкретное действие над resource.
+Credentials/token/session are verified first, then policy checks roles, permissions, ownership or attributes for the concrete operation.
+
+
+### Важный нюанс / limitation
+
+A logged-in user is not automatically allowed to read another user's object.
 
 ## Mental model
 
 Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- Authentication vs authorization
+
+### Полезно
+
+- one short code/result example
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -42,62 +63,81 @@ assert example_s13_authentication_vs_authorization()
 
 ## Common mistakes
 
-**Ошибка:** Считать CORS авторизацией, JWT шифрованием или хранить пароль быстрым hash.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Hiding an admin button in the frontend is neither authentication nor authorization; the API must enforce the rule.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `Authentication vs authorization` example and predict the result before running it.
+
+**B · Find the bug.** Find code that violates `Authentication vs authorization` and explain the concrete consequence.
+
+**D · Small task.** Implement the smallest function/query that demonstrates `Authentication vs authorization` and add one edge-case test.
+
+**E · Interview explanation.** Explain Authentication vs authorization in 45–60 seconds and include one limitation.
 
 ## Interview questions
 
-1. Объясни **Authentication vs authorization** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Назови атакующего, актив, проверку на сервере и безопасный отказ. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Authentication vs authorization и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Authentication vs authorization?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Authentication establishes who the requester is; authorization decides whether that identity may perform an action on a resource.
+
+### Нормальный Junior answer
+
+> Authentication establishes who the requester is; authorization decides whether that identity may perform an action on a resource. Credentials/token/session are verified first, then policy checks roles, permissions, ownership or attributes for the concrete operation. Важное ограничение: A logged-in user is not automatically allowed to read another user's object.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Authentication vs authorization?**
+
+Hiding an admin button in the frontend is neither authentication nor authorization; the API must enforce the rule.
 
 ## Expected answer rubric
 
 ### Must mention
 
 - Authentication vs authorization
-- Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Считать CORS авторизацией, JWT шифрованием или хранить пароль быстрым hash.
-- ответ из одного определения без механизма и failure mode.
+- Hiding an admin button in the frontend is neither authentication nor authorization; the API must enforce the rule.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- Authentication vs authorization
+- Какая типичная ошибка связана с Authentication vs authorization?
 
 ## Задача
 
-Разбери backend-сценарий: **Назови атакующего, актив, проверку на сервере и безопасный отказ.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Authentication vs authorization**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Authentication vs authorization**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Authentication establishes who the requester is; authorization decides whether that identity may perform an action on a resource.
+- **Механизм:** Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации.
+- **Ограничение:** Hiding an admin button in the frontend is neither authentication nor authorization; the API must enforce the rule.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

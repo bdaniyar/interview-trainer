@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «CORS» как на Junior Python Backend interview.",
+    "question": "Что такое CORS и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -8,34 +8,36 @@
       "browser policy",
       "origin",
       "preflight",
-      "credentials",
-      "Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации."
+      "credentials"
     ],
+    "short_answer": "CORS is a browser policy controlling whether frontend JavaScript from one origin may read responses from another origin.",
+    "junior_answer": "CORS is a browser policy controlling whether frontend JavaScript from one origin may read responses from another origin. For non-simple requests the browser sends a preflight OPTIONS request; the server returns allowed origins, methods, headers and credentials policy. Важное ограничение: CORS is not authentication and does not block curl or server-to-server clients.",
+    "follow_up_question": "Какая типичная ошибка связана с CORS?",
+    "follow_up_answer": "Using wildcard origin with credentials is invalid/unsafe; allowed origins should be explicit.",
     "expected_answer": {
       "must_mention": [
         "browser policy",
         "origin",
         "preflight",
-        "credentials",
-        "Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации."
+        "credentials"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Считать CORS авторизацией, JWT шифрованием или хранить пароль быстрым hash.",
+        "Using wildcard origin with credentials is invalid/unsafe; allowed origins should be explicit.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Считать CORS авторизацией, JWT шифрованием или хранить пароль быстрым hash."
+        "Using wildcard origin with credentials is invalid/unsafe; allowed origins should be explicit."
       ],
       "follow_up_questions": [
-        "Назови атакующего, актив, проверку на сервере и безопасный отказ."
+        "Какая типичная ошибка связана с CORS?"
       ]
     },
     "follow_ups": [
-      "Назови атакующего, актив, проверку на сервере и безопасный отказ."
+      "Какая типичная ошибка связана с CORS?"
     ],
     "tags": [
       "stage-13",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «CORS»: Назови атакующего, актив, проверку на сервере и безопасный отказ. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с CORS?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "CORS is not authentication",
+      "Using wildcard origin with credentials is invalid/unsafe; allowed origins should be explicit."
     ],
+    "short_answer": "Using wildcard origin with credentials is invalid/unsafe; allowed origins should be explicit.",
+    "junior_answer": "Using wildcard origin with credentials is invalid/unsafe; allowed origins should be explicit.",
+    "follow_up_question": "Что такое CORS и как это работает?",
+    "follow_up_answer": "CORS is a browser policy controlling whether frontend JavaScript from one origin may read responses from another origin. For non-simple requests the browser sends a preflight OPTIONS request; the server returns allowed origins, methods, headers and credentials policy. Важное ограничение: CORS is not authentication and does not block curl or server-to-server clients.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "CORS is not authentication"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Using wildcard origin with credentials is invalid/unsafe; allowed origins should be explicit."
       ],
       "red_flags": [
-        "Считать CORS авторизацией, JWT шифрованием или хранить пароль быстрым hash."
+        "Using wildcard origin with credentials is invalid/unsafe; allowed origins should be explicit."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое CORS и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое CORS и как это работает?"
     ],
     "tags": [
       "stage-13",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-13",

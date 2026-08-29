@@ -7,38 +7,60 @@
 
 После урока ты сможешь:
 
-- объяснить `process-local` своими словами и связать с backend-сценарием;
-- объяснить `non-durable` своими словами и связать с backend-сценарием;
-- объяснить `small side effects` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **FastAPI BackgroundTasks**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `process-local`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Background work отделяет latency запроса от выполнения, но добавляет delivery, retry и idempotency concerns.
+### Что это
 
-В теме **FastAPI BackgroundTasks** важно уверенно объяснять следующие части:
+Тема **FastAPI BackgroundTasks** описывает отдельный контракт backend-разработки.
 
-### process-local
+### Как работает
 
-Processes изолируют память и подходят для CPU-bound Python, но требуют serialization/IPC и имеют более дорогой startup.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
 
-### non-durable
+**process-local.** Processes изолируют память и подходят для CPU-bound Python, но требуют serialization/IPC и имеют более дорогой startup.
 
-Для `non-durable` проследи delivery от commit до side effect, включая duplicate, retry и idempotency.
+**non-durable.** `non-durable` является этапом delivery от DB commit до side effect, где возможны duplicate, retry и idempotency requirements.
 
-### small side effects
+**small side effects.** `small side effects` является этапом delivery от DB commit до side effect, где возможны duplicate, retry и idempotency requirements.
 
-Для `small side effects` проследи delivery от commit до side effect, включая duplicate, retry и idempotency.
+**crash loss.** `crash loss` является этапом delivery от DB commit до side effect, где возможны duplicate, retry и idempotency requirements.
 
-### crash loss
 
-Для `crash loss` проследи delivery от commit до side effect, включая duplicate, retry и idempotency.
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `process-local` и `non-durable` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `process-local`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Между DB commit и publish есть atomicity gap; outbox переносит событие в ту же transaction.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- process-local
+- non-durable
+- small side effects
+- crash loss
+
+### Полезно
+
+- связать FastAPI BackgroundTasks с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -56,19 +78,45 @@ assert example_s20_fastapi_backgroundtasks()
 
 ## Common mistakes
 
-**Ошибка:** Повторять side effect без idempotency или считать exactly-once свойством одного флага.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Игнорировать ограничение механизма и проверять только happy path.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `process-local` до запуска.
+
+**B · Find the bug.** Найди нарушение `non-durable` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про FastAPI BackgroundTasks за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **FastAPI BackgroundTasks** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Проследи событие от commit через broker/worker до повторной доставки. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое FastAPI BackgroundTasks и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме FastAPI BackgroundTasks?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+FastAPI BackgroundTasks: это отдельный технический контракт
+
+### Нормальный Junior answer
+
+> FastAPI BackgroundTasks — тема, в которой я сначала фиксирую `process-local`, затем объясняю `non-durable` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме FastAPI BackgroundTasks?**
+
+Нужно назвать конкретный failure path и способ его проверить.
 
 ## Expected answer rubric
 
@@ -77,47 +125,35 @@ assert example_s20_fastapi_backgroundtasks()
 - process-local
 - non-durable
 - small side effects
-- crash loss.
-- Между DB commit и publish есть atomicity gap; outbox переносит событие в ту же transaction.
+- crash loss
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Повторять side effect без idempotency или считать exactly-once свойством одного флага.
-- ответ из одного определения без механизма и failure mode.
+- Игнорировать ограничение механизма и проверять только happy path.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- process-local
-- non-durable
-- small side effects
-- crash loss.
+- Какое ограничение или типичная ошибка относится именно к теме FastAPI BackgroundTasks?
 
 ## Задача
 
-Разбери backend-сценарий: **Проследи событие от commit через broker/worker до повторной доставки.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **FastAPI BackgroundTasks**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **FastAPI BackgroundTasks**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** FastAPI BackgroundTasks: это отдельный технический контракт
+- **Механизм:** Между DB commit и publish есть atomicity gap; outbox переносит событие в ту же transaction.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

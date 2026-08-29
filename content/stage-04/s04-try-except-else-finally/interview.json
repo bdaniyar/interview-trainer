@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «`try/except/else/finally`» как на Junior Python Backend interview.",
+    "question": "Что такое `try/except/else/finally` и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -8,34 +8,36 @@
       "control flow",
       "cleanup",
       "return inside try/finally",
-      "narrow exception scope.",
-      "Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка."
+      "narrow exception scope"
     ],
+    "short_answer": "`try/except/else/finally` separates risky work, recovery, success-only work and unconditional cleanup.",
+    "junior_answer": "`try/except/else/finally` separates risky work, recovery, success-only work and unconditional cleanup. `except` runs for a matching exception, `else` only when the try block succeeds, and `finally` runs before control leaves by success, return or exception. Важное ограничение: Keep the try block narrow so unrelated bugs are not mistaken for the expected failure.",
+    "follow_up_question": "Какая типичная ошибка связана с `try/except/else/finally`?",
+    "follow_up_answer": "A return inside finally overrides an earlier return or exception and can silently destroy diagnostic information.",
     "expected_answer": {
       "must_mention": [
         "control flow",
         "cleanup",
         "return inside try/finally",
-        "narrow exception scope.",
-        "Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка."
+        "narrow exception scope"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Перехватывать Exception без стратегии либо удерживать весь поток данных в памяти.",
+        "A return inside finally overrides an earlier return or exception and can silently destroy diagnostic information.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Перехватывать Exception без стратегии либо удерживать весь поток данных в памяти."
+        "A return inside finally overrides an earlier return or exception and can silently destroy diagnostic information."
       ],
       "follow_up_questions": [
-        "Покажи happy path, завершение протокола и поведение при исключении."
+        "Какая типичная ошибка связана с `try/except/else/finally`?"
       ]
     },
     "follow_ups": [
-      "Покажи happy path, завершение протокола и поведение при исключении."
+      "Какая типичная ошибка связана с `try/except/else/finally`?"
     ],
     "tags": [
       "stage-04",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «`try/except/else/finally`»: Покажи happy path, завершение протокола и поведение при исключении. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с `try/except/else/finally`?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "one short code/result example",
+      "A return inside finally overrides an earlier return or exception and can silently destroy diagnostic information."
     ],
+    "short_answer": "A return inside finally overrides an earlier return or exception and can silently destroy diagnostic information.",
+    "junior_answer": "A return inside finally overrides an earlier return or exception and can silently destroy diagnostic information.",
+    "follow_up_question": "Что такое `try/except/else/finally` и как это работает?",
+    "follow_up_answer": "`try/except/else/finally` separates risky work, recovery, success-only work and unconditional cleanup. `except` runs for a matching exception, `else` only when the try block succeeds, and `finally` runs before control leaves by success, return or exception. Важное ограничение: Keep the try block narrow so unrelated bugs are not mistaken for the expected failure.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "one short code/result example"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "A return inside finally overrides an earlier return or exception and can silently destroy diagnostic information."
       ],
       "red_flags": [
-        "Перехватывать Exception без стратегии либо удерживать весь поток данных в памяти."
+        "A return inside finally overrides an earlier return or exception and can silently destroy diagnostic information."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое `try/except/else/finally` и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое `try/except/else/finally` и как это работает?"
     ],
     "tags": [
       "stage-04",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-04",

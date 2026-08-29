@@ -1,41 +1,43 @@
 [
   {
-    "question": "Объясни тему «Session mental model» как на Junior Python Backend interview.",
+    "question": "Что такое SQLAlchemy Session и зачем ей identity map?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "unit of work",
       "identity map",
-      "pending/persistent/detached awareness",
-      "not just a connection.",
-      "Один request/use case обычно владеет одной Session и явно завершает commit или rollback."
+      "unit of work",
+      "основные entity states",
+      "flush vs commit"
     ],
+    "short_answer": "Session — unit of work + identity map + transaction state; в одной Session одна DB row представлена одним Python object.",
+    "junior_answer": "Session отслеживает ORM objects и их изменения, объединяет их в unit of work и владеет transaction state. Identity map хранит уже загруженные объекты по class и primary key, поэтому повторный `get` в той же Session обычно возвращает тот же Python object. Flush отправляет SQL внутри transaction, а commit завершает её. Для web request обычно создают отдельную Session.",
+    "follow_up_question": "Чем `flush` отличается от `commit`?",
+    "follow_up_answer": "Flush синхронизирует ORM state с БД внутри открытой transaction и может получить generated id; commit фиксирует transaction. После rollback результат flush не сохраняется.",
     "expected_answer": {
       "must_mention": [
-        "unit of work",
         "identity map",
-        "pending/persistent/detached awareness",
-        "not just a connection.",
-        "Один request/use case обычно владеет одной Session и явно завершает commit или rollback."
+        "unit of work",
+        "основные entity states",
+        "flush vs commit"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks.",
+        "Создать глобальную Session для всего приложения — state и transaction начнут протекать между requests.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks."
+        "Создать глобальную Session для всего приложения — state и transaction начнут протекать между requests."
       ],
       "follow_up_questions": [
-        "Опиши session scope, момент flush/commit и количество SQL-запросов."
+        "Чем `flush` отличается от `commit`?"
       ]
     },
     "follow_ups": [
-      "Опиши session scope, момент flush/commit и количество SQL-запросов."
+      "Чем `flush` отличается от `commit`?"
     ],
     "tags": [
       "stage-16",
@@ -48,42 +50,47 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Session mental model»: Опиши session scope, момент flush/commit и количество SQL-запросов. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Чем `flush` отличается от `commit`?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Один request/use case обычно владеет одной Session и явно завершает commit или rollback.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "expire/refresh",
+      "autoflush",
+      "transaction context manager",
+      "Flush синхронизирует ORM state с БД внутри открытой transaction и может получить generated id; commit фиксирует transaction. После rollback результат flush не сохраняется."
     ],
+    "short_answer": "Flush синхронизирует ORM state с БД внутри открытой transaction и может получить generated id; commit фиксирует transaction. После rollback результат flush не сохраняется.",
+    "junior_answer": "Flush синхронизирует ORM state с БД внутри открытой transaction и может получить generated id; commit фиксирует transaction. После rollback результат flush не сохраняется.",
+    "follow_up_question": "Что такое SQLAlchemy Session и зачем ей identity map?",
+    "follow_up_answer": "Session отслеживает ORM objects и их изменения, объединяет их в unit of work и владеет transaction state. Identity map хранит уже загруженные объекты по class и primary key, поэтому повторный `get` в той же Session обычно возвращает тот же Python object. Flush отправляет SQL внутри transaction, а commit завершает её. Для web request обычно создают отдельную Session.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "expire/refresh",
+        "autoflush",
+        "transaction context manager"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Создать глобальную Session для всего приложения — state и transaction начнут протекать между requests.",
+        "Коммитить внутри каждого repository method и разрушать атомарность use case.",
+        "Продолжить работу после IntegrityError без `rollback()`."
       ],
       "red_flags": [
-        "Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks."
+        "Создать глобальную Session для всего приложения — state и transaction начнут протекать между requests."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое SQLAlchemy Session и зачем ей identity map?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое SQLAlchemy Session и зачем ей identity map?"
     ],
     "tags": [
       "stage-16",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-16",

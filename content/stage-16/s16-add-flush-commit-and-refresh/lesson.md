@@ -7,42 +7,48 @@
 
 После урока ты сможешь:
 
-- объяснить ``add`` своими словами и связать с backend-сценарием;
-- объяснить ``flush` sends SQL inside transaction` своими словами и связать с backend-сценарием;
-- объяснить ``commit` finalizes` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Add, flush, commit and refresh**, а не только запомнить термин;
+- прочитать и изменить короткий пример для ``add``;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-SQLAlchemy 2.x управляет SQL, identity map, unit of work и transaction lifecycle; Session не является простым соединением.
+### Что это
 
-В теме **Add, flush, commit and refresh** важно уверенно объяснять следующие части:
+`add` attaches a new entity, `flush` emits pending SQL inside the transaction, `commit` finalizes it and `refresh` reloads current DB values.
 
-### `add`
+### Как работает
 
-Для ``add`` укажи Session/transaction owner, момент SQL I/O и последствия rollback или lazy load.
+Autoflush may run before a query; generated primary keys often become available after flush without commit.
 
-### `flush` sends SQL inside transaction
 
-Flush синхронизирует pending ORM state с БД внутри текущей transaction и получает generated values, но не делает изменения durable как commit.
+### Важный нюанс / limitation
 
-### `commit` finalizes
-
-Для ``commit` finalizes` укажи Session/transaction owner, момент SQL I/O и последствия rollback или lazy load.
-
-### `refresh` reloads
-
-Для ``refresh` reloads` укажи Session/transaction owner, момент SQL I/O и последствия rollback или lazy load.
-
-### generated ID may appear after flush
-
-Flush синхронизирует pending ORM state с БД внутри текущей transaction и получает generated values, но не делает изменения durable как commit.
+After commit objects may be expired depending on configuration; refresh is not a substitute for correct transaction ownership.
 
 ## Mental model
 
 Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- `add`
+- `flush` sends SQL inside transaction
+- `commit` finalizes
+- `refresh` reloads
+
+### Полезно
+
+- generated ID may appear after flush
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -59,61 +65,20 @@ Transaction boundary принадлежит service/use case; repository дел�
 
 ## Common mistakes
 
-**Ошибка:** Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Committing only to obtain an id breaks atomic use cases; flush is sufficient inside the still-open transaction.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the ``add`` example and predict the result before running it.
 
-## Interview questions
+**B · Find the bug.** Find code that violates ``flush` sends SQL inside transaction` and explain the concrete consequence.
 
-1. Объясни **Add, flush, commit and refresh** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Опиши session scope, момент flush/commit и количество SQL-запросов. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+**D · Small task.** Implement the smallest function/query that demonstrates ``add`` and add one edge-case test.
 
-## Expected answer rubric
+**E · Interview explanation.** Explain Add, flush, commit and refresh in 45–60 seconds and include one limitation.
 
-### Must mention
-
-- `add`
-- `flush` sends SQL inside transaction
-- `commit` finalizes
-- `refresh` reloads
-- Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- `add`
-- `flush` sends SQL inside transaction
-- `commit` finalizes
-- `refresh` reloads
-- generated ID may appear after flush.
-
-## Задача
-
-### Flush generated id
-
-add_and_flush делает add+flush и возвращает entity; commit запрещён.
-
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
 ## Debugging practice
 
 ### Commit in repository
@@ -124,15 +89,73 @@ add_and_flush делает add+flush и возвращает entity; commit за
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое Add, flush, commit and refresh и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Add, flush, commit and refresh?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+`add` attaches a new entity, `flush` emits pending SQL inside the transaction, `commit` finalizes it and `refresh` reloads current DB values.
+
+### Нормальный Junior answer
+
+> `add` attaches a new entity, `flush` emits pending SQL inside the transaction, `commit` finalizes it and `refresh` reloads current DB values. Autoflush may run before a query; generated primary keys often become available after flush without commit. Важное ограничение: After commit objects may be expired depending on configuration; refresh is not a substitute for correct transaction ownership.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Add, flush, commit and refresh?**
+
+Committing only to obtain an id breaks atomic use cases; flush is sufficient inside the still-open transaction.
+
+## Expected answer rubric
+
+### Must mention
+
+- `add`
+- `flush` sends SQL inside transaction
+- `commit` finalizes
+- `refresh` reloads
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Committing only to obtain an id breaks atomic use cases; flush is sufficient inside the still-open transaction.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какая типичная ошибка связана с Add, flush, commit and refresh?
+
+## Задача
+
+### Flush generated id
+
+add_and_flush делает add+flush и возвращает entity; commit запрещён.
+
+Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Add, flush, commit and refresh**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** `add` attaches a new entity, `flush` emits pending SQL inside the transaction, `commit` finalizes it and `refresh` reloads current DB values.
+- **Механизм:** Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
+- **Ограничение:** Committing only to obtain an id breaks atomic use cases; flush is sufficient inside the still-open transaction.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

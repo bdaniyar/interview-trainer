@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Session lifecycle» как на Junior Python Backend interview.",
+    "question": "Что такое Session lifecycle и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -8,34 +8,36 @@
       "create",
       "use",
       "commit/rollback",
-      "close",
-      "Один request/use case обычно владеет одной Session и явно завершает commit или rollback."
+      "close"
     ],
+    "short_answer": "Session lifecycle is create → use within one unit of work → commit or rollback → close.",
+    "junior_answer": "Session lifecycle is create → use within one unit of work → commit or rollback → close. A FastAPI yield-dependency can own one Session per request; service code decides the transaction outcome and cleanup always closes it. Важное ограничение: One AsyncSession must not be used concurrently by multiple tasks because it carries mutable transaction/identity state.",
+    "follow_up_question": "Какая типичная ошибка связана с Session lifecycle?",
+    "follow_up_answer": "A module-global Session leaks tracked objects and transaction failures across requests.",
     "expected_answer": {
       "must_mention": [
         "create",
         "use",
         "commit/rollback",
-        "close",
-        "Один request/use case обычно владеет одной Session и явно завершает commit или rollback."
+        "close"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks.",
+        "A module-global Session leaks tracked objects and transaction failures across requests.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks."
+        "A module-global Session leaks tracked objects and transaction failures across requests."
       ],
       "follow_up_questions": [
-        "Опиши session scope, момент flush/commit и количество SQL-запросов."
+        "Какая типичная ошибка связана с Session lifecycle?"
       ]
     },
     "follow_ups": [
-      "Опиши session scope, момент flush/commit и количество SQL-запросов."
+      "Какая типичная ошибка связана с Session lifecycle?"
     ],
     "tags": [
       "stage-16",
@@ -48,42 +50,43 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Session lifecycle»: Опиши session scope, момент flush/commit и количество SQL-запросов. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Session lifecycle?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Один request/use case обычно владеет одной Session и явно завершает commit или rollback.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "request-scoped session",
+      "never share one session globally",
+      "A module-global Session leaks tracked objects and transaction failures across requests."
     ],
+    "short_answer": "A module-global Session leaks tracked objects and transaction failures across requests.",
+    "junior_answer": "A module-global Session leaks tracked objects and transaction failures across requests.",
+    "follow_up_question": "Что такое Session lifecycle и как это работает?",
+    "follow_up_answer": "Session lifecycle is create → use within one unit of work → commit or rollback → close. A FastAPI yield-dependency can own one Session per request; service code decides the transaction outcome and cleanup always closes it. Важное ограничение: One AsyncSession must not be used concurrently by multiple tasks because it carries mutable transaction/identity state.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "request-scoped session",
+        "never share one session globally"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "A module-global Session leaks tracked objects and transaction failures across requests."
       ],
       "red_flags": [
-        "Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks."
+        "A module-global Session leaks tracked objects and transaction failures across requests."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Session lifecycle и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Session lifecycle и как это работает?"
     ],
     "tags": [
       "stage-16",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-16",

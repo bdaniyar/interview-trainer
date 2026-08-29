@@ -11,9 +11,11 @@ import re
 from pathlib import Path
 
 try:
+    from .learning_materials import dossier_for
     from .personalize_examples import CURATED as CURATED_EXAMPLES
     from .personalize_examples import fallback_example
 except ImportError:  # direct `python tools/populate_curriculum.py` execution
+    from learning_materials import dossier_for
     from personalize_examples import CURATED as CURATED_EXAMPLES
     from personalize_examples import fallback_example
 
@@ -283,39 +285,39 @@ POINT_EXPLANATIONS = [
 ]
 
 STAGE_POINT_FALLBACKS = {
-    0: "Зафиксируй, какую способность оценивает пункт `{point}`, и подготовь короткое доказательство из своего кода вместо перечисления терминов.",
-    1: "Для `{point}` проследи конкретный object, его type/identity и все bindings до и после операции.",
-    2: "Для `{point}` назови поддерживаемые операции, порядок, уникальность, mutability и стоимость ключевого доступа.",
-    3: "Для `{point}` отдели definition time от call time и покажи влияние на signature, scope или state функции.",
-    4: "Для `{point}` опиши protocol: кто инициирует шаг, какое состояние сохраняется, как выглядит завершение и error path.",
-    5: "Для `{point}` укажи, где хранится state, как Python ищет behavior и почему выбран composition/inheritance.",
-    6: "Для `{point}` покажи, что видит static checker, что реально происходит runtime и где нужна отдельная validation.",
-    7: "Для `{point}` отдели гарантию Python от детали CPython и сначала измерь lifetime, allocations или contention.",
-    8: "Для `{point}` проследи coroutine/task по await points, cancellation и cleanup, не предполагая отдельный thread.",
-    9: "Для `{point}` сравни shared memory, serialization, startup cost и подходящий I/O/CPU workload.",
-    10: "Для `{point}` сначала определи grain/cardinality результата, затем NULL и ordering semantics.",
-    11: "Для `{point}` назови защищаемый invariant, concurrent transaction и evidence из constraint или query plan.",
-    12: "Для `{point}` зафиксируй observable HTTP contract: request semantics, response status/body и повтор запроса.",
-    13: "Для `{point}` назови threat, trust boundary, server-side check и безопасный failure response.",
-    14: "Для `{point}` проследи request через router, validation/dependencies, handler/service и response serialization.",
-    15: "Для `{point}` различай missing, explicit null, invalid input и serialized output Pydantic v2.",
-    16: "Для `{point}` укажи Session/transaction owner, момент SQL I/O и последствия rollback или lazy load.",
-    17: "Для `{point}` опиши проверяемый schema transition и отдельно риски upgrade, deploy compatibility и rollback.",
-    18: "Для `{point}` сформулируй observable contract, isolation boundary и failure, который обязан поймать test.",
-    19: "Для `{point}` определи Redis key/value, TTL, invalidation, concurrency и fallback при outage.",
-    20: "Для `{point}` проследи delivery от commit до side effect, включая duplicate, retry и idempotency.",
-    21: "Для `{point}` раздели image/build-time и container/runtime, затем проверь DNS, ports, mounts и lifecycle.",
-    22: "Для `{point}` сначала назови изменяемое состояние Git: working tree, index, branch pointer или shared history.",
-    23: "Для `{point}` свяжи command с конкретным process, file, permission, environment или network symptom.",
-    24: "Для `{point}` определи reproducible quality gate, trigger, artifact и безопасное управление secret.",
-    25: "Для `{point}` укажи сигнал, labels/context, способ correlation и действие инженера по наблюдаемому symptom.",
-    26: "Для `{point}` сопоставь Django/DRF abstraction с request, ORM query count, validation и permissions.",
-    27: "Для `{point}` проведи границу слоя и dependency direction, затем покажи test без реальной инфраструктуры.",
-    28: "Для `{point}` назови input constraints, data structure, complexity и boundary cases до написания кода.",
-    29: "Для `{point}` начни с requirements/source of truth и только затем добавляй component под измеримый failure mode.",
-    30: "Для `{point}` объясни роль в deploy path и честно отдели знакомство с концепцией от production operation.",
-    31: "Для `{point}` подготовь ответ на 60–90 секунд: context, личное действие, результат и проверяемый follow-up.",
-    32: "Для `{point}` отвечай только по реализованному flow: проблема, своё решение, trade-off, failure mode и test/metric.",
+    0: "`{point}` — отдельная диагностическая область; результат показывает, какую тему стоит повторить в Learn mode перед пробным интервью.",
+    1: "`{point}` относится к связи object, type, identity и names; операция либо меняет binding, либо состояние существующего объекта.",
+    2: "`{point}` является частью контракта collection: наблюдаемое поведение зависит от порядка, duplicates, mutability и стоимости доступа.",
+    3: "`{point}` влияет на function contract; результат определяется definition time, argument binding при вызове и разрешением names.",
+    4: "`{point}` участвует в protocol управления потоком: объект хранит state, consumer делает шаги, а завершение и error path имеют явный сигнал.",
+    5: "`{point}` определяет, где хранится object state, как идёт attribute lookup и насколько сильно тип зависит от collaborators.",
+    6: "`{point}` описывает статическую часть type contract; runtime остаётся динамическим, а недоверенные данные требуют отдельной validation.",
+    7: "`{point}` относится к поведению CPython; практический вывод подтверждают измерением lifetime, allocations или contention.",
+    8: "`{point}` является частью lifecycle coroutine/task между scheduling, await points, cancellation и cleanup; отдельный thread автоматически не появляется.",
+    9: "`{point}` определяет модель выполнения: threads делят память, processes используют isolation/serialization, а выбор зависит от I/O- или CPU-bound workload.",
+    10: "`{point}` меняет набор SQL rows; его смысл проверяют через grain результата, cardinality, NULL semantics и явный ordering.",
+    11: "`{point}` влияет на database invariant, concurrent transactions или access path; правильность подтверждают constraint и фактический query plan.",
+    12: "`{point}` является частью observable HTTP contract и влияет на request semantics, response status/body и допустимость повторного запроса.",
+    13: "`{point}` закрывает конкретную threat на trust boundary; проверка выполняется server-side, а отказ не раскрывает лишних данных.",
+    14: "`{point}` занимает конкретный этап FastAPI request lifecycle между router, validation/dependencies, handler и response serialization.",
+    15: "`{point}` влияет на Pydantic v2 validation/serialization и должен различать missing, explicit null, invalid input и output representation.",
+    16: "`{point}` влияет на SQLAlchemy Session/transaction state, момент фактического SQL I/O и поведение rollback или relationship loading.",
+    17: "`{point}` является частью versioned schema transition; безопасный вариант учитывает upgrade, deploy compatibility, backfill и rollback.",
+    18: "`{point}` помогает проверить observable contract; test задаёт isolation boundary, конкретный input и ожидаемый success/failure result.",
+    19: "`{point}` влияет на Redis key/value lifecycle; корректная схема заранее определяет TTL, invalidation, concurrency и outage fallback.",
+    20: "`{point}` является этапом delivery от DB commit до side effect, где возможны duplicate, retry и idempotency requirements.",
+    21: "`{point}` относится либо к build-time image, либо к runtime container и наблюдается через DNS, ports, mounts и process lifecycle.",
+    22: "`{point}` меняет одно из состояний Git: working tree, index, branch pointer или shared history; эти эффекты нельзя смешивать.",
+    23: "`{point}` связывает shell command с конкретным process, file, permission, environment или network state.",
+    24: "`{point}` является частью reproducible CI/CD gate с явным trigger, versioned artifact и безопасной передачей secrets.",
+    25: "`{point}` является observability signal с контекстом, correlation и ожидаемым действием инженера после обнаружения symptom.",
+    26: "`{point}` входит в Django/DRF request flow и влияет на ORM query count, validation, permissions или response serialization.",
+    27: "`{point}` задаёт границу слоя и направление зависимости; хороший design оставляет seam для теста без реальной infrastructure.",
+    28: "`{point}` определяет data-structure operation с конкретной time/space complexity и набором boundary cases.",
+    29: "`{point}` является компонентом system design только при наличии требования, source of truth и измеримого failure mode.",
+    30: "`{point}` занимает определённое место в deploy path; на Junior уровне достаточно понимать роль и диагностируемый failure.",
+    31: "`{point}` раскрывается через context, личное действие, измеримый результат и конкретный follow-up без выдуманных деталей.",
+    32: "`{point}` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.",
 }
 
 
@@ -329,7 +331,19 @@ def existing_directories() -> dict[str, Path]:
 
 def explain_point(point: str, guide: tuple[str, str, str, str], stage_number: int) -> str:
     lowered = point.lower()
-    for keyword, explanation in POINT_EXPLANATIONS:
+    # Prefer the most specific phrase. The old first-substring match mapped
+    # "indexing" to a database index and "identity map" to object identity.
+    stage_overrides = {
+        (14, "request-scoped lifecycle"): "Dependency создаётся для конкретного request; yield-dependency освобождает ресурс после ответа или ошибки.",
+        (14, "auth/session/settings"): "Dependencies подходят для framework-bound ресурсов: current user, request Session и typed settings передаются handler явно.",
+        (14, "caching per request"): "Одинаковая dependency по умолчанию вычисляется один раз внутри request; между разными requests результат не разделяется.",
+        (16, "identity map"): "Identity map хранит один ORM instance на пару mapped class/primary key внутри Session, поэтому повторная загрузка возвращает тот же Python object.",
+        (16, "unit of work"): "Unit of work собирает изменения tracked entities и синхронизирует их с БД во время flush в одной transaction.",
+        (2, "indexing/slicing"): "Index читает один элемент, а slice создаёт новый внешний list; шаг среза может быть отрицательным, и такая копия остаётся shallow.",
+    }
+    if (stage_number, lowered) in stage_overrides:
+        return stage_overrides[(stage_number, lowered)]
+    for keyword, explanation in sorted(POINT_EXPLANATIONS, key=lambda item: len(item[0]), reverse=True):
         if keyword in lowered:
             return explanation
     return STAGE_POINT_FALLBACKS[stage_number].format(point=point.rstrip("."))
@@ -362,11 +376,11 @@ def lesson_markdown(lesson: dict, stage: dict, existing_theory: str | None, exis
     stage_number = stage["number"]
     guide = STAGE_GUIDES[stage_number]
     outline = lesson.get("outline") or [lesson["title"]]
-    objectives = outline[:3]
     sources = SOURCES[stage_number]
-    theory = existing_theory or "\n\n".join(
-        [guide[0], f"В теме **{lesson['title']}** важно уверенно объяснять следующие части:"]
-        + [f"### {point.rstrip('.')}\n\n{explain_point(point, guide, stage_number)}" for point in outline[:7]]
+    material = dossier_for(
+        lesson,
+        stage_number,
+        lambda point: explain_point(point, guide, stage_number),
     )
     example = CURATED_EXAMPLES.get(lesson["number"]) or fallback_example({**lesson, "stage_number": stage_number})
     example_block = (
@@ -374,18 +388,31 @@ def lesson_markdown(lesson: dict, stage: dict, existing_theory: str | None, exis
         f"```{example[0]}\n{example[1]}\n```\n\n{example[2]}"
     )
     task = existing_task or (
-        f"Разбери backend-сценарий: **{guide[3]}**\n\n"
-        "Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. "
-        "Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса."
+        f"Сделай короткую письменную практику по теме **{lesson['title']}**: реши один пункт из раздела Practice, "
+        "затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются."
     )
-    answer_points = outline[:4] + [guide[1]]
     source_lines = "\n".join(f"- [{name}]({url})" for name, url in sources)
-    outline_lines = "\n".join(f"- {item}" for item in outline[:8])
     objective_lines = "\n".join(
-        [f"- объяснить `{item}` своими словами и связать с backend-сценарием;" for item in objectives]
-        + ["- распознать типичную ошибку и предложить проверяемое исправление."]
+        [
+            f"- восстановить mental model темы **{lesson['title']}**, а не только запомнить термин;",
+            f"- прочитать и изменить короткий пример для `{outline[0]}`;",
+            "- распознать характерную ошибку и объяснить причину;",
+            "- дать реалистичный ответ уровня Junior и выдержать follow-up.",
+        ]
     )
-    answer_lines = "\n".join(f"- {item}" for item in answer_points)
+    mistakes = "\n\n".join(f"### Ошибка {index}\n\n{item}" for index, item in enumerate(material.mistakes, 1))
+    required = "\n".join(f"- {item}" for item in material.required)
+    useful = "\n".join(f"- {item}" for item in material.useful)
+    skip_deep = "\n".join(f"- {item}" for item in material.skip_deep)
+    practices = "\n\n".join(material.practices)
+    rubric = material.rubric or material.required[:4]
+    rubric_lines = "\n".join(f"- {item}" for item in rubric)
+    backend = (
+        f"\n\n### Где используется в backend\n\n{material.backend}"
+        if material.backend
+        else ""
+    )
+    theory_example = f"\n\n### Пример\n\n{material.example}" if material.example else ""
     return f"""# {lesson['title']}
 
 > [!IMPORTANT]
@@ -399,13 +426,38 @@ def lesson_markdown(lesson: dict, stage: dict, existing_theory: str | None, exis
 
 ## Theory
 
-{theory}
+### Что это
+
+{material.what}
+
+### Как работает
+
+{material.mechanism}
+{theory_example}
+
+### Важный нюанс / limitation
+
+{material.nuance}{backend}
 
 ## Mental model
 
 {guide[1]}
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+{required}
+
+### Полезно
+
+{useful}
+
+### Можно не учить глубоко
+
+{skip_deep}
 
 ## Code examples
 
@@ -413,45 +465,60 @@ def lesson_markdown(lesson: dict, stage: dict, existing_theory: str | None, exis
 
 ## Common mistakes
 
-**Ошибка:** {guide[2]}
+{mistakes}
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+## Practice
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
-
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+{practices}
 
 ## Interview questions
 
-1. Объясни **{lesson['title']}** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: {guide[3]} Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+{material.question}
+
+### Follow-up
+
+{material.follow_up_question}
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+{material.short_answer}
+
+### Нормальный Junior answer
+
+> {material.junior_answer}
+
+### Углубление / follow-up
+
+**{material.follow_up_question}**
+
+{material.follow_up_answer}
 
 ## Expected answer rubric
 
 ### Must mention
 
-{answer_lines}
+{rubric_lines}
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- {guide[2]}
-- ответ из одного определения без механизма и failure mode.
+- {material.mistakes[0]}
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-{outline_lines}
+- {material.follow_up_question}
 
 ## Задача
 
@@ -461,11 +528,10 @@ def lesson_markdown(lesson: dict, stage: dict, existing_theory: str | None, exis
 
 Перед собеседованием запомни:
 
-- дай точное определение **{lesson['title']}**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** {material.short_answer}
+- **Механизм:** {guide[1]}
+- **Ограничение:** {material.mistakes[0]}
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 
@@ -479,9 +545,13 @@ def lesson_markdown(lesson: dict, stage: dict, existing_theory: str | None, exis
 
 def interview_questions(lesson: dict, stage: dict) -> list[dict]:
     guide = STAGE_GUIDES[stage["number"]]
-    outline = lesson.get("outline") or [lesson["title"]]
-    answer = outline[:4] + [guide[1]]
-    common = [guide[2], "Ответ без механизма, примера и ограничения"]
+    material = dossier_for(
+        lesson,
+        stage["number"],
+        lambda point: explain_point(point, guide, stage["number"]),
+    )
+    answer = list(material.rubric or material.required[:4])
+    common = [material.mistakes[0], "Ответ без механизма, примера и ограничения"]
     sets = [stage["slug"], "full-junior-backend"]
     if lesson["priority"] in {"P0", "P1"}:
         sets.append("interview-crash-course")
@@ -489,37 +559,45 @@ def interview_questions(lesson: dict, stage: dict) -> list[dict]:
         sets.append("resume-defense")
     return [
         {
-            "question": f"Объясни тему «{lesson['title']}» как на Junior Python Backend interview.",
+            "question": material.question,
             "level": "normal",
             "priority": lesson["priority"],
             "interview_probability": lesson["interview_probability"],
             "answer": answer,
+            "short_answer": material.short_answer,
+            "junior_answer": material.junior_answer,
+            "follow_up_question": material.follow_up_question,
+            "follow_up_answer": material.follow_up_answer,
             "expected_answer": {
                 "must_mention": answer,
-                "good_additions": ["конкретный backend example", "trade-off или failure mode"],
+                "good_additions": ["короткий рабочий пример", "ограничение или типичная ошибка"],
                 "common_wrong_answers": common,
-                "red_flags": [guide[2]],
-                "follow_up_questions": [guide[3]],
+                "red_flags": [material.mistakes[0]],
+                "follow_up_questions": [material.follow_up_question],
             },
-            "follow_ups": [guide[3]],
+            "follow_ups": [material.follow_up_question],
             "tags": [stage["slug"], lesson["priority"].lower()],
             "sets": sets,
         },
         {
-            "question": f"Сценарий по теме «{lesson['title']}»: {guide[3]} Что проверишь первым?",
-            "level": "scenario",
+            "question": material.follow_up_question,
+            "level": "follow_up",
             "priority": lesson["priority"],
             "interview_probability": lesson["interview_probability"],
-            "answer": ["Уточнить требования и observable symptom", guide[1], "Назвать edge case", "Предложить test/log/metric для проверки"],
+            "answer": list(material.useful) + [material.follow_up_answer],
+            "short_answer": material.follow_up_answer,
+            "junior_answer": material.follow_up_answer,
+            "follow_up_question": material.question,
+            "follow_up_answer": material.junior_answer,
             "expected_answer": {
-                "must_mention": ["assumptions", "mechanism", "failure mode", "verification"],
-                "good_additions": ["альтернатива и trade-off"],
-                "common_wrong_answers": ["Сразу называть технологию до уточнения проблемы"],
-                "red_flags": [guide[2]],
-                "follow_up_questions": ["Что произойдёт при повторе или частичном отказе?"],
+                "must_mention": list(material.useful) or list(material.required[:2]),
+                "good_additions": ["короткий пример именно этой темы"],
+                "common_wrong_answers": list(material.mistakes),
+                "red_flags": [material.mistakes[0]],
+                "follow_up_questions": [material.question],
             },
-            "follow_ups": ["Что произойдёт при повторе или частичном отказе?"],
-            "tags": [stage["slug"], "scenario"],
+            "follow_ups": [material.question],
+            "tags": [stage["slug"], "follow-up"],
             "sets": sets,
         },
     ]
@@ -539,7 +617,7 @@ def metadata_for(lesson: dict, stage: dict, slug: str, order: int, has_task: boo
         "estimated_minutes": lesson["estimated_minutes"],
         "xp": 25 if has_task else 5,
         "topics": outline[:8],
-        "description": f"{lesson['priority']} · {lesson['title']}: mental model, interview rubric и backend-сценарий.",
+        "description": f"{lesson['priority']} · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
         "has_task": has_task,
         "has_solution": has_solution,
         "priority": lesson["priority"],
@@ -592,15 +670,9 @@ def main() -> None:
             metadata = metadata_for(lesson, stage, slug, order, has_preserved_task, has_preserved_task)
             (directory / "metadata.json").write_text(json.dumps(metadata, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
             lesson_path = directory / "lesson.md"
-            preserve_seed_lesson = (
-                has_preserved_task
-                and lesson_path.exists()
-                and "## Learning objectives" in lesson_path.read_text(encoding="utf-8")
+            lesson_path.write_text(
+                lesson_markdown(lesson, stage, existing_theory, existing_task), encoding="utf-8"
             )
-            if not preserve_seed_lesson:
-                lesson_path.write_text(
-                    lesson_markdown(lesson, stage, existing_theory, existing_task), encoding="utf-8"
-                )
             (directory / "interview.json").write_text(
                 json.dumps(interview_questions(lesson, stage), ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
             )

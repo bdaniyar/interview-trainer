@@ -7,34 +7,47 @@
 
 После урока ты сможешь:
 
-- объяснить `preserving left rows` своими словами и связать с backend-сценарием;
-- объяснить `condition in `ON` vs `WHERE`` своими словами и связать с backend-сценарием;
-- объяснить `finding missing related rows.` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **LEFT JOIN**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `preserving left rows`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-SQL описывает требуемый набор строк; корректность начинается с cardinality, NULL semantics и явного порядка.
+### Что это
 
-В теме **LEFT JOIN** важно уверенно объяснять следующие части:
+`LEFT JOIN` preserves every left row and fills right-side columns with NULL when no match exists.
 
-### preserving left rows
+### Как работает
 
-Для `preserving left rows` сначала определи grain/cardinality результата, затем NULL и ordering semantics.
+Right-table filters in ON affect which matches attach; the same filter in WHERE can remove NULL-extended rows and effectively turn the result into INNER JOIN.
 
-### condition in `ON` vs `WHERE`
 
-`WHERE` фильтрует строки до grouping; SQL three-valued logic отбрасывает и `FALSE`, и `UNKNOWN`.
+### Важный нюанс / limitation
 
-### finding missing related rows
-
-Для `finding missing related rows` сначала определи grain/cardinality результата, затем NULL и ordering semantics.
+Count a nullable right primary key, not `COUNT(*)`, when measuring related rows per left entity.
 
 ## Mental model
 
 Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- preserving left rows
+- condition in `ON` vs `WHERE`
+- finding missing related rows
+
+### Полезно
+
+- one short code/result example
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -52,56 +65,19 @@ GROUP BY u.id;
 
 ## Common mistakes
 
-**Ошибка:** Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Putting `right.active = true` in WHERE unexpectedly removes left rows with no active relation.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `preserving left rows` example and predict the result before running it.
 
-## Interview questions
+**B · Find the bug.** Find code that violates `condition in `ON` vs `WHERE`` and explain the concrete consequence.
 
-1. Объясни **LEFT JOIN** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Предскажи cardinality результата и проверь, не размножает ли JOIN строки. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+**D · Small task.** Implement the smallest function/query that demonstrates `preserving left rows` and add one edge-case test.
 
-## Expected answer rubric
-
-### Must mention
-
-- preserving left rows
-- condition in `ON` vs `WHERE`
-- finding missing related rows.
-- Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- preserving left rows
-- condition in `ON` vs `WHERE`
-- finding missing related rows.
-
-## Задача
-
-Разбери backend-сценарий: **Предскажи cardinality результата и проверь, не размножает ли JOIN строки.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Explain LEFT JOIN in 45–60 seconds and include one limitation.
 
 ## SQL practice
 
@@ -280,15 +256,69 @@ SQL runner пока не подключён: выполни запрос в ло
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое LEFT JOIN и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с LEFT JOIN?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+`LEFT JOIN` preserves every left row and fills right-side columns with NULL when no match exists.
+
+### Нормальный Junior answer
+
+> `LEFT JOIN` preserves every left row and fills right-side columns with NULL when no match exists. Right-table filters in ON affect which matches attach; the same filter in WHERE can remove NULL-extended rows and effectively turn the result into INNER JOIN. Важное ограничение: Count a nullable right primary key, not `COUNT(*)`, when measuring related rows per left entity.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с LEFT JOIN?**
+
+Putting `right.active = true` in WHERE unexpectedly removes left rows with no active relation.
+
+## Expected answer rubric
+
+### Must mention
+
+- preserving left rows
+- condition in `ON` vs `WHERE`
+- finding missing related rows
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Putting `right.active = true` in WHERE unexpectedly removes left rows with no active relation.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какая типичная ошибка связана с LEFT JOIN?
+
+## Задача
+
+Сделай короткую письменную практику по теме **LEFT JOIN**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **LEFT JOIN**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** `LEFT JOIN` preserves every left row and fills right-side columns with NULL when no match exists.
+- **Механизм:** Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
+- **Ограничение:** Putting `right.active = true` in WHERE unexpectedly removes left rows with no active relation.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

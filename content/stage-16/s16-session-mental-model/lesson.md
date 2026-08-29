@@ -7,38 +7,65 @@
 
 После урока ты сможешь:
 
-- объяснить `unit of work` своими словами и связать с backend-сценарием;
-- объяснить `identity map` своими словами и связать с backend-сценарием;
-- объяснить `pending/persistent/detached awareness` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Session mental model**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `unit of work`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-SQLAlchemy 2.x управляет SQL, identity map, unit of work и transaction lifecycle; Session не является простым соединением.
+### Что это
 
-В теме **Session mental model** важно уверенно объяснять следующие части:
+SQLAlchemy `Session` — рабочая область ORM: она отслеживает entities, хранит identity map, собирает изменения как unit of work и управляет transaction. Это не просто один connection.
 
-### unit of work
+### Как работает
 
-Для `unit of work` укажи Session/transaction owner, момент SQL I/O и последствия rollback или lazy load.
+Новая entity после `add` становится pending; при flush INSERT/UPDATE/DELETE уходят в текущую transaction, а объект становится persistent. Identity map гарантирует один Python object на пару `(mapped class, primary key)` внутри Session. После close/expunge объект detached и lazy loading больше не имеет активного Session context.
 
-### identity map
 
-Identity отвечает на вопрос «тот же ли это объект» и сравнивается через `is`; равенство — отдельный протокол `__eq__`, обычно сравнивающий значения.
+### Пример
 
-### pending/persistent/detached awareness
+```python
+with Session(engine) as session:
+    first = session.get(User, 1)
+    second = session.get(User, 1)
 
-Для `pending/persistent/detached awareness` укажи Session/transaction owner, момент SQL I/O и последствия rollback или lazy load.
+    print(first is second)  # True: identity map
+```
 
-### not just a connection
+### Важный нюанс / limitation
 
-Для `not just a connection` укажи Session/transaction owner, момент SQL I/O и последствия rollback или lazy load.
+Session получает connection по необходимости. `flush` отправляет SQL, но не делает commit; после flush error нужен rollback. Обычно один request/use case владеет одной Session. AsyncSession нельзя одновременно использовать из нескольких tasks.
+
+### Где используется в backend
+
+FastAPI yield-dependency создаёт Session на request, service задаёт transaction boundary, а cleanup закрывает Session.
 
 ## Mental model
 
 Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- identity map
+- unit of work
+- основные entity states
+- flush vs commit
+- request scope
+
+### Полезно
+
+- expire/refresh
+- autoflush
+- transaction context manager
+
+### Можно не учить глубоко
+
+- внутренние события unit-of-work sorter
 
 ## Code examples
 
@@ -53,52 +80,79 @@ def load_twice(session, model, object_id):
 
 ## Common mistakes
 
-**Ошибка:** Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Создать глобальную Session для всего приложения — state и transaction начнут протекать между requests.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+### Ошибка 2
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+Коммитить внутри каждого repository method и разрушать атомарность use case.
+
+### Ошибка 3
+
+Продолжить работу после IntegrityError без `rollback()`.
+
+## Practice
+
+**A · Code prediction.** Два `session.get(User, 1)` — сравни identity результатов.
+
+**B · Find the bug.** Найди global Session и commit в repository.
+
+**C · Rewrite.** Перенеси commit на service/use-case boundary.
+
+**D · Small task.** Реализуй `load_twice` и пройди hidden identity-map test.
 
 ## Interview questions
 
-1. Объясни **Session mental model** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Опиши session scope, момент flush/commit и количество SQL-запросов. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое SQLAlchemy Session и зачем ей identity map?
+
+### Follow-up
+
+Чем `flush` отличается от `commit`?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Session — unit of work + identity map + transaction state; в одной Session одна DB row представлена одним Python object.
+
+### Нормальный Junior answer
+
+> Session отслеживает ORM objects и их изменения, объединяет их в unit of work и владеет transaction state. Identity map хранит уже загруженные объекты по class и primary key, поэтому повторный `get` в той же Session обычно возвращает тот же Python object. Flush отправляет SQL внутри transaction, а commit завершает её. Для web request обычно создают отдельную Session.
+
+### Углубление / follow-up
+
+**Чем `flush` отличается от `commit`?**
+
+Flush синхронизирует ORM state с БД внутри открытой transaction и может получить generated id; commit фиксирует transaction. После rollback результат flush не сохраняется.
 
 ## Expected answer rubric
 
 ### Must mention
 
-- unit of work
 - identity map
-- pending/persistent/detached awareness
-- not just a connection.
-- Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
+- unit of work
+- основные entity states
+- flush vs commit
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks.
-- ответ из одного определения без механизма и failure mode.
+- Создать глобальную Session для всего приложения — state и transaction начнут протекать между requests.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- unit of work
-- identity map
-- pending/persistent/detached awareness
-- not just a connection.
+- Чем `flush` отличается от `commit`?
 
 ## Задача
 
@@ -111,11 +165,10 @@ load_twice делает два Session.get и возвращает tuple; не �
 
 Перед собеседованием запомни:
 
-- дай точное определение **Session mental model**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Session — unit of work + identity map + transaction state; в одной Session одна DB row представлена одним Python object.
+- **Механизм:** Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
+- **Ограничение:** Создать глобальную Session для всего приложения — state и transaction начнут протекать между requests.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

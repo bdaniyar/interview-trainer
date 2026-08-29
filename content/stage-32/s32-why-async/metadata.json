@@ -14,7 +14,7 @@
     "event loop serves other work while waiting",
     "CPU-heavy work must leave event loop."
   ],
-  "description": "P0 · Why async?: mental model, interview rubric и backend-сценарий.",
+  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
   "has_task": false,
   "has_solution": false,
   "priority": "P0",

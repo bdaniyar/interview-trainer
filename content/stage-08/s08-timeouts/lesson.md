@@ -7,34 +7,57 @@
 
 После урока ты сможешь:
 
-- объяснить `bounded waiting` своими словами и связать с backend-сценарием;
-- объяснить ``asyncio.timeout` or version-appropriate API` своими словами и связать с backend-сценарием;
-- объяснить `cleanup.` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Timeouts**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `bounded waiting`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-asyncio даёт кооперативную конкурентность для I/O-bound работы: задача уступает loop только в await point.
+### Что это
 
-В теме **Timeouts** важно уверенно объяснять следующие части:
+Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг await points.
 
-### bounded waiting
+### Как работает
 
-Для `bounded waiting` проследи coroutine/task по await points, cancellation и cleanup, не предполагая отдельный thread.
+Проследи coroutine от создания через scheduling и await points до result, cancellation и cleanup.
 
-### `asyncio.timeout` or version-appropriate API
+**bounded waiting.** `bounded waiting` является частью lifecycle coroutine/task между scheduling, await points, cancellation и cleanup; отдельный thread автоматически не появляется.
 
-Для ``asyncio.timeout` or version-appropriate API` проследи coroutine/task по await points, cancellation и cleanup, не предполагая отдельный thread.
+**`asyncio.timeout` or version-appropriate API.** ``asyncio.timeout` or version-appropriate API` является частью lifecycle coroutine/task между scheduling, await points, cancellation и cleanup; отдельный thread автоматически не появляется.
 
-### cleanup
+**cleanup.** `cleanup` является частью lifecycle coroutine/task между scheduling, await points, cancellation и cleanup; отдельный thread автоматически не появляется.
 
-Для `cleanup` проследи coroutine/task по await points, cancellation и cleanup, не предполагая отдельный thread.
+
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `bounded waiting` и ``asyncio.timeout` or version-appropriate API` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `bounded waiting`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- bounded waiting
+- `asyncio.timeout` or version-appropriate API
+- cleanup
+
+### Полезно
+
+- связать Timeouts с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -57,19 +80,45 @@ Timeout задаёт deadline scope, отменяет затянувшееся �
 
 ## Common mistakes
 
-**Ошибка:** Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Выполнить blocking call в event loop или создать coroutine и не await/schedule её.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `bounded waiting` до запуска.
+
+**B · Find the bug.** Найди нарушение ``asyncio.timeout` or version-appropriate API` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Timeouts за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Timeouts** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Найди blocking участок, обозначь cancellation boundary и выбери способ конкурентного запуска. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Timeouts и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Timeouts?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Timeouts: Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг await points.
+
+### Нормальный Junior answer
+
+> Timeouts — тема, в которой я сначала фиксирую `bounded waiting`, затем объясняю ``asyncio.timeout` or version-appropriate API` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и await points до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Timeouts?**
+
+Выполнить blocking call в event loop или создать coroutine и не await/schedule её.
 
 ## Expected answer rubric
 
@@ -77,30 +126,22 @@ Timeout задаёт deadline scope, отменяет затянувшееся �
 
 - bounded waiting
 - `asyncio.timeout` or version-appropriate API
-- cleanup.
-- Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.
+- cleanup
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint.
-- ответ из одного определения без механизма и failure mode.
+- Выполнить blocking call в event loop или создать coroutine и не await/schedule её.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- bounded waiting
-- `asyncio.timeout` or version-appropriate API
-- cleanup.
+- Какое ограничение или типичная ошибка относится именно к теме Timeouts?
 
 ## Задача
 
@@ -113,11 +154,10 @@ Timeout задаёт deadline scope, отменяет затянувшееся �
 
 Перед собеседованием запомни:
 
-- дай точное определение **Timeouts**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Timeouts: Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг await points.
+- **Механизм:** Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.
+- **Ограничение:** Выполнить blocking call в event loop или создать coroutine и не await/schedule её.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

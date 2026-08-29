@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Hashability» как на Junior Python Backend interview.",
+    "question": "Что такое Hashability и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "hashable object",
       "dict key/set member",
       "equality/hash contract",
-      "mutable object as key",
-      "Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию."
+      "mutable object as key"
     ],
+    "short_answer": "A hashable object has a stable hash and equality behavior, so it can be a dict key or set element.",
+    "junior_answer": "A hashable object has a stable hash and equality behavior, so it can be a dict key or set element. A hash table uses `hash(key)` to find candidates and `==` to confirm a match. Objects that compare equal must have equal hashes; state involved in equality must not change while used as a key. Важное ограничение: A tuple is hashable only when all elements are hashable. Custom equality often requires an explicit, consistent `__hash__` decision.",
+    "follow_up_question": "Какая типичная ошибка связана с Hashability?",
+    "follow_up_answer": "Using list or dict as a key raises `TypeError: unhashable type`; making mutable state hashable can corrupt lookup semantics.",
     "expected_answer": {
       "must_mention": [
         "hashable object",
         "dict key/set member",
         "equality/hash contract",
-        "mutable object as key",
-        "Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию."
+        "mutable object as key"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Объяснять переменную как коробку, которая всегда содержит независимое значение.",
+        "Using list or dict as a key raises `TypeError: unhashable type`; making mutable state hashable can corrupt lookup semantics.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Объяснять переменную как коробку, которая всегда содержит независимое значение."
+        "Using list or dict as a key raises `TypeError: unhashable type`; making mutable state hashable can corrupt lookup semantics."
       ],
       "follow_up_questions": [
-        "Проследи identity и состояние объекта после двух присваиваний и одной мутации."
+        "Какая типичная ошибка связана с Hashability?"
       ]
     },
     "follow_ups": [
-      "Проследи identity и состояние объекта после двух присваиваний и одной мутации."
+      "Какая типичная ошибка связана с Hashability?"
     ],
     "tags": [
       "stage-01",
@@ -48,42 +50,43 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Hashability»: Проследи identity и состояние объекта после двух присваиваний и одной мутации. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Hashability?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "tuple hashability",
+      "custom `__hash__`",
+      "Using list or dict as a key raises `TypeError: unhashable type`; making mutable state hashable can corrupt lookup semantics."
     ],
+    "short_answer": "Using list or dict as a key raises `TypeError: unhashable type`; making mutable state hashable can corrupt lookup semantics.",
+    "junior_answer": "Using list or dict as a key raises `TypeError: unhashable type`; making mutable state hashable can corrupt lookup semantics.",
+    "follow_up_question": "Что такое Hashability и как это работает?",
+    "follow_up_answer": "A hashable object has a stable hash and equality behavior, so it can be a dict key or set element. A hash table uses `hash(key)` to find candidates and `==` to confirm a match. Objects that compare equal must have equal hashes; state involved in equality must not change while used as a key. Важное ограничение: A tuple is hashable only when all elements are hashable. Custom equality often requires an explicit, consistent `__hash__` decision.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "tuple hashability",
+        "custom `__hash__`"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Using list or dict as a key raises `TypeError: unhashable type`; making mutable state hashable can corrupt lookup semantics."
       ],
       "red_flags": [
-        "Объяснять переменную как коробку, которая всегда содержит независимое значение."
+        "Using list or dict as a key raises `TypeError: unhashable type`; making mutable state hashable can corrupt lookup semantics."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Hashability и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Hashability и как это работает?"
     ],
     "tags": [
       "stage-01",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-01",

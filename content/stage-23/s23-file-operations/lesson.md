@@ -7,42 +7,62 @@
 
 После урока ты сможешь:
 
-- объяснить `mkdir` своими словами и связать с backend-сценарием;
-- объяснить `cp` своими словами и связать с backend-сценарием;
-- объяснить `mv` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **File operations**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `mkdir`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Linux basics нужны для запуска процесса, чтения логов, environment и диагностики ports/permissions.
+### Что это
 
-В теме **File operations** важно уверенно объяснять следующие части:
+Тема **File operations** описывает отдельный контракт backend-разработки.
 
-### mkdir
+### Как работает
 
-Для `mkdir` свяжи command с конкретным process, file, permission, environment или network symptom.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
 
-### cp
+**mkdir.** `mkdir` связывает shell command с конкретным process, file, permission, environment или network state.
 
-Для `cp` свяжи command с конкретным process, file, permission, environment или network symptom.
+**cp.** `cp` связывает shell command с конкретным process, file, permission, environment или network state.
 
-### mv
+**mv.** `mv` связывает shell command с конкретным process, file, permission, environment или network state.
 
-Для `mv` свяжи command с конкретным process, file, permission, environment или network symptom.
+**rm.** `rm` связывает shell command с конкретным process, file, permission, environment или network state.
 
-### rm
+**safe destructive operations.** `safe destructive operations` связывает shell command с конкретным process, file, permission, environment или network state.
 
-Для `rm` свяжи command с конкретным process, file, permission, environment или network symptom.
 
-### safe destructive operations
+### Важный нюанс / limitation
 
-Для `safe destructive operations` свяжи command с конкретным process, file, permission, environment или network symptom.
+Граница Junior: уверенно объясняй `mkdir` и `cp` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `mkdir`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Процесс видит filesystem, env, user permissions, descriptors и network namespace.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- mkdir
+- cp
+- mv
+- rm
+
+### Полезно
+
+- safe destructive operations
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -59,19 +79,45 @@ printf '%s
 
 ## Common mistakes
 
-**Ошибка:** Менять permissions на 777 вместо поиска владельца и требуемого доступа.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Игнорировать ограничение механизма и проверять только happy path.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `mkdir` до запуска.
+
+**B · Find the bug.** Найди нарушение `cp` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про File operations за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **File operations** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Найди процесс, его exit code, порт, env и последнюю ошибку в log. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое File operations и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме File operations?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+File operations: это отдельный технический контракт
+
+### Нормальный Junior answer
+
+> File operations — тема, в которой я сначала фиксирую `mkdir`, затем объясняю `cp` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме File operations?**
+
+Нужно назвать конкретный failure path и способ его проверить.
 
 ## Expected answer rubric
 
@@ -81,47 +127,34 @@ printf '%s
 - cp
 - mv
 - rm
-- Процесс видит filesystem, env, user permissions, descriptors и network namespace.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Менять permissions на 777 вместо поиска владельца и требуемого доступа.
-- ответ из одного определения без механизма и failure mode.
+- Игнорировать ограничение механизма и проверять только happy path.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- mkdir
-- cp
-- mv
-- rm
-- safe destructive operations.
+- Какое ограничение или типичная ошибка относится именно к теме File operations?
 
 ## Задача
 
-Разбери backend-сценарий: **Найди процесс, его exit code, порт, env и последнюю ошибку в log.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **File operations**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **File operations**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** File operations: это отдельный технический контракт
+- **Механизм:** Процесс видит filesystem, env, user permissions, descriptors и network namespace.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

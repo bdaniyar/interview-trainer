@@ -7,24 +7,51 @@
 
 После урока ты сможешь:
 
-- объяснить `Repository, working tree, index and commit` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Repository, working tree, index and commit**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `Repository, working tree, index and commit`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Git хранит snapshots и граф commits; working tree, index, local branch и remote-tracking branch — разные состояния.
+### Что это
 
-В теме **Repository, working tree, index and commit** важно уверенно объяснять следующие части:
+Тема **Repository, working tree, index and commit** описывает отдельный контракт backend-разработки.
 
-### Repository, working tree, index and commit
+### Как работает
 
-Index — отдельная структура доступа с ценой записи и хранения; полезность зависит от конкретного predicate, ordering и selectivity.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
+
+**Repository, working tree, index and commit.** Index — отдельная структура доступа с ценой записи и хранения; полезность зависит от конкретного predicate, ordering и selectivity.
+
+
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `Repository, working tree, index and commit` и `Repository, working tree, index and commit` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `Repository, working tree, index and commit`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Перед командой определяй, что именно меняется: файлы, index, branch pointer или shared history.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- Repository, working tree, index and commit
+
+### Полезно
+
+- связать Repository, working tree, index and commit с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -41,62 +68,79 @@ printf '%s
 
 ## Common mistakes
 
-**Ошибка:** Rebase shared commits или удалять secret из файла без ротации.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Игнорировать ограничение механизма и проверять только happy path.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `Repository, working tree, index and commit` до запуска.
+
+**B · Find the bug.** Найди нарушение `Repository, working tree, index and commit` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Repository, working tree, index and commit за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Repository, working tree, index and commit** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Выбери безопасный способ отменить локальное и уже опубликованное изменение. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Repository, working tree, index and commit и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Repository, working tree, index and commit?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Repository, working tree, index and commit: это отдельный технический контракт
+
+### Нормальный Junior answer
+
+> Repository, working tree, index and commit — тема, в которой я сначала фиксирую `Repository, working tree, index and commit`, затем объясняю `Repository, working tree, index and commit` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Repository, working tree, index and commit?**
+
+Нужно назвать конкретный failure path и способ его проверить.
 
 ## Expected answer rubric
 
 ### Must mention
 
 - Repository, working tree, index and commit
-- Перед командой определяй, что именно меняется: файлы, index, branch pointer или shared history.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Rebase shared commits или удалять secret из файла без ротации.
-- ответ из одного определения без механизма и failure mode.
+- Игнорировать ограничение механизма и проверять только happy path.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- Repository, working tree, index and commit
+- Какое ограничение или типичная ошибка относится именно к теме Repository, working tree, index and commit?
 
 ## Задача
 
-Разбери backend-сценарий: **Выбери безопасный способ отменить локальное и уже опубликованное изменение.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Repository, working tree, index and commit**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Repository, working tree, index and commit**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Repository, working tree, index and commit: это отдельный технический контракт
+- **Механизм:** Перед командой определяй, что именно меняется: файлы, index, branch pointer или shared history.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

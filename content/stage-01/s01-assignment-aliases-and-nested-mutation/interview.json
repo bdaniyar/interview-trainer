@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Assignment, aliases and nested mutation» как на Junior Python Backend interview.",
+    "question": "Что такое Assignment, aliases and nested mutation и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -8,34 +8,36 @@
       "aliases",
       "shared nested structures",
       "repeated references",
-      "`[[]] * 3`",
-      "Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию."
+      "`[[]] * 3`"
     ],
+    "short_answer": "Aliases are multiple names or container slots referring to one object; nested mutation through any alias changes that same object.",
+    "junior_answer": "Aliases are multiple names or container slots referring to one object; nested mutation through any alias changes that same object. Assignment and sequence repetition copy references. `[[]] * 3` repeats one inner-list reference three times, so mutating one visible row changes all three positions. Важное ограничение: Build independent nested values with a comprehension such as `[[] for _ in range(3)]`.",
+    "follow_up_question": "Какая типичная ошибка связана с Assignment, aliases and nested mutation?",
+    "follow_up_answer": "Using multiplication for mutable nested defaults creates shared state that is difficult to notice in tests with one element.",
     "expected_answer": {
       "must_mention": [
         "aliases",
         "shared nested structures",
         "repeated references",
-        "`[[]] * 3`",
-        "Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию."
+        "`[[]] * 3`"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Объяснять переменную как коробку, которая всегда содержит независимое значение.",
+        "Using multiplication for mutable nested defaults creates shared state that is difficult to notice in tests with one element.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Объяснять переменную как коробку, которая всегда содержит независимое значение."
+        "Using multiplication for mutable nested defaults creates shared state that is difficult to notice in tests with one element."
       ],
       "follow_up_questions": [
-        "Проследи identity и состояние объекта после двух присваиваний и одной мутации."
+        "Какая типичная ошибка связана с Assignment, aliases and nested mutation?"
       ]
     },
     "follow_ups": [
-      "Проследи identity и состояние объекта после двух присваиваний и одной мутации."
+      "Какая типичная ошибка связана с Assignment, aliases and nested mutation?"
     ],
     "tags": [
       "stage-01",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Assignment, aliases and nested mutation»: Проследи identity и состояние объекта после двух присваиваний и одной мутации. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Assignment, aliases and nested mutation?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "passing objects into functions",
+      "Using multiplication for mutable nested defaults creates shared state that is difficult to notice in tests with one element."
     ],
+    "short_answer": "Using multiplication for mutable nested defaults creates shared state that is difficult to notice in tests with one element.",
+    "junior_answer": "Using multiplication for mutable nested defaults creates shared state that is difficult to notice in tests with one element.",
+    "follow_up_question": "Что такое Assignment, aliases and nested mutation и как это работает?",
+    "follow_up_answer": "Aliases are multiple names or container slots referring to one object; nested mutation through any alias changes that same object. Assignment and sequence repetition copy references. `[[]] * 3` repeats one inner-list reference three times, so mutating one visible row changes all three positions. Важное ограничение: Build independent nested values with a comprehension such as `[[] for _ in range(3)]`.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "passing objects into functions"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Using multiplication for mutable nested defaults creates shared state that is difficult to notice in tests with one element."
       ],
       "red_flags": [
-        "Объяснять переменную как коробку, которая всегда содержит независимое значение."
+        "Using multiplication for mutable nested defaults creates shared state that is difficult to notice in tests with one element."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Assignment, aliases and nested mutation и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Assignment, aliases and nested mutation и как это работает?"
     ],
     "tags": [
       "stage-01",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-01",

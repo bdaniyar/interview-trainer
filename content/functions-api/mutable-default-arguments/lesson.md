@@ -7,28 +7,56 @@
 
 После урока ты сможешь:
 
-- объяснить `evaluation at function definition` своими словами и связать с backend-сценарием;
-- объяснить `mutable default bug` своими словами и связать с backend-сценарием;
-- объяснить `sentinel pattern` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Default arguments**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `evaluation at function definition`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Значения параметров по умолчанию вычисляются один раз — при выполнении `def`. Поэтому список в сигнатуре сохраняется между вызовами.
+### Что это
 
-```python
-def broken(value, bucket=[]):
-    bucket.append(value)
-    return bucket
-```
+Это часть контракта Python function: важно различать definition time, call time, signature и разрешение имён.
 
-Используй `None` как sentinel и создавай новый список внутри вызова.
+### Как работает
+
+Отдели выполнение `def`, связывание arguments при вызове и разрешение names по LEGB.
+
+**evaluation at function definition.** `evaluation at function definition` влияет на function contract; результат определяется definition time, argument binding при вызове и разрешением names.
+
+**mutable default bug.** Mutable объект меняется с сохранением identity, поэтому alias наблюдает ту же мутацию.
+
+**sentinel pattern.** `sentinel pattern` влияет на function contract; результат определяется definition time, argument binding при вызове и разрешением names.
+
+**`None` pattern and its limitations.** ``None` pattern and its limitations` влияет на function contract; результат определяется definition time, argument binding при вызове и разрешением names.
+
+
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `evaluation at function definition` и `mutable default bug` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
 ## Mental model
 
 Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- evaluation at function definition
+- mutable default bug
+- sentinel pattern
+- `None` pattern and its limitations
+
+### Полезно
+
+- связать Default arguments с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -49,56 +77,17 @@ Sentinel/default `None` создаёт новый mutable list на каждый
 
 ## Common mistakes
 
-**Ошибка:** Скрывать неясный API за **kwargs или забывать о времени вычисления defaults.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `evaluation at function definition` до запуска.
 
-## Interview questions
+**B · Find the bug.** Найди нарушение `mutable default bug` и объясни конкретное последствие.
 
-1. Объясни **Default arguments** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Разбери сигнатуру helper-функции и объясни, какие вызовы допустимы и почему. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
-
-## Expected answer rubric
-
-### Must mention
-
-- evaluation at function definition
-- mutable default bug
-- sentinel pattern
-- `None` pattern and its limitations.
-- Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Скрывать неясный API за **kwargs или забывать о времени вычисления defaults.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- evaluation at function definition
-- mutable default bug
-- sentinel pattern
-- `None` pattern and its limitations.
-
-## Задача
-
-Реализуй `add_tag(tag, tags=None)`. Функция возвращает список с добавленным тегом. Вызовы без `tags` не должны делить состояние; переданный список нужно изменить на месте.
+**E · Interview explanation.** Дай ответ про Default arguments за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Code prediction
 
@@ -138,15 +127,70 @@ Misconception: `mutable-default`.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое Default arguments и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Default arguments?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Default arguments: Это часть контракта Python function: важно различать definition time, call time, signature и разрешение имён.
+
+### Нормальный Junior answer
+
+> Default arguments — тема, в которой я сначала фиксирую `evaluation at function definition`, затем объясняю `mutable default bug` на коротком примере. Ключевой механизм: Отдели выполнение `def`, связывание arguments при вызове и разрешение names по LEGB. Главная практическая ошибка — Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Default arguments?**
+
+Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
+
+## Expected answer rubric
+
+### Must mention
+
+- evaluation at function definition
+- mutable default bug
+- sentinel pattern
+- `None` pattern and its limitations
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какое ограничение или типичная ошибка относится именно к теме Default arguments?
+
+## Задача
+
+Сделай короткую письменную практику по теме **Default arguments**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Default arguments**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Default arguments: Это часть контракта Python function: важно различать definition time, call time, signature и разрешение имён.
+- **Механизм:** Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
+- **Ограничение:** Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Collection and callable types» как на Junior Python Backend interview.",
+    "question": "Что такое Collection and callable types и какой механизм здесь важно понимать Junior-разработчику?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "`list[str]`",
       "`dict[str, int]`",
       "`Sequence`",
-      "`Iterable`",
-      "Аннотация — описание для инструментов; runtime validation выполняет отдельный код или библиотека."
+      "`Iterable`"
     ],
+    "short_answer": "Collection and callable types: Это статический контракт для checker и IDE; runtime-поведение Python и validation остаются отдельными слоями.",
+    "junior_answer": "Collection and callable types — тема, в которой я сначала фиксирую ``list[str]``, затем объясняю ``dict[str, int]`` на коротком примере. Ключевой механизм: Покажи, что проверит static analyzer, что произойдёт runtime и где boundary должна добавить validation. Главная практическая ошибка — Считать type hint runtime validation или использовать `Any`, скрывая ошибку contract.",
+    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Collection and callable types?",
+    "follow_up_answer": "Считать type hint runtime validation или использовать `Any`, скрывая ошибку contract.",
     "expected_answer": {
       "must_mention": [
         "`list[str]`",
         "`dict[str, int]`",
         "`Sequence`",
-        "`Iterable`",
-        "Аннотация — описание для инструментов; runtime validation выполняет отдельный код или библиотека."
+        "`Iterable`"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Считать Any безопасным escape hatch либо путать Optional с необязательным аргументом.",
+        "Считать type hint runtime validation или использовать `Any`, скрывая ошибку contract.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Считать Any безопасным escape hatch либо путать Optional с необязательным аргументом."
+        "Считать type hint runtime validation или использовать `Any`, скрывая ошибку contract."
       ],
       "follow_up_questions": [
-        "Опиши тип входа API helper так, чтобы mypy видел ошибочный вызов до запуска."
+        "Какое ограничение или типичная ошибка относится именно к теме Collection and callable types?"
       ]
     },
     "follow_ups": [
-      "Опиши тип входа API helper так, чтобы mypy видел ошибочный вызов до запуска."
+      "Какое ограничение или типичная ошибка относится именно к теме Collection and callable types?"
     ],
     "tags": [
       "stage-06",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Collection and callable types»: Опиши тип входа API helper так, чтобы mypy видел ошибочный вызов до запуска. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какое ограничение или типичная ошибка относится именно к теме Collection and callable types?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Аннотация — описание для инструментов; runtime validation выполняет отдельный код или библиотека.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "`Callable`",
+      "Считать type hint runtime validation или использовать `Any`, скрывая ошибку contract."
     ],
+    "short_answer": "Считать type hint runtime validation или использовать `Any`, скрывая ошибку contract.",
+    "junior_answer": "Считать type hint runtime validation или использовать `Any`, скрывая ошибку contract.",
+    "follow_up_question": "Что такое Collection and callable types и какой механизм здесь важно понимать Junior-разработчику?",
+    "follow_up_answer": "Collection and callable types — тема, в которой я сначала фиксирую ``list[str]``, затем объясняю ``dict[str, int]`` на коротком примере. Ключевой механизм: Покажи, что проверит static analyzer, что произойдёт runtime и где boundary должна добавить validation. Главная практическая ошибка — Считать type hint runtime validation или использовать `Any`, скрывая ошибку contract.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "`Callable`"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Считать type hint runtime validation или использовать `Any`, скрывая ошибку contract."
       ],
       "red_flags": [
-        "Считать Any безопасным escape hatch либо путать Optional с необязательным аргументом."
+        "Считать type hint runtime validation или использовать `Any`, скрывая ошибку contract."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Collection and callable types и какой механизм здесь важно понимать Junior-разработчику?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Collection and callable types и какой механизм здесь важно понимать Junior-разработчику?"
     ],
     "tags": [
       "stage-06",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-06",

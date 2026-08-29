@@ -7,34 +7,53 @@
 
 После урока ты сможешь:
 
-- объяснить `optional value` своими словами и связать с backend-сценарием;
-- объяснить `required nullable field distinction` своими словами и связать с backend-сценарием;
-- объяснить `narrowing.` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Union, Optional and `|`**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `optional value`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Type hints улучшают статический анализ и контракты, но сами по себе не валидируют runtime-данные.
+### Что это
 
-В теме **Union, Optional and `|`** важно уверенно объяснять следующие части:
+Это статический контракт для checker и IDE; runtime-поведение Python и validation остаются отдельными слоями.
 
-### optional value
+### Как работает
 
-`T | None` разрешает значение `None`, но не делает аргумент или поле необязательным без default; missing и explicit null — разные состояния.
+Покажи, что проверит static analyzer, что произойдёт runtime и где boundary должна добавить validation.
 
-### required nullable field distinction
+**optional value.** `T | None` разрешает значение `None`, но не делает аргумент или поле необязательным без default; missing и explicit null — разные состояния.
 
-`NULL` означает отсутствие известного значения; сравнение с ним делают через `IS NULL`, а многие выражения дают `UNKNOWN`.
+**required nullable field distinction.** `NULL` означает отсутствие известного значения; сравнение с ним делают через `IS NULL`, а многие выражения дают `UNKNOWN`.
 
-### narrowing
+**narrowing.** `narrowing` описывает статическую часть type contract; runtime остаётся динамическим, а недоверенные данные требуют отдельной validation.
 
-Для `narrowing` покажи, что видит static checker, что реально происходит runtime и где нужна отдельная validation.
+
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `optional value` и `required nullable field distinction` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
 ## Mental model
 
 Аннотация — описание для инструментов; runtime validation выполняет отдельный код или библиотека.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- optional value
+- required nullable field distinction
+- narrowing
+
+### Полезно
+
+- связать Union, Optional and `|` с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -55,56 +74,17 @@ Nullable type разрешает `None`, но отсутствие default не 
 
 ## Common mistakes
 
-**Ошибка:** Считать Any безопасным escape hatch либо путать Optional с необязательным аргументом.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Считать type hint runtime validation или использовать `Any`, скрывая ошибку contract.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `optional value` до запуска.
 
-## Interview questions
+**B · Find the bug.** Найди нарушение `required nullable field distinction` и объясни конкретное последствие.
 
-1. Объясни **Union, Optional and `|`** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Опиши тип входа API helper так, чтобы mypy видел ошибочный вызов до запуска. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
-
-## Expected answer rubric
-
-### Must mention
-
-- optional value
-- required nullable field distinction
-- narrowing.
-- Аннотация — описание для инструментов; runtime validation выполняет отдельный код или библиотека.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Считать Any безопасным escape hatch либо путать Optional с необязательным аргументом.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- optional value
-- required nullable field distinction
-- narrowing.
-
-## Задача
-
-Разбери backend-сценарий: **Опиши тип входа API helper так, чтобы mypy видел ошибочный вызов до запуска.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Дай ответ про Union, Optional and `|` за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Code prediction
 
@@ -135,15 +115,69 @@ Misconception: `optional-vs-default`.
 
 </details>
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое Union, Optional and `|` и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Union, Optional and `|`?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Union, Optional and `|`: Это статический контракт для checker и IDE; runtime-поведение Python и validation остаются отдельными слоями.
+
+### Нормальный Junior answer
+
+> Union, Optional and `|` — тема, в которой я сначала фиксирую `optional value`, затем объясняю `required nullable field distinction` на коротком примере. Ключевой механизм: Покажи, что проверит static analyzer, что произойдёт runtime и где boundary должна добавить validation. Главная практическая ошибка — Считать type hint runtime validation или использовать `Any`, скрывая ошибку contract.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Union, Optional and `|`?**
+
+Считать type hint runtime validation или использовать `Any`, скрывая ошибку contract.
+
+## Expected answer rubric
+
+### Must mention
+
+- optional value
+- required nullable field distinction
+- narrowing
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Считать type hint runtime validation или использовать `Any`, скрывая ошибку contract.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какое ограничение или типичная ошибка относится именно к теме Union, Optional and `|`?
+
+## Задача
+
+Сделай короткую письменную практику по теме **Union, Optional and `|`**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Union, Optional and `|`**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Union, Optional and `|`: Это статический контракт для checker и IDE; runtime-поведение Python и validation остаются отдельными слоями.
+- **Механизм:** Аннотация — описание для инструментов; runtime validation выполняет отдельный код или библиотека.
+- **Ограничение:** Считать type hint runtime validation или использовать `Any`, скрывая ошибку contract.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

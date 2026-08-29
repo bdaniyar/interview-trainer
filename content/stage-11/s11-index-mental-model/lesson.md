@@ -7,38 +7,48 @@
 
 После урока ты сможешь:
 
-- объяснить `auxiliary data structure` своими словами и связать с backend-сценарием;
-- объяснить `faster reads` своими словами и связать с backend-сценарием;
-- объяснить `storage/write cost` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Index mental model**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `auxiliary data structure`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-PostgreSQL обеспечивает ограничения и конкурентную работу ближе к данным; индекс и transaction boundary проектируются под запросы и инварианты.
+### Что это
 
-В теме **Index mental model** важно уверенно объяснять следующие части:
+A database index is an auxiliary structure that can find ordered key ranges without scanning every table row.
 
-### auxiliary data structure
+### Как работает
 
-Для `auxiliary data structure` назови защищаемый invariant, concurrent transaction и evidence из constraint или query plan.
+It speeds matching access paths but consumes storage and adds work to INSERT/UPDATE/DELETE. The planner may choose a sequential scan when many rows match.
 
-### faster reads
 
-Для `faster reads` назови защищаемый invariant, concurrent transaction и evidence из constraint или query plan.
+### Важный нюанс / limitation
 
-### storage/write cost
-
-Для `storage/write cost` назови защищаемый invariant, concurrent transaction и evidence из constraint или query plan.
-
-### index is not magic
-
-Index — отдельная структура доступа с ценой записи и хранения; полезность зависит от конкретного predicate, ordering и selectivity.
+Design indexes from actual WHERE/JOIN/ORDER patterns and inspect EXPLAIN ANALYZE; an index on every column is harmful.
 
 ## Mental model
 
 Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- auxiliary data structure
+- faster reads
+- storage/write cost
+- index is not magic
+
+### Полезно
+
+- one short code/result example
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -55,58 +65,19 @@ Constraint защищает истину, transaction объединяет из�
 
 ## Common mistakes
 
-**Ошибка:** Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Adding an index without the query shape or selectivity can increase write cost while never being selected.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `auxiliary data structure` example and predict the result before running it.
 
-## Interview questions
+**B · Find the bug.** Find code that violates `faster reads` and explain the concrete consequence.
 
-1. Объясни **Index mental model** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Назови инвариант, конкурентный сценарий и точку, где его гарантирует база. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+**D · Small task.** Implement the smallest function/query that demonstrates `auxiliary data structure` and add one edge-case test.
 
-## Expected answer rubric
-
-### Must mention
-
-- auxiliary data structure
-- faster reads
-- storage/write cost
-- index is not magic.
-- Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- auxiliary data structure
-- faster reads
-- storage/write cost
-- index is not magic.
-
-## Задача
-
-Разбери backend-сценарий: **Назови инвариант, конкурентный сценарий и точку, где его гарантирует база.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Explain Index mental model in 45–60 seconds and include one limitation.
 
 ## SQL practice
 
@@ -154,15 +125,70 @@ SQL runner пока не подключён: выполни запрос в ло
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое Index mental model и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Index mental model?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+A database index is an auxiliary structure that can find ordered key ranges without scanning every table row.
+
+### Нормальный Junior answer
+
+> A database index is an auxiliary structure that can find ordered key ranges without scanning every table row. It speeds matching access paths but consumes storage and adds work to INSERT/UPDATE/DELETE. The planner may choose a sequential scan when many rows match. Важное ограничение: Design indexes from actual WHERE/JOIN/ORDER patterns and inspect EXPLAIN ANALYZE; an index on every column is harmful.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Index mental model?**
+
+Adding an index without the query shape or selectivity can increase write cost while never being selected.
+
+## Expected answer rubric
+
+### Must mention
+
+- auxiliary data structure
+- faster reads
+- storage/write cost
+- index is not magic
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Adding an index without the query shape or selectivity can increase write cost while never being selected.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какая типичная ошибка связана с Index mental model?
+
+## Задача
+
+Сделай короткую письменную практику по теме **Index mental model**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Index mental model**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** A database index is an auxiliary structure that can find ordered key ranges without scanning every table row.
+- **Механизм:** Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
+- **Ограничение:** Adding an index without the query shape or selectivity can increase write cost while never being selected.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

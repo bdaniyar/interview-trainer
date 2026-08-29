@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Compose commands» как на Junior Python Backend interview.",
+    "question": "Что такое Compose commands и какой механизм здесь важно понимать Junior-разработчику?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "`docker compose up`",
       "`up --build`",
       "`build`",
-      "`ps`",
-      "Разделяй build-time layers, runtime config, network DNS и persistent volumes."
+      "`ps`"
     ],
+    "short_answer": "Compose commands: это отдельный технический контракт",
+    "junior_answer": "Compose commands — тема, в которой я сначала фиксирую ``docker compose up``, затем объясняю ``up --build`` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
+    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Compose commands?",
+    "follow_up_answer": "Нужно назвать конкретный failure path и способ его проверить.",
     "expected_answer": {
       "must_mention": [
         "`docker compose up`",
         "`up --build`",
         "`build`",
-        "`ps`",
-        "Разделяй build-time layers, runtime config, network DNS и persistent volumes."
+        "`ps`"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Использовать localhost между containers или считать depends_on проверкой readiness.",
+        "Игнорировать ограничение механизма и проверять только happy path.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Использовать localhost между containers или считать depends_on проверкой readiness."
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "follow_up_questions": [
-        "Диагностируй container через logs, env, DNS, port и healthcheck по порядку."
+        "Какое ограничение или типичная ошибка относится именно к теме Compose commands?"
       ]
     },
     "follow_ups": [
-      "Диагностируй container через logs, env, DNS, port и healthcheck по порядку."
+      "Какое ограничение или типичная ошибка относится именно к теме Compose commands?"
     ],
     "tags": [
       "stage-21",
@@ -48,42 +50,43 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Compose commands»: Диагностируй container через logs, env, DNS, port и healthcheck по порядку. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какое ограничение или типичная ошибка относится именно к теме Compose commands?",
+    "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Разделяй build-time layers, runtime config, network DNS и persistent volumes.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "`logs`",
+      "`exec`",
+      "Нужно назвать конкретный failure path и способ его проверить."
     ],
+    "short_answer": "Нужно назвать конкретный failure path и способ его проверить.",
+    "junior_answer": "Нужно назвать конкретный failure path и способ его проверить.",
+    "follow_up_question": "Что такое Compose commands и какой механизм здесь важно понимать Junior-разработчику?",
+    "follow_up_answer": "Compose commands — тема, в которой я сначала фиксирую ``docker compose up``, затем объясняю ``up --build`` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "`logs`",
+        "`exec`"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "red_flags": [
-        "Использовать localhost между containers или считать depends_on проверкой readiness."
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Compose commands и какой механизм здесь важно понимать Junior-разработчику?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Compose commands и какой механизм здесь важно понимать Junior-разработчику?"
     ],
     "tags": [
       "stage-21",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-21",

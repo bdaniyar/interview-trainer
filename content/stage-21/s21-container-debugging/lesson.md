@@ -7,50 +7,65 @@
 
 После урока ты сможешь:
 
-- объяснить `logs` своими словами и связать с backend-сценарием;
-- объяснить `inspect env` своими словами и связать с backend-сценарием;
-- объяснить `process` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Container debugging**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `logs`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Docker image — неизменяемый шаблон filesystem, container — запущенный изолированный process с configuration runtime.
+### Что это
 
-В теме **Container debugging** важно уверенно объяснять следующие части:
+Тема **Container debugging** описывает отдельный контракт backend-разработки.
 
-### logs
+### Как работает
 
-Для `logs` раздели image/build-time и container/runtime, затем проверь DNS, ports, mounts и lifecycle.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
 
-### inspect env
+**logs.** `logs` относится либо к build-time image, либо к runtime container и наблюдается через DNS, ports, mounts и process lifecycle.
 
-Для `inspect env` раздели image/build-time и container/runtime, затем проверь DNS, ports, mounts и lifecycle.
+**inspect env.** `inspect env` относится либо к build-time image, либо к runtime container и наблюдается через DNS, ports, mounts и process lifecycle.
 
-### process
+**process.** Processes изолируют память и подходят для CPU-bound Python, но требуют serialization/IPC и имеют более дорогой startup.
 
-Processes изолируют память и подходят для CPU-bound Python, но требуют serialization/IPC и имеют более дорогой startup.
+**port.** `port` относится либо к build-time image, либо к runtime container и наблюдается через DNS, ports, mounts и process lifecycle.
 
-### port
+**DNS.** `DNS` относится либо к build-time image, либо к runtime container и наблюдается через DNS, ports, mounts и process lifecycle.
 
-Для `port` раздели image/build-time и container/runtime, затем проверь DNS, ports, mounts и lifecycle.
+**healthcheck.** `healthcheck` относится либо к build-time image, либо к runtime container и наблюдается через DNS, ports, mounts и process lifecycle.
 
-### DNS
 
-Для `DNS` раздели image/build-time и container/runtime, затем проверь DNS, ports, mounts и lifecycle.
+### Важный нюанс / limitation
 
-### healthcheck
+Граница Junior: уверенно объясняй `logs` и `inspect env` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
-Для `healthcheck` раздели image/build-time и container/runtime, затем проверь DNS, ports, mounts и lifecycle.
+### Где используется в backend
 
-### migrations
-
-Для `migrations` раздели image/build-time и container/runtime, затем проверь DNS, ports, mounts и lifecycle.
+В backend эта тема важна в том месте, где применяется `logs`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Разделяй build-time layers, runtime config, network DNS и persistent volumes.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- logs
+- inspect env
+- process
+- port
+
+### Полезно
+
+- DNS
+- healthcheck
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -71,19 +86,45 @@ lesson:
 
 ## Common mistakes
 
-**Ошибка:** Использовать localhost между containers или считать depends_on проверкой readiness.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Игнорировать ограничение механизма и проверять только happy path.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `logs` до запуска.
+
+**B · Find the bug.** Найди нарушение `inspect env` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Container debugging за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Container debugging** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Диагностируй container через logs, env, DNS, port и healthcheck по порядку. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Container debugging и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Container debugging?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Container debugging: это отдельный технический контракт
+
+### Нормальный Junior answer
+
+> Container debugging — тема, в которой я сначала фиксирую `logs`, затем объясняю `inspect env` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Container debugging?**
+
+Нужно назвать конкретный failure path и способ его проверить.
 
 ## Expected answer rubric
 
@@ -93,49 +134,34 @@ lesson:
 - inspect env
 - process
 - port
-- Разделяй build-time layers, runtime config, network DNS и persistent volumes.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Использовать localhost между containers или считать depends_on проверкой readiness.
-- ответ из одного определения без механизма и failure mode.
+- Игнорировать ограничение механизма и проверять только happy path.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- logs
-- inspect env
-- process
-- port
-- DNS
-- healthcheck
-- migrations.
+- Какое ограничение или типичная ошибка относится именно к теме Container debugging?
 
 ## Задача
 
-Разбери backend-сценарий: **Диагностируй container через logs, env, DNS, port и healthcheck по порядку.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Container debugging**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Container debugging**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Container debugging: это отдельный технический контракт
+- **Механизм:** Разделяй build-time layers, runtime config, network DNS и persistent volumes.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

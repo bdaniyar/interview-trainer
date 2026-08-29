@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Dataclasses» как на Junior Python Backend interview.",
+    "question": "Что такое Dataclasses и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "generated methods",
       "equality/repr",
       "mutable fields",
-      "`field(default_factory=...)`",
-      "У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее."
+      "`field(default_factory=...)`"
     ],
+    "short_answer": "`@dataclass` generates methods such as `__init__`, `__repr__` and equality from declared fields.",
+    "junior_answer": "`@dataclass` generates methods such as `__init__`, `__repr__` and equality from declared fields. Fields are processed in order; `field(default_factory=list)` creates a fresh mutable default per instance. `frozen=True` blocks normal field assignment but is not deep immutability. Важное ограничение: Dataclass is good for internal data/value objects; Pydantic handles untrusted validation and ORM models handle persistence.",
+    "follow_up_question": "Какая типичная ошибка связана с Dataclasses?",
+    "follow_up_answer": "Using `items: list = []` is rejected/unsafe; mutable defaults need `default_factory`.",
     "expected_answer": {
       "must_mention": [
         "generated methods",
         "equality/repr",
         "mutable fields",
-        "`field(default_factory=...)`",
-        "У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее."
+        "`field(default_factory=...)`"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Создавать глубокую иерархию ради переиспользования нескольких строк.",
+        "Using `items: list = []` is rejected/unsafe; mutable defaults need `default_factory`.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Создавать глубокую иерархию ради переиспользования нескольких строк."
+        "Using `items: list = []` is rejected/unsafe; mutable defaults need `default_factory`."
       ],
       "follow_up_questions": [
-        "Сравни composition и inheritance для сервиса уведомлений и назови цену изменения."
+        "Какая типичная ошибка связана с Dataclasses?"
       ]
     },
     "follow_ups": [
-      "Сравни composition и inheritance для сервиса уведомлений и назови цену изменения."
+      "Какая типичная ошибка связана с Dataclasses?"
     ],
     "tags": [
       "stage-05",
@@ -48,42 +50,43 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Dataclasses»: Сравни composition и inheritance для сервиса уведомлений и назови цену изменения. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Dataclasses?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "frozen",
+      "domain data vs ORM/Pydantic models",
+      "Using `items: list = []` is rejected/unsafe; mutable defaults need `default_factory`."
     ],
+    "short_answer": "Using `items: list = []` is rejected/unsafe; mutable defaults need `default_factory`.",
+    "junior_answer": "Using `items: list = []` is rejected/unsafe; mutable defaults need `default_factory`.",
+    "follow_up_question": "Что такое Dataclasses и как это работает?",
+    "follow_up_answer": "`@dataclass` generates methods such as `__init__`, `__repr__` and equality from declared fields. Fields are processed in order; `field(default_factory=list)` creates a fresh mutable default per instance. `frozen=True` blocks normal field assignment but is not deep immutability. Важное ограничение: Dataclass is good for internal data/value objects; Pydantic handles untrusted validation and ORM models handle persistence.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "frozen",
+        "domain data vs ORM/Pydantic models"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Using `items: list = []` is rejected/unsafe; mutable defaults need `default_factory`."
       ],
       "red_flags": [
-        "Создавать глубокую иерархию ради переиспользования нескольких строк."
+        "Using `items: list = []` is rejected/unsafe; mutable defaults need `default_factory`."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Dataclasses и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Dataclasses и как это работает?"
     ],
     "tags": [
       "stage-05",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-05",

@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Truthiness» как на Junior Python Backend interview.",
+    "question": "Что такое Truthiness и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "falsy values",
       "`bool`",
       "`__bool__`",
-      "`__len__`",
-      "Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию."
+      "`__len__`"
     ],
+    "short_answer": "Truthiness is Python's protocol for converting an object to boolean context such as `if value`.",
+    "junior_answer": "Truthiness is Python's protocol for converting an object to boolean context such as `if value`. Python calls `__bool__`; if absent, it uses `__len__`; without both, an object is truthy. `None`, numeric zero and empty standard collections are falsy. Важное ограничение: `if value` merges several states. Use `is None` when zero, empty string or empty list is valid data rather than absence.",
+    "follow_up_question": "Какая типичная ошибка связана с Truthiness?",
+    "follow_up_answer": "Replacing `if limit is None` with `if not limit` incorrectly rejects a valid zero when the contract permits it.",
     "expected_answer": {
       "must_mention": [
         "falsy values",
         "`bool`",
         "`__bool__`",
-        "`__len__`",
-        "Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию."
+        "`__len__`"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Объяснять переменную как коробку, которая всегда содержит независимое значение.",
+        "Replacing `if limit is None` with `if not limit` incorrectly rejects a valid zero when the contract permits it.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Объяснять переменную как коробку, которая всегда содержит независимое значение."
+        "Replacing `if limit is None` with `if not limit` incorrectly rejects a valid zero when the contract permits it."
       ],
       "follow_up_questions": [
-        "Проследи identity и состояние объекта после двух присваиваний и одной мутации."
+        "Какая типичная ошибка связана с Truthiness?"
       ]
     },
     "follow_ups": [
-      "Проследи identity и состояние объекта после двух присваиваний и одной мутации."
+      "Какая типичная ошибка связана с Truthiness?"
     ],
     "tags": [
       "stage-01",
@@ -48,42 +50,43 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Truthiness»: Проследи identity и состояние объекта после двух присваиваний и одной мутации. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Truthiness?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "`if value` vs `if value is None`",
+      "backend bugs with `0`, `\"\"` and empty collections",
+      "Replacing `if limit is None` with `if not limit` incorrectly rejects a valid zero when the contract permits it."
     ],
+    "short_answer": "Replacing `if limit is None` with `if not limit` incorrectly rejects a valid zero when the contract permits it.",
+    "junior_answer": "Replacing `if limit is None` with `if not limit` incorrectly rejects a valid zero when the contract permits it.",
+    "follow_up_question": "Что такое Truthiness и как это работает?",
+    "follow_up_answer": "Truthiness is Python's protocol for converting an object to boolean context such as `if value`. Python calls `__bool__`; if absent, it uses `__len__`; without both, an object is truthy. `None`, numeric zero and empty standard collections are falsy. Важное ограничение: `if value` merges several states. Use `is None` when zero, empty string or empty list is valid data rather than absence.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "`if value` vs `if value is None`",
+        "backend bugs with `0`, `\"\"` and empty collections"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Replacing `if limit is None` with `if not limit` incorrectly rejects a valid zero when the contract permits it."
       ],
       "red_flags": [
-        "Объяснять переменную как коробку, которая всегда содержит независимое значение."
+        "Replacing `if limit is None` with `if not limit` incorrectly rejects a valid zero when the contract permits it."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Truthiness и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Truthiness и как это работает?"
     ],
     "tags": [
       "stage-01",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-01",

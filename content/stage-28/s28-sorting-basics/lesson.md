@@ -7,38 +7,56 @@
 
 После урока ты сможешь:
 
-- объяснить `O(n log n)` своими словами и связать с backend-сценарием;
-- объяснить `stable sort` своими словами и связать с backend-сценарием;
-- объяснить `key extraction` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Sorting basics**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `O(n log n)`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Для Junior backend важны базовые структуры и сложность реальных transformations, а не редкие олимпиадные трюки.
+### Что это
 
-В теме **Sorting basics** важно уверенно объяснять следующие части:
+Тема **Sorting basics** описывает отдельный контракт backend-разработки.
 
-### O(n log n)
+### Как работает
 
-Для `O(n log n)` назови input constraints, data structure, complexity и boundary cases до написания кода.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
 
-### stable sort
+**O(n log n).** `O(n log n)` определяет data-structure operation с конкретной time/space complexity и набором boundary cases.
 
-Для `stable sort` назови input constraints, data structure, complexity и boundary cases до написания кода.
+**stable sort.** `stable sort` определяет data-structure operation с конкретной time/space complexity и набором boundary cases.
 
-### key extraction
+**key extraction.** `key extraction` определяет data-structure operation с конкретной time/space complexity и набором boundary cases.
 
-Для `key extraction` назови input constraints, data structure, complexity и boundary cases до написания кода.
+**no need to memorize every sort implementation.** `no need to memorize every sort implementation` определяет data-structure operation с конкретной time/space complexity и набором boundary cases.
 
-### no need to memorize every sort implementation
 
-Для `no need to memorize every sort implementation` назови input constraints, data structure, complexity и boundary cases до написания кода.
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `O(n log n)` и `stable sort` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
 ## Mental model
 
 Выбери структуру по операциям и оцени dominant time/space term.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- O(n log n)
+- stable sort
+- key extraction
+- no need to memorize every sort implementation
+
+### Полезно
+
+- связать Sorting basics с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -56,19 +74,45 @@ assert example_s28_sorting_basics()
 
 ## Common mistakes
 
-**Ошибка:** Писать O(n²), когда один dict даёт линейный проход, или оптимизировать без constraints.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Игнорировать ограничение механизма и проверять только happy path.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `O(n log n)` до запуска.
+
+**B · Find the bug.** Найди нарушение `stable sort` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Sorting basics за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Sorting basics** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Реши задачу сначала корректно, затем назови complexity и граничные случаи. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Sorting basics и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Sorting basics?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Sorting basics: это отдельный технический контракт
+
+### Нормальный Junior answer
+
+> Sorting basics — тема, в которой я сначала фиксирую `O(n log n)`, затем объясняю `stable sort` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Sorting basics?**
+
+Нужно назвать конкретный failure path и способ его проверить.
 
 ## Expected answer rubric
 
@@ -77,47 +121,35 @@ assert example_s28_sorting_basics()
 - O(n log n)
 - stable sort
 - key extraction
-- no need to memorize every sort implementation.
-- Выбери структуру по операциям и оцени dominant time/space term.
+- no need to memorize every sort implementation
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Писать O(n²), когда один dict даёт линейный проход, или оптимизировать без constraints.
-- ответ из одного определения без механизма и failure mode.
+- Игнорировать ограничение механизма и проверять только happy path.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- O(n log n)
-- stable sort
-- key extraction
-- no need to memorize every sort implementation.
+- Какое ограничение или типичная ошибка относится именно к теме Sorting basics?
 
 ## Задача
 
-Разбери backend-сценарий: **Реши задачу сначала корректно, затем назови complexity и граничные случаи.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Sorting basics**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Sorting basics**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Sorting basics: это отдельный технический контракт
+- **Механизм:** Выбери структуру по операциям и оцени dominant time/space term.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

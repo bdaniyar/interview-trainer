@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «StudyHub in 60 seconds» как на Junior Python Backend interview.",
+    "question": "Что такое StudyHub in 60 seconds и какой механизм здесь важно понимать Junior-разработчику?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -8,34 +8,36 @@
       "student platform backend",
       "FastAPI/PostgreSQL/Redis",
       "communities/roles/discussions/materials/Q&A/moderation",
-      "WebSocket for client connection",
-      "Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы."
+      "WebSocket for client connection"
     ],
+    "short_answer": "StudyHub in 60 seconds: это отдельный технический контракт",
+    "junior_answer": "StudyHub in 60 seconds — тема, в которой я сначала фиксирую `student platform backend`, затем объясняю `FastAPI/PostgreSQL/Redis` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
+    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме StudyHub in 60 seconds?",
+    "follow_up_answer": "Нужно назвать конкретный failure path и способ его проверить.",
     "expected_answer": {
       "must_mention": [
         "student platform backend",
         "FastAPI/PostgreSQL/Redis",
         "communities/roles/discussions/materials/Q&A/moderation",
-        "WebSocket for client connection",
-        "Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы."
+        "WebSocket for client connection"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Приписывать себе production scale, AWS, Kubernetes, Kafka или RabbitMQ без фактического опыта.",
+        "Игнорировать ограничение механизма и проверять только happy path.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Приписывать себе production scale, AWS, Kubernetes, Kafka или RabbitMQ без фактического опыта."
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "follow_up_questions": [
-        "Защити один claim, назвав точный flow, failure mode и способ проверки."
+        "Какое ограничение или типичная ошибка относится именно к теме StudyHub in 60 seconds?"
       ]
     },
     "follow_ups": [
-      "Защити один claim, назвав точный flow, failure mode и способ проверки."
+      "Какое ограничение или типичная ошибка относится именно к теме StudyHub in 60 seconds?"
     ],
     "tags": [
       "stage-32",
@@ -49,42 +51,43 @@
     ]
   },
   {
-    "question": "Сценарий по теме «StudyHub in 60 seconds»: Защити один claim, назвав точный flow, failure mode и способ проверки. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какое ограничение или типичная ошибка относится именно к теме StudyHub in 60 seconds?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "Redis Pub/Sub for cross-instance live fan-out",
+      "PostgreSQL for history/read state",
+      "Нужно назвать конкретный failure path и способ его проверить."
     ],
+    "short_answer": "Нужно назвать конкретный failure path и способ его проверить.",
+    "junior_answer": "Нужно назвать конкретный failure path и способ его проверить.",
+    "follow_up_question": "Что такое StudyHub in 60 seconds и какой механизм здесь важно понимать Junior-разработчику?",
+    "follow_up_answer": "StudyHub in 60 seconds — тема, в которой я сначала фиксирую `student platform backend`, затем объясняю `FastAPI/PostgreSQL/Redis` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "Redis Pub/Sub for cross-instance live fan-out",
+        "PostgreSQL for history/read state"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "red_flags": [
-        "Приписывать себе production scale, AWS, Kubernetes, Kafka или RabbitMQ без фактического опыта."
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое StudyHub in 60 seconds и какой механизм здесь важно понимать Junior-разработчику?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое StudyHub in 60 seconds и какой механизм здесь важно понимать Junior-разработчику?"
     ],
     "tags": [
       "stage-32",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-32",

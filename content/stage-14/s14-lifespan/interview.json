@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Lifespan» как на Junior Python Backend interview.",
+    "question": "Что такое Lifespan и как это работает?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "startup/shutdown",
       "shared client/pool initialization",
       "cleanup",
-      "modern lifespan over scattered legacy hooks.",
-      "Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency."
+      "modern lifespan over scattered legacy hooks"
     ],
+    "short_answer": "FastAPI lifespan manages resources that live for the application process, such as connection pools and shared HTTP clients.",
+    "junior_answer": "FastAPI lifespan manages resources that live for the application process, such as connection pools and shared HTTP clients. An async context manager runs setup before yield and cleanup after yield during shutdown; tests should enter lifespan too. Важное ограничение: Application-level resources are shared, but request-specific Session/user state must not be stored in them.",
+    "follow_up_question": "Какая типичная ошибка связана с Lifespan?",
+    "follow_up_answer": "Creating a new expensive client per request wastes pools, while never closing a shared client leaks resources at shutdown.",
     "expected_answer": {
       "must_mention": [
         "startup/shutdown",
         "shared client/pool initialization",
         "cleanup",
-        "modern lifespan over scattered legacy hooks.",
-        "Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency."
+        "modern lifespan over scattered legacy hooks"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Открывать Session глобально или выполнять blocking I/O в async route.",
+        "Creating a new expensive client per request wastes pools, while never closing a shared client leaks resources at shutdown.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Открывать Session глобально или выполнять blocking I/O в async route."
+        "Creating a new expensive client per request wastes pools, while never closing a shared client leaks resources at shutdown."
       ],
       "follow_up_questions": [
-        "Проследи request от router через dependency и service до response model."
+        "Какая типичная ошибка связана с Lifespan?"
       ]
     },
     "follow_ups": [
-      "Проследи request от router через dependency и service до response model."
+      "Какая типичная ошибка связана с Lifespan?"
     ],
     "tags": [
       "stage-14",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Lifespan»: Проследи request от router через dependency и service до response model. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Lifespan?",
+    "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "one short code/result example",
+      "Creating a new expensive client per request wastes pools, while never closing a shared client leaks resources at shutdown."
     ],
+    "short_answer": "Creating a new expensive client per request wastes pools, while never closing a shared client leaks resources at shutdown.",
+    "junior_answer": "Creating a new expensive client per request wastes pools, while never closing a shared client leaks resources at shutdown.",
+    "follow_up_question": "Что такое Lifespan и как это работает?",
+    "follow_up_answer": "FastAPI lifespan manages resources that live for the application process, such as connection pools and shared HTTP clients. An async context manager runs setup before yield and cleanup after yield during shutdown; tests should enter lifespan too. Важное ограничение: Application-level resources are shared, but request-specific Session/user state must not be stored in them.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "one short code/result example"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Creating a new expensive client per request wastes pools, while never closing a shared client leaks resources at shutdown."
       ],
       "red_flags": [
-        "Открывать Session глобально или выполнять blocking I/O в async route."
+        "Creating a new expensive client per request wastes pools, while never closing a shared client leaks resources at shutdown."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Lifespan и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Lifespan и как это работает?"
     ],
     "tags": [
       "stage-14",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-14",

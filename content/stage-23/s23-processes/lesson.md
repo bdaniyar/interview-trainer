@@ -7,42 +7,62 @@
 
 После урока ты сможешь:
 
-- объяснить `ps` своими словами и связать с backend-сценарием;
-- объяснить `foreground/background` своими словами и связать с backend-сценарием;
-- объяснить `signals` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Processes**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `ps`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Linux basics нужны для запуска процесса, чтения логов, environment и диагностики ports/permissions.
+### Что это
 
-В теме **Processes** важно уверенно объяснять следующие части:
+Тема **Processes** описывает отдельный контракт backend-разработки.
 
-### ps
+### Как работает
 
-Для `ps` свяжи command с конкретным process, file, permission, environment или network symptom.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
 
-### foreground/background
+**ps.** `ps` связывает shell command с конкретным process, file, permission, environment или network state.
 
-Для `foreground/background` свяжи command с конкретным process, file, permission, environment или network symptom.
+**foreground/background.** `foreground/background` связывает shell command с конкретным process, file, permission, environment или network state.
 
-### signals
+**signals.** `signals` связывает shell command с конкретным process, file, permission, environment или network state.
 
-Для `signals` свяжи command с конкретным process, file, permission, environment или network symptom.
+**kill.** `kill` связывает shell command с конкретным process, file, permission, environment или network state.
 
-### kill
+**graceful termination.** `graceful termination` связывает shell command с конкретным process, file, permission, environment или network state.
 
-Для `kill` свяжи command с конкретным process, file, permission, environment или network symptom.
 
-### graceful termination
+### Важный нюанс / limitation
 
-Для `graceful termination` свяжи command с конкретным process, file, permission, environment или network symptom.
+Граница Junior: уверенно объясняй `ps` и `foreground/background` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `ps`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Процесс видит filesystem, env, user permissions, descriptors и network namespace.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- ps
+- foreground/background
+- signals
+- kill
+
+### Полезно
+
+- graceful termination
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -59,59 +79,17 @@ stderr/log, command, env, permissions, port.
 
 ## Common mistakes
 
-**Ошибка:** Менять permissions на 777 вместо поиска владельца и требуемого доступа.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Игнорировать ограничение механизма и проверять только happy path.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `ps` до запуска.
 
-## Interview questions
+**B · Find the bug.** Найди нарушение `foreground/background` и объясни конкретное последствие.
 
-1. Объясни **Processes** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Найди процесс, его exit code, порт, env и последнюю ошибку в log. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
-
-## Expected answer rubric
-
-### Must mention
-
-- ps
-- foreground/background
-- signals
-- kill
-- Процесс видит filesystem, env, user permissions, descriptors и network namespace.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Менять permissions на 777 вместо поиска владельца и требуемого доступа.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- ps
-- foreground/background
-- signals
-- kill
-- graceful termination.
-
-## Задача
-
-Разбери backend-сценарий: **Найди процесс, его exit code, порт, env и последнюю ошибку в log.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Дай ответ про Processes за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Operations practice
 
@@ -123,15 +101,70 @@ stderr/log, command, env, permissions, port.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое Processes и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Processes?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Processes: это отдельный технический контракт
+
+### Нормальный Junior answer
+
+> Processes — тема, в которой я сначала фиксирую `ps`, затем объясняю `foreground/background` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Processes?**
+
+Нужно назвать конкретный failure path и способ его проверить.
+
+## Expected answer rubric
+
+### Must mention
+
+- ps
+- foreground/background
+- signals
+- kill
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Игнорировать ограничение механизма и проверять только happy path.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какое ограничение или типичная ошибка относится именно к теме Processes?
+
+## Задача
+
+Сделай короткую письменную практику по теме **Processes**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Processes**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Processes: это отдельный технический контракт
+- **Механизм:** Процесс видит filesystem, env, user permissions, descriptors и network namespace.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

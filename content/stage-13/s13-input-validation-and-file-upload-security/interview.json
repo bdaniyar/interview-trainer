@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Input validation and file upload security» как на Junior Python Backend interview.",
+    "question": "Что такое Input validation and file upload security и какой механизм здесь важно понимать Junior-разработчику?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "size",
       "type",
       "filename/key",
-      "content inspection limitations",
-      "Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации."
+      "content inspection limitations"
     ],
+    "short_answer": "Input validation and file upload security: Это security boundary: сервер проверяет утверждение и безопасно отказывает, не доверяя клиентскому UI.",
+    "junior_answer": "Input validation and file upload security — тема, в которой я сначала фиксирую `size`, затем объясняю `type` на коротком примере. Ключевой механизм: Назови asset, threat, trust boundary, server-side verification и безопасный failure result. Главная практическая ошибка — Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.",
+    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Input validation and file upload security?",
+    "follow_up_answer": "Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.",
     "expected_answer": {
       "must_mention": [
         "size",
         "type",
         "filename/key",
-        "content inspection limitations",
-        "Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации."
+        "content inspection limitations"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Считать CORS авторизацией, JWT шифрованием или хранить пароль быстрым hash.",
+        "Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Считать CORS авторизацией, JWT шифрованием или хранить пароль быстрым hash."
+        "Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией."
       ],
       "follow_up_questions": [
-        "Назови атакующего, актив, проверку на сервере и безопасный отказ."
+        "Какое ограничение или типичная ошибка относится именно к теме Input validation and file upload security?"
       ]
     },
     "follow_ups": [
-      "Назови атакующего, актив, проверку на сервере и безопасный отказ."
+      "Какое ограничение или типичная ошибка относится именно к теме Input validation and file upload security?"
     ],
     "tags": [
       "stage-13",
@@ -48,42 +50,43 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Input validation and file upload security»: Назови атакующего, актив, проверку на сервере и безопасный отказ. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какое ограничение или типичная ошибка относится именно к теме Input validation and file upload security?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "authorization",
+      "orphan cleanup",
+      "Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией."
     ],
+    "short_answer": "Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.",
+    "junior_answer": "Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.",
+    "follow_up_question": "Что такое Input validation and file upload security и какой механизм здесь важно понимать Junior-разработчику?",
+    "follow_up_answer": "Input validation and file upload security — тема, в которой я сначала фиксирую `size`, затем объясняю `type` на коротком примере. Ключевой механизм: Назови asset, threat, trust boundary, server-side verification и безопасный failure result. Главная практическая ошибка — Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "authorization",
+        "orphan cleanup"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией."
       ],
       "red_flags": [
-        "Считать CORS авторизацией, JWT шифрованием или хранить пароль быстрым hash."
+        "Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Input validation and file upload security и какой механизм здесь важно понимать Junior-разработчику?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Input validation and file upload security и какой механизм здесь важно понимать Junior-разработчику?"
     ],
     "tags": [
       "stage-13",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-13",

@@ -1,39 +1,43 @@
 [
   {
-    "question": "Объясни тему «`await` and cooperative scheduling» как на Junior Python Backend interview.",
+    "question": "Что делает `await` и создаёт ли он конкурентность автоматически?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
+      "coroutine object",
       "suspension point",
-      "event loop can run other tasks",
-      "await does not automatically create parallelism.",
-      "Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код."
+      "event loop",
+      "последовательный vs concurrent await"
     ],
+    "short_answer": "Await приостанавливает текущую coroutine и отдаёт loop управление; сам по себе он не создаёт thread и два последовательных await не становятся concurrent.",
+    "junior_answer": "`await` работает внутри coroutine: если операция не готова, state текущей task сохраняется, а event loop может выполнять другие tasks. После готовности выполнение продолжится со следующей строки. Это полезно для I/O-bound кода. Один await не создаёт новую task, поэтому для независимых операций нужны `create_task`, `gather` или `TaskGroup`.",
+    "follow_up_question": "Что произойдёт, если вызвать blocking функцию внутри event loop?",
+    "follow_up_answer": "Она не отдаёт управление, поэтому задержит все tasks этого loop; нужен async-native API, `to_thread` для blocking I/O или отдельный process/worker для CPU work.",
     "expected_answer": {
       "must_mention": [
+        "coroutine object",
         "suspension point",
-        "event loop can run other tasks",
-        "await does not automatically create parallelism.",
-        "Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код."
+        "event loop",
+        "последовательный vs concurrent await"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint.",
+        "Вызвать coroutine без `await`: работа не выполнится, возможен warning `coroutine was never awaited`.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint."
+        "Вызвать coroutine без `await`: работа не выполнится, возможен warning `coroutine was never awaited`."
       ],
       "follow_up_questions": [
-        "Найди blocking участок, обозначь cancellation boundary и выбери способ конкурентного запуска."
+        "Что произойдёт, если вызвать blocking функцию внутри event loop?"
       ]
     },
     "follow_ups": [
-      "Найди blocking участок, обозначь cancellation boundary и выбери способ конкурентного запуска."
+      "Что произойдёт, если вызвать blocking функцию внутри event loop?"
     ],
     "tags": [
       "stage-08",
@@ -46,42 +50,47 @@
     ]
   },
   {
-    "question": "Сценарий по теме «`await` and cooperative scheduling»: Найди blocking участок, обозначь cancellation boundary и выбери способ конкурентного запуска. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Что произойдёт, если вызвать blocking функцию внутри event loop?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "create_task/gather",
+      "cancellation cleanup",
+      "timeouts",
+      "Она не отдаёт управление, поэтому задержит все tasks этого loop; нужен async-native API, `to_thread` для blocking I/O или отдельный process/worker для CPU work."
     ],
+    "short_answer": "Она не отдаёт управление, поэтому задержит все tasks этого loop; нужен async-native API, `to_thread` для blocking I/O или отдельный process/worker для CPU work.",
+    "junior_answer": "Она не отдаёт управление, поэтому задержит все tasks этого loop; нужен async-native API, `to_thread` для blocking I/O или отдельный process/worker для CPU work.",
+    "follow_up_question": "Что делает `await` и создаёт ли он конкурентность автоматически?",
+    "follow_up_answer": "`await` работает внутри coroutine: если операция не готова, state текущей task сохраняется, а event loop может выполнять другие tasks. После готовности выполнение продолжится со следующей строки. Это полезно для I/O-bound кода. Один await не создаёт новую task, поэтому для независимых операций нужны `create_task`, `gather` или `TaskGroup`.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "create_task/gather",
+        "cancellation cleanup",
+        "timeouts"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Вызвать coroutine без `await`: работа не выполнится, возможен warning `coroutine was never awaited`.",
+        "Использовать `time.sleep()` в `async def`; нужно `await asyncio.sleep()` или вынести blocking call.",
+        "Ожидать две независимые операции последовательно и называть это concurrent execution."
       ],
       "red_flags": [
-        "Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint."
+        "Вызвать coroutine без `await`: работа не выполнится, возможен warning `coroutine was never awaited`."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что делает `await` и создаёт ли он конкурентность автоматически?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что делает `await` и создаёт ли он конкурентность автоматически?"
     ],
     "tags": [
       "stage-08",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-08",

@@ -7,42 +7,48 @@
 
 После урока ты сможешь:
 
-- объяснить `class object` своими словами и связать с backend-сценарием;
-- объяснить `instance` своими словами и связать с backend-сценарием;
-- объяснить `instance namespace` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Class, instance and attributes**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `class object`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-ООП в backend полезно как способ выразить состояние, поведение и границы ответственности, а не как соревнование по наследованию.
+### Что это
 
-В теме **Class, instance and attributes** важно уверенно объяснять следующие части:
+A class is an object describing behavior and class attributes; an instance has its own identity and instance namespace.
 
-### class object
+### Как работает
 
-Для `class object` укажи, где хранится state, как Python ищет behavior и почему выбран composition/inheritance.
+Attribute lookup starts on the instance, then follows the class MRO; methods found on the class become bound methods when read through an instance.
 
-### instance
 
-Для `instance` укажи, где хранится state, как Python ищет behavior и почему выбран composition/inheritance.
+### Важный нюанс / limitation
 
-### instance namespace
-
-Для `instance namespace` укажи, где хранится state, как Python ищет behavior и почему выбран composition/inheritance.
-
-### class namespace
-
-Для `class namespace` укажи, где хранится state, как Python ищет behavior и почему выбран composition/inheritance.
-
-### attribute lookup
-
-Для `attribute lookup` укажи, где хранится state, как Python ищет behavior и почему выбран composition/inheritance.
+A mutable class attribute is shared by instances until an instance shadows the name.
 
 ## Mental model
 
 У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- class object
+- instance
+- instance namespace
+- class namespace
+
+### Полезно
+
+- attribute lookup
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -63,19 +69,47 @@ Instance хранит собственный `email`, а attribute lookup нах
 
 ## Common mistakes
 
-**Ошибка:** Создавать глубокую иерархию ради переиспользования нескольких строк.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Defining `items = []` on the class for per-instance data leaks mutations between all instances.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `class object` example and predict the result before running it.
+
+**B · Find the bug.** Find code that violates `instance` and explain the concrete consequence.
+
+**D · Small task.** Implement the smallest function/query that demonstrates `class object` and add one edge-case test.
+
+**E · Interview explanation.** Explain Class, instance and attributes in 45–60 seconds and include one limitation.
 
 ## Interview questions
 
-1. Объясни **Class, instance and attributes** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Сравни composition и inheritance для сервиса уведомлений и назови цену изменения. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Class, instance and attributes и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Class, instance and attributes?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+A class is an object describing behavior and class attributes; an instance has its own identity and instance namespace.
+
+### Нормальный Junior answer
+
+> A class is an object describing behavior and class attributes; an instance has its own identity and instance namespace. Attribute lookup starts on the instance, then follows the class MRO; methods found on the class become bound methods when read through an instance. Важное ограничение: A mutable class attribute is shared by instances until an instance shadows the name.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Class, instance and attributes?**
+
+Defining `items = []` on the class for per-instance data leaks mutations between all instances.
 
 ## Expected answer rubric
 
@@ -85,47 +119,34 @@ Instance хранит собственный `email`, а attribute lookup нах
 - instance
 - instance namespace
 - class namespace
-- У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Создавать глубокую иерархию ради переиспользования нескольких строк.
-- ответ из одного определения без механизма и failure mode.
+- Defining `items = []` on the class for per-instance data leaks mutations between all instances.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- class object
-- instance
-- instance namespace
-- class namespace
-- attribute lookup.
+- Какая типичная ошибка связана с Class, instance and attributes?
 
 ## Задача
 
-Разбери backend-сценарий: **Сравни composition и inheritance для сервиса уведомлений и назови цену изменения.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Class, instance and attributes**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Class, instance and attributes**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** A class is an object describing behavior and class attributes; an instance has its own identity and instance namespace.
+- **Механизм:** У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.
+- **Ограничение:** Defining `items = []` on the class for per-instance data leaks mutations between all instances.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

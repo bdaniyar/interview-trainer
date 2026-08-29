@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «HTTP request and response» как на Junior Python Backend interview.",
+    "question": "Что такое HTTP request and response и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -8,34 +8,36 @@
       "start line",
       "method",
       "path",
-      "headers",
-      "Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса."
+      "headers"
     ],
+    "short_answer": "HTTP is a request/response application protocol: a request contains method, target, headers and optional body; a response contains status, headers and optional body.",
+    "junior_answer": "HTTP is a request/response application protocol: a request contains method, target, headers and optional body; a response contains status, headers and optional body. The server parses the request, routes it, applies application logic and serializes a response. HTTP semantics remain distinct from JSON and framework implementation. Важное ограничение: Transport success does not mean business success; status and body must describe the application result.",
+    "follow_up_question": "Какая типичная ошибка связана с HTTP request and response?",
+    "follow_up_answer": "Returning 200 with an error hidden in JSON breaks clients, monitoring and standard retry/cache behavior.",
     "expected_answer": {
       "must_mention": [
         "start line",
         "method",
         "path",
-        "headers",
-        "Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса."
+        "headers"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне.",
+        "Returning 200 with an error hidden in JSON breaks clients, monitoring and standard retry/cache behavior.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне."
+        "Returning 200 with an error hidden in JSON breaks clients, monitoring and standard retry/cache behavior."
       ],
       "follow_up_questions": [
-        "Спроектируй request/response контракт и объясни retry, idempotency и error body."
+        "Какая типичная ошибка связана с HTTP request and response?"
       ]
     },
     "follow_ups": [
-      "Спроектируй request/response контракт и объясни retry, idempotency и error body."
+      "Какая типичная ошибка связана с HTTP request and response?"
     ],
     "tags": [
       "stage-12",
@@ -48,42 +50,43 @@
     ]
   },
   {
-    "question": "Сценарий по теме «HTTP request and response»: Спроектируй request/response контракт и объясни retry, idempotency и error body. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с HTTP request and response?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "body",
+      "status",
+      "Returning 200 with an error hidden in JSON breaks clients, monitoring and standard retry/cache behavior."
     ],
+    "short_answer": "Returning 200 with an error hidden in JSON breaks clients, monitoring and standard retry/cache behavior.",
+    "junior_answer": "Returning 200 with an error hidden in JSON breaks clients, monitoring and standard retry/cache behavior.",
+    "follow_up_question": "Что такое HTTP request and response и как это работает?",
+    "follow_up_answer": "HTTP is a request/response application protocol: a request contains method, target, headers and optional body; a response contains status, headers and optional body. The server parses the request, routes it, applies application logic and serializes a response. HTTP semantics remain distinct from JSON and framework implementation. Важное ограничение: Transport success does not mean business success; status and body must describe the application result.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "body",
+        "status"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Returning 200 with an error hidden in JSON breaks clients, monitoring and standard retry/cache behavior."
       ],
       "red_flags": [
-        "Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне."
+        "Returning 200 with an error hidden in JSON breaks clients, monitoring and standard retry/cache behavior."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое HTTP request and response и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое HTTP request and response и как это работает?"
     ],
     "tags": [
       "stage-12",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-12",

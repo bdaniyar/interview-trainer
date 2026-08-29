@@ -7,38 +7,60 @@
 
 После урока ты сможешь:
 
-- объяснить `in-memory data structure server` своими словами и связать с backend-сценарием;
-- объяснить `fast` своими словами и связать с backend-сценарием;
-- объяснить `optional persistence modes` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Redis mental model**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `in-memory data structure server`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Redis — быстрый in-memory data store для cache и временного состояния, но источник истины выбирается по durability requirements.
+### Что это
 
-В теме **Redis mental model** важно уверенно объяснять следующие части:
+Тема **Redis mental model** описывает отдельный контракт backend-разработки.
 
-### in-memory data structure server
+### Как работает
 
-Для `in-memory data structure server` определи Redis key/value, TTL, invalidation, concurrency и fallback при outage.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
 
-### fast
+**in-memory data structure server.** `in-memory data structure server` влияет на Redis key/value lifecycle; корректная схема заранее определяет TTL, invalidation, concurrency и outage fallback.
 
-Для `fast` определи Redis key/value, TTL, invalidation, concurrency и fallback при outage.
+**fast.** `fast` влияет на Redis key/value lifecycle; корректная схема заранее определяет TTL, invalidation, concurrency и outage fallback.
 
-### optional persistence modes
+**optional persistence modes.** `T | None` разрешает значение `None`, но не делает аргумент или поле необязательным без default; missing и explicit null — разные состояния.
 
-`T | None` разрешает значение `None`, но не делает аргумент или поле необязательным без default; missing и explicit null — разные состояния.
+**not a relational source of truth by default.** `not a relational source of truth by default` влияет на Redis key/value lifecycle; корректная схема заранее определяет TTL, invalidation, concurrency и outage fallback.
 
-### not a relational source of truth by default
 
-Для `not a relational source of truth by default` определи Redis key/value, TTL, invalidation, concurrency и fallback при outage.
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `in-memory data structure server` и `fast` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `in-memory data structure server`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Для cache всегда определяй key, value, TTL, invalidation и fallback.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- in-memory data structure server
+- fast
+- optional persistence modes
+- not a relational source of truth by default
+
+### Полезно
+
+- связать Redis mental model с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -54,19 +76,45 @@ TTL lesson:19.1:s19_redis_mental_model
 
 ## Common mistakes
 
-**Ошибка:** Использовать Pub/Sub как историю или забыть TTL и invalidation.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Игнорировать ограничение механизма и проверять только happy path.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `in-memory data structure server` до запуска.
+
+**B · Find the bug.** Найди нарушение `fast` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Redis mental model за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Redis mental model** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Разбери cache miss, stale value, Redis outage и concurrent refill. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Redis mental model и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Redis mental model?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Redis mental model: это отдельный технический контракт
+
+### Нормальный Junior answer
+
+> Redis mental model — тема, в которой я сначала фиксирую `in-memory data structure server`, затем объясняю `fast` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Redis mental model?**
+
+Нужно назвать конкретный failure path и способ его проверить.
 
 ## Expected answer rubric
 
@@ -75,47 +123,35 @@ TTL lesson:19.1:s19_redis_mental_model
 - in-memory data structure server
 - fast
 - optional persistence modes
-- not a relational source of truth by default.
-- Для cache всегда определяй key, value, TTL, invalidation и fallback.
+- not a relational source of truth by default
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Использовать Pub/Sub как историю или забыть TTL и invalidation.
-- ответ из одного определения без механизма и failure mode.
+- Игнорировать ограничение механизма и проверять только happy path.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- in-memory data structure server
-- fast
-- optional persistence modes
-- not a relational source of truth by default.
+- Какое ограничение или типичная ошибка относится именно к теме Redis mental model?
 
 ## Задача
 
-Разбери backend-сценарий: **Разбери cache miss, stale value, Redis outage и concurrent refill.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Redis mental model**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Redis mental model**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Redis mental model: это отдельный технический контракт
+- **Механизм:** Для cache всегда определяй key, value, TTL, invalidation и fallback.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

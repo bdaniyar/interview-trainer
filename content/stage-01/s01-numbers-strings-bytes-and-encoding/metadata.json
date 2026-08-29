@@ -18,7 +18,7 @@
     "JSON/text boundaries",
     "money should not use binary float blindly."
   ],
-  "description": "P1 · Numbers, strings, bytes and encoding: mental model, interview rubric и backend-сценарий.",
+  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

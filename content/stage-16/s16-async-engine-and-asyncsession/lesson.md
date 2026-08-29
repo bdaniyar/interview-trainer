@@ -7,38 +7,48 @@
 
 После урока ты сможешь:
 
-- объяснить `async driver` своими словами и связать с backend-сценарием;
-- объяснить `awaitable operations` своими словами и связать с backend-сценарием;
-- объяснить `one session per task/request` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Async engine and AsyncSession**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `async driver`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-SQLAlchemy 2.x управляет SQL, identity map, unit of work и transaction lifecycle; Session не является простым соединением.
+### Что это
 
-В теме **Async engine and AsyncSession** важно уверенно объяснять следующие части:
+AsyncEngine and AsyncSession use an async DB driver so SQL I/O can be awaited without blocking the event loop.
 
-### async driver
+### Как работает
 
-Для `async driver` укажи Session/transaction owner, момент SQL I/O и последствия rollback или lazy load.
+ORM state/transaction semantics remain: one AsyncSession per request/task, explicit await for I/O and clear commit/rollback ownership.
 
-### awaitable operations
 
-`await` приостанавливает текущую coroutine и отдаёт управление event loop, пока awaitable не станет готов.
+### Важный нюанс / limitation
 
-### one session per task/request
-
-Session владеет identity map и transaction state; после ошибки flush требуется rollback до дальнейшей работы.
-
-### no concurrent use of one AsyncSession
-
-Session владеет identity map и transaction state; после ошибки flush требуется rollback до дальнейшей работы.
+Do not share one AsyncSession across `gather` tasks; each concurrent unit needs its own session/transaction.
 
 ## Mental model
 
 Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- async driver
+- awaitable operations
+- one session per task/request
+- no concurrent use of one AsyncSession
+
+### Полезно
+
+- one short code/result example
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -55,58 +65,19 @@ Session per concurrent task/use case.
 
 ## Common mistakes
 
-**Ошибка:** Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Switching to AsyncSession without an async driver or while using blocking migrations does not create an async data path.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `async driver` example and predict the result before running it.
 
-## Interview questions
+**B · Find the bug.** Find code that violates `awaitable operations` and explain the concrete consequence.
 
-1. Объясни **Async engine and AsyncSession** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Опиши session scope, момент flush/commit и количество SQL-запросов. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+**D · Small task.** Implement the smallest function/query that demonstrates `async driver` and add one edge-case test.
 
-## Expected answer rubric
-
-### Must mention
-
-- async driver
-- awaitable operations
-- one session per task/request
-- no concurrent use of one AsyncSession.
-- Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- async driver
-- awaitable operations
-- one session per task/request
-- no concurrent use of one AsyncSession.
-
-## Задача
-
-Разбери backend-сценарий: **Опиши session scope, момент flush/commit и количество SQL-запросов.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Explain Async engine and AsyncSession in 45–60 seconds and include one limitation.
 
 ## Debugging practice
 
@@ -118,15 +89,70 @@ Session per concurrent task/use case.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое Async engine and AsyncSession и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Async engine and AsyncSession?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+AsyncEngine and AsyncSession use an async DB driver so SQL I/O can be awaited without blocking the event loop.
+
+### Нормальный Junior answer
+
+> AsyncEngine and AsyncSession use an async DB driver so SQL I/O can be awaited without blocking the event loop. ORM state/transaction semantics remain: one AsyncSession per request/task, explicit await for I/O and clear commit/rollback ownership. Важное ограничение: Do not share one AsyncSession across `gather` tasks; each concurrent unit needs its own session/transaction.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Async engine and AsyncSession?**
+
+Switching to AsyncSession without an async driver or while using blocking migrations does not create an async data path.
+
+## Expected answer rubric
+
+### Must mention
+
+- async driver
+- awaitable operations
+- one session per task/request
+- no concurrent use of one AsyncSession
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Switching to AsyncSession without an async driver or while using blocking migrations does not create an async data path.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какая типичная ошибка связана с Async engine and AsyncSession?
+
+## Задача
+
+Сделай короткую письменную практику по теме **Async engine and AsyncSession**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Async engine and AsyncSession**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** AsyncEngine and AsyncSession use an async DB driver so SQL I/O can be awaited without blocking the event loop.
+- **Механизм:** Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
+- **Ограничение:** Switching to AsyncSession without an async driver or while using blocking migrations does not create an async data path.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

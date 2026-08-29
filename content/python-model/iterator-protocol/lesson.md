@@ -7,28 +7,48 @@
 
 После урока ты сможешь:
 
-- объяснить ``__iter__`` своими словами и связать с backend-сценарием;
-- объяснить ``__next__`` своими словами и связать с backend-сценарием;
-- объяснить ``StopIteration`` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Iterator protocol**, а не только запомнить термин;
+- прочитать и изменить короткий пример для ``__iter__``;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Iterable возвращает iterator из `__iter__`. Iterator хранит состояние обхода, возвращает себя из `__iter__` и выдаёт элементы через `__next__`. Когда элементы закончились, он поднимает `StopIteration`.
+### Что это
 
-```python
-iterator = iter([10, 20])
-next(iterator)  # 10
-next(iterator)  # 20
-```
+The iterator protocol consists of `__iter__` returning an iterator and `__next__` returning an item or raising `StopIteration`.
 
-Цикл `for` скрывает эти вызовы, но использует тот же протокол.
+### Как работает
+
+A custom iterator stores its current position. A `for` loop calls `iter`, repeatedly calls `next` and catches `StopIteration` internally.
+
+
+### Важный нюанс / limitation
+
+`StopIteration` is a control signal for the protocol, not an ordinary error to print or broadly catch in consumer code.
 
 ## Mental model
 
 Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- `__iter__`
+- `__next__`
+- `StopIteration`
+- custom iterator exercise
+
+### Полезно
+
+- one short code/result example
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -55,56 +75,19 @@ Iterator protocol состоит из `__iter__`, stateful `__next__` и `StopIt
 
 ## Common mistakes
 
-**Ошибка:** Перехватывать Exception без стратегии либо удерживать весь поток данных в памяти.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Returning `None` instead of raising `StopIteration` creates an endless stream of None values instead of ending iteration.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the ``__iter__`` example and predict the result before running it.
 
-## Interview questions
+**B · Find the bug.** Find code that violates ``__next__`` and explain the concrete consequence.
 
-1. Объясни **Iterator protocol** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Покажи happy path, завершение протокола и поведение при исключении. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+**D · Small task.** Implement the smallest function/query that demonstrates ``__iter__`` and add one edge-case test.
 
-## Expected answer rubric
-
-### Must mention
-
-- `__iter__`
-- `__next__`
-- `StopIteration`
-- custom iterator exercise.
-- Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Перехватывать Exception без стратегии либо удерживать весь поток данных в памяти.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- `__iter__`
-- `__next__`
-- `StopIteration`
-- custom iterator exercise.
-
-## Задача
-
-Создай iterator-класс `Countdown(start)`, который выдаёт числа от `start` до `1`. После окончания каждый следующий `next()` должен поднимать `StopIteration`.
+**E · Interview explanation.** Explain Iterator protocol in 45–60 seconds and include one limitation.
 
 ## Code prediction
 
@@ -131,15 +114,70 @@ Misconception: `iterator-exhaustion`.
 
 </details>
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое Iterator protocol и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Iterator protocol?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+The iterator protocol consists of `__iter__` returning an iterator and `__next__` returning an item or raising `StopIteration`.
+
+### Нормальный Junior answer
+
+> The iterator protocol consists of `__iter__` returning an iterator and `__next__` returning an item or raising `StopIteration`. A custom iterator stores its current position. A `for` loop calls `iter`, repeatedly calls `next` and catches `StopIteration` internally. Важное ограничение: `StopIteration` is a control signal for the protocol, not an ordinary error to print or broadly catch in consumer code.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Iterator protocol?**
+
+Returning `None` instead of raising `StopIteration` creates an endless stream of None values instead of ending iteration.
+
+## Expected answer rubric
+
+### Must mention
+
+- `__iter__`
+- `__next__`
+- `StopIteration`
+- custom iterator exercise
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Returning `None` instead of raising `StopIteration` creates an endless stream of None values instead of ending iteration.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какая типичная ошибка связана с Iterator protocol?
+
+## Задача
+
+Сделай короткую письменную практику по теме **Iterator protocol**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Iterator protocol**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** The iterator protocol consists of `__iter__` returning an iterator and `__next__` returning an item or raising `StopIteration`.
+- **Механизм:** Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка.
+- **Ограничение:** Returning `None` instead of raising `StopIteration` creates an endless stream of None values instead of ending iteration.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

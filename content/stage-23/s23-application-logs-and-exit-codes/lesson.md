@@ -7,34 +7,57 @@
 
 После урока ты сможешь:
 
-- объяснить `stdout/stderr` своими словами и связать с backend-сценарием;
-- объяснить `exit status` своими словами и связать с backend-сценарием;
-- объяснить `pipeline failure awareness.` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Application logs and exit codes**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `stdout/stderr`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Linux basics нужны для запуска процесса, чтения логов, environment и диагностики ports/permissions.
+### Что это
 
-В теме **Application logs and exit codes** важно уверенно объяснять следующие части:
+Тема **Application logs and exit codes** описывает отдельный контракт backend-разработки.
 
-### stdout/stderr
+### Как работает
 
-Для `stdout/stderr` свяжи command с конкретным process, file, permission, environment или network symptom.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
 
-### exit status
+**stdout/stderr.** `stdout/stderr` связывает shell command с конкретным process, file, permission, environment или network state.
 
-Для `exit status` свяжи command с конкретным process, file, permission, environment или network symptom.
+**exit status.** `exit status` связывает shell command с конкретным process, file, permission, environment или network state.
 
-### pipeline failure awareness
+**pipeline failure awareness.** `pipeline failure awareness` связывает shell command с конкретным process, file, permission, environment или network state.
 
-Для `pipeline failure awareness` свяжи command с конкретным process, file, permission, environment или network symptom.
+
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `stdout/stderr` и `exit status` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `stdout/stderr`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Процесс видит filesystem, env, user permissions, descriptors и network namespace.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- stdout/stderr
+- exit status
+- pipeline failure awareness
+
+### Полезно
+
+- связать Application logs and exit codes с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -51,19 +74,45 @@ printf '%s
 
 ## Common mistakes
 
-**Ошибка:** Менять permissions на 777 вместо поиска владельца и требуемого доступа.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Игнорировать ограничение механизма и проверять только happy path.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `stdout/stderr` до запуска.
+
+**B · Find the bug.** Найди нарушение `exit status` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Application logs and exit codes за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Application logs and exit codes** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Найди процесс, его exit code, порт, env и последнюю ошибку в log. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Application logs and exit codes и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Application logs and exit codes?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Application logs and exit codes: это отдельный технический контракт
+
+### Нормальный Junior answer
+
+> Application logs and exit codes — тема, в которой я сначала фиксирую `stdout/stderr`, затем объясняю `exit status` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Application logs and exit codes?**
+
+Нужно назвать конкретный failure path и способ его проверить.
 
 ## Expected answer rubric
 
@@ -71,46 +120,35 @@ printf '%s
 
 - stdout/stderr
 - exit status
-- pipeline failure awareness.
-- Процесс видит filesystem, env, user permissions, descriptors и network namespace.
+- pipeline failure awareness
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Менять permissions на 777 вместо поиска владельца и требуемого доступа.
-- ответ из одного определения без механизма и failure mode.
+- Игнорировать ограничение механизма и проверять только happy path.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- stdout/stderr
-- exit status
-- pipeline failure awareness.
+- Какое ограничение или типичная ошибка относится именно к теме Application logs and exit codes?
 
 ## Задача
 
-Разбери backend-сценарий: **Найди процесс, его exit code, порт, env и последнюю ошибку в log.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Application logs and exit codes**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Application logs and exit codes**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Application logs and exit codes: это отдельный технический контракт
+- **Механизм:** Процесс видит filesystem, env, user permissions, descriptors и network namespace.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

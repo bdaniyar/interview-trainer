@@ -7,34 +7,71 @@
 
 После урока ты сможешь:
 
-- объяснить `suspension point` своими словами и связать с backend-сценарием;
-- объяснить `event loop can run other tasks` своими словами и связать с backend-сценарием;
-- объяснить `await does not automatically create parallelism.` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **`await` and cooperative scheduling**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `suspension point`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-asyncio даёт кооперативную конкурентность для I/O-bound работы: задача уступает loop только в await point.
+### Что это
 
-В теме **`await` and cooperative scheduling** важно уверенно объяснять следующие части:
+`await` приостанавливает текущую coroutine до готовности awaitable и позволяет event loop выполнять другие готовые tasks. Это кооперативная конкурентность, а не автоматический новый thread или parallel CPU execution.
 
-### suspension point
+### Как работает
 
-Для `suspension point` проследи coroutine/task по await points, cancellation и cleanup, не предполагая отдельный thread.
+`async def` при вызове создаёт coroutine object. Когда coroutine запущена task-ом, она выполняется до `await`. Если awaitable ещё не готов, task сохраняет state и уступает loop; после события продолжает со следующей строки.
 
-### event loop can run other tasks
 
-Event loop запускает ready callbacks/tasks и ждёт I/O; cooperative task уступает управление только в await point.
+### Пример
 
-### await does not automatically create parallelism
+```python
+import asyncio
 
-`await` приостанавливает текущую coroutine и отдаёт управление event loop, пока awaitable не станет готов.
+async def fetch(name, delay):
+    await asyncio.sleep(delay)
+    return name
+
+async def main():
+    result = await asyncio.gather(fetch("profile", 0.02), fetch("orders", 0.01))
+    print(result)  # ['profile', 'orders']
+
+asyncio.run(main())
+```
+
+### Важный нюанс / limitation
+
+Два последовательных `await` остаются последовательными. Конкурентный запуск требует tasks/`gather`/`TaskGroup`. `time.sleep`, sync DB driver или CPU loop внутри async endpoint блокирует весь event-loop thread.
+
+### Где используется в backend
+
+Async endpoint полезен, когда весь I/O path — HTTP client, DB driver, queue — предоставляет awaitable API.
 
 ## Mental model
 
 Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- coroutine object
+- suspension point
+- event loop
+- последовательный vs concurrent await
+- blocking code
+
+### Полезно
+
+- create_task/gather
+- cancellation cleanup
+- timeouts
+
+### Можно не учить глубоко
+
+- реализация selectors/proactors и bytecode coroutine
 
 ## Code examples
 
@@ -58,58 +95,28 @@ Task уступает управление только в await point, посл
 
 ## Common mistakes
 
-**Ошибка:** Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Вызвать coroutine без `await`: работа не выполнится, возможен warning `coroutine was never awaited`.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+### Ошибка 2
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+Использовать `time.sleep()` в `async def`; нужно `await asyncio.sleep()` или вынести blocking call.
 
-## Interview questions
+### Ошибка 3
 
-1. Объясни **`await` and cooperative scheduling** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Найди blocking участок, обозначь cancellation boundary и выбери способ конкурентного запуска. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+Ожидать две независимые операции последовательно и называть это concurrent execution.
 
-## Expected answer rubric
+## Practice
 
-### Must mention
+**A · Code prediction.** Определи порядок вывода двух tasks с `sleep(0)`.
 
-- suspension point
-- event loop can run other tasks
-- await does not automatically create parallelism.
-- Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.
+**B · Find the bug.** Найди `requests.get`/`time.sleep` внутри async endpoint.
 
-### Good additions
+**C · Rewrite.** Запусти независимые I/O calls через `gather`.
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+**D · Small task.** Реализуй bounded async fetch с timeout.
 
-### Common wrong answers
-
-- Вызвать time.sleep или синхронный HTTP-клиент внутри async endpoint.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- suspension point
-- event loop can run other tasks
-- await does not automatically create parallelism.
-
-## Задача
-
-### Конкурентный profile
-
-Реализуй load_profile: get_user и get_roles запускаются конкурентно; верни объединённый dict.
-
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
 ## Code prediction
 
 ### Await сохраняет порядок внутри task
@@ -150,15 +157,73 @@ Misconception: `await-order`.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что делает `await` и создаёт ли он конкурентность автоматически?
+
+### Follow-up
+
+Что произойдёт, если вызвать blocking функцию внутри event loop?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Await приостанавливает текущую coroutine и отдаёт loop управление; сам по себе он не создаёт thread и два последовательных await не становятся concurrent.
+
+### Нормальный Junior answer
+
+> `await` работает внутри coroutine: если операция не готова, state текущей task сохраняется, а event loop может выполнять другие tasks. После готовности выполнение продолжится со следующей строки. Это полезно для I/O-bound кода. Один await не создаёт новую task, поэтому для независимых операций нужны `create_task`, `gather` или `TaskGroup`.
+
+### Углубление / follow-up
+
+**Что произойдёт, если вызвать blocking функцию внутри event loop?**
+
+Она не отдаёт управление, поэтому задержит все tasks этого loop; нужен async-native API, `to_thread` для blocking I/O или отдельный process/worker для CPU work.
+
+## Expected answer rubric
+
+### Must mention
+
+- coroutine object
+- suspension point
+- event loop
+- последовательный vs concurrent await
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Вызвать coroutine без `await`: работа не выполнится, возможен warning `coroutine was never awaited`.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Что произойдёт, если вызвать blocking функцию внутри event loop?
+
+## Задача
+
+### Конкурентный profile
+
+Реализуй load_profile: get_user и get_roles запускаются конкурентно; верни объединённый dict.
+
+Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **`await` and cooperative scheduling**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Await приостанавливает текущую coroutine и отдаёт loop управление; сам по себе он не создаёт thread и два последовательных await не становятся concurrent.
+- **Механизм:** Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.
+- **Ограничение:** Вызвать coroutine без `await`: работа не выполнится, возможен warning `coroutine was never awaited`.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

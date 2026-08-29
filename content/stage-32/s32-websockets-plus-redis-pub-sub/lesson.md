@@ -7,34 +7,57 @@
 
 После урока ты сможешь:
 
-- объяснить `WebSocket connects client to one process` своими словами и связать с backend-сценарием;
-- объяснить `Pub/Sub distributes live events between instances` своими словами и связать с backend-сценарием;
-- объяснить `API instances fan out to local clients.` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **WebSockets + Redis Pub/Sub**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `WebSocket connects client to one process`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Resume Defense проверяет каждую заявленную технологию через конкретную роль в StudyHub, Hotel Booking или Share Recipe.
+### Что это
 
-В теме **WebSockets + Redis Pub/Sub** важно уверенно объяснять следующие части:
+Тема **WebSockets + Redis Pub/Sub** описывает отдельный контракт backend-разработки.
 
-### WebSocket connects client to one process
+### Как работает
 
-Processes изолируют память и подходят для CPU-bound Python, но требуют serialization/IPC и имеют более дорогой startup.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
 
-### Pub/Sub distributes live events between instances
+**WebSocket connects client to one process.** WebSocket держит долгоживущее соединение; масштабирование требует shared fan-out, а durable history хранится отдельно.
 
-Redis Pub/Sub доставляет только активным subscribers и не является durable очередью или историей.
+**Pub/Sub distributes live events between instances.** Redis Pub/Sub доставляет только активным subscribers и не является durable очередью или историей.
 
-### API instances fan out to local clients
+**API instances fan out to local clients.** `API instances fan out to local clients` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
 
-Для `API instances fan out to local clients` отвечай только по реализованному flow: проблема, своё решение, trade-off, failure mode и test/metric.
+
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `WebSocket connects client to one process` и `Pub/Sub distributes live events between instances` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `WebSocket connects client to one process`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- WebSocket connects client to one process
+- Pub/Sub distributes live events between instances
+- API instances fan out to local clients
+
+### Полезно
+
+- связать WebSockets + Redis Pub/Sub с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -51,56 +74,17 @@ Persist, publish, fan-out; offline reads DB.
 
 ## Common mistakes
 
-**Ошибка:** Приписывать себе production scale, AWS, Kubernetes, Kafka или RabbitMQ без фактического опыта.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Игнорировать ограничение механизма и проверять только happy path.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `WebSocket connects client to one process` до запуска.
 
-## Interview questions
+**B · Find the bug.** Найди нарушение `Pub/Sub distributes live events between instances` и объясни конкретное последствие.
 
-1. Объясни **WebSockets + Redis Pub/Sub** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Защити один claim, назвав точный flow, failure mode и способ проверки. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
-
-## Expected answer rubric
-
-### Must mention
-
-- WebSocket connects client to one process
-- Pub/Sub distributes live events between instances
-- API instances fan out to local clients.
-- Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Приписывать себе production scale, AWS, Kubernetes, Kafka или RabbitMQ без фактического опыта.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- WebSocket connects client to one process
-- Pub/Sub distributes live events between instances
-- API instances fan out to local clients.
-
-## Задача
-
-Разбери backend-сценарий: **Защити один claim, назвав точный flow, failure mode и способ проверки.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Дай ответ про WebSockets + Redis Pub/Sub за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Architecture practice
 
@@ -112,15 +96,69 @@ Persist, publish, fan-out; offline reads DB.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое WebSockets + Redis Pub/Sub и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме WebSockets + Redis Pub/Sub?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+WebSockets + Redis Pub/Sub: это отдельный технический контракт
+
+### Нормальный Junior answer
+
+> WebSockets + Redis Pub/Sub — тема, в которой я сначала фиксирую `WebSocket connects client to one process`, затем объясняю `Pub/Sub distributes live events between instances` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме WebSockets + Redis Pub/Sub?**
+
+Нужно назвать конкретный failure path и способ его проверить.
+
+## Expected answer rubric
+
+### Must mention
+
+- WebSocket connects client to one process
+- Pub/Sub distributes live events between instances
+- API instances fan out to local clients
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Игнорировать ограничение механизма и проверять только happy path.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какое ограничение или типичная ошибка относится именно к теме WebSockets + Redis Pub/Sub?
+
+## Задача
+
+Сделай короткую письменную практику по теме **WebSockets + Redis Pub/Sub**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **WebSockets + Redis Pub/Sub**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** WebSockets + Redis Pub/Sub: это отдельный технический контракт
+- **Механизм:** Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

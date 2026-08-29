@@ -7,38 +7,60 @@
 
 После урока ты сможешь:
 
-- объяснить `browser automatically sends cookies` своими словами и связать с backend-сценарием;
-- объяснить `SameSite` своими словами и связать с backend-сценарием;
-- объяснить `CSRF token` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **CSRF**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `browser automatically sends cookies`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Security строится слоями: аутентификация, авторизация, validation, безопасное хранение секретов и ограничение злоупотреблений.
+### Что это
 
-В теме **CSRF** важно уверенно объяснять следующие части:
+Это security boundary: сервер проверяет утверждение и безопасно отказывает, не доверяя клиентскому UI.
 
-### browser automatically sends cookies
+### Как работает
 
-Для `browser automatically sends cookies` назови threat, trust boundary, server-side check и безопасный failure response.
+Назови asset, threat, trust boundary, server-side verification и безопасный failure result.
 
-### SameSite
+**browser automatically sends cookies.** `browser automatically sends cookies` закрывает конкретную threat на trust boundary; проверка выполняется server-side, а отказ не раскрывает лишних данных.
 
-Для `SameSite` назови threat, trust boundary, server-side check и безопасный failure response.
+**SameSite.** `SameSite` закрывает конкретную threat на trust boundary; проверка выполняется server-side, а отказ не раскрывает лишних данных.
 
-### CSRF token
+**CSRF token.** CSRF использует автоматически отправляемые browser credentials; защита включает SameSite и CSRF token/origin checks для state-changing requests.
 
-CSRF использует автоматически отправляемые browser credentials; защита включает SameSite и CSRF token/origin checks для state-changing requests.
+**bearer header differences.** `bearer header differences` закрывает конкретную threat на trust boundary; проверка выполняется server-side, а отказ не раскрывает лишних данных.
 
-### bearer header differences
 
-Для `bearer header differences` назови threat, trust boundary, server-side check и безопасный failure response.
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `browser automatically sends cookies` и `SameSite` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `browser automatically sends cookies`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- browser automatically sends cookies
+- SameSite
+- CSRF token
+- bearer header differences
+
+### Полезно
+
+- связать CSRF с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -56,19 +78,45 @@ assert example_s13_csrf()
 
 ## Common mistakes
 
-**Ошибка:** Считать CORS авторизацией, JWT шифрованием или хранить пароль быстрым hash.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `browser automatically sends cookies` до запуска.
+
+**B · Find the bug.** Найди нарушение `SameSite` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про CSRF за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **CSRF** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Назови атакующего, актив, проверку на сервере и безопасный отказ. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое CSRF и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме CSRF?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+CSRF: Это security boundary: сервер проверяет утверждение и безопасно отказывает, не доверяя клиентскому UI.
+
+### Нормальный Junior answer
+
+> CSRF — тема, в которой я сначала фиксирую `browser automatically sends cookies`, затем объясняю `SameSite` на коротком примере. Ключевой механизм: Назови asset, threat, trust boundary, server-side verification и безопасный failure result. Главная практическая ошибка — Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме CSRF?**
+
+Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.
 
 ## Expected answer rubric
 
@@ -77,47 +125,35 @@ assert example_s13_csrf()
 - browser automatically sends cookies
 - SameSite
 - CSRF token
-- bearer header differences.
-- Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации.
+- bearer header differences
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Считать CORS авторизацией, JWT шифрованием или хранить пароль быстрым hash.
-- ответ из одного определения без механизма и failure mode.
+- Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- browser automatically sends cookies
-- SameSite
-- CSRF token
-- bearer header differences.
+- Какое ограничение или типичная ошибка относится именно к теме CSRF?
 
 ## Задача
 
-Разбери backend-сценарий: **Назови атакующего, актив, проверку на сервере и безопасный отказ.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **CSRF**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **CSRF**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** CSRF: Это security boundary: сервер проверяет утверждение и безопасно отказывает, не доверяя клиентскому UI.
+- **Механизм:** Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации.
+- **Ограничение:** Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

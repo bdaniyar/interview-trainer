@@ -7,24 +7,45 @@
 
 После урока ты сможешь:
 
-- объяснить `Engine and connection pool` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Engine and connection pool**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `Engine and connection pool`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-SQLAlchemy 2.x управляет SQL, identity map, unit of work и transaction lifecycle; Session не является простым соединением.
+### Что это
 
-В теме **Engine and connection pool** важно уверенно объяснять следующие части:
+SQLAlchemy Engine owns the SQL dialect and connection pool; it is a long-lived application-level factory, not an ORM Session.
 
-### Engine and connection pool
+### Как работает
 
-SQLAlchemy Engine владеет dialect и connection pool; Session запрашивает connection по необходимости и возвращает её после завершения transaction.
+A Session checks out a connection when SQL is needed and returns it according to transaction/session lifecycle.
+
+
+### Важный нюанс / limitation
+
+Pool size must match database capacity and workload; creating an engine per request defeats pooling.
 
 ## Mental model
 
 Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- Engine and connection pool
+
+### Полезно
+
+- one short code/result example
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -42,62 +63,81 @@ assert example_s16_engine_and_connection_pool()
 
 ## Common mistakes
 
-**Ошибка:** Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+A leaked Session can keep a transaction/connection checked out until the pool is exhausted.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `Engine and connection pool` example and predict the result before running it.
+
+**B · Find the bug.** Find code that violates `Engine and connection pool` and explain the concrete consequence.
+
+**D · Small task.** Implement the smallest function/query that demonstrates `Engine and connection pool` and add one edge-case test.
+
+**E · Interview explanation.** Explain Engine and connection pool in 45–60 seconds and include one limitation.
 
 ## Interview questions
 
-1. Объясни **Engine and connection pool** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Опиши session scope, момент flush/commit и количество SQL-запросов. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Engine and connection pool и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Engine and connection pool?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+SQLAlchemy Engine owns the SQL dialect and connection pool; it is a long-lived application-level factory, not an ORM Session.
+
+### Нормальный Junior answer
+
+> SQLAlchemy Engine owns the SQL dialect and connection pool; it is a long-lived application-level factory, not an ORM Session. A Session checks out a connection when SQL is needed and returns it according to transaction/session lifecycle. Важное ограничение: Pool size must match database capacity and workload; creating an engine per request defeats pooling.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Engine and connection pool?**
+
+A leaked Session can keep a transaction/connection checked out until the pool is exhausted.
 
 ## Expected answer rubric
 
 ### Must mention
 
 - Engine and connection pool
-- Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks.
-- ответ из одного определения без механизма и failure mode.
+- A leaked Session can keep a transaction/connection checked out until the pool is exhausted.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- Engine and connection pool
+- Какая типичная ошибка связана с Engine and connection pool?
 
 ## Задача
 
-Разбери backend-сценарий: **Опиши session scope, момент flush/commit и количество SQL-запросов.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Engine and connection pool**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Engine and connection pool**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** SQLAlchemy Engine owns the SQL dialect and connection pool; it is a long-lived application-level factory, not an ORM Session.
+- **Механизм:** Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
+- **Ограничение:** A leaked Session can keep a transaction/connection checked out until the pool is exhausted.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

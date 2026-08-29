@@ -7,34 +7,57 @@
 
 После урока ты сможешь:
 
-- объяснить `explicit dependencies` своими словами и связать с backend-сценарием;
-- объяснить `substitution/testing` своими словами и связать с backend-сценарием;
-- объяснить `framework DI vs general principle.` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Dependency injection**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `explicit dependencies`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Архитектура управляет зависимостями и стоимостью изменений; pattern полезен только при конкретной проблеме.
+### Что это
 
-В теме **Dependency injection** важно уверенно объяснять следующие части:
+Тема **Dependency injection** описывает отдельный контракт backend-разработки.
 
-### explicit dependencies
+### Как работает
 
-Для `explicit dependencies` проведи границу слоя и dependency direction, затем покажи test без реальной инфраструктуры.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
 
-### substitution/testing
+**explicit dependencies.** `explicit dependencies` задаёт границу слоя и направление зависимости; хороший design оставляет seam для теста без реальной infrastructure.
 
-Для `substitution/testing` проведи границу слоя и dependency direction, затем покажи test без реальной инфраструктуры.
+**substitution/testing.** `substitution/testing` задаёт границу слоя и направление зависимости; хороший design оставляет seam для теста без реальной infrastructure.
 
-### framework DI vs general principle
+**framework DI vs general principle.** `framework DI vs general principle` задаёт границу слоя и направление зависимости; хороший design оставляет seam для теста без реальной infrastructure.
 
-Для `framework DI vs general principle` проведи границу слоя и dependency direction, затем покажи test без реальной инфраструктуры.
+
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `explicit dependencies` и `substitution/testing` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `explicit dependencies`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Высокоуровневое правило не должно зависеть от детали storage/framework без необходимости.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- explicit dependencies
+- substitution/testing
+- framework DI vs general principle
+
+### Полезно
+
+- связать Dependency injection с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -52,56 +75,17 @@ Expected: `42`. Explicit dependency делает поведение заменя
 
 ## Common mistakes
 
-**Ошибка:** Добавлять repository/service слои без поведения и тем самым создавать pass-through boilerplate.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Игнорировать ограничение механизма и проверять только happy path.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `explicit dependencies` до запуска.
 
-## Interview questions
+**B · Find the bug.** Найди нарушение `substitution/testing` и объясни конкретное последствие.
 
-1. Объясни **Dependency injection** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Назови направление зависимости, seam для теста и ожидаемое изменение. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
-
-## Expected answer rubric
-
-### Must mention
-
-- explicit dependencies
-- substitution/testing
-- framework DI vs general principle.
-- Высокоуровневое правило не должно зависеть от детали storage/framework без необходимости.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Добавлять repository/service слои без поведения и тем самым создавать pass-through boilerplate.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- explicit dependencies
-- substitution/testing
-- framework DI vs general principle.
-
-## Задача
-
-Разбери backend-сценарий: **Назови направление зависимости, seam для теста и ожидаемое изменение.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Дай ответ про Dependency injection за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Code prediction
 
@@ -131,15 +115,69 @@ Misconception: `dependency-injection`.
 
 </details>
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое Dependency injection и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Dependency injection?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Dependency injection: это отдельный технический контракт
+
+### Нормальный Junior answer
+
+> Dependency injection — тема, в которой я сначала фиксирую `explicit dependencies`, затем объясняю `substitution/testing` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Dependency injection?**
+
+Нужно назвать конкретный failure path и способ его проверить.
+
+## Expected answer rubric
+
+### Must mention
+
+- explicit dependencies
+- substitution/testing
+- framework DI vs general principle
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Игнорировать ограничение механизма и проверять только happy path.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какое ограничение или типичная ошибка относится именно к теме Dependency injection?
+
+## Задача
+
+Сделай короткую письменную практику по теме **Dependency injection**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Dependency injection**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Dependency injection: это отдельный технический контракт
+- **Механизм:** Высокоуровневое правило не должно зависеть от детали storage/framework без необходимости.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

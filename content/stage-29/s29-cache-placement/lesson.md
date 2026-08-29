@@ -7,38 +7,60 @@
 
 После урока ты сможешь:
 
-- объяснить `what to cache` своими словами и связать с backend-сценарием;
-- объяснить `TTL` своими словами и связать с backend-сценарием;
-- объяснить `invalidation` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Cache placement**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `what to cache`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Junior system design начинается с требований, request path, source of truth и failure modes.
+### Что это
 
-В теме **Cache placement** важно уверенно объяснять следующие части:
+Тема **Cache placement** описывает отдельный контракт backend-разработки.
 
-### what to cache
+### Как работает
 
-Для cache заранее определяют key, TTL, invalidation и fallback, иначе ускорение создаёт stale-data bug.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
 
-### TTL
+**what to cache.** Для cache заранее определяют key, TTL, invalidation и fallback, иначе ускорение создаёт stale-data bug.
 
-Для `TTL` начни с requirements/source of truth и только затем добавляй component под измеримый failure mode.
+**TTL.** `TTL` является компонентом system design только при наличии требования, source of truth и измеримого failure mode.
 
-### invalidation
+**invalidation.** `invalidation` является компонентом system design только при наличии требования, source of truth и измеримого failure mode.
 
-Для `invalidation` начни с requirements/source of truth и только затем добавляй component под измеримый failure mode.
+**failure fallback.** `failure fallback` является компонентом system design только при наличии требования, source of truth и измеримого failure mode.
 
-### failure fallback
 
-Для `failure fallback` начни с requirements/source of truth и только затем добавляй component под измеримый failure mode.
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `what to cache` и `TTL` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `what to cache`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Сначала обеспечь корректность простого монолита; масштабируй измеренный bottleneck.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- what to cache
+- TTL
+- invalidation
+- failure fallback
+
+### Полезно
+
+- связать Cache placement с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -55,58 +77,17 @@ Auth-aware key; TTL/invalidation/fallback.
 
 ## Common mistakes
 
-**Ошибка:** Начинать с microservices, не определив нагрузку, consistency и ownership.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Игнорировать ограничение механизма и проверять только happy path.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `what to cache` до запуска.
 
-## Interview questions
+**B · Find the bug.** Найди нарушение `TTL` и объясни конкретное последствие.
 
-1. Объясни **Cache placement** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Уточни traffic, consistency, latency и failure behavior перед схемой компонентов. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
-
-## Expected answer rubric
-
-### Must mention
-
-- what to cache
-- TTL
-- invalidation
-- failure fallback.
-- Сначала обеспечь корректность простого монолита; масштабируй измеренный bottleneck.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Начинать с microservices, не определив нагрузку, consistency и ownership.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- what to cache
-- TTL
-- invalidation
-- failure fallback.
-
-## Задача
-
-Разбери backend-сценарий: **Уточни traffic, consistency, latency и failure behavior перед схемой компонентов.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Дай ответ про Cache placement за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Architecture practice
 
@@ -118,15 +99,70 @@ Auth-aware key; TTL/invalidation/fallback.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое Cache placement и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Cache placement?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Cache placement: это отдельный технический контракт
+
+### Нормальный Junior answer
+
+> Cache placement — тема, в которой я сначала фиксирую `what to cache`, затем объясняю `TTL` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Cache placement?**
+
+Нужно назвать конкретный failure path и способ его проверить.
+
+## Expected answer rubric
+
+### Must mention
+
+- what to cache
+- TTL
+- invalidation
+- failure fallback
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Игнорировать ограничение механизма и проверять только happy path.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какое ограничение или типичная ошибка относится именно к теме Cache placement?
+
+## Задача
+
+Сделай короткую письменную практику по теме **Cache placement**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Cache placement**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Cache placement: это отдельный технический контракт
+- **Механизм:** Сначала обеспечь корректность простого монолита; масштабируй измеренный bottleneck.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

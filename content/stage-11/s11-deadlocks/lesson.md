@@ -7,34 +7,57 @@
 
 После урока ты сможешь:
 
-- объяснить `circular wait` своими словами и связать с backend-сценарием;
-- объяснить `consistent lock order` своими словами и связать с backend-сценарием;
-- объяснить `retry aborted transaction.` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Deadlocks**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `circular wait`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-PostgreSQL обеспечивает ограничения и конкурентную работу ближе к данным; индекс и transaction boundary проектируются под запросы и инварианты.
+### Что это
 
-В теме **Deadlocks** важно уверенно объяснять следующие части:
+Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.
 
-### circular wait
+### Как работает
 
-Для `circular wait` назови защищаемый invariant, concurrent transaction и evidence из constraint или query plan.
+Назови invariant и concurrent scenario, затем проверь constraint, transaction boundary и фактический query plan.
 
-### consistent lock order
+**circular wait.** `circular wait` влияет на database invariant, concurrent transactions или access path; правильность подтверждают constraint и фактический query plan.
 
-Lock сериализует критическую секцию, но корректность требует единого порядка захвата и короткого времени удержания.
+**consistent lock order.** Lock сериализует критическую секцию, но корректность требует единого порядка захвата и короткого времени удержания.
 
-### retry aborted transaction
+**retry aborted transaction.** Transaction задаёт атомарную границу: либо все связанные изменения становятся видимыми, либо выполняется rollback.
 
-Transaction задаёт атомарную границу: либо все связанные изменения становятся видимыми, либо выполняется rollback.
+
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `circular wait` и `consistent lock order` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `circular wait`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- circular wait
+- consistent lock order
+- retry aborted transaction
+
+### Полезно
+
+- связать Deadlocks с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -51,56 +74,17 @@ Constraint защищает истину, transaction объединяет из�
 
 ## Common mistakes
 
-**Ошибка:** Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `circular wait` до запуска.
 
-## Interview questions
+**B · Find the bug.** Найди нарушение `consistent lock order` и объясни конкретное последствие.
 
-1. Объясни **Deadlocks** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Назови инвариант, конкурентный сценарий и точку, где его гарантирует база. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
-
-## Expected answer rubric
-
-### Must mention
-
-- circular wait
-- consistent lock order
-- retry aborted transaction.
-- Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- circular wait
-- consistent lock order
-- retry aborted transaction.
-
-## Задача
-
-Разбери backend-сценарий: **Назови инвариант, конкурентный сценарий и точку, где его гарантирует база.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Дай ответ про Deadlocks за 60 секунд: определение, механизм, пример, ограничение.
 
 ## SQL practice
 
@@ -148,15 +132,69 @@ SQL runner пока не подключён: выполни запрос в ло
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое Deadlocks и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Deadlocks?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Deadlocks: Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.
+
+### Нормальный Junior answer
+
+> Deadlocks — тема, в которой я сначала фиксирую `circular wait`, затем объясняю `consistent lock order` на коротком примере. Ключевой механизм: Назови invariant и concurrent scenario, затем проверь constraint, transaction boundary и фактический query plan. Главная практическая ошибка — Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Deadlocks?**
+
+Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
+
+## Expected answer rubric
+
+### Must mention
+
+- circular wait
+- consistent lock order
+- retry aborted transaction
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какое ограничение или типичная ошибка относится именно к теме Deadlocks?
+
+## Задача
+
+Сделай короткую письменную практику по теме **Deadlocks**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Deadlocks**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Deadlocks: Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.
+- **Механизм:** Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
+- **Ограничение:** Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

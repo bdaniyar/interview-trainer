@@ -13,7 +13,7 @@
     "ties",
     "top-N per group."
   ],
-  "description": "P1 · `ROW_NUMBER`, `RANK`, `DENSE_RANK`: mental model, interview rubric и backend-сценарий.",
+  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

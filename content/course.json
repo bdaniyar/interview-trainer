@@ -28,7 +28,7 @@
             "результат по категориям",
             "рекомендации по слабым темам."
           ],
-          "description": "P0 · Диагностический Junior Python Backend interview: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -71,7 +71,7 @@
           "topics": [
             "Как отвечать на технический вопрос"
           ],
-          "description": "P0 · Как отвечать на технический вопрос: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -116,7 +116,7 @@
           "topics": [
             "Как защищать проект"
           ],
-          "description": "P0 · Как защищать проект: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -175,7 +175,7 @@
             "rebinding",
             "multiple names for one object."
           ],
-          "description": "P0 · Object, type, name and binding: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -226,7 +226,7 @@
             "почему нельзя полагаться на interning",
             "custom `__eq__`."
           ],
-          "description": "P0 · Identity and equality: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -276,7 +276,7 @@
             "tuple с mutable element",
             "effect on function arguments."
           ],
-          "description": "P0 · Mutability and immutability: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -326,7 +326,7 @@
             "tuple hashability",
             "custom `__hash__`."
           ],
-          "description": "P0 · Hashability: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -376,7 +376,7 @@
             "`if value` vs `if value is None`",
             "backend bugs with `0`, `\"\"` and empty collections."
           ],
-          "description": "P0 · Truthiness: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -433,7 +433,7 @@
             "`[[]] * 3`",
             "passing objects into functions."
           ],
-          "description": "P0 · Assignment, aliases and nested mutation: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -484,7 +484,7 @@
             "nested mutable data",
             "when deepcopy is inappropriate."
           ],
-          "description": "P0 · Shallow and deep copy: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -543,7 +543,7 @@
             "JSON/text boundaries",
             "money should not use binary float blindly."
           ],
-          "description": "P1 · Numbers, strings, bytes and encoding: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -602,7 +602,7 @@
             "common time complexity",
             "copying"
           ],
-          "description": "P0 · List: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -651,7 +651,7 @@
             "tuple as key",
             "named structured data vs dataclass."
           ],
-          "description": "P0 · Tuple: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -703,7 +703,7 @@
             "iteration",
             "hash table mental model"
           ],
-          "description": "P0 · Dict: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -761,7 +761,7 @@
             "set vs list",
             "frozenset."
           ],
-          "description": "P0 · Set and frozenset: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -819,7 +819,7 @@
             "complexity trade-offs",
             "practical backend examples."
           ],
-          "description": "P0 · Choosing a collection: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -869,7 +869,7 @@
             "readability",
             "when a regular loop is better."
           ],
-          "description": "P0 · Comprehensions: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -928,7 +928,7 @@
             "sorting dictionaries/objects",
             "complexity basics."
           ],
-          "description": "P1 · Sorting: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P1",
@@ -993,7 +993,7 @@
             "storing functions",
             "higher-order functions."
           ],
-          "description": "P0 · Function objects and first-class functions: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -1042,7 +1042,7 @@
             "keyword",
             "binding process."
           ],
-          "description": "P0 · Parameters vs arguments: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -1091,7 +1091,7 @@
             "readable signatures",
             "backward compatibility."
           ],
-          "description": "P1 · Positional-only and keyword-only parameters: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P1",
@@ -1147,7 +1147,7 @@
             "sentinel pattern",
             "`None` pattern and its limitations."
           ],
-          "description": "P0 · Default arguments: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -1196,7 +1196,7 @@
             "duplicate arguments",
             "wrapper functions."
           ],
-          "description": "P0 · `*args`, `**kwargs` and unpacking: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -1252,7 +1252,7 @@
             "relationship with FastAPI/Pydantic",
             "return annotations."
           ],
-          "description": "P0 · Function annotations: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -1302,7 +1302,7 @@
             "name lookup",
             "shadowing."
           ],
-          "description": "P0 · LEGB: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -1349,7 +1349,7 @@
             "enclosing state",
             "why mutable global state is risky in backend services."
           ],
-          "description": "P1 · `global` and `nonlocal`: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -1398,7 +1398,7 @@
             "retained state",
             "practical factory/callback examples."
           ],
-          "description": "P0 · Closures and free variables: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -1456,7 +1456,7 @@
             "factory function",
             "`functools.partial`."
           ],
-          "description": "P0 · Late binding: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -1513,7 +1513,7 @@
             "function replacement",
             "backend use cases."
           ],
-          "description": "P0 · Basic decorators: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -1570,7 +1570,7 @@
             "`__wrapped__`",
             "why frameworks/tools care."
           ],
-          "description": "P0 · `functools.wraps`: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -1625,7 +1625,7 @@
             "configuration captured by closure",
             "retry/timing/permission examples."
           ],
-          "description": "P1 · Decorator factory and decorator arguments: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P1",
@@ -1680,7 +1680,7 @@
             "execution nesting",
             "prediction tasks."
           ],
-          "description": "P1 · Multiple decorators and order: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -1737,7 +1737,7 @@
             "single-pass state",
             "exhaustion."
           ],
-          "description": "P0 · Iterable vs iterator: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -1793,7 +1793,7 @@
             "`StopIteration`",
             "custom iterator exercise."
           ],
-          "description": "P0 · Iterator protocol: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -1842,7 +1842,7 @@
             "generator state",
             "memory use."
           ],
-          "description": "P0 · Generator function and `yield`: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -1890,7 +1890,7 @@
             "performance/memory",
             "when list is preferable."
           ],
-          "description": "P0 · Generator expression vs list comprehension: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -1938,7 +1938,7 @@
             "common built-ins",
             "why not catch bare `except`."
           ],
-          "description": "P0 · Exception hierarchy: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -1986,7 +1986,7 @@
             "return inside try/finally",
             "narrow exception scope."
           ],
-          "description": "P0 · `try/except/else/finally`: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -2042,7 +2042,7 @@
             "preserving traceback",
             "domain exceptions."
           ],
-          "description": "P0 · Raising and re-raising: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -2089,7 +2089,7 @@
             "preserving root cause",
             "translating infrastructure errors into domain/API errors."
           ],
-          "description": "P1 · Exception chaining: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -2137,7 +2137,7 @@
             "mapping to HTTP errors",
             "avoiding exception-driven normal flow."
           ],
-          "description": "P1 · Custom exceptions: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -2186,7 +2186,7 @@
             "resource cleanup",
             "exception suppression."
           ],
-          "description": "P0 · Context manager protocol: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -2240,7 +2240,7 @@
             "generator-based context manager",
             "transaction/file/timer examples."
           ],
-          "description": "P1 · `contextlib.contextmanager`: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -2296,7 +2296,7 @@
             "class namespace",
             "attribute lookup."
           ],
-          "description": "P0 · Class, instance and attributes: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -2343,7 +2343,7 @@
             "shadowing",
             "appropriate constants/config."
           ],
-          "description": "P0 · Instance vs class attributes: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -2390,7 +2390,7 @@
             "descriptor-level mental model only as needed",
             "explicit instance parameter."
           ],
-          "description": "P0 · Methods and `self`: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -2438,7 +2438,7 @@
             "namespace utility",
             "when module-level function is simpler."
           ],
-          "description": "P0 · `classmethod` and `staticmethod`: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -2494,7 +2494,7 @@
             "contracts",
             "avoid Java-style ceremony."
           ],
-          "description": "P0 · Encapsulation, abstraction and polymorphism: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -2543,7 +2543,7 @@
             "service composition",
             "when inheritance is justified."
           ],
-          "description": "P0 · Inheritance vs composition: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -2590,7 +2590,7 @@
             "avoiding direct parent naming",
             "inheritance chains."
           ],
-          "description": "P0 · Method overriding and `super()`: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -2639,7 +2639,7 @@
             "cooperative `super`",
             "common interview predictions."
           ],
-          "description": "P1 · MRO and multiple inheritance: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -2688,7 +2688,7 @@
             "ABC vs Protocol",
             "repository interface example."
           ],
-          "description": "P1 · Abstract base classes: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -2738,7 +2738,7 @@
             "frozen",
             "domain data vs ORM/Pydantic models."
           ],
-          "description": "P0 · Dataclasses: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -2793,7 +2793,7 @@
             "immutable subclasses",
             "avoid unnecessary custom `__new__`."
           ],
-          "description": "P1 · `__new__` vs `__init__`: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -2841,7 +2841,7 @@
             "unambiguous repr",
             "avoiding secrets in logs."
           ],
-          "description": "P0 · `__repr__` and `__str__`: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -2889,7 +2889,7 @@
             "mutable fields",
             "dataclass behavior."
           ],
-          "description": "P1 · `__eq__` and `__hash__`: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -2937,7 +2937,7 @@
             "membership",
             "indexing/iteration fallback."
           ],
-          "description": "P1 · `__len__`, `__bool__`, `__contains__`, `__getitem__`: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -2992,7 +2992,7 @@
             "Python remains dynamic",
             "FastAPI/Pydantic use hints at runtime."
           ],
-          "description": "P0 · Static hints vs runtime behavior: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -3039,7 +3039,7 @@
             "required nullable field distinction",
             "narrowing."
           ],
-          "description": "P0 · Union, Optional and `|`: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -3088,7 +3088,7 @@
             "`Iterable`",
             "`Callable`."
           ],
-          "description": "P0 · Collection and callable types: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -3135,7 +3135,7 @@
             "typed dictionaries",
             "JSON-like structures."
           ],
-          "description": "P1 · Literal and TypedDict: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -3182,7 +3182,7 @@
             "dependency contracts",
             "testing/fakes."
           ],
-          "description": "P1 · Protocol: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -3237,7 +3237,7 @@
             "processes/native code for CPU work",
             "GIL is not a general lock for application data."
           ],
-          "description": "P1 · GIL: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -3286,7 +3286,7 @@
             "deadlock basics",
             "database race conditions are separate from Python GIL."
           ],
-          "description": "P1 · Race conditions and locks: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -3342,7 +3342,7 @@
             "I/O-bound",
             "CPU-bound."
           ],
-          "description": "P0 · Sync, concurrency and parallelism: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -3398,7 +3398,7 @@
             "coroutine object",
             "execution begins when awaited/scheduled."
           ],
-          "description": "P0 · Coroutine function and coroutine object: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -3453,7 +3453,7 @@
             "event loop can run other tasks",
             "await does not automatically create parallelism."
           ],
-          "description": "P0 · `await` and cooperative scheduling: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -3509,7 +3509,7 @@
             "callbacks/tasks",
             "one blocking call stalls the loop."
           ],
-          "description": "P0 · Event loop: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -3565,7 +3565,7 @@
             "awaiting completion",
             "exception handling."
           ],
-          "description": "P0 · Tasks and `asyncio.create_task`: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -3621,7 +3621,7 @@
             "exceptions",
             "comparison with sequential await."
           ],
-          "description": "P0 · `asyncio.gather`: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -3676,7 +3676,7 @@
             "`asyncio.timeout` or version-appropriate API",
             "cleanup."
           ],
-          "description": "P1 · Timeouts: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P1",
@@ -3732,7 +3732,7 @@
             "cooperative cancellation",
             "do not swallow cancellation accidentally."
           ],
-          "description": "P1 · Cancellation: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P1",
@@ -3789,7 +3789,7 @@
             "CPU-heavy loop",
             "alternatives: async client, `to_thread`, worker/process."
           ],
-          "description": "P0 · Blocking code inside async code: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -3844,7 +3844,7 @@
             "connection/session/client lifecycle",
             "`__aenter__`/`__aexit__`."
           ],
-          "description": "P1 · Async context managers: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P1",
@@ -3900,7 +3900,7 @@
             "paginated I/O",
             "cleanup."
           ],
-          "description": "P1 · Async iterators and generators: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P1",
@@ -3956,7 +3956,7 @@
             "CPU-bound pure Python → process pool/worker",
             "durable background job → queue/worker."
           ],
-          "description": "P0 · Threads vs processes vs async: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -4020,7 +4020,7 @@
             "locks",
             "GIL limitations."
           ],
-          "description": "P1 · Threading: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -4068,7 +4068,7 @@
             "process startup/overhead",
             "CPU-bound work."
           ],
-          "description": "P1 · Multiprocessing: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -4115,7 +4115,7 @@
             "bounded pool",
             "exception propagation."
           ],
-          "description": "P1 · ThreadPoolExecutor: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -4172,7 +4172,7 @@
             "data types",
             "relational thinking."
           ],
-          "description": "P0 · Relational model and tables: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -4218,7 +4218,7 @@
             "aliases",
             "readable formatting."
           ],
-          "description": "P0 · SELECT, aliases and expressions: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -4267,7 +4267,7 @@
             "ranges",
             "pattern matching."
           ],
-          "description": "P0 · WHERE and boolean logic: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -4316,7 +4316,7 @@
             "`COALESCE`",
             "aggregates and NULL."
           ],
-          "description": "P0 · NULL and three-valued logic: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -4363,7 +4363,7 @@
             "multi-column ordering",
             "pagination caveats."
           ],
-          "description": "P0 · ORDER BY, LIMIT and OFFSET: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -4410,7 +4410,7 @@
             "hiding join mistakes",
             "cost."
           ],
-          "description": "P0 · DISTINCT: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -4460,7 +4460,7 @@
             "`MAX`",
             "`COUNT(*)` vs `COUNT(column)`."
           ],
-          "description": "P0 · Aggregates: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -4507,7 +4507,7 @@
             "selected non-aggregate columns",
             "common errors."
           ],
-          "description": "P0 · GROUP BY: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -4554,7 +4554,7 @@
             "HAVING after grouping",
             "realistic order/customer examples."
           ],
-          "description": "P0 · HAVING: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -4602,7 +4602,7 @@
             "duplicates",
             "missing condition/cartesian product."
           ],
-          "description": "P0 · INNER JOIN: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -4649,7 +4649,7 @@
             "condition in `ON` vs `WHERE`",
             "finding missing related rows."
           ],
-          "description": "P0 · LEFT JOIN: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -4695,7 +4695,7 @@
             "conceptual symmetry",
             "practical alternatives."
           ],
-          "description": "P1 · RIGHT and FULL OUTER JOIN: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -4742,7 +4742,7 @@
             "comparison",
             "manager/employee example."
           ],
-          "description": "P1 · Self join: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -4790,7 +4790,7 @@
             "`IN`",
             "nested aggregation."
           ],
-          "description": "P0 · Subqueries: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -4837,7 +4837,7 @@
             "optimizer caveat",
             "alternatives."
           ],
-          "description": "P1 · Correlated subquery: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -4884,7 +4884,7 @@
             "NULL caveats",
             "no simplistic universal performance rule."
           ],
-          "description": "P1 · EXISTS vs IN: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -4932,7 +4932,7 @@
             "multiple stages",
             "planner/version caveats."
           ],
-          "description": "P1 · CTE: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -4978,7 +4978,7 @@
             "conditional projection",
             "grouped reporting."
           ],
-          "description": "P1 · CASE: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -5026,7 +5026,7 @@
             "`INTERSECT`",
             "`EXCEPT`."
           ],
-          "description": "P1 · Set operations: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -5073,7 +5073,7 @@
             "difference from GROUP BY",
             "window definition."
           ],
-          "description": "P1 · Window functions: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -5119,7 +5119,7 @@
             "ties",
             "top-N per group."
           ],
-          "description": "P1 · `ROW_NUMBER`, `RANK`, `DENSE_RANK`: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -5165,7 +5165,7 @@
             "independent windows per group",
             "deterministic order."
           ],
-          "description": "P1 · `PARTITION BY` and window ordering: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -5215,7 +5215,7 @@
             "safe WHERE",
             "upsert basics."
           ],
-          "description": "P0 · Data modification: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -5269,7 +5269,7 @@
             "referential integrity",
             "delete/update actions."
           ],
-          "description": "P0 · Primary and foreign keys: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -5318,7 +5318,7 @@
             "FK",
             "business invariant in DB."
           ],
-          "description": "P0 · Constraints: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -5366,7 +5366,7 @@
             "1NF/2NF/3NF at practical Junior depth",
             "deliberate denormalization only with reason."
           ],
-          "description": "P0 · Normalization: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -5414,7 +5414,7 @@
             "storage/write cost",
             "index is not magic."
           ],
-          "description": "P0 · Index mental model: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -5461,7 +5461,7 @@
             "common default",
             "no deep page internals required."
           ],
-          "description": "P1 · PostgreSQL B-tree: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -5508,7 +5508,7 @@
             "filter/order patterns",
             "equality before range as a heuristic, not dogma."
           ],
-          "description": "P1 · Composite indexes and column order: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -5554,7 +5554,7 @@
             "low-cardinality fields",
             "why planner may prefer sequential scan."
           ],
-          "description": "P1 · Selectivity: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -5604,7 +5604,7 @@
             "timing",
             "ANALYZE executes the query."
           ],
-          "description": "P1 · EXPLAIN and EXPLAIN ANALYZE: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -5653,7 +5653,7 @@
             "durability",
             "transaction boundary."
           ],
-          "description": "P0 · Transactions and ACID: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -5702,7 +5702,7 @@
             "anomalies at reasonable depth",
             "PostgreSQL-specific behavior."
           ],
-          "description": "P1 · Isolation levels: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -5750,7 +5750,7 @@
             "old row versions",
             "vacuum awareness."
           ],
-          "description": "P1 · MVCC basics: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -5798,7 +5798,7 @@
             "short transactions",
             "lock contention."
           ],
-          "description": "P1 · Locks: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -5845,7 +5845,7 @@
             "consistent lock order",
             "retry aborted transaction."
           ],
-          "description": "P1 · Deadlocks: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -5893,7 +5893,7 @@
             "async pool",
             "leaking sessions/connections."
           ],
-          "description": "P1 · Connection pooling: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -5941,7 +5941,7 @@
             "cursor/keyset pagination",
             "stable ordering."
           ],
-          "description": "P1 · Pagination: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -5991,7 +5991,7 @@
             "transaction",
             "`409 Conflict`."
           ],
-          "description": "P0 · Booking concurrency: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -6048,7 +6048,7 @@
             "body",
             "status."
           ],
-          "description": "P0 · HTTP request and response: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -6093,7 +6093,7 @@
             "validation",
             "sensitive data not in URL."
           ],
-          "description": "P0 · Path, query, headers and body: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -6144,7 +6144,7 @@
             "OPTIONS",
             "HEAD basics."
           ],
-          "description": "P0 · HTTP methods: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -6192,7 +6192,7 @@
             "retry implications",
             "business side effects."
           ],
-          "description": "P0 · Safe and idempotent methods: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -6239,7 +6239,7 @@
             "API contract",
             "idempotency."
           ],
-          "description": "P0 · PUT vs PATCH: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -6285,7 +6285,7 @@
             "server-selected vs client-known resource identifier",
             "creation/action semantics."
           ],
-          "description": "P0 · POST vs PUT: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -6337,7 +6337,7 @@
             "401",
             "403"
           ],
-          "description": "P0 · Status codes: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -6384,7 +6384,7 @@
             "authenticated but forbidden",
             "appropriate challenge/header context."
           ],
-          "description": "P0 · 401 vs 403: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -6430,7 +6430,7 @@
             "malformed request vs semantically invalid/validation",
             "framework conventions."
           ],
-          "description": "P0 · 400 vs 422: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -6477,7 +6477,7 @@
             "charset",
             "Accept"
           ],
-          "description": "P1 · Content negotiation and Content-Type: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -6527,7 +6527,7 @@
             "Secure",
             "SameSite."
           ],
-          "description": "P0 · Cookies: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -6575,7 +6575,7 @@
             "conditional request",
             "difference from application Redis cache."
           ],
-          "description": "P1 · HTTP caching: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -6624,7 +6624,7 @@
             "TLS termination",
             "no cryptography deep dive."
           ],
-          "description": "P1 · HTTP/HTTPS and TLS basics: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -6672,7 +6672,7 @@
             "container networking",
             "TCP socket."
           ],
-          "description": "P1 · IP, ports and sockets: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -6719,7 +6719,7 @@
             "service/container names",
             "common failure scenarios."
           ],
-          "description": "P1 · DNS: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -6767,7 +6767,7 @@
             "headers",
             "load distribution."
           ],
-          "description": "P1 · Reverse proxy: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -6815,7 +6815,7 @@
             "nested resources",
             "actions only when appropriate."
           ],
-          "description": "P0 · REST resources and URLs: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -6862,7 +6862,7 @@
             "validation",
             "default/max limits."
           ],
-          "description": "P0 · API pagination/filtering/sorting: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -6911,7 +6911,7 @@
             "field errors",
             "no internal traces."
           ],
-          "description": "P0 · Error contracts: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -6959,7 +6959,7 @@
             "version strategies",
             "avoid premature version complexity."
           ],
-          "description": "P1 · API versioning and compatibility: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -7007,7 +7007,7 @@
             "client contract",
             "limitations."
           ],
-          "description": "P0 · OpenAPI: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -7059,7 +7059,7 @@
           "topics": [
             "Authentication vs authorization"
           ],
-          "description": "P0 · Authentication vs authorization: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -7108,7 +7108,7 @@
             "Argon2/bcrypt concepts",
             "never reversible encryption/plain hash."
           ],
-          "description": "P0 · Password storage: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -7157,7 +7157,7 @@
             "revocation",
             "scaling/storage."
           ],
-          "description": "P0 · Sessions: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -7207,7 +7207,7 @@
             "claims",
             "verification."
           ],
-          "description": "P0 · JWT structure: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -7257,7 +7257,7 @@
             "reuse detection",
             "server-side refresh session."
           ],
-          "description": "P0 · Access and refresh tokens: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -7307,7 +7307,7 @@
             "unsafe browser storage",
             "no revocation plan."
           ],
-          "description": "P0 · JWT pitfalls: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -7355,7 +7355,7 @@
             "object-level authorization",
             "UI is not security boundary."
           ],
-          "description": "P0 · RBAC and permissions: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -7404,7 +7404,7 @@
             "resource server",
             "authorization code flow."
           ],
-          "description": "P1 · OAuth2 basics: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -7454,7 +7454,7 @@
             "redirect URI",
             "PKCE does not replace all CSRF protections."
           ],
-          "description": "P1 · Authorization Code + PKCE: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -7501,7 +7501,7 @@
             "ORM does not protect raw string interpolation",
             "identifiers/order fields require allowlist."
           ],
-          "description": "P0 · SQL injection: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -7548,7 +7548,7 @@
             "output encoding",
             "relevance to API-returned user content."
           ],
-          "description": "P1 · XSS: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -7596,7 +7596,7 @@
             "CSRF token",
             "bearer header differences."
           ],
-          "description": "P1 · CSRF: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -7645,7 +7645,7 @@
             "credentials",
             "CORS is not authentication."
           ],
-          "description": "P0 · CORS: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -7693,7 +7693,7 @@
             "rotation",
             "`.env.example`."
           ],
-          "description": "P0 · Secret management: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -7743,7 +7743,7 @@
             "429",
             "fail-open/fail-closed trade-off."
           ],
-          "description": "P1 · Rate limiting: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -7788,7 +7788,7 @@
           "topics": [
             "HTTPS and secure cookies"
           ],
-          "description": "P0 · HTTPS and secure cookies: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -7838,7 +7838,7 @@
             "authorization",
             "orphan cleanup."
           ],
-          "description": "P0 · Input validation and file upload security: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -7893,7 +7893,7 @@
             "ASGI awareness",
             "no server internals deep dive."
           ],
-          "description": "P0 · Application and ASGI mental model: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -7942,7 +7942,7 @@
             "tags",
             "modular structure."
           ],
-          "description": "P0 · Routes and routers: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -7997,7 +7997,7 @@
             "validation",
             "routing order pitfalls."
           ],
-          "description": "P0 · Path parameters: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -8053,7 +8053,7 @@
             "constraints",
             "pagination."
           ],
-          "description": "P0 · Query parameters: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -8109,7 +8109,7 @@
             "nested models",
             "validation."
           ],
-          "description": "P0 · Request bodies: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -8165,7 +8165,7 @@
             "filtering fields",
             "avoiding secret leakage."
           ],
-          "description": "P0 · Response models: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -8219,7 +8219,7 @@
           "topics": [
             "Status codes, headers and cookies"
           ],
-          "description": "P0 · Status codes, headers and cookies: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -8267,7 +8267,7 @@
             "auth/session/settings",
             "caching per request."
           ],
-          "description": "P0 · Dependency injection with `Depends`: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -8323,7 +8323,7 @@
             "readability",
             "typing."
           ],
-          "description": "P0 · `Annotated` dependencies: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -8370,7 +8370,7 @@
             "session lifecycle",
             "exception behavior."
           ],
-          "description": "P0 · Yield dependencies: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -8425,7 +8425,7 @@
             "422 convention",
             "custom validation response only with reason."
           ],
-          "description": "P0 · Validation errors: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -8473,7 +8473,7 @@
             "global handler",
             "avoid leaking internals."
           ],
-          "description": "P0 · Exception handlers: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -8529,7 +8529,7 @@
             "ordering",
             "not for domain logic."
           ],
-          "description": "P1 · Middleware: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P1",
@@ -8585,7 +8585,7 @@
             "cleanup",
             "modern lifespan over scattered legacy hooks."
           ],
-          "description": "P1 · Lifespan: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -8632,7 +8632,7 @@
             "blocking inside async",
             "async only when dependency stack benefits."
           ],
-          "description": "P0 · Sync vs async endpoints: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -8681,7 +8681,7 @@
             "lost on crash",
             "not a replacement for Celery/outbox."
           ],
-          "description": "P1 · BackgroundTasks: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -8728,7 +8728,7 @@
             "credentials",
             "wildcards."
           ],
-          "description": "P0 · CORS configuration: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -8776,7 +8776,7 @@
             "operation IDs",
             "contract value."
           ],
-          "description": "P0 · OpenAPI and Swagger: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -8826,7 +8826,7 @@
             "reconnect",
             "horizontal scaling."
           ],
-          "description": "P1 · WebSockets: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -8878,7 +8878,7 @@
             "tests",
             "migrations"
           ],
-          "description": "P0 · Project structure: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -8926,7 +8926,7 @@
             "test overrides",
             "secrets."
           ],
-          "description": "P0 · Settings/configuration: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -8973,7 +8973,7 @@
             "transaction boundary",
             "framework-independent testing."
           ],
-          "description": "P1 · Service layer: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -9022,7 +9022,7 @@
             "database isolation",
             "response assertions."
           ],
-          "description": "P0 · Testing FastAPI: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -9074,7 +9074,7 @@
           "topics": [
             "BaseModel and validation"
           ],
-          "description": "P0 · BaseModel and validation: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -9129,7 +9129,7 @@
             "strict mode",
             "trusted/untrusted boundaries."
           ],
-          "description": "P0 · Parsing vs validation mental model: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -9178,7 +9178,7 @@
             "aliases",
             "Field."
           ],
-          "description": "P0 · Field constraints: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -9234,7 +9234,7 @@
             "default",
             "PATCH semantics."
           ],
-          "description": "P0 · Optional, nullable and default values: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -9287,7 +9287,7 @@
           "topics": [
             "Nested models"
           ],
-          "description": "P0 · Nested models: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -9342,7 +9342,7 @@
             "before/after",
             "avoid DB I/O inside schema validation."
           ],
-          "description": "P1 · Field validators: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P1",
@@ -9396,7 +9396,7 @@
             "cross-field invariant",
             "validation ordering."
           ],
-          "description": "P1 · Model validators: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P1",
@@ -9452,7 +9452,7 @@
             "aliases",
             "secret fields."
           ],
-          "description": "P0 · Serialization and `model_dump`: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -9498,7 +9498,7 @@
             "validating objects/data",
             "ORM attributes."
           ],
-          "description": "P0 · `model_validate`: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -9546,7 +9546,7 @@
             "extra fields",
             "aliases."
           ],
-          "description": "P1 · ConfigDict: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -9593,7 +9593,7 @@
             "relationship loading",
             "serialization does not solve N+1."
           ],
-          "description": "P0 · ORM integration: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -9645,7 +9645,7 @@
           "topics": [
             "Engine and connection pool"
           ],
-          "description": "P0 · Engine and connection pool: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -9694,7 +9694,7 @@
             "primary keys",
             "constraints."
           ],
-          "description": "P0 · Declarative models: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -9751,7 +9751,7 @@
             "`back_populates`",
             "ownership vs navigation."
           ],
-          "description": "P0 · Relationships: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -9799,7 +9799,7 @@
             "pending/persistent/detached awareness",
             "not just a connection."
           ],
-          "description": "P0 · Session mental model: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -9857,7 +9857,7 @@
             "request-scoped session",
             "never share one session globally."
           ],
-          "description": "P0 · Session lifecycle: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -9907,7 +9907,7 @@
             "`.first`",
             "multiple rows."
           ],
-          "description": "P0 · SQLAlchemy 2.x `select`: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -9961,7 +9961,7 @@
             "primary-key lookup",
             "identity map behavior."
           ],
-          "description": "P1 · `Session.get`: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P1",
@@ -10018,7 +10018,7 @@
             "`refresh` reloads",
             "generated ID may appear after flush."
           ],
-          "description": "P0 · Add, flush, commit and refresh: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -10073,7 +10073,7 @@
             "rollback before reuse",
             "exception boundary."
           ],
-          "description": "P0 · Rollback: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -10128,7 +10128,7 @@
             "atomic service operation",
             "avoid commits hidden across repository calls."
           ],
-          "description": "P0 · Explicit transactions: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -10183,7 +10183,7 @@
             "explicit conditions",
             "selecting entities/columns."
           ],
-          "description": "P0 · Joins: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -10238,7 +10238,7 @@
             "session dependency",
             "async pitfalls."
           ],
-          "description": "P0 · Lazy loading: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -10286,7 +10286,7 @@
             "logs/query count",
             "eager loading."
           ],
-          "description": "P0 · N+1: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -10342,7 +10342,7 @@
             "collections",
             "common safe default."
           ],
-          "description": "P0 · `selectinload`: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -10398,7 +10398,7 @@
             "scalar relationships",
             "result uniqueness when relevant."
           ],
-          "description": "P1 · `joinedload`: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P1",
@@ -10453,7 +10453,7 @@
             "ownership",
             "dangerous deletes."
           ],
-          "description": "P1 · Cascade and delete-orphan: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -10501,7 +10501,7 @@
             "one session per task/request",
             "no concurrent use of one AsyncSession."
           ],
-          "description": "P0 · Async engine and AsyncSession: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -10548,7 +10548,7 @@
             "missing greenlet-style problems",
             "explicit eager loading."
           ],
-          "description": "P0 · Async lazy-loading pitfalls: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -10594,7 +10594,7 @@
             "DB migration still required",
             "model declaration is not production schema migration."
           ],
-          "description": "P0 · Constraints and indexes in models: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -10647,7 +10647,7 @@
             "model code does not update an existing DB",
             "versioned schema history."
           ],
-          "description": "P0 · Why migrations exist: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -10692,7 +10692,7 @@
           "topics": [
             "Revision, upgrade and downgrade"
           ],
-          "description": "P0 · Revision, upgrade and downgrade: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -10739,7 +10739,7 @@
             "manual review",
             "rename may look like drop/add."
           ],
-          "description": "P0 · Autogenerate: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": true,
           "has_solution": true,
           "priority": "P0",
@@ -10794,7 +10794,7 @@
             "batching",
             "transaction/runtime concerns."
           ],
-          "description": "P1 · Data migrations: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -10842,7 +10842,7 @@
             "indexes on large tables",
             "backward compatibility."
           ],
-          "description": "P1 · Safe schema changes: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -10889,7 +10889,7 @@
             "merge revision",
             "team workflow."
           ],
-          "description": "P1 · Migration history conflicts: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -10945,7 +10945,7 @@
             "contract awareness",
             "correct boundary choice."
           ],
-          "description": "P0 · Test pyramid and test types: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -10991,7 +10991,7 @@
             "exception assertions",
             "readable tests."
           ],
-          "description": "P0 · pytest fundamentals: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -11039,7 +11039,7 @@
             "yield fixture",
             "avoiding giant fixture graphs."
           ],
-          "description": "P0 · Fixtures: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -11085,7 +11085,7 @@
             "function/class/module/session",
             "isolation vs speed."
           ],
-          "description": "P1 · Fixture scope: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -11132,7 +11132,7 @@
             "readable IDs",
             "avoiding repeated tests."
           ],
-          "description": "P0 · Parametrization: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -11179,7 +11179,7 @@
             "do not mock implementation details",
             "verify behavior carefully."
           ],
-          "description": "P0 · Mocking: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -11227,7 +11227,7 @@
             "async dependencies",
             "correct patch location."
           ],
-          "description": "P1 · `monkeypatch`, Mock and AsyncMock: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -11276,7 +11276,7 @@
             "dependency overrides",
             "lifespan."
           ],
-          "description": "P0 · FastAPI tests: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -11325,7 +11325,7 @@
             "migrations",
             "no production DB."
           ],
-          "description": "P0 · Database tests: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -11372,7 +11372,7 @@
             "fakes only when semantics are sufficient",
             "TTL/invalidation."
           ],
-          "description": "P1 · Redis tests: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -11420,7 +11420,7 @@
             "deterministic timeouts",
             "no sleep-heavy tests."
           ],
-          "description": "P1 · Async tests: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -11472,7 +11472,7 @@
             "retry",
             "idempotency."
           ],
-          "description": "P0 · What to test: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -11519,7 +11519,7 @@
             "branch/critical path",
             "80% does not mean 80% quality."
           ],
-          "description": "P1 · Coverage: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -11568,7 +11568,7 @@
             "cleanup",
             "order independence."
           ],
-          "description": "P0 · Test isolation and determinism: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -11623,7 +11623,7 @@
             "optional persistence modes",
             "not a relational source of truth by default."
           ],
-          "description": "P1 · Redis mental model: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -11673,7 +11673,7 @@
             "sorted sets",
             "streams awareness."
           ],
-          "description": "P1 · Data structures: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -11721,7 +11721,7 @@
             "stale/missing keys",
             "memory policy awareness."
           ],
-          "description": "P1 · TTL and expiration: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -11768,7 +11768,7 @@
             "miss → DB → cache",
             "source of truth remains DB."
           ],
-          "description": "P1 · Cache-aside: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -11820,7 +11820,7 @@
             "mutations меняют состояние",
             "после mutation связанные read cache keys нужно invalidation/update"
           ],
-          "description": "P1 · Cache invalidation: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -11867,7 +11867,7 @@
             "TTL",
             "durable requirements."
           ],
-          "description": "P1 · Sessions and temporary state: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -11915,7 +11915,7 @@
             "race-free command/script",
             "distributed instances."
           ],
-          "description": "P1 · Atomic counters and rate limiting: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -11966,7 +11966,7 @@
             "offline subscriber misses message",
             "no acknowledgement/replay."
           ],
-          "description": "P1 · Redis Pub/Sub: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -12014,7 +12014,7 @@
             "thundering herd basics",
             "stale values."
           ],
-          "description": "P1 · Redis failure scenarios: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -12070,7 +12070,7 @@
             "retry",
             "transaction boundary."
           ],
-          "description": "P0 · In-request vs background work: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -12118,7 +12118,7 @@
             "small side effects",
             "crash loss."
           ],
-          "description": "P1 · FastAPI BackgroundTasks: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -12168,7 +12168,7 @@
             "serialization",
             "retries."
           ],
-          "description": "P1 · Celery model: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -12216,7 +12216,7 @@
             "jitter",
             "retry limit."
           ],
-          "description": "P1 · Retry and backoff: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -12265,7 +12265,7 @@
             "state transition",
             "side-effect deduplication."
           ],
-          "description": "P0 · Idempotency: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -12315,7 +12315,7 @@
             "idempotent consumer",
             "dual-write problem."
           ],
-          "description": "P1 · Outbox pattern: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -12363,7 +12363,7 @@
             "outbox closes atomicity gap",
             "Celery may still be delivery/execution layer."
           ],
-          "description": "P1 · Why outbox instead of direct Celery publish: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -12415,7 +12415,7 @@
           "topics": [
             "Image vs container"
           ],
-          "description": "P1 · Image vs container: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -12464,7 +12464,7 @@
             "ENTRYPOINT",
             "build context."
           ],
-          "description": "P1 · Dockerfile: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -12511,7 +12511,7 @@
             "source later",
             "cache invalidation."
           ],
-          "description": "P1 · Layers and cache: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -12556,7 +12556,7 @@
           "topics": [
             "Build vs run"
           ],
-          "description": "P1 · Build vs run: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -12603,7 +12603,7 @@
             "container port",
             "service-to-service uses container port."
           ],
-          "description": "P1 · Port mapping: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -12651,7 +12651,7 @@
             "persistence",
             "source mount pitfalls."
           ],
-          "description": "P1 · Volumes: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -12698,7 +12698,7 @@
             "no secrets baked into image",
             "`.env` vs `.env.example`."
           ],
-          "description": "P1 · Environment variables: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -12745,7 +12745,7 @@
             "`localhost` means current container",
             "common DB connection bug."
           ],
-          "description": "P1 · Networks and service discovery: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -12790,7 +12790,7 @@
           "topics": [
             "`.dockerignore`"
           ],
-          "description": "P1 · `.dockerignore`: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -12839,7 +12839,7 @@
             "worker",
             "shared network."
           ],
-          "description": "P1 · Docker Compose services: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -12884,7 +12884,7 @@
           "topics": [
             "`build` vs `image`"
           ],
-          "description": "P1 · `build` vs `image`: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -12931,7 +12931,7 @@
             "healthcheck",
             "retry/backoff."
           ],
-          "description": "P1 · `depends_on` and readiness: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -12976,7 +12976,7 @@
           "topics": [
             "Compose volumes/networks/env_file"
           ],
-          "description": "P1 · Compose volumes/networks/env_file: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -13028,7 +13028,7 @@
             "`down`",
             "volume removal warning."
           ],
-          "description": "P1 · Compose commands: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -13079,7 +13079,7 @@
             "healthcheck",
             "migrations."
           ],
-          "description": "P1 · Container debugging: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -13131,7 +13131,7 @@
           "topics": [
             "Repository, working tree, index and commit"
           ],
-          "description": "P0 · Repository, working tree, index and commit: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -13174,7 +13174,7 @@
           "topics": [
             "init, clone, status, add and commit"
           ],
-          "description": "P0 · init, clone, status, add and commit: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -13219,7 +13219,7 @@
           "topics": [
             "branch and switch"
           ],
-          "description": "P0 · branch and switch: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -13265,7 +13265,7 @@
             "pull as fetch + integration",
             "upstream branch."
           ],
-          "description": "P0 · fetch, pull and push: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -13312,7 +13312,7 @@
             "merge commit",
             "conflicts."
           ],
-          "description": "P0 · merge: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -13360,7 +13360,7 @@
             "rewriting hashes",
             "do not casually rebase shared history."
           ],
-          "description": "P1 · rebase basics: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -13408,7 +13408,7 @@
             "test after resolution",
             "continue/abort."
           ],
-          "description": "P0 · Conflict resolution: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -13456,7 +13456,7 @@
             "apply/pop",
             "conflict possibility."
           ],
-          "description": "P1 · stash: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -13503,7 +13503,7 @@
             "working/index effects",
             "safe public-history undo."
           ],
-          "description": "P0 · reset vs revert: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -13549,7 +13549,7 @@
             "ignoring future files does not remove tracked/history content",
             "leaked secret must be rotated."
           ],
-          "description": "P0 · `.gitignore` and secrets: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -13598,7 +13598,7 @@
             "responding to comments",
             "reviewing behavior, not personality."
           ],
-          "description": "P0 · Pull request and code review: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -13648,7 +13648,7 @@
             "recover stashed work",
             "sync with main."
           ],
-          "description": "P0 · Practical Git scenarios: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -13703,7 +13703,7 @@
             "cd",
             "relative/absolute paths."
           ],
-          "description": "P1 · Filesystem navigation: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -13750,7 +13750,7 @@
             "rm",
             "safe destructive operations."
           ],
-          "description": "P1 · File operations: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -13800,7 +13800,7 @@
             "grep/rg",
             "`tail -f`."
           ],
-          "description": "P1 · Reading/searching logs and files: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -13848,7 +13848,7 @@
             "quoting",
             "secrets."
           ],
-          "description": "P1 · Environment variables: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -13897,7 +13897,7 @@
             "kill",
             "graceful termination."
           ],
-          "description": "P1 · Processes: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -13944,7 +13944,7 @@
             "chmod basics",
             "ownership awareness."
           ],
-          "description": "P1 · Permissions: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -13993,7 +13993,7 @@
             "DNS",
             "service unavailable."
           ],
-          "description": "P1 · Ports and network diagnostics: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -14040,7 +14040,7 @@
             "exit status",
             "pipeline failure awareness."
           ],
-          "description": "P1 · Application logs and exit codes: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -14097,7 +14097,7 @@
             "coverage",
             "build."
           ],
-          "description": "P1 · CI pipeline mental model: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -14147,7 +14147,7 @@
             "cache",
             "secrets."
           ],
-          "description": "P1 · GitHub Actions or existing CI: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -14197,7 +14197,7 @@
             "build",
             "gates do not guarantee correctness."
           ],
-          "description": "P1 · Quality gates: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -14244,7 +14244,7 @@
             "dependency/version/env/timezone/order differences",
             "reading logs."
           ],
-          "description": "P1 · CI debugging: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -14298,7 +14298,7 @@
             "no print-debugging as final solution",
             "no secrets/PII."
           ],
-          "description": "P1 · Logging fundamentals: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -14345,7 +14345,7 @@
             "numeric time series",
             "request path across components."
           ],
-          "description": "P1 · Logs vs metrics vs traces: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -14396,7 +14396,7 @@
             "queue backlog",
             "cache hit ratio where useful."
           ],
-          "description": "P1 · Backend signals: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -14448,7 +14448,7 @@
           "topics": [
             "Django project/app mental model"
           ],
-          "description": "P1 · Django project/app mental model: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -14493,7 +14493,7 @@
           "topics": [
             "Settings and environment"
           ],
-          "description": "P1 · Settings and environment: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -14538,7 +14538,7 @@
           "topics": [
             "Models and migrations"
           ],
-          "description": "P1 · Models and migrations: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -14588,7 +14588,7 @@
             "delete",
             "lazy QuerySet."
           ],
-          "description": "P1 · Django ORM query basics: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -14634,7 +14634,7 @@
             "N+1",
             "FK/one-to-one vs collections."
           ],
-          "description": "P1 · `select_related` and `prefetch_related`: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -14682,7 +14682,7 @@
             "model serializer",
             "nested data caution."
           ],
-          "description": "P1 · DRF serializers: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -14728,7 +14728,7 @@
             "trade-offs",
             "routers."
           ],
-          "description": "P1 · APIView, generic views and ViewSet: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -14774,7 +14774,7 @@
             "global vs per-view",
             "object-level permission."
           ],
-          "description": "P1 · Authentication and permissions: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -14819,7 +14819,7 @@
           "topics": [
             "Pagination/filtering"
           ],
-          "description": "P1 · Pagination/filtering: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -14864,7 +14864,7 @@
           "topics": [
             "DRF exception/response flow"
           ],
-          "description": "P1 · DRF exception/response flow: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -14909,7 +14909,7 @@
           "topics": [
             "DRF testing"
           ],
-          "description": "P1 · DRF testing: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -14956,7 +14956,7 @@
             "Django: batteries, ORM, admin, auth ecosystem",
             "no claim that one is universally better."
           ],
-          "description": "P1 · FastAPI vs Django/DRF: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -15011,7 +15011,7 @@
             "internal modules",
             "valid default for Junior projects."
           ],
-          "description": "P1 · Monolith: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -15057,7 +15057,7 @@
             "boundaries inside one deployable",
             "lower operational complexity."
           ],
-          "description": "P1 · Modular monolith: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -15102,7 +15102,7 @@
           "topics": [
             "Coupling and cohesion"
           ],
-          "description": "P1 · Coupling and cohesion: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -15147,7 +15147,7 @@
           "topics": [
             "Separation of concerns"
           ],
-          "description": "P1 · Separation of concerns: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -15195,7 +15195,7 @@
             "data access",
             "infrastructure."
           ],
-          "description": "P1 · Layered architecture: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -15242,7 +15242,7 @@
             "substitution/testing",
             "framework DI vs general principle."
           ],
-          "description": "P1 · Dependency injection: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -15296,7 +15296,7 @@
             "dominant term",
             "common collection operations."
           ],
-          "description": "P1 · Big O: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -15341,7 +15341,7 @@
           "topics": [
             "Array/list"
           ],
-          "description": "P1 · Array/list: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -15388,7 +15388,7 @@
             "collisions awareness",
             "membership/deduplication."
           ],
-          "description": "P1 · Hash table/dict/set: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -15435,7 +15435,7 @@
             "undo",
             "DFS basics."
           ],
-          "description": "P1 · Stack: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -15482,7 +15482,7 @@
             "BFS",
             "task processing."
           ],
-          "description": "P1 · Queue/deque: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -15529,7 +15529,7 @@
             "boundaries",
             "O(log n)."
           ],
-          "description": "P1 · Binary search: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -15577,7 +15577,7 @@
             "key extraction",
             "no need to memorize every sort implementation."
           ],
-          "description": "P1 · Sorting basics: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -15629,7 +15629,7 @@
             "simple LRU mental model",
             "pagination cursor"
           ],
-          "description": "P1 · Backend-oriented coding set: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -15681,7 +15681,7 @@
           "topics": [
             "Basic request path"
           ],
-          "description": "P0 · Basic request path: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -15728,7 +15728,7 @@
             "shared DB/cache",
             "sticky sessions trade-off."
           ],
-          "description": "P1 · Stateless API and horizontal scaling: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -15776,7 +15776,7 @@
             "invalidation",
             "failure fallback."
           ],
-          "description": "P1 · Cache placement: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -15824,7 +15824,7 @@
             "retries",
             "idempotency."
           ],
-          "description": "P1 · Background jobs: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -15874,7 +15874,7 @@
             "lock contention",
             "measure first."
           ],
-          "description": "P1 · Database bottlenecks: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -15925,7 +15925,7 @@
             "conflict response",
             "notification."
           ],
-          "description": "P0 · Booking endpoint: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -15970,7 +15970,7 @@
           "topics": [
             "Preventing double booking"
           ],
-          "description": "P0 · Preventing double booking: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -16020,7 +16020,7 @@
             "multi-instance delivery",
             "Redis Pub/Sub limitations."
           ],
-          "description": "P1 · Chat/WebSocket design: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -16069,7 +16069,7 @@
             "validation/finalize",
             "orphan cleanup."
           ],
-          "description": "P1 · File upload design: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -16118,7 +16118,7 @@
             "idempotency",
             "locking."
           ],
-          "description": "P1 · Outbox design: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -16163,7 +16163,7 @@
           "topics": [
             "Scaling sequence"
           ],
-          "description": "P1 · Scaling sequence: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -16219,7 +16219,7 @@
             "target role",
             "no autobiography."
           ],
-          "description": "P0 · Tell me about yourself: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -16268,7 +16268,7 @@
             "trade-offs",
             "no “Python is always fastest/best”."
           ],
-          "description": "P0 · Why Python?: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -16313,7 +16313,7 @@
           "topics": [
             "Why backend?"
           ],
-          "description": "P0 · Why backend?: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -16362,7 +16362,7 @@
             "async stack",
             "comparison with Django without tribalism."
           ],
-          "description": "P0 · Why FastAPI?: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -16410,7 +16410,7 @@
             "transactions",
             "mature querying."
           ],
-          "description": "P0 · Why PostgreSQL?: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -16456,7 +16456,7 @@
             "cache/ephemeral coordination",
             "not durable source of truth."
           ],
-          "description": "P0 · Why Redis?: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -16504,7 +16504,7 @@
             "multi-service local setup",
             "not “Docker automatically scales”."
           ],
-          "description": "P1 · Why Docker?: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -16553,7 +16553,7 @@
             "fix",
             "prevention/test."
           ],
-          "description": "P0 · Difficult bug: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -16600,7 +16600,7 @@
             "measured next step",
             "avoid pretending project is production-perfect."
           ],
-          "description": "P0 · What would you improve?: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -16648,7 +16648,7 @@
             "focused PR",
             "conflict resolution."
           ],
-          "description": "P1 · Teamwork and code review: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -16696,7 +16696,7 @@
             "clear commitment",
             "no promises impossible to combine with study."
           ],
-          "description": "P1 · Student schedule and availability: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -16745,7 +16745,7 @@
             "explaining async/transaction trade-off",
             "PR description."
           ],
-          "description": "P1 · English project explanation: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -16804,7 +16804,7 @@
             "outbox worker",
             "MinIO"
           ],
-          "description": "P0 · StudyHub in 60 seconds: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -16853,7 +16853,7 @@
             "FastAPI is not universally superior to Django",
             "Django could reduce custom work for admin/content-heavy product."
           ],
-          "description": "P0 · Why Python and FastAPI?: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -16900,7 +16900,7 @@
             "added build/deploy/observability complexity",
             "split only for measured CPU/problem/organizational boundary."
           ],
-          "description": "P1 · Why one backend language?: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -16947,7 +16947,7 @@
             "event loop serves other work while waiting",
             "CPU-heavy work must leave event loop."
           ],
-          "description": "P0 · Why async?: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -16994,7 +16994,7 @@
             "Redis ephemeral acceleration/coordination",
             "durable state survives Redis loss."
           ],
-          "description": "P0 · Why PostgreSQL and Redis together?: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -17041,7 +17041,7 @@
             "Pub/Sub distributes live events between instances",
             "API instances fan out to local clients."
           ],
-          "description": "P0 · WebSockets + Redis Pub/Sub: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -17090,7 +17090,7 @@
             "history stored in PostgreSQL",
             "reconnect fetches missed messages."
           ],
-          "description": "P0 · Why Pub/Sub is not storage: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -17139,7 +17139,7 @@
             "at-least-once",
             "idempotency/retry."
           ],
-          "description": "P0 · Outbox pattern: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -17187,7 +17187,7 @@
             "publish before commit may process rolled-back state",
             "Celery can coexist but does not alone solve dual write."
           ],
-          "description": "P0 · Why outbox instead of Celery in StudyHub: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -17236,7 +17236,7 @@
             "idempotency key",
             "duplicate-safe external effect."
           ],
-          "description": "P1 · Multiple outbox workers: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -17286,7 +17286,7 @@
             "revocation",
             "reuse detection."
           ],
-          "description": "P0 · JWT refresh sessions: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -17335,7 +17335,7 @@
             "JWT claims may become stale",
             "UI is not security boundary."
           ],
-          "description": "P0 · Roles and permissions: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -17383,7 +17383,7 @@
             "multiple signals",
             "fail policy depends on endpoint risk."
           ],
-          "description": "P1 · Rate limiting: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -17433,7 +17433,7 @@
             "finalize validation",
             "no raw binary in relational row."
           ],
-          "description": "P1 · MinIO and presigned URLs: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -17481,7 +17481,7 @@
             "expand/contract",
             "data migration/rollback awareness."
           ],
-          "description": "P0 · Alembic: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -17528,7 +17528,7 @@
             "critical failure cases",
             "coverage gate is not quality proof."
           ],
-          "description": "P0 · pytest and 80% coverage gate: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -17577,7 +17577,7 @@
             "`409 Conflict`",
             "idempotency where applicable."
           ],
-          "description": "P0 · Hotel Booking and double booking: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -17626,7 +17626,7 @@
             "invalidation trigger",
             "fallback."
           ],
-          "description": "P1 · Redis caching in Hotel Booking: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -17676,7 +17676,7 @@
             "backoff",
             "idempotency."
           ],
-          "description": "P1 · Celery workers: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -17725,7 +17725,7 @@
             "candidate configured and used them in a pet-project",
             "candidate did not administer a production monitoring cluster."
           ],
-          "description": "P1 · Prometheus/Grafana/Sentry: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -17772,7 +17772,7 @@
             "intercepted code cannot be exchanged without verifier",
             "state/redirect validation still needed."
           ],
-          "description": "P1 · OAuth2 Authorization Code + PKCE: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -17821,7 +17821,7 @@
             "do not reveal whether email exists",
             "revoke sessions when appropriate."
           ],
-          "description": "P1 · Redis-backed password reset: mental model, interview rubric и backend-сценарий.",
+          "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -17873,7 +17873,7 @@
             "“production-ready” without production operations",
             "“exactly-once” without a precisely scoped mechanism"
           ],
-          "description": "P0 · Honest boundaries: mental model, interview rubric и backend-сценарий.",
+          "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",

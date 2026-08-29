@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Constraints» как на Junior Python Backend interview.",
+    "question": "Что такое Constraints и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -8,34 +8,36 @@
       "NOT NULL",
       "UNIQUE",
       "CHECK",
-      "FK",
-      "Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path."
+      "FK"
     ],
+    "short_answer": "Database constraints enforce invariants for every writer: NOT NULL, UNIQUE, CHECK, primary/foreign keys.",
+    "junior_answer": "Database constraints enforce invariants for every writer: NOT NULL, UNIQUE, CHECK, primary/foreign keys. The database evaluates constraints during writes/transaction completion and rejects invalid state; application code translates the specific conflict. Важное ограничение: Validation improves UX but cannot replace a DB constraint under concurrent requests.",
+    "follow_up_question": "Какая типичная ошибка связана с Constraints?",
+    "follow_up_answer": "Checking uniqueness only with SELECT then INSERT races; a UNIQUE constraint must be the final authority.",
     "expected_answer": {
       "must_mention": [
         "NOT NULL",
         "UNIQUE",
         "CHECK",
-        "FK",
-        "Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path."
+        "FK"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова.",
+        "Checking uniqueness only with SELECT then INSERT races; a UNIQUE constraint must be the final authority.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова."
+        "Checking uniqueness only with SELECT then INSERT races; a UNIQUE constraint must be the final authority."
       ],
       "follow_up_questions": [
-        "Назови инвариант, конкурентный сценарий и точку, где его гарантирует база."
+        "Какая типичная ошибка связана с Constraints?"
       ]
     },
     "follow_ups": [
-      "Назови инвариант, конкурентный сценарий и точку, где его гарантирует база."
+      "Какая типичная ошибка связана с Constraints?"
     ],
     "tags": [
       "stage-11",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Constraints»: Назови инвариант, конкурентный сценарий и точку, где его гарантирует база. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Constraints?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "business invariant in DB",
+      "Checking uniqueness only with SELECT then INSERT races; a UNIQUE constraint must be the final authority."
     ],
+    "short_answer": "Checking uniqueness only with SELECT then INSERT races; a UNIQUE constraint must be the final authority.",
+    "junior_answer": "Checking uniqueness only with SELECT then INSERT races; a UNIQUE constraint must be the final authority.",
+    "follow_up_question": "Что такое Constraints и как это работает?",
+    "follow_up_answer": "Database constraints enforce invariants for every writer: NOT NULL, UNIQUE, CHECK, primary/foreign keys. The database evaluates constraints during writes/transaction completion and rejects invalid state; application code translates the specific conflict. Важное ограничение: Validation improves UX but cannot replace a DB constraint under concurrent requests.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "business invariant in DB"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Checking uniqueness only with SELECT then INSERT races; a UNIQUE constraint must be the final authority."
       ],
       "red_flags": [
-        "Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова."
+        "Checking uniqueness only with SELECT then INSERT races; a UNIQUE constraint must be the final authority."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Constraints и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Constraints и как это работает?"
     ],
     "tags": [
       "stage-11",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-11",

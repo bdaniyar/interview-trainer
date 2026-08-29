@@ -306,6 +306,8 @@ def upsert_section(markdown: str, heading: str, body: str) -> str:
     replacement = f"\n{heading}\n\n{body.rstrip()}\n"
     if re.search(pattern, markdown, re.DOTALL):
         return re.sub(pattern, replacement, markdown, flags=re.DOTALL)
+    if re.search(r"practice|prediction", heading, re.IGNORECASE) and "\n## Interview questions" in markdown:
+        return markdown.replace("\n## Interview questions", replacement + "\n## Interview questions")
     if "\n## Cheat sheet" in markdown:
         return markdown.replace("\n## Cheat sheet", replacement + "\n## Cheat sheet")
     return markdown.rstrip() + "\n" + replacement

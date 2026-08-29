@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Threading» как на Junior Python Backend interview.",
+    "question": "Что такое Threading и как это работает?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "medium",
@@ -8,34 +8,36 @@
       "shared process memory",
       "I/O-bound",
       "race conditions",
-      "locks",
-      "Thread разделяет память процесса; process изолирован и требует сериализации/IPC."
+      "locks"
     ],
+    "short_answer": "A thread executes within one process and shares its memory, file descriptors and module state with other threads.",
+    "junior_answer": "A thread executes within one process and shares its memory, file descriptors and module state with other threads. Threads are useful for blocking I/O libraries. Shared mutable state needs Lock or another synchronization design; `join` waits for completion. Важное ограничение: The GIL limits CPU-bound Python parallelism but does not prevent race conditions between multi-step operations.",
+    "follow_up_question": "Какая типичная ошибка связана с Threading?",
+    "follow_up_answer": "Updating shared state with check-then-act logic without a lock can lose changes even when individual operations appear atomic.",
     "expected_answer": {
       "must_mention": [
         "shared process memory",
         "I/O-bound",
         "race conditions",
-        "locks",
-        "Thread разделяет память процесса; process изолирован и требует сериализации/IPC."
+        "locks"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Отправлять непиклируемый объект в process pool или делить mutable state без lock.",
+        "Updating shared state with check-then-act logic without a lock can lose changes even when individual operations appear atomic.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Отправлять непиклируемый объект в process pool или делить mutable state без lock."
+        "Updating shared state with check-then-act logic without a lock can lose changes even when individual operations appear atomic."
       ],
       "follow_up_questions": [
-        "Выбери executor для I/O-bound и CPU-bound функций и объясни ограничения."
+        "Какая типичная ошибка связана с Threading?"
       ]
     },
     "follow_ups": [
-      "Выбери executor для I/O-bound и CPU-bound функций и объясни ограничения."
+      "Какая типичная ошибка связана с Threading?"
     ],
     "tags": [
       "stage-09",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Threading»: Выбери executor для I/O-bound и CPU-bound функций и объясни ограничения. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Threading?",
+    "level": "follow_up",
     "priority": "P1",
     "interview_probability": "medium",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Thread разделяет память процесса; process изолирован и требует сериализации/IPC.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "GIL limitations",
+      "Updating shared state with check-then-act logic without a lock can lose changes even when individual operations appear atomic."
     ],
+    "short_answer": "Updating shared state with check-then-act logic without a lock can lose changes even when individual operations appear atomic.",
+    "junior_answer": "Updating shared state with check-then-act logic without a lock can lose changes even when individual operations appear atomic.",
+    "follow_up_question": "Что такое Threading и как это работает?",
+    "follow_up_answer": "A thread executes within one process and shares its memory, file descriptors and module state with other threads. Threads are useful for blocking I/O libraries. Shared mutable state needs Lock or another synchronization design; `join` waits for completion. Важное ограничение: The GIL limits CPU-bound Python parallelism but does not prevent race conditions between multi-step operations.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "GIL limitations"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Updating shared state with check-then-act logic without a lock can lose changes even when individual operations appear atomic."
       ],
       "red_flags": [
-        "Отправлять непиклируемый объект в process pool или делить mutable state без lock."
+        "Updating shared state with check-then-act logic without a lock can lose changes even when individual operations appear atomic."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Threading и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Threading и как это работает?"
     ],
     "tags": [
       "stage-09",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-09",

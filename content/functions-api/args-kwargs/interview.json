@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «`*args`, `**kwargs` and unpacking» как на Junior Python Backend interview.",
+    "question": "Что такое `*args`, `**kwargs` and unpacking и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "collection",
       "forwarding",
       "iterable/dict unpacking",
-      "duplicate arguments",
-      "Разделяй момент определения функции, момент вызова и момент разрешения свободного имени."
+      "duplicate arguments"
     ],
+    "short_answer": "`*args` collects extra positional arguments into a tuple, `**kwargs` collects extra keyword arguments into a dict; the same stars unpack values at a call site.",
+    "junior_answer": "`*args` collects extra positional arguments into a tuple, `**kwargs` collects extra keyword arguments into a dict; the same stars unpack values at a call site. Argument binding still enforces the signature. Forwarding wrappers commonly call `fn(*args, **kwargs)`, and duplicate values for one parameter raise `TypeError`. Важное ограничение: Do not replace a clear public signature with unlimited kwargs. Explicit keyword-only parameters produce better typing and API errors.",
+    "follow_up_question": "Какая типичная ошибка связана с `*args`, `**kwargs` and unpacking?",
+    "follow_up_answer": "Forwarding `fn(value, **{'value': other})` passes the same parameter twice and raises `TypeError`.",
     "expected_answer": {
       "must_mention": [
         "collection",
         "forwarding",
         "iterable/dict unpacking",
-        "duplicate arguments",
-        "Разделяй момент определения функции, момент вызова и момент разрешения свободного имени."
+        "duplicate arguments"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Скрывать неясный API за **kwargs или забывать о времени вычисления defaults.",
+        "Forwarding `fn(value, **{'value': other})` passes the same parameter twice and raises `TypeError`.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Скрывать неясный API за **kwargs или забывать о времени вычисления defaults."
+        "Forwarding `fn(value, **{'value': other})` passes the same parameter twice and raises `TypeError`."
       ],
       "follow_up_questions": [
-        "Разбери сигнатуру helper-функции и объясни, какие вызовы допустимы и почему."
+        "Какая типичная ошибка связана с `*args`, `**kwargs` and unpacking?"
       ]
     },
     "follow_ups": [
-      "Разбери сигнатуру helper-функции и объясни, какие вызовы допустимы и почему."
+      "Какая типичная ошибка связана с `*args`, `**kwargs` and unpacking?"
     ],
     "tags": [
       "stage-03",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «`*args`, `**kwargs` and unpacking»: Разбери сигнатуру helper-функции и объясни, какие вызовы допустимы и почему. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с `*args`, `**kwargs` and unpacking?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "wrapper functions",
+      "Forwarding `fn(value, **{'value': other})` passes the same parameter twice and raises `TypeError`."
     ],
+    "short_answer": "Forwarding `fn(value, **{'value': other})` passes the same parameter twice and raises `TypeError`.",
+    "junior_answer": "Forwarding `fn(value, **{'value': other})` passes the same parameter twice and raises `TypeError`.",
+    "follow_up_question": "Что такое `*args`, `**kwargs` and unpacking и как это работает?",
+    "follow_up_answer": "`*args` collects extra positional arguments into a tuple, `**kwargs` collects extra keyword arguments into a dict; the same stars unpack values at a call site. Argument binding still enforces the signature. Forwarding wrappers commonly call `fn(*args, **kwargs)`, and duplicate values for one parameter raise `TypeError`. Важное ограничение: Do not replace a clear public signature with unlimited kwargs. Explicit keyword-only parameters produce better typing and API errors.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "wrapper functions"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Forwarding `fn(value, **{'value': other})` passes the same parameter twice and raises `TypeError`."
       ],
       "red_flags": [
-        "Скрывать неясный API за **kwargs или забывать о времени вычисления defaults."
+        "Forwarding `fn(value, **{'value': other})` passes the same parameter twice and raises `TypeError`."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое `*args`, `**kwargs` and unpacking и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое `*args`, `**kwargs` and unpacking и как это работает?"
     ],
     "tags": [
       "stage-03",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-03",

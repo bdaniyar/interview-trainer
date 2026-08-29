@@ -7,34 +7,57 @@
 
 После урока ты сможешь:
 
-- объяснить `ORM cascade vs DB cascade` своими словами и связать с backend-сценарием;
-- объяснить `ownership` своими словами и связать с backend-сценарием;
-- объяснить `dangerous deletes.` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Cascade and delete-orphan**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `ORM cascade vs DB cascade`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-SQLAlchemy 2.x управляет SQL, identity map, unit of work и transaction lifecycle; Session не является простым соединением.
+### Что это
 
-В теме **Cascade and delete-orphan** важно уверенно объяснять следующие части:
+Это часть SQLAlchemy 2.x data-access flow: statement, Session, identity map и transaction lifecycle.
 
-### ORM cascade vs DB cascade
+### Как работает
 
-Для `ORM cascade vs DB cascade` укажи Session/transaction owner, момент SQL I/O и последствия rollback или lazy load.
+Укажи владельца Session/transaction, момент SQL I/O и state entity до и после flush/commit/rollback.
 
-### ownership
+**ORM cascade vs DB cascade.** `ORM cascade vs DB cascade` влияет на SQLAlchemy Session/transaction state, момент фактического SQL I/O и поведение rollback или relationship loading.
 
-Для `ownership` укажи Session/transaction owner, момент SQL I/O и последствия rollback или lazy load.
+**ownership.** `ownership` влияет на SQLAlchemy Session/transaction state, момент фактического SQL I/O и поведение rollback или relationship loading.
 
-### dangerous deletes
+**dangerous deletes.** `dangerous deletes` влияет на SQLAlchemy Session/transaction state, момент фактического SQL I/O и поведение rollback или relationship loading.
 
-Для `dangerous deletes` укажи Session/transaction owner, момент SQL I/O и последствия rollback или lazy load.
+
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `ORM cascade vs DB cascade` и `ownership` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `ORM cascade vs DB cascade`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- ORM cascade vs DB cascade
+- ownership
+- dangerous deletes
+
+### Полезно
+
+- связать Cascade and delete-orphan с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -51,56 +74,17 @@ SQLAlchemy 2.x управляет SQL, identity map, unit of work и transaction
 
 ## Common mistakes
 
-**Ошибка:** Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Скрыть commit внутри repository, допустить N+1 или продолжить Session без rollback после ошибки.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `ORM cascade vs DB cascade` до запуска.
 
-## Interview questions
+**B · Find the bug.** Найди нарушение `ownership` и объясни конкретное последствие.
 
-1. Объясни **Cascade and delete-orphan** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Опиши session scope, момент flush/commit и количество SQL-запросов. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
-
-## Expected answer rubric
-
-### Must mention
-
-- ORM cascade vs DB cascade
-- ownership
-- dangerous deletes.
-- Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- ORM cascade vs DB cascade
-- ownership
-- dangerous deletes.
-
-## Задача
-
-Разбери backend-сценарий: **Опиши session scope, момент flush/commit и количество SQL-запросов.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Дай ответ про Cascade and delete-orphan за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Debugging practice
 
@@ -112,15 +96,69 @@ SQLAlchemy 2.x управляет SQL, identity map, unit of work и transaction
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое Cascade and delete-orphan и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Cascade and delete-orphan?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Cascade and delete-orphan: Это часть SQLAlchemy 2.x data-access flow: statement, Session, identity map и transaction lifecycle.
+
+### Нормальный Junior answer
+
+> Cascade and delete-orphan — тема, в которой я сначала фиксирую `ORM cascade vs DB cascade`, затем объясняю `ownership` на коротком примере. Ключевой механизм: Укажи владельца Session/transaction, момент SQL I/O и state entity до и после flush/commit/rollback. Главная практическая ошибка — Скрыть commit внутри repository, допустить N+1 или продолжить Session без rollback после ошибки.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Cascade and delete-orphan?**
+
+Скрыть commit внутри repository, допустить N+1 или продолжить Session без rollback после ошибки.
+
+## Expected answer rubric
+
+### Must mention
+
+- ORM cascade vs DB cascade
+- ownership
+- dangerous deletes
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Скрыть commit внутри repository, допустить N+1 или продолжить Session без rollback после ошибки.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какое ограничение или типичная ошибка относится именно к теме Cascade and delete-orphan?
+
+## Задача
+
+Сделай короткую письменную практику по теме **Cascade and delete-orphan**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Cascade and delete-orphan**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Cascade and delete-orphan: Это часть SQLAlchemy 2.x data-access flow: statement, Session, identity map и transaction lifecycle.
+- **Механизм:** Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
+- **Ограничение:** Скрыть commit внутри repository, допустить N+1 или продолжить Session без rollback после ошибки.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

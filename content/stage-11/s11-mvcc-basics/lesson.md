@@ -7,38 +7,60 @@
 
 После урока ты сможешь:
 
-- объяснить `snapshots` своими словами и связать с backend-сценарием;
-- объяснить `readers/writers` своими словами и связать с backend-сценарием;
-- объяснить `old row versions` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **MVCC basics**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `snapshots`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-PostgreSQL обеспечивает ограничения и конкурентную работу ближе к данным; индекс и transaction boundary проектируются под запросы и инварианты.
+### Что это
 
-В теме **MVCC basics** важно уверенно объяснять следующие части:
+Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.
 
-### snapshots
+### Как работает
 
-Для `snapshots` назови защищаемый invariant, concurrent transaction и evidence из constraint или query plan.
+Назови invariant и concurrent scenario, затем проверь constraint, transaction boundary и фактический query plan.
 
-### readers/writers
+**snapshots.** `snapshots` влияет на database invariant, concurrent transactions или access path; правильность подтверждают constraint и фактический query plan.
 
-Для `readers/writers` назови защищаемый invariant, concurrent transaction и evidence из constraint или query plan.
+**readers/writers.** `readers/writers` влияет на database invariant, concurrent transactions или access path; правильность подтверждают constraint и фактический query plan.
 
-### old row versions
+**old row versions.** `old row versions` влияет на database invariant, concurrent transactions или access path; правильность подтверждают constraint и фактический query plan.
 
-Для `old row versions` назови защищаемый invariant, concurrent transaction и evidence из constraint или query plan.
+**vacuum awareness.** `vacuum awareness` влияет на database invariant, concurrent transactions или access path; правильность подтверждают constraint и фактический query plan.
 
-### vacuum awareness
 
-Для `vacuum awareness` назови защищаемый invariant, concurrent transaction и evidence из constraint или query plan.
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `snapshots` и `readers/writers` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `snapshots`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- snapshots
+- readers/writers
+- old row versions
+- vacuum awareness
+
+### Полезно
+
+- связать MVCC basics с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -54,58 +76,17 @@ SELECT 's11_mvcc_basics' AS example_key;
 
 ## Common mistakes
 
-**Ошибка:** Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `snapshots` до запуска.
 
-## Interview questions
+**B · Find the bug.** Найди нарушение `readers/writers` и объясни конкретное последствие.
 
-1. Объясни **MVCC basics** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Назови инвариант, конкурентный сценарий и точку, где его гарантирует база. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
-
-## Expected answer rubric
-
-### Must mention
-
-- snapshots
-- readers/writers
-- old row versions
-- vacuum awareness.
-- Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- snapshots
-- readers/writers
-- old row versions
-- vacuum awareness.
-
-## Задача
-
-Разбери backend-сценарий: **Назови инвариант, конкурентный сценарий и точку, где его гарантирует база.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Дай ответ про MVCC basics за 60 секунд: определение, механизм, пример, ограничение.
 
 ## SQL practice
 
@@ -143,15 +124,70 @@ Expected columns: reasoning rubric. Comparison: reasoning_rubric.
 
 SQL runner пока не подключён: выполни запрос в локальном PostgreSQL и сверь result с rubric.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое MVCC basics и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме MVCC basics?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+MVCC basics: Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.
+
+### Нормальный Junior answer
+
+> MVCC basics — тема, в которой я сначала фиксирую `snapshots`, затем объясняю `readers/writers` на коротком примере. Ключевой механизм: Назови invariant и concurrent scenario, затем проверь constraint, transaction boundary и фактический query plan. Главная практическая ошибка — Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме MVCC basics?**
+
+Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
+
+## Expected answer rubric
+
+### Must mention
+
+- snapshots
+- readers/writers
+- old row versions
+- vacuum awareness
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какое ограничение или типичная ошибка относится именно к теме MVCC basics?
+
+## Задача
+
+Сделай короткую письменную практику по теме **MVCC basics**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **MVCC basics**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** MVCC basics: Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.
+- **Механизм:** Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
+- **Ограничение:** Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

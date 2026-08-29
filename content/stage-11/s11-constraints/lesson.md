@@ -7,42 +7,48 @@
 
 После урока ты сможешь:
 
-- объяснить `NOT NULL` своими словами и связать с backend-сценарием;
-- объяснить `UNIQUE` своими словами и связать с backend-сценарием;
-- объяснить `CHECK` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Constraints**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `NOT NULL`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-PostgreSQL обеспечивает ограничения и конкурентную работу ближе к данным; индекс и transaction boundary проектируются под запросы и инварианты.
+### Что это
 
-В теме **Constraints** важно уверенно объяснять следующие части:
+Database constraints enforce invariants for every writer: NOT NULL, UNIQUE, CHECK, primary/foreign keys.
 
-### NOT NULL
+### Как работает
 
-`NULL` означает отсутствие известного значения; сравнение с ним делают через `IS NULL`, а многие выражения дают `UNKNOWN`.
+The database evaluates constraints during writes/transaction completion and rejects invalid state; application code translates the specific conflict.
 
-### UNIQUE
 
-Для `UNIQUE` назови защищаемый invariant, concurrent transaction и evidence из constraint или query plan.
+### Важный нюанс / limitation
 
-### CHECK
-
-Для `CHECK` назови защищаемый invariant, concurrent transaction и evidence из constraint или query plan.
-
-### FK
-
-Для `FK` назови защищаемый invariant, concurrent transaction и evidence из constraint или query plan.
-
-### business invariant in DB
-
-Для `business invariant in DB` назови защищаемый invariant, concurrent transaction и evidence из constraint или query plan.
+Validation improves UX but cannot replace a DB constraint under concurrent requests.
 
 ## Mental model
 
 Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- NOT NULL
+- UNIQUE
+- CHECK
+- FK
+
+### Полезно
+
+- business invariant in DB
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -58,19 +64,47 @@ SELECT 's11_constraints' AS example_key;
 
 ## Common mistakes
 
-**Ошибка:** Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Checking uniqueness only with SELECT then INSERT races; a UNIQUE constraint must be the final authority.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `NOT NULL` example and predict the result before running it.
+
+**B · Find the bug.** Find code that violates `UNIQUE` and explain the concrete consequence.
+
+**D · Small task.** Implement the smallest function/query that demonstrates `NOT NULL` and add one edge-case test.
+
+**E · Interview explanation.** Explain Constraints in 45–60 seconds and include one limitation.
 
 ## Interview questions
 
-1. Объясни **Constraints** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Назови инвариант, конкурентный сценарий и точку, где его гарантирует база. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Constraints и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Constraints?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Database constraints enforce invariants for every writer: NOT NULL, UNIQUE, CHECK, primary/foreign keys.
+
+### Нормальный Junior answer
+
+> Database constraints enforce invariants for every writer: NOT NULL, UNIQUE, CHECK, primary/foreign keys. The database evaluates constraints during writes/transaction completion and rejects invalid state; application code translates the specific conflict. Важное ограничение: Validation improves UX but cannot replace a DB constraint under concurrent requests.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Constraints?**
+
+Checking uniqueness only with SELECT then INSERT races; a UNIQUE constraint must be the final authority.
 
 ## Expected answer rubric
 
@@ -80,47 +114,34 @@ SELECT 's11_constraints' AS example_key;
 - UNIQUE
 - CHECK
 - FK
-- Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова.
-- ответ из одного определения без механизма и failure mode.
+- Checking uniqueness only with SELECT then INSERT races; a UNIQUE constraint must be the final authority.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- NOT NULL
-- UNIQUE
-- CHECK
-- FK
-- business invariant in DB.
+- Какая типичная ошибка связана с Constraints?
 
 ## Задача
 
-Разбери backend-сценарий: **Назови инвариант, конкурентный сценарий и точку, где его гарантирует база.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Constraints**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Constraints**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Database constraints enforce invariants for every writer: NOT NULL, UNIQUE, CHECK, primary/foreign keys.
+- **Механизм:** Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
+- **Ограничение:** Checking uniqueness only with SELECT then INSERT races; a UNIQUE constraint must be the final authority.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

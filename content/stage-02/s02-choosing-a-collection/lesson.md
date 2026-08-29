@@ -7,46 +7,61 @@
 
 После урока ты сможешь:
 
-- объяснить `list vs tuple` своими словами и связать с backend-сценарием;
-- объяснить `list vs set` своими словами и связать с backend-сценарием;
-- объяснить `dict vs list of pairs` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Choosing a collection**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `list vs tuple`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Коллекция выбирается по требуемым операциям: порядок, уникальность, доступ по ключу, мутабельность и стоимость поиска.
+### Что это
 
-В теме **Choosing a collection** важно уверенно объяснять следующие части:
+Это операция или гарантия стандартной коллекции Python; выбор структуры зависит от порядка, уникальности и стоимости основных операций.
 
-### list vs tuple
+### Как работает
 
-`list` — ordered mutable sequence: индекс и append удобны, а поиск значения и вставка в начало линейны; aliases видят общие mutations.
+Сравни порядок, duplicates, mutability, lookup/membership и стоимость изменения; затем проверь edge cases коротким кодом.
 
-### list vs set
+**list vs tuple.** `tuple` — immutable sequence; hashability зависит от всех элементов, а неизменяемость контейнера не делает mutable элементы неизменяемыми.
 
-`list` — ordered mutable sequence: индекс и append удобны, а поиск значения и вставка в начало линейны; aliases видят общие mutations.
+**list vs set.** `list` — ordered mutable sequence: индекс и append удобны, а поиск значения и вставка в начало линейны; aliases видят общие mutations.
 
-### dict vs list of pairs
+**dict vs list of pairs.** `list` — ordered mutable sequence: индекс и append удобны, а поиск значения и вставка в начало линейны; aliases видят общие mutations.
 
-`list` — ordered mutable sequence: индекс и append удобны, а поиск значения и вставка в начало линейны; aliases видят общие mutations.
+**queue/stack choices.** `queue/stack choices` является частью контракта collection: наблюдаемое поведение зависит от порядка, duplicates, mutability и стоимости доступа.
 
-### queue/stack choices
+**complexity trade-offs.** `complexity trade-offs` является частью контракта collection: наблюдаемое поведение зависит от порядка, duplicates, mutability и стоимости доступа.
 
-Для `queue/stack choices` назови поддерживаемые операции, порядок, уникальность, mutability и стоимость ключевого доступа.
+**practical backend examples.** `practical backend examples` является частью контракта collection: наблюдаемое поведение зависит от порядка, duplicates, mutability и стоимости доступа.
 
-### complexity trade-offs
 
-Для `complexity trade-offs` назови поддерживаемые операции, порядок, уникальность, mutability и стоимость ключевого доступа.
+### Важный нюанс / limitation
 
-### practical backend examples
-
-Для `practical backend examples` назови поддерживаемые операции, порядок, уникальность, mutability и стоимость ключевого доступа.
+Граница Junior: уверенно объясняй `list vs tuple` и `list vs set` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
 ## Mental model
 
 Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- list vs tuple
+- list vs set
+- dict vs list of pairs
+- queue/stack choices
+
+### Полезно
+
+- complexity trade-offs
+- practical backend examples
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -64,19 +79,45 @@ print(ordered_ids, unique_ids, user_by_id.keys())
 
 ## Common mistakes
 
-**Ошибка:** Выбирать коллекцию по привычке и игнорировать порядок, дубликаты или хешируемость.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Выбрать collection по привычке и не проверить duplicates, order или lookup cost.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `list vs tuple` до запуска.
+
+**B · Find the bug.** Найди нарушение `list vs set` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Choosing a collection за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Choosing a collection** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Выбери структуру для набора API-записей и обоснуй lookup, порядок и дубликаты. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Choosing a collection и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Choosing a collection?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Choosing a collection: Это операция или гарантия стандартной коллекции Python; выбор структуры зависит от порядка, уникальности и стоимости основных операций.
+
+### Нормальный Junior answer
+
+> Choosing a collection — тема, в которой я сначала фиксирую `list vs tuple`, затем объясняю `list vs set` на коротком примере. Ключевой механизм: Сравни порядок, duplicates, mutability, lookup/membership и стоимость изменения; затем проверь edge cases коротким кодом. Главная практическая ошибка — Выбрать collection по привычке и не проверить duplicates, order или lookup cost.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Choosing a collection?**
+
+Выбрать collection по привычке и не проверить duplicates, order или lookup cost.
 
 ## Expected answer rubric
 
@@ -86,48 +127,34 @@ print(ordered_ids, unique_ids, user_by_id.keys())
 - list vs set
 - dict vs list of pairs
 - queue/stack choices
-- Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Выбирать коллекцию по привычке и игнорировать порядок, дубликаты или хешируемость.
-- ответ из одного определения без механизма и failure mode.
+- Выбрать collection по привычке и не проверить duplicates, order или lookup cost.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- list vs tuple
-- list vs set
-- dict vs list of pairs
-- queue/stack choices
-- complexity trade-offs
-- practical backend examples.
+- Какое ограничение или типичная ошибка относится именно к теме Choosing a collection?
 
 ## Задача
 
-Разбери backend-сценарий: **Выбери структуру для набора API-записей и обоснуй lookup, порядок и дубликаты.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Choosing a collection**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Choosing a collection**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Choosing a collection: Это операция или гарантия стандартной коллекции Python; выбор структуры зависит от порядка, уникальности и стоимости основных операций.
+- **Механизм:** Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set.
+- **Ограничение:** Выбрать collection по привычке и не проверить duplicates, order или lookup cost.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

@@ -1,41 +1,43 @@
 [
   {
-    "question": "Объясни тему «Numbers, strings, bytes and encoding» как на Junior Python Backend interview.",
+    "question": "Почему float не подходит для точных денежных расчётов и чем `str` отличается от `bytes`?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "int/float/Decimal basics",
-      "floating-point precision",
-      "`str` vs `bytes`",
-      "Unicode",
-      "Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию."
+      "объяснить погрешность float",
+      "различать str/bytes",
+      "уметь encode/decode",
+      "выбрать Decimal для денег"
     ],
+    "short_answer": "Float хранит двоичное приближение; для денег нужен Decimal/NUMERIC. `str` — Unicode, `bytes` — конкретные байты.",
+    "junior_answer": "Многие десятичные дроби нельзя точно записать в двоичном float, поэтому операции накапливают небольшую погрешность. Для денег используют `Decimal` и SQL `NUMERIC`, создавая Decimal из строки. `str` представляет Unicode-текст, а `bytes` — данные на границе файла или сети; переход выполняют явными `encode` и `decode` с одной кодировкой.",
+    "follow_up_question": "Как корректно сравнивать результаты обычных scientific float-вычислений?",
+    "follow_up_answer": "Обычно через допустимую абсолютную/относительную погрешность, например `math.isclose`, а не прямое `==`.",
     "expected_answer": {
       "must_mention": [
-        "int/float/Decimal basics",
-        "floating-point precision",
-        "`str` vs `bytes`",
-        "Unicode",
-        "Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию."
+        "объяснить погрешность float",
+        "различать str/bytes",
+        "уметь encode/decode",
+        "выбрать Decimal для денег"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Объяснять переменную как коробку, которая всегда содержит независимое значение.",
+        "Создать `Decimal(0.1)` и ожидать точное `0.1`; лучше `Decimal('0.1')`.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Объяснять переменную как коробку, которая всегда содержит независимое значение."
+        "Создать `Decimal(0.1)` и ожидать точное `0.1`; лучше `Decimal('0.1')`."
       ],
       "follow_up_questions": [
-        "Проследи identity и состояние объекта после двух присваиваний и одной мутации."
+        "Как корректно сравнивать результаты обычных scientific float-вычислений?"
       ]
     },
     "follow_ups": [
-      "Проследи identity и состояние объекта после двух присваиваний и одной мутации."
+      "Как корректно сравнивать результаты обычных scientific float-вычислений?"
     ],
     "tags": [
       "stage-01",
@@ -48,42 +50,42 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Numbers, strings, bytes and encoding»: Проследи identity и состояние объекта после двух присваиваний и одной мутации. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Как корректно сравнивать результаты обычных scientific float-вычислений?",
+    "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "знать про `math.isclose` для приближённых сравнений",
+      "Обычно через допустимую абсолютную/относительную погрешность, например `math.isclose`, а не прямое `==`."
     ],
+    "short_answer": "Обычно через допустимую абсолютную/относительную погрешность, например `math.isclose`, а не прямое `==`.",
+    "junior_answer": "Обычно через допустимую абсолютную/относительную погрешность, например `math.isclose`, а не прямое `==`.",
+    "follow_up_question": "Почему float не подходит для точных денежных расчётов и чем `str` отличается от `bytes`?",
+    "follow_up_answer": "Многие десятичные дроби нельзя точно записать в двоичном float, поэтому операции накапливают небольшую погрешность. Для денег используют `Decimal` и SQL `NUMERIC`, создавая Decimal из строки. `str` представляет Unicode-текст, а `bytes` — данные на границе файла или сети; переход выполняют явными `encode` и `decode` с одной кодировкой.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "знать про `math.isclose` для приближённых сравнений"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Создать `Decimal(0.1)` и ожидать точное `0.1`; лучше `Decimal('0.1')`.",
+        "Декодировать произвольные bytes без согласованной encoding/error policy."
       ],
       "red_flags": [
-        "Объяснять переменную как коробку, которая всегда содержит независимое значение."
+        "Создать `Decimal(0.1)` и ожидать точное `0.1`; лучше `Decimal('0.1')`."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Почему float не подходит для точных денежных расчётов и чем `str` отличается от `bytes`?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Почему float не подходит для точных денежных расчётов и чем `str` отличается от `bytes`?"
     ],
     "tags": [
       "stage-01",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-01",

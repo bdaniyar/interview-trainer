@@ -7,50 +7,65 @@
 
 После урока ты сможешь:
 
-- объяснить `request rate` своими словами и связать с backend-сценарием;
-- объяснить `error rate` своими словами и связать с backend-сценарием;
-- объяснить `latency/p95` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Backend signals**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `request rate`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Observability отвечает на вопросы о поведении системы через logs, metrics и traces.
+### Что это
 
-В теме **Backend signals** важно уверенно объяснять следующие части:
+Тема **Backend signals** описывает отдельный контракт backend-разработки.
 
-### request rate
+### Как работает
 
-Для `request rate` укажи сигнал, labels/context, способ correlation и действие инженера по наблюдаемому symptom.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
 
-### error rate
+**request rate.** `request rate` является observability signal с контекстом, correlation и ожидаемым действием инженера после обнаружения symptom.
 
-Для `error rate` укажи сигнал, labels/context, способ correlation и действие инженера по наблюдаемому symptom.
+**error rate.** `error rate` является observability signal с контекстом, correlation и ожидаемым действием инженера после обнаружения symptom.
 
-### latency/p95
+**latency/p95.** `latency/p95` является observability signal с контекстом, correlation и ожидаемым действием инженера после обнаружения symptom.
 
-Для `latency/p95` укажи сигнал, labels/context, способ correlation и действие инженера по наблюдаемому symptom.
+**DB errors.** `DB errors` является observability signal с контекстом, correlation и ожидаемым действием инженера после обнаружения symptom.
 
-### DB errors
+**worker failures.** `worker failures` является observability signal с контекстом, correlation и ожидаемым действием инженера после обнаружения symptom.
 
-Для `DB errors` укажи сигнал, labels/context, способ correlation и действие инженера по наблюдаемому symptom.
+**queue backlog.** `queue backlog` является observability signal с контекстом, correlation и ожидаемым действием инженера после обнаружения symptom.
 
-### worker failures
 
-Для `worker failures` укажи сигнал, labels/context, способ correlation и действие инженера по наблюдаемому symptom.
+### Важный нюанс / limitation
 
-### queue backlog
+Граница Junior: уверенно объясняй `request rate` и `error rate` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
-Для `queue backlog` укажи сигнал, labels/context, способ correlation и действие инженера по наблюдаемому symptom.
+### Где используется в backend
 
-### cache hit ratio where useful
-
-`WHERE` фильтрует строки до grouping; SQL three-valued logic отбрасывает и `FALSE`, и `UNKNOWN`.
+В backend эта тема важна в том месте, где применяется `request rate`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Сначала сформулируй вопрос, затем выбери signal и labels с контролируемой cardinality.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- request rate
+- error rate
+- latency/p95
+- DB errors
+
+### Полезно
+
+- worker failures
+- queue backlog
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -68,19 +83,45 @@ assert example_s25_backend_signals()
 
 ## Common mistakes
 
-**Ошибка:** Логировать secrets или использовать user_id как Prometheus label.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Игнорировать ограничение механизма и проверять только happy path.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `request rate` до запуска.
+
+**B · Find the bug.** Найди нарушение `error rate` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Backend signals за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Backend signals** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: По росту p95 при стабильной средней выбери следующие metrics и logs. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Backend signals и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Backend signals?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Backend signals: это отдельный технический контракт
+
+### Нормальный Junior answer
+
+> Backend signals — тема, в которой я сначала фиксирую `request rate`, затем объясняю `error rate` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Backend signals?**
+
+Нужно назвать конкретный failure path и способ его проверить.
 
 ## Expected answer rubric
 
@@ -90,49 +131,34 @@ assert example_s25_backend_signals()
 - error rate
 - latency/p95
 - DB errors
-- Сначала сформулируй вопрос, затем выбери signal и labels с контролируемой cardinality.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Логировать secrets или использовать user_id как Prometheus label.
-- ответ из одного определения без механизма и failure mode.
+- Игнорировать ограничение механизма и проверять только happy path.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- request rate
-- error rate
-- latency/p95
-- DB errors
-- worker failures
-- queue backlog
-- cache hit ratio where useful.
+- Какое ограничение или типичная ошибка относится именно к теме Backend signals?
 
 ## Задача
 
-Разбери backend-сценарий: **По росту p95 при стабильной средней выбери следующие metrics и logs.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Backend signals**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Backend signals**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Backend signals: это отдельный технический контракт
+- **Механизм:** Сначала сформулируй вопрос, затем выбери signal и labels с контролируемой cardinality.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

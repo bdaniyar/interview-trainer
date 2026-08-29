@@ -7,46 +7,65 @@
 
 После урока ты сможешь:
 
-- объяснить `row` своими словами и связать с backend-сценарием;
-- объяснить `column` своими словами и связать с backend-сценарием;
-- объяснить `relation` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Relational model and tables**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `row`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-SQL описывает требуемый набор строк; корректность начинается с cardinality, NULL semantics и явного порядка.
+### Что это
 
-В теме **Relational model and tables** важно уверенно объяснять следующие части:
+Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.
 
-### row
+### Как работает
 
-Для `row` сначала определи grain/cardinality результата, затем NULL и ordering semantics.
+Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа.
 
-### column
+**row.** `row` меняет набор SQL rows; его смысл проверяют через grain результата, cardinality, NULL semantics и явный ordering.
 
-Для `column` сначала определи grain/cardinality результата, затем NULL и ordering semantics.
+**column.** `column` меняет набор SQL rows; его смысл проверяют через grain результата, cardinality, NULL semantics и явный ordering.
 
-### relation
+**relation.** `relation` меняет набор SQL rows; его смысл проверяют через grain результата, cardinality, NULL semantics и явный ordering.
 
-Для `relation` сначала определи grain/cardinality результата, затем NULL и ordering semantics.
+**schema.** `schema` меняет набор SQL rows; его смысл проверяют через grain результата, cardinality, NULL semantics и явный ordering.
 
-### schema
+**data types.** `data types` меняет набор SQL rows; его смысл проверяют через grain результата, cardinality, NULL semantics и явный ordering.
 
-Для `schema` сначала определи grain/cardinality результата, затем NULL и ordering semantics.
+**relational thinking.** `relational thinking` меняет набор SQL rows; его смысл проверяют через grain результата, cardinality, NULL semantics и явный ordering.
 
-### data types
 
-Для `data types` сначала определи grain/cardinality результата, затем NULL и ordering semantics.
+### Важный нюанс / limitation
 
-### relational thinking
+Граница Junior: уверенно объясняй `row` и `column` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
-Для `relational thinking` сначала определи grain/cardinality результата, затем NULL и ordering semantics.
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `row`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- row
+- column
+- relation
+- schema
+
+### Полезно
+
+- data types
+- relational thinking
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -69,19 +88,45 @@ CREATE TABLE articles (
 
 ## Common mistakes
 
-**Ошибка:** Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Не определить cardinality результата и замаскировать неверный query через DISTINCT.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `row` до запуска.
+
+**B · Find the bug.** Найди нарушение `column` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Relational model and tables за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Relational model and tables** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Предскажи cardinality результата и проверь, не размножает ли JOIN строки. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Relational model and tables и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Relational model and tables?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Relational model and tables: Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.
+
+### Нормальный Junior answer
+
+> Relational model and tables — тема, в которой я сначала фиксирую `row`, затем объясняю `column` на коротком примере. Ключевой механизм: Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа. Главная практическая ошибка — Не определить cardinality результата и замаскировать неверный query через DISTINCT.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Relational model and tables?**
+
+Не определить cardinality результата и замаскировать неверный query через DISTINCT.
 
 ## Expected answer rubric
 
@@ -91,48 +136,34 @@ CREATE TABLE articles (
 - column
 - relation
 - schema
-- Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Использовать LIMIT без детерминированного ORDER BY или фильтровать правую таблицу LEFT JOIN в WHERE.
-- ответ из одного определения без механизма и failure mode.
+- Не определить cardinality результата и замаскировать неверный query через DISTINCT.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- row
-- column
-- relation
-- schema
-- data types
-- relational thinking.
+- Какое ограничение или типичная ошибка относится именно к теме Relational model and tables?
 
 ## Задача
 
-Разбери backend-сценарий: **Предскажи cardinality результата и проверь, не размножает ли JOIN строки.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Relational model and tables**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Relational model and tables**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Relational model and tables: Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.
+- **Механизм:** Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
+- **Ограничение:** Не определить cardinality результата и замаскировать неверный query через DISTINCT.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

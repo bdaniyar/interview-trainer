@@ -1,35 +1,37 @@
 [
   {
-    "question": "Объясни тему «Basic request path» как на Junior Python Backend interview.",
+    "question": "Что такое Basic request path и какой механизм здесь важно понимать Junior-разработчику?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "Basic request path",
-      "Сначала обеспечь корректность простого монолита; масштабируй измеренный bottleneck."
+      "Basic request path"
     ],
+    "short_answer": "Basic request path: это отдельный технический контракт",
+    "junior_answer": "Basic request path — тема, в которой я сначала фиксирую `Basic request path`, затем объясняю `Basic request path` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
+    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Basic request path?",
+    "follow_up_answer": "Нужно назвать конкретный failure path и способ его проверить.",
     "expected_answer": {
       "must_mention": [
-        "Basic request path",
-        "Сначала обеспечь корректность простого монолита; масштабируй измеренный bottleneck."
+        "Basic request path"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Начинать с microservices, не определив нагрузку, consistency и ownership.",
+        "Игнорировать ограничение механизма и проверять только happy path.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Начинать с microservices, не определив нагрузку, consistency и ownership."
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "follow_up_questions": [
-        "Уточни traffic, consistency, latency и failure behavior перед схемой компонентов."
+        "Какое ограничение или типичная ошибка относится именно к теме Basic request path?"
       ]
     },
     "follow_ups": [
-      "Уточни traffic, consistency, latency и failure behavior перед схемой компонентов."
+      "Какое ограничение или типичная ошибка относится именно к теме Basic request path?"
     ],
     "tags": [
       "stage-29",
@@ -42,42 +44,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Basic request path»: Уточни traffic, consistency, latency и failure behavior перед схемой компонентов. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какое ограничение или типичная ошибка относится именно к теме Basic request path?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Сначала обеспечь корректность простого монолита; масштабируй измеренный bottleneck.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "связать Basic request path с коротким рабочим примером",
+      "Нужно назвать конкретный failure path и способ его проверить."
     ],
+    "short_answer": "Нужно назвать конкретный failure path и способ его проверить.",
+    "junior_answer": "Нужно назвать конкретный failure path и способ его проверить.",
+    "follow_up_question": "Что такое Basic request path и какой механизм здесь важно понимать Junior-разработчику?",
+    "follow_up_answer": "Basic request path — тема, в которой я сначала фиксирую `Basic request path`, затем объясняю `Basic request path` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "связать Basic request path с коротким рабочим примером"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "red_flags": [
-        "Начинать с microservices, не определив нагрузку, consistency и ownership."
+        "Игнорировать ограничение механизма и проверять только happy path."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Basic request path и какой механизм здесь важно понимать Junior-разработчику?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Basic request path и какой механизм здесь важно понимать Junior-разработчику?"
     ],
     "tags": [
       "stage-29",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-29",

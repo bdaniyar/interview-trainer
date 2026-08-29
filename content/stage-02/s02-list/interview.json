@@ -1,41 +1,43 @@
 [
   {
-    "question": "Объясни тему «List» как на Junior Python Backend interview.",
+    "question": "Что такое list, какие у него основные операции и их сложность?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "order",
-      "mutability",
-      "indexing/slicing",
-      "append/extend/insert",
-      "Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set."
+      "append vs extend",
+      "индексы и срезы",
+      "mutability и aliases",
+      "базовая сложность операций"
     ],
+    "short_answer": "List — ordered mutable sequence; индекс и append обычно O(1), поиск и вставка в начало — O(n).",
+    "junior_answer": "`list` хранит упорядоченную последовательность references, допускает дубликаты и меняется на месте. Доступ по индексу и append обычно O(1), а поиск значения, удаление по значению и вставка в начало — O(n). `append` добавляет один объект, `extend` — все элементы iterable. Срез создаёт новый внешний список, но копия остаётся shallow.",
+    "follow_up_question": "Когда вместо list выбрать set, dict или deque?",
+    "follow_up_answer": "Set — для уникальности и быстрого membership, dict — для lookup по ключу, deque — для частых операций с обоих концов.",
     "expected_answer": {
       "must_mention": [
-        "order",
-        "mutability",
-        "indexing/slicing",
-        "append/extend/insert",
-        "Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set."
+        "append vs extend",
+        "индексы и срезы",
+        "mutability и aliases",
+        "базовая сложность операций"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Выбирать коллекцию по привычке и игнорировать порядок, дубликаты или хешируемость.",
+        "`items = items.append(value)` заменит переменную на `None`.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Выбирать коллекцию по привычке и игнорировать порядок, дубликаты или хешируемость."
+        "`items = items.append(value)` заменит переменную на `None`."
       ],
       "follow_up_questions": [
-        "Выбери структуру для набора API-записей и обоснуй lookup, порядок и дубликаты."
+        "Когда вместо list выбрать set, dict или deque?"
       ]
     },
     "follow_ups": [
-      "Выбери структуру для набора API-записей и обоснуй lookup, порядок и дубликаты."
+      "Когда вместо list выбрать set, dict или deque?"
     ],
     "tags": [
       "stage-02",
@@ -48,42 +50,44 @@
     ]
   },
   {
-    "question": "Сценарий по теме «List»: Выбери структуру для набора API-записей и обоснуй lookup, порядок и дубликаты. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Когда вместо list выбрать set, dict или deque?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "deque для очереди",
+      "stable sort и key function",
+      "Set — для уникальности и быстрого membership, dict — для lookup по ключу, deque — для частых операций с обоих концов."
     ],
+    "short_answer": "Set — для уникальности и быстрого membership, dict — для lookup по ключу, deque — для частых операций с обоих концов.",
+    "junior_answer": "Set — для уникальности и быстрого membership, dict — для lookup по ключу, deque — для частых операций с обоих концов.",
+    "follow_up_question": "Что такое list, какие у него основные операции и их сложность?",
+    "follow_up_answer": "`list` хранит упорядоченную последовательность references, допускает дубликаты и меняется на месте. Доступ по индексу и append обычно O(1), а поиск значения, удаление по значению и вставка в начало — O(n). `append` добавляет один объект, `extend` — все элементы iterable. Срез создаёт новый внешний список, но копия остаётся shallow.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "deque для очереди",
+        "stable sort и key function"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "`items = items.append(value)` заменит переменную на `None`.",
+        "`matrix = [[0] * 3] * 3` создаёт три ссылки на одну строку, поэтому изменение одной строки видно во всех."
       ],
       "red_flags": [
-        "Выбирать коллекцию по привычке и игнорировать порядок, дубликаты или хешируемость."
+        "`items = items.append(value)` заменит переменную на `None`."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое list, какие у него основные операции и их сложность?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое list, какие у него основные операции и их сложность?"
     ],
     "tags": [
       "stage-02",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-02",

@@ -7,29 +7,54 @@
 
 После урока ты сможешь:
 
-- объяснить `ignoring future files does not remove tracked/history content` своими словами и связать с backend-сценарием;
-- объяснить `leaked secret must be rotated.` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **`.gitignore` and secrets**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `ignoring future files does not remove tracked/history content`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Git хранит snapshots и граф commits; working tree, index, local branch и remote-tracking branch — разные состояния.
+### Что это
 
-В теме **`.gitignore` and secrets** важно уверенно объяснять следующие части:
+Тема **`.gitignore` and secrets** описывает отдельный контракт backend-разработки.
 
-### ignoring future files does not remove tracked/history content
+### Как работает
 
-Для `ignoring future files does not remove tracked/history content` сначала назови изменяемое состояние Git: working tree, index, branch pointer или shared history.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
 
-### leaked secret must be rotated
+**ignoring future files does not remove tracked/history content.** `ignoring future files does not remove tracked/history content` меняет одно из состояний Git: working tree, index, branch pointer или shared history; эти эффекты нельзя смешивать.
 
-Для `leaked secret must be rotated` сначала назови изменяемое состояние Git: working tree, index, branch pointer или shared history.
+**leaked secret must be rotated.** `leaked secret must be rotated` меняет одно из состояний Git: working tree, index, branch pointer или shared history; эти эффекты нельзя смешивать.
+
+
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `ignoring future files does not remove tracked/history content` и `leaked secret must be rotated` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `ignoring future files does not remove tracked/history content`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Перед командой определяй, что именно меняется: файлы, index, branch pointer или shared history.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- ignoring future files does not remove tracked/history content
+- leaked secret must be rotated
+
+### Полезно
+
+- связать `.gitignore` and secrets с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -46,54 +71,17 @@ Rotate; audit; history cleanup отдельно.
 
 ## Common mistakes
 
-**Ошибка:** Rebase shared commits или удалять secret из файла без ротации.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Игнорировать ограничение механизма и проверять только happy path.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `ignoring future files does not remove tracked/history content` до запуска.
 
-## Interview questions
+**B · Find the bug.** Найди нарушение `leaked secret must be rotated` и объясни конкретное последствие.
 
-1. Объясни **`.gitignore` and secrets** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Выбери безопасный способ отменить локальное и уже опубликованное изменение. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
-
-## Expected answer rubric
-
-### Must mention
-
-- ignoring future files does not remove tracked/history content
-- leaked secret must be rotated.
-- Перед командой определяй, что именно меняется: файлы, index, branch pointer или shared history.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Rebase shared commits или удалять secret из файла без ротации.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- ignoring future files does not remove tracked/history content
-- leaked secret must be rotated.
-
-## Задача
-
-Разбери backend-сценарий: **Выбери безопасный способ отменить локальное и уже опубликованное изменение.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Дай ответ про `.gitignore` and secrets за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Operations practice
 
@@ -115,15 +103,68 @@ Rotate; audit; history cleanup отдельно.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое `.gitignore` and secrets и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме `.gitignore` and secrets?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+`.gitignore` and secrets: это отдельный технический контракт
+
+### Нормальный Junior answer
+
+> `.gitignore` and secrets — тема, в которой я сначала фиксирую `ignoring future files does not remove tracked/history content`, затем объясняю `leaked secret must be rotated` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме `.gitignore` and secrets?**
+
+Нужно назвать конкретный failure path и способ его проверить.
+
+## Expected answer rubric
+
+### Must mention
+
+- ignoring future files does not remove tracked/history content
+- leaked secret must be rotated
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Игнорировать ограничение механизма и проверять только happy path.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какое ограничение или типичная ошибка относится именно к теме `.gitignore` and secrets?
+
+## Задача
+
+Сделай короткую письменную практику по теме **`.gitignore` and secrets**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **`.gitignore` and secrets**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** `.gitignore` and secrets: это отдельный технический контракт
+- **Механизм:** Перед командой определяй, что именно меняется: файлы, index, branch pointer или shared history.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

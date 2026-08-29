@@ -15,7 +15,7 @@
     "membership",
     "indexing/iteration fallback."
   ],
-  "description": "P1 · `__len__`, `__bool__`, `__contains__`, `__getitem__`: mental model, interview rubric и backend-сценарий.",
+  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

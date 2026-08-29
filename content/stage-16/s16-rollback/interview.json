@@ -1,39 +1,41 @@
 [
   {
-    "question": "Объясни тему «Rollback» как на Junior Python Backend interview.",
+    "question": "Что такое Rollback и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
       "failed transaction state",
       "rollback before reuse",
-      "exception boundary.",
-      "Один request/use case обычно владеет одной Session и явно завершает commit или rollback."
+      "exception boundary"
     ],
+    "short_answer": "Rollback cancels the current database transaction and is required before reusing a Session after a flush/commit error.",
+    "junior_answer": "Rollback cancels the current database transaction and is required before reusing a Session after a flush/commit error. SQLAlchemy marks the failed transaction state; catching IntegrityError without rollback leaves later operations failing. Важное ограничение: Translate known constraint conflicts after rollback and re-raise unexpected failures with their cause/context.",
+    "follow_up_question": "Какая типичная ошибка связана с Rollback?",
+    "follow_up_answer": "Continuing queries immediately after IntegrityError produces a pending-rollback error and obscures the original conflict.",
     "expected_answer": {
       "must_mention": [
         "failed transaction state",
         "rollback before reuse",
-        "exception boundary.",
-        "Один request/use case обычно владеет одной Session и явно завершает commit или rollback."
+        "exception boundary"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks.",
+        "Continuing queries immediately after IntegrityError produces a pending-rollback error and obscures the original conflict.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks."
+        "Continuing queries immediately after IntegrityError produces a pending-rollback error and obscures the original conflict."
       ],
       "follow_up_questions": [
-        "Опиши session scope, момент flush/commit и количество SQL-запросов."
+        "Какая типичная ошибка связана с Rollback?"
       ]
     },
     "follow_ups": [
-      "Опиши session scope, момент flush/commit и количество SQL-запросов."
+      "Какая типичная ошибка связана с Rollback?"
     ],
     "tags": [
       "stage-16",
@@ -46,42 +48,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Rollback»: Опиши session scope, момент flush/commit и количество SQL-запросов. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Rollback?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Один request/use case обычно владеет одной Session и явно завершает commit или rollback.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "one short code/result example",
+      "Continuing queries immediately after IntegrityError produces a pending-rollback error and obscures the original conflict."
     ],
+    "short_answer": "Continuing queries immediately after IntegrityError produces a pending-rollback error and obscures the original conflict.",
+    "junior_answer": "Continuing queries immediately after IntegrityError produces a pending-rollback error and obscures the original conflict.",
+    "follow_up_question": "Что такое Rollback и как это работает?",
+    "follow_up_answer": "Rollback cancels the current database transaction and is required before reusing a Session after a flush/commit error. SQLAlchemy marks the failed transaction state; catching IntegrityError without rollback leaves later operations failing. Важное ограничение: Translate known constraint conflicts after rollback and re-raise unexpected failures with their cause/context.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "one short code/result example"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Continuing queries immediately after IntegrityError produces a pending-rollback error and obscures the original conflict."
       ],
       "red_flags": [
-        "Коммитить внутри repository, допускать N+1 или делить AsyncSession между concurrent tasks."
+        "Continuing queries immediately after IntegrityError produces a pending-rollback error and obscures the original conflict."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Rollback и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Rollback и как это работает?"
     ],
     "tags": [
       "stage-16",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-16",

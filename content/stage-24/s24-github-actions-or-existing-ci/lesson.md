@@ -7,46 +7,65 @@
 
 После урока ты сможешь:
 
-- объяснить `workflow` своими словами и связать с backend-сценарием;
-- объяснить `trigger` своими словами и связать с backend-сценарием;
-- объяснить `job` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **GitHub Actions or existing CI**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `workflow`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-CI повторяемо выполняет quality gates для commit; CD продвигает проверенный artifact по окружениям.
+### Что это
 
-В теме **GitHub Actions or existing CI** важно уверенно объяснять следующие части:
+Тема **GitHub Actions or existing CI** описывает отдельный контракт backend-разработки.
 
-### workflow
+### Как работает
 
-Для `workflow` определи reproducible quality gate, trigger, artifact и безопасное управление secret.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
 
-### trigger
+**workflow.** `workflow` является частью reproducible CI/CD gate с явным trigger, versioned artifact и безопасной передачей secrets.
 
-Для `trigger` определи reproducible quality gate, trigger, artifact и безопасное управление secret.
+**trigger.** `trigger` является частью reproducible CI/CD gate с явным trigger, versioned artifact и безопасной передачей secrets.
 
-### job
+**job.** `job` является частью reproducible CI/CD gate с явным trigger, versioned artifact и безопасной передачей secrets.
 
-Для `job` определи reproducible quality gate, trigger, artifact и безопасное управление secret.
+**step.** `step` является частью reproducible CI/CD gate с явным trigger, versioned artifact и безопасной передачей secrets.
 
-### step
+**cache.** Для cache заранее определяют key, TTL, invalidation и fallback, иначе ускорение создаёт stale-data bug.
 
-Для `step` определи reproducible quality gate, trigger, artifact и безопасное управление secret.
+**secrets.** `secrets` является частью reproducible CI/CD gate с явным trigger, versioned artifact и безопасной передачей secrets.
 
-### cache
 
-Для cache заранее определяют key, TTL, invalidation и fallback, иначе ускорение создаёт stale-data bug.
+### Важный нюанс / limitation
 
-### secrets
+Граница Junior: уверенно объясняй `workflow` и `trigger` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
-Для `secrets` определи reproducible quality gate, trigger, artifact и безопасное управление secret.
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `workflow`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Pipeline должен собирать один artifact и падать на воспроизводимой проверке с понятным log.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- workflow
+- trigger
+- job
+- step
+
+### Полезно
+
+- cache
+- secrets
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -67,19 +86,45 @@ CI gate должен быть воспроизводимым, иметь пон�
 
 ## Common mistakes
 
-**Ошибка:** Игнорировать flaky test или собирать другой код на каждом environment.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Игнорировать ограничение механизма и проверять только happy path.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `workflow` до запуска.
+
+**B · Find the bug.** Найди нарушение `trigger` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про GitHub Actions or existing CI за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **GitHub Actions or existing CI** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Разбери failure по шагу, версии runtime, env и отличию от local run. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое GitHub Actions or existing CI и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме GitHub Actions or existing CI?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+GitHub Actions or existing CI: это отдельный технический контракт
+
+### Нормальный Junior answer
+
+> GitHub Actions or existing CI — тема, в которой я сначала фиксирую `workflow`, затем объясняю `trigger` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме GitHub Actions or existing CI?**
+
+Нужно назвать конкретный failure path и способ его проверить.
 
 ## Expected answer rubric
 
@@ -89,48 +134,34 @@ CI gate должен быть воспроизводимым, иметь пон�
 - trigger
 - job
 - step
-- Pipeline должен собирать один artifact и падать на воспроизводимой проверке с понятным log.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Игнорировать flaky test или собирать другой код на каждом environment.
-- ответ из одного определения без механизма и failure mode.
+- Игнорировать ограничение механизма и проверять только happy path.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- workflow
-- trigger
-- job
-- step
-- cache
-- secrets.
+- Какое ограничение или типичная ошибка относится именно к теме GitHub Actions or existing CI?
 
 ## Задача
 
-Разбери backend-сценарий: **Разбери failure по шагу, версии runtime, env и отличию от local run.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **GitHub Actions or existing CI**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **GitHub Actions or existing CI**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** GitHub Actions or existing CI: это отдельный технический контракт
+- **Механизм:** Pipeline должен собирать один artifact и падать на воспроизводимой проверке с понятным log.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

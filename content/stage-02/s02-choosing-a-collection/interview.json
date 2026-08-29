@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Choosing a collection» как на Junior Python Backend interview.",
+    "question": "Что такое Choosing a collection и какой механизм здесь важно понимать Junior-разработчику?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -8,34 +8,36 @@
       "list vs tuple",
       "list vs set",
       "dict vs list of pairs",
-      "queue/stack choices",
-      "Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set."
+      "queue/stack choices"
     ],
+    "short_answer": "Choosing a collection: Это операция или гарантия стандартной коллекции Python; выбор структуры зависит от порядка, уникальности и стоимости основных операций.",
+    "junior_answer": "Choosing a collection — тема, в которой я сначала фиксирую `list vs tuple`, затем объясняю `list vs set` на коротком примере. Ключевой механизм: Сравни порядок, duplicates, mutability, lookup/membership и стоимость изменения; затем проверь edge cases коротким кодом. Главная практическая ошибка — Выбрать collection по привычке и не проверить duplicates, order или lookup cost.",
+    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Choosing a collection?",
+    "follow_up_answer": "Выбрать collection по привычке и не проверить duplicates, order или lookup cost.",
     "expected_answer": {
       "must_mention": [
         "list vs tuple",
         "list vs set",
         "dict vs list of pairs",
-        "queue/stack choices",
-        "Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set."
+        "queue/stack choices"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Выбирать коллекцию по привычке и игнорировать порядок, дубликаты или хешируемость.",
+        "Выбрать collection по привычке и не проверить duplicates, order или lookup cost.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Выбирать коллекцию по привычке и игнорировать порядок, дубликаты или хешируемость."
+        "Выбрать collection по привычке и не проверить duplicates, order или lookup cost."
       ],
       "follow_up_questions": [
-        "Выбери структуру для набора API-записей и обоснуй lookup, порядок и дубликаты."
+        "Какое ограничение или типичная ошибка относится именно к теме Choosing a collection?"
       ]
     },
     "follow_ups": [
-      "Выбери структуру для набора API-записей и обоснуй lookup, порядок и дубликаты."
+      "Какое ограничение или типичная ошибка относится именно к теме Choosing a collection?"
     ],
     "tags": [
       "stage-02",
@@ -48,42 +50,43 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Choosing a collection»: Выбери структуру для набора API-записей и обоснуй lookup, порядок и дубликаты. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какое ограничение или типичная ошибка относится именно к теме Choosing a collection?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "complexity trade-offs",
+      "practical backend examples",
+      "Выбрать collection по привычке и не проверить duplicates, order или lookup cost."
     ],
+    "short_answer": "Выбрать collection по привычке и не проверить duplicates, order или lookup cost.",
+    "junior_answer": "Выбрать collection по привычке и не проверить duplicates, order или lookup cost.",
+    "follow_up_question": "Что такое Choosing a collection и какой механизм здесь важно понимать Junior-разработчику?",
+    "follow_up_answer": "Choosing a collection — тема, в которой я сначала фиксирую `list vs tuple`, затем объясняю `list vs set` на коротком примере. Ключевой механизм: Сравни порядок, duplicates, mutability, lookup/membership и стоимость изменения; затем проверь edge cases коротким кодом. Главная практическая ошибка — Выбрать collection по привычке и не проверить duplicates, order или lookup cost.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "complexity trade-offs",
+        "practical backend examples"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Выбрать collection по привычке и не проверить duplicates, order или lookup cost."
       ],
       "red_flags": [
-        "Выбирать коллекцию по привычке и игнорировать порядок, дубликаты или хешируемость."
+        "Выбрать collection по привычке и не проверить duplicates, order или lookup cost."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Choosing a collection и какой механизм здесь важно понимать Junior-разработчику?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Choosing a collection и какой механизм здесь важно понимать Junior-разработчику?"
     ],
     "tags": [
       "stage-02",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-02",

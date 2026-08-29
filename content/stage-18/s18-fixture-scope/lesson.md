@@ -7,29 +7,54 @@
 
 После урока ты сможешь:
 
-- объяснить `function/class/module/session` своими словами и связать с backend-сценарием;
-- объяснить `isolation vs speed.` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Fixture scope**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `function/class/module/session`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Тест подтверждает observable contract в изолированном сценарии; хорошие tests детерминированы и объясняют failure.
+### Что это
 
-В теме **Fixture scope** важно уверенно объяснять следующие части:
+Это инструмент проверки observable contract с контролируемым setup, failure и cleanup.
 
-### function/class/module/session
+### Как работает
 
-Session владеет identity map и transaction state; после ошибки flush требуется rollback до дальнейшей работы.
+Сформулируй observable behavior, выбери isolation boundary и добавь case, который падает при реальном regression.
 
-### isolation vs speed
+**function/class/module/session.** Session владеет identity map и transaction state; после ошибки flush требуется rollback до дальнейшей работы.
 
-Для `isolation vs speed` сформулируй observable contract, isolation boundary и failure, который обязан поймать test.
+**isolation vs speed.** `isolation vs speed` помогает проверить observable contract; test задаёт isolation boundary, конкретный input и ожидаемый success/failure result.
+
+
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `function/class/module/session` и `isolation vs speed` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `function/class/module/session`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Arrange создаёт условия, Act выполняет одно поведение, Assert проверяет значимый результат.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- function/class/module/session
+- isolation vs speed
+
+### Полезно
+
+- связать Fixture scope с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -46,54 +71,17 @@ Function scope или reset; scope по isolation.
 
 ## Common mistakes
 
-**Ошибка:** Mock не в том namespace, shared fixture state или тест только happy path.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `function/class/module/session` до запуска.
 
-## Interview questions
+**B · Find the bug.** Найди нарушение `isolation vs speed` и объясни конкретное последствие.
 
-1. Объясни **Fixture scope** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Выдели unit boundary, integration boundary и критичный failure case. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
-
-## Expected answer rubric
-
-### Must mention
-
-- function/class/module/session
-- isolation vs speed.
-- Arrange создаёт условия, Act выполняет одно поведение, Assert проверяет значимый результат.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Mock не в том namespace, shared fixture state или тест только happy path.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- function/class/module/session
-- isolation vs speed.
-
-## Задача
-
-Разбери backend-сценарий: **Выдели unit boundary, integration boundary и критичный failure case.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+**E · Interview explanation.** Дай ответ про Fixture scope за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Testing practice
 
@@ -105,15 +93,68 @@ Function scope или reset; scope по isolation.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое Fixture scope и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Fixture scope?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Fixture scope: Это инструмент проверки observable contract с контролируемым setup, failure и cleanup.
+
+### Нормальный Junior answer
+
+> Fixture scope — тема, в которой я сначала фиксирую `function/class/module/session`, затем объясняю `isolation vs speed` на коротком примере. Ключевой механизм: Сформулируй observable behavior, выбери isolation boundary и добавь case, который падает при реальном regression. Главная практическая ошибка — Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Fixture scope?**
+
+Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior.
+
+## Expected answer rubric
+
+### Must mention
+
+- function/class/module/session
+- isolation vs speed
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какое ограничение или типичная ошибка относится именно к теме Fixture scope?
+
+## Задача
+
+Сделай короткую письменную практику по теме **Fixture scope**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Fixture scope**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Fixture scope: Это инструмент проверки observable contract с контролируемым setup, failure и cleanup.
+- **Механизм:** Arrange создаёт условия, Act выполняет одно поведение, Assert проверяет значимый результат.
+- **Ограничение:** Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

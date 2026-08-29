@@ -17,7 +17,7 @@
     "frozen",
     "domain data vs ORM/Pydantic models."
   ],
-  "description": "P0 · Dataclasses: mental model, interview rubric и backend-сценарий.",
+  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
   "has_task": true,
   "has_solution": true,
   "priority": "P0",

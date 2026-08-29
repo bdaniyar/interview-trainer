@@ -1,41 +1,45 @@
 [
   {
-    "question": "Объясни тему «Dict» как на Junior Python Backend interview.",
+    "question": "Что такое `dict`, как работает lookup и чем `.get()` отличается от `[]` и `.setdefault()`?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "keys/values/items",
+      "mutable mapping",
+      "hashable unique keys",
+      "average O(1)",
       "insertion order",
-      "lookup",
-      "`.get`",
-      "Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set."
+      "get/setdefault semantics"
     ],
+    "short_answer": "Dict — mutable mapping на hash table; lookup в среднем O(1), keys hashable. `[]` даёт KeyError, `.get` не меняет dict, `setdefault` может вставить default.",
+    "junior_answer": "`dict` хранит пары key-value; keys уникальны и hashable. В среднем lookup работает за O(1), потому что сначала используется hash, а затем equality. `data[key]` нужен, когда ключ обязателен, и поднимет `KeyError` при ошибке. `.get` удобен для допустимо отсутствующего значения и не меняет dict. `.setdefault` возвращает значение, но при отсутствии ещё и вставляет default. Dict сохраняет insertion order, а замена value не перемещает ключ.",
+    "follow_up_question": "Когда `.setdefault()` лучше заменить на `defaultdict(list)`?",
+    "follow_up_answer": "Когда код систематически группирует много значений по keys: defaultdict убирает повторяющееся создание bucket. Для единичной вставки setdefault проще и не меняет тип mapping.",
     "expected_answer": {
       "must_mention": [
-        "keys/values/items",
+        "mutable mapping",
+        "hashable unique keys",
+        "average O(1)",
         "insertion order",
-        "lookup",
-        "`.get`",
-        "Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set."
+        "get/setdefault semantics"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Выбирать коллекцию по привычке и игнорировать порядок, дубликаты или хешируемость.",
+        "`user['email']` падает с `KeyError`, если поле действительно необязательное; используй `.get` только когда отсутствие допустимо.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Выбирать коллекцию по привычке и игнорировать порядок, дубликаты или хешируемость."
+        "`user['email']` падает с `KeyError`, если поле действительно необязательное; используй `.get` только когда отсутствие допустимо."
       ],
       "follow_up_questions": [
-        "Выбери структуру для набора API-записей и обоснуй lookup, порядок и дубликаты."
+        "Когда `.setdefault()` лучше заменить на `defaultdict(list)`?"
       ]
     },
     "follow_ups": [
-      "Выбери структуру для набора API-записей и обоснуй lookup, порядок и дубликаты."
+      "Когда `.setdefault()` лучше заменить на `defaultdict(list)`?"
     ],
     "tags": [
       "stage-02",
@@ -48,42 +52,47 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Dict»: Выбери структуру для набора API-записей и обоснуй lookup, порядок и дубликаты. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Когда `.setdefault()` лучше заменить на `defaultdict(list)`?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "merge через `|` и `update`",
+      "views и безопасная итерация",
+      "когда выбрать defaultdict",
+      "Когда код систематически группирует много значений по keys: defaultdict убирает повторяющееся создание bucket. Для единичной вставки setdefault проще и не меняет тип mapping."
     ],
+    "short_answer": "Когда код систематически группирует много значений по keys: defaultdict убирает повторяющееся создание bucket. Для единичной вставки setdefault проще и не меняет тип mapping.",
+    "junior_answer": "Когда код систематически группирует много значений по keys: defaultdict убирает повторяющееся создание bucket. Для единичной вставки setdefault проще и не меняет тип mapping.",
+    "follow_up_question": "Что такое `dict`, как работает lookup и чем `.get()` отличается от `[]` и `.setdefault()`?",
+    "follow_up_answer": "`dict` хранит пары key-value; keys уникальны и hashable. В среднем lookup работает за O(1), потому что сначала используется hash, а затем equality. `data[key]` нужен, когда ключ обязателен, и поднимет `KeyError` при ошибке. `.get` удобен для допустимо отсутствующего значения и не меняет dict. `.setdefault` возвращает значение, но при отсутствии ещё и вставляет default. Dict сохраняет insertion order, а замена value не перемещает ключ.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "merge через `|` и `update`",
+        "views и безопасная итерация",
+        "когда выбрать defaultdict"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "`user['email']` падает с `KeyError`, если поле действительно необязательное; используй `.get` только когда отсутствие допустимо.",
+        "`data[[1, 2]] = 'value'` падает с `TypeError: unhashable type: 'list'`.",
+        "`bucket = data.setdefault('roles', [])` изменяет dict при отсутствующем ключе — в отличие от `.get`."
       ],
       "red_flags": [
-        "Выбирать коллекцию по привычке и игнорировать порядок, дубликаты или хешируемость."
+        "`user['email']` падает с `KeyError`, если поле действительно необязательное; используй `.get` только когда отсутствие допустимо."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое `dict`, как работает lookup и чем `.get()` отличается от `[]` и `.setdefault()`?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое `dict`, как работает lookup и чем `.get()` отличается от `[]` и `.setdefault()`?"
     ],
     "tags": [
       "stage-02",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-02",

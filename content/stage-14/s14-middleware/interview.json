@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Middleware» как на Junior Python Backend interview.",
+    "question": "Что такое Middleware и как это работает?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "request/response wrapper",
       "timing/request ID",
       "ordering",
-      "not for domain logic.",
-      "Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency."
+      "not for domain logic"
     ],
+    "short_answer": "Middleware wraps the request/response flow for cross-cutting behavior such as request IDs, timing or security headers.",
+    "junior_answer": "Middleware wraps the request/response flow for cross-cutting behavior such as request IDs, timing or security headers. Each middleware runs before the inner app and after it returns; order therefore changes observation and error behavior. Важное ограничение: Domain authorization usually needs resolved user/resource context and belongs in dependencies/services, not generic middleware.",
+    "follow_up_question": "Какая типичная ошибка связана с Middleware?",
+    "follow_up_answer": "Reading a streaming request body in middleware without replaying it can leave the endpoint with no body.",
     "expected_answer": {
       "must_mention": [
         "request/response wrapper",
         "timing/request ID",
         "ordering",
-        "not for domain logic.",
-        "Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency."
+        "not for domain logic"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Открывать Session глобально или выполнять blocking I/O в async route.",
+        "Reading a streaming request body in middleware without replaying it can leave the endpoint with no body.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Открывать Session глобально или выполнять blocking I/O в async route."
+        "Reading a streaming request body in middleware without replaying it can leave the endpoint with no body."
       ],
       "follow_up_questions": [
-        "Проследи request от router через dependency и service до response model."
+        "Какая типичная ошибка связана с Middleware?"
       ]
     },
     "follow_ups": [
-      "Проследи request от router через dependency и service до response model."
+      "Какая типичная ошибка связана с Middleware?"
     ],
     "tags": [
       "stage-14",
@@ -48,42 +50,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Middleware»: Проследи request от router через dependency и service до response model. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Middleware?",
+    "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "one short code/result example",
+      "Reading a streaming request body in middleware without replaying it can leave the endpoint with no body."
     ],
+    "short_answer": "Reading a streaming request body in middleware without replaying it can leave the endpoint with no body.",
+    "junior_answer": "Reading a streaming request body in middleware without replaying it can leave the endpoint with no body.",
+    "follow_up_question": "Что такое Middleware и как это работает?",
+    "follow_up_answer": "Middleware wraps the request/response flow for cross-cutting behavior such as request IDs, timing or security headers. Each middleware runs before the inner app and after it returns; order therefore changes observation and error behavior. Важное ограничение: Domain authorization usually needs resolved user/resource context and belongs in dependencies/services, not generic middleware.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "one short code/result example"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Reading a streaming request body in middleware without replaying it can leave the endpoint with no body."
       ],
       "red_flags": [
-        "Открывать Session глобально или выполнять blocking I/O в async route."
+        "Reading a streaming request body in middleware without replaying it can leave the endpoint with no body."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Middleware и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Middleware и как это работает?"
     ],
     "tags": [
       "stage-14",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-14",

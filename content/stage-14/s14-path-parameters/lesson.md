@@ -7,34 +7,47 @@
 
 После урока ты сможешь:
 
-- объяснить `type conversion` своими словами и связать с backend-сценарием;
-- объяснить `validation` своими словами и связать с backend-сценарием;
-- объяснить `routing order pitfalls.` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Path parameters**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `type conversion`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-FastAPI связывает ASGI request lifecycle, routing, validation, dependency graph и response serialization.
+### Что это
 
-В теме **Path parameters** важно уверенно объяснять следующие части:
+A path parameter identifies part of the routed resource path and is converted/validated from text using the endpoint annotation.
 
-### type conversion
+### Как работает
 
-Для `type conversion` проследи request через router, validation/dependencies, handler/service и response serialization.
+`/users/{user_id}` binds the segment; constraints can reject invalid values before handler execution. Static routes must not be accidentally shadowed by a broad dynamic route.
 
-### validation
 
-Для `validation` проследи request через router, validation/dependencies, handler/service и response serialization.
+### Важный нюанс / limitation
 
-### routing order pitfalls
-
-Для `routing order pitfalls` проследи request через router, validation/dependencies, handler/service и response serialization.
+Path parameters are required by the matched path; optional filters belong in query parameters.
 
 ## Mental model
 
 Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- type conversion
+- validation
+- routing order pitfalls
+
+### Полезно
+
+- one short code/result example
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -54,19 +67,47 @@ Router сначала сопоставляет path, затем FastAPI прео
 
 ## Common mistakes
 
-**Ошибка:** Открывать Session глобально или выполнять blocking I/O в async route.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Registering `/users/{user_id}` before a conflicting `/users/me` design can route `me` into integer validation instead of the intended handler.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `type conversion` example and predict the result before running it.
+
+**B · Find the bug.** Find code that violates `validation` and explain the concrete consequence.
+
+**D · Small task.** Implement the smallest function/query that demonstrates `type conversion` and add one edge-case test.
+
+**E · Interview explanation.** Explain Path parameters in 45–60 seconds and include one limitation.
 
 ## Interview questions
 
-1. Объясни **Path parameters** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Проследи request от router через dependency и service до response model. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Path parameters и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Path parameters?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+A path parameter identifies part of the routed resource path and is converted/validated from text using the endpoint annotation.
+
+### Нормальный Junior answer
+
+> A path parameter identifies part of the routed resource path and is converted/validated from text using the endpoint annotation. `/users/{user_id}` binds the segment; constraints can reject invalid values before handler execution. Static routes must not be accidentally shadowed by a broad dynamic route. Важное ограничение: Path parameters are required by the matched path; optional filters belong in query parameters.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Path parameters?**
+
+Registering `/users/{user_id}` before a conflicting `/users/me` design can route `me` into integer validation instead of the intended handler.
 
 ## Expected answer rubric
 
@@ -74,30 +115,22 @@ Router сначала сопоставляет path, затем FastAPI прео
 
 - type conversion
 - validation
-- routing order pitfalls.
-- Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
+- routing order pitfalls
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Открывать Session глобально или выполнять blocking I/O в async route.
-- ответ из одного определения без механизма и failure mode.
+- Registering `/users/{user_id}` before a conflicting `/users/me` design can route `me` into integer validation instead of the intended handler.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- type conversion
-- validation
-- routing order pitfalls.
+- Какая типичная ошибка связана с Path parameters?
 
 ## Задача
 
@@ -110,11 +143,10 @@ GET /users/{user_id}: user_id >= 1; valid response содержит user_id, inv
 
 Перед собеседованием запомни:
 
-- дай точное определение **Path parameters**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** A path parameter identifies part of the routed resource path and is converted/validated from text using the endpoint annotation.
+- **Механизм:** Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
+- **Ограничение:** Registering `/users/{user_id}` before a conflicting `/users/me` design can route `me` into integer validation instead of the intended handler.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

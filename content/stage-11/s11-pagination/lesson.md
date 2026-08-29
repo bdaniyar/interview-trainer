@@ -7,38 +7,60 @@
 
 После урока ты сможешь:
 
-- объяснить `OFFSET/LIMIT` своими словами и связать с backend-сценарием;
-- объяснить `large-offset cost` своими словами и связать с backend-сценарием;
-- объяснить `cursor/keyset pagination` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Pagination**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `OFFSET/LIMIT`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-PostgreSQL обеспечивает ограничения и конкурентную работу ближе к данным; индекс и transaction boundary проектируются под запросы и инварианты.
+### Что это
 
-В теме **Pagination** важно уверенно объяснять следующие части:
+Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.
 
-### OFFSET/LIMIT
+### Как работает
 
-Для `OFFSET/LIMIT` назови защищаемый invariant, concurrent transaction и evidence из constraint или query plan.
+Назови invariant и concurrent scenario, затем проверь constraint, transaction boundary и фактический query plan.
 
-### large-offset cost
+**OFFSET/LIMIT.** `OFFSET/LIMIT` влияет на database invariant, concurrent transactions или access path; правильность подтверждают constraint и фактический query plan.
 
-Для `large-offset cost` назови защищаемый invariant, concurrent transaction и evidence из constraint или query plan.
+**large-offset cost.** `large-offset cost` влияет на database invariant, concurrent transactions или access path; правильность подтверждают constraint и фактический query plan.
 
-### cursor/keyset pagination
+**cursor/keyset pagination.** `cursor/keyset pagination` влияет на database invariant, concurrent transactions или access path; правильность подтверждают constraint и фактический query plan.
 
-Для `cursor/keyset pagination` назови защищаемый invariant, concurrent transaction и evidence из constraint или query plan.
+**stable ordering.** `stable ordering` влияет на database invariant, concurrent transactions или access path; правильность подтверждают constraint и фактический query plan.
 
-### stable ordering
 
-Для `stable ordering` назови защищаемый invariant, concurrent transaction и evidence из constraint или query plan.
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `OFFSET/LIMIT` и `large-offset cost` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `OFFSET/LIMIT`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- OFFSET/LIMIT
+- large-offset cost
+- cursor/keyset pagination
+- stable ordering
+
+### Полезно
+
+- связать Pagination с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -54,19 +76,45 @@ SELECT 's11_pagination' AS example_key;
 
 ## Common mistakes
 
-**Ошибка:** Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `OFFSET/LIMIT` до запуска.
+
+**B · Find the bug.** Найди нарушение `large-offset cost` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Pagination за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Pagination** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Назови инвариант, конкурентный сценарий и точку, где его гарантирует база. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Pagination и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Pagination?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Pagination: Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.
+
+### Нормальный Junior answer
+
+> Pagination — тема, в которой я сначала фиксирую `OFFSET/LIMIT`, затем объясняю `large-offset cost` на коротком примере. Ключевой механизм: Назови invariant и concurrent scenario, затем проверь constraint, transaction boundary и фактический query plan. Главная практическая ошибка — Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Pagination?**
+
+Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
 
 ## Expected answer rubric
 
@@ -75,47 +123,35 @@ SELECT 's11_pagination' AS example_key;
 - OFFSET/LIMIT
 - large-offset cost
 - cursor/keyset pagination
-- stable ordering.
-- Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
+- stable ordering
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова.
-- ответ из одного определения без механизма и failure mode.
+- Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- OFFSET/LIMIT
-- large-offset cost
-- cursor/keyset pagination
-- stable ordering.
+- Какое ограничение или типичная ошибка относится именно к теме Pagination?
 
 ## Задача
 
-Разбери backend-сценарий: **Назови инвариант, конкурентный сценарий и точку, где его гарантирует база.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Pagination**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Pagination**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Pagination: Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.
+- **Механизм:** Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
+- **Ограничение:** Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

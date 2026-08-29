@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Cookies» как на Junior Python Backend interview.",
+    "question": "Что такое Cookies и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "high",
@@ -8,34 +8,36 @@
       "request/response headers",
       "domain/path",
       "expiration",
-      "HttpOnly",
-      "Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса."
+      "HttpOnly"
     ],
+    "short_answer": "A cookie is a name/value set by response header and automatically returned by a browser according to domain, path, expiry and security attributes.",
+    "junior_answer": "A cookie is a name/value set by response header and automatically returned by a browser according to domain, path, expiry and security attributes. HttpOnly blocks JavaScript reads, Secure restricts HTTPS transport and SameSite limits cross-site sending; none replaces server-side authorization. Важное ограничение: Cookie authentication needs CSRF considerations because the browser attaches cookies automatically.",
+    "follow_up_question": "Какая типичная ошибка связана с Cookies?",
+    "follow_up_answer": "Putting a session cookie without HttpOnly/Secure/SameSite defaults unnecessarily expands the attack surface.",
     "expected_answer": {
       "must_mention": [
         "request/response headers",
         "domain/path",
         "expiration",
-        "HttpOnly",
-        "Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса."
+        "HttpOnly"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне.",
+        "Putting a session cookie without HttpOnly/Secure/SameSite defaults unnecessarily expands the attack surface.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне."
+        "Putting a session cookie without HttpOnly/Secure/SameSite defaults unnecessarily expands the attack surface."
       ],
       "follow_up_questions": [
-        "Спроектируй request/response контракт и объясни retry, idempotency и error body."
+        "Какая типичная ошибка связана с Cookies?"
       ]
     },
     "follow_ups": [
-      "Спроектируй request/response контракт и объясни retry, idempotency и error body."
+      "Какая типичная ошибка связана с Cookies?"
     ],
     "tags": [
       "stage-12",
@@ -48,42 +50,43 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Cookies»: Спроектируй request/response контракт и объясни retry, idempotency и error body. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Cookies?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "Secure",
+      "SameSite",
+      "Putting a session cookie without HttpOnly/Secure/SameSite defaults unnecessarily expands the attack surface."
     ],
+    "short_answer": "Putting a session cookie without HttpOnly/Secure/SameSite defaults unnecessarily expands the attack surface.",
+    "junior_answer": "Putting a session cookie without HttpOnly/Secure/SameSite defaults unnecessarily expands the attack surface.",
+    "follow_up_question": "Что такое Cookies и как это работает?",
+    "follow_up_answer": "A cookie is a name/value set by response header and automatically returned by a browser according to domain, path, expiry and security attributes. HttpOnly blocks JavaScript reads, Secure restricts HTTPS transport and SameSite limits cross-site sending; none replaces server-side authorization. Важное ограничение: Cookie authentication needs CSRF considerations because the browser attaches cookies automatically.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "Secure",
+        "SameSite"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Putting a session cookie without HttpOnly/Secure/SameSite defaults unnecessarily expands the attack surface."
       ],
       "red_flags": [
-        "Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне."
+        "Putting a session cookie without HttpOnly/Secure/SameSite defaults unnecessarily expands the attack surface."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Cookies и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Cookies и как это работает?"
     ],
     "tags": [
       "stage-12",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-12",

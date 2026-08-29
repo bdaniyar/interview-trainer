@@ -1,6 +1,6 @@
 [
   {
-    "question": "Объясни тему «Mutability and immutability» как на Junior Python Backend interview.",
+    "question": "Что такое Mutability and immutability и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -8,34 +8,36 @@
       "mutable/immutable",
       "mutation vs rebinding",
       "list, dict, set",
-      "int, str, bytes, tuple",
-      "Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию."
+      "int, str, bytes, tuple"
     ],
+    "short_answer": "Mutable objects can change while keeping identity; immutable objects cannot be changed in place and an apparent update creates or binds another object.",
+    "junior_answer": "Mutable objects can change while keeping identity; immutable objects cannot be changed in place and an apparent update creates or binds another object. Lists, dicts and sets expose mutating operations. Integers, strings, bytes and tuples do not. A tuple itself is immutable but may contain a mutable element. Важное ограничение: Mutability matters more than the syntax: `name += value` may mutate a list but creates a new string object.",
+    "follow_up_question": "Какая типичная ошибка связана с Mutability and immutability?",
+    "follow_up_answer": "Confusing mutation with rebinding makes a caller's data change unexpectedly through an alias.",
     "expected_answer": {
       "must_mention": [
         "mutable/immutable",
         "mutation vs rebinding",
         "list, dict, set",
-        "int, str, bytes, tuple",
-        "Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию."
+        "int, str, bytes, tuple"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Объяснять переменную как коробку, которая всегда содержит независимое значение.",
+        "Confusing mutation with rebinding makes a caller's data change unexpectedly through an alias.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Объяснять переменную как коробку, которая всегда содержит независимое значение."
+        "Confusing mutation with rebinding makes a caller's data change unexpectedly through an alias."
       ],
       "follow_up_questions": [
-        "Проследи identity и состояние объекта после двух присваиваний и одной мутации."
+        "Какая типичная ошибка связана с Mutability and immutability?"
       ]
     },
     "follow_ups": [
-      "Проследи identity и состояние объекта после двух присваиваний и одной мутации."
+      "Какая типичная ошибка связана с Mutability and immutability?"
     ],
     "tags": [
       "stage-01",
@@ -48,42 +50,43 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Mutability and immutability»: Проследи identity и состояние объекта после двух присваиваний и одной мутации. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Mutability and immutability?",
+    "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "tuple с mutable element",
+      "effect on function arguments",
+      "Confusing mutation with rebinding makes a caller's data change unexpectedly through an alias."
     ],
+    "short_answer": "Confusing mutation with rebinding makes a caller's data change unexpectedly through an alias.",
+    "junior_answer": "Confusing mutation with rebinding makes a caller's data change unexpectedly through an alias.",
+    "follow_up_question": "Что такое Mutability and immutability и как это работает?",
+    "follow_up_answer": "Mutable objects can change while keeping identity; immutable objects cannot be changed in place and an apparent update creates or binds another object. Lists, dicts and sets expose mutating operations. Integers, strings, bytes and tuples do not. A tuple itself is immutable but may contain a mutable element. Важное ограничение: Mutability matters more than the syntax: `name += value` may mutate a list but creates a new string object.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "tuple с mutable element",
+        "effect on function arguments"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Confusing mutation with rebinding makes a caller's data change unexpectedly through an alias."
       ],
       "red_flags": [
-        "Объяснять переменную как коробку, которая всегда содержит независимое значение."
+        "Confusing mutation with rebinding makes a caller's data change unexpectedly through an alias."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Mutability and immutability и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Mutability and immutability и как это работает?"
     ],
     "tags": [
       "stage-01",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-01",

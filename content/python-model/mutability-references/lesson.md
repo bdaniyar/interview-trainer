@@ -7,29 +7,53 @@
 
 После урока ты сможешь:
 
-- объяснить `mutable/immutable` своими словами и связать с backend-сценарием;
-- объяснить `mutation vs rebinding` своими словами и связать с backend-сценарием;
-- объяснить `list, dict, set` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Mutability and immutability**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `mutable/immutable`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Переменные в Python — имена, связанные с объектами. Если два имени ссылаются на изменяемый объект, мутация наблюдается через обе ссылки.
+### Что это
 
-```python
-original = {"roles": ["reader"]}
-alias = original
-alias["roles"].append("writer")
-assert original["roles"] == ["reader", "writer"]
-```
+Mutable objects can change while keeping identity; immutable objects cannot be changed in place and an apparent update creates or binds another object.
 
-Переприсваивание имени не меняет прежний объект, а связывает имя с новым. Мутация, напротив, сохраняет identity объекта.
+### Как работает
+
+Lists, dicts and sets expose mutating operations. Integers, strings, bytes and tuples do not. A tuple itself is immutable but may contain a mutable element.
+
+
+### Важный нюанс / limitation
+
+Mutability matters more than the syntax: `name += value` may mutate a list but creates a new string object.
+
+### Где используется в backend
+
+Shared mutable request/config defaults can leak state between calls.
 
 ## Mental model
 
 Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- mutable/immutable
+- mutation vs rebinding
+- list, dict, set
+- int, str, bytes, tuple
+
+### Полезно
+
+- tuple с mutable element
+- effect on function arguments
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -52,58 +76,19 @@ List меняется с сохранением identity; операция со 
 
 ## Common mistakes
 
-**Ошибка:** Объяснять переменную как коробку, которая всегда содержит независимое значение.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Confusing mutation with rebinding makes a caller's data change unexpectedly through an alias.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `mutable/immutable` example and predict the result before running it.
 
-## Interview questions
+**B · Find the bug.** Find code that violates `mutation vs rebinding` and explain the concrete consequence.
 
-1. Объясни **Mutability and immutability** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Проследи identity и состояние объекта после двух присваиваний и одной мутации. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+**D · Small task.** Implement the smallest function/query that demonstrates `mutable/immutable` and add one edge-case test.
 
-## Expected answer rubric
-
-### Must mention
-
-- mutable/immutable
-- mutation vs rebinding
-- list, dict, set
-- int, str, bytes, tuple
-- Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию.
-
-### Good additions
-
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
-
-### Common wrong answers
-
-- Объяснять переменную как коробку, которая всегда содержит независимое значение.
-- ответ из одного определения без механизма и failure mode.
-
-### Follow-up
-
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- mutable/immutable
-- mutation vs rebinding
-- list, dict, set
-- int, str, bytes, tuple
-- tuple с mutable element
-- effect on function arguments.
-
-## Задача
-
-Реализуй `append_marker(items, marker)`: добавь marker в переданный список и верни **тот же** список. Не создавай копию.
+**E · Interview explanation.** Explain Mutability and immutability in 45–60 seconds and include one limitation.
 
 ## Code prediction
 
@@ -132,15 +117,70 @@ Misconception: `aliasing`.
 
 </details>
 
+## Interview questions
+
+### Основной вопрос
+
+Что такое Mutability and immutability и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Mutability and immutability?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Mutable objects can change while keeping identity; immutable objects cannot be changed in place and an apparent update creates or binds another object.
+
+### Нормальный Junior answer
+
+> Mutable objects can change while keeping identity; immutable objects cannot be changed in place and an apparent update creates or binds another object. Lists, dicts and sets expose mutating operations. Integers, strings, bytes and tuples do not. A tuple itself is immutable but may contain a mutable element. Важное ограничение: Mutability matters more than the syntax: `name += value` may mutate a list but creates a new string object.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Mutability and immutability?**
+
+Confusing mutation with rebinding makes a caller's data change unexpectedly through an alias.
+
+## Expected answer rubric
+
+### Must mention
+
+- mutable/immutable
+- mutation vs rebinding
+- list, dict, set
+- int, str, bytes, tuple
+
+### Good additions
+
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
+
+### Common wrong answers
+
+- Confusing mutation with rebinding makes a caller's data change unexpectedly through an alias.
+- пересказ одного определения без механизма или примера.
+
+### Follow-up
+
+- Какая типичная ошибка связана с Mutability and immutability?
+
+## Задача
+
+Сделай короткую письменную практику по теме **Mutability and immutability**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Mutability and immutability**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Mutable objects can change while keeping identity; immutable objects cannot be changed in place and an apparent update creates or binds another object.
+- **Механизм:** Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию.
+- **Ограничение:** Confusing mutation with rebinding makes a caller's data change unexpectedly through an alias.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

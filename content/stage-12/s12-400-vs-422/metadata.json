@@ -13,7 +13,7 @@
     "malformed request vs semantically invalid/validation",
     "framework conventions."
   ],
-  "description": "P0 · 400 vs 422: mental model, interview rubric и backend-сценарий.",
+  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
   "has_task": false,
   "has_solution": false,
   "priority": "P0",

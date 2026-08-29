@@ -7,34 +7,57 @@
 
 После урока ты сможешь:
 
-- объяснить `works locally but fails in CI` своими словами и связать с backend-сценарием;
-- объяснить `dependency/version/env/timezone/order differences` своими словами и связать с backend-сценарием;
-- объяснить `reading logs.` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **CI debugging**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `works locally but fails in CI`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-CI повторяемо выполняет quality gates для commit; CD продвигает проверенный artifact по окружениям.
+### Что это
 
-В теме **CI debugging** важно уверенно объяснять следующие части:
+Тема **CI debugging** описывает отдельный контракт backend-разработки.
 
-### works locally but fails in CI
+### Как работает
 
-Для `works locally but fails in CI` определи reproducible quality gate, trigger, artifact и безопасное управление secret.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
 
-### dependency/version/env/timezone/order differences
+**works locally but fails in CI.** `works locally but fails in CI` является частью reproducible CI/CD gate с явным trigger, versioned artifact и безопасной передачей secrets.
 
-Dependency объявляет вход handler/service явно; FastAPI разрешает graph зависимостей на request, cache-ит результат в его рамках и выполняет cleanup yield-dependency.
+**dependency/version/env/timezone/order differences.** Dependency объявляет вход handler/service явно; FastAPI разрешает graph зависимостей на request, cache-ит результат в его рамках и выполняет cleanup yield-dependency.
 
-### reading logs
+**reading logs.** `reading logs` является частью reproducible CI/CD gate с явным trigger, versioned artifact и безопасной передачей secrets.
 
-Для `reading logs` определи reproducible quality gate, trigger, artifact и безопасное управление secret.
+
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `works locally but fails in CI` и `dependency/version/env/timezone/order differences` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `works locally but fails in CI`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Pipeline должен собирать один artifact и падать на воспроизводимой проверке с понятным log.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- works locally but fails in CI
+- dependency/version/env/timezone/order differences
+- reading logs
+
+### Полезно
+
+- связать CI debugging с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -54,19 +77,45 @@ CI gate должен быть воспроизводимым, иметь пон�
 
 ## Common mistakes
 
-**Ошибка:** Игнорировать flaky test или собирать другой код на каждом environment.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Игнорировать ограничение механизма и проверять только happy path.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `works locally but fails in CI` до запуска.
+
+**B · Find the bug.** Найди нарушение `dependency/version/env/timezone/order differences` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про CI debugging за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **CI debugging** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Разбери failure по шагу, версии runtime, env и отличию от local run. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое CI debugging и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме CI debugging?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+CI debugging: это отдельный технический контракт
+
+### Нормальный Junior answer
+
+> CI debugging — тема, в которой я сначала фиксирую `works locally but fails in CI`, затем объясняю `dependency/version/env/timezone/order differences` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме CI debugging?**
+
+Нужно назвать конкретный failure path и способ его проверить.
 
 ## Expected answer rubric
 
@@ -74,46 +123,35 @@ CI gate должен быть воспроизводимым, иметь пон�
 
 - works locally but fails in CI
 - dependency/version/env/timezone/order differences
-- reading logs.
-- Pipeline должен собирать один artifact и падать на воспроизводимой проверке с понятным log.
+- reading logs
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Игнорировать flaky test или собирать другой код на каждом environment.
-- ответ из одного определения без механизма и failure mode.
+- Игнорировать ограничение механизма и проверять только happy path.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- works locally but fails in CI
-- dependency/version/env/timezone/order differences
-- reading logs.
+- Какое ограничение или типичная ошибка относится именно к теме CI debugging?
 
 ## Задача
 
-Разбери backend-сценарий: **Разбери failure по шагу, версии runtime, env и отличию от local run.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **CI debugging**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **CI debugging**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** CI debugging: это отдельный технический контракт
+- **Механизм:** Pipeline должен собирать один artifact и падать на воспроизводимой проверке с понятным log.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

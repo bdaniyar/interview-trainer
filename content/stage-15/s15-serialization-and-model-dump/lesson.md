@@ -7,38 +7,60 @@
 
 После урока ты сможешь:
 
-- объяснить `JSON mode` своими словами и связать с backend-сценарием;
-- объяснить `exclude unset` своими словами и связать с backend-сценарием;
-- объяснить `aliases` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Serialization and `model_dump`**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `JSON mode`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Pydantic v2 преобразует и валидирует данные на границе; модель должна явно описывать required, nullable и default semantics.
+### Что это
 
-В теме **Serialization and `model_dump`** важно уверенно объяснять следующие части:
+Это часть Pydantic v2 boundary между недоверенным input, validated model и serialized output.
 
-### JSON mode
+### Как работает
 
-Для `JSON mode` различай missing, explicit null, invalid input и serialized output Pydantic v2.
+Проверь четыре состояния: missing, explicit null, invalid type/value и сериализованный результат.
 
-### exclude unset
+**JSON mode.** `JSON mode` влияет на Pydantic v2 validation/serialization и должен различать missing, explicit null, invalid input и output representation.
 
-Для `exclude unset` различай missing, explicit null, invalid input и serialized output Pydantic v2.
+**exclude unset.** `exclude unset` влияет на Pydantic v2 validation/serialization и должен различать missing, explicit null, invalid input и output representation.
 
-### aliases
+**aliases.** `aliases` влияет на Pydantic v2 validation/serialization и должен различать missing, explicit null, invalid input и output representation.
 
-Для `aliases` различай missing, explicit null, invalid input и serialized output Pydantic v2.
+**secret fields.** `secret fields` влияет на Pydantic v2 validation/serialization и должен различать missing, explicit null, invalid input и output representation.
 
-### secret fields
 
-Для `secret fields` различай missing, explicit null, invalid input и serialized output Pydantic v2.
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `JSON mode` и `exclude unset` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `JSON mode`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Сначала приходит недоверенный input, затем core schema выполняет validation, после чего model_dump управляет serialization.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- JSON mode
+- exclude unset
+- aliases
+- secret fields
+
+### Полезно
+
+- связать Serialization and `model_dump` с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -56,19 +78,45 @@ assert example_s15_serialization_and_model_dump()
 
 ## Common mistakes
 
-**Ошибка:** Путать str | None с полем, которое можно полностью не передать.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Смешать missing и explicit null либо считать coercion бизнес-валидацией.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `JSON mode` до запуска.
+
+**B · Find the bug.** Найди нарушение `exclude unset` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Serialization and `model_dump` за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Serialization and `model_dump`** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Проверь missing, explicit null, неверный тип и сериализованный результат. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Serialization and `model_dump` и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Serialization and `model_dump`?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Serialization and `model_dump`: Это часть Pydantic v2 boundary между недоверенным input, validated model и serialized output.
+
+### Нормальный Junior answer
+
+> Serialization and `model_dump` — тема, в которой я сначала фиксирую `JSON mode`, затем объясняю `exclude unset` на коротком примере. Ключевой механизм: Проверь четыре состояния: missing, explicit null, invalid type/value и сериализованный результат. Главная практическая ошибка — Смешать missing и explicit null либо считать coercion бизнес-валидацией.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Serialization and `model_dump`?**
+
+Смешать missing и explicit null либо считать coercion бизнес-валидацией.
 
 ## Expected answer rubric
 
@@ -77,47 +125,35 @@ assert example_s15_serialization_and_model_dump()
 - JSON mode
 - exclude unset
 - aliases
-- secret fields.
-- Сначала приходит недоверенный input, затем core schema выполняет validation, после чего model_dump управляет serialization.
+- secret fields
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Путать str | None с полем, которое можно полностью не передать.
-- ответ из одного определения без механизма и failure mode.
+- Смешать missing и explicit null либо считать coercion бизнес-валидацией.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- JSON mode
-- exclude unset
-- aliases
-- secret fields.
+- Какое ограничение или типичная ошибка относится именно к теме Serialization and `model_dump`?
 
 ## Задача
 
-Разбери backend-сценарий: **Проверь missing, explicit null, неверный тип и сериализованный результат.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Serialization and `model_dump`**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Serialization and `model_dump`**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Serialization and `model_dump`: Это часть Pydantic v2 boundary между недоверенным input, validated model и serialized output.
+- **Механизм:** Сначала приходит недоверенный input, затем core schema выполняет validation, после чего model_dump управляет serialization.
+- **Ограничение:** Смешать missing и explicit null либо считать coercion бизнес-валидацией.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

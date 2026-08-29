@@ -7,50 +7,65 @@
 
 После урока ты сможешь:
 
-- объяснить `happy path` своими словами и связать с backend-сценарием;
-- объяснить `validation` своими словами и связать с backend-сценарием;
-- объяснить `permissions` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **What to test**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `happy path`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Тест подтверждает observable contract в изолированном сценарии; хорошие tests детерминированы и объясняют failure.
+### Что это
 
-В теме **What to test** важно уверенно объяснять следующие части:
+Это инструмент проверки observable contract с контролируемым setup, failure и cleanup.
 
-### happy path
+### Как работает
 
-Для `happy path` сформулируй observable contract, isolation boundary и failure, который обязан поймать test.
+Сформулируй observable behavior, выбери isolation boundary и добавь case, который падает при реальном regression.
 
-### validation
+**happy path.** `happy path` помогает проверить observable contract; test задаёт isolation boundary, конкретный input и ожидаемый success/failure result.
 
-Для `validation` сформулируй observable contract, isolation boundary и failure, который обязан поймать test.
+**validation.** `validation` помогает проверить observable contract; test задаёт isolation boundary, конкретный input и ожидаемый success/failure result.
 
-### permissions
+**permissions.** `permissions` помогает проверить observable contract; test задаёт isolation boundary, конкретный input и ожидаемый success/failure result.
 
-Для `permissions` сформулируй observable contract, isolation boundary и failure, который обязан поймать test.
+**not found.** `not found` помогает проверить observable contract; test задаёт isolation boundary, конкретный input и ожидаемый success/failure result.
 
-### not found
+**duplicates/conflicts.** `duplicates/conflicts` помогает проверить observable contract; test задаёт isolation boundary, конкретный input и ожидаемый success/failure result.
 
-Для `not found` сформулируй observable contract, isolation boundary и failure, который обязан поймать test.
+**rollback.** Rollback отменяет текущую transaction и возвращает Session в usable state; после flush error продолжать без rollback нельзя.
 
-### duplicates/conflicts
 
-Для `duplicates/conflicts` сформулируй observable contract, isolation boundary и failure, который обязан поймать test.
+### Важный нюанс / limitation
 
-### rollback
+Граница Junior: уверенно объясняй `happy path` и `validation` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
-Rollback отменяет текущую transaction и возвращает Session в usable state; после flush error продолжать без rollback нельзя.
+### Где используется в backend
 
-### retry
-
-Retry подходит для transient failure, ограничивается числом попыток и backoff с jitter; permanent errors нужно возвращать сразу.
+В backend эта тема важна в том месте, где применяется `happy path`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Arrange создаёт условия, Act выполняет одно поведение, Assert проверяет значимый результат.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- happy path
+- validation
+- permissions
+- not found
+
+### Полезно
+
+- duplicates/conflicts
+- rollback
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -68,19 +83,45 @@ assert example_s18_what_to_test()
 
 ## Common mistakes
 
-**Ошибка:** Mock не в том namespace, shared fixture state или тест только happy path.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `happy path` до запуска.
+
+**B · Find the bug.** Найди нарушение `validation` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про What to test за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **What to test** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Выдели unit boundary, integration boundary и критичный failure case. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое What to test и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме What to test?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+What to test: Это инструмент проверки observable contract с контролируемым setup, failure и cleanup.
+
+### Нормальный Junior answer
+
+> What to test — тема, в которой я сначала фиксирую `happy path`, затем объясняю `validation` на коротком примере. Ключевой механизм: Сформулируй observable behavior, выбери isolation boundary и добавь case, который падает при реальном regression. Главная практическая ошибка — Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме What to test?**
+
+Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior.
 
 ## Expected answer rubric
 
@@ -90,50 +131,34 @@ assert example_s18_what_to_test()
 - validation
 - permissions
 - not found
-- Arrange создаёт условия, Act выполняет одно поведение, Assert проверяет значимый результат.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Mock не в том namespace, shared fixture state или тест только happy path.
-- ответ из одного определения без механизма и failure mode.
+- Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- happy path
-- validation
-- permissions
-- not found
-- duplicates/conflicts
-- rollback
-- retry
-- idempotency.
+- Какое ограничение или типичная ошибка относится именно к теме What to test?
 
 ## Задача
 
-Разбери backend-сценарий: **Выдели unit boundary, integration boundary и критичный failure case.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **What to test**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **What to test**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** What to test: Это инструмент проверки observable contract с контролируемым setup, failure и cleanup.
+- **Механизм:** Arrange создаёт условия, Act выполняет одно поведение, Assert проверяет значимый результат.
+- **Ограничение:** Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

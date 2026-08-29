@@ -7,38 +7,73 @@
 
 После урока ты сможешь:
 
-- объяснить `dependency graph` своими словами и связать с backend-сценарием;
-- объяснить `request-scoped lifecycle` своими словами и связать с backend-сценарием;
-- объяснить `auth/session/settings` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Dependency injection with `Depends`**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `dependency graph`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-FastAPI связывает ASGI request lifecycle, routing, validation, dependency graph и response serialization.
+### Что это
 
-В теме **Dependency injection with `Depends`** важно уверенно объяснять следующие части:
+Dependency Injection — передача нужной зависимости извне вместо создания её внутри handler. В FastAPI `Depends` описывает dependency graph, который framework разрешает для каждого request.
 
-### dependency graph
+### Как работает
 
-Dependency объявляет вход handler/service явно; FastAPI разрешает graph зависимостей на request, cache-ит результат в его рамках и выполняет cleanup yield-dependency.
+FastAPI читает signature endpoint и dependencies, вызывает их в правильном порядке и передаёт результаты дальше. Одинаковая dependency по умолчанию кэшируется один раз в рамках request. Dependency может зависеть от другой dependency; yield-вариант выполняет setup до handler и cleanup после response/error.
 
-### request-scoped lifecycle
 
-LEGB ищет имя в local, enclosing, global и builtins; assignment делает имя local, если не объявлены `global` или `nonlocal`.
+### Пример
 
-### auth/session/settings
+```python
+from typing import Annotated
+from fastapi import Depends, FastAPI, Header, HTTPException
 
-Session владеет identity map и transaction state; после ошибки flush требуется rollback до дальнейшей работы.
+app = FastAPI()
 
-### caching per request
+def require_admin(x_role: Annotated[str | None, Header()] = None) -> str:
+    if x_role != "admin":
+        raise HTTPException(403, "admin role required")
+    return x_role
 
-Для `caching per request` проследи request через router, validation/dependencies, handler/service и response serialization.
+@app.get("/admin")
+def admin(role: Annotated[str, Depends(require_admin)]):
+    return {"role": role}
+```
+
+### Важный нюанс / limitation
+
+Request-scoped cache не является глобальным cache. Не храни request-specific Session или user в module global. Dependencies удобны для границ framework — auth, session, settings — но сложные business rules лучше оставить service.
+
+### Где используется в backend
+
+`get_current_user` может зависеть от token parser, а endpoint получает уже проверенного user; dependency override упрощает тест.
 
 ## Mental model
 
 Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- зачем DI
+- dependency graph
+- per-request cache
+- yield cleanup
+- test overrides
+
+### Полезно
+
+- `Annotated` aliases
+- `use_cache=False`
+- граница dependency/service
+
+### Можно не учить глубоко
+
+- внутренние классы решения dependency graph FastAPI
 
 ## Code examples
 
@@ -55,52 +90,79 @@ app = FastAPI()
 
 ## Common mistakes
 
-**Ошибка:** Открывать Session глобально или выполнять blocking I/O в async route.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Вызвать dependency вручную как обычную функцию и ожидать, что FastAPI разрешит её sub-dependencies.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+### Ошибка 2
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+Создать глобальную SQLAlchemy Session и возвращать её всем requests.
+
+### Ошибка 3
+
+Поместить всю бизнес-логику в огромную dependency graph, которую трудно тестировать отдельно.
+
+## Practice
+
+**A · Flow prediction.** Расположи вызовы parent dependency, child dependency, endpoint и cleanup.
+
+**B · Find the bug.** Найди глобальную Session в dependency module.
+
+**C · Rewrite.** Вынеси чтение X-Role в `require_admin`.
+
+**D · Small task.** Реализуй защищённый `/admin` endpoint с hidden tests.
 
 ## Interview questions
 
-1. Объясни **Dependency injection with `Depends`** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Проследи request от router через dependency и service до response model. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Как работает `Depends` в FastAPI и каков lifecycle dependency?
+
+### Follow-up
+
+Чем request cache dependency отличается от singleton?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Depends объявляет dependency graph; FastAPI разрешает его на request, кэширует одинаковые dependencies и выполняет cleanup yield-dependency.
+
+### Нормальный Junior answer
+
+> `Depends` позволяет endpoint явно объявить, что ему нужны user, Session или settings. FastAPI строит graph по signatures, вызывает dependencies и передаёт результаты в handler. Внутри одного request одинаковая dependency обычно выполняется один раз. Если dependency использует `yield`, код после yield работает как cleanup. В тестах dependency можно override-нуть.
+
+### Углубление / follow-up
+
+**Чем request cache dependency отличается от singleton?**
+
+Результат переиспользуется только внутри одного request; следующий request разрешает dependency заново. Singleton живёт между requests на уровне приложения.
 
 ## Expected answer rubric
 
 ### Must mention
 
+- зачем DI
 - dependency graph
-- request-scoped lifecycle
-- auth/session/settings
-- caching per request.
-- Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
+- per-request cache
+- yield cleanup
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Открывать Session глобально или выполнять blocking I/O в async route.
-- ответ из одного определения без механизма и failure mode.
+- Вызвать dependency вручную как обычную функцию и ожидать, что FastAPI разрешит её sub-dependencies.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- dependency graph
-- request-scoped lifecycle
-- auth/session/settings
-- caching per request.
+- Чем request cache dependency отличается от singleton?
 
 ## Задача
 
@@ -113,11 +175,10 @@ require_admin читает X-Role: не admin → 403; GET /admin использ
 
 Перед собеседованием запомни:
 
-- дай точное определение **Dependency injection with `Depends`**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Depends объявляет dependency graph; FastAPI разрешает его на request, кэширует одинаковые dependencies и выполняет cleanup yield-dependency.
+- **Механизм:** Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
+- **Ограничение:** Вызвать dependency вручную как обычную функцию и ожидать, что FastAPI разрешит её sub-dependencies.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

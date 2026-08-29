@@ -1,39 +1,41 @@
 [
   {
-    "question": "Объясни тему «Content negotiation and Content-Type» как на Junior Python Backend interview.",
+    "question": "Что такое Content negotiation and Content-Type и как это работает?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
       "JSON",
       "charset",
-      "Accept",
-      "Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса."
+      "Accept"
     ],
+    "short_answer": "`Content-Type` describes the representation sent in a body; `Accept` describes representations the client can receive.",
+    "junior_answer": "`Content-Type` describes the representation sent in a body; `Accept` describes representations the client can receive. For JSON APIs the sender normally uses `application/json`; charset matters for textual formats and body parsing follows the declared media type. Важное ограничение: A JSON-looking string with the wrong Content-Type is not the same protocol contract.",
+    "follow_up_question": "Какая типичная ошибка связана с Content negotiation and Content-Type?",
+    "follow_up_answer": "Confusing Accept with Content-Type produces 415/406 behavior or incorrect parsing.",
     "expected_answer": {
       "must_mention": [
         "JSON",
         "charset",
-        "Accept",
-        "Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса."
+        "Accept"
       ],
       "good_additions": [
-        "конкретный backend example",
-        "trade-off или failure mode"
+        "короткий рабочий пример",
+        "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне.",
+        "Confusing Accept with Content-Type produces 415/406 behavior or incorrect parsing.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне."
+        "Confusing Accept with Content-Type produces 415/406 behavior or incorrect parsing."
       ],
       "follow_up_questions": [
-        "Спроектируй request/response контракт и объясни retry, idempotency и error body."
+        "Какая типичная ошибка связана с Content negotiation and Content-Type?"
       ]
     },
     "follow_ups": [
-      "Спроектируй request/response контракт и объясни retry, idempotency и error body."
+      "Какая типичная ошибка связана с Content negotiation and Content-Type?"
     ],
     "tags": [
       "stage-12",
@@ -46,42 +48,41 @@
     ]
   },
   {
-    "question": "Сценарий по теме «Content negotiation and Content-Type»: Спроектируй request/response контракт и объясни retry, idempotency и error body. Что проверишь первым?",
-    "level": "scenario",
+    "question": "Какая типичная ошибка связана с Content negotiation and Content-Type?",
+    "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "Уточнить требования и observable symptom",
-      "Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.",
-      "Назвать edge case",
-      "Предложить test/log/metric для проверки"
+      "one short code/result example",
+      "Confusing Accept with Content-Type produces 415/406 behavior or incorrect parsing."
     ],
+    "short_answer": "Confusing Accept with Content-Type produces 415/406 behavior or incorrect parsing.",
+    "junior_answer": "Confusing Accept with Content-Type produces 415/406 behavior or incorrect parsing.",
+    "follow_up_question": "Что такое Content negotiation and Content-Type и как это работает?",
+    "follow_up_answer": "`Content-Type` describes the representation sent in a body; `Accept` describes representations the client can receive. For JSON APIs the sender normally uses `application/json`; charset matters for textual formats and body parsing follows the declared media type. Важное ограничение: A JSON-looking string with the wrong Content-Type is not the same protocol contract.",
     "expected_answer": {
       "must_mention": [
-        "assumptions",
-        "mechanism",
-        "failure mode",
-        "verification"
+        "one short code/result example"
       ],
       "good_additions": [
-        "альтернатива и trade-off"
+        "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Сразу называть технологию до уточнения проблемы"
+        "Confusing Accept with Content-Type produces 415/406 behavior or incorrect parsing."
       ],
       "red_flags": [
-        "Возвращать 200 для любой ошибки или считать POST автоматически неидемпотентным при любом дизайне."
+        "Confusing Accept with Content-Type produces 415/406 behavior or incorrect parsing."
       ],
       "follow_up_questions": [
-        "Что произойдёт при повторе или частичном отказе?"
+        "Что такое Content negotiation and Content-Type и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что произойдёт при повторе или частичном отказе?"
+      "Что такое Content negotiation and Content-Type и как это работает?"
     ],
     "tags": [
       "stage-12",
-      "scenario"
+      "follow-up"
     ],
     "sets": [
       "stage-12",

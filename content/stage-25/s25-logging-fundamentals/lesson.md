@@ -7,34 +7,57 @@
 
 После урока ты сможешь:
 
-- объяснить `debug/info/warning/error/exception` своими словами и связать с backend-сценарием;
-- объяснить `no print-debugging as final solution` своими словами и связать с backend-сценарием;
-- объяснить `no secrets/PII.` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Logging fundamentals**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `debug/info/warning/error/exception`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Observability отвечает на вопросы о поведении системы через logs, metrics и traces.
+### Что это
 
-В теме **Logging fundamentals** важно уверенно объяснять следующие части:
+Тема **Logging fundamentals** описывает отдельный контракт backend-разработки.
 
-### debug/info/warning/error/exception
+### Как работает
 
-Для `debug/info/warning/error/exception` укажи сигнал, labels/context, способ correlation и действие инженера по наблюдаемому symptom.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
 
-### no print-debugging as final solution
+**debug/info/warning/error/exception.** `debug/info/warning/error/exception` является observability signal с контекстом, correlation и ожидаемым действием инженера после обнаружения symptom.
 
-Для `no print-debugging as final solution` укажи сигнал, labels/context, способ correlation и действие инженера по наблюдаемому symptom.
+**no print-debugging as final solution.** `no print-debugging as final solution` является observability signal с контекстом, correlation и ожидаемым действием инженера после обнаружения symptom.
 
-### no secrets/PII
+**no secrets/PII.** `no secrets/PII` является observability signal с контекстом, correlation и ожидаемым действием инженера после обнаружения symptom.
 
-Для `no secrets/PII` укажи сигнал, labels/context, способ correlation и действие инженера по наблюдаемому symptom.
+
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `debug/info/warning/error/exception` и `no print-debugging as final solution` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `debug/info/warning/error/exception`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Сначала сформулируй вопрос, затем выбери signal и labels с контролируемой cardinality.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- debug/info/warning/error/exception
+- no print-debugging as final solution
+- no secrets/PII
+
+### Полезно
+
+- связать Logging fundamentals с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -52,19 +75,45 @@ assert example_s25_logging_fundamentals()
 
 ## Common mistakes
 
-**Ошибка:** Логировать secrets или использовать user_id как Prometheus label.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Игнорировать ограничение механизма и проверять только happy path.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `debug/info/warning/error/exception` до запуска.
+
+**B · Find the bug.** Найди нарушение `no print-debugging as final solution` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Logging fundamentals за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Logging fundamentals** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: По росту p95 при стабильной средней выбери следующие metrics и logs. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Logging fundamentals и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Logging fundamentals?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Logging fundamentals: это отдельный технический контракт
+
+### Нормальный Junior answer
+
+> Logging fundamentals — тема, в которой я сначала фиксирую `debug/info/warning/error/exception`, затем объясняю `no print-debugging as final solution` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Logging fundamentals?**
+
+Нужно назвать конкретный failure path и способ его проверить.
 
 ## Expected answer rubric
 
@@ -72,46 +121,35 @@ assert example_s25_logging_fundamentals()
 
 - debug/info/warning/error/exception
 - no print-debugging as final solution
-- no secrets/PII.
-- Сначала сформулируй вопрос, затем выбери signal и labels с контролируемой cardinality.
+- no secrets/PII
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Логировать secrets или использовать user_id как Prometheus label.
-- ответ из одного определения без механизма и failure mode.
+- Игнорировать ограничение механизма и проверять только happy path.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- debug/info/warning/error/exception
-- no print-debugging as final solution
-- no secrets/PII.
+- Какое ограничение или типичная ошибка относится именно к теме Logging fundamentals?
 
 ## Задача
 
-Разбери backend-сценарий: **По росту p95 при стабильной средней выбери следующие metrics и logs.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Logging fundamentals**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Logging fundamentals**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Logging fundamentals: это отдельный технический контракт
+- **Механизм:** Сначала сформулируй вопрос, затем выбери signal и labels с контролируемой cardinality.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

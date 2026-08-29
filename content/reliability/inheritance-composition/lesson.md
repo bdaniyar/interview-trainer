@@ -7,42 +7,52 @@
 
 После урока ты сможешь:
 
-- объяснить `is-a vs has-a` своими словами и связать с backend-сценарием;
-- объяснить `coupling` своими словами и связать с backend-сценарием;
-- объяснить `testability` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Inheritance vs composition**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `is-a vs has-a`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-ООП в backend полезно как способ выразить состояние, поведение и границы ответственности, а не как соревнование по наследованию.
+### Что это
 
-В теме **Inheritance vs composition** важно уверенно объяснять следующие части:
+Inheritance models an is-a relationship; composition models has-a by giving an object explicit collaborators.
 
-### is-a vs has-a
+### Как работает
 
-Для `is-a vs has-a` укажи, где хранится state, как Python ищет behavior и почему выбран composition/inheritance.
+Inheritance reuses and overrides behavior through MRO. Composition delegates to injected objects, reducing coupling and making substitutions local.
 
-### coupling
 
-Для `coupling` укажи, где хранится state, как Python ищет behavior и почему выбран composition/inheritance.
+### Важный нюанс / limitation
 
-### testability
+Prefer composition for services/repositories. Inheritance is justified for a stable substitutable hierarchy or framework contract, not only code reuse.
 
-Для `testability` укажи, где хранится state, как Python ищет behavior и почему выбран composition/inheritance.
+### Где используется в backend
 
-### service composition
-
-Composition передаёт объекту collaborators явно и позволяет заменять их независимо, не связывая доменные типы общей иерархией.
-
-### when inheritance is justified
-
-Inheritance выражает отношение is-a и участвует в MRO; если нужно только переиспользовать collaborator, composition обычно делает зависимость яснее.
+A notification service composed with an email provider is easier to test than a deep service subclass tree.
 
 ## Mental model
 
 У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- is-a vs has-a
+- coupling
+- testability
+- service composition
+
+### Полезно
+
+- when inheritance is justified
+
+### Можно не учить глубоко
+
+- internal implementation details beyond common Junior follow-ups
 
 ## Code examples
 
@@ -67,19 +77,47 @@ Composition передаёт collaborator явно и не заставляет 
 
 ## Common mistakes
 
-**Ошибка:** Создавать глубокую иерархию ради переиспользования нескольких строк.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Adding subclasses for every combination of behavior creates a fragile hierarchy and unclear MRO.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Code/result prediction.** Change one input in the `is-a vs has-a` example and predict the result before running it.
+
+**B · Find the bug.** Find code that violates `coupling` and explain the concrete consequence.
+
+**D · Small task.** Implement the smallest function/query that demonstrates `is-a vs has-a` and add one edge-case test.
+
+**E · Interview explanation.** Explain Inheritance vs composition in 45–60 seconds and include one limitation.
 
 ## Interview questions
 
-1. Объясни **Inheritance vs composition** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Сравни composition и inheritance для сервиса уведомлений и назови цену изменения. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Inheritance vs composition и как это работает?
+
+### Follow-up
+
+Какая типичная ошибка связана с Inheritance vs composition?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Inheritance models an is-a relationship; composition models has-a by giving an object explicit collaborators.
+
+### Нормальный Junior answer
+
+> Inheritance models an is-a relationship; composition models has-a by giving an object explicit collaborators. Inheritance reuses and overrides behavior through MRO. Composition delegates to injected objects, reducing coupling and making substitutions local. Важное ограничение: Prefer composition for services/repositories. Inheritance is justified for a stable substitutable hierarchy or framework contract, not only code reuse.
+
+### Углубление / follow-up
+
+**Какая типичная ошибка связана с Inheritance vs composition?**
+
+Adding subclasses for every combination of behavior creates a fragile hierarchy and unclear MRO.
 
 ## Expected answer rubric
 
@@ -89,47 +127,34 @@ Composition передаёт collaborator явно и не заставляет 
 - coupling
 - testability
 - service composition
-- У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Создавать глубокую иерархию ради переиспользования нескольких строк.
-- ответ из одного определения без механизма и failure mode.
+- Adding subclasses for every combination of behavior creates a fragile hierarchy and unclear MRO.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- is-a vs has-a
-- coupling
-- testability
-- service composition
-- when inheritance is justified.
+- Какая типичная ошибка связана с Inheritance vs composition?
 
 ## Задача
 
-Разбери backend-сценарий: **Сравни composition и inheritance для сервиса уведомлений и назови цену изменения.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Inheritance vs composition**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Inheritance vs composition**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Inheritance models an is-a relationship; composition models has-a by giving an object explicit collaborators.
+- **Механизм:** У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.
+- **Ограничение:** Adding subclasses for every combination of behavior creates a fragile hierarchy and unclear MRO.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

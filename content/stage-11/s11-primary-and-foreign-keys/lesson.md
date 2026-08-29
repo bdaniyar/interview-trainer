@@ -7,34 +7,57 @@
 
 После урока ты сможешь:
 
-- объяснить `entity identity` своими словами и связать с backend-сценарием;
-- объяснить `referential integrity` своими словами и связать с backend-сценарием;
-- объяснить `delete/update actions.` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Primary and foreign keys**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `entity identity`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-PostgreSQL обеспечивает ограничения и конкурентную работу ближе к данным; индекс и transaction boundary проектируются под запросы и инварианты.
+### Что это
 
-В теме **Primary and foreign keys** важно уверенно объяснять следующие части:
+Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.
 
-### entity identity
+### Как работает
 
-Identity отвечает на вопрос «тот же ли это объект» и сравнивается через `is`; равенство — отдельный протокол `__eq__`, обычно сравнивающий значения.
+Назови invariant и concurrent scenario, затем проверь constraint, transaction boundary и фактический query plan.
 
-### referential integrity
+**entity identity.** Identity отвечает на вопрос «тот же ли это объект» и сравнивается через `is`; равенство — отдельный протокол `__eq__`, обычно сравнивающий значения.
 
-Для `referential integrity` назови защищаемый invariant, concurrent transaction и evidence из constraint или query plan.
+**referential integrity.** `referential integrity` влияет на database invariant, concurrent transactions или access path; правильность подтверждают constraint и фактический query plan.
 
-### delete/update actions
+**delete/update actions.** `delete/update actions` влияет на database invariant, concurrent transactions или access path; правильность подтверждают constraint и фактический query plan.
 
-Для `delete/update actions` назови защищаемый invariant, concurrent transaction и evidence из constraint или query plan.
+
+### Важный нюанс / limitation
+
+Граница Junior: уверенно объясняй `entity identity` и `referential integrity` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+
+### Где используется в backend
+
+В backend эта тема важна в том месте, где применяется `entity identity`; проверяй именно наблюдаемый contract, а не название инструмента.
 
 ## Mental model
 
 Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- entity identity
+- referential integrity
+- delete/update actions
+
+### Полезно
+
+- связать Primary and foreign keys с коротким рабочим примером
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -50,19 +73,45 @@ SELECT 's11_primary_and_foreign_keys' AS example_key;
 
 ## Common mistakes
 
-**Ошибка:** Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `entity identity` до запуска.
+
+**B · Find the bug.** Найди нарушение `referential integrity` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Primary and foreign keys за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Primary and foreign keys** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Назови инвариант, конкурентный сценарий и точку, где его гарантирует база. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Primary and foreign keys и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Primary and foreign keys?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Primary and foreign keys: Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.
+
+### Нормальный Junior answer
+
+> Primary and foreign keys — тема, в которой я сначала фиксирую `entity identity`, затем объясняю `referential integrity` на коротком примере. Ключевой механизм: Назови invariant и concurrent scenario, затем проверь constraint, transaction boundary и фактический query plan. Главная практическая ошибка — Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Primary and foreign keys?**
+
+Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
 
 ## Expected answer rubric
 
@@ -70,46 +119,35 @@ SELECT 's11_primary_and_foreign_keys' AS example_key;
 
 - entity identity
 - referential integrity
-- delete/update actions.
-- Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
+- delete/update actions
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Добавлять индекс на каждый столбец или держать transaction открытой во время сетевого вызова.
-- ответ из одного определения без механизма и failure mode.
+- Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- entity identity
-- referential integrity
-- delete/update actions.
+- Какое ограничение или типичная ошибка относится именно к теме Primary and foreign keys?
 
 ## Задача
 
-Разбери backend-сценарий: **Назови инвариант, конкурентный сценарий и точку, где его гарантирует база.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Primary and foreign keys**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Primary and foreign keys**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Primary and foreign keys: Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.
+- **Механизм:** Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
+- **Ограничение:** Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 

@@ -7,50 +7,61 @@
 
 После урока ты сможешь:
 
-- объяснить `frequency map` своими словами и связать с backend-сценарием;
-- объяснить `deduplicate preserving order` своими словами и связать с backend-сценарием;
-- объяснить `group records` своими словами и связать с backend-сценарием;
-- распознать типичную ошибку и предложить проверяемое исправление.
+- восстановить mental model темы **Backend-oriented coding set**, а не только запомнить термин;
+- прочитать и изменить короткий пример для `frequency map`;
+- распознать характерную ошибку и объяснить причину;
+- дать реалистичный ответ уровня Junior и выдержать follow-up.
 
 ## Theory
 
-Для Junior backend важны базовые структуры и сложность реальных transformations, а не редкие олимпиадные трюки.
+### Что это
 
-В теме **Backend-oriented coding set** важно уверенно объяснять следующие части:
+Тема **Backend-oriented coding set** описывает отдельный контракт backend-разработки.
 
-### frequency map
+### Как работает
 
-Для `frequency map` назови input constraints, data structure, complexity и boundary cases до написания кода.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
 
-### deduplicate preserving order
+**frequency map.** `frequency map` определяет data-structure operation с конкретной time/space complexity и набором boundary cases.
 
-Для `deduplicate preserving order` назови input constraints, data structure, complexity и boundary cases до написания кода.
+**deduplicate preserving order.** `deduplicate preserving order` определяет data-structure operation с конкретной time/space complexity и набором boundary cases.
 
-### group records
+**group records.** GROUP BY формирует группы до вычисления aggregates, а HAVING фильтрует уже агрегированные группы.
 
-GROUP BY формирует группы до вычисления aggregates, а HAVING фильтрует уже агрегированные группы.
+**merge intervals.** `merge intervals` определяет data-structure operation с конкретной time/space complexity и набором boundary cases.
 
-### merge intervals
+**validate brackets.** `validate brackets` определяет data-structure operation с конкретной time/space complexity и набором boundary cases.
 
-Для `merge intervals` назови input constraints, data structure, complexity и boundary cases до написания кода.
+**top-K without excessive complexity.** `top-K without excessive complexity` определяет data-structure operation с конкретной time/space complexity и набором boundary cases.
 
-### validate brackets
 
-Для `validate brackets` назови input constraints, data structure, complexity и boundary cases до написания кода.
+### Важный нюанс / limitation
 
-### top-K without excessive complexity
-
-Для `top-K without excessive complexity` назови input constraints, data structure, complexity и boundary cases до написания кода.
-
-### simple LRU mental model
-
-Для `simple LRU mental model` назови input constraints, data structure, complexity и boundary cases до написания кода.
+Граница Junior: уверенно объясняй `frequency map` и `deduplicate preserving order` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
 ## Mental model
 
 Выбери структуру по операциям и оцени dominant time/space term.
 
-Проверь модель вопросами: кто владеет состоянием, где проходит граница операции, что увидит вызывающий код и как выглядит безопасный отказ.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+
+## Что нужно знать на Junior
+
+### Обязательно
+
+- frequency map
+- deduplicate preserving order
+- group records
+- merge intervals
+
+### Полезно
+
+- validate brackets
+- top-K without excessive complexity
+
+### Можно не учить глубоко
+
+- implementation internals, не влияющие на Junior-код и типичный interview follow-up
 
 ## Code examples
 
@@ -68,19 +79,45 @@ assert example_s28_backend_oriented_coding_set()
 
 ## Common mistakes
 
-**Ошибка:** Писать O(n²), когда один dict даёт линейный проход, или оптимизировать без constraints.
+### Ошибка 1
 
-**Симптом:** код проходит простой happy path, но ломается при повторном вызове, конкурентном запросе, ошибке зависимости или изменении данных.
+Игнорировать ограничение механизма и проверять только happy path.
 
-**Причина:** механизм и границы ответственности не были проговорены до реализации.
+## Practice
 
-**Исправление:** зафиксируй контракт, сделай state/transaction boundary явной и добавь тест на failure path.
+**A · Prediction/reasoning.** Предскажи результат минимального примера для `frequency map` до запуска.
+
+**B · Find the bug.** Найди нарушение `deduplicate preserving order` и объясни конкретное последствие.
+
+**E · Interview explanation.** Дай ответ про Backend-oriented coding set за 60 секунд: определение, механизм, пример, ограничение.
 
 ## Interview questions
 
-1. Объясни **Backend-oriented coding set** по схеме «определение → механизм → пример → ограничение».
-2. Сценарий: Реши задачу сначала корректно, затем назови complexity и граничные случаи. Какие уточнения ты задашь и как проверишь решение?
-3. Какой слабый ответ по этой теме создаст риск в первой backend-задаче?
+### Основной вопрос
+
+Что такое Backend-oriented coding set и какой механизм здесь важно понимать Junior-разработчику?
+
+### Follow-up
+
+Какое ограничение или типичная ошибка относится именно к теме Backend-oriented coding set?
+
+Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+
+## Good answers
+
+### Короткий ответ
+
+Backend-oriented coding set: это отдельный технический контракт
+
+### Нормальный Junior answer
+
+> Backend-oriented coding set — тема, в которой я сначала фиксирую `frequency map`, затем объясняю `deduplicate preserving order` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
+
+### Углубление / follow-up
+
+**Какое ограничение или типичная ошибка относится именно к теме Backend-oriented coding set?**
+
+Нужно назвать конкретный failure path и способ его проверить.
 
 ## Expected answer rubric
 
@@ -90,50 +127,34 @@ assert example_s28_backend_oriented_coding_set()
 - deduplicate preserving order
 - group records
 - merge intervals
-- Выбери структуру по операциям и оцени dominant time/space term.
 
 ### Good additions
 
-- назвать конкретный trade-off, а не только API;
-- привести короткий пример из FastAPI/PostgreSQL/Redis, когда он действительно уместен;
-- обозначить границу Junior: что нужно проверить в документации или измерить.
+- один короткий пример с результатом;
+- одно ограничение или характерная ошибка именно этой темы;
+- backend-пример только при естественной связи.
 
 ### Common wrong answers
 
-- Писать O(n²), когда один dict даёт линейный проход, или оптимизировать без constraints.
-- ответ из одного определения без механизма и failure mode.
+- Игнорировать ограничение механизма и проверять только happy path.
+- пересказ одного определения без механизма или примера.
 
 ### Follow-up
 
-- Как изменится решение при повторном запросе, ошибке dependency или двух одновременных операциях?
-- Какой unit/integration test подтвердит ключевой контракт?
-
-## Что нужно уметь перед практикой
-
-- frequency map
-- deduplicate preserving order
-- group records
-- merge intervals
-- validate brackets
-- top-K without excessive complexity
-- simple LRU mental model
-- pagination cursor
+- Какое ограничение или типичная ошибка относится именно к теме Backend-oriented coding set?
 
 ## Задача
 
-Разбери backend-сценарий: **Реши задачу сначала корректно, затем назови complexity и граничные случаи.**
-
-Запиши решение в формате: assumptions → mechanism → edge cases → test/verification. Для этого урока автоматическая coding-проверка не нужна; ответ сверяется с rubric interview-вопроса.
+Сделай короткую письменную практику по теме **Backend-oriented coding set**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
 
 ## Cheat sheet
 
 Перед собеседованием запомни:
 
-- дай точное определение **Backend-oriented coding set**;
-- объясни механизм, а не только синтаксис;
-- назови один realistic backend example;
-- проговори failure mode и trade-off;
-- заверши ответ способом проверки: test, constraint, log или metric.
+- **Что это:** Backend-oriented coding set: это отдельный технический контракт
+- **Механизм:** Выбери структуру по операциям и оцени dominant time/space term.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
+- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
 
 ## Sources
 
