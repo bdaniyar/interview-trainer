@@ -3,7 +3,7 @@
   "slug": "s20-kafka-basics",
   "title": "Kafka basics",
   "module_slug": "stage-20",
-  "module_title": "Stage 20 · Background Work, Celery and Message Brokers",
+  "module_title": "Этап 20 · Background Work, Celery and Message Brokers",
   "module_order": 20,
   "order": 272,
   "duration": 10,
@@ -19,7 +19,7 @@
     "retention/replay",
     "not “just a faster RabbitMQ”."
   ],
-  "description": "P2 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P2 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P2",

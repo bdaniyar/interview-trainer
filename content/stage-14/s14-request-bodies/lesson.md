@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** FastAPI явно встречался в 9/18, любой Python web framework — в 16/18.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-A request body carries structured input; FastAPI commonly validates JSON through a Pydantic model.
+Request body переносит структурированный input; FastAPI обычно валидирует JSON через Pydantic model.
 
 ### Как работает
 
-Body bytes are decoded by media type, parsed as JSON and validated recursively before the endpoint receives a typed model.
+Body bytes декодируются по media type, разбираются как JSON и рекурсивно валидируются до передачи typed model в endpoint.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Schema validation handles shape/ranges; database-dependent business invariants belong in service logic/constraints.
+Schema validation проверяет форму и ranges; business инварианты, зависящие от БД, относятся к service logic и constraints.
 
-## Mental model
+## Модель понимания
 
 Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -44,13 +44,13 @@ Path operation — внешний адаптер; бизнес-правила л
 
 ### Полезно
 
-- one short code/result example
+- один короткий пример кода с результатом
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Request bodies: отдельный пример
 
@@ -64,71 +64,71 @@ app = FastAPI()
 
 Это публичный starter contract практики «Validated request body». Реализация и hidden assertions в lesson Markdown не раскрываются.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Using a raw dict everywhere loses generated schema, typed access and precise field errors.
+Необработанный словарь повсюду лишает код сгенерированной схемы, типизированного доступа и точных ошибок отдельных полей.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `Pydantic model` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `Pydantic model` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `JSON` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `JSON`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `Pydantic model` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `Pydantic model`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Request bodies in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Request bodies за 45–60 секунд и назови одно ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Request bodies и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Request bodies?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-A request body carries structured input; FastAPI commonly validates JSON through a Pydantic model.
+Request body переносит структурированный input; FastAPI обычно валидирует JSON через Pydantic model.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> A request body carries structured input; FastAPI commonly validates JSON through a Pydantic model. Body bytes are decoded by media type, parsed as JSON and validated recursively before the endpoint receives a typed model. Важное ограничение: Schema validation handles shape/ranges; database-dependent business invariants belong in service logic/constraints.
+> Request body переносит структурированный input; FastAPI обычно валидирует JSON через Pydantic model. Body bytes декодируются по media type, разбираются как JSON и рекурсивно валидируются до передачи typed model в endpoint. Важное ограничение: Schema validation проверяет форму и ranges; business инварианты, зависящие от БД, относятся к service logic и constraints.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Request bodies?**
 
-Using a raw dict everywhere loses generated schema, typed access and precise field errors.
+Необработанный словарь повсюду лишает код сгенерированной схемы, типизированного доступа и точных ошибок отдельных полей.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - Pydantic model
 - JSON
 - nested models
 - validation
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Using a raw dict everywhere loses generated schema, typed access and precise field errors.
+- Необработанный словарь повсюду лишает код сгенерированной схемы, типизированного доступа и точных ошибок отдельных полей.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Request bodies?
 
@@ -138,17 +138,17 @@ Using a raw dict everywhere loses generated schema, typed access and precise fie
 
 Создай BookingCreate(room_id > 0, guests 1..8) и POST /bookings → 201.
 
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
-## Cheat sheet
+Работай в main.py. Не меняй публичные имена и сигнатуры: скрытые тесты импортируют их напрямую. Проверь основной сценарий, граничные значения, повторные вызовы и распространение ошибок.
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** A request body carries structured input; FastAPI commonly validates JSON through a Pydantic model.
+- **Что это:** Request body переносит структурированный input; FastAPI обычно валидирует JSON через Pydantic model.
 - **Механизм:** Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
-- **Ограничение:** Using a raw dict everywhere loses generated schema, typed access and precise field errors.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Необработанный словарь повсюду лишает код сгенерированной схемы, типизированного доступа и точных ошибок отдельных полей.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

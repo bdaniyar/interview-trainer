@@ -10,10 +10,10 @@
       "aliases",
       "readable formatting"
     ],
-    "short_answer": "`SELECT` chooses result columns or expressions; aliases name output fields without changing stored schema.",
-    "junior_answer": "`SELECT` chooses result columns or expressions; aliases name output fields without changing stored schema. Expressions are evaluated for rows produced by FROM/JOIN/filter/group stages. `SELECT *` couples callers to schema changes and transfers unused data. Важное ограничение: SQL result order is undefined without `ORDER BY`, even when a local test appears stable.",
+    "short_answer": "`SELECT` выбирает result columns и expressions; aliases задают имена результата, не меняя stored schema.",
+    "junior_answer": "`SELECT` выбирает result columns и expressions; aliases задают имена результата, не меняя stored schema. Expressions вычисляются для rows после FROM/JOIN/filter/group. `SELECT *` связывает caller с изменениями schema и передаёт ненужные данные. Важное ограничение: Порядок SQL-результата не определён без `ORDER BY`, даже если локальный тест кажется стабильным.",
     "follow_up_question": "Какая типичная ошибка связана с SELECT, aliases and expressions?",
-    "follow_up_answer": "Relying on implicit row order or ambiguous duplicate column names makes pagination and mapping unstable.",
+    "follow_up_answer": "Неявный порядок или одинаковые имена columns делают pagination и mapping нестабильными.",
     "expected_answer": {
       "must_mention": [
         "selecting columns",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Relying on implicit row order or ambiguous duplicate column names makes pagination and mapping unstable.",
+        "Неявный порядок или одинаковые имена columns делают pagination и mapping нестабильными.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Relying on implicit row order or ambiguous duplicate column names makes pagination and mapping unstable."
+        "Неявный порядок или одинаковые имена columns делают pagination и mapping нестабильными."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с SELECT, aliases and expressions?"
@@ -55,25 +55,25 @@
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "one short code/result example",
-      "Relying on implicit row order or ambiguous duplicate column names makes pagination and mapping unstable."
+      "один короткий пример кода с результатом",
+      "Неявный порядок или одинаковые имена columns делают pagination и mapping нестабильными."
     ],
-    "short_answer": "Relying on implicit row order or ambiguous duplicate column names makes pagination and mapping unstable.",
-    "junior_answer": "Relying on implicit row order or ambiguous duplicate column names makes pagination and mapping unstable.",
+    "short_answer": "Неявный порядок или одинаковые имена columns делают pagination и mapping нестабильными.",
+    "junior_answer": "Неявный порядок или одинаковые имена columns делают pagination и mapping нестабильными.",
     "follow_up_question": "Что такое SELECT, aliases and expressions и как это работает?",
-    "follow_up_answer": "`SELECT` chooses result columns or expressions; aliases name output fields without changing stored schema. Expressions are evaluated for rows produced by FROM/JOIN/filter/group stages. `SELECT *` couples callers to schema changes and transfers unused data. Важное ограничение: SQL result order is undefined without `ORDER BY`, even when a local test appears stable.",
+    "follow_up_answer": "`SELECT` выбирает result columns и expressions; aliases задают имена результата, не меняя stored schema. Expressions вычисляются для rows после FROM/JOIN/filter/group. `SELECT *` связывает caller с изменениями schema и передаёт ненужные данные. Важное ограничение: Порядок SQL-результата не определён без `ORDER BY`, даже если локальный тест кажется стабильным.",
     "expected_answer": {
       "must_mention": [
-        "one short code/result example"
+        "один короткий пример кода с результатом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Relying on implicit row order or ambiguous duplicate column names makes pagination and mapping unstable."
+        "Неявный порядок или одинаковые имена columns делают pagination и mapping нестабильными."
       ],
       "red_flags": [
-        "Relying on implicit row order or ambiguous duplicate column names makes pagination and mapping unstable."
+        "Неявный порядок или одинаковые имена columns делают pagination и mapping нестабильными."
       ],
       "follow_up_questions": [
         "Что такое SELECT, aliases and expressions и как это работает?"

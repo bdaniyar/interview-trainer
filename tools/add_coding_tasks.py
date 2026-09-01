@@ -889,10 +889,10 @@ def indexes() -> tuple[dict[str, dict], dict[str, Path]]:
 def replace_task(markdown: str, task: Task) -> str:
     section = (
         f"## Задача\n\n### {task.title}\n\n{task.prompt}\n\n"
-        "Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. "
-        "Проверь happy path, boundary values, повторные вызовы и propagation ошибок."
+        "Работай в main.py. Не меняй публичные имена и сигнатуры: скрытые тесты импортируют их напрямую. "
+        "Проверь основной сценарий, граничные значения, повторные вызовы и распространение ошибок."
     )
-    return re.sub(r"## Задача\n.*?(?=\n## Cheat sheet)", section, markdown, flags=re.DOTALL)
+    return re.sub(r"## Задача\n.*?(?=\n## Шпаргалка)", section, markdown, flags=re.DOTALL)
 
 
 def write_task(task: Task, lesson: dict, directory: Path) -> None:

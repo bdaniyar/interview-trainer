@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: high · 12 минут.** Alembic защищает заявленный migration опыт и безопасные schema changes.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,43 +12,43 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-A migration is a versioned, reviewable transition of an existing database schema/data; changing ORM model code alone does not update deployed databases.
+Migration — versioned и reviewable переход существующей database schema или данных; изменение ORM model само не обновляет deployed database.
 
 ### Как работает
 
-Alembic revisions define upgrade/downgrade steps and form an ordered history applied consistently across environments.
+Alembic revisions определяют upgrade и downgrade steps и образуют ordered history, одинаково применяемую в окружениях.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Schema changes must stay compatible with old/new application versions during rolling deploys.
+Schema changes должны оставаться совместимыми со старой и новой версиями application во время rolling deploy.
 
-## Mental model
+## Модель понимания
 
 Migration — воспроизводимый переход между версиями, который нужно review, test и безопасно раскатывать.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
-- model code does not update an existing DB
+- код модели не обновляет существующую базу данных
 - versioned schema history
 
 ### Полезно
 
-- one short code/result example
+- один короткий пример кода с результатом
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Why migrations exist: отдельный пример
 
@@ -58,88 +58,88 @@ alembic revision -m "s17_why_migrations_exist"
 alembic upgrade head
 ```
 
-Review migration как versioned schema transition; autogenerate — только кандидат.
+Review migration как версионированного перехода схемы; autogenerate — только кандидат.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Running `create_all` on startup cannot safely express rename, backfill or staged constraint changes.
+`create_all` при startup не умеет безопасно выразить rename, заполнение существующих данных или поэтапное добавление constraint.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `model code does not update an existing DB` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `model code does not update an existing DB` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `versioned schema history` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `versioned schema history`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `model code does not update an existing DB` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `model code does not update an existing DB`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Why migrations exist in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Why migrations exist за 45–60 секунд и назови одно ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Why migrations exist и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Why migrations exist?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-A migration is a versioned, reviewable transition of an existing database schema/data; changing ORM model code alone does not update deployed databases.
+Migration — versioned и reviewable переход существующей database schema или данных; изменение ORM model само не обновляет deployed database.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> A migration is a versioned, reviewable transition of an existing database schema/data; changing ORM model code alone does not update deployed databases. Alembic revisions define upgrade/downgrade steps and form an ordered history applied consistently across environments. Важное ограничение: Schema changes must stay compatible with old/new application versions during rolling deploys.
+> Migration — versioned и reviewable переход существующей database schema или данных; изменение ORM model само не обновляет deployed database. Alembic revisions определяют upgrade и downgrade steps и образуют ordered history, одинаково применяемую в окружениях. Важное ограничение: Schema changes должны оставаться совместимыми со старой и новой версиями application во время rolling deploy.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Why migrations exist?**
 
-Running `create_all` on startup cannot safely express rename, backfill or staged constraint changes.
+`create_all` при startup не умеет безопасно выразить rename, заполнение существующих данных или поэтапное добавление constraint.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
-- model code does not update an existing DB
+- код модели не обновляет существующую базу данных
 - versioned schema history
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Running `create_all` on startup cannot safely express rename, backfill or staged constraint changes.
+- `create_all` при startup не умеет безопасно выразить rename, заполнение существующих данных или поэтапное добавление constraint.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Why migrations exist?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Why migrations exist**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Why migrations exist**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** A migration is a versioned, reviewable transition of an existing database schema/data; changing ORM model code alone does not update deployed databases.
+- **Что это:** Migration — versioned и reviewable переход существующей database schema или данных; изменение ORM model само не обновляет deployed database.
 - **Механизм:** Migration — воспроизводимый переход между версиями, который нужно review, test и безопасно раскатывать.
-- **Ограничение:** Running `create_all` on startup cannot safely express rename, backfill or staged constraint changes.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** `create_all` при startup не умеет безопасно выразить rename, заполнение существующих данных или поэтапное добавление constraint.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

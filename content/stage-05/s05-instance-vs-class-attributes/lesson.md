@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** Python указан в 18/18; OOP/data model важны для чтения framework и domain code.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,7 +12,7 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
@@ -22,28 +22,28 @@
 
 Проследи instance/class namespaces, attribute lookup и направление зависимости между объектами.
 
-**shared mutable class attribute bug.** Class attribute разделяется instances до тех пор, пока instance не перекроет имя; mutable class state часто создаёт утечку между объектами.
+**ошибка общего изменяемого атрибута класса.** Class attribute разделяется instances до тех пор, пока instance не перекроет имя; mutable class state часто создаёт утечку между объектами.
 
 **shadowing.** `shadowing` определяет, где хранится object state, как идёт attribute lookup и насколько сильно тип зависит от collaborators.
 
 **appropriate constants/config.** `appropriate constants/config` определяет, где хранится object state, как идёт attribute lookup и насколько сильно тип зависит от collaborators.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
 Граница Junior: уверенно объясняй `shared mutable class attribute bug` и `shadowing` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
-## Mental model
+## Модель понимания
 
 У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
-- shared mutable class attribute bug
+- ошибка общего изменяемого атрибута класса
 - shadowing
 - appropriate constants/config
 
@@ -53,9 +53,9 @@
 
 ### Можно не учить глубоко
 
-- implementation internals, не влияющие на Junior-код и типичный interview follow-up
+- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Instance vs class attributes: отдельный пример
 
@@ -74,21 +74,21 @@ print(b.items)
 
 Mutable instance state создают в `__init__`; иначе class attribute разделяется всеми instances.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
 Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.
 
-## Practice
+## Практика
 
-**A · Prediction/reasoning.** Предскажи результат минимального примера для `shared mutable class attribute bug` до запуска.
+**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для `shared mutable class attribute bug` до запуска.
 
-**B · Find the bug.** Найди нарушение `shadowing` и объясни конкретное последствие.
+**B · Найди ошибку.** Найди нарушение `shadowing` и объясни конкретное последствие.
 
-**E · Interview explanation.** Дай ответ про Instance vs class attributes за 60 секунд: определение, механизм, пример, ограничение.
+**E · Ответ на собеседовании.** Дай ответ про Instance vs class attributes за 60 секунд: определение, механизм, пример, ограничение.
 
-## Code prediction
+## Предсказание результата кода
 
 ### Class attribute общий
 
@@ -104,7 +104,7 @@ print(b.roles)
 
 <details><summary>Показать ответ</summary>
 
-Expected:
+Ожидаемый результат:
 
 ```text
 ['admin']
@@ -112,85 +112,85 @@ Expected:
 
 До instance assignment оба объекта находят один mutable class attribute.
 
-Misconception: `class-attribute`.
+Типичная ошибка мышления: `class-attribute`.
 
 </details>
 
-## Debugging practice
+## Практика: Отладка
 
 ### Shared class state
 
 **Сценарий:** roles=[] class attribute делится между instances.
 
-**Rubric:** Mutable instance state создавать в __init__/default_factory.
+**Критерии ответа:** Mutable instance state создавать в __init__/default_factory.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Instance vs class attributes и какой механизм здесь важно понимать Junior-разработчику?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какое ограничение или типичная ошибка относится именно к теме Instance vs class attributes?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
 Instance vs class attributes: Это элемент Python object model, который определяет состояние объекта, поиск поведения или способ композиции типов.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
 > Instance vs class attributes — тема, в которой я сначала фиксирую `shared mutable class attribute bug`, затем объясняю `shadowing` на коротком примере. Ключевой механизм: Проследи instance/class namespaces, attribute lookup и направление зависимости между объектами. Главная практическая ошибка — Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какое ограничение или типичная ошибка относится именно к теме Instance vs class attributes?**
 
 Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
-- shared mutable class attribute bug
+- ошибка общего изменяемого атрибута класса
 - shadowing
 - appropriate constants/config
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
 - Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какое ограничение или типичная ошибка относится именно к теме Instance vs class attributes?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Instance vs class attributes**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Instance vs class attributes**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
 - **Что это:** Instance vs class attributes: Это элемент Python object model, который определяет состояние объекта, поиск поведения или способ композиции типов.
 - **Механизм:** У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.
 - **Ограничение:** Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

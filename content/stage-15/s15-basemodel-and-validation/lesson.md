@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** Pydantic v2 — validation boundary основной FastAPI trajectory.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,7 +12,7 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
@@ -20,12 +20,12 @@
 
 ### Как работает
 
-Проверь четыре состояния: missing, explicit null, invalid type/value и сериализованный результат.
+Проверь четыре состояния: missing, явное значение null, invalid type/value и сериализованный результат.
 
 **BaseModel and validation.** Pydantic `BaseModel` превращает недоверенный input в типизированный объект по core schema; validation errors относятся к границе входа, не бизнес-правилам.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
 Граница Junior: уверенно объясняй `BaseModel and validation` и `BaseModel and validation` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
@@ -33,11 +33,11 @@
 
 В backend эта тема важна в том месте, где применяется `BaseModel and validation`; проверяй именно наблюдаемый contract, а не название инструмента.
 
-## Mental model
+## Модель понимания
 
 Сначала приходит недоверенный input, затем core schema выполняет validation, после чего model_dump управляет serialization.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -51,9 +51,9 @@
 
 ### Можно не учить глубоко
 
-- implementation internals, не влияющие на Junior-код и типичный interview follow-up
+- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### BaseModel and validation: отдельный пример
 
@@ -65,66 +65,66 @@ from pydantic import BaseModel
 
 Это публичный starter contract практики «UserCreate model». Реализация и hidden assertions в lesson Markdown не раскрываются.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Смешать missing и explicit null либо считать coercion бизнес-валидацией.
+Смешать missing и явное значение null либо считать coercion бизнес-валидацией.
 
-## Practice
+## Практика
 
-**A · Prediction/reasoning.** Предскажи результат минимального примера для `BaseModel and validation` до запуска.
+**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для `BaseModel and validation` до запуска.
 
-**B · Find the bug.** Найди нарушение `BaseModel and validation` и объясни конкретное последствие.
+**B · Найди ошибку.** Найди нарушение `BaseModel and validation` и объясни конкретное последствие.
 
-**E · Interview explanation.** Дай ответ про BaseModel and validation за 60 секунд: определение, механизм, пример, ограничение.
+**E · Ответ на собеседовании.** Дай ответ про BaseModel and validation за 60 секунд: определение, механизм, пример, ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое BaseModel and validation и какой механизм здесь важно понимать Junior-разработчику?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какое ограничение или типичная ошибка относится именно к теме BaseModel and validation?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
 BaseModel and validation: Это часть Pydantic v2 boundary между недоверенным input, validated model и serialized output.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> BaseModel and validation — тема, в которой я сначала фиксирую `BaseModel and validation`, затем объясняю `BaseModel and validation` на коротком примере. Ключевой механизм: Проверь четыре состояния: missing, explicit null, invalid type/value и сериализованный результат. Главная практическая ошибка — Смешать missing и explicit null либо считать coercion бизнес-валидацией.
+> BaseModel and validation — тема, в которой я сначала фиксирую `BaseModel and validation`, затем объясняю `BaseModel and validation` на коротком примере. Ключевой механизм: Проверь четыре состояния: missing, явное значение null, invalid type/value и сериализованный результат. Главная практическая ошибка — Смешать missing и явное значение null либо считать coercion бизнес-валидацией.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какое ограничение или типичная ошибка относится именно к теме BaseModel and validation?**
 
-Смешать missing и explicit null либо считать coercion бизнес-валидацией.
+Смешать missing и явное значение null либо считать coercion бизнес-валидацией.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - BaseModel and validation
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Смешать missing и explicit null либо считать coercion бизнес-валидацией.
+- Смешать missing и явное значение null либо считать coercion бизнес-валидацией.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какое ограничение или типичная ошибка относится именно к теме BaseModel and validation?
 
@@ -134,17 +134,17 @@ BaseModel and validation: Это часть Pydantic v2 boundary между не
 
 Pydantic UserCreate: username min_length=3, age 14..120.
 
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
-## Cheat sheet
+Работай в main.py. Не меняй публичные имена и сигнатуры: скрытые тесты импортируют их напрямую. Проверь основной сценарий, граничные значения, повторные вызовы и распространение ошибок.
+## Шпаргалка
 
 Перед собеседованием запомни:
 
 - **Что это:** BaseModel and validation: Это часть Pydantic v2 boundary между недоверенным input, validated model и serialized output.
 - **Механизм:** Сначала приходит недоверенный input, затем core schema выполняет validation, после чего model_dump управляет serialization.
-- **Ограничение:** Смешать missing и explicit null либо считать coercion бизнес-валидацией.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Смешать missing и явное значение null либо считать coercion бизнес-валидацией.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

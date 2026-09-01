@@ -3,7 +3,7 @@
   "slug": "s27-microservices",
   "title": "Microservices",
   "module_slug": "stage-27",
-  "module_title": "Stage 27 · Architecture and Useful Patterns",
+  "module_title": "Этап 27 · Architecture and Useful Patterns",
   "module_order": 27,
   "order": 337,
   "duration": 10,
@@ -14,7 +14,7 @@
     "network/failure/observability cost",
     "not “many folders” or “many technologies”."
   ],
-  "description": "P2 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P2 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P2",

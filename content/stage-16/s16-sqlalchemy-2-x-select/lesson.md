@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** ORM/SQLAlchemy явно встречались в 4/18, но Session/transaction знание фундаментально для FastAPI backend.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-SQLAlchemy 2.x `select()` builds an explicit SQL expression executed through Session.
+SQLAlchemy 2.x `select()` строит явное SQL expression, выполняемое через Session.
 
 ### Как работает
 
-`where` adds predicates; `session.scalars(statement)` returns the first selected entity/value column; `one_or_none` enforces at most one row while `first` merely takes one.
+`where` добавляет predicates; `session.scalars(statement)` возвращает первую выбранную entity или value column; `one_or_none` требует не больше одной row, а `first` просто берёт одну.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Choose result method according to cardinality instead of silently ignoring duplicate rows.
+Result method выбирают по ожидаемой cardinality, а не скрывают duplicate rows.
 
-## Mental model
+## Модель понимания
 
 Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -49,9 +49,9 @@ Choose result method according to cardinality instead of silently ignoring dupli
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### SQLAlchemy 2.x `select`: отдельный пример
 
@@ -62,71 +62,71 @@ def active_users_statement(User):
 
 Это публичный starter contract практики «SQLAlchemy select». Реализация и hidden assertions в lesson Markdown не раскрываются.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Using `.first()` where uniqueness is required hides duplicate-data bugs that `.one_or_none()` would expose.
+`.first()` там, где требуется уникальность, скрывает duplicate-data bug, который показал бы `.one_or_none()`.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the ``select`` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере ``select`` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates ``where`` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий ``where``, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates ``select`` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие ``select``, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain SQLAlchemy 2.x `select` in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни SQLAlchemy 2.x `select` за 45–60 секунд и назови одно ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое SQLAlchemy 2.x `select` и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с SQLAlchemy 2.x `select`?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-SQLAlchemy 2.x `select()` builds an explicit SQL expression executed through Session.
+SQLAlchemy 2.x `select()` строит явное SQL expression, выполняемое через Session.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> SQLAlchemy 2.x `select()` builds an explicit SQL expression executed through Session. `where` adds predicates; `session.scalars(statement)` returns the first selected entity/value column; `one_or_none` enforces at most one row while `first` merely takes one. Важное ограничение: Choose result method according to cardinality instead of silently ignoring duplicate rows.
+> SQLAlchemy 2.x `select()` строит явное SQL expression, выполняемое через Session. `where` добавляет predicates; `session.scalars(statement)` возвращает первую выбранную entity или value column; `one_or_none` требует не больше одной row, а `first` просто берёт одну. Важное ограничение: Result method выбирают по ожидаемой cardinality, а не скрывают duplicate rows.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с SQLAlchemy 2.x `select`?**
 
-Using `.first()` where uniqueness is required hides duplicate-data bugs that `.one_or_none()` would expose.
+`.first()` там, где требуется уникальность, скрывает duplicate-data bug, который показал бы `.one_or_none()`.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - `select`
 - `where`
 - result/scalars
 - `.one_or_none`
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Using `.first()` where uniqueness is required hides duplicate-data bugs that `.one_or_none()` would expose.
+- `.first()` там, где требуется уникальность, скрывает duplicate-data bug, который показал бы `.one_or_none()`.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с SQLAlchemy 2.x `select`?
 
@@ -136,17 +136,17 @@ Using `.first()` where uniqueness is required hides duplicate-data bugs that `.o
 
 active_users_statement(User): select active true, order by id.
 
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
-## Cheat sheet
+Работай в main.py. Не меняй публичные имена и сигнатуры: скрытые тесты импортируют их напрямую. Проверь основной сценарий, граничные значения, повторные вызовы и распространение ошибок.
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** SQLAlchemy 2.x `select()` builds an explicit SQL expression executed through Session.
+- **Что это:** SQLAlchemy 2.x `select()` строит явное SQL expression, выполняемое через Session.
 - **Механизм:** Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
-- **Ограничение:** Using `.first()` where uniqueness is required hides duplicate-data bugs that `.one_or_none()` would expose.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** `.first()` там, где требуется уникальность, скрывает duplicate-data bug, который показал бы `.one_or_none()`.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

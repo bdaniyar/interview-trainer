@@ -1,37 +1,37 @@
 [
   {
-    "question": "Что такое Engine and connection pool и как это работает?",
+    "question": "Что такое Engine and пулом соединений и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "Engine and connection pool"
+      "Engine and пулом соединений"
     ],
-    "short_answer": "SQLAlchemy Engine owns the SQL dialect and connection pool; it is a long-lived application-level factory, not an ORM Session.",
-    "junior_answer": "SQLAlchemy Engine owns the SQL dialect and connection pool; it is a long-lived application-level factory, not an ORM Session. A Session checks out a connection when SQL is needed and returns it according to transaction/session lifecycle. Важное ограничение: Pool size must match database capacity and workload; creating an engine per request defeats pooling.",
-    "follow_up_question": "Какая типичная ошибка связана с Engine and connection pool?",
-    "follow_up_answer": "A leaked Session can keep a transaction/connection checked out until the pool is exhausted.",
+    "short_answer": "SQLAlchemy Engine владеет Диалектом SQL и пулом соединений; это долгоживущая фабрика уровня приложения, а не ORM Session.",
+    "junior_answer": "SQLAlchemy Engine владеет Диалектом SQL и пулом соединений; это долгоживущая фабрика уровня приложения, а не ORM Session. Session получает connection, когда нужен SQL, и возвращает его согласно transaction и session lifecycle. Важное ограничение: Pool size согласуют с возможностями БД и workload; новый Engine на каждый request уничтожает пользу pooling.",
+    "follow_up_question": "Какая типичная ошибка связана с Engine and пулом соединений?",
+    "follow_up_answer": "Незакрытая Session удерживает transaction или connection, пока pool не исчерпается.",
     "expected_answer": {
       "must_mention": [
-        "Engine and connection pool"
+        "Engine and пулом соединений"
       ],
       "good_additions": [
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "A leaked Session can keep a transaction/connection checked out until the pool is exhausted.",
+        "Незакрытая Session удерживает transaction или connection, пока pool не исчерпается.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "A leaked Session can keep a transaction/connection checked out until the pool is exhausted."
+        "Незакрытая Session удерживает transaction или connection, пока pool не исчерпается."
       ],
       "follow_up_questions": [
-        "Какая типичная ошибка связана с Engine and connection pool?"
+        "Какая типичная ошибка связана с Engine and пулом соединений?"
       ]
     },
     "follow_ups": [
-      "Какая типичная ошибка связана с Engine and connection pool?"
+      "Какая типичная ошибка связана с Engine and пулом соединений?"
     ],
     "tags": [
       "stage-16",
@@ -44,37 +44,37 @@
     ]
   },
   {
-    "question": "Какая типичная ошибка связана с Engine and connection pool?",
+    "question": "Какая типичная ошибка связана с Engine and пулом соединений?",
     "level": "follow_up",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "one short code/result example",
-      "A leaked Session can keep a transaction/connection checked out until the pool is exhausted."
+      "один короткий пример кода с результатом",
+      "Незакрытая Session удерживает transaction или connection, пока pool не исчерпается."
     ],
-    "short_answer": "A leaked Session can keep a transaction/connection checked out until the pool is exhausted.",
-    "junior_answer": "A leaked Session can keep a transaction/connection checked out until the pool is exhausted.",
-    "follow_up_question": "Что такое Engine and connection pool и как это работает?",
-    "follow_up_answer": "SQLAlchemy Engine owns the SQL dialect and connection pool; it is a long-lived application-level factory, not an ORM Session. A Session checks out a connection when SQL is needed and returns it according to transaction/session lifecycle. Важное ограничение: Pool size must match database capacity and workload; creating an engine per request defeats pooling.",
+    "short_answer": "Незакрытая Session удерживает transaction или connection, пока pool не исчерпается.",
+    "junior_answer": "Незакрытая Session удерживает transaction или connection, пока pool не исчерпается.",
+    "follow_up_question": "Что такое Engine and пулом соединений и как это работает?",
+    "follow_up_answer": "SQLAlchemy Engine владеет Диалектом SQL и пулом соединений; это долгоживущая фабрика уровня приложения, а не ORM Session. Session получает connection, когда нужен SQL, и возвращает его согласно transaction и session lifecycle. Важное ограничение: Pool size согласуют с возможностями БД и workload; новый Engine на каждый request уничтожает пользу pooling.",
     "expected_answer": {
       "must_mention": [
-        "one short code/result example"
+        "один короткий пример кода с результатом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "A leaked Session can keep a transaction/connection checked out until the pool is exhausted."
+        "Незакрытая Session удерживает transaction или connection, пока pool не исчерпается."
       ],
       "red_flags": [
-        "A leaked Session can keep a transaction/connection checked out until the pool is exhausted."
+        "Незакрытая Session удерживает transaction или connection, пока pool не исчерпается."
       ],
       "follow_up_questions": [
-        "Что такое Engine and connection pool и как это работает?"
+        "Что такое Engine and пулом соединений и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что такое Engine and connection pool и как это работает?"
+      "Что такое Engine and пулом соединений и как это работает?"
     ],
     "tags": [
       "stage-16",

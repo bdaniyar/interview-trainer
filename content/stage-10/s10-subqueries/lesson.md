@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: high · 12 минут.** SQL/relational DB явно встречались в 15/18 — один из главных P0-разделов.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-A subquery is a query used as an expression or table source inside another statement.
+Subquery — запрос, используемый как expression или table source внутри другого SQL statement.
 
 ### Как работает
 
-A scalar subquery must return at most one row; `IN` compares against a set of values; a FROM subquery exposes a derived table with an alias.
+Scalar subquery должен вернуть не больше одной row; `IN` сравнивает с набором values; subquery в FROM создаёт derived table с alias.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Prefer the form that expresses intent clearly. Performance depends on the planner and data, not a universal 'JOIN is faster' rule.
+Выбирай форму по ясности смысла. Производительность зависит от planner и данных, поэтому универсального правила «JOIN всегда быстрее» нет.
 
-## Mental model
+## Модель понимания
 
 Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -44,13 +44,13 @@ Prefer the form that expresses intent clearly. Performance depends on the planne
 
 ### Полезно
 
-- one short code/result example
+- один короткий пример кода с результатом
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Subqueries: отдельный пример
 
@@ -62,23 +62,23 @@ WHERE total > (SELECT AVG(total) FROM invoices);
 
 Scalar subquery вычисляет среднее один раз для сравнения каждой invoice.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-A scalar subquery returning multiple rows raises an error; `NOT IN` with NULL can also produce surprising UNKNOWN results.
+Scalar subquery с несколькими rows вызывает ошибку, а `NOT IN` при наличии NULL может дать неожиданный UNKNOWN.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `scalar` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `scalar` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `table subquery` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `table subquery`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `scalar` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `scalar`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Subqueries in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Subqueries за 45–60 секунд и назови одно ограничение.
 
-## SQL practice
+## Практика SQL
 
 ### Заказы выше среднего
 
@@ -112,7 +112,7 @@ CREATE TABLE order_items (
 );
 ```
 
-Seed:
+Начальные данные:
 
 ```sql
 INSERT INTO users VALUES
@@ -131,76 +131,76 @@ INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,1
 
 **Вопрос:** Найди orders с total выше среднего total всех orders.
 
-Expected columns: id, total. Comparison: unordered.
+Ожидаемые столбцы: id, total. Сравнение: без учёта порядка строк.
 
-SQL runner пока не подключён: выполни запрос в локальном PostgreSQL и сверь result с rubric.
+Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Subqueries и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Subqueries?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-A subquery is a query used as an expression or table source inside another statement.
+Subquery — запрос, используемый как expression или table source внутри другого SQL statement.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> A subquery is a query used as an expression or table source inside another statement. A scalar subquery must return at most one row; `IN` compares against a set of values; a FROM subquery exposes a derived table with an alias. Важное ограничение: Prefer the form that expresses intent clearly. Performance depends on the planner and data, not a universal 'JOIN is faster' rule.
+> Subquery — запрос, используемый как expression или table source внутри другого SQL statement. Scalar subquery должен вернуть не больше одной row; `IN` сравнивает с набором values; subquery в FROM создаёт derived table с alias. Важное ограничение: Выбирай форму по ясности смысла. Производительность зависит от planner и данных, поэтому универсального правила «JOIN всегда быстрее» нет.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Subqueries?**
 
-A scalar subquery returning multiple rows raises an error; `NOT IN` with NULL can also produce surprising UNKNOWN results.
+Scalar subquery с несколькими rows вызывает ошибку, а `NOT IN` при наличии NULL может дать неожиданный UNKNOWN.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - scalar
 - table subquery
 - `IN`
 - nested aggregation
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- A scalar subquery returning multiple rows raises an error; `NOT IN` with NULL can also produce surprising UNKNOWN results.
+- Scalar subquery с несколькими rows вызывает ошибку, а `NOT IN` при наличии NULL может дать неожиданный UNKNOWN.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Subqueries?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Subqueries**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Subqueries**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** A subquery is a query used as an expression or table source inside another statement.
+- **Что это:** Subquery — запрос, используемый как expression или table source внутри другого SQL statement.
 - **Механизм:** Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
-- **Ограничение:** A scalar subquery returning multiple rows raises an error; `NOT IN` with NULL can also produce surprising UNKNOWN results.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Scalar subquery с несколькими rows вызывает ошибку, а `NOT IN` при наличии NULL может дать неожиданный UNKNOWN.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

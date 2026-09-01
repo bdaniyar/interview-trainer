@@ -6,7 +6,7 @@
     "interview_probability": "high",
     "answer": [
       "snapshots",
-      "readers/writers",
+      "readers/клиенты записи",
       "old row versions",
       "vacuum awareness"
     ],
@@ -17,7 +17,7 @@
     "expected_answer": {
       "must_mention": [
         "snapshots",
-        "readers/writers",
+        "readers/клиенты записи",
         "old row versions",
         "vacuum awareness"
       ],

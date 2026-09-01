@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: high · 12 минут.** SQL/relational DB явно встречались в 15/18 — один из главных P0-разделов.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-`ORDER BY` defines result order; `LIMIT` bounds rows and `OFFSET` skips rows for simple pagination.
+`ORDER BY` задаёт порядок результата, `LIMIT` ограничивает rows, а `OFFSET` пропускает строки для простой pagination.
 
 ### Как работает
 
-Multiple order columns are evaluated left to right. A unique tie-breaker such as id is needed for deterministic pages when primary sort values tie.
+Несколько полей сортировки применяются слева направо. Уникальный tie-breaker вроде id нужен для детерминированных страниц при одинаковом основном значении.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Large OFFSET makes the database scan/discard earlier rows and concurrent inserts can shift page boundaries; keyset pagination scales better.
+Большой OFFSET заставляет БД просмотреть и отбросить предыдущие rows, а concurrent inserts сдвигают границы страниц; keyset pagination масштабируется лучше.
 
-## Mental model
+## Модель понимания
 
 Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -43,13 +43,13 @@ Large OFFSET makes the database scan/discard earlier rows and concurrent inserts
 
 ### Полезно
 
-- one short code/result example
+- один короткий пример кода с результатом
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### ORDER BY, LIMIT and OFFSET: отдельный пример
 
@@ -62,23 +62,23 @@ LIMIT 20 OFFSET 20;
 
 Уникальный `id` — tie-breaker: страницы остаются детерминированными при одинаковом времени.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Using LIMIT/OFFSET without a stable unique ordering returns duplicated or missing rows across pages.
+LIMIT/OFFSET без стабильного уникального ordering возвращает пропущенные или повторные rows между страницами.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `deterministic ordering` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `deterministic ordering` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `multi-column ordering` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `multi-column ordering`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `deterministic ordering` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `deterministic ordering`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain ORDER BY, LIMIT and OFFSET in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни ORDER BY, LIMIT and OFFSET за 45–60 секунд и назови одно ограничение.
 
-## SQL practice
+## Практика SQL
 
 ### Последние два заказа
 
@@ -112,7 +112,7 @@ CREATE TABLE order_items (
 );
 ```
 
-Seed:
+Начальные данные:
 
 ```sql
 INSERT INTO users VALUES
@@ -131,9 +131,9 @@ INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,1
 
 **Вопрос:** Верни два последних заказа по created_at, при равенстве — больший id первым.
 
-Expected columns: id, created_at. Comparison: ordered.
+Ожидаемые столбцы: id, created_at. Сравнение: с учётом порядка строк.
 
-SQL runner пока не подключён: выполни запрос в локальном PostgreSQL и сверь result с rubric.
+Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
 
 ### Вторая страница
 
@@ -167,7 +167,7 @@ CREATE TABLE order_items (
 );
 ```
 
-Seed:
+Начальные данные:
 
 ```sql
 INSERT INTO users VALUES
@@ -186,85 +186,85 @@ INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,1
 
 **Вопрос:** Верни вторую страницу пользователей размера 2 с устойчивым order по id.
 
-Expected columns: id, email. Comparison: ordered.
+Ожидаемые столбцы: id, email. Сравнение: с учётом порядка строк.
 
-SQL runner пока не подключён: выполни запрос в локальном PostgreSQL и сверь result с rubric.
+Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
 
-## Debugging practice
+## Практика: Отладка
 
 ### Missing deterministic order
 
 **Сценарий:** LIMIT 20 иногда возвращает другой набор строк.
 
-**Rubric:** Добавить ORDER BY с уникальным tie-breaker; без него SQL не обещает порядок.
+**Критерии ответа:** Добавить ORDER BY с уникальным tie-breaker; без него SQL не обещает порядок.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое ORDER BY, LIMIT and OFFSET и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с ORDER BY, LIMIT and OFFSET?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-`ORDER BY` defines result order; `LIMIT` bounds rows and `OFFSET` skips rows for simple pagination.
+`ORDER BY` задаёт порядок результата, `LIMIT` ограничивает rows, а `OFFSET` пропускает строки для простой pagination.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> `ORDER BY` defines result order; `LIMIT` bounds rows and `OFFSET` skips rows for simple pagination. Multiple order columns are evaluated left to right. A unique tie-breaker such as id is needed for deterministic pages when primary sort values tie. Важное ограничение: Large OFFSET makes the database scan/discard earlier rows and concurrent inserts can shift page boundaries; keyset pagination scales better.
+> `ORDER BY` задаёт порядок результата, `LIMIT` ограничивает rows, а `OFFSET` пропускает строки для простой pagination. Несколько полей сортировки применяются слева направо. Уникальный tie-breaker вроде id нужен для детерминированных страниц при одинаковом основном значении. Важное ограничение: Большой OFFSET заставляет БД просмотреть и отбросить предыдущие rows, а concurrent inserts сдвигают границы страниц; keyset pagination масштабируется лучше.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с ORDER BY, LIMIT and OFFSET?**
 
-Using LIMIT/OFFSET without a stable unique ordering returns duplicated or missing rows across pages.
+LIMIT/OFFSET без стабильного уникального ordering возвращает пропущенные или повторные rows между страницами.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - deterministic ordering
 - multi-column ordering
 - pagination caveats
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Using LIMIT/OFFSET without a stable unique ordering returns duplicated or missing rows across pages.
+- LIMIT/OFFSET без стабильного уникального ordering возвращает пропущенные или повторные rows между страницами.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с ORDER BY, LIMIT and OFFSET?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **ORDER BY, LIMIT and OFFSET**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **ORDER BY, LIMIT and OFFSET**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** `ORDER BY` defines result order; `LIMIT` bounds rows and `OFFSET` skips rows for simple pagination.
+- **Что это:** `ORDER BY` задаёт порядок результата, `LIMIT` ограничивает rows, а `OFFSET` пропускает строки для простой pagination.
 - **Механизм:** Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
-- **Ограничение:** Using LIMIT/OFFSET without a stable unique ordering returns duplicated or missing rows across pages.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** LIMIT/OFFSET без стабильного уникального ordering возвращает пропущенные или повторные rows между страницами.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

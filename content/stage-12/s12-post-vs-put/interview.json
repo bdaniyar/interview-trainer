@@ -5,7 +5,7 @@
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "server-selected vs client-known resource identifier",
+      "идентификатор ресурса выбирает сервер или заранее знает клиент",
       "creation/action semantics"
     ],
     "short_answer": "POST vs PUT: Это часть наблюдаемого HTTP contract: method/target/headers/body на входе и status/headers/body на выходе.",
@@ -14,7 +14,7 @@
     "follow_up_answer": "Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency.",
     "expected_answer": {
       "must_mention": [
-        "server-selected vs client-known resource identifier",
+        "идентификатор ресурса выбирает сервер или заранее знает клиент",
         "creation/action semantics"
       ],
       "good_additions": [

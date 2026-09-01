@@ -7,7 +7,7 @@
     "answer": [
       "annotations are metadata",
       "not runtime validation by default",
-      "relationship with FastAPI/Pydantic",
+      "связь с FastAPI и Pydantic",
       "return annotations"
     ],
     "short_answer": "Function annotations: Это часть контракта Python function: важно различать definition time, call time, signature и разрешение имён.",
@@ -18,7 +18,7 @@
       "must_mention": [
         "annotations are metadata",
         "not runtime validation by default",
-        "relationship with FastAPI/Pydantic",
+        "связь с FastAPI и Pydantic",
         "return annotations"
       ],
       "good_additions": [

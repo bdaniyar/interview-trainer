@@ -10,10 +10,10 @@
       "instance namespace",
       "class namespace"
     ],
-    "short_answer": "A class is an object describing behavior and class attributes; an instance has its own identity and instance namespace.",
-    "junior_answer": "A class is an object describing behavior and class attributes; an instance has its own identity and instance namespace. Attribute lookup starts on the instance, then follows the class MRO; methods found on the class become bound methods when read through an instance. Важное ограничение: A mutable class attribute is shared by instances until an instance shadows the name.",
+    "short_answer": "Class — объект, описывающий поведение и class attributes; instance имеет собственную identity и instance namespace.",
+    "junior_answer": "Class — объект, описывающий поведение и class attributes; instance имеет собственную identity и instance namespace. Поиск атрибута начинается в instance, затем идёт по MRO класса; function на классе при чтении через instance превращается в bound method. Важное ограничение: Изменяемый class attribute разделяется между экземплярами, пока конкретный instance не затенит имя.",
     "follow_up_question": "Какая типичная ошибка связана с Class, instance and attributes?",
-    "follow_up_answer": "Defining `items = []` on the class for per-instance data leaks mutations between all instances.",
+    "follow_up_answer": "`items = []` на классе для данных отдельного объекта переносит мутации между всеми instances.",
     "expected_answer": {
       "must_mention": [
         "class object",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Defining `items = []` on the class for per-instance data leaks mutations between all instances.",
+        "`items = []` на классе для данных отдельного объекта переносит мутации между всеми instances.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Defining `items = []` on the class for per-instance data leaks mutations between all instances."
+        "`items = []` на классе для данных отдельного объекта переносит мутации между всеми instances."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Class, instance and attributes?"
@@ -56,12 +56,12 @@
     "interview_probability": "very_high",
     "answer": [
       "attribute lookup",
-      "Defining `items = []` on the class for per-instance data leaks mutations between all instances."
+      "`items = []` на классе для данных отдельного объекта переносит мутации между всеми instances."
     ],
-    "short_answer": "Defining `items = []` on the class for per-instance data leaks mutations between all instances.",
-    "junior_answer": "Defining `items = []` on the class for per-instance data leaks mutations between all instances.",
+    "short_answer": "`items = []` на классе для данных отдельного объекта переносит мутации между всеми instances.",
+    "junior_answer": "`items = []` на классе для данных отдельного объекта переносит мутации между всеми instances.",
     "follow_up_question": "Что такое Class, instance and attributes и как это работает?",
-    "follow_up_answer": "A class is an object describing behavior and class attributes; an instance has its own identity and instance namespace. Attribute lookup starts on the instance, then follows the class MRO; methods found on the class become bound methods when read through an instance. Важное ограничение: A mutable class attribute is shared by instances until an instance shadows the name.",
+    "follow_up_answer": "Class — объект, описывающий поведение и class attributes; instance имеет собственную identity и instance namespace. Поиск атрибута начинается в instance, затем идёт по MRO класса; function на классе при чтении через instance превращается в bound method. Важное ограничение: Изменяемый class attribute разделяется между экземплярами, пока конкретный instance не затенит имя.",
     "expected_answer": {
       "must_mention": [
         "attribute lookup"
@@ -70,10 +70,10 @@
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Defining `items = []` on the class for per-instance data leaks mutations between all instances."
+        "`items = []` на классе для данных отдельного объекта переносит мутации между всеми instances."
       ],
       "red_flags": [
-        "Defining `items = []` on the class for per-instance data leaks mutations between all instances."
+        "`items = []` на классе для данных отдельного объекта переносит мутации между всеми instances."
       ],
       "follow_up_questions": [
         "Что такое Class, instance and attributes и как это работает?"

@@ -3,7 +3,7 @@
   "slug": "positional-only",
   "title": "Positional-only and keyword-only parameters",
   "module_slug": "stage-03",
-  "module_title": "Stage 3 · Functions, Scope, Closures and Decorators",
+  "module_title": "Этап 3 · Functions, Scope, Closures and Decorators",
   "module_order": 3,
   "order": 21,
   "duration": 10,
@@ -16,7 +16,7 @@
     "readable signatures",
     "backward compatibility."
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": true,
   "has_solution": true,
   "priority": "P1",

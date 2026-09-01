@@ -10,10 +10,10 @@
       "filtering fields",
       "avoiding secret leakage"
     ],
-    "short_answer": "A response model defines the public output schema and filters/serializes endpoint results.",
-    "junior_answer": "A response model defines the public output schema and filters/serializes endpoint results. FastAPI validates the returned value against the model and emits the declared representation in OpenAPI. Важное ограничение: Use a separate public schema so password hashes and internal flags cannot leak from an ORM object.",
+    "short_answer": "Response model задаёт публичную output schema и фильтрует или сериализует результат endpoint.",
+    "junior_answer": "Response model задаёт публичную output schema и фильтрует или сериализует результат endpoint. FastAPI проверяет возвращённое значение по model и публикует представление в OpenAPI. Важное ограничение: Отдельная public schema не позволяет password hash и внутренним flags случайно попасть из ORM object в response.",
     "follow_up_question": "Какая типичная ошибка связана с Response models?",
-    "follow_up_answer": "Returning ORM `__dict__` or an unrestricted model can expose secret/internal fields.",
+    "follow_up_answer": "Возврат ORM `__dict__` или неограниченной model способен раскрыть secret и internal fields.",
     "expected_answer": {
       "must_mention": [
         "contract",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Returning ORM `__dict__` or an unrestricted model can expose secret/internal fields.",
+        "Возврат ORM `__dict__` или неограниченной model способен раскрыть secret и internal fields.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Returning ORM `__dict__` or an unrestricted model can expose secret/internal fields."
+        "Возврат ORM `__dict__` или неограниченной model способен раскрыть secret и internal fields."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Response models?"
@@ -55,25 +55,25 @@
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "one short code/result example",
-      "Returning ORM `__dict__` or an unrestricted model can expose secret/internal fields."
+      "один короткий пример кода с результатом",
+      "Возврат ORM `__dict__` или неограниченной model способен раскрыть secret и internal fields."
     ],
-    "short_answer": "Returning ORM `__dict__` or an unrestricted model can expose secret/internal fields.",
-    "junior_answer": "Returning ORM `__dict__` or an unrestricted model can expose secret/internal fields.",
+    "short_answer": "Возврат ORM `__dict__` или неограниченной model способен раскрыть secret и internal fields.",
+    "junior_answer": "Возврат ORM `__dict__` или неограниченной model способен раскрыть secret и internal fields.",
     "follow_up_question": "Что такое Response models и как это работает?",
-    "follow_up_answer": "A response model defines the public output schema and filters/serializes endpoint results. FastAPI validates the returned value against the model and emits the declared representation in OpenAPI. Важное ограничение: Use a separate public schema so password hashes and internal flags cannot leak from an ORM object.",
+    "follow_up_answer": "Response model задаёт публичную output schema и фильтрует или сериализует результат endpoint. FastAPI проверяет возвращённое значение по model и публикует представление в OpenAPI. Важное ограничение: Отдельная public schema не позволяет password hash и внутренним flags случайно попасть из ORM object в response.",
     "expected_answer": {
       "must_mention": [
-        "one short code/result example"
+        "один короткий пример кода с результатом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Returning ORM `__dict__` or an unrestricted model can expose secret/internal fields."
+        "Возврат ORM `__dict__` или неограниченной model способен раскрыть secret и internal fields."
       ],
       "red_flags": [
-        "Returning ORM `__dict__` or an unrestricted model can expose secret/internal fields."
+        "Возврат ORM `__dict__` или неограниченной model способен раскрыть secret и internal fields."
       ],
       "follow_up_questions": [
         "Что такое Response models и как это работает?"

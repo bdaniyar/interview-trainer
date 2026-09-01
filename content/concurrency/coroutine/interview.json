@@ -8,29 +8,29 @@
       "`async def`",
       "calling async function",
       "coroutine object",
-      "execution begins when awaited/scheduled"
+      "выполнение начинается после ожидания через await или планирования"
     ],
-    "short_answer": "A coroutine function is declared with `async def`; calling it creates a coroutine object rather than executing the body to completion.",
-    "junior_answer": "A coroutine function is declared with `async def`; calling it creates a coroutine object rather than executing the body to completion. The object runs when awaited or scheduled as a Task. Dropping it without either usually produces a 'coroutine was never awaited' warning. Важное ограничение: A coroutine object is single-use and cannot be awaited again after completion.",
+    "short_answer": "Coroutine function объявляется через `async def`; вызов создаёт coroutine object, а не выполняет тело до конца.",
+    "junior_answer": "Coroutine function объявляется через `async def`; вызов создаёт coroutine object, а не выполняет тело до конца. Объект запускается через `await` или scheduling как Task. Потерянная coroutine обычно приводит к warning `coroutine was never awaited`. Важное ограничение: Coroutine object одноразовый: после завершения его нельзя await повторно.",
     "follow_up_question": "Какая типичная ошибка связана с Coroutine function and coroutine object?",
-    "follow_up_answer": "Returning a coroutine object from code that promised a final value leaks the async boundary to the wrong caller.",
+    "follow_up_answer": "Возврат coroutine object из кода, обещавшего готовое значение, переносит async boundary не тому caller.",
     "expected_answer": {
       "must_mention": [
         "`async def`",
         "calling async function",
         "coroutine object",
-        "execution begins when awaited/scheduled"
+        "выполнение начинается после ожидания через await или планирования"
       ],
       "good_additions": [
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Returning a coroutine object from code that promised a final value leaks the async boundary to the wrong caller.",
+        "Возврат coroutine object из кода, обещавшего готовое значение, переносит async boundary не тому caller.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Returning a coroutine object from code that promised a final value leaks the async boundary to the wrong caller."
+        "Возврат coroutine object из кода, обещавшего готовое значение, переносит async boundary не тому caller."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Coroutine function and coroutine object?"
@@ -55,25 +55,25 @@
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "one short code/result example",
-      "Returning a coroutine object from code that promised a final value leaks the async boundary to the wrong caller."
+      "один короткий пример кода с результатом",
+      "Возврат coroutine object из кода, обещавшего готовое значение, переносит async boundary не тому caller."
     ],
-    "short_answer": "Returning a coroutine object from code that promised a final value leaks the async boundary to the wrong caller.",
-    "junior_answer": "Returning a coroutine object from code that promised a final value leaks the async boundary to the wrong caller.",
+    "short_answer": "Возврат coroutine object из кода, обещавшего готовое значение, переносит async boundary не тому caller.",
+    "junior_answer": "Возврат coroutine object из кода, обещавшего готовое значение, переносит async boundary не тому caller.",
     "follow_up_question": "Что такое Coroutine function and coroutine object и как это работает?",
-    "follow_up_answer": "A coroutine function is declared with `async def`; calling it creates a coroutine object rather than executing the body to completion. The object runs when awaited or scheduled as a Task. Dropping it without either usually produces a 'coroutine was never awaited' warning. Важное ограничение: A coroutine object is single-use and cannot be awaited again after completion.",
+    "follow_up_answer": "Coroutine function объявляется через `async def`; вызов создаёт coroutine object, а не выполняет тело до конца. Объект запускается через `await` или scheduling как Task. Потерянная coroutine обычно приводит к warning `coroutine was never awaited`. Важное ограничение: Coroutine object одноразовый: после завершения его нельзя await повторно.",
     "expected_answer": {
       "must_mention": [
-        "one short code/result example"
+        "один короткий пример кода с результатом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Returning a coroutine object from code that promised a final value leaks the async boundary to the wrong caller."
+        "Возврат coroutine object из кода, обещавшего готовое значение, переносит async boundary не тому caller."
       ],
       "red_flags": [
-        "Returning a coroutine object from code that promised a final value leaks the async boundary to the wrong caller."
+        "Возврат coroutine object из кода, обещавшего готовое значение, переносит async boundary не тому caller."
       ],
       "follow_up_questions": [
         "Что такое Coroutine function and coroutine object и как это работает?"

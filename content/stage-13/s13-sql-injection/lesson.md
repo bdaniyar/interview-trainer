@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** Auth/security защищают заявленные JWT/OAuth2/PKCE и API permissions.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,7 +12,7 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
@@ -20,16 +20,16 @@
 
 ### Как работает
 
-Назови asset, threat, trust boundary, server-side verification и безопасный failure result.
+Назови asset, threat, trust boundary, на стороне сервера verification и безопасный failure result.
 
-**parameterized queries.** `parameterized queries` закрывает конкретную threat на trust boundary; проверка выполняется server-side, а отказ не раскрывает лишних данных.
+**parameterized queries.** `parameterized queries` закрывает конкретную threat на trust boundary; проверка выполняется на стороне сервера, а отказ не раскрывает лишних данных.
 
-**ORM does not protect raw string interpolation.** `ORM does not protect raw string interpolation` закрывает конкретную threat на trust boundary; проверка выполняется server-side, а отказ не раскрывает лишних данных.
+**ORM не делает безопасной ручную подстановку строк в SQL.** `ORM does not protect raw string interpolation` закрывает конкретную threat на trust boundary; проверка выполняется на стороне сервера, а отказ не раскрывает лишних данных.
 
-**identifiers/order fields require allowlist.** `list` — ordered mutable sequence: индекс и append удобны, а поиск значения и вставка в начало линейны; aliases видят общие mutations.
+**идентификаторы и поля сортировки требуют списка разрешённых значений.** `list` — ordered mutable sequence: индекс и append удобны, а поиск значения и вставка в начало линейны; aliases видят общие mutations.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
 Граница Junior: уверенно объясняй `parameterized queries` и `ORM does not protect raw string interpolation` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
@@ -37,19 +37,19 @@
 
 В backend эта тема важна в том месте, где применяется `parameterized queries`; проверяй именно наблюдаемый contract, а не название инструмента.
 
-## Mental model
+## Модель понимания
 
 Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
 - parameterized queries
-- ORM does not protect raw string interpolation
-- identifiers/order fields require allowlist
+- ORM не делает безопасной ручную подстановку строк в SQL
+- идентификаторы и поля сортировки требуют списка разрешённых значений
 
 ### Полезно
 
@@ -57,9 +57,9 @@
 
 ### Можно не учить глубоко
 
-- implementation internals, не влияющие на Junior-код и типичный interview follow-up
+- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### SQL injection: отдельный пример
 
@@ -72,95 +72,95 @@ Parameterized query/SQLAlchemy expression; test malicious input как data, н�
 
 Это отдельный debugging example для данного subtopic, а не общий пример stage.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
 Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.
 
-## Practice
+## Практика
 
-**A · Prediction/reasoning.** Предскажи результат минимального примера для `parameterized queries` до запуска.
+**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для `parameterized queries` до запуска.
 
-**B · Find the bug.** Найди нарушение `ORM does not protect raw string interpolation` и объясни конкретное последствие.
+**B · Найди ошибку.** Найди нарушение `ORM does not protect raw string interpolation` и объясни конкретное последствие.
 
-**E · Interview explanation.** Дай ответ про SQL injection за 60 секунд: определение, механизм, пример, ограничение.
+**E · Ответ на собеседовании.** Дай ответ про SQL injection за 60 секунд: определение, механизм, пример, ограничение.
 
-## Debugging practice
+## Практика: Отладка
 
 ### SQL f-string
 
 **Сценарий:** Query строится из user input через f-string.
 
-**Rubric:** Parameterized query/SQLAlchemy expression; test malicious input как data, не SQL syntax.
+**Критерии ответа:** Parameterized query/SQLAlchemy expression; test malicious input как data, не SQL syntax.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое SQL injection и какой механизм здесь важно понимать Junior-разработчику?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какое ограничение или типичная ошибка относится именно к теме SQL injection?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
 SQL injection: Это security boundary: сервер проверяет утверждение и безопасно отказывает, не доверяя клиентскому UI.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> SQL injection — тема, в которой я сначала фиксирую `parameterized queries`, затем объясняю `ORM does not protect raw string interpolation` на коротком примере. Ключевой механизм: Назови asset, threat, trust boundary, server-side verification и безопасный failure result. Главная практическая ошибка — Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.
+> SQL injection — тема, в которой я сначала фиксирую `parameterized queries`, затем объясняю `ORM does not protect raw string interpolation` на коротком примере. Ключевой механизм: Назови asset, threat, trust boundary, на стороне сервера verification и безопасный failure result. Главная практическая ошибка — Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какое ограничение или типичная ошибка относится именно к теме SQL injection?**
 
 Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - parameterized queries
-- ORM does not protect raw string interpolation
-- identifiers/order fields require allowlist
+- ORM не делает безопасной ручную подстановку строк в SQL
+- идентификаторы и поля сортировки требуют списка разрешённых значений
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
 - Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какое ограничение или типичная ошибка относится именно к теме SQL injection?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **SQL injection**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **SQL injection**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
 - **Что это:** SQL injection: Это security boundary: сервер проверяет утверждение и безопасно отказывает, не доверяя клиентскому UI.
 - **Механизм:** Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации.
 - **Ограничение:** Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

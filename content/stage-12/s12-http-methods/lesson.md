@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** HTTP/REST/API явно встречались в 13/18 — P0 внешний контракт backend.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-HTTP methods express intent: GET reads, POST submits/creates/actions, PUT replaces at a known target, PATCH partially changes and DELETE removes.
+HTTP methods выражают намерение: GET читает, POST отправляет или создаёт, PUT заменяет ресурс по известному адресу, PATCH частично меняет, DELETE удаляет.
 
 ### Как работает
 
-Safety means no requested state change; idempotency means repeating the same request has the same intended effect. These are semantics, not automatic framework enforcement.
+Safety означает отсутствие запрошенного изменения состояния, idempotency — одинаковый целевой эффект повторного request. Framework не обеспечивает эти свойства автоматически.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-POST can be made retry-safe with an idempotency key, while a badly designed PUT can still have extra side effects.
+POST можно сделать безопасным для retry через idempotency key, а плохо спроектированный PUT всё равно способен иметь лишние side effects.
 
-## Mental model
+## Модель понимания
 
 Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -49,9 +49,9 @@ POST can be made retry-safe with an idempotency key, while a badly designed PUT 
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### HTTP methods: отдельный пример
 
@@ -63,88 +63,88 @@ X-Request-ID: req-12-3
 
 Зафиксируй method/path/headers/body, status и поведение повторного request. Здесь route и request-id привязаны именно к теме «HTTP methods».
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Choosing a method only by whether it has a body ignores caching, retries and client expectations.
+Выбор method только по наличию body игнорирует cache, retry и ожидания clients.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `GET` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `GET` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `POST` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `POST`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `GET` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `GET`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain HTTP methods in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни HTTP methods за 45–60 секунд и назови одно ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое HTTP methods и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с HTTP methods?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-HTTP methods express intent: GET reads, POST submits/creates/actions, PUT replaces at a known target, PATCH partially changes and DELETE removes.
+HTTP methods выражают намерение: GET читает, POST отправляет или создаёт, PUT заменяет ресурс по известному адресу, PATCH частично меняет, DELETE удаляет.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> HTTP methods express intent: GET reads, POST submits/creates/actions, PUT replaces at a known target, PATCH partially changes and DELETE removes. Safety means no requested state change; idempotency means repeating the same request has the same intended effect. These are semantics, not automatic framework enforcement. Важное ограничение: POST can be made retry-safe with an idempotency key, while a badly designed PUT can still have extra side effects.
+> HTTP methods выражают намерение: GET читает, POST отправляет или создаёт, PUT заменяет ресурс по известному адресу, PATCH частично меняет, DELETE удаляет. Safety означает отсутствие запрошенного изменения состояния, idempotency — одинаковый целевой эффект повторного request. Framework не обеспечивает эти свойства автоматически. Важное ограничение: POST можно сделать безопасным для retry через idempotency key, а плохо спроектированный PUT всё равно способен иметь лишние side effects.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с HTTP methods?**
 
-Choosing a method only by whether it has a body ignores caching, retries and client expectations.
+Выбор method только по наличию body игнорирует cache, retry и ожидания clients.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - GET
 - POST
 - PUT
 - PATCH
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Choosing a method only by whether it has a body ignores caching, retries and client expectations.
+- Выбор method только по наличию body игнорирует cache, retry и ожидания clients.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с HTTP methods?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **HTTP methods**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **HTTP methods**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** HTTP methods express intent: GET reads, POST submits/creates/actions, PUT replaces at a known target, PATCH partially changes and DELETE removes.
+- **Что это:** HTTP methods выражают намерение: GET читает, POST отправляет или создаёт, PUT заменяет ресурс по известному адресу, PATCH частично меняет, DELETE удаляет.
 - **Механизм:** Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
-- **Ограничение:** Choosing a method only by whether it has a body ignores caching, retries and client expectations.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Выбор method только по наличию body игнорирует cache, retry и ожидания clients.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

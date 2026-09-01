@@ -7,28 +7,28 @@
     "answer": [
       "`begin`",
       "atomic service operation",
-      "avoid commits hidden across repository calls"
+      "избегать скрытой фиксации транзакции внутри вызовов репозитория"
     ],
-    "short_answer": "An explicit transaction boundary groups all database changes of one use case into one commit/rollback decision.",
-    "junior_answer": "An explicit transaction boundary groups all database changes of one use case into one commit/rollback decision. `with session.begin()` commits on normal exit and rolls back on exception; repositories should not secretly finalize independent parts. Важное ограничение: Keep external network calls outside the transaction when possible to reduce lock/connection time.",
+    "short_answer": "Explicit transaction boundary объединяет все database changes одного use case в одно решение commit или rollback.",
+    "junior_answer": "Explicit transaction boundary объединяет все database changes одного use case в одно решение commit или rollback. `with session.begin()` делает commit при normal exit и rollback при exception; repositories не должны незаметно фиксировать отдельные части. Важное ограничение: External network calls по возможности выносят за transaction, чтобы не удерживать locks и connection.",
     "follow_up_question": "Какая типичная ошибка связана с Explicit transactions?",
-    "follow_up_answer": "Multiple hidden repository commits make partial data durable when a later step fails.",
+    "follow_up_answer": "Несколько скрытых commits в repository оставляют частичные данные после ошибки позднего шага.",
     "expected_answer": {
       "must_mention": [
         "`begin`",
         "atomic service operation",
-        "avoid commits hidden across repository calls"
+        "избегать скрытой фиксации транзакции внутри вызовов репозитория"
       ],
       "good_additions": [
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Multiple hidden repository commits make partial data durable when a later step fails.",
+        "Несколько скрытых commits в repository оставляют частичные данные после ошибки позднего шага.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Multiple hidden repository commits make partial data durable when a later step fails."
+        "Несколько скрытых commits в repository оставляют частичные данные после ошибки позднего шага."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Explicit transactions?"
@@ -53,25 +53,25 @@
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "one short code/result example",
-      "Multiple hidden repository commits make partial data durable when a later step fails."
+      "один короткий пример кода с результатом",
+      "Несколько скрытых commits в repository оставляют частичные данные после ошибки позднего шага."
     ],
-    "short_answer": "Multiple hidden repository commits make partial data durable when a later step fails.",
-    "junior_answer": "Multiple hidden repository commits make partial data durable when a later step fails.",
+    "short_answer": "Несколько скрытых commits в repository оставляют частичные данные после ошибки позднего шага.",
+    "junior_answer": "Несколько скрытых commits в repository оставляют частичные данные после ошибки позднего шага.",
     "follow_up_question": "Что такое Explicit transactions и как это работает?",
-    "follow_up_answer": "An explicit transaction boundary groups all database changes of one use case into one commit/rollback decision. `with session.begin()` commits on normal exit and rolls back on exception; repositories should not secretly finalize independent parts. Важное ограничение: Keep external network calls outside the transaction when possible to reduce lock/connection time.",
+    "follow_up_answer": "Explicit transaction boundary объединяет все database changes одного use case в одно решение commit или rollback. `with session.begin()` делает commit при normal exit и rollback при exception; repositories не должны незаметно фиксировать отдельные части. Важное ограничение: External network calls по возможности выносят за transaction, чтобы не удерживать locks и connection.",
     "expected_answer": {
       "must_mention": [
-        "one short code/result example"
+        "один короткий пример кода с результатом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Multiple hidden repository commits make partial data durable when a later step fails."
+        "Несколько скрытых commits в repository оставляют частичные данные после ошибки позднего шага."
       ],
       "red_flags": [
-        "Multiple hidden repository commits make partial data durable when a later step fails."
+        "Несколько скрытых commits в repository оставляют частичные данные после ошибки позднего шага."
       ],
       "follow_up_questions": [
         "Что такое Explicit transactions и как это работает?"

@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P1 · вероятность на интервью: medium · 10 минут.** Resume Defense основан только на фактических StudyHub, Hotel Booking и Share Recipe claims.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,7 +12,7 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
@@ -20,20 +20,20 @@
 
 ### Как работает
 
-Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы сценарий ошибки.
 
-**Prometheus collects time-series metrics.** `Prometheus collects time-series metrics` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
+**Prometheus собирает метрики временных рядов.** `Prometheus collects time-series metrics` защищается по реализованному flow: проблема, принятое решение, компромисс, режим отказа и test/metric.
 
-**Grafana visualizes data and dashboards.** `Grafana visualizes data and dashboards` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
+**Grafana визуализирует данные на панелях мониторинга.** `Grafana visualizes data and dashboards` защищается по реализованному flow: проблема, принятое решение, компромисс, режим отказа и test/metric.
 
-**Sentry groups application errors with stack/context.** GROUP BY формирует группы до вычисления aggregates, а HAVING фильтрует уже агрегированные группы.
+**Sentry группирует ошибки приложения вместе со стеком и контекстом.** GROUP BY формирует группы до вычисления aggregates, а HAVING фильтрует уже агрегированные группы.
 
-**candidate configured and used them in a pet-project.** `candidate configured and used them in a pet-project` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
+**кандидат настраивал и использовал эти инструменты в учебном проекте.** `candidate configured and used them in a pet-project` защищается по реализованному flow: проблема, принятое решение, компромисс, режим отказа и test/metric.
 
-**candidate did not administer a production monitoring cluster.** `candidate did not administer a production monitoring cluster` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
+**кандидат не утверждает, что администрировал промышленный кластер мониторинга.** `candidate did not administer a production monitoring cluster` защищается по реализованному flow: проблема, принятое решение, компромисс, режим отказа и test/metric.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
 Граница Junior: уверенно объясняй `Prometheus collects time-series metrics` и `Grafana visualizes data and dashboards` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
@@ -41,30 +41,30 @@
 
 В backend эта тема важна в том месте, где применяется `Prometheus collects time-series metrics`; проверяй именно наблюдаемый contract, а не название инструмента.
 
-## Mental model
+## Модель понимания
 
-Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы.
+Отвечай только о реализованном: problem → own decision → компромисс → test/metric; честно обозначай границы.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
-- Prometheus collects time-series metrics
-- Grafana visualizes data and dashboards
-- Sentry groups application errors with stack/context
-- candidate configured and used them in a pet-project
+- Prometheus собирает метрики временных рядов
+- Grafana визуализирует данные на панелях мониторинга
+- Sentry группирует ошибки приложения вместе со стеком и контекстом
+- кандидат настраивал и использовал эти инструменты в учебном проекте
 
 ### Полезно
 
-- candidate did not administer a production monitoring cluster
+- кандидат не утверждает, что администрировал промышленный кластер мониторинга
 
 ### Можно не учить глубоко
 
-- implementation internals, не влияющие на Junior-код и типичный interview follow-up
+- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Prometheus/Grafana/Sentry: отдельный пример
 
@@ -83,86 +83,86 @@
 
 Этот micro-scenario сформирован из outline конкретного урока и не переиспользуется соседними subtopics.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Игнорировать ограничение механизма и проверять только happy path.
+Игнорировать ограничение механизма и проверять только основной сценарий.
 
-## Practice
+## Практика
 
-**A · Prediction/reasoning.** Предскажи результат минимального примера для `Prometheus collects time-series metrics` до запуска.
+**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для `Prometheus collects time-series metrics` до запуска.
 
-**B · Find the bug.** Найди нарушение `Grafana visualizes data and dashboards` и объясни конкретное последствие.
+**B · Найди ошибку.** Найди нарушение `Grafana visualizes data and dashboards` и объясни конкретное последствие.
 
-**E · Interview explanation.** Дай ответ про Prometheus/Grafana/Sentry за 60 секунд: определение, механизм, пример, ограничение.
+**E · Ответ на собеседовании.** Дай ответ про Prometheus/Grafana/Sentry за 60 секунд: определение, механизм, пример, ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Prometheus/Grafana/Sentry и какой механизм здесь важно понимать Junior-разработчику?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какое ограничение или типичная ошибка относится именно к теме Prometheus/Grafana/Sentry?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
 Prometheus/Grafana/Sentry: это отдельный технический контракт
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
 > Prometheus/Grafana/Sentry — тема, в которой я сначала фиксирую `Prometheus collects time-series metrics`, затем объясняю `Grafana visualizes data and dashboards` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какое ограничение или типичная ошибка относится именно к теме Prometheus/Grafana/Sentry?**
 
-Нужно назвать конкретный failure path и способ его проверить.
+Нужно назвать конкретный сценарий ошибки и способ его проверить.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
-- Prometheus collects time-series metrics
-- Grafana visualizes data and dashboards
-- Sentry groups application errors with stack/context
-- candidate configured and used them in a pet-project
+- Prometheus собирает метрики временных рядов
+- Grafana визуализирует данные на панелях мониторинга
+- Sentry группирует ошибки приложения вместе со стеком и контекстом
+- кандидат настраивал и использовал эти инструменты в учебном проекте
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Игнорировать ограничение механизма и проверять только happy path.
+- Игнорировать ограничение механизма и проверять только основной сценарий.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какое ограничение или типичная ошибка относится именно к теме Prometheus/Grafana/Sentry?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Prometheus/Grafana/Sentry**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Prometheus/Grafana/Sentry**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
 - **Что это:** Prometheus/Grafana/Sentry: это отдельный технический контракт
-- **Механизм:** Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы.
-- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Механизм:** Отвечай только о реализованном: problem → own decision → компромисс → test/metric; честно обозначай границы.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только основной сценарий.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

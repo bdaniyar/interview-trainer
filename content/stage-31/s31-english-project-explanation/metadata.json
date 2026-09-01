@@ -3,7 +3,7 @@
   "slug": "s31-english-project-explanation",
   "title": "English project explanation",
   "module_slug": "stage-31",
-  "module_title": "Stage 31 · HR, Screening and Communication",
+  "module_title": "Этап 31 · HR, Screening and Communication",
   "module_order": 31,
   "order": 383,
   "duration": 10,
@@ -16,7 +16,7 @@
     "explaining async/transaction trade-off",
     "PR description."
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

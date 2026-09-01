@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** Python указан в 18/18; functions/scope/decorators регулярно проверяют на screening.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-LEGB is Python's name lookup order: Local, Enclosing, Global, Builtins.
+LEGB — порядок поиска имени в Python: Local, Enclosing, Global, Builtins.
 
 ### Как работает
 
-A read searches those scopes in order. Assignment inside a function makes the name local unless declared `global` or `nonlocal`, which can cause `UnboundLocalError` when the name is read before local assignment.
+Чтение имени проходит эти области по порядку. Присваивание внутри функции делает имя локальным без `global` или `nonlocal`, поэтому чтение до присваивания может вызвать `UnboundLocalError`.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Shadowing `list`, `id` or another builtin works but makes later calls confusing or broken.
+Имена `list`, `id` и других builtins можно затенить, но последующие вызовы станут запутанными или сломаются.
 
-## Mental model
+## Модель понимания
 
 Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -49,9 +49,9 @@ Shadowing `list`, `id` or another builtin works but makes later calls confusing 
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### LEGB: отдельный пример
 
@@ -70,23 +70,23 @@ print(outer(), label)
 
 Три разных bindings с одним именем находятся на local, enclosing и global уровнях.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Assuming assignment updates a global while Python created a new local binding causes wrong state and `UnboundLocalError`.
+Ожидание, что присваивание изменит global, хотя Python создал local binding, приводит к неверному состоянию и `UnboundLocalError`.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `Local` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `Local` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `Enclosing` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `Enclosing`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `Local` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `Local`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain LEGB in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни LEGB за 45–60 секунд и назови одно ограничение.
 
-## Code prediction
+## Предсказание результата кода
 
 ### LEGB и локальное имя
 
@@ -102,7 +102,7 @@ print(read(), value)
 
 <details><summary>Показать ответ</summary>
 
-Expected:
+Ожидаемый результат:
 
 ```text
 local global
@@ -110,76 +110,76 @@ local global
 
 Assignment внутри функции создаёт local binding и не меняет global binding.
 
-Misconception: `legb`.
+Типичная ошибка мышления: `legb`.
 
 </details>
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое LEGB и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с LEGB?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-LEGB is Python's name lookup order: Local, Enclosing, Global, Builtins.
+LEGB — порядок поиска имени в Python: Local, Enclosing, Global, Builtins.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> LEGB is Python's name lookup order: Local, Enclosing, Global, Builtins. A read searches those scopes in order. Assignment inside a function makes the name local unless declared `global` or `nonlocal`, which can cause `UnboundLocalError` when the name is read before local assignment. Важное ограничение: Shadowing `list`, `id` or another builtin works but makes later calls confusing or broken.
+> LEGB — порядок поиска имени в Python: Local, Enclosing, Global, Builtins. Чтение имени проходит эти области по порядку. Присваивание внутри функции делает имя локальным без `global` или `nonlocal`, поэтому чтение до присваивания может вызвать `UnboundLocalError`. Важное ограничение: Имена `list`, `id` и других builtins можно затенить, но последующие вызовы станут запутанными или сломаются.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с LEGB?**
 
-Assuming assignment updates a global while Python created a new local binding causes wrong state and `UnboundLocalError`.
+Ожидание, что присваивание изменит global, хотя Python создал local binding, приводит к неверному состоянию и `UnboundLocalError`.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - Local
 - Enclosing
 - Global
 - Builtins
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Assuming assignment updates a global while Python created a new local binding causes wrong state and `UnboundLocalError`.
+- Ожидание, что присваивание изменит global, хотя Python создал local binding, приводит к неверному состоянию и `UnboundLocalError`.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с LEGB?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **LEGB**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **LEGB**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** LEGB is Python's name lookup order: Local, Enclosing, Global, Builtins.
+- **Что это:** LEGB — порядок поиска имени в Python: Local, Enclosing, Global, Builtins.
 - **Механизм:** Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
-- **Ограничение:** Assuming assignment updates a global while Python created a new local binding causes wrong state and `UnboundLocalError`.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Ожидание, что присваивание изменит global, хотя Python создал local binding, приводит к неверному состоянию и `UnboundLocalError`.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

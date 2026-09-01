@@ -1,43 +1,43 @@
 [
   {
-    "question": "Как работает `Depends` в FastAPI и каков lifecycle dependency?",
+    "question": "Как работает `Depends` в FastAPI и каков жизненный цикл зависимости?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "зачем DI",
-      "dependency graph",
-      "per-request cache",
-      "yield cleanup"
+      "зачем нужно внедрение зависимостей",
+      "граф зависимостей",
+      "кеш в рамках запроса",
+      "освобождение ресурса после `yield`"
     ],
-    "short_answer": "Depends объявляет dependency graph; FastAPI разрешает его на request, кэширует одинаковые dependencies и выполняет cleanup yield-dependency.",
-    "junior_answer": "`Depends` позволяет endpoint явно объявить, что ему нужны user, Session или settings. FastAPI строит graph по signatures, вызывает dependencies и передаёт результаты в handler. Внутри одного request одинаковая dependency обычно выполняется один раз. Если dependency использует `yield`, код после yield работает как cleanup. В тестах dependency можно override-нуть.",
-    "follow_up_question": "Чем request cache dependency отличается от singleton?",
-    "follow_up_answer": "Результат переиспользуется только внутри одного request; следующий request разрешает dependency заново. Singleton живёт между requests на уровне приложения.",
+    "short_answer": "`Depends` объявляет граф зависимостей; FastAPI разрешает его для запроса, переиспользует одинаковые зависимости и освобождает ресурсы зависимости с `yield`.",
+    "junior_answer": "`Depends` позволяет эндпоинту явно объявить, что ему нужны текущий пользователь, `Session` или настройки. FastAPI строит граф по сигнатурам, вызывает зависимости и передаёт результаты обработчику. Внутри одного запроса одинаковая зависимость обычно выполняется один раз. Если она использует `yield`, код после `yield` освобождает ресурс. В тестах зависимость можно подменить.",
+    "follow_up_question": "Чем кеш зависимости в рамках запроса отличается от singleton?",
+    "follow_up_answer": "Результат переиспользуется только внутри одного запроса; для следующего запроса зависимость вычисляется заново. Singleton живёт между запросами на уровне приложения.",
     "expected_answer": {
       "must_mention": [
-        "зачем DI",
-        "dependency graph",
-        "per-request cache",
-        "yield cleanup"
+        "зачем нужно внедрение зависимостей",
+        "граф зависимостей",
+        "кеш в рамках запроса",
+        "освобождение ресурса после `yield`"
       ],
       "good_additions": [
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Вызвать dependency вручную как обычную функцию и ожидать, что FastAPI разрешит её sub-dependencies.",
+        "Вызвать зависимость вручную как обычную функцию и ожидать, что FastAPI разрешит её вложенные зависимости.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Вызвать dependency вручную как обычную функцию и ожидать, что FastAPI разрешит её sub-dependencies."
+        "Вызвать зависимость вручную как обычную функцию и ожидать, что FastAPI разрешит её вложенные зависимости."
       ],
       "follow_up_questions": [
-        "Чем request cache dependency отличается от singleton?"
+        "Чем кеш зависимости в рамках запроса отличается от singleton?"
       ]
     },
     "follow_ups": [
-      "Чем request cache dependency отличается от singleton?"
+      "Чем кеш зависимости в рамках запроса отличается от singleton?"
     ],
     "tags": [
       "stage-14",
@@ -50,43 +50,43 @@
     ]
   },
   {
-    "question": "Чем request cache dependency отличается от singleton?",
+    "question": "Чем кеш зависимости в рамках запроса отличается от singleton?",
     "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "`Annotated` aliases",
+      "псевдонимы с `Annotated`",
       "`use_cache=False`",
-      "граница dependency/service",
-      "Результат переиспользуется только внутри одного request; следующий request разрешает dependency заново. Singleton живёт между requests на уровне приложения."
+      "граница между зависимостью и сервисом",
+      "Результат переиспользуется только внутри одного запроса; для следующего запроса зависимость вычисляется заново. Singleton живёт между запросами на уровне приложения."
     ],
-    "short_answer": "Результат переиспользуется только внутри одного request; следующий request разрешает dependency заново. Singleton живёт между requests на уровне приложения.",
-    "junior_answer": "Результат переиспользуется только внутри одного request; следующий request разрешает dependency заново. Singleton живёт между requests на уровне приложения.",
-    "follow_up_question": "Как работает `Depends` в FastAPI и каков lifecycle dependency?",
-    "follow_up_answer": "`Depends` позволяет endpoint явно объявить, что ему нужны user, Session или settings. FastAPI строит graph по signatures, вызывает dependencies и передаёт результаты в handler. Внутри одного request одинаковая dependency обычно выполняется один раз. Если dependency использует `yield`, код после yield работает как cleanup. В тестах dependency можно override-нуть.",
+    "short_answer": "Результат переиспользуется только внутри одного запроса; для следующего запроса зависимость вычисляется заново. Singleton живёт между запросами на уровне приложения.",
+    "junior_answer": "Результат переиспользуется только внутри одного запроса; для следующего запроса зависимость вычисляется заново. Singleton живёт между запросами на уровне приложения.",
+    "follow_up_question": "Как работает `Depends` в FastAPI и каков жизненный цикл зависимости?",
+    "follow_up_answer": "`Depends` позволяет эндпоинту явно объявить, что ему нужны текущий пользователь, `Session` или настройки. FastAPI строит граф по сигнатурам, вызывает зависимости и передаёт результаты обработчику. Внутри одного запроса одинаковая зависимость обычно выполняется один раз. Если она использует `yield`, код после `yield` освобождает ресурс. В тестах зависимость можно подменить.",
     "expected_answer": {
       "must_mention": [
-        "`Annotated` aliases",
+        "псевдонимы с `Annotated`",
         "`use_cache=False`",
-        "граница dependency/service"
+        "граница между зависимостью и сервисом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Вызвать dependency вручную как обычную функцию и ожидать, что FastAPI разрешит её sub-dependencies.",
-        "Создать глобальную SQLAlchemy Session и возвращать её всем requests.",
-        "Поместить всю бизнес-логику в огромную dependency graph, которую трудно тестировать отдельно."
+        "Вызвать зависимость вручную как обычную функцию и ожидать, что FastAPI разрешит её вложенные зависимости.",
+        "Создать глобальную SQLAlchemy Session и возвращать её всем запросам.",
+        "Поместить всю бизнес-логику в огромный граф зависимостей, который трудно тестировать отдельно."
       ],
       "red_flags": [
-        "Вызвать dependency вручную как обычную функцию и ожидать, что FastAPI разрешит её sub-dependencies."
+        "Вызвать зависимость вручную как обычную функцию и ожидать, что FastAPI разрешит её вложенные зависимости."
       ],
       "follow_up_questions": [
-        "Как работает `Depends` в FastAPI и каков lifecycle dependency?"
+        "Как работает `Depends` в FastAPI и каков жизненный цикл зависимости?"
       ]
     },
     "follow_ups": [
-      "Как работает `Depends` в FastAPI и каков lifecycle dependency?"
+      "Как работает `Depends` в FastAPI и каков жизненный цикл зависимости?"
     ],
     "tags": [
       "stage-14",

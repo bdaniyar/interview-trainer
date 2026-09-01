@@ -9,10 +9,10 @@
       "selected non-aggregate columns",
       "common errors"
     ],
-    "short_answer": "`GROUP BY` forms groups of rows and returns one result row per unique grouping key.",
-    "junior_answer": "`GROUP BY` forms groups of rows and returns one result row per unique grouping key. Aggregate functions compute inside each group. Selected non-aggregate columns must normally appear in GROUP BY or be functionally determined under DB rules. Важное ограничение: Always state the grain, such as one row per `user_id`, before adding joins that may multiply source rows.",
+    "short_answer": "`GROUP BY` формирует группы rows и возвращает одну result row для каждого уникального grouping key.",
+    "junior_answer": "`GROUP BY` формирует группы rows и возвращает одну result row для каждого уникального grouping key. Aggregate functions считают значения внутри группы. Выбранные неагрегированные columns обычно должны находиться в GROUP BY. Важное ограничение: Сначала назови grain результата, например «одна строка на `user_id`», и только потом добавляй joins, способные размножить source rows.",
     "follow_up_question": "Какая типичная ошибка связана с GROUP BY?",
-    "follow_up_answer": "Grouping after a one-to-many join can double-count totals if the join has a finer grain than the measure.",
+    "follow_up_answer": "Grouping после one-to-many join может посчитать сумму дважды, если grain join мельче измеряемого показателя.",
     "expected_answer": {
       "must_mention": [
         "grouping",
@@ -24,11 +24,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Grouping after a one-to-many join can double-count totals if the join has a finer grain than the measure.",
+        "Grouping после one-to-many join может посчитать сумму дважды, если grain join мельче измеряемого показателя.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Grouping after a one-to-many join can double-count totals if the join has a finer grain than the measure."
+        "Grouping после one-to-many join может посчитать сумму дважды, если grain join мельче измеряемого показателя."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с GROUP BY?"
@@ -53,25 +53,25 @@
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "one short code/result example",
-      "Grouping after a one-to-many join can double-count totals if the join has a finer grain than the measure."
+      "один короткий пример кода с результатом",
+      "Grouping после one-to-many join может посчитать сумму дважды, если grain join мельче измеряемого показателя."
     ],
-    "short_answer": "Grouping after a one-to-many join can double-count totals if the join has a finer grain than the measure.",
-    "junior_answer": "Grouping after a one-to-many join can double-count totals if the join has a finer grain than the measure.",
+    "short_answer": "Grouping после one-to-many join может посчитать сумму дважды, если grain join мельче измеряемого показателя.",
+    "junior_answer": "Grouping после one-to-many join может посчитать сумму дважды, если grain join мельче измеряемого показателя.",
     "follow_up_question": "Что такое GROUP BY и как это работает?",
-    "follow_up_answer": "`GROUP BY` forms groups of rows and returns one result row per unique grouping key. Aggregate functions compute inside each group. Selected non-aggregate columns must normally appear in GROUP BY or be functionally determined under DB rules. Важное ограничение: Always state the grain, such as one row per `user_id`, before adding joins that may multiply source rows.",
+    "follow_up_answer": "`GROUP BY` формирует группы rows и возвращает одну result row для каждого уникального grouping key. Aggregate functions считают значения внутри группы. Выбранные неагрегированные columns обычно должны находиться в GROUP BY. Важное ограничение: Сначала назови grain результата, например «одна строка на `user_id`», и только потом добавляй joins, способные размножить source rows.",
     "expected_answer": {
       "must_mention": [
-        "one short code/result example"
+        "один короткий пример кода с результатом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Grouping after a one-to-many join can double-count totals if the join has a finer grain than the measure."
+        "Grouping после one-to-many join может посчитать сумму дважды, если grain join мельче измеряемого показателя."
       ],
       "red_flags": [
-        "Grouping after a one-to-many join can double-count totals if the join has a finer grain than the measure."
+        "Grouping после one-to-many join может посчитать сумму дважды, если grain join мельче измеряемого показателя."
       ],
       "follow_up_questions": [
         "Что такое GROUP BY и как это работает?"

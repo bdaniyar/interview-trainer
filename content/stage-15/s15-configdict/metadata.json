@@ -3,7 +3,7 @@
   "slug": "s15-configdict",
   "title": "ConfigDict",
   "module_slug": "stage-15",
-  "module_title": "Stage 15 · Pydantic v2",
+  "module_title": "Этап 15 · Pydantic v2",
   "module_order": 15,
   "order": 211,
   "duration": 10,
@@ -15,7 +15,7 @@
     "extra fields",
     "aliases."
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

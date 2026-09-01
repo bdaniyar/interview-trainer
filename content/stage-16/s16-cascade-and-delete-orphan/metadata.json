@@ -3,7 +3,7 @@
   "slug": "s16-cascade-and-delete-orphan",
   "title": "Cascade and delete-orphan",
   "module_slug": "stage-16",
-  "module_title": "Stage 16 · SQLAlchemy 2.x",
+  "module_title": "Этап 16 · SQLAlchemy 2.x",
   "module_order": 16,
   "order": 228,
   "duration": 10,
@@ -14,7 +14,7 @@
     "ownership",
     "dangerous deletes."
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

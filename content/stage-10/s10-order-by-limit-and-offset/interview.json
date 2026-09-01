@@ -9,10 +9,10 @@
       "multi-column ordering",
       "pagination caveats"
     ],
-    "short_answer": "`ORDER BY` defines result order; `LIMIT` bounds rows and `OFFSET` skips rows for simple pagination.",
-    "junior_answer": "`ORDER BY` defines result order; `LIMIT` bounds rows and `OFFSET` skips rows for simple pagination. Multiple order columns are evaluated left to right. A unique tie-breaker such as id is needed for deterministic pages when primary sort values tie. Важное ограничение: Large OFFSET makes the database scan/discard earlier rows and concurrent inserts can shift page boundaries; keyset pagination scales better.",
+    "short_answer": "`ORDER BY` задаёт порядок результата, `LIMIT` ограничивает rows, а `OFFSET` пропускает строки для простой pagination.",
+    "junior_answer": "`ORDER BY` задаёт порядок результата, `LIMIT` ограничивает rows, а `OFFSET` пропускает строки для простой pagination. Несколько полей сортировки применяются слева направо. Уникальный tie-breaker вроде id нужен для детерминированных страниц при одинаковом основном значении. Важное ограничение: Большой OFFSET заставляет БД просмотреть и отбросить предыдущие rows, а concurrent inserts сдвигают границы страниц; keyset pagination масштабируется лучше.",
     "follow_up_question": "Какая типичная ошибка связана с ORDER BY, LIMIT and OFFSET?",
-    "follow_up_answer": "Using LIMIT/OFFSET without a stable unique ordering returns duplicated or missing rows across pages.",
+    "follow_up_answer": "LIMIT/OFFSET без стабильного уникального ordering возвращает пропущенные или повторные rows между страницами.",
     "expected_answer": {
       "must_mention": [
         "deterministic ordering",
@@ -24,11 +24,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Using LIMIT/OFFSET without a stable unique ordering returns duplicated or missing rows across pages.",
+        "LIMIT/OFFSET без стабильного уникального ordering возвращает пропущенные или повторные rows между страницами.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Using LIMIT/OFFSET without a stable unique ordering returns duplicated or missing rows across pages."
+        "LIMIT/OFFSET без стабильного уникального ordering возвращает пропущенные или повторные rows между страницами."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с ORDER BY, LIMIT and OFFSET?"
@@ -53,25 +53,25 @@
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "one short code/result example",
-      "Using LIMIT/OFFSET without a stable unique ordering returns duplicated or missing rows across pages."
+      "один короткий пример кода с результатом",
+      "LIMIT/OFFSET без стабильного уникального ordering возвращает пропущенные или повторные rows между страницами."
     ],
-    "short_answer": "Using LIMIT/OFFSET without a stable unique ordering returns duplicated or missing rows across pages.",
-    "junior_answer": "Using LIMIT/OFFSET without a stable unique ordering returns duplicated or missing rows across pages.",
+    "short_answer": "LIMIT/OFFSET без стабильного уникального ordering возвращает пропущенные или повторные rows между страницами.",
+    "junior_answer": "LIMIT/OFFSET без стабильного уникального ordering возвращает пропущенные или повторные rows между страницами.",
     "follow_up_question": "Что такое ORDER BY, LIMIT and OFFSET и как это работает?",
-    "follow_up_answer": "`ORDER BY` defines result order; `LIMIT` bounds rows and `OFFSET` skips rows for simple pagination. Multiple order columns are evaluated left to right. A unique tie-breaker such as id is needed for deterministic pages when primary sort values tie. Важное ограничение: Large OFFSET makes the database scan/discard earlier rows and concurrent inserts can shift page boundaries; keyset pagination scales better.",
+    "follow_up_answer": "`ORDER BY` задаёт порядок результата, `LIMIT` ограничивает rows, а `OFFSET` пропускает строки для простой pagination. Несколько полей сортировки применяются слева направо. Уникальный tie-breaker вроде id нужен для детерминированных страниц при одинаковом основном значении. Важное ограничение: Большой OFFSET заставляет БД просмотреть и отбросить предыдущие rows, а concurrent inserts сдвигают границы страниц; keyset pagination масштабируется лучше.",
     "expected_answer": {
       "must_mention": [
-        "one short code/result example"
+        "один короткий пример кода с результатом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Using LIMIT/OFFSET without a stable unique ordering returns duplicated or missing rows across pages."
+        "LIMIT/OFFSET без стабильного уникального ordering возвращает пропущенные или повторные rows между страницами."
       ],
       "red_flags": [
-        "Using LIMIT/OFFSET without a stable unique ordering returns duplicated or missing rows across pages."
+        "LIMIT/OFFSET без стабильного уникального ordering возвращает пропущенные или повторные rows между страницами."
       ],
       "follow_up_questions": [
         "Что такое ORDER BY, LIMIT and OFFSET и как это работает?"

@@ -3,7 +3,7 @@
   "slug": "s14-request-bodies",
   "title": "Request bodies",
   "module_slug": "stage-14",
-  "module_title": "Stage 14 · FastAPI",
+  "module_title": "Этап 14 · FastAPI",
   "module_order": 14,
   "order": 182,
   "duration": 12,
@@ -15,7 +15,7 @@
     "nested models",
     "validation."
   ],
-  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": true,
   "has_solution": true,
   "priority": "P0",

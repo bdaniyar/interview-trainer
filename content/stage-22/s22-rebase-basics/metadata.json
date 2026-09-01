@@ -3,7 +3,7 @@
   "slug": "s22-rebase-basics",
   "title": "rebase basics",
   "module_slug": "stage-22",
-  "module_title": "Stage 22 · Git and GitHub Workflow",
+  "module_title": "Этап 22 · Git and GitHub Workflow",
   "module_order": 22,
   "order": 295,
   "duration": 10,
@@ -15,7 +15,7 @@
     "rewriting hashes",
     "do not casually rebase shared history."
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

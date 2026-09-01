@@ -10,10 +10,10 @@
       "result/scalars",
       "`.one_or_none`"
     ],
-    "short_answer": "SQLAlchemy 2.x `select()` builds an explicit SQL expression executed through Session.",
-    "junior_answer": "SQLAlchemy 2.x `select()` builds an explicit SQL expression executed through Session. `where` adds predicates; `session.scalars(statement)` returns the first selected entity/value column; `one_or_none` enforces at most one row while `first` merely takes one. Важное ограничение: Choose result method according to cardinality instead of silently ignoring duplicate rows.",
+    "short_answer": "SQLAlchemy 2.x `select()` строит явное SQL expression, выполняемое через Session.",
+    "junior_answer": "SQLAlchemy 2.x `select()` строит явное SQL expression, выполняемое через Session. `where` добавляет predicates; `session.scalars(statement)` возвращает первую выбранную entity или value column; `one_or_none` требует не больше одной row, а `first` просто берёт одну. Важное ограничение: Result method выбирают по ожидаемой cardinality, а не скрывают duplicate rows.",
     "follow_up_question": "Какая типичная ошибка связана с SQLAlchemy 2.x `select`?",
-    "follow_up_answer": "Using `.first()` where uniqueness is required hides duplicate-data bugs that `.one_or_none()` would expose.",
+    "follow_up_answer": "`.first()` там, где требуется уникальность, скрывает duplicate-data bug, который показал бы `.one_or_none()`.",
     "expected_answer": {
       "must_mention": [
         "`select`",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Using `.first()` where uniqueness is required hides duplicate-data bugs that `.one_or_none()` would expose.",
+        "`.first()` там, где требуется уникальность, скрывает duplicate-data bug, который показал бы `.one_or_none()`.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Using `.first()` where uniqueness is required hides duplicate-data bugs that `.one_or_none()` would expose."
+        "`.first()` там, где требуется уникальность, скрывает duplicate-data bug, который показал бы `.one_or_none()`."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с SQLAlchemy 2.x `select`?"
@@ -57,12 +57,12 @@
     "answer": [
       "`.first`",
       "multiple rows",
-      "Using `.first()` where uniqueness is required hides duplicate-data bugs that `.one_or_none()` would expose."
+      "`.first()` там, где требуется уникальность, скрывает duplicate-data bug, который показал бы `.one_or_none()`."
     ],
-    "short_answer": "Using `.first()` where uniqueness is required hides duplicate-data bugs that `.one_or_none()` would expose.",
-    "junior_answer": "Using `.first()` where uniqueness is required hides duplicate-data bugs that `.one_or_none()` would expose.",
+    "short_answer": "`.first()` там, где требуется уникальность, скрывает duplicate-data bug, который показал бы `.one_or_none()`.",
+    "junior_answer": "`.first()` там, где требуется уникальность, скрывает duplicate-data bug, который показал бы `.one_or_none()`.",
     "follow_up_question": "Что такое SQLAlchemy 2.x `select` и как это работает?",
-    "follow_up_answer": "SQLAlchemy 2.x `select()` builds an explicit SQL expression executed through Session. `where` adds predicates; `session.scalars(statement)` returns the first selected entity/value column; `one_or_none` enforces at most one row while `first` merely takes one. Важное ограничение: Choose result method according to cardinality instead of silently ignoring duplicate rows.",
+    "follow_up_answer": "SQLAlchemy 2.x `select()` строит явное SQL expression, выполняемое через Session. `where` добавляет predicates; `session.scalars(statement)` возвращает первую выбранную entity или value column; `one_or_none` требует не больше одной row, а `first` просто берёт одну. Важное ограничение: Result method выбирают по ожидаемой cardinality, а не скрывают duplicate rows.",
     "expected_answer": {
       "must_mention": [
         "`.first`",
@@ -72,10 +72,10 @@
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Using `.first()` where uniqueness is required hides duplicate-data bugs that `.one_or_none()` would expose."
+        "`.first()` там, где требуется уникальность, скрывает duplicate-data bug, который показал бы `.one_or_none()`."
       ],
       "red_flags": [
-        "Using `.first()` where uniqueness is required hides duplicate-data bugs that `.one_or_none()` would expose."
+        "`.first()` там, где требуется уникальность, скрывает duplicate-data bug, который показал бы `.one_or_none()`."
       ],
       "follow_up_questions": [
         "Что такое SQLAlchemy 2.x `select` и как это работает?"

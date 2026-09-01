@@ -3,7 +3,7 @@
   "slug": "s27-coupling-and-cohesion",
   "title": "Coupling and cohesion",
   "module_slug": "stage-27",
-  "module_title": "Stage 27 · Architecture and Useful Patterns",
+  "module_title": "Этап 27 · Architecture and Useful Patterns",
   "module_order": 27,
   "order": 338,
   "duration": 10,
@@ -12,7 +12,7 @@
   "topics": [
     "Coupling and cohesion"
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

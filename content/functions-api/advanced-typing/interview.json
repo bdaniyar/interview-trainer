@@ -8,29 +8,29 @@
       "type hints",
       "static checker",
       "Python remains dynamic",
-      "FastAPI/Pydantic use hints at runtime"
+      "FastAPI и Pydantic используют аннотации во время выполнения"
     ],
-    "short_answer": "Type hints describe contracts for static checkers, IDEs and readers; Python remains dynamically typed at runtime.",
-    "junior_answer": "Type hints describe contracts for static checkers, IDEs and readers; Python remains dynamically typed at runtime. Annotations are stored as metadata and do not automatically insert type checks. Frameworks such as FastAPI/Pydantic explicitly inspect them to build validation/schema behavior. Важное ограничение: A passing type check is not input validation, and a runtime-valid coercion may still be undesirable for a domain rule.",
+    "short_answer": "Type hints описывают контракт для static checker, IDE и читателя; Python остаётся динамически типизированным во время выполнения.",
+    "junior_answer": "Type hints описывают контракт для static checker, IDE и читателя; Python остаётся динамически типизированным во время выполнения. Annotations хранятся как metadata и сами не добавляют проверки типов. FastAPI и Pydantic отдельно читают их для schema и validation. Важное ограничение: Успешная статическая проверка не заменяет input validation, а допустимое runtime-преобразование может нарушать domain rule.",
     "follow_up_question": "Какая типичная ошибка связана с Static hints vs runtime behavior?",
-    "follow_up_answer": "Assuming `value: int` prevents a caller from passing a string leads to runtime surprises.",
+    "follow_up_answer": "Аннотация `value: int` сама по себе не запрещает caller передать строку.",
     "expected_answer": {
       "must_mention": [
         "type hints",
         "static checker",
         "Python remains dynamic",
-        "FastAPI/Pydantic use hints at runtime"
+        "FastAPI и Pydantic используют аннотации во время выполнения"
       ],
       "good_additions": [
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Assuming `value: int` prevents a caller from passing a string leads to runtime surprises.",
+        "Аннотация `value: int` сама по себе не запрещает caller передать строку.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Assuming `value: int` prevents a caller from passing a string leads to runtime surprises."
+        "Аннотация `value: int` сама по себе не запрещает caller передать строку."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Static hints vs runtime behavior?"
@@ -55,25 +55,25 @@
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "one short code/result example",
-      "Assuming `value: int` prevents a caller from passing a string leads to runtime surprises."
+      "один короткий пример кода с результатом",
+      "Аннотация `value: int` сама по себе не запрещает caller передать строку."
     ],
-    "short_answer": "Assuming `value: int` prevents a caller from passing a string leads to runtime surprises.",
-    "junior_answer": "Assuming `value: int` prevents a caller from passing a string leads to runtime surprises.",
+    "short_answer": "Аннотация `value: int` сама по себе не запрещает caller передать строку.",
+    "junior_answer": "Аннотация `value: int` сама по себе не запрещает caller передать строку.",
     "follow_up_question": "Что такое Static hints vs runtime behavior и как это работает?",
-    "follow_up_answer": "Type hints describe contracts for static checkers, IDEs and readers; Python remains dynamically typed at runtime. Annotations are stored as metadata and do not automatically insert type checks. Frameworks such as FastAPI/Pydantic explicitly inspect them to build validation/schema behavior. Важное ограничение: A passing type check is not input validation, and a runtime-valid coercion may still be undesirable for a domain rule.",
+    "follow_up_answer": "Type hints описывают контракт для static checker, IDE и читателя; Python остаётся динамически типизированным во время выполнения. Annotations хранятся как metadata и сами не добавляют проверки типов. FastAPI и Pydantic отдельно читают их для schema и validation. Важное ограничение: Успешная статическая проверка не заменяет input validation, а допустимое runtime-преобразование может нарушать domain rule.",
     "expected_answer": {
       "must_mention": [
-        "one short code/result example"
+        "один короткий пример кода с результатом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Assuming `value: int` prevents a caller from passing a string leads to runtime surprises."
+        "Аннотация `value: int` сама по себе не запрещает caller передать строку."
       ],
       "red_flags": [
-        "Assuming `value: int` prevents a caller from passing a string leads to runtime surprises."
+        "Аннотация `value: int` сама по себе не запрещает caller передать строку."
       ],
       "follow_up_questions": [
         "Что такое Static hints vs runtime behavior и как это работает?"

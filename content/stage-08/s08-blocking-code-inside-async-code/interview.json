@@ -10,8 +10,8 @@
       "synchronous DB driver",
       "CPU-heavy loop"
     ],
-    "short_answer": "Blocking code inside async code: Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг await points.",
-    "junior_answer": "Blocking code inside async code — тема, в которой я сначала фиксирую ``time.sleep``, затем объясняю ``requests`` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и await points до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
+    "short_answer": "Blocking code inside async code: Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг точки приостановки await.",
+    "junior_answer": "Blocking code inside async code — тема, в которой я сначала фиксирую ``time.sleep``, затем объясняю ``requests`` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и точки приостановки await до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
     "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Blocking code inside async code?",
     "follow_up_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
     "expected_answer": {
@@ -55,16 +55,16 @@
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "alternatives: async client, `to_thread`, worker/process",
+      "альтернативы: асинхронный клиент, `to_thread`, отдельный обработчик или процесс",
       "Выполнить blocking call в event loop или создать coroutine и не await/schedule её."
     ],
     "short_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
     "junior_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
     "follow_up_question": "Что такое Blocking code inside async code и какой механизм здесь важно понимать Junior-разработчику?",
-    "follow_up_answer": "Blocking code inside async code — тема, в которой я сначала фиксирую ``time.sleep``, затем объясняю ``requests`` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и await points до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
+    "follow_up_answer": "Blocking code inside async code — тема, в которой я сначала фиксирую ``time.sleep``, затем объясняю ``requests`` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и точки приостановки await до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
     "expected_answer": {
       "must_mention": [
-        "alternatives: async client, `to_thread`, worker/process"
+        "альтернативы: асинхронный клиент, `to_thread`, отдельный обработчик или процесс"
       ],
       "good_additions": [
         "короткий пример именно этой темы"

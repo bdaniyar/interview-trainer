@@ -3,7 +3,7 @@
   "slug": "s31-why-fastapi",
   "title": "Why FastAPI?",
   "module_slug": "stage-31",
-  "module_title": "Stage 31 · HR, Screening and Communication",
+  "module_title": "Этап 31 · HR, Screening and Communication",
   "module_order": 31,
   "order": 375,
   "duration": 12,
@@ -16,7 +16,7 @@
     "async stack",
     "comparison with Django without tribalism."
   ],
-  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P0",

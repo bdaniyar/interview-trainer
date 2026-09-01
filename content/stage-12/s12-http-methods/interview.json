@@ -10,10 +10,10 @@
       "PUT",
       "PATCH"
     ],
-    "short_answer": "HTTP methods express intent: GET reads, POST submits/creates/actions, PUT replaces at a known target, PATCH partially changes and DELETE removes.",
-    "junior_answer": "HTTP methods express intent: GET reads, POST submits/creates/actions, PUT replaces at a known target, PATCH partially changes and DELETE removes. Safety means no requested state change; idempotency means repeating the same request has the same intended effect. These are semantics, not automatic framework enforcement. Важное ограничение: POST can be made retry-safe with an idempotency key, while a badly designed PUT can still have extra side effects.",
+    "short_answer": "HTTP methods выражают намерение: GET читает, POST отправляет или создаёт, PUT заменяет ресурс по известному адресу, PATCH частично меняет, DELETE удаляет.",
+    "junior_answer": "HTTP methods выражают намерение: GET читает, POST отправляет или создаёт, PUT заменяет ресурс по известному адресу, PATCH частично меняет, DELETE удаляет. Safety означает отсутствие запрошенного изменения состояния, idempotency — одинаковый целевой эффект повторного request. Framework не обеспечивает эти свойства автоматически. Важное ограничение: POST можно сделать безопасным для retry через idempotency key, а плохо спроектированный PUT всё равно способен иметь лишние side effects.",
     "follow_up_question": "Какая типичная ошибка связана с HTTP methods?",
-    "follow_up_answer": "Choosing a method only by whether it has a body ignores caching, retries and client expectations.",
+    "follow_up_answer": "Выбор method только по наличию body игнорирует cache, retry и ожидания clients.",
     "expected_answer": {
       "must_mention": [
         "GET",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Choosing a method only by whether it has a body ignores caching, retries and client expectations.",
+        "Выбор method только по наличию body игнорирует cache, retry и ожидания clients.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Choosing a method only by whether it has a body ignores caching, retries and client expectations."
+        "Выбор method только по наличию body игнорирует cache, retry и ожидания clients."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с HTTP methods?"
@@ -57,12 +57,12 @@
     "answer": [
       "DELETE",
       "OPTIONS",
-      "Choosing a method only by whether it has a body ignores caching, retries and client expectations."
+      "Выбор method только по наличию body игнорирует cache, retry и ожидания clients."
     ],
-    "short_answer": "Choosing a method only by whether it has a body ignores caching, retries and client expectations.",
-    "junior_answer": "Choosing a method only by whether it has a body ignores caching, retries and client expectations.",
+    "short_answer": "Выбор method только по наличию body игнорирует cache, retry и ожидания clients.",
+    "junior_answer": "Выбор method только по наличию body игнорирует cache, retry и ожидания clients.",
     "follow_up_question": "Что такое HTTP methods и как это работает?",
-    "follow_up_answer": "HTTP methods express intent: GET reads, POST submits/creates/actions, PUT replaces at a known target, PATCH partially changes and DELETE removes. Safety means no requested state change; idempotency means repeating the same request has the same intended effect. These are semantics, not automatic framework enforcement. Важное ограничение: POST can be made retry-safe with an idempotency key, while a badly designed PUT can still have extra side effects.",
+    "follow_up_answer": "HTTP methods выражают намерение: GET читает, POST отправляет или создаёт, PUT заменяет ресурс по известному адресу, PATCH частично меняет, DELETE удаляет. Safety означает отсутствие запрошенного изменения состояния, idempotency — одинаковый целевой эффект повторного request. Framework не обеспечивает эти свойства автоматически. Важное ограничение: POST можно сделать безопасным для retry через idempotency key, а плохо спроектированный PUT всё равно способен иметь лишние side effects.",
     "expected_answer": {
       "must_mention": [
         "DELETE",
@@ -72,10 +72,10 @@
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Choosing a method only by whether it has a body ignores caching, retries and client expectations."
+        "Выбор method только по наличию body игнорирует cache, retry и ожидания clients."
       ],
       "red_flags": [
-        "Choosing a method only by whether it has a body ignores caching, retries and client expectations."
+        "Выбор method только по наличию body игнорирует cache, retry и ожидания clients."
       ],
       "follow_up_questions": [
         "Что такое HTTP methods и как это работает?"

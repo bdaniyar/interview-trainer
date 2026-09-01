@@ -3,7 +3,7 @@
   "slug": "s15-serialization-and-model-dump",
   "title": "Serialization and `model_dump`",
   "module_slug": "stage-15",
-  "module_title": "Stage 15 · Pydantic v2",
+  "module_title": "Этап 15 · Pydantic v2",
   "module_order": 15,
   "order": 209,
   "duration": 12,
@@ -15,7 +15,7 @@
     "aliases",
     "secret fields."
   ],
-  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P0",

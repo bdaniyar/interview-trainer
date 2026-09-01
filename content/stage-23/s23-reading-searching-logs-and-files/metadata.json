@@ -3,7 +3,7 @@
   "slug": "s23-reading-searching-logs-and-files",
   "title": "Reading/searching logs and files",
   "module_slug": "stage-23",
-  "module_title": "Stage 23 · Linux and Shell",
+  "module_title": "Этап 23 · Linux and Shell",
   "module_order": 23,
   "order": 304,
   "duration": 10,
@@ -17,7 +17,7 @@
     "grep/rg",
     "`tail -f`."
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

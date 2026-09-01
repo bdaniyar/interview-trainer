@@ -3,7 +3,7 @@
   "slug": "s00-kak-zaschischat-proekt",
   "title": "Как защищать проект",
   "module_slug": "stage-00",
-  "module_title": "Stage 0 · Orientation and diagnostic",
+  "module_title": "Этап 0 · Orientation and diagnostic",
   "module_order": 0,
   "order": 3,
   "duration": 12,
@@ -12,7 +12,7 @@
   "topics": [
     "Как защищать проект"
   ],
-  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P0",

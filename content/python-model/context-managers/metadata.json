@@ -3,7 +3,7 @@
   "slug": "context-managers",
   "title": "Context manager protocol",
   "module_slug": "stage-04",
-  "module_title": "Stage 4 · Iteration, Generators, Exceptions and Context Managers",
+  "module_title": "Этап 4 · Iteration, Generators, Exceptions and Context Managers",
   "module_order": 4,
   "order": 45,
   "duration": 12,
@@ -16,7 +16,7 @@
     "resource cleanup",
     "exception suppression."
   ],
-  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": true,
   "has_solution": true,
   "priority": "P0",

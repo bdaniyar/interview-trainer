@@ -5,32 +5,32 @@
     "priority": "P1",
     "interview_probability": "medium",
     "answer": [
-      "Prometheus collects time-series metrics",
-      "Grafana visualizes data and dashboards",
-      "Sentry groups application errors with stack/context",
-      "candidate configured and used them in a pet-project"
+      "Prometheus собирает метрики временных рядов",
+      "Grafana визуализирует данные на панелях мониторинга",
+      "Sentry группирует ошибки приложения вместе со стеком и контекстом",
+      "кандидат настраивал и использовал эти инструменты в учебном проекте"
     ],
     "short_answer": "Prometheus/Grafana/Sentry: это отдельный технический контракт",
     "junior_answer": "Prometheus/Grafana/Sentry — тема, в которой я сначала фиксирую `Prometheus collects time-series metrics`, затем объясняю `Grafana visualizes data and dashboards` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
     "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Prometheus/Grafana/Sentry?",
-    "follow_up_answer": "Нужно назвать конкретный failure path и способ его проверить.",
+    "follow_up_answer": "Нужно назвать конкретный сценарий ошибки и способ его проверить.",
     "expected_answer": {
       "must_mention": [
-        "Prometheus collects time-series metrics",
-        "Grafana visualizes data and dashboards",
-        "Sentry groups application errors with stack/context",
-        "candidate configured and used them in a pet-project"
+        "Prometheus собирает метрики временных рядов",
+        "Grafana визуализирует данные на панелях мониторинга",
+        "Sentry группирует ошибки приложения вместе со стеком и контекстом",
+        "кандидат настраивал и использовал эти инструменты в учебном проекте"
       ],
       "good_additions": [
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Игнорировать ограничение механизма и проверять только happy path.",
+        "Игнорировать ограничение механизма и проверять только основной сценарий.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Игнорировать ограничение механизма и проверять только happy path."
+        "Игнорировать ограничение механизма и проверять только основной сценарий."
       ],
       "follow_up_questions": [
         "Какое ограничение или типичная ошибка относится именно к теме Prometheus/Grafana/Sentry?"
@@ -56,25 +56,25 @@
     "priority": "P1",
     "interview_probability": "medium",
     "answer": [
-      "candidate did not administer a production monitoring cluster",
-      "Нужно назвать конкретный failure path и способ его проверить."
+      "кандидат не утверждает, что администрировал промышленный кластер мониторинга",
+      "Нужно назвать конкретный сценарий ошибки и способ его проверить."
     ],
-    "short_answer": "Нужно назвать конкретный failure path и способ его проверить.",
-    "junior_answer": "Нужно назвать конкретный failure path и способ его проверить.",
+    "short_answer": "Нужно назвать конкретный сценарий ошибки и способ его проверить.",
+    "junior_answer": "Нужно назвать конкретный сценарий ошибки и способ его проверить.",
     "follow_up_question": "Что такое Prometheus/Grafana/Sentry и какой механизм здесь важно понимать Junior-разработчику?",
     "follow_up_answer": "Prometheus/Grafana/Sentry — тема, в которой я сначала фиксирую `Prometheus collects time-series metrics`, затем объясняю `Grafana visualizes data and dashboards` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
     "expected_answer": {
       "must_mention": [
-        "candidate did not administer a production monitoring cluster"
+        "кандидат не утверждает, что администрировал промышленный кластер мониторинга"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Игнорировать ограничение механизма и проверять только happy path."
+        "Игнорировать ограничение механизма и проверять только основной сценарий."
       ],
       "red_flags": [
-        "Игнорировать ограничение механизма и проверять только happy path."
+        "Игнорировать ограничение механизма и проверять только основной сценарий."
       ],
       "follow_up_questions": [
         "Что такое Prometheus/Grafana/Sentry и какой механизм здесь важно понимать Junior-разработчику?"

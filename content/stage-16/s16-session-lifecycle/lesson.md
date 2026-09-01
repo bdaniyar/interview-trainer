@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** ORM/SQLAlchemy явно встречались в 4/18, но Session/transaction знание фундаментально для FastAPI backend.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-Session lifecycle is create → use within one unit of work → commit or rollback → close.
+Session lifecycle: создать, использовать в одном unit of work, выполнить commit или rollback и закрыть.
 
 ### Как работает
 
-A FastAPI yield-dependency can own one Session per request; service code decides the transaction outcome and cleanup always closes it.
+FastAPI yield-dependency может владеть одной Session на request; service решает исход transaction, а cleanup всегда закрывает Session.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-One AsyncSession must not be used concurrently by multiple tasks because it carries mutable transaction/identity state.
+Одну AsyncSession нельзя одновременно использовать в нескольких tasks: она содержит mutable transaction и identity state.
 
-## Mental model
+## Модель понимания
 
 Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -49,9 +49,9 @@ One AsyncSession must not be used concurrently by multiple tasks because it carr
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Session lifecycle: отдельный пример
 
@@ -65,88 +65,88 @@ assert example_s16_session_lifecycle()
 
 Укажи владельца Session/transaction и момент фактического SQL I/O.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-A module-global Session leaks tracked objects and transaction failures across requests.
+Module-global Session переносит tracked objects и transaction failures между requests.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `create` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `create` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `use` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `use`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `create` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `create`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Session lifecycle in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Session lifecycle за 45–60 секунд и назови одно ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Session lifecycle и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Session lifecycle?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-Session lifecycle is create → use within one unit of work → commit or rollback → close.
+Session lifecycle: создать, использовать в одном unit of work, выполнить commit или rollback и закрыть.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> Session lifecycle is create → use within one unit of work → commit or rollback → close. A FastAPI yield-dependency can own one Session per request; service code decides the transaction outcome and cleanup always closes it. Важное ограничение: One AsyncSession must not be used concurrently by multiple tasks because it carries mutable transaction/identity state.
+> Session lifecycle: создать, использовать в одном unit of work, выполнить commit или rollback и закрыть. FastAPI yield-dependency может владеть одной Session на request; service решает исход transaction, а cleanup всегда закрывает Session. Важное ограничение: Одну AsyncSession нельзя одновременно использовать в нескольких tasks: она содержит mutable transaction и identity state.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Session lifecycle?**
 
-A module-global Session leaks tracked objects and transaction failures across requests.
+Module-global Session переносит tracked objects и transaction failures между requests.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - create
 - use
 - commit/rollback
 - close
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- A module-global Session leaks tracked objects and transaction failures across requests.
+- Module-global Session переносит tracked objects и transaction failures между requests.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Session lifecycle?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Session lifecycle**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Session lifecycle**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** Session lifecycle is create → use within one unit of work → commit or rollback → close.
+- **Что это:** Session lifecycle: создать, использовать в одном unit of work, выполнить commit или rollback и закрыть.
 - **Механизм:** Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
-- **Ограничение:** A module-global Session leaks tracked objects and transaction failures across requests.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Module-global Session переносит tracked objects и transaction failures между requests.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

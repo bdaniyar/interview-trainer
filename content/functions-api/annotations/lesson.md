@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: high · 12 минут.** Python указан в 18/18; functions/scope/decorators регулярно проверяют на screening.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,7 +12,7 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
@@ -26,20 +26,20 @@
 
 **not runtime validation by default.** `not runtime validation by default` влияет на function contract; результат определяется definition time, argument binding при вызове и разрешением names.
 
-**relationship with FastAPI/Pydantic.** `relationship with FastAPI/Pydantic` влияет на function contract; результат определяется definition time, argument binding при вызове и разрешением names.
+**связь с FastAPI и Pydantic.** `relationship with FastAPI/Pydantic` влияет на function contract; результат определяется definition time, argument binding при вызове и разрешением names.
 
 **return annotations.** `return annotations` влияет на function contract; результат определяется definition time, argument binding при вызове и разрешением names.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
 Граница Junior: уверенно объясняй `annotations are metadata` и `not runtime validation by default` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
-## Mental model
+## Модель понимания
 
 Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -47,7 +47,7 @@
 
 - annotations are metadata
 - not runtime validation by default
-- relationship with FastAPI/Pydantic
+- связь с FastAPI и Pydantic
 - return annotations
 
 ### Полезно
@@ -56,9 +56,9 @@
 
 ### Можно не учить глубоко
 
-- implementation internals, не влияющие на Junior-код и типичный interview follow-up
+- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Function annotations: отдельный пример
 
@@ -72,86 +72,86 @@ print(find_user("runtime is still dynamic"))
 
 Annotations доступны инструментам и runtime introspection, но сами не запрещают неверный тип аргумента.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
 Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
 
-## Practice
+## Практика
 
-**A · Prediction/reasoning.** Предскажи результат минимального примера для `annotations are metadata` до запуска.
+**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для `annotations are metadata` до запуска.
 
-**B · Find the bug.** Найди нарушение `not runtime validation by default` и объясни конкретное последствие.
+**B · Найди ошибку.** Найди нарушение `not runtime validation by default` и объясни конкретное последствие.
 
-**E · Interview explanation.** Дай ответ про Function annotations за 60 секунд: определение, механизм, пример, ограничение.
+**E · Ответ на собеседовании.** Дай ответ про Function annotations за 60 секунд: определение, механизм, пример, ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Function annotations и какой механизм здесь важно понимать Junior-разработчику?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какое ограничение или типичная ошибка относится именно к теме Function annotations?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
 Function annotations: Это часть контракта Python function: важно различать definition time, call time, signature и разрешение имён.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
 > Function annotations — тема, в которой я сначала фиксирую `annotations are metadata`, затем объясняю `not runtime validation by default` на коротком примере. Ключевой механизм: Отдели выполнение `def`, связывание arguments при вызове и разрешение names по LEGB. Главная практическая ошибка — Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какое ограничение или типичная ошибка относится именно к теме Function annotations?**
 
 Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - annotations are metadata
 - not runtime validation by default
-- relationship with FastAPI/Pydantic
+- связь с FastAPI и Pydantic
 - return annotations
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
 - Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какое ограничение или типичная ошибка относится именно к теме Function annotations?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Function annotations**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Function annotations**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
 - **Что это:** Function annotations: Это часть контракта Python function: важно различать definition time, call time, signature и разрешение имён.
 - **Механизм:** Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
 - **Ограничение:** Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

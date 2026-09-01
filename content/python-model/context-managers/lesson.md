@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: high · 12 минут.** Python указан в 18/18; iteration/exceptions/resource cleanup нужны в production code.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,30 +12,30 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-A context manager defines a reliable acquire/use/release boundary used by the `with` statement.
+Контекстный менеджер задаёт надёжную границу получение, использование и освобождение ресурса для оператора `with`.
 
 ### Как работает
 
-`__enter__` returns the value bound after `as`; `__exit__` receives exception information and cleanup runs even when the body fails. A truthy `__exit__` return suppresses the exception.
+`__enter__` возвращает значение после `as`; `__exit__` получает данные об исключении, а cleanup выполняется даже при ошибке. Truthy-результат `__exit__` подавляет исключение.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Suppress only errors the context manager intentionally handles; returning True accidentally can hide real failures.
+Подавляй только ошибки, которые Контекстный менеджер действительно умеет обработать; случайный `True` скрывает сбой.
 
 ### Где используется в backend
 
-Files, locks, DB transactions and clients use context managers to make resource lifetime visible.
+Файлы, locks, DB transactions и clients используют context managers для явного управления ресурсом.
 
-## Mental model
+## Модель понимания
 
 Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -52,9 +52,9 @@ Files, locks, DB transactions and clients use context managers to make resource 
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Context manager protocol: отдельный пример
 
@@ -72,25 +72,25 @@ with Transaction():
     print("write")
 ```
 
-Context manager централизует acquire/cleanup и не подавляет исключение при `False`.
+Контекстный менеджер централизует acquire/cleanup и не подавляет исключение при `False`.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Manual open/close without finally leaks resources on an exception path.
+Ручные open/close без finally оставляют ресурс открытым при исключении.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the ``with`` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере ``with`` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates ``__enter__`` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий ``__enter__``, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates ``with`` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие ``with``, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Context manager protocol in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Контекстный менеджер protocol за 45–60 секунд и назови одно ограничение.
 
-## Code prediction
+## Предсказание результата кода
 
 ### Context manager получает exception
 
@@ -109,7 +109,7 @@ print('after')
 
 <details><summary>Показать ответ</summary>
 
-Expected:
+Ожидаемый результат:
 
 ```text
 ValueError
@@ -118,61 +118,61 @@ after
 
 __exit__ получил тип ошибки и вернул True, поэтому исключение было подавлено.
 
-Misconception: `context-manager-suppression`.
+Типичная ошибка мышления: `context-manager-suppression`.
 
 </details>
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
-Что такое Context manager protocol и как это работает?
+Что такое Контекстный менеджер protocol и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
-Какая типичная ошибка связана с Context manager protocol?
+Какая типичная ошибка связана с Контекстный менеджер protocol?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-A context manager defines a reliable acquire/use/release boundary used by the `with` statement.
+Контекстный менеджер задаёт надёжную границу получение, использование и освобождение ресурса для оператора `with`.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> A context manager defines a reliable acquire/use/release boundary used by the `with` statement. `__enter__` returns the value bound after `as`; `__exit__` receives exception information and cleanup runs even when the body fails. A truthy `__exit__` return suppresses the exception. Важное ограничение: Suppress only errors the context manager intentionally handles; returning True accidentally can hide real failures.
+> Контекстный менеджер задаёт надёжную границу получение, использование и освобождение ресурса для оператора `with`. `__enter__` возвращает значение после `as`; `__exit__` получает данные об исключении, а cleanup выполняется даже при ошибке. Truthy-результат `__exit__` подавляет исключение. Важное ограничение: Подавляй только ошибки, которые Контекстный менеджер действительно умеет обработать; случайный `True` скрывает сбой.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
-**Какая типичная ошибка связана с Context manager protocol?**
+**Какая типичная ошибка связана с Контекстный менеджер protocol?**
 
-Manual open/close without finally leaks resources on an exception path.
+Ручные open/close без finally оставляют ресурс открытым при исключении.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - `with`
 - `__enter__`
 - `__exit__`
 - resource cleanup
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Manual open/close without finally leaks resources on an exception path.
+- Ручные open/close без finally оставляют ресурс открытым при исключении.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
-- Какая типичная ошибка связана с Context manager protocol?
+- Какая типичная ошибка связана с Контекстный менеджер protocol?
 
 ## Задача
 
@@ -180,17 +180,17 @@ Manual open/close without finally leaks resources on an exception path.
 
 Создай Transaction: enter возвращает resource; success вызывает commit, error — rollback; исключение не подавляется.
 
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
-## Cheat sheet
+Работай в main.py. Не меняй публичные имена и сигнатуры: скрытые тесты импортируют их напрямую. Проверь основной сценарий, граничные значения, повторные вызовы и распространение ошибок.
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** A context manager defines a reliable acquire/use/release boundary used by the `with` statement.
+- **Что это:** Контекстный менеджер задаёт надёжную границу получение, использование и освобождение ресурса для оператора `with`.
 - **Механизм:** Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка.
-- **Ограничение:** Manual open/close without finally leaks resources on an exception path.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Ручные open/close без finally оставляют ресурс открытым при исключении.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

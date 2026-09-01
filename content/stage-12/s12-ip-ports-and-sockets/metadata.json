@@ -3,7 +3,7 @@
   "slug": "s12-ip-ports-and-sockets",
   "title": "IP, ports and sockets",
   "module_slug": "stage-12",
-  "module_title": "Stage 12 · HTTP, Networking and REST",
+  "module_title": "Этап 12 · HTTP, Networking and REST",
   "module_order": 12,
   "order": 152,
   "duration": 10,
@@ -15,7 +15,7 @@
     "container networking",
     "TCP socket."
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

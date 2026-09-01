@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P1 · вероятность на интервью: high · 10 минут.** FastAPI явно встречался в 9/18, любой Python web framework — в 16/18.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,45 +12,45 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-FastAPI `BackgroundTasks` schedules small in-process work after the response is sent.
+FastAPI `BackgroundTasks` запускает небольшую in-process работу после отправки response.
 
 ### Как работает
 
-The task runs in the same application process and has no durable delivery, distributed retry or crash recovery guarantee.
+Task работает в том же application process и не имеет гарантий durable delivery, distributed retry или восстановления после crash.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Use it for small non-critical actions; use a queue/worker and idempotency for durable jobs.
+Используй механизм для небольших некритичных действий; durable jobs требуют queue/worker и idempotency.
 
-## Mental model
+## Модель понимания
 
 Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
-- runs after response in same application process
+- выполняется после ответа в том же процессе приложения
 - small non-critical work
 - not durable
 - lost on crash
 
 ### Полезно
 
-- not a replacement for Celery/outbox
+- не является заменой Celery или шаблону outbox
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### BackgroundTasks: отдельный пример
 
@@ -64,88 +64,88 @@ assert example_s14_backgroundtasks()
 
 Проследи request через router, validation, dependency, service и response model.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Sending a critical payment/email only via BackgroundTasks can lose it on process restart.
+Критическое письмо или payment только через BackgroundTasks может потеряться при restart process.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `runs after response in same application process` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `runs after response in same application process` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `small non-critical work` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `small non-critical work`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `runs after response in same application process` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `runs after response in same application process`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain BackgroundTasks in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни BackgroundTasks за 45–60 секунд и назови одно ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое BackgroundTasks и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с BackgroundTasks?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-FastAPI `BackgroundTasks` schedules small in-process work after the response is sent.
+FastAPI `BackgroundTasks` запускает небольшую in-process работу после отправки response.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> FastAPI `BackgroundTasks` schedules small in-process work after the response is sent. The task runs in the same application process and has no durable delivery, distributed retry or crash recovery guarantee. Важное ограничение: Use it for small non-critical actions; use a queue/worker and idempotency for durable jobs.
+> FastAPI `BackgroundTasks` запускает небольшую in-process работу после отправки response. Task работает в том же application process и не имеет гарантий durable delivery, distributed retry или восстановления после crash. Важное ограничение: Используй механизм для небольших некритичных действий; durable jobs требуют queue/worker и idempotency.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с BackgroundTasks?**
 
-Sending a critical payment/email only via BackgroundTasks can lose it on process restart.
+Критическое письмо или payment только через BackgroundTasks может потеряться при restart process.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
-- runs after response in same application process
+- выполняется после ответа в том же процессе приложения
 - small non-critical work
 - not durable
 - lost on crash
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Sending a critical payment/email only via BackgroundTasks can lose it on process restart.
+- Критическое письмо или payment только через BackgroundTasks может потеряться при restart process.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с BackgroundTasks?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **BackgroundTasks**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **BackgroundTasks**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** FastAPI `BackgroundTasks` schedules small in-process work after the response is sent.
+- **Что это:** FastAPI `BackgroundTasks` запускает небольшую in-process работу после отправки response.
 - **Механизм:** Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
-- **Ограничение:** Sending a critical payment/email only via BackgroundTasks can lose it on process restart.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Критическое письмо или payment только через BackgroundTasks может потеряться при restart process.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

@@ -10,8 +10,8 @@
       "paginated I/O",
       "cleanup"
     ],
-    "short_answer": "Async iterators and generators: Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг await points.",
-    "junior_answer": "Async iterators and generators — тема, в которой я сначала фиксирую ``async for``, затем объясняю `streaming` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и await points до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
+    "short_answer": "Async iterators and generators: Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг точки приостановки await.",
+    "junior_answer": "Async iterators and generators — тема, в которой я сначала фиксирую ``async for``, затем объясняю `streaming` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и точки приостановки await до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
     "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Async iterators and generators?",
     "follow_up_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
     "expected_answer": {
@@ -61,7 +61,7 @@
     "short_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
     "junior_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
     "follow_up_question": "Что такое Async iterators and generators и какой механизм здесь важно понимать Junior-разработчику?",
-    "follow_up_answer": "Async iterators and generators — тема, в которой я сначала фиксирую ``async for``, затем объясняю `streaming` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и await points до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
+    "follow_up_answer": "Async iterators and generators — тема, в которой я сначала фиксирую ``async for``, затем объясняю `streaming` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и точки приостановки await до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
     "expected_answer": {
       "must_mention": [
         "связать Async iterators and generators с коротким рабочим примером"

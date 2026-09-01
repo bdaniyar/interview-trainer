@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: high · 12 минут.** Pydantic v2 — validation boundary основной FastAPI trajectory.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,7 +12,7 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
@@ -20,16 +20,16 @@
 
 ### Как работает
 
-Проверь четыре состояния: missing, explicit null, invalid type/value и сериализованный результат.
+Проверь четыре состояния: missing, явное значение null, invalid type/value и сериализованный результат.
 
-**coercion.** `coercion` влияет на Pydantic v2 validation/serialization и должен различать missing, explicit null, invalid input и output representation.
+**coercion.** `coercion` влияет на Pydantic v2 validation/serialization и должен различать missing, явное значение null, некорректные входные данные и представление результата.
 
-**strict mode.** `strict mode` влияет на Pydantic v2 validation/serialization и должен различать missing, explicit null, invalid input и output representation.
+**strict mode.** `strict mode` влияет на Pydantic v2 validation/serialization и должен различать missing, явное значение null, некорректные входные данные и представление результата.
 
-**trusted/untrusted boundaries.** `trusted/untrusted boundaries` влияет на Pydantic v2 validation/serialization и должен различать missing, explicit null, invalid input и output representation.
+**границы доверенных и недоверенных данных.** `trusted/untrusted boundaries` влияет на Pydantic v2 validation/serialization и должен различать missing, явное значение null, некорректные входные данные и представление результата.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
 Граница Junior: уверенно объясняй `coercion` и `strict mode` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
@@ -37,11 +37,11 @@
 
 В backend эта тема важна в том месте, где применяется `coercion`; проверяй именно наблюдаемый contract, а не название инструмента.
 
-## Mental model
+## Модель понимания
 
 Сначала приходит недоверенный input, затем core schema выполняет validation, после чего model_dump управляет serialization.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -49,17 +49,17 @@
 
 - coercion
 - strict mode
-- trusted/untrusted boundaries
+- границы доверенных и недоверенных данных
 
 ### Полезно
 
-- связать Parsing vs validation mental model с коротким рабочим примером
+- связать Parsing vs validation модель понимания с коротким рабочим примером
 
 ### Можно не учить глубоко
 
-- implementation internals, не влияющие на Junior-код и типичный interview follow-up
+- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Parsing vs validation mental model: отдельный пример
 
@@ -71,87 +71,87 @@ def example_s15_parsing_vs_validation_mental_model() -> tuple[str, ...]:
 assert example_s15_parsing_vs_validation_mental_model()
 ```
 
-Проверь missing, explicit null, invalid input и serialized output Pydantic v2.
+Проверь missing, явное значение null, некорректные входные данные и serialized output Pydantic v2.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Смешать missing и explicit null либо считать coercion бизнес-валидацией.
+Смешать missing и явное значение null либо считать coercion бизнес-валидацией.
 
-## Practice
+## Практика
 
-**A · Prediction/reasoning.** Предскажи результат минимального примера для `coercion` до запуска.
+**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для `coercion` до запуска.
 
-**B · Find the bug.** Найди нарушение `strict mode` и объясни конкретное последствие.
+**B · Найди ошибку.** Найди нарушение `strict mode` и объясни конкретное последствие.
 
-**E · Interview explanation.** Дай ответ про Parsing vs validation mental model за 60 секунд: определение, механизм, пример, ограничение.
+**E · Ответ на собеседовании.** Дай ответ про Parsing vs validation модель понимания за 60 секунд: определение, механизм, пример, ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
-Что такое Parsing vs validation mental model и какой механизм здесь важно понимать Junior-разработчику?
+Что такое Parsing vs validation модель понимания и какой механизм здесь важно понимать Junior-разработчику?
 
-### Follow-up
+### Дополнительный вопрос
 
-Какое ограничение или типичная ошибка относится именно к теме Parsing vs validation mental model?
+Какое ограничение или типичная ошибка относится именно к теме Parsing vs validation модель понимания?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-Parsing vs validation mental model: Это часть Pydantic v2 boundary между недоверенным input, validated model и serialized output.
+Parsing vs validation модель понимания: Это часть Pydantic v2 boundary между недоверенным input, validated model и serialized output.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> Parsing vs validation mental model — тема, в которой я сначала фиксирую `coercion`, затем объясняю `strict mode` на коротком примере. Ключевой механизм: Проверь четыре состояния: missing, explicit null, invalid type/value и сериализованный результат. Главная практическая ошибка — Смешать missing и explicit null либо считать coercion бизнес-валидацией.
+> Parsing vs validation модель понимания — тема, в которой я сначала фиксирую `coercion`, затем объясняю `strict mode` на коротком примере. Ключевой механизм: Проверь четыре состояния: missing, явное значение null, invalid type/value и сериализованный результат. Главная практическая ошибка — Смешать missing и явное значение null либо считать coercion бизнес-валидацией.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
-**Какое ограничение или типичная ошибка относится именно к теме Parsing vs validation mental model?**
+**Какое ограничение или типичная ошибка относится именно к теме Parsing vs validation модель понимания?**
 
-Смешать missing и explicit null либо считать coercion бизнес-валидацией.
+Смешать missing и явное значение null либо считать coercion бизнес-валидацией.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - coercion
 - strict mode
-- trusted/untrusted boundaries
+- границы доверенных и недоверенных данных
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Смешать missing и explicit null либо считать coercion бизнес-валидацией.
+- Смешать missing и явное значение null либо считать coercion бизнес-валидацией.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
-- Какое ограничение или типичная ошибка относится именно к теме Parsing vs validation mental model?
+- Какое ограничение или типичная ошибка относится именно к теме Parsing vs validation модель понимания?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Parsing vs validation mental model**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Parsing vs validation mental model**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** Parsing vs validation mental model: Это часть Pydantic v2 boundary между недоверенным input, validated model и serialized output.
+- **Что это:** Parsing vs validation модель понимания: Это часть Pydantic v2 boundary между недоверенным input, validated model и serialized output.
 - **Механизм:** Сначала приходит недоверенный input, затем core schema выполняет validation, после чего model_dump управляет serialization.
-- **Ограничение:** Смешать missing и explicit null либо считать coercion бизнес-валидацией.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Смешать missing и явное значение null либо считать coercion бизнес-валидацией.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

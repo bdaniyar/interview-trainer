@@ -55,7 +55,7 @@
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "backward compatibility",
+      "обратная совместимость",
       "Смешать definition time и call time либо скрыть неясную signature за `**kwargs`."
     ],
     "short_answer": "Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.",
@@ -64,7 +64,7 @@
     "follow_up_answer": "Positional-only and keyword-only parameters — тема, в которой я сначала фиксирую ``/``, затем объясняю ``*`` на коротком примере. Ключевой механизм: Отдели выполнение `def`, связывание arguments при вызове и разрешение names по LEGB. Главная практическая ошибка — Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.",
     "expected_answer": {
       "must_mention": [
-        "backward compatibility"
+        "обратная совместимость"
       ],
       "good_additions": [
         "короткий пример именно этой темы"

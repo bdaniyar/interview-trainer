@@ -10,10 +10,10 @@
       "isolation",
       "durability"
     ],
-    "short_answer": "A transaction groups operations into one atomic boundary; ACID describes atomicity, consistency, isolation and durability.",
-    "junior_answer": "A transaction groups operations into one atomic boundary; ACID describes atomicity, consistency, isolation and durability. Commit makes the transaction's changes durable/visible under DB rules; rollback discards them. Consistency comes from correct code plus constraints, not the letter C automatically. Важное ограничение: Keep transactions short and avoid network calls while locks/resources are held.",
+    "short_answer": "Transaction объединяет операции в одну атомарную границу; ACID означает atomicity, consistency, isolation и durability.",
+    "junior_answer": "Transaction объединяет операции в одну атомарную границу; ACID означает atomicity, consistency, isolation и durability. Commit фиксирует изменения, rollback отменяет их. Consistency обеспечивается правильным кодом и constraints, а не буквой C автоматически. Важное ограничение: Transactions держат короткими и по возможности не выполняют внутри них сетевые вызовы, пока заняты locks и connection.",
     "follow_up_question": "Какая типичная ошибка связана с Transactions and ACID?",
-    "follow_up_answer": "Committing inside each repository call can leave half a use case saved after a later failure.",
+    "follow_up_answer": "Commit внутри каждого repository call способен сохранить половину use case после ошибки следующего шага.",
     "expected_answer": {
       "must_mention": [
         "atomicity",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Committing inside each repository call can leave half a use case saved after a later failure.",
+        "Commit внутри каждого repository call способен сохранить половину use case после ошибки следующего шага.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Committing inside each repository call can leave half a use case saved after a later failure."
+        "Commit внутри каждого repository call способен сохранить половину use case после ошибки следующего шага."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Transactions and ACID?"
@@ -56,12 +56,12 @@
     "interview_probability": "very_high",
     "answer": [
       "transaction boundary",
-      "Committing inside each repository call can leave half a use case saved after a later failure."
+      "Commit внутри каждого repository call способен сохранить половину use case после ошибки следующего шага."
     ],
-    "short_answer": "Committing inside each repository call can leave half a use case saved after a later failure.",
-    "junior_answer": "Committing inside each repository call can leave half a use case saved after a later failure.",
+    "short_answer": "Commit внутри каждого repository call способен сохранить половину use case после ошибки следующего шага.",
+    "junior_answer": "Commit внутри каждого repository call способен сохранить половину use case после ошибки следующего шага.",
     "follow_up_question": "Что такое Transactions and ACID и как это работает?",
-    "follow_up_answer": "A transaction groups operations into one atomic boundary; ACID describes atomicity, consistency, isolation and durability. Commit makes the transaction's changes durable/visible under DB rules; rollback discards them. Consistency comes from correct code plus constraints, not the letter C automatically. Важное ограничение: Keep transactions short and avoid network calls while locks/resources are held.",
+    "follow_up_answer": "Transaction объединяет операции в одну атомарную границу; ACID означает atomicity, consistency, isolation и durability. Commit фиксирует изменения, rollback отменяет их. Consistency обеспечивается правильным кодом и constraints, а не буквой C автоматически. Важное ограничение: Transactions держат короткими и по возможности не выполняют внутри них сетевые вызовы, пока заняты locks и connection.",
     "expected_answer": {
       "must_mention": [
         "transaction boundary"
@@ -70,10 +70,10 @@
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Committing inside each repository call can leave half a use case saved after a later failure."
+        "Commit внутри каждого repository call способен сохранить половину use case после ошибки следующего шага."
       ],
       "red_flags": [
-        "Committing inside each repository call can leave half a use case saved after a later failure."
+        "Commit внутри каждого repository call способен сохранить половину use case после ошибки следующего шага."
       ],
       "follow_up_questions": [
         "Что такое Transactions and ACID и как это работает?"

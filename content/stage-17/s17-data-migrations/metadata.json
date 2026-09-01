@@ -3,7 +3,7 @@
   "slug": "s17-data-migrations",
   "title": "Data migrations",
   "module_slug": "stage-17",
-  "module_title": "Stage 17 · Alembic",
+  "module_title": "Этап 17 · Alembic",
   "module_order": 17,
   "order": 235,
   "duration": 10,
@@ -14,7 +14,7 @@
     "batching",
     "transaction/runtime concerns."
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

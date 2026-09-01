@@ -5,10 +5,10 @@
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "debugging representation",
+      "debugging представление",
       "user-facing text",
       "unambiguous repr",
-      "avoiding secrets in logs"
+      "avoiding секретов in logs"
     ],
     "short_answer": "`__repr__` and `__str__`: Это элемент Python object model, который определяет состояние объекта, поиск поведения или способ композиции типов.",
     "junior_answer": "`__repr__` and `__str__` — тема, в которой я сначала фиксирую `debugging representation`, затем объясняю `user-facing text` на коротком примере. Ключевой механизм: Проследи instance/class namespaces, attribute lookup и направление зависимости между объектами. Главная практическая ошибка — Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.",
@@ -16,10 +16,10 @@
     "follow_up_answer": "Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.",
     "expected_answer": {
       "must_mention": [
-        "debugging representation",
+        "debugging представление",
         "user-facing text",
         "unambiguous repr",
-        "avoiding secrets in logs"
+        "avoiding секретов in logs"
       ],
       "good_additions": [
         "короткий рабочий пример",

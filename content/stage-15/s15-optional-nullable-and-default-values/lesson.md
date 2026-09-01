@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** Pydantic v2 — validation boundary основной FastAPI trajectory.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,7 +12,7 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
@@ -20,18 +20,18 @@
 
 ### Как работает
 
-Проверь четыре состояния: missing, explicit null, invalid type/value и сериализованный результат.
+Проверь четыре состояния: missing, явное значение null, invalid type/value и сериализованный результат.
 
-**missing.** `missing` влияет на Pydantic v2 validation/serialization и должен различать missing, explicit null, invalid input и output representation.
+**missing.** `missing` влияет на Pydantic v2 validation/serialization и должен различать missing, явное значение null, некорректные входные данные и представление результата.
 
 **present with null.** `NULL` означает отсутствие известного значения; сравнение с ним делают через `IS NULL`, а многие выражения дают `UNKNOWN`.
 
-**default.** `default` влияет на Pydantic v2 validation/serialization и должен различать missing, explicit null, invalid input и output representation.
+**default.** `default` влияет на Pydantic v2 validation/serialization и должен различать missing, явное значение null, некорректные входные данные и представление результата.
 
-**PATCH semantics.** `PATCH semantics` влияет на Pydantic v2 validation/serialization и должен различать missing, explicit null, invalid input и output representation.
+**PATCH semantics.** `PATCH semantics` влияет на Pydantic v2 validation/serialization и должен различать missing, явное значение null, некорректные входные данные и представление результата.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
 Граница Junior: уверенно объясняй `missing` и `present with null` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
@@ -39,11 +39,11 @@
 
 В backend эта тема важна в том месте, где применяется `missing`; проверяй именно наблюдаемый contract, а не название инструмента.
 
-## Mental model
+## Модель понимания
 
 Сначала приходит недоверенный input, затем core schema выполняет validation, после чего model_dump управляет serialization.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -60,9 +60,9 @@
 
 ### Можно не учить глубоко
 
-- implementation internals, не влияющие на Junior-код и типичный interview follow-up
+- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Optional, nullable and default values: отдельный пример
 
@@ -74,69 +74,69 @@ from pydantic import BaseModel
 
 Это публичный starter contract практики «Patch semantics». Реализация и hidden assertions в lesson Markdown не раскрываются.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Смешать missing и explicit null либо считать coercion бизнес-валидацией.
+Смешать missing и явное значение null либо считать coercion бизнес-валидацией.
 
-## Practice
+## Практика
 
-**A · Prediction/reasoning.** Предскажи результат минимального примера для `missing` до запуска.
+**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для `missing` до запуска.
 
-**B · Find the bug.** Найди нарушение `present with null` и объясни конкретное последствие.
+**B · Найди ошибку.** Найди нарушение `present with null` и объясни конкретное последствие.
 
-**E · Interview explanation.** Дай ответ про Optional, nullable and default values за 60 секунд: определение, механизм, пример, ограничение.
+**E · Ответ на собеседовании.** Дай ответ про Optional, nullable and default values за 60 секунд: определение, механизм, пример, ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Optional, nullable and default values и какой механизм здесь важно понимать Junior-разработчику?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какое ограничение или типичная ошибка относится именно к теме Optional, nullable and default values?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
 Optional, nullable and default values: Это часть Pydantic v2 boundary между недоверенным input, validated model и serialized output.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> Optional, nullable and default values — тема, в которой я сначала фиксирую `missing`, затем объясняю `present with null` на коротком примере. Ключевой механизм: Проверь четыре состояния: missing, explicit null, invalid type/value и сериализованный результат. Главная практическая ошибка — Смешать missing и explicit null либо считать coercion бизнес-валидацией.
+> Optional, nullable and default values — тема, в которой я сначала фиксирую `missing`, затем объясняю `present with null` на коротком примере. Ключевой механизм: Проверь четыре состояния: missing, явное значение null, invalid type/value и сериализованный результат. Главная практическая ошибка — Смешать missing и явное значение null либо считать coercion бизнес-валидацией.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какое ограничение или типичная ошибка относится именно к теме Optional, nullable and default values?**
 
-Смешать missing и explicit null либо считать coercion бизнес-валидацией.
+Смешать missing и явное значение null либо считать coercion бизнес-валидацией.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - missing
 - present with null
 - default
 - PATCH semantics
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Смешать missing и explicit null либо считать coercion бизнес-валидацией.
+- Смешать missing и явное значение null либо считать coercion бизнес-валидацией.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какое ограничение или типичная ошибка относится именно к теме Optional, nullable and default values?
 
@@ -146,17 +146,17 @@ Optional, nullable and default values: Это часть Pydantic v2 boundary м
 
 UserPatch: display_name и age можно не передать или передать null; extra fields запрещены.
 
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
-## Cheat sheet
+Работай в main.py. Не меняй публичные имена и сигнатуры: скрытые тесты импортируют их напрямую. Проверь основной сценарий, граничные значения, повторные вызовы и распространение ошибок.
+## Шпаргалка
 
 Перед собеседованием запомни:
 
 - **Что это:** Optional, nullable and default values: Это часть Pydantic v2 boundary между недоверенным input, validated model и serialized output.
 - **Механизм:** Сначала приходит недоверенный input, затем core schema выполняет validation, после чего model_dump управляет serialization.
-- **Ограничение:** Смешать missing и explicit null либо считать coercion бизнес-валидацией.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Смешать missing и явное значение null либо считать coercion бизнес-валидацией.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

@@ -10,10 +10,10 @@
       "race conditions",
       "locks"
     ],
-    "short_answer": "A thread executes within one process and shares its memory, file descriptors and module state with other threads.",
-    "junior_answer": "A thread executes within one process and shares its memory, file descriptors and module state with other threads. Threads are useful for blocking I/O libraries. Shared mutable state needs Lock or another synchronization design; `join` waits for completion. Важное ограничение: The GIL limits CPU-bound Python parallelism but does not prevent race conditions between multi-step operations.",
+    "short_answer": "Thread выполняется внутри одного process и разделяет память, file дескрипторы и module state с другими threads.",
+    "junior_answer": "Thread выполняется внутри одного process и разделяет память, file дескрипторы и module state с другими threads. Threads удобны для blocking I/O libraries. Shared mutable state требует Lock или другой синхронизации; `join` ожидает завершения. Важное ограничение: GIL ограничивает CPU-bound parallelism Python-кода, но не предотвращает race conditions в многошаговых операциях.",
     "follow_up_question": "Какая типичная ошибка связана с Threading?",
-    "follow_up_answer": "Updating shared state with check-then-act logic without a lock can lose changes even when individual operations appear atomic.",
+    "follow_up_answer": "Check-then-act над общим состоянием без lock может потерять изменение, даже если отдельные операции кажутся атомарными.",
     "expected_answer": {
       "must_mention": [
         "shared process memory",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Updating shared state with check-then-act logic without a lock can lose changes even when individual operations appear atomic.",
+        "Check-then-act над общим состоянием без lock может потерять изменение, даже если отдельные операции кажутся атомарными.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Updating shared state with check-then-act logic without a lock can lose changes even when individual operations appear atomic."
+        "Check-then-act над общим состоянием без lock может потерять изменение, даже если отдельные операции кажутся атомарными."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Threading?"
@@ -56,12 +56,12 @@
     "interview_probability": "medium",
     "answer": [
       "GIL limitations",
-      "Updating shared state with check-then-act logic without a lock can lose changes even when individual operations appear atomic."
+      "Check-then-act над общим состоянием без lock может потерять изменение, даже если отдельные операции кажутся атомарными."
     ],
-    "short_answer": "Updating shared state with check-then-act logic without a lock can lose changes even when individual operations appear atomic.",
-    "junior_answer": "Updating shared state with check-then-act logic without a lock can lose changes even when individual operations appear atomic.",
+    "short_answer": "Check-then-act над общим состоянием без lock может потерять изменение, даже если отдельные операции кажутся атомарными.",
+    "junior_answer": "Check-then-act над общим состоянием без lock может потерять изменение, даже если отдельные операции кажутся атомарными.",
     "follow_up_question": "Что такое Threading и как это работает?",
-    "follow_up_answer": "A thread executes within one process and shares its memory, file descriptors and module state with other threads. Threads are useful for blocking I/O libraries. Shared mutable state needs Lock or another synchronization design; `join` waits for completion. Важное ограничение: The GIL limits CPU-bound Python parallelism but does not prevent race conditions between multi-step operations.",
+    "follow_up_answer": "Thread выполняется внутри одного process и разделяет память, file дескрипторы и module state с другими threads. Threads удобны для blocking I/O libraries. Shared mutable state требует Lock или другой синхронизации; `join` ожидает завершения. Важное ограничение: GIL ограничивает CPU-bound parallelism Python-кода, но не предотвращает race conditions в многошаговых операциях.",
     "expected_answer": {
       "must_mention": [
         "GIL limitations"
@@ -70,10 +70,10 @@
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Updating shared state with check-then-act logic without a lock can lose changes even when individual operations appear atomic."
+        "Check-then-act над общим состоянием без lock может потерять изменение, даже если отдельные операции кажутся атомарными."
       ],
       "red_flags": [
-        "Updating shared state with check-then-act logic without a lock can lose changes even when individual operations appear atomic."
+        "Check-then-act над общим состоянием без lock может потерять изменение, даже если отдельные операции кажутся атомарными."
       ],
       "follow_up_questions": [
         "Что такое Threading и как это работает?"

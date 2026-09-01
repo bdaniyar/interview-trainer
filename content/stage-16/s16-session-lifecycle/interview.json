@@ -10,10 +10,10 @@
       "commit/rollback",
       "close"
     ],
-    "short_answer": "Session lifecycle is create → use within one unit of work → commit or rollback → close.",
-    "junior_answer": "Session lifecycle is create → use within one unit of work → commit or rollback → close. A FastAPI yield-dependency can own one Session per request; service code decides the transaction outcome and cleanup always closes it. Важное ограничение: One AsyncSession must not be used concurrently by multiple tasks because it carries mutable transaction/identity state.",
+    "short_answer": "Session lifecycle: создать, использовать в одном unit of work, выполнить commit или rollback и закрыть.",
+    "junior_answer": "Session lifecycle: создать, использовать в одном unit of work, выполнить commit или rollback и закрыть. FastAPI yield-dependency может владеть одной Session на request; service решает исход transaction, а cleanup всегда закрывает Session. Важное ограничение: Одну AsyncSession нельзя одновременно использовать в нескольких tasks: она содержит mutable transaction и identity state.",
     "follow_up_question": "Какая типичная ошибка связана с Session lifecycle?",
-    "follow_up_answer": "A module-global Session leaks tracked objects and transaction failures across requests.",
+    "follow_up_answer": "Module-global Session переносит tracked objects и transaction failures между requests.",
     "expected_answer": {
       "must_mention": [
         "create",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "A module-global Session leaks tracked objects and transaction failures across requests.",
+        "Module-global Session переносит tracked objects и transaction failures между requests.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "A module-global Session leaks tracked objects and transaction failures across requests."
+        "Module-global Session переносит tracked objects и transaction failures между requests."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Session lifecycle?"
@@ -57,12 +57,12 @@
     "answer": [
       "request-scoped session",
       "never share one session globally",
-      "A module-global Session leaks tracked objects and transaction failures across requests."
+      "Module-global Session переносит tracked objects и transaction failures между requests."
     ],
-    "short_answer": "A module-global Session leaks tracked objects and transaction failures across requests.",
-    "junior_answer": "A module-global Session leaks tracked objects and transaction failures across requests.",
+    "short_answer": "Module-global Session переносит tracked objects и transaction failures между requests.",
+    "junior_answer": "Module-global Session переносит tracked objects и transaction failures между requests.",
     "follow_up_question": "Что такое Session lifecycle и как это работает?",
-    "follow_up_answer": "Session lifecycle is create → use within one unit of work → commit or rollback → close. A FastAPI yield-dependency can own one Session per request; service code decides the transaction outcome and cleanup always closes it. Важное ограничение: One AsyncSession must not be used concurrently by multiple tasks because it carries mutable transaction/identity state.",
+    "follow_up_answer": "Session lifecycle: создать, использовать в одном unit of work, выполнить commit или rollback и закрыть. FastAPI yield-dependency может владеть одной Session на request; service решает исход transaction, а cleanup всегда закрывает Session. Важное ограничение: Одну AsyncSession нельзя одновременно использовать в нескольких tasks: она содержит mutable transaction и identity state.",
     "expected_answer": {
       "must_mention": [
         "request-scoped session",
@@ -72,10 +72,10 @@
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "A module-global Session leaks tracked objects and transaction failures across requests."
+        "Module-global Session переносит tracked objects и transaction failures между requests."
       ],
       "red_flags": [
-        "A module-global Session leaks tracked objects and transaction failures across requests."
+        "Module-global Session переносит tracked objects и transaction failures между requests."
       ],
       "follow_up_questions": [
         "Что такое Session lifecycle и как это работает?"

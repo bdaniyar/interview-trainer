@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** Resume Defense основан только на фактических StudyHub, Hotel Booking и Share Recipe claims.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,7 +12,7 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
@@ -20,20 +20,20 @@
 
 ### Как работает
 
-Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы сценарий ошибки.
 
-**mature ecosystem and development speed.** `mature ecosystem and development speed` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
+**зрелая экосистема и скорость разработки.** `mature ecosystem and development speed` защищается по реализованному flow: проблема, принятое решение, компромисс, режим отказа и test/metric.
 
 **type hints/Pydantic/OpenAPI.** Type hint описывает контракт для checker/IDE; обычный Python не запрещает другое runtime-значение, а FastAPI/Pydantic отдельно используют annotation для schema и validation.
 
-**async stack suits WebSockets and I/O waits.** WebSocket держит долгоживущее соединение; масштабирование требует shared fan-out, а durable history хранится отдельно.
+**асинхронный стек подходит для WebSocket и ожидания ввода-вывода.** WebSocket держит долгоживущее соединение; масштабирование требует shared fan-out, а durable history хранится отдельно.
 
-**FastAPI is not universally superior to Django.** `FastAPI is not universally superior to Django` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
+**FastAPI не лучше Django во всех возможных задачах.** `FastAPI is not universally superior to Django` защищается по реализованному flow: проблема, принятое решение, компромисс, режим отказа и test/metric.
 
-**Django could reduce custom work for admin/content-heavy product.** `Django could reduce custom work for admin/content-heavy product` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
+**Django может сократить объём собственной разработки для продукта с админкой и большим количеством контента.** `Django could reduce custom work for admin/content-heavy product` защищается по реализованному flow: проблема, принятое решение, компромисс, режим отказа и test/metric.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
 Граница Junior: уверенно объясняй `mature ecosystem and development speed` и `type hints/Pydantic/OpenAPI` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
@@ -41,30 +41,30 @@
 
 В backend эта тема важна в том месте, где применяется `mature ecosystem and development speed`; проверяй именно наблюдаемый contract, а не название инструмента.
 
-## Mental model
+## Модель понимания
 
-Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы.
+Отвечай только о реализованном: problem → own decision → компромисс → test/metric; честно обозначай границы.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
-- mature ecosystem and development speed
+- зрелая экосистема и скорость разработки
 - type hints/Pydantic/OpenAPI
-- async stack suits WebSockets and I/O waits
-- FastAPI is not universally superior to Django
+- асинхронный стек подходит для WebSocket и ожидания ввода-вывода
+- FastAPI не лучше Django во всех возможных задачах
 
 ### Полезно
 
-- Django could reduce custom work for admin/content-heavy product
+- Django может сократить объём собственной разработки для продукта с админкой и большим количеством контента
 
 ### Можно не учить глубоко
 
-- implementation internals, не влияющие на Junior-код и типичный interview follow-up
+- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Why Python and FastAPI?: отдельный пример
 
@@ -83,86 +83,86 @@
 
 Этот micro-scenario сформирован из outline конкретного урока и не переиспользуется соседними subtopics.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Игнорировать ограничение механизма и проверять только happy path.
+Игнорировать ограничение механизма и проверять только основной сценарий.
 
-## Practice
+## Практика
 
-**A · Prediction/reasoning.** Предскажи результат минимального примера для `mature ecosystem and development speed` до запуска.
+**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для `mature ecosystem and development speed` до запуска.
 
-**B · Find the bug.** Найди нарушение `type hints/Pydantic/OpenAPI` и объясни конкретное последствие.
+**B · Найди ошибку.** Найди нарушение `type hints/Pydantic/OpenAPI` и объясни конкретное последствие.
 
-**E · Interview explanation.** Дай ответ про Why Python and FastAPI? за 60 секунд: определение, механизм, пример, ограничение.
+**E · Ответ на собеседовании.** Дай ответ про Why Python and FastAPI? за 60 секунд: определение, механизм, пример, ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Why Python and FastAPI? и какой механизм здесь важно понимать Junior-разработчику?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какое ограничение или типичная ошибка относится именно к теме Why Python and FastAPI??
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
 Why Python and FastAPI?: это отдельный технический контракт
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
 > Why Python and FastAPI? — тема, в которой я сначала фиксирую `mature ecosystem and development speed`, затем объясняю `type hints/Pydantic/OpenAPI` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какое ограничение или типичная ошибка относится именно к теме Why Python and FastAPI??**
 
-Нужно назвать конкретный failure path и способ его проверить.
+Нужно назвать конкретный сценарий ошибки и способ его проверить.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
-- mature ecosystem and development speed
+- зрелая экосистема и скорость разработки
 - type hints/Pydantic/OpenAPI
-- async stack suits WebSockets and I/O waits
-- FastAPI is not universally superior to Django
+- асинхронный стек подходит для WebSocket и ожидания ввода-вывода
+- FastAPI не лучше Django во всех возможных задачах
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Игнорировать ограничение механизма и проверять только happy path.
+- Игнорировать ограничение механизма и проверять только основной сценарий.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какое ограничение или типичная ошибка относится именно к теме Why Python and FastAPI??
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Why Python and FastAPI?**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Why Python and FastAPI?**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
 - **Что это:** Why Python and FastAPI?: это отдельный технический контракт
-- **Механизм:** Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы.
-- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Механизм:** Отвечай только о реализованном: problem → own decision → компромисс → test/metric; честно обозначай границы.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только основной сценарий.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

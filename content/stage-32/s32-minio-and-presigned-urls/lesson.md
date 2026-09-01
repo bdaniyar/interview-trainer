@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P1 · вероятность на интервью: high · 10 минут.** Resume Defense основан только на фактических StudyHub, Hotel Booking и Share Recipe claims.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,7 +12,7 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
@@ -20,22 +20,22 @@
 
 ### Как работает
 
-Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы сценарий ошибки.
 
-**S3-compatible object storage.** `S3-compatible object storage` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
+**S3-compatible object storage.** `S3-compatible object storage` защищается по реализованному flow: проблема, принятое решение, компромисс, режим отказа и test/metric.
 
-**short-lived direct upload.** `short-lived direct upload` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
+**short-lived direct upload.** `short-lived direct upload` защищается по реализованному flow: проблема, принятое решение, компромисс, режим отказа и test/metric.
 
-**metadata/key in PostgreSQL.** `metadata/key in PostgreSQL` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
+**metadata/key in PostgreSQL.** `metadata/key in PostgreSQL` защищается по реализованному flow: проблема, принятое решение, компромисс, режим отказа и test/metric.
 
-**authorization.** Authorization выполняется server-side на каждом resource/action и не заменяется скрытой кнопкой, CORS или данными из непроверенного token.
+**authorization.** Authorization выполняется на стороне сервера на каждом resource/action и не заменяется скрытой кнопкой, CORS или данными из непроверенного token.
 
-**finalize validation.** `finalize validation` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
+**finalize validation.** `finalize validation` защищается по реализованному flow: проблема, принятое решение, компромисс, режим отказа и test/metric.
 
-**no raw binary in relational row.** `no raw binary in relational row` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
+**no raw binary in relational row.** `no raw binary in relational row` защищается по реализованному flow: проблема, принятое решение, компромисс, режим отказа и test/metric.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
 Граница Junior: уверенно объясняй `S3-compatible object storage` и `short-lived direct upload` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
@@ -43,11 +43,11 @@
 
 В backend эта тема важна в том месте, где применяется `S3-compatible object storage`; проверяй именно наблюдаемый contract, а не название инструмента.
 
-## Mental model
+## Модель понимания
 
-Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы.
+Отвечай только о реализованном: problem → own decision → компромисс → test/metric; честно обозначай границы.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -65,9 +65,9 @@
 
 ### Можно не учить глубоко
 
-- implementation internals, не влияющие на Junior-код и типичный interview follow-up
+- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### MinIO and presigned URLs: отдельный пример
 
@@ -80,96 +80,96 @@ Policy, size validation, delete/reject.
 
 Это отдельный architecture example для данного subtopic, а не общий пример stage.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Игнорировать ограничение механизма и проверять только happy path.
+Игнорировать ограничение механизма и проверять только основной сценарий.
 
-## Practice
+## Практика
 
-**A · Prediction/reasoning.** Предскажи результат минимального примера для `S3-compatible object storage` до запуска.
+**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для `S3-compatible object storage` до запуска.
 
-**B · Find the bug.** Найди нарушение `short-lived direct upload` и объясни конкретное последствие.
+**B · Найди ошибку.** Найди нарушение `short-lived direct upload` и объясни конкретное последствие.
 
-**E · Interview explanation.** Дай ответ про MinIO and presigned URLs за 60 секунд: определение, механизм, пример, ограничение.
+**E · Ответ на собеседовании.** Дай ответ про MinIO and presigned URLs за 60 секунд: определение, механизм, пример, ограничение.
 
-## Architecture practice
+## Практика: Архитектура
 
 ### Presigned upload
 
 **Сценарий:** Слишком большой file.
 
-**Rubric:** Policy, size validation, delete/reject.
+**Критерии ответа:** Policy, size validation, delete/reject.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое MinIO and presigned URLs и какой механизм здесь важно понимать Junior-разработчику?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какое ограничение или типичная ошибка относится именно к теме MinIO and presigned URLs?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
 MinIO and presigned URLs: это отдельный технический контракт
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
 > MinIO and presigned URLs — тема, в которой я сначала фиксирую `S3-compatible object storage`, затем объясняю `short-lived direct upload` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какое ограничение или типичная ошибка относится именно к теме MinIO and presigned URLs?**
 
-Нужно назвать конкретный failure path и способ его проверить.
+Нужно назвать конкретный сценарий ошибки и способ его проверить.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - S3-compatible object storage
 - short-lived direct upload
 - metadata/key in PostgreSQL
 - authorization
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Игнорировать ограничение механизма и проверять только happy path.
+- Игнорировать ограничение механизма и проверять только основной сценарий.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какое ограничение или типичная ошибка относится именно к теме MinIO and presigned URLs?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **MinIO and presigned URLs**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **MinIO and presigned URLs**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
 - **Что это:** MinIO and presigned URLs: это отдельный технический контракт
-- **Механизм:** Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы.
-- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Механизм:** Отвечай только о реализованном: problem → own decision → компромисс → test/metric; честно обозначай границы.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только основной сценарий.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

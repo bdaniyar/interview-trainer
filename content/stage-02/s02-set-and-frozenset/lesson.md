@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: high · 12 минут.** Python указан в 18/18; collections — ежедневная data transformation работа backend.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,30 +12,30 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-`set` is a mutable unordered collection of unique hashable elements; `frozenset` is its immutable hashable variant.
+`set` — изменяемая неупорядоченная коллекция уникальных hashable-элементов; `frozenset` — её неизменяемый hashable-вариант.
 
 ### Как работает
 
-Membership, add and remove are average O(1) through hashing. Union `|`, intersection `&` and difference `-` express standard set operations.
+Membership, добавление и удаление работают в среднем за O(1) благодаря hashing. Объединение `|`, пересечение `&` и разность `-` выражают стандартные операции множеств.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Set iteration order is not a business contract. Sorting is required when output order matters; converting to set also discards duplicates.
+Порядок обхода set не является контрактом. Когда порядок результата важен, его задают отдельно; преобразование в set также удаляет повторы.
 
 ### Где используется в backend
 
-Sets are useful for permission membership or deduplication when original order is not required.
+Set естественно подходит для проверки permissions или удаления дублей, когда исходный порядок не нужен.
 
-## Mental model
+## Модель понимания
 
 Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -53,9 +53,9 @@ Sets are useful for permission membership or deduplication when original order i
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Set and frozenset: отдельный пример
 
@@ -69,23 +69,23 @@ print(requested <= granted)
 
 Set operations прямо выражают пересечение и проверку подмножества permissions.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Returning `list(set(values))` from an API silently loses deterministic ordering.
+Возврат `list(set(values))` из API молча уничтожает детерминированный порядок.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `uniqueness` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `uniqueness` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `membership` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `membership`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `uniqueness` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `uniqueness`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Set and frozenset in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Set and frozenset за 45–60 секунд и назови одно ограничение.
 
-## Code prediction
+## Предсказание результата кода
 
 ### set удаляет дубликаты
 
@@ -98,7 +98,7 @@ print(len(values), sorted(values))
 
 <details><summary>Показать ответ</summary>
 
-Expected:
+Ожидаемый результат:
 
 ```text
 3 [1, 2, 3]
@@ -106,59 +106,59 @@ Expected:
 
 set хранит уникальные hashable значения; порядок вывода делают явным через sorted.
 
-Misconception: `set-order`.
+Типичная ошибка мышления: `set-order`.
 
 </details>
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Set and frozenset и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Set and frozenset?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-`set` is a mutable unordered collection of unique hashable elements; `frozenset` is its immutable hashable variant.
+`set` — изменяемая неупорядоченная коллекция уникальных hashable-элементов; `frozenset` — её неизменяемый hashable-вариант.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> `set` is a mutable unordered collection of unique hashable elements; `frozenset` is its immutable hashable variant. Membership, add and remove are average O(1) through hashing. Union `|`, intersection `&` and difference `-` express standard set operations. Важное ограничение: Set iteration order is not a business contract. Sorting is required when output order matters; converting to set also discards duplicates.
+> `set` — изменяемая неупорядоченная коллекция уникальных hashable-элементов; `frozenset` — её неизменяемый hashable-вариант. Membership, добавление и удаление работают в среднем за O(1) благодаря hashing. Объединение `|`, пересечение `&` и разность `-` выражают стандартные операции множеств. Важное ограничение: Порядок обхода set не является контрактом. Когда порядок результата важен, его задают отдельно; преобразование в set также удаляет повторы.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Set and frozenset?**
 
-Returning `list(set(values))` from an API silently loses deterministic ordering.
+Возврат `list(set(values))` из API молча уничтожает детерминированный порядок.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - uniqueness
 - membership
 - union/intersection/difference
 - deduplication
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Returning `list(set(values))` from an API silently loses deterministic ordering.
+- Возврат `list(set(values))` из API молча уничтожает детерминированный порядок.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Set and frozenset?
 
@@ -168,17 +168,17 @@ Returning `list(set(values))` from an API silently loses deterministic ordering.
 
 Верни frozenset непустых scopes в lower-case без пробелов и дублей.
 
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
-## Cheat sheet
+Работай в main.py. Не меняй публичные имена и сигнатуры: скрытые тесты импортируют их напрямую. Проверь основной сценарий, граничные значения, повторные вызовы и распространение ошибок.
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** `set` is a mutable unordered collection of unique hashable elements; `frozenset` is its immutable hashable variant.
+- **Что это:** `set` — изменяемая неупорядоченная коллекция уникальных hashable-элементов; `frozenset` — её неизменяемый hashable-вариант.
 - **Механизм:** Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set.
-- **Ограничение:** Returning `list(set(values))` from an API silently loses deterministic ordering.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Возврат `list(set(values))` из API молча уничтожает детерминированный порядок.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

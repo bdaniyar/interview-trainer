@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: high · 12 минут.** FastAPI явно встречался в 9/18, любой Python web framework — в 16/18.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-An exception handler translates an exception type into a consistent HTTP response at an application/router boundary.
+Exception handler преобразует определённый тип исключения в единый HTTP response на границе application или router.
 
 ### Как работает
 
-Domain code raises a meaningful domain exception; FastAPI handler maps it to status and safe payload while unexpected errors remain server failures.
+Domain code поднимает domain exception, а FastAPI handler сопоставляет его со status и безопасным payload; неожиданные ошибки остаются server failures.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Do not catch every exception and convert programming bugs into 400 responses.
+Не преобразуй любой Exception в 400: так programming bugs маскируются под ошибку client.
 
-## Mental model
+## Модель понимания
 
 Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -44,13 +44,13 @@ Path operation — внешний адаптер; бизнес-правила л
 
 ### Полезно
 
-- one short code/result example
+- один короткий пример кода с результатом
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Exception handlers: отдельный пример
 
@@ -63,71 +63,71 @@ app = FastAPI()
 
 Это публичный starter contract практики «Domain exception handler». Реализация и hidden assertions в lesson Markdown не раскрываются.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Leaking `str(database_error)` to clients exposes schema/SQL details and creates an unstable contract.
+Передача `str(database_error)` клиенту раскрывает SQL/schema details и создаёт нестабильный contract.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `domain exception` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `domain exception` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `HTTP mapping` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `HTTP mapping`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `domain exception` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `domain exception`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Exception handlers in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Exception handlers за 45–60 секунд и назови одно ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Exception handlers и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Exception handlers?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-An exception handler translates an exception type into a consistent HTTP response at an application/router boundary.
+Exception handler преобразует определённый тип исключения в единый HTTP response на границе application или router.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> An exception handler translates an exception type into a consistent HTTP response at an application/router boundary. Domain code raises a meaningful domain exception; FastAPI handler maps it to status and safe payload while unexpected errors remain server failures. Важное ограничение: Do not catch every exception and convert programming bugs into 400 responses.
+> Exception handler преобразует определённый тип исключения в единый HTTP response на границе application или router. Domain code поднимает domain exception, а FastAPI handler сопоставляет его со status и безопасным payload; неожиданные ошибки остаются server failures. Важное ограничение: Не преобразуй любой Exception в 400: так programming bugs маскируются под ошибку client.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Exception handlers?**
 
-Leaking `str(database_error)` to clients exposes schema/SQL details and creates an unstable contract.
+Передача `str(database_error)` клиенту раскрывает SQL/schema details и создаёт нестабильный contract.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - domain exception
 - HTTP mapping
 - global handler
 - avoid leaking internals
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Leaking `str(database_error)` to clients exposes schema/SQL details and creates an unstable contract.
+- Передача `str(database_error)` клиенту раскрывает SQL/schema details и создаёт нестабильный contract.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Exception handlers?
 
@@ -137,17 +137,17 @@ Leaking `str(database_error)` to clients exposes schema/SQL details and creates 
 
 DomainConflict handler возвращает status 409 и JSON error; GET /conflict поднимает already booked.
 
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
-## Cheat sheet
+Работай в main.py. Не меняй публичные имена и сигнатуры: скрытые тесты импортируют их напрямую. Проверь основной сценарий, граничные значения, повторные вызовы и распространение ошибок.
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** An exception handler translates an exception type into a consistent HTTP response at an application/router boundary.
+- **Что это:** Exception handler преобразует определённый тип исключения в единый HTTP response на границе application или router.
 - **Механизм:** Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
-- **Ограничение:** Leaking `str(database_error)` to clients exposes schema/SQL details and creates an unstable contract.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Передача `str(database_error)` клиенту раскрывает SQL/schema details и создаёт нестабильный contract.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

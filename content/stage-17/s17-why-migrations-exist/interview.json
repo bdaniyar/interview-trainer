@@ -5,16 +5,16 @@
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "model code does not update an existing DB",
+      "код модели не обновляет существующую базу данных",
       "versioned schema history"
     ],
-    "short_answer": "A migration is a versioned, reviewable transition of an existing database schema/data; changing ORM model code alone does not update deployed databases.",
-    "junior_answer": "A migration is a versioned, reviewable transition of an existing database schema/data; changing ORM model code alone does not update deployed databases. Alembic revisions define upgrade/downgrade steps and form an ordered history applied consistently across environments. Важное ограничение: Schema changes must stay compatible with old/new application versions during rolling deploys.",
+    "short_answer": "Migration — versioned и reviewable переход существующей database schema или данных; изменение ORM model само не обновляет deployed database.",
+    "junior_answer": "Migration — versioned и reviewable переход существующей database schema или данных; изменение ORM model само не обновляет deployed database. Alembic revisions определяют upgrade и downgrade steps и образуют ordered history, одинаково применяемую в окружениях. Важное ограничение: Schema changes должны оставаться совместимыми со старой и новой версиями application во время rolling deploy.",
     "follow_up_question": "Какая типичная ошибка связана с Why migrations exist?",
-    "follow_up_answer": "Running `create_all` on startup cannot safely express rename, backfill or staged constraint changes.",
+    "follow_up_answer": "`create_all` при startup не умеет безопасно выразить rename, заполнение существующих данных или поэтапное добавление constraint.",
     "expected_answer": {
       "must_mention": [
-        "model code does not update an existing DB",
+        "код модели не обновляет существующую базу данных",
         "versioned schema history"
       ],
       "good_additions": [
@@ -22,11 +22,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Running `create_all` on startup cannot safely express rename, backfill or staged constraint changes.",
+        "`create_all` при startup не умеет безопасно выразить rename, заполнение существующих данных или поэтапное добавление constraint.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Running `create_all` on startup cannot safely express rename, backfill or staged constraint changes."
+        "`create_all` при startup не умеет безопасно выразить rename, заполнение существующих данных или поэтапное добавление constraint."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Why migrations exist?"
@@ -51,25 +51,25 @@
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "one short code/result example",
-      "Running `create_all` on startup cannot safely express rename, backfill or staged constraint changes."
+      "один короткий пример кода с результатом",
+      "`create_all` при startup не умеет безопасно выразить rename, заполнение существующих данных или поэтапное добавление constraint."
     ],
-    "short_answer": "Running `create_all` on startup cannot safely express rename, backfill or staged constraint changes.",
-    "junior_answer": "Running `create_all` on startup cannot safely express rename, backfill or staged constraint changes.",
+    "short_answer": "`create_all` при startup не умеет безопасно выразить rename, заполнение существующих данных или поэтапное добавление constraint.",
+    "junior_answer": "`create_all` при startup не умеет безопасно выразить rename, заполнение существующих данных или поэтапное добавление constraint.",
     "follow_up_question": "Что такое Why migrations exist и как это работает?",
-    "follow_up_answer": "A migration is a versioned, reviewable transition of an existing database schema/data; changing ORM model code alone does not update deployed databases. Alembic revisions define upgrade/downgrade steps and form an ordered history applied consistently across environments. Важное ограничение: Schema changes must stay compatible with old/new application versions during rolling deploys.",
+    "follow_up_answer": "Migration — versioned и reviewable переход существующей database schema или данных; изменение ORM model само не обновляет deployed database. Alembic revisions определяют upgrade и downgrade steps и образуют ordered history, одинаково применяемую в окружениях. Важное ограничение: Schema changes должны оставаться совместимыми со старой и новой версиями application во время rolling deploy.",
     "expected_answer": {
       "must_mention": [
-        "one short code/result example"
+        "один короткий пример кода с результатом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Running `create_all` on startup cannot safely express rename, backfill or staged constraint changes."
+        "`create_all` при startup не умеет безопасно выразить rename, заполнение существующих данных или поэтапное добавление constraint."
       ],
       "red_flags": [
-        "Running `create_all` on startup cannot safely express rename, backfill or staged constraint changes."
+        "`create_all` при startup не умеет безопасно выразить rename, заполнение существующих данных или поэтапное добавление constraint."
       ],
       "follow_up_questions": [
         "Что такое Why migrations exist и как это работает?"

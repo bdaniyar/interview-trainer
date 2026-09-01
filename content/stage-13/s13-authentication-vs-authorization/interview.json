@@ -1,37 +1,37 @@
 [
   {
-    "question": "Что такое Authentication vs authorization и как это работает?",
+    "question": "Что такое Аутентификацию vs authorization и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Authentication vs authorization"
+      "Аутентификацию vs authorization"
     ],
-    "short_answer": "Authentication establishes who the requester is; authorization decides whether that identity may perform an action on a resource.",
-    "junior_answer": "Authentication establishes who the requester is; authorization decides whether that identity may perform an action on a resource. Credentials/token/session are verified first, then policy checks roles, permissions, ownership or attributes for the concrete operation. Важное ограничение: A logged-in user is not automatically allowed to read another user's object.",
-    "follow_up_question": "Какая типичная ошибка связана с Authentication vs authorization?",
-    "follow_up_answer": "Hiding an admin button in the frontend is neither authentication nor authorization; the API must enforce the rule.",
+    "short_answer": "Аутентификацию устанавливает личность requester, authorization решает, может ли эта identity выполнить действие над конкретным resource.",
+    "junior_answer": "Аутентификацию устанавливает личность requester, authorization решает, может ли эта identity выполнить действие над конкретным resource. Сначала проверяется credential, token или session, затем policy проверяет role, permission, ownership или attributes для операции. Важное ограничение: Авторизованный вход в систему не даёт автоматического права читать чужой объект.",
+    "follow_up_question": "Какая типичная ошибка связана с Аутентификацию vs authorization?",
+    "follow_up_answer": "Скрытая admin-кнопка во frontend не является ни аутентификацию, ни authorization: правило обязан проверять API.",
     "expected_answer": {
       "must_mention": [
-        "Authentication vs authorization"
+        "Аутентификацию vs authorization"
       ],
       "good_additions": [
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Hiding an admin button in the frontend is neither authentication nor authorization; the API must enforce the rule.",
+        "Скрытая admin-кнопка во frontend не является ни аутентификацию, ни authorization: правило обязан проверять API.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Hiding an admin button in the frontend is neither authentication nor authorization; the API must enforce the rule."
+        "Скрытая admin-кнопка во frontend не является ни аутентификацию, ни authorization: правило обязан проверять API."
       ],
       "follow_up_questions": [
-        "Какая типичная ошибка связана с Authentication vs authorization?"
+        "Какая типичная ошибка связана с Аутентификацию vs authorization?"
       ]
     },
     "follow_ups": [
-      "Какая типичная ошибка связана с Authentication vs authorization?"
+      "Какая типичная ошибка связана с Аутентификацию vs authorization?"
     ],
     "tags": [
       "stage-13",
@@ -44,37 +44,37 @@
     ]
   },
   {
-    "question": "Какая типичная ошибка связана с Authentication vs authorization?",
+    "question": "Какая типичная ошибка связана с Аутентификацию vs authorization?",
     "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "one short code/result example",
-      "Hiding an admin button in the frontend is neither authentication nor authorization; the API must enforce the rule."
+      "один короткий пример кода с результатом",
+      "Скрытая admin-кнопка во frontend не является ни аутентификацию, ни authorization: правило обязан проверять API."
     ],
-    "short_answer": "Hiding an admin button in the frontend is neither authentication nor authorization; the API must enforce the rule.",
-    "junior_answer": "Hiding an admin button in the frontend is neither authentication nor authorization; the API must enforce the rule.",
-    "follow_up_question": "Что такое Authentication vs authorization и как это работает?",
-    "follow_up_answer": "Authentication establishes who the requester is; authorization decides whether that identity may perform an action on a resource. Credentials/token/session are verified first, then policy checks roles, permissions, ownership or attributes for the concrete operation. Важное ограничение: A logged-in user is not automatically allowed to read another user's object.",
+    "short_answer": "Скрытая admin-кнопка во frontend не является ни аутентификацию, ни authorization: правило обязан проверять API.",
+    "junior_answer": "Скрытая admin-кнопка во frontend не является ни аутентификацию, ни authorization: правило обязан проверять API.",
+    "follow_up_question": "Что такое Аутентификацию vs authorization и как это работает?",
+    "follow_up_answer": "Аутентификацию устанавливает личность requester, authorization решает, может ли эта identity выполнить действие над конкретным resource. Сначала проверяется credential, token или session, затем policy проверяет role, permission, ownership или attributes для операции. Важное ограничение: Авторизованный вход в систему не даёт автоматического права читать чужой объект.",
     "expected_answer": {
       "must_mention": [
-        "one short code/result example"
+        "один короткий пример кода с результатом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Hiding an admin button in the frontend is neither authentication nor authorization; the API must enforce the rule."
+        "Скрытая admin-кнопка во frontend не является ни аутентификацию, ни authorization: правило обязан проверять API."
       ],
       "red_flags": [
-        "Hiding an admin button in the frontend is neither authentication nor authorization; the API must enforce the rule."
+        "Скрытая admin-кнопка во frontend не является ни аутентификацию, ни authorization: правило обязан проверять API."
       ],
       "follow_up_questions": [
-        "Что такое Authentication vs authorization и как это работает?"
+        "Что такое Аутентификацию vs authorization и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что такое Authentication vs authorization и как это работает?"
+      "Что такое Аутентификацию vs authorization и как это работает?"
     ],
     "tags": [
       "stage-13",

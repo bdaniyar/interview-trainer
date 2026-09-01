@@ -10,10 +10,10 @@
       "union/intersection/difference",
       "deduplication"
     ],
-    "short_answer": "`set` is a mutable unordered collection of unique hashable elements; `frozenset` is its immutable hashable variant.",
-    "junior_answer": "`set` is a mutable unordered collection of unique hashable elements; `frozenset` is its immutable hashable variant. Membership, add and remove are average O(1) through hashing. Union `|`, intersection `&` and difference `-` express standard set operations. Важное ограничение: Set iteration order is not a business contract. Sorting is required when output order matters; converting to set also discards duplicates.",
+    "short_answer": "`set` — изменяемая неупорядоченная коллекция уникальных hashable-элементов; `frozenset` — её неизменяемый hashable-вариант.",
+    "junior_answer": "`set` — изменяемая неупорядоченная коллекция уникальных hashable-элементов; `frozenset` — её неизменяемый hashable-вариант. Membership, добавление и удаление работают в среднем за O(1) благодаря hashing. Объединение `|`, пересечение `&` и разность `-` выражают стандартные операции множеств. Важное ограничение: Порядок обхода set не является контрактом. Когда порядок результата важен, его задают отдельно; преобразование в set также удаляет повторы.",
     "follow_up_question": "Какая типичная ошибка связана с Set and frozenset?",
-    "follow_up_answer": "Returning `list(set(values))` from an API silently loses deterministic ordering.",
+    "follow_up_answer": "Возврат `list(set(values))` из API молча уничтожает детерминированный порядок.",
     "expected_answer": {
       "must_mention": [
         "uniqueness",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Returning `list(set(values))` from an API silently loses deterministic ordering.",
+        "Возврат `list(set(values))` из API молча уничтожает детерминированный порядок.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Returning `list(set(values))` from an API silently loses deterministic ordering."
+        "Возврат `list(set(values))` из API молча уничтожает детерминированный порядок."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Set and frozenset?"
@@ -57,12 +57,12 @@
     "answer": [
       "set vs list",
       "frozenset",
-      "Returning `list(set(values))` from an API silently loses deterministic ordering."
+      "Возврат `list(set(values))` из API молча уничтожает детерминированный порядок."
     ],
-    "short_answer": "Returning `list(set(values))` from an API silently loses deterministic ordering.",
-    "junior_answer": "Returning `list(set(values))` from an API silently loses deterministic ordering.",
+    "short_answer": "Возврат `list(set(values))` из API молча уничтожает детерминированный порядок.",
+    "junior_answer": "Возврат `list(set(values))` из API молча уничтожает детерминированный порядок.",
     "follow_up_question": "Что такое Set and frozenset и как это работает?",
-    "follow_up_answer": "`set` is a mutable unordered collection of unique hashable elements; `frozenset` is its immutable hashable variant. Membership, add and remove are average O(1) through hashing. Union `|`, intersection `&` and difference `-` express standard set operations. Важное ограничение: Set iteration order is not a business contract. Sorting is required when output order matters; converting to set also discards duplicates.",
+    "follow_up_answer": "`set` — изменяемая неупорядоченная коллекция уникальных hashable-элементов; `frozenset` — её неизменяемый hashable-вариант. Membership, добавление и удаление работают в среднем за O(1) благодаря hashing. Объединение `|`, пересечение `&` и разность `-` выражают стандартные операции множеств. Важное ограничение: Порядок обхода set не является контрактом. Когда порядок результата важен, его задают отдельно; преобразование в set также удаляет повторы.",
     "expected_answer": {
       "must_mention": [
         "set vs list",
@@ -72,10 +72,10 @@
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Returning `list(set(values))` from an API silently loses deterministic ordering."
+        "Возврат `list(set(values))` из API молча уничтожает детерминированный порядок."
       ],
       "red_flags": [
-        "Returning `list(set(values))` from an API silently loses deterministic ordering."
+        "Возврат `list(set(values))` из API молча уничтожает детерминированный порядок."
       ],
       "follow_up_questions": [
         "Что такое Set and frozenset и как это работает?"

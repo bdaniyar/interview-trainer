@@ -25,8 +25,8 @@ interface MarkdownSection {
   body: string;
 }
 
-const REVIEW_SECTION = /practice|prediction|задача|interview|good answers|answer rubric/i;
-const COLLAPSED_SECTION = /mental model|good answers|answer rubric|sources/i;
+const REVIEW_SECTION = /практика|предсказание|задача|вопросы с собеседований|хорошие ответы|критерии хорошего ответа/i;
+const COLLAPSED_SECTION = /модель понимания|хорошие ответы|критерии хорошего ответа|источники/i;
 
 function splitSections(markdown: string): { intro: string; sections: MarkdownSection[] } {
   const matches = [...markdown.matchAll(/^## (.+)$/gm)];
@@ -108,7 +108,7 @@ export function MarkdownLesson({ lesson, theme, position, total, onCompleteTheor
   return (
     <article className="lesson-reader">
       <div className="reader-inner">
-        <p className="lesson-kicker">JUNIOR BACKEND · {mode === 'learn' ? 'LEARN MODE' : 'REVIEW MODE'}</p>
+        <p className="lesson-kicker">JUNIOR BACKEND · {mode === 'learn' ? 'РЕЖИМ ОБУЧЕНИЯ' : 'РЕЖИМ ПОВТОРЕНИЯ'}</p>
         <div className="lesson-title-row">
           <div>
             <h1>{lesson.title}</h1>
@@ -125,24 +125,24 @@ export function MarkdownLesson({ lesson, theme, position, total, onCompleteTheor
         <div className="lesson-mode-switch" aria-label="Режим урока">
           <button className={mode === 'learn' ? 'active' : ''} onClick={() => changeMode('learn')}>
             <BookOpen size={15} />
-            <span><b>Learn</b><small>Теория, примеры и практика</small></span>
+            <span><b>Обучение</b><small>Теория, примеры и практика</small></span>
           </button>
           <button className={mode === 'review' ? 'active' : ''} onClick={() => changeMode('review')}>
             <Brain size={15} />
-            <span><b>Review</b><small>Вопросы без подсказок</small></span>
+            <span><b>Повторение</b><small>Вопросы без подсказок</small></span>
           </button>
         </div>
 
         <div className="markdown-body">
           {mode === 'learn' ? <MarkdownContent source={parsed.intro} theme={theme} /> : (
             <div className="review-intro">
-              <b>Сначала реши без Theory</b>
-              <p>Ответь на prediction, найди ошибку и проговори interview answer. Хорошие ответы и rubric раскрывай после попытки.</p>
+              <b>Сначала реши без теории</b>
+              <p>Предскажи результат кода, найди ошибку и проговори ответ как на собеседовании. Хорошие ответы и критерии раскрывай после попытки.</p>
             </div>
           )}
           {visibleSections.map((section) => COLLAPSED_SECTION.test(section.title) ? (
             <details className="lesson-disclosure" key={section.title}>
-              <summary>{section.title === 'Good answers' ? 'Показать хороший ответ' : section.title}</summary>
+              <summary>{section.title === 'Хорошие ответы' ? 'Показать хороший ответ' : section.title}</summary>
               <div><MarkdownContent source={section.body} theme={theme} /></div>
             </details>
           ) : (
@@ -155,7 +155,7 @@ export function MarkdownLesson({ lesson, theme, position, total, onCompleteTheor
 
         <div className="theory-complete-card">
           <div>
-            <strong>{lesson.progress.theory_completed ? 'Теория пройдена' : 'Закончил Learn mode?'}</strong>
+            <strong>{lesson.progress.theory_completed ? 'Теория пройдена' : 'Закончил режим обучения?'}</strong>
             <p>{lesson.progress.theory_completed ? 'XP уже начислен. Переходи к практике.' : 'Отметь теорию и получи +5 XP.'}</p>
           </div>
           <button className="secondary-button" disabled={lesson.progress.theory_completed} onClick={onCompleteTheory}>

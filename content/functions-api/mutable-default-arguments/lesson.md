@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** Python указан в 18/18; functions/scope/decorators регулярно проверяют на screening.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,7 +12,7 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
@@ -22,7 +22,7 @@
 
 Отдели выполнение `def`, связывание arguments при вызове и разрешение names по LEGB.
 
-**evaluation at function definition.** `evaluation at function definition` влияет на function contract; результат определяется definition time, argument binding при вызове и разрешением names.
+**вычисление в момент определения функции.** `evaluation at function definition` влияет на function contract; результат определяется definition time, argument binding при вызове и разрешением names.
 
 **mutable default bug.** Mutable объект меняется с сохранением identity, поэтому alias наблюдает ту же мутацию.
 
@@ -31,21 +31,21 @@
 **`None` pattern and its limitations.** ``None` pattern and its limitations` влияет на function contract; результат определяется definition time, argument binding при вызове и разрешением names.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
 Граница Junior: уверенно объясняй `evaluation at function definition` и `mutable default bug` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
-## Mental model
+## Модель понимания
 
 Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
-- evaluation at function definition
+- вычисление в момент определения функции
 - mutable default bug
 - sentinel pattern
 - `None` pattern and its limitations
@@ -56,9 +56,9 @@
 
 ### Можно не учить глубоко
 
-- implementation internals, не влияющие на Junior-код и типичный interview follow-up
+- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Default arguments: отдельный пример
 
@@ -75,21 +75,21 @@ print(add_tag("sql"))
 
 Sentinel/default `None` создаёт новый mutable list на каждый вызов и исключает shared state.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
 Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
 
-## Practice
+## Практика
 
-**A · Prediction/reasoning.** Предскажи результат минимального примера для `evaluation at function definition` до запуска.
+**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для `evaluation at function definition` до запуска.
 
-**B · Find the bug.** Найди нарушение `mutable default bug` и объясни конкретное последствие.
+**B · Найди ошибку.** Найди нарушение `mutable default bug` и объясни конкретное последствие.
 
-**E · Interview explanation.** Дай ответ про Default arguments за 60 секунд: определение, механизм, пример, ограничение.
+**E · Ответ на собеседовании.** Дай ответ про Default arguments за 60 секунд: определение, механизм, пример, ограничение.
 
-## Code prediction
+## Предсказание результата кода
 
 ### Default вычисляется один раз
 
@@ -105,7 +105,7 @@ print(add(1), add(2))
 
 <details><summary>Показать ответ</summary>
 
-Expected:
+Ожидаемый результат:
 
 ```text
 [1] [1, 2]
@@ -113,86 +113,86 @@ Expected:
 
 Mutable default создаётся при выполнении def и переиспользуется следующими вызовами.
 
-Misconception: `mutable-default`.
+Типичная ошибка мышления: `mutable-default`.
 
 </details>
 
-## Debugging practice
+## Практика: Отладка
 
 ### Mutable default
 
 **Сценарий:** Список tags растёт между независимыми вызовами.
 
-**Rubric:** Default создаётся при def; None/sentinel и новый list; тест на два вызова.
+**Критерии ответа:** Default создаётся при def; None/sentinel и новый list; тест на два вызова.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Default arguments и какой механизм здесь важно понимать Junior-разработчику?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какое ограничение или типичная ошибка относится именно к теме Default arguments?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
 Default arguments: Это часть контракта Python function: важно различать definition time, call time, signature и разрешение имён.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
 > Default arguments — тема, в которой я сначала фиксирую `evaluation at function definition`, затем объясняю `mutable default bug` на коротком примере. Ключевой механизм: Отдели выполнение `def`, связывание arguments при вызове и разрешение names по LEGB. Главная практическая ошибка — Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какое ограничение или типичная ошибка относится именно к теме Default arguments?**
 
 Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
-- evaluation at function definition
+- вычисление в момент определения функции
 - mutable default bug
 - sentinel pattern
 - `None` pattern and its limitations
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
 - Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какое ограничение или типичная ошибка относится именно к теме Default arguments?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Default arguments**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Default arguments**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
 - **Что это:** Default arguments: Это часть контракта Python function: важно различать definition time, call time, signature и разрешение имён.
 - **Механизм:** Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
 - **Ограничение:** Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

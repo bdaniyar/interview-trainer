@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P1 · вероятность на интервью: medium · 10 минут.** Concurrency fundamentals поддерживают выбор threads/processes/async без мифов о GIL.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-A thread executes within one process and shares its memory, file descriptors and module state with other threads.
+Thread выполняется внутри одного process и разделяет память, file дескрипторы и module state с другими threads.
 
 ### Как работает
 
-Threads are useful for blocking I/O libraries. Shared mutable state needs Lock or another synchronization design; `join` waits for completion.
+Threads удобны для blocking I/O libraries. Shared mutable state требует Lock или другой синхронизации; `join` ожидает завершения.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-The GIL limits CPU-bound Python parallelism but does not prevent race conditions between multi-step operations.
+GIL ограничивает CPU-bound parallelism Python-кода, но не предотвращает race conditions в многошаговых операциях.
 
-## Mental model
+## Модель понимания
 
 Thread разделяет память процесса; process изолирован и требует сериализации/IPC.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -48,9 +48,9 @@ Thread разделяет память процесса; process изолиро�
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Threading: отдельный пример
 
@@ -67,23 +67,23 @@ thread.join()
 
 Thread разделяет память процесса; `join` задаёт явную точку ожидания завершения.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Updating shared state with check-then-act logic without a lock can lose changes even when individual operations appear atomic.
+Check-then-act над общим состоянием без lock может потерять изменение, даже если отдельные операции кажутся атомарными.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `shared process memory` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `shared process memory` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `I/O-bound` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `I/O-bound`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `shared process memory` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `shared process memory`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Threading in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Threading за 45–60 секунд и назови одно ограничение.
 
-## Code prediction
+## Предсказание результата кода
 
 ### Threads разделяют объект
 
@@ -99,7 +99,7 @@ print(items)
 
 <details><summary>Показать ответ</summary>
 
-Expected:
+Ожидаемый результат:
 
 ```text
 [1]
@@ -107,76 +107,76 @@ Expected:
 
 Thread работает в памяти процесса; join гарантирует завершение перед print.
 
-Misconception: `thread-shared-memory`.
+Типичная ошибка мышления: `thread-shared-memory`.
 
 </details>
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Threading и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Threading?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-A thread executes within one process and shares its memory, file descriptors and module state with other threads.
+Thread выполняется внутри одного process и разделяет память, file дескрипторы и module state с другими threads.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> A thread executes within one process and shares its memory, file descriptors and module state with other threads. Threads are useful for blocking I/O libraries. Shared mutable state needs Lock or another synchronization design; `join` waits for completion. Важное ограничение: The GIL limits CPU-bound Python parallelism but does not prevent race conditions between multi-step operations.
+> Thread выполняется внутри одного process и разделяет память, file дескрипторы и module state с другими threads. Threads удобны для blocking I/O libraries. Shared mutable state требует Lock или другой синхронизации; `join` ожидает завершения. Важное ограничение: GIL ограничивает CPU-bound parallelism Python-кода, но не предотвращает race conditions в многошаговых операциях.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Threading?**
 
-Updating shared state with check-then-act logic without a lock can lose changes even when individual operations appear atomic.
+Check-then-act над общим состоянием без lock может потерять изменение, даже если отдельные операции кажутся атомарными.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - shared process memory
 - I/O-bound
 - race conditions
 - locks
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Updating shared state with check-then-act logic without a lock can lose changes even when individual operations appear atomic.
+- Check-then-act над общим состоянием без lock может потерять изменение, даже если отдельные операции кажутся атомарными.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Threading?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Threading**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Threading**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** A thread executes within one process and shares its memory, file descriptors and module state with other threads.
+- **Что это:** Thread выполняется внутри одного process и разделяет память, file дескрипторы и module state с другими threads.
 - **Механизм:** Thread разделяет память процесса; process изолирован и требует сериализации/IPC.
-- **Ограничение:** Updating shared state with check-then-act logic without a lock can lose changes even when individual operations appear atomic.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Check-then-act над общим состоянием без lock может потерять изменение, даже если отдельные операции кажутся атомарными.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

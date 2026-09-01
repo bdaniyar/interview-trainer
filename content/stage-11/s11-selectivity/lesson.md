@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P1 · вероятность на интервью: high · 10 минут.** PostgreSQL явно встречался в 13/18; indexes/transactions/concurrency критичны для backend.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,7 +12,7 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
@@ -24,10 +24,10 @@
 
 **low-cardinality fields.** `low-cardinality fields` влияет на database invariant, concurrent transactions или access path; правильность подтверждают constraint и фактический query plan.
 
-**why planner may prefer sequential scan.** `why planner may prefer sequential scan` влияет на database invariant, concurrent transactions или access path; правильность подтверждают constraint и фактический query plan.
+**почему планировщик может предпочесть последовательное сканирование.** `why planner may prefer sequential scan` влияет на database invariant, concurrent transactions или access path; правильность подтверждают constraint и фактический query plan.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
 Граница Junior: уверенно объясняй `low-cardinality fields` и `why planner may prefer sequential scan` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
@@ -35,18 +35,18 @@
 
 В backend эта тема важна в том месте, где применяется `low-cardinality fields`; проверяй именно наблюдаемый contract, а не название инструмента.
 
-## Mental model
+## Модель понимания
 
 Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
 - low-cardinality fields
-- why planner may prefer sequential scan
+- почему планировщик может предпочесть последовательное сканирование
 
 ### Полезно
 
@@ -54,9 +54,9 @@ Constraint защищает истину, transaction объединяет из�
 
 ### Можно не учить глубоко
 
-- implementation internals, не влияющие на Junior-код и типичный interview follow-up
+- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Selectivity: отдельный пример
 
@@ -68,21 +68,21 @@ SELECT 's11_selectivity' AS example_key;
 
 Проверь invariant, конкурентный сценарий и фактический query plan вместо догадки.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
 Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
 
-## Practice
+## Практика
 
-**A · Prediction/reasoning.** Предскажи результат минимального примера для `low-cardinality fields` до запуска.
+**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для `low-cardinality fields` до запуска.
 
-**B · Find the bug.** Найди нарушение `why planner may prefer sequential scan` и объясни конкретное последствие.
+**B · Найди ошибку.** Найди нарушение `why planner may prefer sequential scan` и объясни конкретное последствие.
 
-**E · Interview explanation.** Дай ответ про Selectivity за 60 секунд: определение, механизм, пример, ограничение.
+**E · Ответ на собеседовании.** Дай ответ про Selectivity за 60 секунд: определение, механизм, пример, ограничение.
 
-## SQL practice
+## Практика SQL
 
 ### Covering index
 
@@ -103,7 +103,7 @@ CREATE TABLE bookings (
 );
 ```
 
-Seed:
+Начальные данные:
 
 ```sql
 INSERT INTO rooms VALUES (1,10,'101'),(2,10,'102');
@@ -114,74 +114,74 @@ INSERT INTO bookings VALUES
 
 **Вопрос:** Query фильтрует user_id, сортирует created_at и возвращает total. Когда уместен INCLUDE?
 
-Expected columns: reasoning rubric. Comparison: reasoning_rubric.
+Ожидаемые столбцы: критерии рассуждения. Сравнение: по критериям рассуждения.
 
-SQL runner пока не подключён: выполни запрос в локальном PostgreSQL и сверь result с rubric.
+Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Selectivity и какой механизм здесь важно понимать Junior-разработчику?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какое ограничение или типичная ошибка относится именно к теме Selectivity?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
 Selectivity: Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
 > Selectivity — тема, в которой я сначала фиксирую `low-cardinality fields`, затем объясняю `why planner may prefer sequential scan` на коротком примере. Ключевой механизм: Назови invariant и concurrent scenario, затем проверь constraint, transaction boundary и фактический query plan. Главная практическая ошибка — Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какое ограничение или типичная ошибка относится именно к теме Selectivity?**
 
 Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - low-cardinality fields
-- why planner may prefer sequential scan
+- почему планировщик может предпочесть последовательное сканирование
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
 - Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какое ограничение или типичная ошибка относится именно к теме Selectivity?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Selectivity**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Selectivity**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
 - **Что это:** Selectivity: Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.
 - **Механизм:** Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
 - **Ограничение:** Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

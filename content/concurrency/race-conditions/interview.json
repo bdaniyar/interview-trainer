@@ -55,7 +55,7 @@
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "database race conditions are separate from Python GIL",
+      "гонки данных в базе не предотвращаются GIL языка Python",
       "Принять деталь CPython за гарантию языка или оптимизировать без измерения."
     ],
     "short_answer": "Принять деталь CPython за гарантию языка или оптимизировать без измерения.",
@@ -64,7 +64,7 @@
     "follow_up_answer": "Race conditions and locks — тема, в которой я сначала фиксирую `check-then-act`, затем объясняю `shared mutable state` на коротком примере. Ключевой механизм: Сначала измерь lifetime, allocations или contention и только затем связывай symptom с особенностью CPython. Главная практическая ошибка — Принять деталь CPython за гарантию языка или оптимизировать без измерения.",
     "expected_answer": {
       "must_mention": [
-        "database race conditions are separate from Python GIL"
+        "гонки данных в базе не предотвращаются GIL языка Python"
       ],
       "good_additions": [
         "короткий пример именно этой темы"

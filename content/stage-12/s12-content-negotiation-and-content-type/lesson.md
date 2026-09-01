@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P1 · вероятность на интервью: high · 10 минут.** HTTP/REST/API явно встречались в 13/18 — P0 внешний контракт backend.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-`Content-Type` describes the representation sent in a body; `Accept` describes representations the client can receive.
+`Content-Type` описывает представление отправленного body, а `Accept` — форматы, которые client готов получить.
 
 ### Как работает
 
-For JSON APIs the sender normally uses `application/json`; charset matters for textual formats and body parsing follows the declared media type.
+Для JSON API отправитель обычно указывает `application/json`; charset важен для текстовых форматов, а parser следует объявленному media type.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-A JSON-looking string with the wrong Content-Type is not the same protocol contract.
+Строка, похожая на JSON, с неверным Content-Type не является тем же protocol contract.
 
-## Mental model
+## Модель понимания
 
 Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -43,13 +43,13 @@ A JSON-looking string with the wrong Content-Type is not the same protocol contr
 
 ### Полезно
 
-- one short code/result example
+- один короткий пример кода с результатом
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Content negotiation and Content-Type: отдельный пример
 
@@ -61,87 +61,87 @@ X-Request-ID: req-12-10
 
 Зафиксируй method/path/headers/body, status и поведение повторного request. Здесь route и request-id привязаны именно к теме «Content negotiation and Content-Type».
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Confusing Accept with Content-Type produces 415/406 behavior or incorrect parsing.
+Смешение Accept и Content-Type приводит к ошибкам 415/406 или неверному parsing.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `JSON` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `JSON` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `charset` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `charset`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `JSON` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `JSON`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Content negotiation and Content-Type in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Content negotiation and Content-Type за 45–60 секунд и назови одно ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Content negotiation and Content-Type и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Content negotiation and Content-Type?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-`Content-Type` describes the representation sent in a body; `Accept` describes representations the client can receive.
+`Content-Type` описывает представление отправленного body, а `Accept` — форматы, которые client готов получить.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> `Content-Type` describes the representation sent in a body; `Accept` describes representations the client can receive. For JSON APIs the sender normally uses `application/json`; charset matters for textual formats and body parsing follows the declared media type. Важное ограничение: A JSON-looking string with the wrong Content-Type is not the same protocol contract.
+> `Content-Type` описывает представление отправленного body, а `Accept` — форматы, которые client готов получить. Для JSON API отправитель обычно указывает `application/json`; charset важен для текстовых форматов, а parser следует объявленному media type. Важное ограничение: Строка, похожая на JSON, с неверным Content-Type не является тем же protocol contract.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Content negotiation and Content-Type?**
 
-Confusing Accept with Content-Type produces 415/406 behavior or incorrect parsing.
+Смешение Accept и Content-Type приводит к ошибкам 415/406 или неверному parsing.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - JSON
 - charset
 - Accept
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Confusing Accept with Content-Type produces 415/406 behavior or incorrect parsing.
+- Смешение Accept и Content-Type приводит к ошибкам 415/406 или неверному parsing.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Content negotiation and Content-Type?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Content negotiation and Content-Type**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Content negotiation and Content-Type**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** `Content-Type` describes the representation sent in a body; `Accept` describes representations the client can receive.
+- **Что это:** `Content-Type` описывает представление отправленного body, а `Accept` — форматы, которые client готов получить.
 - **Механизм:** Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
-- **Ограничение:** Confusing Accept with Content-Type produces 415/406 behavior or incorrect parsing.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Смешение Accept и Content-Type приводит к ошибкам 415/406 или неверному parsing.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

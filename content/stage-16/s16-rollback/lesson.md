@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** ORM/SQLAlchemy явно встречались в 4/18, но Session/transaction знание фундаментально для FastAPI backend.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-Rollback cancels the current database transaction and is required before reusing a Session after a flush/commit error.
+Rollback отменяет текущую database transaction и обязателен перед повторным использованием Session после flush или commit error.
 
 ### Как работает
 
-SQLAlchemy marks the failed transaction state; catching IntegrityError without rollback leaves later operations failing.
+SQLAlchemy помечает transaction как failed; перехват `IntegrityError` без rollback оставляет дальнейшие операции нерабочими.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Translate known constraint conflicts after rollback and re-raise unexpected failures with their cause/context.
+После rollback известный constraint conflict переводят в domain error, а неожиданный сбой поднимают с исходной причиной.
 
-## Mental model
+## Модель понимания
 
 Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -43,13 +43,13 @@ Translate known constraint conflicts after rollback and re-raise unexpected fail
 
 ### Полезно
 
-- one short code/result example
+- один короткий пример кода с результатом
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Rollback: отдельный пример
 
@@ -62,80 +62,80 @@ Rollback failed transaction before reuse.
 
 Это отдельный debugging example для данного subtopic, а не общий пример stage.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Continuing queries immediately after IntegrityError produces a pending-rollback error and obscures the original conflict.
+Query сразу после IntegrityError без rollback вызывает pending-rollback error и скрывает исходный conflict.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `failed transaction state` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `failed transaction state` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `rollback before reuse` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `rollback before reuse`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `failed transaction state` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `failed transaction state`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Rollback in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Rollback за 45–60 секунд и назови одно ограничение.
 
-## Debugging practice
+## Практика: Отладка
 
 ### Failed session
 
 **Сценарий:** После IntegrityError новые queries падают.
 
-**Rubric:** Rollback failed transaction before reuse.
+**Критерии ответа:** Rollback failed transaction before reuse.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Rollback и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Rollback?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-Rollback cancels the current database transaction and is required before reusing a Session after a flush/commit error.
+Rollback отменяет текущую database transaction и обязателен перед повторным использованием Session после flush или commit error.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> Rollback cancels the current database transaction and is required before reusing a Session after a flush/commit error. SQLAlchemy marks the failed transaction state; catching IntegrityError without rollback leaves later operations failing. Важное ограничение: Translate known constraint conflicts after rollback and re-raise unexpected failures with their cause/context.
+> Rollback отменяет текущую database transaction и обязателен перед повторным использованием Session после flush или commit error. SQLAlchemy помечает transaction как failed; перехват `IntegrityError` без rollback оставляет дальнейшие операции нерабочими. Важное ограничение: После rollback известный constraint conflict переводят в domain error, а неожиданный сбой поднимают с исходной причиной.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Rollback?**
 
-Continuing queries immediately after IntegrityError produces a pending-rollback error and obscures the original conflict.
+Query сразу после IntegrityError без rollback вызывает pending-rollback error и скрывает исходный conflict.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - failed transaction state
 - rollback before reuse
 - exception boundary
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Continuing queries immediately after IntegrityError produces a pending-rollback error and obscures the original conflict.
+- Query сразу после IntegrityError без rollback вызывает pending-rollback error и скрывает исходный conflict.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Rollback?
 
@@ -145,17 +145,17 @@ Continuing queries immediately after IntegrityError produces a pending-rollback 
 
 persist делает add+commit; на любой Exception rollback и re-raise.
 
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
-## Cheat sheet
+Работай в main.py. Не меняй публичные имена и сигнатуры: скрытые тесты импортируют их напрямую. Проверь основной сценарий, граничные значения, повторные вызовы и распространение ошибок.
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** Rollback cancels the current database transaction and is required before reusing a Session after a flush/commit error.
+- **Что это:** Rollback отменяет текущую database transaction и обязателен перед повторным использованием Session после flush или commit error.
 - **Механизм:** Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
-- **Ограничение:** Continuing queries immediately after IntegrityError produces a pending-rollback error and obscures the original conflict.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Query сразу после IntegrityError без rollback вызывает pending-rollback error и скрывает исходный conflict.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P1 · вероятность на интервью: high · 10 минут.** Auth/security защищают заявленные JWT/OAuth2/PKCE и API permissions.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,7 +12,7 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
@@ -20,22 +20,22 @@
 
 ### Как работает
 
-Назови asset, threat, trust boundary, server-side verification и безопасный failure result.
+Назови asset, threat, trust boundary, на стороне сервера verification и безопасный failure result.
 
-**verifier.** `verifier` закрывает конкретную threat на trust boundary; проверка выполняется server-side, а отказ не раскрывает лишних данных.
+**verifier.** `verifier` закрывает конкретную threat на trust boundary; проверка выполняется на стороне сервера, а отказ не раскрывает лишних данных.
 
-**challenge.** `challenge` закрывает конкретную threat на trust boundary; проверка выполняется server-side, а отказ не раскрывает лишних данных.
+**challenge.** `challenge` закрывает конкретную threat на trust boundary; проверка выполняется на стороне сервера, а отказ не раскрывает лишних данных.
 
-**code interception.** `code interception` закрывает конкретную threat на trust boundary; проверка выполняется server-side, а отказ не раскрывает лишних данных.
+**code interception.** `code interception` закрывает конкретную threat на trust boundary; проверка выполняется на стороне сервера, а отказ не раскрывает лишних данных.
 
-**`state`.** ``state`` закрывает конкретную threat на trust boundary; проверка выполняется server-side, а отказ не раскрывает лишних данных.
+**`state`.** ``state`` закрывает конкретную threat на trust boundary; проверка выполняется на стороне сервера, а отказ не раскрывает лишних данных.
 
-**redirect URI.** `redirect URI` закрывает конкретную threat на trust boundary; проверка выполняется server-side, а отказ не раскрывает лишних данных.
+**redirect URI.** `redirect URI` закрывает конкретную threat на trust boundary; проверка выполняется на стороне сервера, а отказ не раскрывает лишних данных.
 
-**PKCE does not replace all CSRF protections.** PKCE отправляет challenge в authorize request и verifier при token exchange, поэтому перехваченного code недостаточно без verifier.
+**PKCE не заменяет все меры защиты от CSRF.** PKCE отправляет challenge в authorize request и verifier при token exchange, поэтому перехваченного code недостаточно без verifier.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
 Граница Junior: уверенно объясняй `verifier` и `challenge` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
@@ -43,11 +43,11 @@
 
 В backend эта тема важна в том месте, где применяется `verifier`; проверяй именно наблюдаемый contract, а не название инструмента.
 
-## Mental model
+## Модель понимания
 
 Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -61,13 +61,13 @@
 ### Полезно
 
 - redirect URI
-- PKCE does not replace all CSRF protections
+- PKCE не заменяет все меры защиты от CSRF
 
 ### Можно не учить глубоко
 
-- implementation internals, не влияющие на Junior-код и типичный interview follow-up
+- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Authorization Code + PKCE: отдельный пример
 
@@ -79,88 +79,88 @@ def example_s13_authorization_code_plus_pkce() -> tuple[str, ...]:
 assert example_s13_authorization_code_plus_pkce()
 ```
 
-Назови threat, trust boundary, server-side check и безопасный отказ.
+Назови threat, trust boundary, на стороне сервера check и безопасный отказ.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
 Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.
 
-## Practice
+## Практика
 
-**A · Prediction/reasoning.** Предскажи результат минимального примера для `verifier` до запуска.
+**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для `verifier` до запуска.
 
-**B · Find the bug.** Найди нарушение `challenge` и объясни конкретное последствие.
+**B · Найди ошибку.** Найди нарушение `challenge` и объясни конкретное последствие.
 
-**E · Interview explanation.** Дай ответ про Authorization Code + PKCE за 60 секунд: определение, механизм, пример, ограничение.
+**E · Ответ на собеседовании.** Дай ответ про Authorization Code + PKCE за 60 секунд: определение, механизм, пример, ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Authorization Code + PKCE и какой механизм здесь важно понимать Junior-разработчику?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какое ограничение или типичная ошибка относится именно к теме Authorization Code + PKCE?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
 Authorization Code + PKCE: Это security boundary: сервер проверяет утверждение и безопасно отказывает, не доверяя клиентскому UI.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> Authorization Code + PKCE — тема, в которой я сначала фиксирую `verifier`, затем объясняю `challenge` на коротком примере. Ключевой механизм: Назови asset, threat, trust boundary, server-side verification и безопасный failure result. Главная практическая ошибка — Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.
+> Authorization Code + PKCE — тема, в которой я сначала фиксирую `verifier`, затем объясняю `challenge` на коротком примере. Ключевой механизм: Назови asset, threat, trust boundary, на стороне сервера verification и безопасный failure result. Главная практическая ошибка — Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какое ограничение или типичная ошибка относится именно к теме Authorization Code + PKCE?**
 
 Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - verifier
 - challenge
 - code interception
 - `state`
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
 - Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какое ограничение или типичная ошибка относится именно к теме Authorization Code + PKCE?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Authorization Code + PKCE**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Authorization Code + PKCE**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
 - **Что это:** Authorization Code + PKCE: Это security boundary: сервер проверяет утверждение и безопасно отказывает, не доверяя клиентскому UI.
 - **Механизм:** Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации.
 - **Ограничение:** Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

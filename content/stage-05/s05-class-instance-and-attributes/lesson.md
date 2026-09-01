@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** Python указан в 18/18; OOP/data model важны для чтения framework и domain code.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-A class is an object describing behavior and class attributes; an instance has its own identity and instance namespace.
+Class — объект, описывающий поведение и class attributes; instance имеет собственную identity и instance namespace.
 
 ### Как работает
 
-Attribute lookup starts on the instance, then follows the class MRO; methods found on the class become bound methods when read through an instance.
+Поиск атрибута начинается в instance, затем идёт по MRO класса; function на классе при чтении через instance превращается в bound method.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-A mutable class attribute is shared by instances until an instance shadows the name.
+Изменяемый class attribute разделяется между экземплярами, пока конкретный instance не затенит имя.
 
-## Mental model
+## Модель понимания
 
 У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -48,9 +48,9 @@ A mutable class attribute is shared by instances until an instance shadows the n
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Class, instance and attributes: отдельный пример
 
@@ -67,88 +67,88 @@ print(user.email, user.kind, type(user).__name__)
 
 Instance хранит собственный `email`, а attribute lookup находит общий `kind` в class.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Defining `items = []` on the class for per-instance data leaks mutations between all instances.
+`items = []` на классе для данных отдельного объекта переносит мутации между всеми instances.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `class object` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `class object` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `instance` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `instance`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `class object` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `class object`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Class, instance and attributes in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Class, instance and attributes за 45–60 секунд и назови одно ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Class, instance and attributes и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Class, instance and attributes?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-A class is an object describing behavior and class attributes; an instance has its own identity and instance namespace.
+Class — объект, описывающий поведение и class attributes; instance имеет собственную identity и instance namespace.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> A class is an object describing behavior and class attributes; an instance has its own identity and instance namespace. Attribute lookup starts on the instance, then follows the class MRO; methods found on the class become bound methods when read through an instance. Важное ограничение: A mutable class attribute is shared by instances until an instance shadows the name.
+> Class — объект, описывающий поведение и class attributes; instance имеет собственную identity и instance namespace. Поиск атрибута начинается в instance, затем идёт по MRO класса; function на классе при чтении через instance превращается в bound method. Важное ограничение: Изменяемый class attribute разделяется между экземплярами, пока конкретный instance не затенит имя.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Class, instance and attributes?**
 
-Defining `items = []` on the class for per-instance data leaks mutations between all instances.
+`items = []` на классе для данных отдельного объекта переносит мутации между всеми instances.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - class object
 - instance
 - instance namespace
 - class namespace
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Defining `items = []` on the class for per-instance data leaks mutations between all instances.
+- `items = []` на классе для данных отдельного объекта переносит мутации между всеми instances.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Class, instance and attributes?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Class, instance and attributes**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Class, instance and attributes**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** A class is an object describing behavior and class attributes; an instance has its own identity and instance namespace.
+- **Что это:** Class — объект, описывающий поведение и class attributes; instance имеет собственную identity и instance namespace.
 - **Механизм:** У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.
-- **Ограничение:** Defining `items = []` on the class for per-instance data leaks mutations between all instances.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** `items = []` на классе для данных отдельного объекта переносит мутации между всеми instances.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

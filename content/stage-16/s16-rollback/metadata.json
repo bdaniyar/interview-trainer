@@ -3,7 +3,7 @@
   "slug": "s16-rollback",
   "title": "Rollback",
   "module_slug": "stage-16",
-  "module_title": "Stage 16 · SQLAlchemy 2.x",
+  "module_title": "Этап 16 · SQLAlchemy 2.x",
   "module_order": 16,
   "order": 221,
   "duration": 12,
@@ -14,7 +14,7 @@
     "rollback before reuse",
     "exception boundary."
   ],
-  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": true,
   "has_solution": true,
   "priority": "P0",

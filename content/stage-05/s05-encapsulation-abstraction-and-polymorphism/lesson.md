@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: high · 12 минут.** Python указан в 18/18; OOP/data model важны для чтения framework и domain code.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,30 +12,30 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-Encapsulation groups state and behavior, abstraction exposes a relevant contract, and polymorphism lets different objects satisfy that contract.
+Encapsulation объединяет состояние и поведение, abstraction показывает значимый контракт, а polymorphism позволяет разным объектам удовлетворять этому контракту.
 
 ### Как работает
 
-Python often uses duck typing: caller depends on available behavior rather than a concrete inheritance tree. ABC and Protocol can make the contract explicit when useful.
+Python часто использует duck typing: caller зависит от доступного поведения, а не от конкретного дерева наследования. ABC и Protocol делают договор явным, когда это нужно.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Leading underscores communicate non-public API but are not access control; invariants still need methods/properties and tests.
+Начальный underscore обозначает непубличный API, но не является контролем доступа; инварианты всё равно защищают методами, properties и тестами.
 
 ### Где используется в backend
 
-A service can accept any notifier implementing `send`, allowing a fake in tests and different providers in production.
+Service может принять любой notifier с методом `send`: в тесте передаётся fake, а в production — реальный provider.
 
-## Mental model
+## Модель понимания
 
 У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -48,13 +48,13 @@ A service can accept any notifier implementing `send`, allowing a fake in tests 
 
 ### Полезно
 
-- one short code/result example
+- один короткий пример кода с результатом
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Encapsulation, abstraction and polymorphism: отдельный пример
 
@@ -75,23 +75,23 @@ print(response(User()))
 
 Polymorphism позволяет caller работать через behavior contract, не проверяя конкретный класс.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Checking `type(obj) is ConcreteClass` blocks valid substitutes and defeats polymorphism.
+Проверка `type(obj) is ConcreteClass` запрещает корректные замены и ломает polymorphism.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `practical Python meaning` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `practical Python meaning` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `duck typing` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `duck typing`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `practical Python meaning` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `practical Python meaning`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Encapsulation, abstraction and polymorphism in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Encapsulation, abstraction and polymorphism за 45–60 секунд и назови одно ограничение.
 
-## Code prediction
+## Предсказание результата кода
 
 ### super следует MRO
 
@@ -108,7 +108,7 @@ print(C().name())
 
 <details><summary>Показать ответ</summary>
 
-Expected:
+Ожидаемый результат:
 
 ```text
 B>A
@@ -116,76 +116,76 @@ B>A
 
 super в B продолжает поиск после B в MRO фактического класса C.
 
-Misconception: `mro`.
+Типичная ошибка мышления: `mro`.
 
 </details>
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Encapsulation, abstraction and polymorphism и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Encapsulation, abstraction and polymorphism?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-Encapsulation groups state and behavior, abstraction exposes a relevant contract, and polymorphism lets different objects satisfy that contract.
+Encapsulation объединяет состояние и поведение, abstraction показывает значимый контракт, а polymorphism позволяет разным объектам удовлетворять этому контракту.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> Encapsulation groups state and behavior, abstraction exposes a relevant contract, and polymorphism lets different objects satisfy that contract. Python often uses duck typing: caller depends on available behavior rather than a concrete inheritance tree. ABC and Protocol can make the contract explicit when useful. Важное ограничение: Leading underscores communicate non-public API but are not access control; invariants still need methods/properties and tests.
+> Encapsulation объединяет состояние и поведение, abstraction показывает значимый контракт, а polymorphism позволяет разным объектам удовлетворять этому контракту. Python часто использует duck typing: caller зависит от доступного поведения, а не от конкретного дерева наследования. ABC и Protocol делают договор явным, когда это нужно. Важное ограничение: Начальный underscore обозначает непубличный API, но не является контролем доступа; инварианты всё равно защищают методами, properties и тестами.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Encapsulation, abstraction and polymorphism?**
 
-Checking `type(obj) is ConcreteClass` blocks valid substitutes and defeats polymorphism.
+Проверка `type(obj) is ConcreteClass` запрещает корректные замены и ломает polymorphism.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - practical Python meaning
 - duck typing
 - contracts
 - avoid Java-style ceremony
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Checking `type(obj) is ConcreteClass` blocks valid substitutes and defeats polymorphism.
+- Проверка `type(obj) is ConcreteClass` запрещает корректные замены и ломает polymorphism.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Encapsulation, abstraction and polymorphism?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Encapsulation, abstraction and polymorphism**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Encapsulation, abstraction and polymorphism**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** Encapsulation groups state and behavior, abstraction exposes a relevant contract, and polymorphism lets different objects satisfy that contract.
+- **Что это:** Encapsulation объединяет состояние и поведение, abstraction показывает значимый контракт, а polymorphism позволяет разным объектам удовлетворять этому контракту.
 - **Механизм:** У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.
-- **Ограничение:** Checking `type(obj) is ConcreteClass` blocks valid substitutes and defeats polymorphism.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Проверка `type(obj) is ConcreteClass` запрещает корректные замены и ломает polymorphism.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

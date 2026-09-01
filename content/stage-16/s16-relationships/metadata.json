@@ -3,7 +3,7 @@
   "slug": "s16-relationships",
   "title": "Relationships",
   "module_slug": "stage-16",
-  "module_title": "Stage 16 · SQLAlchemy 2.x",
+  "module_title": "Этап 16 · SQLAlchemy 2.x",
   "module_order": 16,
   "order": 215,
   "duration": 12,
@@ -16,7 +16,7 @@
     "`back_populates`",
     "ownership vs navigation."
   ],
-  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P0",

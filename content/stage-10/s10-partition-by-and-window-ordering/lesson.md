@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P1 · вероятность на интервью: high · 10 минут.** SQL/relational DB явно встречались в 15/18 — один из главных P0-разделов.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,7 +12,7 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
@@ -27,7 +27,7 @@
 **deterministic order.** `deterministic order` меняет набор SQL rows; его смысл проверяют через grain результата, cardinality, NULL semantics и явный ordering.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
 Граница Junior: уверенно объясняй `independent windows per group` и `deterministic order` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
@@ -35,11 +35,11 @@
 
 В backend эта тема важна в том месте, где применяется `independent windows per group`; проверяй именно наблюдаемый contract, а не название инструмента.
 
-## Mental model
+## Модель понимания
 
 Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -54,9 +54,9 @@
 
 ### Можно не учить глубоко
 
-- implementation internals, не влияющие на Junior-код и типичный interview follow-up
+- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### `PARTITION BY` and window ordering: отдельный пример
 
@@ -71,21 +71,21 @@ FROM project_events;
 
 PARTITION перезапускает окно для каждого project, ordering определяет предыдущую строку для LAG.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
 Не определить cardinality результата и замаскировать неверный query через DISTINCT.
 
-## Practice
+## Практика
 
-**A · Prediction/reasoning.** Предскажи результат минимального примера для `independent windows per group` до запуска.
+**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для `independent windows per group` до запуска.
 
-**B · Find the bug.** Найди нарушение `deterministic order` и объясни конкретное последствие.
+**B · Найди ошибку.** Найди нарушение `deterministic order` и объясни конкретное последствие.
 
-**E · Interview explanation.** Дай ответ про `PARTITION BY` and window ordering за 60 секунд: определение, механизм, пример, ограничение.
+**E · Ответ на собеседовании.** Дай ответ про `PARTITION BY` and window ordering за 60 секунд: определение, механизм, пример, ограничение.
 
-## SQL practice
+## Практика SQL
 
 ### Running revenue
 
@@ -119,7 +119,7 @@ CREATE TABLE order_items (
 );
 ```
 
-Seed:
+Начальные данные:
 
 ```sql
 INSERT INTO users VALUES
@@ -138,74 +138,74 @@ INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,1
 
 **Вопрос:** Для каждого user посчитай накопительный total по created_at/id.
 
-Expected columns: id, user_id, running_total. Comparison: ordered.
+Ожидаемые столбцы: id, user_id, running_total. Сравнение: с учётом порядка строк.
 
-SQL runner пока не подключён: выполни запрос в локальном PostgreSQL и сверь result с rubric.
+Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое `PARTITION BY` and window ordering и какой механизм здесь важно понимать Junior-разработчику?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какое ограничение или типичная ошибка относится именно к теме `PARTITION BY` and window ordering?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
 `PARTITION BY` and window ordering: Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
 > `PARTITION BY` and window ordering — тема, в которой я сначала фиксирую `independent windows per group`, затем объясняю `deterministic order` на коротком примере. Ключевой механизм: Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа. Главная практическая ошибка — Не определить cardinality результата и замаскировать неверный query через DISTINCT.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какое ограничение или типичная ошибка относится именно к теме `PARTITION BY` and window ordering?**
 
 Не определить cardinality результата и замаскировать неверный query через DISTINCT.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - independent windows per group
 - deterministic order
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
 - Не определить cardinality результата и замаскировать неверный query через DISTINCT.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какое ограничение или типичная ошибка относится именно к теме `PARTITION BY` and window ordering?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **`PARTITION BY` and window ordering**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **`PARTITION BY` and window ordering**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
 - **Что это:** `PARTITION BY` and window ordering: Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.
 - **Механизм:** Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
 - **Ограничение:** Не определить cardinality результата и замаскировать неверный query через DISTINCT.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

@@ -3,7 +3,7 @@
   "slug": "s31-why-docker",
   "title": "Why Docker?",
   "module_slug": "stage-31",
-  "module_title": "Stage 31 · HR, Screening and Communication",
+  "module_title": "Этап 31 · HR, Screening and Communication",
   "module_order": 31,
   "order": 378,
   "duration": 10,
@@ -15,7 +15,7 @@
     "multi-service local setup",
     "not “Docker automatically scales”."
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

@@ -10,10 +10,10 @@
       "name",
       "binding"
     ],
-    "short_answer": "Python name is a label in a namespace bound to an object; assignment binds a name and normally does not copy the object.",
-    "junior_answer": "Python name is a label in a namespace bound to an object; assignment binds a name and normally does not copy the object. Each object has a type, identity and value. `a = b` makes both names refer to the same object; later rebinding `a = ...` changes only name `a`, while mutation is visible through every alias. Важное ограничение: Function arguments use the same object-reference model: a function can mutate a passed list, but rebinding its local parameter does not rebind the caller's name.",
+    "short_answer": "Имя в Python — это запись в пространстве имён, связанная с объектом; обычное присваивание связывает имя и не копирует объект.",
+    "junior_answer": "Имя в Python — это запись в пространстве имён, связанная с объектом; обычное присваивание связывает имя и не копирует объект. У каждого объекта есть тип, идентичность и значение. После `a = b` оба имени указывают на один объект: новое присваивание имени меняет только связь, а мутация видна через все ссылки. Важное ограничение: Аргументы функций подчиняются той же модели: функция может изменить переданный список, но присваивание нового объекта локальному параметру не меняет имя вызывающего кода.",
     "follow_up_question": "Какая типичная ошибка связана с Object, type, name and binding?",
-    "follow_up_answer": "Treating a variable as an independent box leads to wrong predictions for aliases and function arguments.",
+    "follow_up_answer": "Представление переменной как независимой коробки приводит к неверным выводам об alias и аргументах функций.",
     "expected_answer": {
       "must_mention": [
         "object",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Treating a variable as an independent box leads to wrong predictions for aliases and function arguments.",
+        "Представление переменной как независимой коробки приводит к неверным выводам об alias и аргументах функций.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Treating a variable as an independent box leads to wrong predictions for aliases and function arguments."
+        "Представление переменной как независимой коробки приводит к неверным выводам об alias и аргументах функций."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Object, type, name and binding?"
@@ -57,12 +57,12 @@
     "answer": [
       "переменная как имя, связанное с объектом",
       "assignment не копирует объект",
-      "Treating a variable as an independent box leads to wrong predictions for aliases and function arguments."
+      "Представление переменной как независимой коробки приводит к неверным выводам об alias и аргументах функций."
     ],
-    "short_answer": "Treating a variable as an independent box leads to wrong predictions for aliases and function arguments.",
-    "junior_answer": "Treating a variable as an independent box leads to wrong predictions for aliases and function arguments.",
+    "short_answer": "Представление переменной как независимой коробки приводит к неверным выводам об alias и аргументах функций.",
+    "junior_answer": "Представление переменной как независимой коробки приводит к неверным выводам об alias и аргументах функций.",
     "follow_up_question": "Что такое Object, type, name and binding и как это работает?",
-    "follow_up_answer": "Python name is a label in a namespace bound to an object; assignment binds a name and normally does not copy the object. Each object has a type, identity and value. `a = b` makes both names refer to the same object; later rebinding `a = ...` changes only name `a`, while mutation is visible through every alias. Важное ограничение: Function arguments use the same object-reference model: a function can mutate a passed list, but rebinding its local parameter does not rebind the caller's name.",
+    "follow_up_answer": "Имя в Python — это запись в пространстве имён, связанная с объектом; обычное присваивание связывает имя и не копирует объект. У каждого объекта есть тип, идентичность и значение. После `a = b` оба имени указывают на один объект: новое присваивание имени меняет только связь, а мутация видна через все ссылки. Важное ограничение: Аргументы функций подчиняются той же модели: функция может изменить переданный список, но присваивание нового объекта локальному параметру не меняет имя вызывающего кода.",
     "expected_answer": {
       "must_mention": [
         "переменная как имя, связанное с объектом",
@@ -72,10 +72,10 @@
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Treating a variable as an independent box leads to wrong predictions for aliases and function arguments."
+        "Представление переменной как независимой коробки приводит к неверным выводам об alias и аргументах функций."
       ],
       "red_flags": [
-        "Treating a variable as an independent box leads to wrong predictions for aliases and function arguments."
+        "Представление переменной как независимой коробки приводит к неверным выводам об alias и аргументах функций."
       ],
       "follow_up_questions": [
         "Что такое Object, type, name and binding и как это работает?"

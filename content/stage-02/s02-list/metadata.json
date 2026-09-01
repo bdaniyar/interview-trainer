@@ -3,7 +3,7 @@
   "slug": "s02-list",
   "title": "List",
   "module_slug": "stage-02",
-  "module_title": "Stage 2 · Collections and Comprehensions",
+  "module_title": "Этап 2 · Collections and Comprehensions",
   "module_order": 2,
   "order": 12,
   "duration": 12,
@@ -19,7 +19,7 @@
     "common time complexity",
     "copying"
   ],
-  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P0",

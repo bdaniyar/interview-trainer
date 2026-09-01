@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P1 · вероятность на интервью: high · 10 минут.** Pydantic v2 — validation boundary основной FastAPI trajectory.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,7 +12,7 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
@@ -20,16 +20,16 @@
 
 ### Как работает
 
-Проверь четыре состояния: missing, explicit null, invalid type/value и сериализованный результат.
+Проверь четыре состояния: missing, явное значение null, invalid type/value и сериализованный результат.
 
-**modern v2 validator API.** `modern v2 validator API` влияет на Pydantic v2 validation/serialization и должен различать missing, explicit null, invalid input и output representation.
+**modern v2 validator API.** `modern v2 validator API` влияет на Pydantic v2 validation/serialization и должен различать missing, явное значение null, некорректные входные данные и представление результата.
 
-**before/after.** `before/after` влияет на Pydantic v2 validation/serialization и должен различать missing, explicit null, invalid input и output representation.
+**before/after.** `before/after` влияет на Pydantic v2 validation/serialization и должен различать missing, явное значение null, некорректные входные данные и представление результата.
 
-**avoid DB I/O inside schema validation.** `avoid DB I/O inside schema validation` влияет на Pydantic v2 validation/serialization и должен различать missing, explicit null, invalid input и output representation.
+**не выполняй обращения к БД внутри валидации схемы.** `avoid DB I/O inside schema validation` влияет на Pydantic v2 validation/serialization и должен различать missing, явное значение null, некорректные входные данные и представление результата.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
 Граница Junior: уверенно объясняй `modern v2 validator API` и `before/after` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
@@ -37,11 +37,11 @@
 
 В backend эта тема важна в том месте, где применяется `modern v2 validator API`; проверяй именно наблюдаемый contract, а не название инструмента.
 
-## Mental model
+## Модель понимания
 
 Сначала приходит недоверенный input, затем core schema выполняет validation, после чего model_dump управляет serialization.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -49,7 +49,7 @@
 
 - modern v2 validator API
 - before/after
-- avoid DB I/O inside schema validation
+- не выполняй обращения к БД внутри валидации схемы
 
 ### Полезно
 
@@ -57,9 +57,9 @@
 
 ### Можно не учить глубоко
 
-- implementation internals, не влияющие на Junior-код и типичный interview follow-up
+- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Field validators: отдельный пример
 
@@ -71,68 +71,68 @@ from pydantic import BaseModel
 
 Это публичный starter contract практики «Email field validator». Реализация и hidden assertions в lesson Markdown не раскрываются.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Смешать missing и explicit null либо считать coercion бизнес-валидацией.
+Смешать missing и явное значение null либо считать coercion бизнес-валидацией.
 
-## Practice
+## Практика
 
-**A · Prediction/reasoning.** Предскажи результат минимального примера для `modern v2 validator API` до запуска.
+**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для `modern v2 validator API` до запуска.
 
-**B · Find the bug.** Найди нарушение `before/after` и объясни конкретное последствие.
+**B · Найди ошибку.** Найди нарушение `before/after` и объясни конкретное последствие.
 
-**E · Interview explanation.** Дай ответ про Field validators за 60 секунд: определение, механизм, пример, ограничение.
+**E · Ответ на собеседовании.** Дай ответ про Field validators за 60 секунд: определение, механизм, пример, ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Field validators и какой механизм здесь важно понимать Junior-разработчику?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какое ограничение или типичная ошибка относится именно к теме Field validators?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
 Field validators: Это часть Pydantic v2 boundary между недоверенным input, validated model и serialized output.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> Field validators — тема, в которой я сначала фиксирую `modern v2 validator API`, затем объясняю `before/after` на коротком примере. Ключевой механизм: Проверь четыре состояния: missing, explicit null, invalid type/value и сериализованный результат. Главная практическая ошибка — Смешать missing и explicit null либо считать coercion бизнес-валидацией.
+> Field validators — тема, в которой я сначала фиксирую `modern v2 validator API`, затем объясняю `before/after` на коротком примере. Ключевой механизм: Проверь четыре состояния: missing, явное значение null, invalid type/value и сериализованный результат. Главная практическая ошибка — Смешать missing и явное значение null либо считать coercion бизнес-валидацией.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какое ограничение или типичная ошибка относится именно к теме Field validators?**
 
-Смешать missing и explicit null либо считать coercion бизнес-валидацией.
+Смешать missing и явное значение null либо считать coercion бизнес-валидацией.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - modern v2 validator API
 - before/after
-- avoid DB I/O inside schema validation
+- не выполняй обращения к БД внутри валидации схемы
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Смешать missing и explicit null либо считать coercion бизнес-валидацией.
+- Смешать missing и явное значение null либо считать coercion бизнес-валидацией.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какое ограничение или типичная ошибка относится именно к теме Field validators?
 
@@ -142,17 +142,17 @@ Field validators: Это часть Pydantic v2 boundary между недове
 
 LoginInput.email: before validator делает strip/lower; требует ровно один @ и непустые части.
 
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
-## Cheat sheet
+Работай в main.py. Не меняй публичные имена и сигнатуры: скрытые тесты импортируют их напрямую. Проверь основной сценарий, граничные значения, повторные вызовы и распространение ошибок.
+## Шпаргалка
 
 Перед собеседованием запомни:
 
 - **Что это:** Field validators: Это часть Pydantic v2 boundary между недоверенным input, validated model и serialized output.
 - **Механизм:** Сначала приходит недоверенный input, затем core schema выполняет validation, после чего model_dump управляет serialization.
-- **Ограничение:** Смешать missing и explicit null либо считать coercion бизнес-валидацией.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Смешать missing и явное значение null либо считать coercion бизнес-валидацией.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

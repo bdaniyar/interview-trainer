@@ -11,11 +11,11 @@ import re
 from pathlib import Path
 
 try:
-    from .learning_materials import dossier_for
+    from .learning_materials import dossier_for, russianize_prose
     from .personalize_examples import CURATED as CURATED_EXAMPLES
     from .personalize_examples import fallback_example
 except ImportError:  # direct `python tools/populate_curriculum.py` execution
-    from learning_materials import dossier_for
+    from learning_materials import dossier_for, russianize_prose
     from personalize_examples import CURATED as CURATED_EXAMPLES
     from personalize_examples import fallback_example
 
@@ -359,7 +359,7 @@ def extract_existing(path: Path) -> tuple[str | None, str | None]:
         return None, None
     text = lesson_path.read_text(encoding="utf-8")
     is_seed = metadata.get("slug") in PRESERVE_TASKS
-    if metadata.get("generated_by") == "populate_curriculum.py" and (not is_seed or "## Learning objectives" in text):
+    if metadata.get("generated_by") == "populate_curriculum.py" and (not is_seed or "## Учебные цели" in text):
         return None, None
     if "Материал урока пока не добавлен" in text or "Задача будет добавлена позже" in text:
         return None, None
@@ -374,7 +374,7 @@ def extract_existing(path: Path) -> tuple[str | None, str | None]:
 
 def lesson_markdown(lesson: dict, stage: dict, existing_theory: str | None, existing_task: str | None) -> str:
     stage_number = stage["number"]
-    guide = STAGE_GUIDES[stage_number]
+    guide = tuple(russianize_prose(item) for item in STAGE_GUIDES[stage_number])
     outline = lesson.get("outline") or [lesson["title"]]
     sources = SOURCES[stage_number]
     material = dossier_for(
@@ -385,11 +385,11 @@ def lesson_markdown(lesson: dict, stage: dict, existing_theory: str | None, exis
     example = CURATED_EXAMPLES.get(lesson["number"]) or fallback_example({**lesson, "stage_number": stage_number})
     example_block = (
         f"### {lesson['title']}: отдельный пример\n\n"
-        f"```{example[0]}\n{example[1]}\n```\n\n{example[2]}"
+        f"```{example[0]}\n{example[1]}\n```\n\n{russianize_prose(example[2])}"
     )
     task = existing_task or (
-        f"Сделай короткую письменную практику по теме **{lesson['title']}**: реши один пункт из раздела Practice, "
-        "затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются."
+        f"Сделай короткую письменную практику по теме **{lesson['title']}**: реши один пункт из раздела «Практика», "
+        "затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются."
     )
     source_lines = "\n".join(f"- [{name}]({url})" for name, url in sources)
     objective_lines = "\n".join(
@@ -416,15 +416,15 @@ def lesson_markdown(lesson: dict, stage: dict, existing_theory: str | None, exis
     return f"""# {lesson['title']}
 
 > [!IMPORTANT]
-> **{lesson['priority']} · вероятность на интервью: {lesson['interview_probability']} · {lesson['estimated_minutes']} минут.** {lesson['market_evidence']}
+> **{lesson['priority']} · вероятность на интервью: {lesson['interview_probability']} · {lesson['estimated_minutes']} минут.** {russianize_prose(lesson['market_evidence'])}
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
 {objective_lines}
 
-## Theory
+## Теория
 
 ### Что это
 
@@ -435,15 +435,15 @@ def lesson_markdown(lesson: dict, stage: dict, existing_theory: str | None, exis
 {material.mechanism}
 {theory_example}
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
 {material.nuance}{backend}
 
-## Mental model
+## Модель понимания
 
 {guide[1]}
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -459,64 +459,64 @@ def lesson_markdown(lesson: dict, stage: dict, existing_theory: str | None, exis
 
 {skip_deep}
 
-## Code examples
+## Примеры кода
 
 {example_block}
 
-## Common mistakes
+## Типичные ошибки
 
 {mistakes}
 
-## Practice
+## Практика
 
 {practices}
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 {material.question}
 
-### Follow-up
+### Дополнительный вопрос
 
 {material.follow_up_question}
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
 {material.short_answer}
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
 > {material.junior_answer}
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **{material.follow_up_question}**
 
 {material.follow_up_answer}
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 {rubric_lines}
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
 - {material.mistakes[0]}
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - {material.follow_up_question}
 
@@ -524,16 +524,16 @@ def lesson_markdown(lesson: dict, stage: dict, existing_theory: str | None, exis
 
 {task}
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
 - **Что это:** {material.short_answer}
 - **Механизм:** {guide[1]}
 - **Ограничение:** {material.mistakes[0]}
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 
@@ -610,14 +610,14 @@ def metadata_for(lesson: dict, stage: dict, slug: str, order: int, has_task: boo
         "slug": slug,
         "title": lesson["title"],
         "module_slug": stage["slug"],
-        "module_title": f"Stage {stage['number']} · {stage['title']}",
+        "module_title": f"Этап {stage['number']} · {stage['title']}",
         "module_order": stage["number"],
         "order": order,
         "duration": lesson["estimated_minutes"],
         "estimated_minutes": lesson["estimated_minutes"],
         "xp": 25 if has_task else 5,
         "topics": outline[:8],
-        "description": f"{lesson['priority']} · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+        "description": f"{lesson['priority']} · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
         "has_task": has_task,
         "has_solution": has_solution,
         "priority": lesson["priority"],

@@ -3,7 +3,7 @@
   "slug": "s24-quality-gates",
   "title": "Quality gates",
   "module_slug": "stage-24",
-  "module_title": "Stage 24 · CI/CD",
+  "module_title": "Этап 24 · CI/CD",
   "module_order": 24,
   "order": 313,
   "duration": 10,
@@ -17,7 +17,7 @@
     "build",
     "gates do not guarantee correctness."
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

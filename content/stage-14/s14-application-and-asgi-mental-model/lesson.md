@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: high · 12 минут.** FastAPI явно встречался в 9/18, любой Python web framework — в 16/18.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,45 +12,45 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-A FastAPI application is an ASGI callable that participates in an asynchronous request lifecycle.
+FastAPI application — ASGI callable, участвующий в асинхронном жизненный цикл запроса.
 
 ### Как работает
 
-The ASGI server receives connection events, FastAPI matches a route, validates inputs, resolves dependencies, calls the endpoint and serializes a response.
+ASGI server принимает события соединения, FastAPI выбирает route, валидирует input, разрешает dependencies, вызывает endpoint и сериализует response.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-The endpoint should be an adapter; business rules and transaction boundaries remain testable outside framework request objects.
+Endpoint лучше оставлять adapter-ом, а business rules и transaction boundary тестировать без framework request objects.
 
-## Mental model
+## Модель понимания
 
 Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
 - application object
-- request lifecycle
+- жизненный цикл запроса
 - ASGI awareness
 - no server internals deep dive
 
 ### Полезно
 
-- one short code/result example
+- один короткий пример кода с результатом
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Application and ASGI mental model: отдельный пример
 
@@ -64,88 +64,88 @@ assert example_s14_application_and_asgi_mental_model()
 
 Проследи request через router, validation, dependency, service и response model.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Putting DB session creation and domain logic directly in every route duplicates lifecycle and error handling.
+Создание DB session и domain logic прямо в каждом route дублирует lifecycle и error handling.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `application object` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `application object` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `request lifecycle` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `request lifecycle`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `application object` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `application object`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Application and ASGI mental model in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Application and ASGI модель понимания за 45–60 секунд и назови одно ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
-Что такое Application and ASGI mental model и как это работает?
+Что такое Application and ASGI модель понимания и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
-Какая типичная ошибка связана с Application and ASGI mental model?
+Какая типичная ошибка связана с Application and ASGI модель понимания?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-A FastAPI application is an ASGI callable that participates in an asynchronous request lifecycle.
+FastAPI application — ASGI callable, участвующий в асинхронном жизненный цикл запроса.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> A FastAPI application is an ASGI callable that participates in an asynchronous request lifecycle. The ASGI server receives connection events, FastAPI matches a route, validates inputs, resolves dependencies, calls the endpoint and serializes a response. Важное ограничение: The endpoint should be an adapter; business rules and transaction boundaries remain testable outside framework request objects.
+> FastAPI application — ASGI callable, участвующий в асинхронном жизненный цикл запроса. ASGI server принимает события соединения, FastAPI выбирает route, валидирует input, разрешает dependencies, вызывает endpoint и сериализует response. Важное ограничение: Endpoint лучше оставлять adapter-ом, а business rules и transaction boundary тестировать без framework request objects.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
-**Какая типичная ошибка связана с Application and ASGI mental model?**
+**Какая типичная ошибка связана с Application and ASGI модель понимания?**
 
-Putting DB session creation and domain logic directly in every route duplicates lifecycle and error handling.
+Создание DB session и domain logic прямо в каждом route дублирует lifecycle и error handling.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - application object
-- request lifecycle
+- жизненный цикл запроса
 - ASGI awareness
 - no server internals deep dive
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Putting DB session creation and domain logic directly in every route duplicates lifecycle and error handling.
+- Создание DB session и domain logic прямо в каждом route дублирует lifecycle и error handling.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
-- Какая типичная ошибка связана с Application and ASGI mental model?
+- Какая типичная ошибка связана с Application and ASGI модель понимания?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Application and ASGI mental model**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Application and ASGI mental model**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** A FastAPI application is an ASGI callable that participates in an asynchronous request lifecycle.
+- **Что это:** FastAPI application — ASGI callable, участвующий в асинхронном жизненный цикл запроса.
 - **Механизм:** Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
-- **Ограничение:** Putting DB session creation and domain logic directly in every route duplicates lifecycle and error handling.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Создание DB session и domain logic прямо в каждом route дублирует lifecycle и error handling.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

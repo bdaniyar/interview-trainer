@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: high · 12 минут.** Python указан в 18/18; functions/scope/decorators регулярно проверяют на screening.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-`*args` collects extra positional arguments into a tuple, `**kwargs` collects extra keyword arguments into a dict; the same stars unpack values at a call site.
+`*args` собирает дополнительные позиционные аргументы в tuple, а `**kwargs` — именованные аргументы в dict; те же звёздочки распаковывают значения при вызове.
 
 ### Как работает
 
-Argument binding still enforces the signature. Forwarding wrappers commonly call `fn(*args, **kwargs)`, and duplicate values for one parameter raise `TypeError`.
+Привязка аргументов всё равно проверяет сигнатуру. Wrapper обычно передаёт вызов как `fn(*args, **kwargs)`, а двойная передача одного параметра вызывает `TypeError`.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Do not replace a clear public signature with unlimited kwargs. Explicit keyword-only parameters produce better typing and API errors.
+Не заменяй понятную публичную сигнатуру неограниченным `**kwargs`: явные keyword-only параметры дают лучшую типизацию и понятные ошибки API.
 
-## Mental model
+## Модель понимания
 
 Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -48,9 +48,9 @@ Do not replace a clear public signature with unlimited kwargs. Explicit keyword-
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### `*args`, `**kwargs` and unpacking: отдельный пример
 
@@ -64,71 +64,71 @@ print(audit("updated", 10, 11, **context))
 
 `*args` собирает positional IDs, `**kwargs` — дополнительные named fields; unpacking разворачивает mapping при вызове.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Forwarding `fn(value, **{'value': other})` passes the same parameter twice and raises `TypeError`.
+Вызов `fn(value, **{'value': other})` передаёт один параметр дважды и завершается `TypeError`.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `collection` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `collection` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `forwarding` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `forwarding`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `collection` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `collection`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain `*args`, `**kwargs` and unpacking in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни `*args`, `**kwargs` and unpacking за 45–60 секунд и назови одно ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое `*args`, `**kwargs` and unpacking и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с `*args`, `**kwargs` and unpacking?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-`*args` collects extra positional arguments into a tuple, `**kwargs` collects extra keyword arguments into a dict; the same stars unpack values at a call site.
+`*args` собирает дополнительные позиционные аргументы в tuple, а `**kwargs` — именованные аргументы в dict; те же звёздочки распаковывают значения при вызове.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> `*args` collects extra positional arguments into a tuple, `**kwargs` collects extra keyword arguments into a dict; the same stars unpack values at a call site. Argument binding still enforces the signature. Forwarding wrappers commonly call `fn(*args, **kwargs)`, and duplicate values for one parameter raise `TypeError`. Важное ограничение: Do not replace a clear public signature with unlimited kwargs. Explicit keyword-only parameters produce better typing and API errors.
+> `*args` собирает дополнительные позиционные аргументы в tuple, а `**kwargs` — именованные аргументы в dict; те же звёздочки распаковывают значения при вызове. Привязка аргументов всё равно проверяет сигнатуру. Wrapper обычно передаёт вызов как `fn(*args, **kwargs)`, а двойная передача одного параметра вызывает `TypeError`. Важное ограничение: Не заменяй понятную публичную сигнатуру неограниченным `**kwargs`: явные keyword-only параметры дают лучшую типизацию и понятные ошибки API.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с `*args`, `**kwargs` and unpacking?**
 
-Forwarding `fn(value, **{'value': other})` passes the same parameter twice and raises `TypeError`.
+Вызов `fn(value, **{'value': other})` передаёт один параметр дважды и завершается `TypeError`.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - collection
 - forwarding
 - iterable/dict unpacking
 - duplicate arguments
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Forwarding `fn(value, **{'value': other})` passes the same parameter twice and raises `TypeError`.
+- Вызов `fn(value, **{'value': other})` передаёт один параметр дважды и завершается `TypeError`.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с `*args`, `**kwargs` and unpacking?
 
@@ -138,17 +138,17 @@ Forwarding `fn(value, **{'value': other})` passes the same parameter twice and r
 
 Объедини base и keyword overrides, где overrides побеждают. Не изменяй входной dict.
 
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
-## Cheat sheet
+Работай в main.py. Не меняй публичные имена и сигнатуры: скрытые тесты импортируют их напрямую. Проверь основной сценарий, граничные значения, повторные вызовы и распространение ошибок.
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** `*args` collects extra positional arguments into a tuple, `**kwargs` collects extra keyword arguments into a dict; the same stars unpack values at a call site.
+- **Что это:** `*args` собирает дополнительные позиционные аргументы в tuple, а `**kwargs` — именованные аргументы в dict; те же звёздочки распаковывают значения при вызове.
 - **Механизм:** Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
-- **Ограничение:** Forwarding `fn(value, **{'value': other})` passes the same parameter twice and raises `TypeError`.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Вызов `fn(value, **{'value': other})` передаёт один параметр дважды и завершается `TypeError`.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

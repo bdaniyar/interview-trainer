@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** PostgreSQL явно встречался в 13/18; indexes/transactions/concurrency критичны для backend.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,30 +12,30 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-A transaction groups operations into one atomic boundary; ACID describes atomicity, consistency, isolation and durability.
+Transaction объединяет операции в одну атомарную границу; ACID означает atomicity, consistency, isolation и durability.
 
 ### Как работает
 
-Commit makes the transaction's changes durable/visible under DB rules; rollback discards them. Consistency comes from correct code plus constraints, not the letter C automatically.
+Commit фиксирует изменения, rollback отменяет их. Consistency обеспечивается правильным кодом и constraints, а не буквой C автоматически.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Keep transactions short and avoid network calls while locks/resources are held.
+Transactions держат короткими и по возможности не выполняют внутри них сетевые вызовы, пока заняты locks и connection.
 
 ### Где используется в backend
 
-A service operation that creates an order and reserves inventory should commit or rollback as one unit where invariants require it.
+Создание заказа и резервирование остатка должны входить в одну transaction, если этого требует invariant.
 
-## Mental model
+## Модель понимания
 
 Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -52,9 +52,9 @@ Constraint защищает истину, transaction объединяет из�
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Transactions and ACID: отдельный пример
 
@@ -67,23 +67,23 @@ Constraint защищает истину, transaction объединяет из�
 
 Это отдельный debugging example для данного subtopic, а не общий пример stage.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Committing inside each repository call can leave half a use case saved after a later failure.
+Commit внутри каждого repository call способен сохранить половину use case после ошибки следующего шага.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `atomicity` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `atomicity` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `consistency` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `consistency`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `atomicity` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `atomicity`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Transactions and ACID in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Transactions and ACID за 45–60 секунд и назови одно ограничение.
 
-## SQL practice
+## Практика SQL
 
 ### Atomic booking
 
@@ -104,7 +104,7 @@ CREATE TABLE bookings (
 );
 ```
 
-Seed:
+Начальные данные:
 
 ```sql
 INSERT INTO rooms VALUES (1,10,'101'),(2,10,'102');
@@ -115,17 +115,17 @@ INSERT INTO bookings VALUES
 
 **Вопрос:** Два запроса бронируют последний room одновременно. Где защитить инвариант?
 
-Expected columns: reasoning rubric. Comparison: reasoning_rubric.
+Ожидаемые столбцы: критерии рассуждения. Сравнение: по критериям рассуждения.
 
-SQL runner пока не подключён: выполни запрос в локальном PostgreSQL и сверь result с rubric.
+Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
 
-## Debugging practice
+## Практика: Отладка
 
 ### Long transaction
 
 **Сценарий:** Request держит transaction открытой во время HTTP-вызова.
 
-**Rubric:** Сетевой I/O вынести за DB transaction; короткая boundary уменьшает locks, pool pressure и stale snapshot.
+**Критерии ответа:** Сетевой I/O вынести за DB transaction; короткая boundary уменьшает locks, pool pressure и stale snapshot.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
@@ -133,76 +133,76 @@ SQL runner пока не подключён: выполни запрос в ло
 
 **Сценарий:** Два SELECT видят свободный номер и создают booking.
 
-**Rubric:** Защитить invariant в БД constraint/lock/conditional write и проверить concurrent integration test.
+**Критерии ответа:** Защитить invariant в БД constraint/lock/conditional write и проверить concurrent integration test.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Transactions and ACID и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Transactions and ACID?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-A transaction groups operations into one atomic boundary; ACID describes atomicity, consistency, isolation and durability.
+Transaction объединяет операции в одну атомарную границу; ACID означает atomicity, consistency, isolation и durability.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> A transaction groups operations into one atomic boundary; ACID describes atomicity, consistency, isolation and durability. Commit makes the transaction's changes durable/visible under DB rules; rollback discards them. Consistency comes from correct code plus constraints, not the letter C automatically. Важное ограничение: Keep transactions short and avoid network calls while locks/resources are held.
+> Transaction объединяет операции в одну атомарную границу; ACID означает atomicity, consistency, isolation и durability. Commit фиксирует изменения, rollback отменяет их. Consistency обеспечивается правильным кодом и constraints, а не буквой C автоматически. Важное ограничение: Transactions держат короткими и по возможности не выполняют внутри них сетевые вызовы, пока заняты locks и connection.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Transactions and ACID?**
 
-Committing inside each repository call can leave half a use case saved after a later failure.
+Commit внутри каждого repository call способен сохранить половину use case после ошибки следующего шага.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - atomicity
 - consistency
 - isolation
 - durability
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Committing inside each repository call can leave half a use case saved after a later failure.
+- Commit внутри каждого repository call способен сохранить половину use case после ошибки следующего шага.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Transactions and ACID?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Transactions and ACID**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Transactions and ACID**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** A transaction groups operations into one atomic boundary; ACID describes atomicity, consistency, isolation and durability.
+- **Что это:** Transaction объединяет операции в одну атомарную границу; ACID означает atomicity, consistency, isolation и durability.
 - **Механизм:** Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
-- **Ограничение:** Committing inside each repository call can leave half a use case saved after a later failure.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Commit внутри каждого repository call способен сохранить половину use case после ошибки следующего шага.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

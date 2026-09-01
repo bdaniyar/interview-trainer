@@ -5,8 +5,8 @@
     "priority": "P1",
     "interview_probability": "medium",
     "answer": [
-      "real disposable Redis for integration boundary",
-      "fakes only when semantics are sufficient",
+      "одноразовый реальный Redis для интеграционной границы",
+      "подмены допустимы только когда их семантики достаточно для проверки",
       "TTL/invalidation"
     ],
     "short_answer": "Redis tests: Это инструмент проверки observable contract с контролируемым setup, failure и cleanup.",
@@ -15,8 +15,8 @@
     "follow_up_answer": "Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior.",
     "expected_answer": {
       "must_mention": [
-        "real disposable Redis for integration boundary",
-        "fakes only when semantics are sufficient",
+        "одноразовый реальный Redis для интеграционной границы",
+        "подмены допустимы только когда их семантики достаточно для проверки",
         "TTL/invalidation"
       ],
       "good_additions": [

@@ -3,7 +3,7 @@
   "slug": "s12-400-vs-422",
   "title": "400 vs 422",
   "module_slug": "stage-12",
-  "module_title": "Stage 12 · HTTP, Networking and REST",
+  "module_title": "Этап 12 · HTTP, Networking and REST",
   "module_order": 12,
   "order": 147,
   "duration": 12,
@@ -13,7 +13,7 @@
     "malformed request vs semantically invalid/validation",
     "framework conventions."
   ],
-  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P0",

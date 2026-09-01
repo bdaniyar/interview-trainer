@@ -3,7 +3,7 @@
   "slug": "functions-as-objects",
   "title": "Function objects and first-class functions",
   "module_slug": "stage-03",
-  "module_title": "Stage 3 · Functions, Scope, Closures and Decorators",
+  "module_title": "Этап 3 · Functions, Scope, Closures and Decorators",
   "module_order": 3,
   "order": 19,
   "duration": 12,
@@ -17,7 +17,7 @@
     "storing functions",
     "higher-order functions."
   ],
-  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P0",

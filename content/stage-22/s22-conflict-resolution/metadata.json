@@ -3,7 +3,7 @@
   "slug": "s22-conflict-resolution",
   "title": "Conflict resolution",
   "module_slug": "stage-22",
-  "module_title": "Stage 22 · Git and GitHub Workflow",
+  "module_title": "Этап 22 · Git and GitHub Workflow",
   "module_order": 22,
   "order": 296,
   "duration": 12,
@@ -15,7 +15,7 @@
     "test after resolution",
     "continue/abort."
   ],
-  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P0",

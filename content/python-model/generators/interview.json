@@ -10,10 +10,10 @@
       "lazy evaluation",
       "generator state"
     ],
-    "short_answer": "A generator function contains `yield`; calling it returns a generator object without running the body immediately.",
-    "junior_answer": "A generator function contains `yield`; calling it returns a generator object without running the body immediately. Each `next` resumes execution until the next `yield`, preserving local variables and instruction position. Return or falling off the end raises `StopIteration` to the consumer. Важное ограничение: Laziness reduces peak memory but generators are single-use and defer exceptions until iteration reaches the failing line.",
+    "short_answer": "Generator function содержит `yield`; её вызов возвращает generator object и не запускает тело немедленно.",
+    "junior_answer": "Generator function содержит `yield`; её вызов возвращает generator object и не запускает тело немедленно. Каждый `next` продолжает выполнение до следующего `yield`, сохраняя локальные переменные и позицию. `return` или конец функции превращается для consumer в `StopIteration`. Важное ограничение: Ленивость уменьшает пиковую память, но generator одноразовый, а исключения откладываются до достижения проблемной строки.",
     "follow_up_question": "Какая типичная ошибка связана с Generator function and `yield`?",
-    "follow_up_answer": "Converting a generator to list for logging before real use accidentally exhausts it.",
+    "follow_up_answer": "Преобразование generator в list ради логирования расходует его до основного использования.",
     "expected_answer": {
       "must_mention": [
         "generator object",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Converting a generator to list for logging before real use accidentally exhausts it.",
+        "Преобразование generator в list ради логирования расходует его до основного использования.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Converting a generator to list for logging before real use accidentally exhausts it."
+        "Преобразование generator в list ради логирования расходует его до основного использования."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Generator function and `yield`?"
@@ -56,12 +56,12 @@
     "interview_probability": "very_high",
     "answer": [
       "memory use",
-      "Converting a generator to list for logging before real use accidentally exhausts it."
+      "Преобразование generator в list ради логирования расходует его до основного использования."
     ],
-    "short_answer": "Converting a generator to list for logging before real use accidentally exhausts it.",
-    "junior_answer": "Converting a generator to list for logging before real use accidentally exhausts it.",
+    "short_answer": "Преобразование generator в list ради логирования расходует его до основного использования.",
+    "junior_answer": "Преобразование generator в list ради логирования расходует его до основного использования.",
     "follow_up_question": "Что такое Generator function and `yield` и как это работает?",
-    "follow_up_answer": "A generator function contains `yield`; calling it returns a generator object without running the body immediately. Each `next` resumes execution until the next `yield`, preserving local variables and instruction position. Return or falling off the end raises `StopIteration` to the consumer. Важное ограничение: Laziness reduces peak memory but generators are single-use and defer exceptions until iteration reaches the failing line.",
+    "follow_up_answer": "Generator function содержит `yield`; её вызов возвращает generator object и не запускает тело немедленно. Каждый `next` продолжает выполнение до следующего `yield`, сохраняя локальные переменные и позицию. `return` или конец функции превращается для consumer в `StopIteration`. Важное ограничение: Ленивость уменьшает пиковую память, но generator одноразовый, а исключения откладываются до достижения проблемной строки.",
     "expected_answer": {
       "must_mention": [
         "memory use"
@@ -70,10 +70,10 @@
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Converting a generator to list for logging before real use accidentally exhausts it."
+        "Преобразование generator в list ради логирования расходует его до основного использования."
       ],
       "red_flags": [
-        "Converting a generator to list for logging before real use accidentally exhausts it."
+        "Преобразование generator в list ради логирования расходует его до основного использования."
       ],
       "follow_up_questions": [
         "Что такое Generator function and `yield` и как это работает?"

@@ -3,7 +3,7 @@
   "slug": "s05-abstract-base-classes",
   "title": "Abstract base classes",
   "module_slug": "stage-05",
-  "module_title": "Stage 5 · OOP and Python Data Model",
+  "module_title": "Этап 5 · OOP and Python Data Model",
   "module_order": 5,
   "order": 55,
   "duration": 10,
@@ -16,7 +16,7 @@
     "ABC vs Protocol",
     "repository interface example."
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

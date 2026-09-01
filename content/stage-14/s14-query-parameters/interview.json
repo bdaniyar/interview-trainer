@@ -10,10 +10,10 @@
       "constraints",
       "pagination"
     ],
-    "short_answer": "Query parameters describe optional or required modifiers such as pagination, filtering and sorting after `?`.",
-    "junior_answer": "Query parameters describe optional or required modifiers such as pagination, filtering and sorting after `?`. FastAPI reads annotations/defaults and applies `Query` constraints; the resulting contract appears in OpenAPI. Важное ограничение: Set maximum page sizes and allowlist sort fields rather than interpolating arbitrary user input into SQL.",
+    "short_answer": "Query parameters описывают обязательные или необязательные modifiers после `?`: pagination, filtering и sorting.",
+    "junior_answer": "Query parameters описывают обязательные или необязательные modifiers после `?`: pagination, filtering и sorting. FastAPI читает annotations и defaults, применяет `Query` constraints и отражает contract в OpenAPI. Важное ограничение: Ограничивай максимальный page size и разрешённые sort fields вместо подстановки произвольного input в SQL.",
     "follow_up_question": "Какая типичная ошибка связана с Query parameters?",
-    "follow_up_answer": "Treating `limit: int | None` as optional without a default still leaves it required.",
+    "follow_up_answer": "`limit: int | None` без default всё равно остаётся обязательным параметром.",
     "expected_answer": {
       "must_mention": [
         "optional/required",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Treating `limit: int | None` as optional without a default still leaves it required.",
+        "`limit: int | None` без default всё равно остаётся обязательным параметром.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Treating `limit: int | None` as optional without a default still leaves it required."
+        "`limit: int | None` без default всё равно остаётся обязательным параметром."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Query parameters?"
@@ -55,25 +55,25 @@
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "one short code/result example",
-      "Treating `limit: int | None` as optional without a default still leaves it required."
+      "один короткий пример кода с результатом",
+      "`limit: int | None` без default всё равно остаётся обязательным параметром."
     ],
-    "short_answer": "Treating `limit: int | None` as optional without a default still leaves it required.",
-    "junior_answer": "Treating `limit: int | None` as optional without a default still leaves it required.",
+    "short_answer": "`limit: int | None` без default всё равно остаётся обязательным параметром.",
+    "junior_answer": "`limit: int | None` без default всё равно остаётся обязательным параметром.",
     "follow_up_question": "Что такое Query parameters и как это работает?",
-    "follow_up_answer": "Query parameters describe optional or required modifiers such as pagination, filtering and sorting after `?`. FastAPI reads annotations/defaults and applies `Query` constraints; the resulting contract appears in OpenAPI. Важное ограничение: Set maximum page sizes and allowlist sort fields rather than interpolating arbitrary user input into SQL.",
+    "follow_up_answer": "Query parameters описывают обязательные или необязательные modifiers после `?`: pagination, filtering и sorting. FastAPI читает annotations и defaults, применяет `Query` constraints и отражает contract в OpenAPI. Важное ограничение: Ограничивай максимальный page size и разрешённые sort fields вместо подстановки произвольного input в SQL.",
     "expected_answer": {
       "must_mention": [
-        "one short code/result example"
+        "один короткий пример кода с результатом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Treating `limit: int | None` as optional without a default still leaves it required."
+        "`limit: int | None` без default всё равно остаётся обязательным параметром."
       ],
       "red_flags": [
-        "Treating `limit: int | None` as optional without a default still leaves it required."
+        "`limit: int | None` без default всё равно остаётся обязательным параметром."
       ],
       "follow_up_questions": [
         "Что такое Query parameters и как это работает?"

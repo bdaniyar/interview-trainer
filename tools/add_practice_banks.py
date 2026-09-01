@@ -306,10 +306,10 @@ def upsert_section(markdown: str, heading: str, body: str) -> str:
     replacement = f"\n{heading}\n\n{body.rstrip()}\n"
     if re.search(pattern, markdown, re.DOTALL):
         return re.sub(pattern, replacement, markdown, flags=re.DOTALL)
-    if re.search(r"practice|prediction", heading, re.IGNORECASE) and "\n## Interview questions" in markdown:
-        return markdown.replace("\n## Interview questions", replacement + "\n## Interview questions")
-    if "\n## Cheat sheet" in markdown:
-        return markdown.replace("\n## Cheat sheet", replacement + "\n## Cheat sheet")
+    if re.search(r"практика|предсказание", heading, re.IGNORECASE) and "\n## Вопросы с собеседований" in markdown:
+        return markdown.replace("\n## Вопросы с собеседований", replacement + "\n## Вопросы с собеседований")
+    if "\n## Шпаргалка" in markdown:
+        return markdown.replace("\n## Шпаргалка", replacement + "\n## Шпаргалка")
     return markdown.rstrip() + "\n" + replacement
 
 
@@ -351,13 +351,13 @@ def main() -> None:
             f"### {record['title']}\n\n```python\n{record['snippet']}\n```\n\n"
             f"**Вопрос:** {record['prompt']}\n\n"
             f"<details><summary>Показать ответ</summary>\n\n"
-            f"Expected:\n\n```text\n{record['expected_output']}\n```\n\n"
-            f"{record['step_by_step']}\n\nMisconception: `{record['misconception_tag']}`.\n\n</details>"
+            f"Ожидаемый результат:\n\n```text\n{record['expected_output']}\n```\n\n"
+            f"{record['step_by_step']}\n\nТипичная ошибка мышления: `{record['misconception_tag']}`.\n\n</details>"
             for record in records
         )
         lesson_path = directory / "lesson.md"
         lesson_path.write_text(
-            upsert_section(lesson_path.read_text(encoding="utf-8"), "## Code prediction", body),
+            upsert_section(lesson_path.read_text(encoding="utf-8"), "## Предсказание результата кода", body),
             encoding="utf-8",
         )
 
@@ -400,17 +400,22 @@ def main() -> None:
         directory = directories[lessons[number]["implementation_slug"]]
         blocks = []
         for task in tasks:
-            columns = ", ".join(task["expected_columns"]) or "reasoning rubric"
+            columns = ", ".join(task["expected_columns"]) or "критерии рассуждения"
+            comparison = {
+                "ordered": "с учётом порядка строк",
+                "unordered": "без учёта порядка строк",
+                "reasoning_rubric": "по критериям рассуждения",
+            }.get(task["comparison"], task["comparison"])
             blocks.append(
                 f"### {task['title']}\n\n```sql\n{task['schema']}\n```\n\n"
-                f"Seed:\n\n```sql\n{task['seed']}\n```\n\n"
+                f"Начальные данные:\n\n```sql\n{task['seed']}\n```\n\n"
                 f"**Вопрос:** {task['prompt']}\n\n"
-                f"Expected columns: {columns}. Comparison: {task['comparison']}.\n\n"
-                "SQL runner пока не подключён: выполни запрос в локальном PostgreSQL и сверь result с rubric."
+                f"Ожидаемые столбцы: {columns}. Сравнение: {comparison}.\n\n"
+                "Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями."
             )
         lesson_path = directory / "lesson.md"
         lesson_path.write_text(
-            upsert_section(lesson_path.read_text(encoding="utf-8"), "## SQL practice", "\n\n".join(blocks)),
+            upsert_section(lesson_path.read_text(encoding="utf-8"), "## Практика SQL", "\n\n".join(blocks)),
             encoding="utf-8",
         )
 
@@ -423,6 +428,12 @@ def main() -> None:
         "debugging": scenario_records("debugging", DEBUGGING),
         "architecture": scenario_records("architecture", ARCHITECTURE),
     }
+    practice_titles = {
+        "testing": "Тестирование",
+        "operations": "Эксплуатация",
+        "debugging": "Отладка",
+        "architecture": "Архитектура",
+    }
     for kind in ("testing", "operations", "debugging", "architecture"):
         grouped: dict[str, list[dict]] = defaultdict(list)
         for record in banks[kind]:
@@ -431,13 +442,13 @@ def main() -> None:
             directory = directories[lessons[number]["implementation_slug"]]
             body = "\n\n".join(
                 f"### {record['title']}\n\n**Сценарий:** {record['prompt']}\n\n"
-                f"**Rubric:** {record['expected_reasoning']}\n\n"
+                f"**Критерии ответа:** {record['expected_reasoning']}\n\n"
                 f"**Слабый ответ:** {record['common_weak_answer']}"
                 for record in records
             )
             lesson_path = directory / "lesson.md"
             lesson_path.write_text(
-                upsert_section(lesson_path.read_text(encoding="utf-8"), f"## {kind.title()} practice", body),
+                upsert_section(lesson_path.read_text(encoding="utf-8"), f"## Практика: {practice_titles[kind]}", body),
                 encoding="utf-8",
             )
     OUTPUT.write_text(json.dumps(banks, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

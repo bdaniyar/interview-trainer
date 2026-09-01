@@ -3,7 +3,7 @@
   "slug": "s26-pagination-filtering",
   "title": "Pagination/filtering",
   "module_slug": "stage-26",
-  "module_title": "Stage 26 · Django and Django REST Framework",
+  "module_title": "Этап 26 · Django and Django REST Framework",
   "module_order": 26,
   "order": 331,
   "duration": 10,
@@ -12,7 +12,7 @@
   "topics": [
     "Pagination/filtering"
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** FastAPI явно встречался в 9/18, любой Python web framework — в 16/18.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-Query parameters describe optional or required modifiers such as pagination, filtering and sorting after `?`.
+Query parameters описывают обязательные или необязательные modifiers после `?`: pagination, filtering и sorting.
 
 ### Как работает
 
-FastAPI reads annotations/defaults and applies `Query` constraints; the resulting contract appears in OpenAPI.
+FastAPI читает annotations и defaults, применяет `Query` constraints и отражает contract в OpenAPI.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Set maximum page sizes and allowlist sort fields rather than interpolating arbitrary user input into SQL.
+Ограничивай максимальный page size и разрешённые sort fields вместо подстановки произвольного input в SQL.
 
-## Mental model
+## Модель понимания
 
 Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -44,13 +44,13 @@ Path operation — внешний адаптер; бизнес-правила л
 
 ### Полезно
 
-- one short code/result example
+- один короткий пример кода с результатом
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Query parameters: отдельный пример
 
@@ -66,71 +66,71 @@ def articles(limit: int = Query(default=20, ge=1, le=100), offset: int = Query(d
 
 Query parameters имеют независимые defaults и boundary constraints; pagination contract виден в OpenAPI.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Treating `limit: int | None` as optional without a default still leaves it required.
+`limit: int | None` без default всё равно остаётся обязательным параметром.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `optional/required` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `optional/required` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `aliases` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `aliases`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `optional/required` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `optional/required`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Query parameters in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Query parameters за 45–60 секунд и назови одно ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Query parameters и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Query parameters?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-Query parameters describe optional or required modifiers such as pagination, filtering and sorting after `?`.
+Query parameters описывают обязательные или необязательные modifiers после `?`: pagination, filtering и sorting.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> Query parameters describe optional or required modifiers such as pagination, filtering and sorting after `?`. FastAPI reads annotations/defaults and applies `Query` constraints; the resulting contract appears in OpenAPI. Важное ограничение: Set maximum page sizes and allowlist sort fields rather than interpolating arbitrary user input into SQL.
+> Query parameters описывают обязательные или необязательные modifiers после `?`: pagination, filtering и sorting. FastAPI читает annotations и defaults, применяет `Query` constraints и отражает contract в OpenAPI. Важное ограничение: Ограничивай максимальный page size и разрешённые sort fields вместо подстановки произвольного input в SQL.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Query parameters?**
 
-Treating `limit: int | None` as optional without a default still leaves it required.
+`limit: int | None` без default всё равно остаётся обязательным параметром.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - optional/required
 - aliases
 - constraints
 - pagination
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Treating `limit: int | None` as optional without a default still leaves it required.
+- `limit: int | None` без default всё равно остаётся обязательным параметром.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Query parameters?
 
@@ -140,17 +140,17 @@ Treating `limit: int | None` as optional without a default still leaves it requi
 
 GET /items: offset >= 0, limit 1..100; defaults 0/20; верни оба значения.
 
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
-## Cheat sheet
+Работай в main.py. Не меняй публичные имена и сигнатуры: скрытые тесты импортируют их напрямую. Проверь основной сценарий, граничные значения, повторные вызовы и распространение ошибок.
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** Query parameters describe optional or required modifiers such as pagination, filtering and sorting after `?`.
+- **Что это:** Query parameters описывают обязательные или необязательные modifiers после `?`: pagination, filtering и sorting.
 - **Механизм:** Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
-- **Ограничение:** Treating `limit: int | None` as optional without a default still leaves it required.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** `limit: int | None` без default всё равно остаётся обязательным параметром.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

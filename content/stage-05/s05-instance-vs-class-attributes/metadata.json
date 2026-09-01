@@ -3,7 +3,7 @@
   "slug": "s05-instance-vs-class-attributes",
   "title": "Instance vs class attributes",
   "module_slug": "stage-05",
-  "module_title": "Stage 5 · OOP and Python Data Model",
+  "module_title": "Этап 5 · OOP and Python Data Model",
   "module_order": 5,
   "order": 48,
   "duration": 12,
@@ -14,7 +14,7 @@
     "shadowing",
     "appropriate constants/config."
   ],
-  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P0",

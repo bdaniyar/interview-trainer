@@ -9,7 +9,7 @@
       "ownership",
       "dangerous deletes"
     ],
-    "short_answer": "Cascade and delete-orphan: Это часть SQLAlchemy 2.x data-access flow: statement, Session, identity map и transaction lifecycle.",
+    "short_answer": "Cascade and delete-orphan: Это часть SQLAlchemy 2.x процесс доступа к данным: statement, Session, identity map и жизненный цикл транзакции.",
     "junior_answer": "Cascade and delete-orphan — тема, в которой я сначала фиксирую `ORM cascade vs DB cascade`, затем объясняю `ownership` на коротком примере. Ключевой механизм: Укажи владельца Session/transaction, момент SQL I/O и state entity до и после flush/commit/rollback. Главная практическая ошибка — Скрыть commit внутри repository, допустить N+1 или продолжить Session без rollback после ошибки.",
     "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Cascade and delete-orphan?",
     "follow_up_answer": "Скрыть commit внутри repository, допустить N+1 или продолжить Session без rollback после ошибки.",

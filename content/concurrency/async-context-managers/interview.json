@@ -6,17 +6,17 @@
     "interview_probability": "high",
     "answer": [
       "`async with`",
-      "connection/session/client lifecycle",
+      "жизненный цикл соединения, сессии или клиента",
       "`__aenter__`/`__aexit__`"
     ],
-    "short_answer": "Async context managers: Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг await points.",
-    "junior_answer": "Async context managers — тема, в которой я сначала фиксирую ``async with``, затем объясняю `connection/session/client lifecycle` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и await points до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
+    "short_answer": "Async context managers: Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг точки приостановки await.",
+    "junior_answer": "Async context managers — тема, в которой я сначала фиксирую ``async with``, затем объясняю `connection/session/client lifecycle` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и точки приостановки await до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
     "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Async context managers?",
     "follow_up_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
     "expected_answer": {
       "must_mention": [
         "`async with`",
-        "connection/session/client lifecycle",
+        "жизненный цикл соединения, сессии или клиента",
         "`__aenter__`/`__aexit__`"
       ],
       "good_additions": [
@@ -59,7 +59,7 @@
     "short_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
     "junior_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
     "follow_up_question": "Что такое Async context managers и какой механизм здесь важно понимать Junior-разработчику?",
-    "follow_up_answer": "Async context managers — тема, в которой я сначала фиксирую ``async with``, затем объясняю `connection/session/client lifecycle` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и await points до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
+    "follow_up_answer": "Async context managers — тема, в которой я сначала фиксирую ``async with``, затем объясняю `connection/session/client lifecycle` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и точки приостановки await до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
     "expected_answer": {
       "must_mention": [
         "связать Async context managers с коротким рабочим примером"

@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** Python указан в 18/18 primary вакансий; object model — базовый screening foundation.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,30 +12,30 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-Mutable objects can change while keeping identity; immutable objects cannot be changed in place and an apparent update creates or binds another object.
+Изменяемый объект можно изменить с сохранением identity; неизменяемый объект нельзя изменить на месте — операция создаёт новый объект или новую связь имени.
 
 ### Как работает
 
-Lists, dicts and sets expose mutating operations. Integers, strings, bytes and tuples do not. A tuple itself is immutable but may contain a mutable element.
+`list`, `dict` и `set` имеют изменяющие операции. `int`, `str`, `bytes` и `tuple` неизменяемы. При этом tuple может содержать изменяемый элемент.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Mutability matters more than the syntax: `name += value` may mutate a list but creates a new string object.
+Важна семантика типа: `+=` может изменить существующий list, но для строки создаёт новый объект.
 
 ### Где используется в backend
 
-Shared mutable request/config defaults can leak state between calls.
+Общий изменяемый default в обработчиках или конфигурации способен переносить состояние между вызовами.
 
-## Mental model
+## Модель понимания
 
 Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -53,9 +53,9 @@ Shared mutable request/config defaults can leak state between calls.
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Mutability and immutability: отдельный пример
 
@@ -74,23 +74,23 @@ print(id(name) == old_name_id)
 
 List меняется с сохранением identity; операция со строкой создаёт новый immutable объект.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Confusing mutation with rebinding makes a caller's data change unexpectedly through an alias.
+Смешение мутации и перепривязки приводит к неожиданному изменению данных вызывающей стороны через общую ссылку.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `mutable/immutable` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `mutable/immutable` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `mutation vs rebinding` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `mutation vs rebinding`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `mutable/immutable` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `mutable/immutable`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Mutability and immutability in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Mutability and immutability за 45–60 секунд и назови одно ограничение.
 
-## Code prediction
+## Предсказание результата кода
 
 ### Два имени одного списка
 
@@ -105,7 +105,7 @@ print(a)
 
 <details><summary>Показать ответ</summary>
 
-Expected:
+Ожидаемый результат:
 
 ```text
 [1]
@@ -113,76 +113,76 @@ Expected:
 
 Assignment связал b с тем же mutable list; append виден через оба имени.
 
-Misconception: `aliasing`.
+Типичная ошибка мышления: `aliasing`.
 
 </details>
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Mutability and immutability и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Mutability and immutability?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-Mutable objects can change while keeping identity; immutable objects cannot be changed in place and an apparent update creates or binds another object.
+Изменяемый объект можно изменить с сохранением identity; неизменяемый объект нельзя изменить на месте — операция создаёт новый объект или новую связь имени.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> Mutable objects can change while keeping identity; immutable objects cannot be changed in place and an apparent update creates or binds another object. Lists, dicts and sets expose mutating operations. Integers, strings, bytes and tuples do not. A tuple itself is immutable but may contain a mutable element. Важное ограничение: Mutability matters more than the syntax: `name += value` may mutate a list but creates a new string object.
+> Изменяемый объект можно изменить с сохранением identity; неизменяемый объект нельзя изменить на месте — операция создаёт новый объект или новую связь имени. `list`, `dict` и `set` имеют изменяющие операции. `int`, `str`, `bytes` и `tuple` неизменяемы. При этом tuple может содержать изменяемый элемент. Важное ограничение: Важна семантика типа: `+=` может изменить существующий list, но для строки создаёт новый объект.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Mutability and immutability?**
 
-Confusing mutation with rebinding makes a caller's data change unexpectedly through an alias.
+Смешение мутации и перепривязки приводит к неожиданному изменению данных вызывающей стороны через общую ссылку.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - mutable/immutable
 - mutation vs rebinding
 - list, dict, set
 - int, str, bytes, tuple
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Confusing mutation with rebinding makes a caller's data change unexpectedly through an alias.
+- Смешение мутации и перепривязки приводит к неожиданному изменению данных вызывающей стороны через общую ссылку.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Mutability and immutability?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Mutability and immutability**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Mutability and immutability**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** Mutable objects can change while keeping identity; immutable objects cannot be changed in place and an apparent update creates or binds another object.
+- **Что это:** Изменяемый объект можно изменить с сохранением identity; неизменяемый объект нельзя изменить на месте — операция создаёт новый объект или новую связь имени.
 - **Механизм:** Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию.
-- **Ограничение:** Confusing mutation with rebinding makes a caller's data change unexpectedly through an alias.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Смешение мутации и перепривязки приводит к неожиданному изменению данных вызывающей стороны через общую ссылку.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

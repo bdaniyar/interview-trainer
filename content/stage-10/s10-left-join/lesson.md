@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** SQL/relational DB явно встречались в 15/18 — один из главных P0-разделов.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-`LEFT JOIN` preserves every left row and fills right-side columns with NULL when no match exists.
+`LEFT JOIN` сохраняет каждую row левой таблицы и подставляет NULL в columns правой стороны при отсутствии совпадения.
 
 ### Как работает
 
-Right-table filters in ON affect which matches attach; the same filter in WHERE can remove NULL-extended rows and effectively turn the result into INNER JOIN.
+Фильтр правой таблицы в ON влияет на присоединяемые совпадения; тот же фильтр в WHERE удаляет NULL-rows и фактически превращает результат в INNER JOIN.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Count a nullable right primary key, not `COUNT(*)`, when measuring related rows per left entity.
+Для числа связанных rows считай nullable первичный ключ правой таблицы, а не `COUNT(*)`.
 
-## Mental model
+## Модель понимания
 
 Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -43,13 +43,13 @@ Count a nullable right primary key, not `COUNT(*)`, when measuring related rows 
 
 ### Полезно
 
-- one short code/result example
+- один короткий пример кода с результатом
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### LEFT JOIN: отдельный пример
 
@@ -63,23 +63,23 @@ GROUP BY u.id;
 
 Условие правой таблицы находится в ON, поэтому users без active sessions не исчезают.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Putting `right.active = true` in WHERE unexpectedly removes left rows with no active relation.
+Условие `right.active = true` в WHERE неожиданно удаляет left rows без активной связи.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `preserving left rows` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `preserving left rows` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `condition in `ON` vs `WHERE`` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `condition in `ON` vs `WHERE``, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `preserving left rows` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `preserving left rows`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain LEFT JOIN in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни LEFT JOIN за 45–60 секунд и назови одно ограничение.
 
-## SQL practice
+## Практика SQL
 
 ### Пользователи без заказов
 
@@ -113,7 +113,7 @@ CREATE TABLE order_items (
 );
 ```
 
-Seed:
+Начальные данные:
 
 ```sql
 INSERT INTO users VALUES
@@ -132,9 +132,9 @@ INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,1
 
 **Вопрос:** LEFT JOIN и найди users без orders.
 
-Expected columns: id, email. Comparison: unordered.
+Ожидаемые столбцы: id, email. Сравнение: без учёта порядка строк.
 
-SQL runner пока не подключён: выполни запрос в локальном PostgreSQL и сверь result с rubric.
+Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
 
 ### LEFT JOIN с условием в ON
 
@@ -168,7 +168,7 @@ CREATE TABLE order_items (
 );
 ```
 
-Seed:
+Начальные данные:
 
 ```sql
 INSERT INTO users VALUES
@@ -187,9 +187,9 @@ INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,1
 
 **Вопрос:** Верни всех users и id только paid orders, не теряя users без paid-заказов.
 
-Expected columns: user_id, order_id. Comparison: ordered.
+Ожидаемые столбцы: user_id, order_id. Сравнение: с учётом порядка строк.
 
-SQL runner пока не подключён: выполни запрос в локальном PostgreSQL и сверь result с rubric.
+Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
 
 ### Категории без продаж
 
@@ -223,7 +223,7 @@ CREATE TABLE order_items (
 );
 ```
 
-Seed:
+Начальные данные:
 
 ```sql
 INSERT INTO users VALUES
@@ -242,85 +242,85 @@ INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,1
 
 **Вопрос:** Верни products, которые ни разу не встречались в order_items.
 
-Expected columns: id, name. Comparison: unordered.
+Ожидаемые столбцы: id, name. Сравнение: без учёта порядка строк.
 
-SQL runner пока не подключён: выполни запрос в локальном PostgreSQL и сверь result с rubric.
+Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
 
-## Debugging practice
+## Практика: Отладка
 
 ### LEFT becomes INNER
 
 **Сценарий:** WHERE right.status='paid' удалил NULL rows.
 
-**Rubric:** Условие правой таблицы в ON или explicit NULL semantics.
+**Критерии ответа:** Условие правой таблицы в ON или explicit NULL semantics.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое LEFT JOIN и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с LEFT JOIN?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-`LEFT JOIN` preserves every left row and fills right-side columns with NULL when no match exists.
+`LEFT JOIN` сохраняет каждую row левой таблицы и подставляет NULL в columns правой стороны при отсутствии совпадения.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> `LEFT JOIN` preserves every left row and fills right-side columns with NULL when no match exists. Right-table filters in ON affect which matches attach; the same filter in WHERE can remove NULL-extended rows and effectively turn the result into INNER JOIN. Важное ограничение: Count a nullable right primary key, not `COUNT(*)`, when measuring related rows per left entity.
+> `LEFT JOIN` сохраняет каждую row левой таблицы и подставляет NULL в columns правой стороны при отсутствии совпадения. Фильтр правой таблицы в ON влияет на присоединяемые совпадения; тот же фильтр в WHERE удаляет NULL-rows и фактически превращает результат в INNER JOIN. Важное ограничение: Для числа связанных rows считай nullable первичный ключ правой таблицы, а не `COUNT(*)`.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с LEFT JOIN?**
 
-Putting `right.active = true` in WHERE unexpectedly removes left rows with no active relation.
+Условие `right.active = true` в WHERE неожиданно удаляет left rows без активной связи.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - preserving left rows
 - condition in `ON` vs `WHERE`
 - finding missing related rows
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Putting `right.active = true` in WHERE unexpectedly removes left rows with no active relation.
+- Условие `right.active = true` в WHERE неожиданно удаляет left rows без активной связи.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с LEFT JOIN?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **LEFT JOIN**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **LEFT JOIN**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** `LEFT JOIN` preserves every left row and fills right-side columns with NULL when no match exists.
+- **Что это:** `LEFT JOIN` сохраняет каждую row левой таблицы и подставляет NULL в columns правой стороны при отсутствии совпадения.
 - **Механизм:** Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
-- **Ограничение:** Putting `right.active = true` in WHERE unexpectedly removes left rows with no active relation.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Условие `right.active = true` в WHERE неожиданно удаляет left rows без активной связи.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

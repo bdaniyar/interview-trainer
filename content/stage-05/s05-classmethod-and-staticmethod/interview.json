@@ -8,7 +8,7 @@
       "alternate constructors",
       "class-aware behavior",
       "namespace utility",
-      "when module-level function is simpler"
+      "когда функция уровня модуля проще"
     ],
     "short_answer": "`classmethod` and `staticmethod`: Это элемент Python object model, который определяет состояние объекта, поиск поведения или способ композиции типов.",
     "junior_answer": "`classmethod` and `staticmethod` — тема, в которой я сначала фиксирую `alternate constructors`, затем объясняю `class-aware behavior` на коротком примере. Ключевой механизм: Проследи instance/class namespaces, attribute lookup и направление зависимости между объектами. Главная практическая ошибка — Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.",
@@ -19,7 +19,7 @@
         "alternate constructors",
         "class-aware behavior",
         "namespace utility",
-        "when module-level function is simpler"
+        "когда функция уровня модуля проще"
       ],
       "good_additions": [
         "короткий рабочий пример",

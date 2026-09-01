@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** SQL/relational DB явно встречались в 15/18 — один из главных P0-разделов.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,30 +12,30 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-`SELECT` chooses result columns or expressions; aliases name output fields without changing stored schema.
+`SELECT` выбирает result columns и expressions; aliases задают имена результата, не меняя stored schema.
 
 ### Как работает
 
-Expressions are evaluated for rows produced by FROM/JOIN/filter/group stages. `SELECT *` couples callers to schema changes and transfers unused data.
+Expressions вычисляются для rows после FROM/JOIN/filter/group. `SELECT *` связывает caller с изменениями schema и передаёт ненужные данные.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-SQL result order is undefined without `ORDER BY`, even when a local test appears stable.
+Порядок SQL-результата не определён без `ORDER BY`, даже если локальный тест кажется стабильным.
 
 ### Где используется в backend
 
-API repositories project only fields needed for response DTOs.
+Repository для API выбирает только поля, необходимые response DTO.
 
-## Mental model
+## Модель понимания
 
 Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -48,13 +48,13 @@ API repositories project only fields needed for response DTOs.
 
 ### Полезно
 
-- one short code/result example
+- один короткий пример кода с результатом
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### SELECT, aliases and expressions: отдельный пример
 
@@ -68,23 +68,23 @@ FROM products;
 
 SELECT формирует projection: alias меняет имя result column, expression вычисляется для каждой строки.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Relying on implicit row order or ambiguous duplicate column names makes pagination and mapping unstable.
+Неявный порядок или одинаковые имена columns делают pagination и mapping нестабильными.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `selecting columns` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `selecting columns` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `computed fields` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `computed fields`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `selecting columns` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `selecting columns`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain SELECT, aliases and expressions in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни SELECT, aliases and expressions за 45–60 секунд и назови одно ограничение.
 
-## SQL practice
+## Практика SQL
 
 ### Активные пользователи
 
@@ -118,7 +118,7 @@ CREATE TABLE order_items (
 );
 ```
 
-Seed:
+Начальные данные:
 
 ```sql
 INSERT INTO users VALUES
@@ -137,76 +137,76 @@ INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,1
 
 **Вопрос:** Выбери id и email активных пользователей.
 
-Expected columns: id, email. Comparison: unordered.
+Ожидаемые столбцы: id, email. Сравнение: без учёта порядка строк.
 
-SQL runner пока не подключён: выполни запрос в локальном PostgreSQL и сверь result с rubric.
+Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое SELECT, aliases and expressions и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с SELECT, aliases and expressions?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-`SELECT` chooses result columns or expressions; aliases name output fields without changing stored schema.
+`SELECT` выбирает result columns и expressions; aliases задают имена результата, не меняя stored schema.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> `SELECT` chooses result columns or expressions; aliases name output fields without changing stored schema. Expressions are evaluated for rows produced by FROM/JOIN/filter/group stages. `SELECT *` couples callers to schema changes and transfers unused data. Важное ограничение: SQL result order is undefined without `ORDER BY`, even when a local test appears stable.
+> `SELECT` выбирает result columns и expressions; aliases задают имена результата, не меняя stored schema. Expressions вычисляются для rows после FROM/JOIN/filter/group. `SELECT *` связывает caller с изменениями schema и передаёт ненужные данные. Важное ограничение: Порядок SQL-результата не определён без `ORDER BY`, даже если локальный тест кажется стабильным.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с SELECT, aliases and expressions?**
 
-Relying on implicit row order or ambiguous duplicate column names makes pagination and mapping unstable.
+Неявный порядок или одинаковые имена columns делают pagination и mapping нестабильными.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - selecting columns
 - computed fields
 - aliases
 - readable formatting
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Relying on implicit row order or ambiguous duplicate column names makes pagination and mapping unstable.
+- Неявный порядок или одинаковые имена columns делают pagination и mapping нестабильными.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с SELECT, aliases and expressions?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **SELECT, aliases and expressions**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **SELECT, aliases and expressions**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** `SELECT` chooses result columns or expressions; aliases name output fields without changing stored schema.
+- **Что это:** `SELECT` выбирает result columns и expressions; aliases задают имена результата, не меняя stored schema.
 - **Механизм:** Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
-- **Ограничение:** Relying on implicit row order or ambiguous duplicate column names makes pagination and mapping unstable.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Неявный порядок или одинаковые имена columns делают pagination и mapping нестабильными.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

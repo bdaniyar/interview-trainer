@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** Async явно встречался в 5/18 и является P0/P1 для FastAPI async-проектов кандидата.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-Sequential code does one operation after another; concurrency makes progress on multiple tasks; parallelism executes work simultaneously.
+Последовательный код выполняет операции одну за другой; concurrency позволяет нескольким задачам продвигаться, а parallelism выполняет работу одновременно.
 
 ### Как работает
 
-Async and threads often provide concurrency for I/O waits, while processes can provide parallel execution for CPU-bound Python.
+Async и threads обычно дают concurrency для ожидания I/O, а processes способны дать parallel execution для CPU-bound Python.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Concurrency can reduce idle time but adds ordering, cancellation and shared-state concerns; it does not make a single CPU calculation faster by itself.
+Concurrency уменьшает простой, но добавляет вопросы порядка, cancellation и shared state; одна CPU-операция сама по себе быстрее не становится.
 
-## Mental model
+## Модель понимания
 
 Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -48,9 +48,9 @@ Event loop планирует готовые tasks; await не создаёт о
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Sync, concurrency and parallelism: отдельный пример
 
@@ -69,71 +69,71 @@ asyncio.run(main())
 
 Concurrency перекрывает ожидание двух I/O операций; это не параллельное выполнение CPU-bound Python.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Selecting async for CPU-heavy work without moving it off the event loop increases latency for every request.
+Выбор async для CPU-heavy работы без выноса из event loop увеличивает latency всех requests.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `sequential execution` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `sequential execution` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `concurrency` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `concurrency`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `sequential execution` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `sequential execution`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Sync, concurrency and parallelism in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Sync, concurrency and parallelism за 45–60 секунд и назови одно ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Sync, concurrency and parallelism и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Sync, concurrency and parallelism?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-Sequential code does one operation after another; concurrency makes progress on multiple tasks; parallelism executes work simultaneously.
+Последовательный код выполняет операции одну за другой; concurrency позволяет нескольким задачам продвигаться, а parallelism выполняет работу одновременно.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> Sequential code does one operation after another; concurrency makes progress on multiple tasks; parallelism executes work simultaneously. Async and threads often provide concurrency for I/O waits, while processes can provide parallel execution for CPU-bound Python. Важное ограничение: Concurrency can reduce idle time but adds ordering, cancellation and shared-state concerns; it does not make a single CPU calculation faster by itself.
+> Последовательный код выполняет операции одну за другой; concurrency позволяет нескольким задачам продвигаться, а parallelism выполняет работу одновременно. Async и threads обычно дают concurrency для ожидания I/O, а processes способны дать parallel execution для CPU-bound Python. Важное ограничение: Concurrency уменьшает простой, но добавляет вопросы порядка, cancellation и shared state; одна CPU-операция сама по себе быстрее не становится.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Sync, concurrency and parallelism?**
 
-Selecting async for CPU-heavy work without moving it off the event loop increases latency for every request.
+Выбор async для CPU-heavy работы без выноса из event loop увеличивает latency всех requests.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - sequential execution
 - concurrency
 - parallelism
 - I/O-bound
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Selecting async for CPU-heavy work without moving it off the event loop increases latency for every request.
+- Выбор async для CPU-heavy работы без выноса из event loop увеличивает latency всех requests.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Sync, concurrency and parallelism?
 
@@ -143,17 +143,17 @@ Selecting async for CPU-heavy work without moving it off the event loop increase
 
 Реализуй async run_blocking_calls(function, values) через asyncio.to_thread и gather; порядок результата как во входе.
 
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
-## Cheat sheet
+Работай в main.py. Не меняй публичные имена и сигнатуры: скрытые тесты импортируют их напрямую. Проверь основной сценарий, граничные значения, повторные вызовы и распространение ошибок.
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** Sequential code does one operation after another; concurrency makes progress on multiple tasks; parallelism executes work simultaneously.
+- **Что это:** Последовательный код выполняет операции одну за другой; concurrency позволяет нескольким задачам продвигаться, а parallelism выполняет работу одновременно.
 - **Механизм:** Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.
-- **Ограничение:** Selecting async for CPU-heavy work without moving it off the event loop increases latency for every request.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Выбор async для CPU-heavy работы без выноса из event loop увеличивает latency всех requests.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

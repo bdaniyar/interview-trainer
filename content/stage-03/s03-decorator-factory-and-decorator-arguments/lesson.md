@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P1 · вероятность на интервью: high · 10 минут.** Python указан в 18/18; functions/scope/decorators регулярно проверяют на screening.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,7 +12,7 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
@@ -24,27 +24,27 @@
 
 **three levels of functions.** `three levels of functions` влияет на function contract; результат определяется definition time, argument binding при вызове и разрешением names.
 
-**configuration captured by closure.** Closure хранит ссылки на enclosing bindings, а не snapshot каждого значения; late binding особенно заметен в callbacks, созданных в цикле.
+**конфигурация, захваченная замыканием.** Closure хранит ссылки на enclosing bindings, а не snapshot каждого значения; late binding особенно заметен в callbacks, созданных в цикле.
 
 **retry/timing/permission examples.** Retry подходит для transient failure, ограничивается числом попыток и backoff с jitter; permanent errors нужно возвращать сразу.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
 Граница Junior: уверенно объясняй `three levels of functions` и `configuration captured by closure` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
-## Mental model
+## Модель понимания
 
 Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
 - three levels of functions
-- configuration captured by closure
+- конфигурация, захваченная замыканием
 - retry/timing/permission examples
 
 ### Полезно
@@ -53,9 +53,9 @@
 
 ### Можно не учить глубоко
 
-- implementation internals, не влияющие на Junior-код и типичный interview follow-up
+- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Decorator factory and decorator arguments: отдельный пример
 
@@ -73,70 +73,70 @@ def retry(*, attempts):
     return decorate
 ```
 
-Decorator factory сначала фиксирует configuration, затем получает функцию и строит wrapper.
+Decorator factory сначала фиксирует конфигурацию, затем получает функцию и строит wrapper.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
 Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
 
-## Practice
+## Практика
 
-**A · Prediction/reasoning.** Предскажи результат минимального примера для `three levels of functions` до запуска.
+**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для `three levels of functions` до запуска.
 
-**B · Find the bug.** Найди нарушение `configuration captured by closure` и объясни конкретное последствие.
+**B · Найди ошибку.** Найди нарушение `configuration captured by closure` и объясни конкретное последствие.
 
-**E · Interview explanation.** Дай ответ про Decorator factory and decorator arguments за 60 секунд: определение, механизм, пример, ограничение.
+**E · Ответ на собеседовании.** Дай ответ про Decorator factory and decorator arguments за 60 секунд: определение, механизм, пример, ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Decorator factory and decorator arguments и какой механизм здесь важно понимать Junior-разработчику?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какое ограничение или типичная ошибка относится именно к теме Decorator factory and decorator arguments?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
 Decorator factory and decorator arguments: Это часть контракта Python function: важно различать definition time, call time, signature и разрешение имён.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
 > Decorator factory and decorator arguments — тема, в которой я сначала фиксирую `three levels of functions`, затем объясняю `configuration captured by closure` на коротком примере. Ключевой механизм: Отдели выполнение `def`, связывание arguments при вызове и разрешение names по LEGB. Главная практическая ошибка — Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какое ограничение или типичная ошибка относится именно к теме Decorator factory and decorator arguments?**
 
 Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - three levels of functions
-- configuration captured by closure
+- конфигурация, захваченная замыканием
 - retry/timing/permission examples
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
 - Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какое ограничение или типичная ошибка относится именно к теме Decorator factory and decorator arguments?
 
@@ -146,17 +146,17 @@ Decorator factory and decorator arguments: Это часть контракта 
 
 Реализуй retry(attempts, exceptions, on_retry). Повторяй только указанные errors, вызови hook перед retry и подними последнюю ошибку.
 
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
-## Cheat sheet
+Работай в main.py. Не меняй публичные имена и сигнатуры: скрытые тесты импортируют их напрямую. Проверь основной сценарий, граничные значения, повторные вызовы и распространение ошибок.
+## Шпаргалка
 
 Перед собеседованием запомни:
 
 - **Что это:** Decorator factory and decorator arguments: Это часть контракта Python function: важно различать definition time, call time, signature и разрешение имён.
 - **Механизм:** Разделяй момент определения функции, момент вызова и момент разрешения свободного имени.
 - **Ограничение:** Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

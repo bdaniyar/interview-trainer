@@ -3,7 +3,7 @@
   "slug": "async-context-managers",
   "title": "Async context managers",
   "module_slug": "stage-08",
-  "module_title": "Stage 8 · Async Python",
+  "module_title": "Этап 8 · Async Python",
   "module_order": 8,
   "order": 89,
   "duration": 10,
@@ -14,7 +14,7 @@
     "connection/session/client lifecycle",
     "`__aenter__`/`__aexit__`."
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": true,
   "has_solution": true,
   "priority": "P1",

@@ -3,7 +3,7 @@
   "slug": "s19-ttl-and-expiration",
   "title": "TTL and expiration",
   "module_slug": "stage-19",
-  "module_title": "Stage 19 · Redis",
+  "module_title": "Этап 19 · Redis",
   "module_order": 19,
   "order": 254,
   "duration": 10,
@@ -15,7 +15,7 @@
     "stale/missing keys",
     "memory policy awareness."
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

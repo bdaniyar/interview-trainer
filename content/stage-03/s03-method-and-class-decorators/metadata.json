@@ -3,7 +3,7 @@
   "slug": "s03-method-and-class-decorators",
   "title": "Method and class decorators",
   "module_slug": "stage-03",
-  "module_title": "Stage 3 · Functions, Scope, Closures and Decorators",
+  "module_title": "Этап 3 · Functions, Scope, Closures and Decorators",
   "module_order": 3,
   "order": 33,
   "duration": 10,
@@ -14,7 +14,7 @@
     "class decorator basics",
     "do not turn into metaprogramming course."
   ],
-  "description": "P2 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P2 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P2",

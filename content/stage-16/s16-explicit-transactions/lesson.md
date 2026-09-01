@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: high · 12 минут.** ORM/SQLAlchemy явно встречались в 4/18, но Session/transaction знание фундаментально для FastAPI backend.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-An explicit transaction boundary groups all database changes of one use case into one commit/rollback decision.
+Explicit transaction boundary объединяет все database changes одного use case в одно решение commit или rollback.
 
 ### Как работает
 
-`with session.begin()` commits on normal exit and rolls back on exception; repositories should not secretly finalize independent parts.
+`with session.begin()` делает commit при normal exit и rollback при exception; repositories не должны незаметно фиксировать отдельные части.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Keep external network calls outside the transaction when possible to reduce lock/connection time.
+External network calls по возможности выносят за transaction, чтобы не удерживать locks и connection.
 
-## Mental model
+## Модель понимания
 
 Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -39,17 +39,17 @@ Keep external network calls outside the transaction when possible to reduce lock
 
 - `begin`
 - atomic service operation
-- avoid commits hidden across repository calls
+- избегать скрытой фиксации транзакции внутри вызовов репозитория
 
 ### Полезно
 
-- one short code/result example
+- один короткий пример кода с результатом
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Explicit transactions: отдельный пример
 
@@ -60,70 +60,70 @@ def transfer(session, source, target, amount):
 
 Это публичный starter contract практики «Explicit transfer transaction». Реализация и hidden assertions в lesson Markdown не раскрываются.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Multiple hidden repository commits make partial data durable when a later step fails.
+Несколько скрытых commits в repository оставляют частичные данные после ошибки позднего шага.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the ``begin`` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере ``begin`` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `atomic service operation` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `atomic service operation`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates ``begin`` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие ``begin``, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Explicit transactions in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Explicit transactions за 45–60 секунд и назови одно ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Explicit transactions и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Explicit transactions?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-An explicit transaction boundary groups all database changes of one use case into one commit/rollback decision.
+Explicit transaction boundary объединяет все database changes одного use case в одно решение commit или rollback.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> An explicit transaction boundary groups all database changes of one use case into one commit/rollback decision. `with session.begin()` commits on normal exit and rolls back on exception; repositories should not secretly finalize independent parts. Важное ограничение: Keep external network calls outside the transaction when possible to reduce lock/connection time.
+> Explicit transaction boundary объединяет все database changes одного use case в одно решение commit или rollback. `with session.begin()` делает commit при normal exit и rollback при exception; repositories не должны незаметно фиксировать отдельные части. Важное ограничение: External network calls по возможности выносят за transaction, чтобы не удерживать locks и connection.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Explicit transactions?**
 
-Multiple hidden repository commits make partial data durable when a later step fails.
+Несколько скрытых commits в repository оставляют частичные данные после ошибки позднего шага.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - `begin`
 - atomic service operation
-- avoid commits hidden across repository calls
+- избегать скрытой фиксации транзакции внутри вызовов репозитория
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Multiple hidden repository commits make partial data durable when a later step fails.
+- Несколько скрытых commits в repository оставляют частичные данные после ошибки позднего шага.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Explicit transactions?
 
@@ -133,17 +133,17 @@ Multiple hidden repository commits make partial data durable when a later step f
 
 transfer проверяет positive amount/balance и меняет два Account внутри session.begin.
 
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
-## Cheat sheet
+Работай в main.py. Не меняй публичные имена и сигнатуры: скрытые тесты импортируют их напрямую. Проверь основной сценарий, граничные значения, повторные вызовы и распространение ошибок.
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** An explicit transaction boundary groups all database changes of one use case into one commit/rollback decision.
+- **Что это:** Explicit transaction boundary объединяет все database changes одного use case в одно решение commit или rollback.
 - **Механизм:** Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
-- **Ограничение:** Multiple hidden repository commits make partial data durable when a later step fails.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Несколько скрытых commits в repository оставляют частичные данные после ошибки позднего шага.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

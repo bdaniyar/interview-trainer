@@ -8,7 +8,7 @@
       "Cache-Control",
       "ETag",
       "conditional request",
-      "difference from application Redis cache"
+      "отличие от кеша Redis на уровне приложения"
     ],
     "short_answer": "HTTP caching: Это часть наблюдаемого HTTP contract: method/target/headers/body на входе и status/headers/body на выходе.",
     "junior_answer": "HTTP caching — тема, в которой я сначала фиксирую `Cache-Control`, затем объясняю `ETag` на коротком примере. Ключевой механизм: Опиши один request и один response, включая поведение retry, cache и error contract только там, где они относятся к теме. Главная практическая ошибка — Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency.",
@@ -19,7 +19,7 @@
         "Cache-Control",
         "ETag",
         "conditional request",
-        "difference from application Redis cache"
+        "отличие от кеша Redis на уровне приложения"
       ],
       "good_additions": [
         "короткий рабочий пример",

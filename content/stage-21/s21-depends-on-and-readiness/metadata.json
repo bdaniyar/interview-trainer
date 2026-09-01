@@ -3,7 +3,7 @@
   "slug": "s21-depends-on-and-readiness",
   "title": "`depends_on` and readiness",
   "module_slug": "stage-21",
-  "module_title": "Stage 21 · Docker and Docker Compose",
+  "module_title": "Этап 21 · Docker and Docker Compose",
   "module_order": 21,
   "order": 286,
   "duration": 10,
@@ -14,7 +14,7 @@
     "healthcheck",
     "retry/backoff."
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

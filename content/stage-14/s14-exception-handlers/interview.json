@@ -10,10 +10,10 @@
       "global handler",
       "avoid leaking internals"
     ],
-    "short_answer": "An exception handler translates an exception type into a consistent HTTP response at an application/router boundary.",
-    "junior_answer": "An exception handler translates an exception type into a consistent HTTP response at an application/router boundary. Domain code raises a meaningful domain exception; FastAPI handler maps it to status and safe payload while unexpected errors remain server failures. Важное ограничение: Do not catch every exception and convert programming bugs into 400 responses.",
+    "short_answer": "Exception handler преобразует определённый тип исключения в единый HTTP response на границе application или router.",
+    "junior_answer": "Exception handler преобразует определённый тип исключения в единый HTTP response на границе application или router. Domain code поднимает domain exception, а FastAPI handler сопоставляет его со status и безопасным payload; неожиданные ошибки остаются server failures. Важное ограничение: Не преобразуй любой Exception в 400: так programming bugs маскируются под ошибку client.",
     "follow_up_question": "Какая типичная ошибка связана с Exception handlers?",
-    "follow_up_answer": "Leaking `str(database_error)` to clients exposes schema/SQL details and creates an unstable contract.",
+    "follow_up_answer": "Передача `str(database_error)` клиенту раскрывает SQL/schema details и создаёт нестабильный contract.",
     "expected_answer": {
       "must_mention": [
         "domain exception",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Leaking `str(database_error)` to clients exposes schema/SQL details and creates an unstable contract.",
+        "Передача `str(database_error)` клиенту раскрывает SQL/schema details и создаёт нестабильный contract.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Leaking `str(database_error)` to clients exposes schema/SQL details and creates an unstable contract."
+        "Передача `str(database_error)` клиенту раскрывает SQL/schema details и создаёт нестабильный contract."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Exception handlers?"
@@ -55,25 +55,25 @@
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "one short code/result example",
-      "Leaking `str(database_error)` to clients exposes schema/SQL details and creates an unstable contract."
+      "один короткий пример кода с результатом",
+      "Передача `str(database_error)` клиенту раскрывает SQL/schema details и создаёт нестабильный contract."
     ],
-    "short_answer": "Leaking `str(database_error)` to clients exposes schema/SQL details and creates an unstable contract.",
-    "junior_answer": "Leaking `str(database_error)` to clients exposes schema/SQL details and creates an unstable contract.",
+    "short_answer": "Передача `str(database_error)` клиенту раскрывает SQL/schema details и создаёт нестабильный contract.",
+    "junior_answer": "Передача `str(database_error)` клиенту раскрывает SQL/schema details и создаёт нестабильный contract.",
     "follow_up_question": "Что такое Exception handlers и как это работает?",
-    "follow_up_answer": "An exception handler translates an exception type into a consistent HTTP response at an application/router boundary. Domain code raises a meaningful domain exception; FastAPI handler maps it to status and safe payload while unexpected errors remain server failures. Важное ограничение: Do not catch every exception and convert programming bugs into 400 responses.",
+    "follow_up_answer": "Exception handler преобразует определённый тип исключения в единый HTTP response на границе application или router. Domain code поднимает domain exception, а FastAPI handler сопоставляет его со status и безопасным payload; неожиданные ошибки остаются server failures. Важное ограничение: Не преобразуй любой Exception в 400: так programming bugs маскируются под ошибку client.",
     "expected_answer": {
       "must_mention": [
-        "one short code/result example"
+        "один короткий пример кода с результатом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Leaking `str(database_error)` to clients exposes schema/SQL details and creates an unstable contract."
+        "Передача `str(database_error)` клиенту раскрывает SQL/schema details и создаёт нестабильный contract."
       ],
       "red_flags": [
-        "Leaking `str(database_error)` to clients exposes schema/SQL details and creates an unstable contract."
+        "Передача `str(database_error)` клиенту раскрывает SQL/schema details и создаёт нестабильный contract."
       ],
       "follow_up_questions": [
         "Что такое Exception handlers и как это работает?"

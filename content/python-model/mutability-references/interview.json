@@ -10,10 +10,10 @@
       "list, dict, set",
       "int, str, bytes, tuple"
     ],
-    "short_answer": "Mutable objects can change while keeping identity; immutable objects cannot be changed in place and an apparent update creates or binds another object.",
-    "junior_answer": "Mutable objects can change while keeping identity; immutable objects cannot be changed in place and an apparent update creates or binds another object. Lists, dicts and sets expose mutating operations. Integers, strings, bytes and tuples do not. A tuple itself is immutable but may contain a mutable element. Важное ограничение: Mutability matters more than the syntax: `name += value` may mutate a list but creates a new string object.",
+    "short_answer": "Изменяемый объект можно изменить с сохранением identity; неизменяемый объект нельзя изменить на месте — операция создаёт новый объект или новую связь имени.",
+    "junior_answer": "Изменяемый объект можно изменить с сохранением identity; неизменяемый объект нельзя изменить на месте — операция создаёт новый объект или новую связь имени. `list`, `dict` и `set` имеют изменяющие операции. `int`, `str`, `bytes` и `tuple` неизменяемы. При этом tuple может содержать изменяемый элемент. Важное ограничение: Важна семантика типа: `+=` может изменить существующий list, но для строки создаёт новый объект.",
     "follow_up_question": "Какая типичная ошибка связана с Mutability and immutability?",
-    "follow_up_answer": "Confusing mutation with rebinding makes a caller's data change unexpectedly through an alias.",
+    "follow_up_answer": "Смешение мутации и перепривязки приводит к неожиданному изменению данных вызывающей стороны через общую ссылку.",
     "expected_answer": {
       "must_mention": [
         "mutable/immutable",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Confusing mutation with rebinding makes a caller's data change unexpectedly through an alias.",
+        "Смешение мутации и перепривязки приводит к неожиданному изменению данных вызывающей стороны через общую ссылку.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Confusing mutation with rebinding makes a caller's data change unexpectedly through an alias."
+        "Смешение мутации и перепривязки приводит к неожиданному изменению данных вызывающей стороны через общую ссылку."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Mutability and immutability?"
@@ -57,12 +57,12 @@
     "answer": [
       "tuple с mutable element",
       "effect on function arguments",
-      "Confusing mutation with rebinding makes a caller's data change unexpectedly through an alias."
+      "Смешение мутации и перепривязки приводит к неожиданному изменению данных вызывающей стороны через общую ссылку."
     ],
-    "short_answer": "Confusing mutation with rebinding makes a caller's data change unexpectedly through an alias.",
-    "junior_answer": "Confusing mutation with rebinding makes a caller's data change unexpectedly through an alias.",
+    "short_answer": "Смешение мутации и перепривязки приводит к неожиданному изменению данных вызывающей стороны через общую ссылку.",
+    "junior_answer": "Смешение мутации и перепривязки приводит к неожиданному изменению данных вызывающей стороны через общую ссылку.",
     "follow_up_question": "Что такое Mutability and immutability и как это работает?",
-    "follow_up_answer": "Mutable objects can change while keeping identity; immutable objects cannot be changed in place and an apparent update creates or binds another object. Lists, dicts and sets expose mutating operations. Integers, strings, bytes and tuples do not. A tuple itself is immutable but may contain a mutable element. Важное ограничение: Mutability matters more than the syntax: `name += value` may mutate a list but creates a new string object.",
+    "follow_up_answer": "Изменяемый объект можно изменить с сохранением identity; неизменяемый объект нельзя изменить на месте — операция создаёт новый объект или новую связь имени. `list`, `dict` и `set` имеют изменяющие операции. `int`, `str`, `bytes` и `tuple` неизменяемы. При этом tuple может содержать изменяемый элемент. Важное ограничение: Важна семантика типа: `+=` может изменить существующий list, но для строки создаёт новый объект.",
     "expected_answer": {
       "must_mention": [
         "tuple с mutable element",
@@ -72,10 +72,10 @@
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Confusing mutation with rebinding makes a caller's data change unexpectedly through an alias."
+        "Смешение мутации и перепривязки приводит к неожиданному изменению данных вызывающей стороны через общую ссылку."
       ],
       "red_flags": [
-        "Confusing mutation with rebinding makes a caller's data change unexpectedly through an alias."
+        "Смешение мутации и перепривязки приводит к неожиданному изменению данных вызывающей стороны через общую ссылку."
       ],
       "follow_up_questions": [
         "Что такое Mutability and immutability и как это работает?"

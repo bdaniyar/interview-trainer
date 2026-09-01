@@ -10,10 +10,10 @@
       "many-to-many",
       "`back_populates`"
     ],
-    "short_answer": "A relationship describes ORM navigation between entities; the foreign key column remains the database source of referential truth.",
-    "junior_answer": "A relationship describes ORM navigation between entities; the foreign key column remains the database source of referential truth. `back_populates` connects both directions; one-to-many, many-to-one and many-to-many determine collection/scalar shape and loading behavior. Важное ограничение: Relationship does not automatically choose efficient eager loading or safe cascade semantics.",
+    "short_answer": "Relationship описывает ORM-навигацию между entities; внешний ключ column остаётся источником referential truth в БД.",
+    "junior_answer": "Relationship описывает ORM-навигацию между entities; внешний ключ column остаётся источником referential truth в БД. `back_populates` связывает направления; one-to-many, many-to-one и many-to-many определяют collection/scalar форму и loading behavior. Важное ограничение: Relationship не выбирает автоматически эффективный eager loading и безопасную cascade semantics.",
     "follow_up_question": "Какая типичная ошибка связана с Relationships?",
-    "follow_up_answer": "Confusing ORM relationship with database ownership can configure delete cascade that removes more data than intended.",
+    "follow_up_answer": "Смешение ORM relationship и ownership в БД может настроить delete cascade, удаляющий лишние данные.",
     "expected_answer": {
       "must_mention": [
         "one-to-many",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Confusing ORM relationship with database ownership can configure delete cascade that removes more data than intended.",
+        "Смешение ORM relationship и ownership в БД может настроить delete cascade, удаляющий лишние данные.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Confusing ORM relationship with database ownership can configure delete cascade that removes more data than intended."
+        "Смешение ORM relationship и ownership в БД может настроить delete cascade, удаляющий лишние данные."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Relationships?"
@@ -56,12 +56,12 @@
     "interview_probability": "high",
     "answer": [
       "ownership vs navigation",
-      "Confusing ORM relationship with database ownership can configure delete cascade that removes more data than intended."
+      "Смешение ORM relationship и ownership в БД может настроить delete cascade, удаляющий лишние данные."
     ],
-    "short_answer": "Confusing ORM relationship with database ownership can configure delete cascade that removes more data than intended.",
-    "junior_answer": "Confusing ORM relationship with database ownership can configure delete cascade that removes more data than intended.",
+    "short_answer": "Смешение ORM relationship и ownership в БД может настроить delete cascade, удаляющий лишние данные.",
+    "junior_answer": "Смешение ORM relationship и ownership в БД может настроить delete cascade, удаляющий лишние данные.",
     "follow_up_question": "Что такое Relationships и как это работает?",
-    "follow_up_answer": "A relationship describes ORM navigation between entities; the foreign key column remains the database source of referential truth. `back_populates` connects both directions; one-to-many, many-to-one and many-to-many determine collection/scalar shape and loading behavior. Важное ограничение: Relationship does not automatically choose efficient eager loading or safe cascade semantics.",
+    "follow_up_answer": "Relationship описывает ORM-навигацию между entities; внешний ключ column остаётся источником referential truth в БД. `back_populates` связывает направления; one-to-many, many-to-one и many-to-many определяют collection/scalar форму и loading behavior. Важное ограничение: Relationship не выбирает автоматически эффективный eager loading и безопасную cascade semantics.",
     "expected_answer": {
       "must_mention": [
         "ownership vs navigation"
@@ -70,10 +70,10 @@
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Confusing ORM relationship with database ownership can configure delete cascade that removes more data than intended."
+        "Смешение ORM relationship и ownership в БД может настроить delete cascade, удаляющий лишние данные."
       ],
       "red_flags": [
-        "Confusing ORM relationship with database ownership can configure delete cascade that removes more data than intended."
+        "Смешение ORM relationship и ownership в БД может настроить delete cascade, удаляющий лишние данные."
       ],
       "follow_up_questions": [
         "Что такое Relationships и как это работает?"

@@ -3,7 +3,7 @@
   "slug": "functools-wraps",
   "title": "`functools.wraps`",
   "module_slug": "stage-03",
-  "module_title": "Stage 3 · Functions, Scope, Closures and Decorators",
+  "module_title": "Этап 3 · Functions, Scope, Closures and Decorators",
   "module_order": 3,
   "order": 30,
   "duration": 12,
@@ -16,7 +16,7 @@
     "`__wrapped__`",
     "why frameworks/tools care."
   ],
-  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": true,
   "has_solution": true,
   "priority": "P0",

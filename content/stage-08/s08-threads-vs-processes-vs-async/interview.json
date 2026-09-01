@@ -7,19 +7,19 @@
     "answer": [
       "many network waits → async",
       "blocking I/O library → thread pool",
-      "CPU-bound pure Python → process pool/worker",
-      "durable background job → queue/worker"
+      "Вычислительный код на чистом Python → пул процессов или отдельный обработчик",
+      "надёжная фоновая задача → очередь и обработчик"
     ],
-    "short_answer": "Threads vs processes vs async: Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг await points.",
-    "junior_answer": "Threads vs processes vs async — тема, в которой я сначала фиксирую `many network waits → async`, затем объясняю `blocking I/O library → thread pool` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и await points до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
+    "short_answer": "Threads vs processes vs async: Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг точки приостановки await.",
+    "junior_answer": "Threads vs processes vs async — тема, в которой я сначала фиксирую `many network waits → async`, затем объясняю `blocking I/O library → thread pool` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и точки приостановки await до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
     "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Threads vs processes vs async?",
     "follow_up_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
     "expected_answer": {
       "must_mention": [
         "many network waits → async",
         "blocking I/O library → thread pool",
-        "CPU-bound pure Python → process pool/worker",
-        "durable background job → queue/worker"
+        "Вычислительный код на чистом Python → пул процессов или отдельный обработчик",
+        "надёжная фоновая задача → очередь и обработчик"
       ],
       "good_additions": [
         "короткий рабочий пример",
@@ -61,7 +61,7 @@
     "short_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
     "junior_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
     "follow_up_question": "Что такое Threads vs processes vs async и какой механизм здесь важно понимать Junior-разработчику?",
-    "follow_up_answer": "Threads vs processes vs async — тема, в которой я сначала фиксирую `many network waits → async`, затем объясняю `blocking I/O library → thread pool` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и await points до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
+    "follow_up_answer": "Threads vs processes vs async — тема, в которой я сначала фиксирую `many network waits → async`, затем объясняю `blocking I/O library → thread pool` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и точки приостановки await до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
     "expected_answer": {
       "must_mention": [
         "связать Threads vs processes vs async с коротким рабочим примером"

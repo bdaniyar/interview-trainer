@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P1 · вероятность на интервью: medium · 10 минут.** Concurrency fundamentals поддерживают выбор threads/processes/async без мифов о GIL.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-Multiprocessing runs work in separate processes with isolated memory and separate Python interpreters.
+Multiprocessing запускает работу в отдельных processes с изолированной памятью и отдельными Python interpreters.
 
 ### Как работает
 
-Inputs/results cross process boundaries through serialization and IPC. This enables CPU parallelism but adds startup, memory and communication cost.
+Входы и результаты пересекают границу процесса через serialization и IPC. Это даёт CPU parallelism ценой startup, памяти и передачи данных.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Worker targets and arguments generally must be pickleable, and process startup behavior differs by platform.
+Targets и arguments обычно должны быть pickleable, а поведение запуска процесса различается между платформами.
 
-## Mental model
+## Модель понимания
 
 Thread разделяет память процесса; process изолирован и требует сериализации/IPC.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -44,13 +44,13 @@ Thread разделяет память процесса; process изолиро�
 
 ### Полезно
 
-- one short code/result example
+- один короткий пример кода с результатом
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Multiprocessing: отдельный пример
 
@@ -68,88 +68,88 @@ print(queue.get())
 
 Process имеет отдельную память, поэтому результат передаётся через IPC, а arguments должны сериализоваться.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Passing a live Session, lock-bound client or local closure to a process often fails serialization or creates invalid copied state.
+Передача живой Session, клиента с locks или локального closure в process часто ломает serialization или создаёт некорректную копию состояния.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `separate processes` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `separate processes` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `serialization` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `serialization`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `separate processes` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `separate processes`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Multiprocessing in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Multiprocessing за 45–60 секунд и назови одно ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Multiprocessing и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Multiprocessing?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-Multiprocessing runs work in separate processes with isolated memory and separate Python interpreters.
+Multiprocessing запускает работу в отдельных processes с изолированной памятью и отдельными Python interpreters.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> Multiprocessing runs work in separate processes with isolated memory and separate Python interpreters. Inputs/results cross process boundaries through serialization and IPC. This enables CPU parallelism but adds startup, memory and communication cost. Важное ограничение: Worker targets and arguments generally must be pickleable, and process startup behavior differs by platform.
+> Multiprocessing запускает работу в отдельных processes с изолированной памятью и отдельными Python interpreters. Входы и результаты пересекают границу процесса через serialization и IPC. Это даёт CPU parallelism ценой startup, памяти и передачи данных. Важное ограничение: Targets и arguments обычно должны быть pickleable, а поведение запуска процесса различается между платформами.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Multiprocessing?**
 
-Passing a live Session, lock-bound client or local closure to a process often fails serialization or creates invalid copied state.
+Передача живой Session, клиента с locks или локального closure в process часто ломает serialization или создаёт некорректную копию состояния.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - separate processes
 - serialization
 - process startup/overhead
 - CPU-bound work
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Passing a live Session, lock-bound client or local closure to a process often fails serialization or creates invalid copied state.
+- Передача живой Session, клиента с locks или локального closure в process часто ломает serialization или создаёт некорректную копию состояния.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Multiprocessing?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Multiprocessing**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Multiprocessing**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** Multiprocessing runs work in separate processes with isolated memory and separate Python interpreters.
+- **Что это:** Multiprocessing запускает работу в отдельных processes с изолированной памятью и отдельными Python interpreters.
 - **Механизм:** Thread разделяет память процесса; process изолирован и требует сериализации/IPC.
-- **Ограничение:** Passing a live Session, lock-bound client or local closure to a process often fails serialization or creates invalid copied state.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Передача живой Session, клиента с locks или локального closure в process часто ломает serialization или создаёт некорректную копию состояния.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

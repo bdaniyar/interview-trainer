@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P1 · вероятность на интервью: high · 10 минут.** Async явно встречался в 5/18 и является P0/P1 для FastAPI async-проектов кандидата.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг await points.
+Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг точки приостановки await.
 
 ### Как работает
 
-Проследи coroutine от создания через scheduling и await points до result, cancellation и cleanup.
+Проследи coroutine от создания через scheduling и точки приостановки await до result, cancellation и cleanup.
 
 **`CancelledError`.** Cancellation — управляющий сигнал: cleanup выполняют в `finally`, а отмену обычно не поглощают без веской причины.
 
-**cleanup.** `cleanup` является частью lifecycle coroutine/task между scheduling, await points, cancellation и cleanup; отдельный thread автоматически не появляется.
+**cleanup.** `cleanup` является частью lifecycle coroutine/task между scheduling, точки приостановки await, cancellation и cleanup; отдельный thread автоматически не появляется.
 
 **cooperative cancellation.** Cancellation — управляющий сигнал: cleanup выполняют в `finally`, а отмену обычно не поглощают без веской причины.
 
-**do not swallow cancellation accidentally.** Cancellation — управляющий сигнал: cleanup выполняют в `finally`, а отмену обычно не поглощают без веской причины.
+**не поглощать отмену задачи случайно.** Cancellation — управляющий сигнал: cleanup выполняют в `finally`, а отмену обычно не поглощают без веской причины.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
 Граница Junior: уверенно объясняй ``CancelledError`` и `cleanup` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
@@ -39,11 +39,11 @@
 
 В backend эта тема важна в том месте, где применяется ``CancelledError``; проверяй именно наблюдаемый contract, а не название инструмента.
 
-## Mental model
+## Модель понимания
 
 Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -52,7 +52,7 @@ Event loop планирует готовые tasks; await не создаёт о
 - `CancelledError`
 - cleanup
 - cooperative cancellation
-- do not swallow cancellation accidentally
+- не поглощать отмену задачи случайно
 
 ### Полезно
 
@@ -60,9 +60,9 @@ Event loop планирует готовые tasks; await не создаёт о
 
 ### Можно не учить глубоко
 
-- implementation internals, не влияющие на Junior-код и типичный interview follow-up
+- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Cancellation: отдельный пример
 
@@ -89,21 +89,21 @@ asyncio.run(main())
 
 Cancellation проходит через await, выполняет `finally` и обычно повторно распространяется caller.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
 Выполнить blocking call в event loop или создать coroutine и не await/schedule её.
 
-## Practice
+## Практика
 
-**A · Prediction/reasoning.** Предскажи результат минимального примера для ``CancelledError`` до запуска.
+**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для ``CancelledError`` до запуска.
 
-**B · Find the bug.** Найди нарушение `cleanup` и объясни конкретное последствие.
+**B · Найди ошибку.** Найди нарушение `cleanup` и объясни конкретное последствие.
 
-**E · Interview explanation.** Дай ответ про Cancellation за 60 секунд: определение, механизм, пример, ограничение.
+**E · Ответ на собеседовании.** Дай ответ про Cancellation за 60 секунд: определение, механизм, пример, ограничение.
 
-## Code prediction
+## Предсказание результата кода
 
 ### Timeout преобразует ожидание в ошибку
 
@@ -121,7 +121,7 @@ asyncio.run(main())
 
 <details><summary>Показать ответ</summary>
 
-Expected:
+Ожидаемый результат:
 
 ```text
 timeout
@@ -129,69 +129,69 @@ timeout
 
 wait_for отменяет слишком долгий awaitable и поднимает TimeoutError вызывающему коду.
 
-Misconception: `async-timeout`.
+Типичная ошибка мышления: `async-timeout`.
 
 </details>
 
-## Debugging practice
+## Практика: Отладка
 
 ### Swallowed cancellation
 
 **Сценарий:** except BaseException подавляет shutdown.
 
-**Rubric:** CancelledError не поглощать; cleanup finally; re-raise.
+**Критерии ответа:** CancelledError не поглощать; cleanup finally; re-raise.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Cancellation и какой механизм здесь важно понимать Junior-разработчику?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какое ограничение или типичная ошибка относится именно к теме Cancellation?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-Cancellation: Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг await points.
+Cancellation: Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг точки приостановки await.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> Cancellation — тема, в которой я сначала фиксирую ``CancelledError``, затем объясняю `cleanup` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и await points до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.
+> Cancellation — тема, в которой я сначала фиксирую ``CancelledError``, затем объясняю `cleanup` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и точки приостановки await до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какое ограничение или типичная ошибка относится именно к теме Cancellation?**
 
 Выполнить blocking call в event loop или создать coroutine и не await/schedule её.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - `CancelledError`
 - cleanup
 - cooperative cancellation
-- do not swallow cancellation accidentally
+- не поглощать отмену задачи случайно
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
 - Выполнить blocking call в event loop или создать coroutine и не await/schedule её.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какое ограничение или типичная ошибка относится именно к теме Cancellation?
 
@@ -201,17 +201,17 @@ Cancellation: Это часть asyncio: event loop кооперативно п�
 
 Отмени task, await его, поглоти только CancelledError и верни True при отмене.
 
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
-## Cheat sheet
+Работай в main.py. Не меняй публичные имена и сигнатуры: скрытые тесты импортируют их напрямую. Проверь основной сценарий, граничные значения, повторные вызовы и распространение ошибок.
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** Cancellation: Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг await points.
+- **Что это:** Cancellation: Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг точки приостановки await.
 - **Механизм:** Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.
 - **Ограничение:** Выполнить blocking call в event loop или создать coroutine и не await/schedule её.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

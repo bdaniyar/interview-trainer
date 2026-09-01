@@ -10,10 +10,10 @@
       "nested comprehensions",
       "scope"
     ],
-    "short_answer": "A comprehension builds a list, dict or set from an expression, source iterable and optional filters; a generator expression stays lazy.",
-    "junior_answer": "A comprehension builds a list, dict or set from an expression, source iterable and optional filters; a generator expression stays lazy. The expression runs once per selected input item. Comprehension loop variables have their own scope in Python 3, while referenced outer names are read normally. Важное ограничение: Prefer a regular loop when there are several branches, side effects or nested transformations that hide intent.",
+    "short_answer": "Comprehension создаёт list, dict или set из выражения, исходного iterable и необязательного фильтра; generator expression остаётся ленивым.",
+    "junior_answer": "Comprehension создаёт list, dict или set из выражения, исходного iterable и необязательного фильтра; generator expression остаётся ленивым. Выражение выполняется по одному разу для каждого выбранного элемента. В Python 3 переменная цикла comprehension имеет собственную область видимости. Важное ограничение: Обычный цикл лучше, когда есть несколько ветвей, побочные эффекты или вложенная трансформация, скрывающая смысл.",
     "follow_up_question": "Какая типичная ошибка связана с Comprehensions?",
-    "follow_up_answer": "A dense nested comprehension can be syntactically valid but harder to review and debug than a four-line loop.",
+    "follow_up_answer": "Плотный вложенный comprehension может быть корректным, но заметно сложнее для чтения и отладки, чем короткий цикл.",
     "expected_answer": {
       "must_mention": [
         "list/dict/set comprehensions",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "A dense nested comprehension can be syntactically valid but harder to review and debug than a four-line loop.",
+        "Плотный вложенный comprehension может быть корректным, но заметно сложнее для чтения и отладки, чем короткий цикл.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "A dense nested comprehension can be syntactically valid but harder to review and debug than a four-line loop."
+        "Плотный вложенный comprehension может быть корректным, но заметно сложнее для чтения и отладки, чем короткий цикл."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Comprehensions?"
@@ -57,12 +57,12 @@
     "answer": [
       "readability",
       "when a regular loop is better",
-      "A dense nested comprehension can be syntactically valid but harder to review and debug than a four-line loop."
+      "Плотный вложенный comprehension может быть корректным, но заметно сложнее для чтения и отладки, чем короткий цикл."
     ],
-    "short_answer": "A dense nested comprehension can be syntactically valid but harder to review and debug than a four-line loop.",
-    "junior_answer": "A dense nested comprehension can be syntactically valid but harder to review and debug than a four-line loop.",
+    "short_answer": "Плотный вложенный comprehension может быть корректным, но заметно сложнее для чтения и отладки, чем короткий цикл.",
+    "junior_answer": "Плотный вложенный comprehension может быть корректным, но заметно сложнее для чтения и отладки, чем короткий цикл.",
     "follow_up_question": "Что такое Comprehensions и как это работает?",
-    "follow_up_answer": "A comprehension builds a list, dict or set from an expression, source iterable and optional filters; a generator expression stays lazy. The expression runs once per selected input item. Comprehension loop variables have their own scope in Python 3, while referenced outer names are read normally. Важное ограничение: Prefer a regular loop when there are several branches, side effects or nested transformations that hide intent.",
+    "follow_up_answer": "Comprehension создаёт list, dict или set из выражения, исходного iterable и необязательного фильтра; generator expression остаётся ленивым. Выражение выполняется по одному разу для каждого выбранного элемента. В Python 3 переменная цикла comprehension имеет собственную область видимости. Важное ограничение: Обычный цикл лучше, когда есть несколько ветвей, побочные эффекты или вложенная трансформация, скрывающая смысл.",
     "expected_answer": {
       "must_mention": [
         "readability",
@@ -72,10 +72,10 @@
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "A dense nested comprehension can be syntactically valid but harder to review and debug than a four-line loop."
+        "Плотный вложенный comprehension может быть корректным, но заметно сложнее для чтения и отладки, чем короткий цикл."
       ],
       "red_flags": [
-        "A dense nested comprehension can be syntactically valid but harder to review and debug than a four-line loop."
+        "Плотный вложенный comprehension может быть корректным, но заметно сложнее для чтения и отладки, чем короткий цикл."
       ],
       "follow_up_questions": [
         "Что такое Comprehensions и как это работает?"

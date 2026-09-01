@@ -3,7 +3,7 @@
   "slug": "s14-application-and-asgi-mental-model",
   "title": "Application and ASGI mental model",
   "module_slug": "stage-14",
-  "module_title": "Stage 14 · FastAPI",
+  "module_title": "Этап 14 · FastAPI",
   "module_order": 14,
   "order": 178,
   "duration": 12,
@@ -15,7 +15,7 @@
     "ASGI awareness",
     "no server internals deep dive."
   ],
-  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P0",

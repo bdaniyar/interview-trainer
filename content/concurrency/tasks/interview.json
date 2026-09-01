@@ -10,10 +10,10 @@
       "awaiting completion",
       "exception handling"
     ],
-    "short_answer": "An asyncio Task schedules one coroutine and stores its completion, result, exception or cancellation state.",
-    "junior_answer": "An asyncio Task schedules one coroutine and stores its completion, result, exception or cancellation state. `create_task` makes a coroutine eligible to run; the caller should keep a reference and eventually await it or otherwise handle its outcome. Важное ограничение: Fire-and-forget inside a web process is not durable: process shutdown can lose the task, and unobserved exceptions may surface only in logs.",
+    "short_answer": "Asyncio Task планирует одну coroutine и хранит её состояние завершения, result, exception или cancellation.",
+    "junior_answer": "Asyncio Task планирует одну coroutine и хранит её состояние завершения, result, exception или cancellation. `create_task` делает coroutine готовой к выполнению; caller должен сохранить reference и затем дождаться результата либо явно обработать outcome. Важное ограничение: Fire-and-forget внутри web process не является durable: shutdown может потерять task, а необработанное исключение останется только в logs.",
     "follow_up_question": "Какая типичная ошибка связана с Tasks and `asyncio.create_task`?",
-    "follow_up_answer": "Creating a task and dropping the reference hides failures and does not guarantee completion before request/process shutdown.",
+    "follow_up_answer": "Создание task без сохранения reference скрывает сбои и не гарантирует завершение до остановки request или process.",
     "expected_answer": {
       "must_mention": [
         "scheduling",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Creating a task and dropping the reference hides failures and does not guarantee completion before request/process shutdown.",
+        "Создание task без сохранения reference скрывает сбои и не гарантирует завершение до остановки request или process.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Creating a task and dropping the reference hides failures and does not guarantee completion before request/process shutdown."
+        "Создание task без сохранения reference скрывает сбои и не гарантирует завершение до остановки request или process."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Tasks and `asyncio.create_task`?"
@@ -55,25 +55,25 @@
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "one short code/result example",
-      "Creating a task and dropping the reference hides failures and does not guarantee completion before request/process shutdown."
+      "один короткий пример кода с результатом",
+      "Создание task без сохранения reference скрывает сбои и не гарантирует завершение до остановки request или process."
     ],
-    "short_answer": "Creating a task and dropping the reference hides failures and does not guarantee completion before request/process shutdown.",
-    "junior_answer": "Creating a task and dropping the reference hides failures and does not guarantee completion before request/process shutdown.",
+    "short_answer": "Создание task без сохранения reference скрывает сбои и не гарантирует завершение до остановки request или process.",
+    "junior_answer": "Создание task без сохранения reference скрывает сбои и не гарантирует завершение до остановки request или process.",
     "follow_up_question": "Что такое Tasks and `asyncio.create_task` и как это работает?",
-    "follow_up_answer": "An asyncio Task schedules one coroutine and stores its completion, result, exception or cancellation state. `create_task` makes a coroutine eligible to run; the caller should keep a reference and eventually await it or otherwise handle its outcome. Важное ограничение: Fire-and-forget inside a web process is not durable: process shutdown can lose the task, and unobserved exceptions may surface only in logs.",
+    "follow_up_answer": "Asyncio Task планирует одну coroutine и хранит её состояние завершения, result, exception или cancellation. `create_task` делает coroutine готовой к выполнению; caller должен сохранить reference и затем дождаться результата либо явно обработать outcome. Важное ограничение: Fire-and-forget внутри web process не является durable: shutdown может потерять task, а необработанное исключение останется только в logs.",
     "expected_answer": {
       "must_mention": [
-        "one short code/result example"
+        "один короткий пример кода с результатом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Creating a task and dropping the reference hides failures and does not guarantee completion before request/process shutdown."
+        "Создание task без сохранения reference скрывает сбои и не гарантирует завершение до остановки request или process."
       ],
       "red_flags": [
-        "Creating a task and dropping the reference hides failures and does not guarantee completion before request/process shutdown."
+        "Создание task без сохранения reference скрывает сбои и не гарантирует завершение до остановки request или process."
       ],
       "follow_up_questions": [
         "Что такое Tasks and `asyncio.create_task` и как это работает?"

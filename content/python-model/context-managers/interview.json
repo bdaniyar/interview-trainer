@@ -1,6 +1,6 @@
 [
   {
-    "question": "Что такое Context manager protocol и как это работает?",
+    "question": "Что такое Контекстный менеджер protocol и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "high",
@@ -10,10 +10,10 @@
       "`__exit__`",
       "resource cleanup"
     ],
-    "short_answer": "A context manager defines a reliable acquire/use/release boundary used by the `with` statement.",
-    "junior_answer": "A context manager defines a reliable acquire/use/release boundary used by the `with` statement. `__enter__` returns the value bound after `as`; `__exit__` receives exception information and cleanup runs even when the body fails. A truthy `__exit__` return suppresses the exception. Важное ограничение: Suppress only errors the context manager intentionally handles; returning True accidentally can hide real failures.",
-    "follow_up_question": "Какая типичная ошибка связана с Context manager protocol?",
-    "follow_up_answer": "Manual open/close without finally leaks resources on an exception path.",
+    "short_answer": "Контекстный менеджер задаёт надёжную границу получение, использование и освобождение ресурса для оператора `with`.",
+    "junior_answer": "Контекстный менеджер задаёт надёжную границу получение, использование и освобождение ресурса для оператора `with`. `__enter__` возвращает значение после `as`; `__exit__` получает данные об исключении, а cleanup выполняется даже при ошибке. Truthy-результат `__exit__` подавляет исключение. Важное ограничение: Подавляй только ошибки, которые Контекстный менеджер действительно умеет обработать; случайный `True` скрывает сбой.",
+    "follow_up_question": "Какая типичная ошибка связана с Контекстный менеджер protocol?",
+    "follow_up_answer": "Ручные open/close без finally оставляют ресурс открытым при исключении.",
     "expected_answer": {
       "must_mention": [
         "`with`",
@@ -26,18 +26,18 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Manual open/close without finally leaks resources on an exception path.",
+        "Ручные open/close без finally оставляют ресурс открытым при исключении.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Manual open/close without finally leaks resources on an exception path."
+        "Ручные open/close без finally оставляют ресурс открытым при исключении."
       ],
       "follow_up_questions": [
-        "Какая типичная ошибка связана с Context manager protocol?"
+        "Какая типичная ошибка связана с Контекстный менеджер protocol?"
       ]
     },
     "follow_ups": [
-      "Какая типичная ошибка связана с Context manager protocol?"
+      "Какая типичная ошибка связана с Контекстный менеджер protocol?"
     ],
     "tags": [
       "stage-04",
@@ -50,18 +50,18 @@
     ]
   },
   {
-    "question": "Какая типичная ошибка связана с Context manager protocol?",
+    "question": "Какая типичная ошибка связана с Контекстный менеджер protocol?",
     "level": "follow_up",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
       "exception suppression",
-      "Manual open/close without finally leaks resources on an exception path."
+      "Ручные open/close без finally оставляют ресурс открытым при исключении."
     ],
-    "short_answer": "Manual open/close without finally leaks resources on an exception path.",
-    "junior_answer": "Manual open/close without finally leaks resources on an exception path.",
-    "follow_up_question": "Что такое Context manager protocol и как это работает?",
-    "follow_up_answer": "A context manager defines a reliable acquire/use/release boundary used by the `with` statement. `__enter__` returns the value bound after `as`; `__exit__` receives exception information and cleanup runs even when the body fails. A truthy `__exit__` return suppresses the exception. Важное ограничение: Suppress only errors the context manager intentionally handles; returning True accidentally can hide real failures.",
+    "short_answer": "Ручные open/close без finally оставляют ресурс открытым при исключении.",
+    "junior_answer": "Ручные open/close без finally оставляют ресурс открытым при исключении.",
+    "follow_up_question": "Что такое Контекстный менеджер protocol и как это работает?",
+    "follow_up_answer": "Контекстный менеджер задаёт надёжную границу получение, использование и освобождение ресурса для оператора `with`. `__enter__` возвращает значение после `as`; `__exit__` получает данные об исключении, а cleanup выполняется даже при ошибке. Truthy-результат `__exit__` подавляет исключение. Важное ограничение: Подавляй только ошибки, которые Контекстный менеджер действительно умеет обработать; случайный `True` скрывает сбой.",
     "expected_answer": {
       "must_mention": [
         "exception suppression"
@@ -70,17 +70,17 @@
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Manual open/close without finally leaks resources on an exception path."
+        "Ручные open/close без finally оставляют ресурс открытым при исключении."
       ],
       "red_flags": [
-        "Manual open/close without finally leaks resources on an exception path."
+        "Ручные open/close без finally оставляют ресурс открытым при исключении."
       ],
       "follow_up_questions": [
-        "Что такое Context manager protocol и как это работает?"
+        "Что такое Контекстный менеджер protocol и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что такое Context manager protocol и как это работает?"
+      "Что такое Контекстный менеджер protocol и как это работает?"
     ],
     "tags": [
       "stage-04",

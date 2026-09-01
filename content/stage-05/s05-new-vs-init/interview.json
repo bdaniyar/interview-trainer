@@ -5,7 +5,7 @@
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "object creation vs initialization",
+      "создание объекта и его инициализация",
       "immutable subclasses",
       "avoid unnecessary custom `__new__`"
     ],
@@ -15,7 +15,7 @@
     "follow_up_answer": "Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.",
     "expected_answer": {
       "must_mention": [
-        "object creation vs initialization",
+        "создание объекта и его инициализация",
         "immutable subclasses",
         "avoid unnecessary custom `__new__`"
       ],

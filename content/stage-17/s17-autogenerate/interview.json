@@ -5,19 +5,19 @@
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "generated diff is a draft",
-      "manual review",
-      "rename may look like drop/add"
+      "сгенерированная разница является черновиком",
+      "ручная проверка",
+      "переименование может выглядеть как удаление и добавление"
     ],
     "short_answer": "Autogenerate: Это версионированный переход schema, который должен безопасно работать с кодом во время deploy.",
-    "junior_answer": "Autogenerate — тема, в которой я сначала фиксирую `generated diff is a draft`, затем объясняю `manual review` на коротком примере. Ключевой механизм: Раздели upgrade, совместимость старого/нового кода, backfill и rollback; autogenerate обязательно review. Главная практическая ошибка — Принять autogenerate без review или выпустить несовместимые schema/code изменения одним шагом.",
+    "junior_answer": "Autogenerate — тема, в которой я сначала фиксирую `generated diff is a draft`, затем объясняю `manual review` на коротком примере. Ключевой механизм: Раздели upgrade, совместимость старого/нового кода, заполнение существующих данных и rollback; autogenerate обязательно review. Главная практическая ошибка — Принять autogenerate без review или выпустить несовместимые schema/code изменения одним шагом.",
     "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Autogenerate?",
     "follow_up_answer": "Принять autogenerate без review или выпустить несовместимые schema/code изменения одним шагом.",
     "expected_answer": {
       "must_mention": [
-        "generated diff is a draft",
-        "manual review",
-        "rename may look like drop/add"
+        "сгенерированная разница является черновиком",
+        "ручная проверка",
+        "переименование может выглядеть как удаление и добавление"
       ],
       "good_additions": [
         "короткий рабочий пример",
@@ -59,7 +59,7 @@
     "short_answer": "Принять autogenerate без review или выпустить несовместимые schema/code изменения одним шагом.",
     "junior_answer": "Принять autogenerate без review или выпустить несовместимые schema/code изменения одним шагом.",
     "follow_up_question": "Что такое Autogenerate и какой механизм здесь важно понимать Junior-разработчику?",
-    "follow_up_answer": "Autogenerate — тема, в которой я сначала фиксирую `generated diff is a draft`, затем объясняю `manual review` на коротком примере. Ключевой механизм: Раздели upgrade, совместимость старого/нового кода, backfill и rollback; autogenerate обязательно review. Главная практическая ошибка — Принять autogenerate без review или выпустить несовместимые schema/code изменения одним шагом.",
+    "follow_up_answer": "Autogenerate — тема, в которой я сначала фиксирую `generated diff is a draft`, затем объясняю `manual review` на коротком примере. Ключевой механизм: Раздели upgrade, совместимость старого/нового кода, заполнение существующих данных и rollback; autogenerate обязательно review. Главная практическая ошибка — Принять autogenerate без review или выпустить несовместимые schema/code изменения одним шагом.",
     "expected_answer": {
       "must_mention": [
         "связать Autogenerate с коротким рабочим примером"

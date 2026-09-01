@@ -6,16 +6,16 @@
     "interview_probability": "high",
     "answer": [
       "DB migration still required",
-      "model declaration is not production schema migration"
+      "объявление модели не является миграцией рабочей схемы базы данных"
     ],
-    "short_answer": "Constraints and indexes in models: Это часть SQLAlchemy 2.x data-access flow: statement, Session, identity map и transaction lifecycle.",
+    "short_answer": "Constraints and indexes in models: Это часть SQLAlchemy 2.x процесс доступа к данным: statement, Session, identity map и жизненный цикл транзакции.",
     "junior_answer": "Constraints and indexes in models — тема, в которой я сначала фиксирую `DB migration still required`, затем объясняю `model declaration is not production schema migration` на коротком примере. Ключевой механизм: Укажи владельца Session/transaction, момент SQL I/O и state entity до и после flush/commit/rollback. Главная практическая ошибка — Скрыть commit внутри repository, допустить N+1 или продолжить Session без rollback после ошибки.",
     "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Constraints and indexes in models?",
     "follow_up_answer": "Скрыть commit внутри repository, допустить N+1 или продолжить Session без rollback после ошибки.",
     "expected_answer": {
       "must_mention": [
         "DB migration still required",
-        "model declaration is not production schema migration"
+        "объявление модели не является миграцией рабочей схемы базы данных"
       ],
       "good_additions": [
         "короткий рабочий пример",

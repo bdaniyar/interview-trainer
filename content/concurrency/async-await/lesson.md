@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** Async явно встречался в 5/18 и является P0/P1 для FastAPI async-проектов кандидата.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,7 +12,7 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
@@ -39,7 +39,7 @@ async def main():
 asyncio.run(main())
 ```
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
 Два последовательных `await` остаются последовательными. Конкурентный запуск требует tasks/`gather`/`TaskGroup`. `time.sleep`, sync DB driver или CPU loop внутри async endpoint блокирует весь event-loop thread.
 
@@ -47,11 +47,11 @@ asyncio.run(main())
 
 Async endpoint полезен, когда весь I/O path — HTTP client, DB driver, queue — предоставляет awaitable API.
 
-## Mental model
+## Модель понимания
 
 Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -73,7 +73,7 @@ Event loop планирует готовые tasks; await не создаёт о
 
 - реализация selectors/proactors и bytecode coroutine
 
-## Code examples
+## Примеры кода
 
 ### `await` and cooperative scheduling: отдельный пример
 
@@ -91,9 +91,9 @@ async def main():
 asyncio.run(main())
 ```
 
-Task уступает управление только в await point, после чего loop может продолжить другую ready task.
+Task уступает управление только в точка приостановки await, после чего loop может продолжить другую ready task.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
@@ -107,17 +107,17 @@ Task уступает управление только в await point, посл
 
 Ожидать две независимые операции последовательно и называть это concurrent execution.
 
-## Practice
+## Практика
 
-**A · Code prediction.** Определи порядок вывода двух tasks с `sleep(0)`.
+**A · Предсказание результата кода.** Определи порядок вывода двух tasks с `sleep(0)`.
 
-**B · Find the bug.** Найди `requests.get`/`time.sleep` внутри async endpoint.
+**B · Найди ошибку.** Найди `requests.get`/`time.sleep` внутри async endpoint.
 
-**C · Rewrite.** Запусти независимые I/O calls через `gather`.
+**C · Улучшение кода.** Запусти независимые I/O calls через `gather`.
 
-**D · Small task.** Реализуй bounded async fetch с timeout.
+**D · Небольшая задача.** Реализуй bounded async fetch с timeout.
 
-## Code prediction
+## Предсказание результата кода
 
 ### Await сохраняет порядок внутри task
 
@@ -134,7 +134,7 @@ asyncio.run(main())
 
 <details><summary>Показать ответ</summary>
 
-Expected:
+Ожидаемый результат:
 
 ```text
 a
@@ -143,69 +143,69 @@ b
 
 await может отдать управление loop, но эта программа содержит только одну пользовательскую task.
 
-Misconception: `await-order`.
+Типичная ошибка мышления: `await-order`.
 
 </details>
 
-## Debugging practice
+## Практика: Отладка
 
 ### Forgotten await
 
 **Сценарий:** Endpoint возвращает coroutine object.
 
-**Rubric:** await coroutine; включить warnings/test serialization.
+**Критерии ответа:** await coroutine; включить warnings/test serialization.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что делает `await` и создаёт ли он конкурентность автоматически?
 
-### Follow-up
+### Дополнительный вопрос
 
 Что произойдёт, если вызвать blocking функцию внутри event loop?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
 Await приостанавливает текущую coroutine и отдаёт loop управление; сам по себе он не создаёт thread и два последовательных await не становятся concurrent.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
 > `await` работает внутри coroutine: если операция не готова, state текущей task сохраняется, а event loop может выполнять другие tasks. После готовности выполнение продолжится со следующей строки. Это полезно для I/O-bound кода. Один await не создаёт новую task, поэтому для независимых операций нужны `create_task`, `gather` или `TaskGroup`.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Что произойдёт, если вызвать blocking функцию внутри event loop?**
 
 Она не отдаёт управление, поэтому задержит все tasks этого loop; нужен async-native API, `to_thread` для blocking I/O или отдельный process/worker для CPU work.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - coroutine object
 - suspension point
 - event loop
 - последовательный vs concurrent await
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
 - Вызвать coroutine без `await`: работа не выполнится, возможен warning `coroutine was never awaited`.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Что произойдёт, если вызвать blocking функцию внутри event loop?
 
@@ -215,17 +215,17 @@ Await приостанавливает текущую coroutine и отдаёт 
 
 Реализуй load_profile: get_user и get_roles запускаются конкурентно; верни объединённый dict.
 
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
-## Cheat sheet
+Работай в main.py. Не меняй публичные имена и сигнатуры: скрытые тесты импортируют их напрямую. Проверь основной сценарий, граничные значения, повторные вызовы и распространение ошибок.
+## Шпаргалка
 
 Перед собеседованием запомни:
 
 - **Что это:** Await приостанавливает текущую coroutine и отдаёт loop управление; сам по себе он не создаёт thread и два последовательных await не становятся concurrent.
 - **Механизм:** Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.
 - **Ограничение:** Вызвать coroutine без `await`: работа не выполнится, возможен warning `coroutine was never awaited`.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

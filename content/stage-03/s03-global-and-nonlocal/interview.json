@@ -7,7 +7,7 @@
     "answer": [
       "rebinding",
       "enclosing state",
-      "why mutable global state is risky in backend services"
+      "почему изменяемое глобальное состояние опасно в backend-сервисах"
     ],
     "short_answer": "`global` and `nonlocal`: Это часть контракта Python function: важно различать definition time, call time, signature и разрешение имён.",
     "junior_answer": "`global` and `nonlocal` — тема, в которой я сначала фиксирую `rebinding`, затем объясняю `enclosing state` на коротком примере. Ключевой механизм: Отдели выполнение `def`, связывание arguments при вызове и разрешение names по LEGB. Главная практическая ошибка — Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.",
@@ -17,7 +17,7 @@
       "must_mention": [
         "rebinding",
         "enclosing state",
-        "why mutable global state is risky in backend services"
+        "почему изменяемое глобальное состояние опасно в backend-сервисах"
       ],
       "good_additions": [
         "короткий рабочий пример",

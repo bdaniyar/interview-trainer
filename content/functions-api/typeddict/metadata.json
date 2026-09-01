@@ -3,7 +3,7 @@
   "slug": "typeddict",
   "title": "Literal and TypedDict",
   "module_slug": "stage-06",
-  "module_title": "Stage 6 · Typing",
+  "module_title": "Этап 6 · Typing",
   "module_order": 6,
   "order": 69,
   "duration": 10,
@@ -14,7 +14,7 @@
     "typed dictionaries",
     "JSON-like structures."
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

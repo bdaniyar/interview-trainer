@@ -7,7 +7,7 @@
     "answer": [
       "Status codes, headers and cookies"
     ],
-    "short_answer": "Status codes, headers and cookies: Это часть FastAPI request lifecycle между routing, validation, dependencies, handler и response serialization.",
+    "short_answer": "Status codes, headers and cookies: Это часть FastAPI жизненный цикл запроса между routing, validation, dependencies, handler и сериализация ответа.",
     "junior_answer": "Status codes, headers and cookies — тема, в которой я сначала фиксирую `Status codes, headers and cookies`, затем объясняю `Status codes, headers and cookies` на коротком примере. Ключевой механизм: Проследи request через router, Pydantic validation, dependency graph, service и response model. Главная практическая ошибка — Открыть глобальный request resource или спрятать domain logic в framework hook.",
     "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Status codes, headers and cookies?",
     "follow_up_answer": "Открыть глобальный request resource или спрятать domain logic в framework hook.",

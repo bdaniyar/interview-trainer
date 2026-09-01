@@ -3,7 +3,7 @@
   "slug": "exception-chaining",
   "title": "Exception chaining",
   "module_slug": "stage-04",
-  "module_title": "Stage 4 · Iteration, Generators, Exceptions and Context Managers",
+  "module_title": "Этап 4 · Iteration, Generators, Exceptions and Context Managers",
   "module_order": 4,
   "order": 43,
   "duration": 10,
@@ -14,7 +14,7 @@
     "preserving root cause",
     "translating infrastructure errors into domain/API errors."
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

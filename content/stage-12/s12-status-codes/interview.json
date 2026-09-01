@@ -10,10 +10,10 @@
       "202",
       "204"
     ],
-    "short_answer": "HTTP status codes communicate the outcome category and specific result of processing a request.",
-    "junior_answer": "HTTP status codes communicate the outcome category and specific result of processing a request. Typical API codes include 200, 201 with Location where useful, 204 without body, 400 malformed request, 401 unauthenticated, 403 forbidden, 404, 409 conflict, 422 validation and 500 unexpected server error. Важное ограничение: Use one consistent error body with a machine-readable code; do not leak stack traces.",
+    "short_answer": "HTTP status code сообщает категорию и конкретный результат обработки request.",
+    "junior_answer": "HTTP status code сообщает категорию и конкретный результат обработки request. Частые API-коды: 200, 201, 204 без body, 400 для некорректного request, 401 без аутентификацию, 403 без права, 404, 409 conflict, 422 validation и 500 для неожиданной server error. Важное ограничение: Используй единый error body с machine-readable code и не раскрывай stack trace.",
     "follow_up_question": "Какая типичная ошибка связана с Status codes?",
-    "follow_up_answer": "Returning 200 for every error forces clients to reverse-engineer success from response text.",
+    "follow_up_answer": "Ответ 200 на любую ошибку заставляет client угадывать успех по тексту response.",
     "expected_answer": {
       "must_mention": [
         "200",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Returning 200 for every error forces clients to reverse-engineer success from response text.",
+        "Ответ 200 на любую ошибку заставляет client угадывать успех по тексту response.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Returning 200 for every error forces clients to reverse-engineer success from response text."
+        "Ответ 200 на любую ошибку заставляет client угадывать успех по тексту response."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Status codes?"
@@ -57,12 +57,12 @@
     "answer": [
       "304",
       "400",
-      "Returning 200 for every error forces clients to reverse-engineer success from response text."
+      "Ответ 200 на любую ошибку заставляет client угадывать успех по тексту response."
     ],
-    "short_answer": "Returning 200 for every error forces clients to reverse-engineer success from response text.",
-    "junior_answer": "Returning 200 for every error forces clients to reverse-engineer success from response text.",
+    "short_answer": "Ответ 200 на любую ошибку заставляет client угадывать успех по тексту response.",
+    "junior_answer": "Ответ 200 на любую ошибку заставляет client угадывать успех по тексту response.",
     "follow_up_question": "Что такое Status codes и как это работает?",
-    "follow_up_answer": "HTTP status codes communicate the outcome category and specific result of processing a request. Typical API codes include 200, 201 with Location where useful, 204 without body, 400 malformed request, 401 unauthenticated, 403 forbidden, 404, 409 conflict, 422 validation and 500 unexpected server error. Важное ограничение: Use one consistent error body with a machine-readable code; do not leak stack traces.",
+    "follow_up_answer": "HTTP status code сообщает категорию и конкретный результат обработки request. Частые API-коды: 200, 201, 204 без body, 400 для некорректного request, 401 без аутентификацию, 403 без права, 404, 409 conflict, 422 validation и 500 для неожиданной server error. Важное ограничение: Используй единый error body с machine-readable code и не раскрывай stack trace.",
     "expected_answer": {
       "must_mention": [
         "304",
@@ -72,10 +72,10 @@
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Returning 200 for every error forces clients to reverse-engineer success from response text."
+        "Ответ 200 на любую ошибку заставляет client угадывать успех по тексту response."
       ],
       "red_flags": [
-        "Returning 200 for every error forces clients to reverse-engineer success from response text."
+        "Ответ 200 на любую ошибку заставляет client угадывать успех по тексту response."
       ],
       "follow_up_questions": [
         "Что такое Status codes и как это работает?"

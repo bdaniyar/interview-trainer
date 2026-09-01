@@ -1,6 +1,6 @@
 [
   {
-    "question": "Что такое Relational model and tables и какой механизм здесь важно понимать Junior-разработчику?",
+    "question": "Что такое Relational model and таблицами и какой механизм здесь важно понимать Junior-разработчику?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -10,9 +10,9 @@
       "relation",
       "schema"
     ],
-    "short_answer": "Relational model and tables: Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.",
-    "junior_answer": "Relational model and tables — тема, в которой я сначала фиксирую `row`, затем объясняю `column` на коротком примере. Ключевой механизм: Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа. Главная практическая ошибка — Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
-    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Relational model and tables?",
+    "short_answer": "Relational model and таблицами: Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.",
+    "junior_answer": "Relational model and таблицами — тема, в которой я сначала фиксирую `row`, затем объясняю `column` на коротком примере. Ключевой механизм: Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа. Главная практическая ошибка — Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
+    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Relational model and таблицами?",
     "follow_up_answer": "Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
     "expected_answer": {
       "must_mention": [
@@ -33,11 +33,11 @@
         "Не определить cardinality результата и замаскировать неверный query через DISTINCT."
       ],
       "follow_up_questions": [
-        "Какое ограничение или типичная ошибка относится именно к теме Relational model and tables?"
+        "Какое ограничение или типичная ошибка относится именно к теме Relational model and таблицами?"
       ]
     },
     "follow_ups": [
-      "Какое ограничение или типичная ошибка относится именно к теме Relational model and tables?"
+      "Какое ограничение или типичная ошибка относится именно к теме Relational model and таблицами?"
     ],
     "tags": [
       "stage-10",
@@ -50,7 +50,7 @@
     ]
   },
   {
-    "question": "Какое ограничение или типичная ошибка относится именно к теме Relational model and tables?",
+    "question": "Какое ограничение или типичная ошибка относится именно к теме Relational model and таблицами?",
     "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -61,8 +61,8 @@
     ],
     "short_answer": "Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
     "junior_answer": "Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
-    "follow_up_question": "Что такое Relational model and tables и какой механизм здесь важно понимать Junior-разработчику?",
-    "follow_up_answer": "Relational model and tables — тема, в которой я сначала фиксирую `row`, затем объясняю `column` на коротком примере. Ключевой механизм: Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа. Главная практическая ошибка — Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
+    "follow_up_question": "Что такое Relational model and таблицами и какой механизм здесь важно понимать Junior-разработчику?",
+    "follow_up_answer": "Relational model and таблицами — тема, в которой я сначала фиксирую `row`, затем объясняю `column` на коротком примере. Ключевой механизм: Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа. Главная практическая ошибка — Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
     "expected_answer": {
       "must_mention": [
         "data types",
@@ -78,11 +78,11 @@
         "Не определить cardinality результата и замаскировать неверный query через DISTINCT."
       ],
       "follow_up_questions": [
-        "Что такое Relational model and tables и какой механизм здесь важно понимать Junior-разработчику?"
+        "Что такое Relational model and таблицами и какой механизм здесь важно понимать Junior-разработчику?"
       ]
     },
     "follow_ups": [
-      "Что такое Relational model and tables и какой механизм здесь важно понимать Junior-разработчику?"
+      "Что такое Relational model and таблицами и какой механизм здесь важно понимать Junior-разработчику?"
     ],
     "tags": [
       "stage-10",

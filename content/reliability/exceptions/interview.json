@@ -10,10 +10,10 @@
       "common built-ins",
       "why not catch bare `except`"
     ],
-    "short_answer": "Exceptions are objects in a hierarchy; application errors usually derive from `Exception`, while `BaseException` also includes process-control signals such as `KeyboardInterrupt`.",
-    "junior_answer": "Exceptions are objects in a hierarchy; application errors usually derive from `Exception`, while `BaseException` also includes process-control signals such as `KeyboardInterrupt`. Python searches matching except clauses from top to bottom and unwinds stack frames until a handler is found; otherwise the traceback reaches the caller. Важное ограничение: Catch the narrow type you can handle. A broad catch must normally log context and re-raise rather than report false success.",
+    "short_answer": "Exceptions — объекты иерархии; прикладные ошибки обычно наследуют `Exception`, а `BaseException` также включает сигналы управления процессом вроде `KeyboardInterrupt`.",
+    "junior_answer": "Exceptions — объекты иерархии; прикладные ошибки обычно наследуют `Exception`, а `BaseException` также включает сигналы управления процессом вроде `KeyboardInterrupt`. Python проверяет except-блоки сверху вниз и раскручивает stack frames до подходящего обработчика; без обработчика traceback возвращается вызывающему коду. Важное ограничение: Перехватывай узкий тип ошибки, которую можешь обработать. Широкий catch обычно должен добавить контекст и повторно поднять исключение.",
     "follow_up_question": "Какая типичная ошибка связана с Exception hierarchy?",
-    "follow_up_answer": "Bare `except:` can swallow cancellation or shutdown signals and hide programming bugs.",
+    "follow_up_answer": "Bare `except:` способен поглотить отмену, завершение процесса и программные ошибки.",
     "expected_answer": {
       "must_mention": [
         "`BaseException`",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Bare `except:` can swallow cancellation or shutdown signals and hide programming bugs.",
+        "Bare `except:` способен поглотить отмену, завершение процесса и программные ошибки.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Bare `except:` can swallow cancellation or shutdown signals and hide programming bugs."
+        "Bare `except:` способен поглотить отмену, завершение процесса и программные ошибки."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Exception hierarchy?"
@@ -55,25 +55,25 @@
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "one short code/result example",
-      "Bare `except:` can swallow cancellation or shutdown signals and hide programming bugs."
+      "один короткий пример кода с результатом",
+      "Bare `except:` способен поглотить отмену, завершение процесса и программные ошибки."
     ],
-    "short_answer": "Bare `except:` can swallow cancellation or shutdown signals and hide programming bugs.",
-    "junior_answer": "Bare `except:` can swallow cancellation or shutdown signals and hide programming bugs.",
+    "short_answer": "Bare `except:` способен поглотить отмену, завершение процесса и программные ошибки.",
+    "junior_answer": "Bare `except:` способен поглотить отмену, завершение процесса и программные ошибки.",
     "follow_up_question": "Что такое Exception hierarchy и как это работает?",
-    "follow_up_answer": "Exceptions are objects in a hierarchy; application errors usually derive from `Exception`, while `BaseException` also includes process-control signals such as `KeyboardInterrupt`. Python searches matching except clauses from top to bottom and unwinds stack frames until a handler is found; otherwise the traceback reaches the caller. Важное ограничение: Catch the narrow type you can handle. A broad catch must normally log context and re-raise rather than report false success.",
+    "follow_up_answer": "Exceptions — объекты иерархии; прикладные ошибки обычно наследуют `Exception`, а `BaseException` также включает сигналы управления процессом вроде `KeyboardInterrupt`. Python проверяет except-блоки сверху вниз и раскручивает stack frames до подходящего обработчика; без обработчика traceback возвращается вызывающему коду. Важное ограничение: Перехватывай узкий тип ошибки, которую можешь обработать. Широкий catch обычно должен добавить контекст и повторно поднять исключение.",
     "expected_answer": {
       "must_mention": [
-        "one short code/result example"
+        "один короткий пример кода с результатом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Bare `except:` can swallow cancellation or shutdown signals and hide programming bugs."
+        "Bare `except:` способен поглотить отмену, завершение процесса и программные ошибки."
       ],
       "red_flags": [
-        "Bare `except:` can swallow cancellation or shutdown signals and hide programming bugs."
+        "Bare `except:` способен поглотить отмену, завершение процесса и программные ошибки."
       ],
       "follow_up_questions": [
         "Что такое Exception hierarchy и как это работает?"

@@ -3,7 +3,7 @@
   "slug": "s26-authentication-and-permissions",
   "title": "Authentication and permissions",
   "module_slug": "stage-26",
-  "module_title": "Stage 26 · Django and Django REST Framework",
+  "module_title": "Этап 26 · Django and Django REST Framework",
   "module_order": 26,
   "order": 330,
   "duration": 10,
@@ -13,7 +13,7 @@
     "global vs per-view",
     "object-level permission."
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

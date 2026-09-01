@@ -11,7 +11,7 @@
       "Argon2/bcrypt concepts"
     ],
     "short_answer": "Password storage: Это security boundary: сервер проверяет утверждение и безопасно отказывает, не доверяя клиентскому UI.",
-    "junior_answer": "Password storage — тема, в которой я сначала фиксирую `password hashing`, затем объясняю `salt` на коротком примере. Ключевой механизм: Назови asset, threat, trust boundary, server-side verification и безопасный failure result. Главная практическая ошибка — Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.",
+    "junior_answer": "Password storage — тема, в которой я сначала фиксирую `password hashing`, затем объясняю `salt` на коротком примере. Ключевой механизм: Назови asset, threat, trust boundary, на стороне сервера verification и безопасный failure result. Главная практическая ошибка — Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.",
     "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Password storage?",
     "follow_up_answer": "Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.",
     "expected_answer": {
@@ -55,16 +55,16 @@
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "never reversible encryption/plain hash",
+      "не использовать обратимое шифрование или обычный быстрый хеш",
       "Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией."
     ],
     "short_answer": "Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.",
     "junior_answer": "Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.",
     "follow_up_question": "Что такое Password storage и какой механизм здесь важно понимать Junior-разработчику?",
-    "follow_up_answer": "Password storage — тема, в которой я сначала фиксирую `password hashing`, затем объясняю `salt` на коротком примере. Ключевой механизм: Назови asset, threat, trust boundary, server-side verification и безопасный failure result. Главная практическая ошибка — Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.",
+    "follow_up_answer": "Password storage — тема, в которой я сначала фиксирую `password hashing`, затем объясняю `salt` на коротком примере. Ключевой механизм: Назови asset, threat, trust boundary, на стороне сервера verification и безопасный failure result. Главная практическая ошибка — Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.",
     "expected_answer": {
       "must_mention": [
-        "never reversible encryption/plain hash"
+        "не использовать обратимое шифрование или обычный быстрый хеш"
       ],
       "good_additions": [
         "короткий пример именно этой темы"

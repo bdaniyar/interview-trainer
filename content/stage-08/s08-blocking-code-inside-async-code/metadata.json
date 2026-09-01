@@ -3,7 +3,7 @@
   "slug": "s08-blocking-code-inside-async-code",
   "title": "Blocking code inside async code",
   "module_slug": "stage-08",
-  "module_title": "Stage 8 · Async Python",
+  "module_title": "Этап 8 · Async Python",
   "module_order": 8,
   "order": 88,
   "duration": 12,
@@ -16,7 +16,7 @@
     "CPU-heavy loop",
     "alternatives: async client, `to_thread`, worker/process."
   ],
-  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": true,
   "has_solution": true,
   "priority": "P0",

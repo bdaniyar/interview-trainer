@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: high · 12 минут.** FastAPI явно встречался в 9/18, любой Python web framework — в 16/18.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-A practical FastAPI structure separates HTTP routers/schemas from use-case services and data-access details.
+Практичная структура FastAPI отделяет HTTP routers и schemas от use-case services и деталей data access.
 
 ### Как работает
 
-Routers adapt request/response, services hold business workflows/transaction decisions, repositories or query modules isolate persistence when they add value.
+Routers адаптируют request/response, services содержат business workflow и transaction decisions, repositories или query modules изолируют persistence, когда добавляют реальную ценность.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Avoid pass-through layers with no behavior; boundaries should correspond to change/test seams.
+Не создавай pass-through layers без поведения: boundary должна соответствовать изменению или test seam.
 
-## Mental model
+## Модель понимания
 
 Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -49,9 +49,9 @@ Path operation — внешний адаптер; бизнес-правила л
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Project structure: отдельный пример
 
@@ -65,88 +65,88 @@ assert example_s14_project_structure()
 
 Проследи request через router, validation, dependency, service и response model.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Putting every concern into routes makes transaction testing and framework-independent business tests difficult.
+Все concerns внутри routes усложняют transaction tests и проверку business logic без framework.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `routers` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `routers` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `schemas` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `schemas`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `routers` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `routers`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Project structure in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Project structure за 45–60 секунд и назови одно ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Project structure и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Project structure?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-A practical FastAPI structure separates HTTP routers/schemas from use-case services and data-access details.
+Практичная структура FastAPI отделяет HTTP routers и schemas от use-case services и деталей data access.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> A practical FastAPI structure separates HTTP routers/schemas from use-case services and data-access details. Routers adapt request/response, services hold business workflows/transaction decisions, repositories or query modules isolate persistence when they add value. Важное ограничение: Avoid pass-through layers with no behavior; boundaries should correspond to change/test seams.
+> Практичная структура FastAPI отделяет HTTP routers и schemas от use-case services и деталей data access. Routers адаптируют request/response, services содержат business workflow и transaction decisions, repositories или query modules изолируют persistence, когда добавляют реальную ценность. Важное ограничение: Не создавай pass-through layers без поведения: boundary должна соответствовать изменению или test seam.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Project structure?**
 
-Putting every concern into routes makes transaction testing and framework-independent business tests difficult.
+Все concerns внутри routes усложняют transaction tests и проверку business logic без framework.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - routers
 - schemas
 - services
 - repositories/data access
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Putting every concern into routes makes transaction testing and framework-independent business tests difficult.
+- Все concerns внутри routes усложняют transaction tests и проверку business logic без framework.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Project structure?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Project structure**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Project structure**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** A practical FastAPI structure separates HTTP routers/schemas from use-case services and data-access details.
+- **Что это:** Практичная структура FastAPI отделяет HTTP routers и schemas от use-case services и деталей data access.
 - **Механизм:** Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
-- **Ограничение:** Putting every concern into routes makes transaction testing and framework-independent business tests difficult.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Все concerns внутри routes усложняют transaction tests и проверку business logic без framework.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

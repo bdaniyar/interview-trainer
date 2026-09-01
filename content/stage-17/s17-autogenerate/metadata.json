@@ -3,7 +3,7 @@
   "slug": "s17-autogenerate",
   "title": "Autogenerate",
   "module_slug": "stage-17",
-  "module_title": "Stage 17 · Alembic",
+  "module_title": "Этап 17 · Alembic",
   "module_order": 17,
   "order": 234,
   "duration": 12,
@@ -14,7 +14,7 @@
     "manual review",
     "rename may look like drop/add."
   ],
-  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": true,
   "has_solution": true,
   "priority": "P0",

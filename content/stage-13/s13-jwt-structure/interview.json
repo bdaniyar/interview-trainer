@@ -10,10 +10,10 @@
       "signature",
       "encoded is not encrypted"
     ],
-    "short_answer": "JWT is a signed token format with header, payload claims and signature; it is normally encoded, not encrypted.",
-    "junior_answer": "JWT is a signed token format with header, payload claims and signature; it is normally encoded, not encrypted. The server verifies signature, allowed algorithm, issuer, audience and time claims before trusting identity/permissions. Важное ограничение: Revocation and refresh lifecycle still need design; a long-lived access JWT is not automatically secure or stateless in the operational sense.",
+    "short_answer": "JWT — формат подписанного token с header, payload claims и signature; обычно он закодирован, но не зашифрован.",
+    "junior_answer": "JWT — формат подписанного token с header, payload claims и signature; обычно он закодирован, но не зашифрован. Server проверяет signature, разрешённый algorithm, issuer, audience и time claims до доверия identity и permissions. Важное ограничение: Revocation и refresh lifecycle всё равно нужно проектировать; долгоживущий access JWT не становится безопасным автоматически.",
     "follow_up_question": "Какая типичная ошибка связана с JWT structure?",
-    "follow_up_answer": "Decoding payload without signature/claim verification lets an attacker supply arbitrary identity data.",
+    "follow_up_answer": "Декодирование payload без проверки signature и claims позволяет attacker подставить произвольную identity.",
     "expected_answer": {
       "must_mention": [
         "header",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Decoding payload without signature/claim verification lets an attacker supply arbitrary identity data.",
+        "Декодирование payload без проверки signature и claims позволяет attacker подставить произвольную identity.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Decoding payload without signature/claim verification lets an attacker supply arbitrary identity data."
+        "Декодирование payload без проверки signature и claims позволяет attacker подставить произвольную identity."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с JWT structure?"
@@ -57,12 +57,12 @@
     "answer": [
       "claims",
       "verification",
-      "Decoding payload without signature/claim verification lets an attacker supply arbitrary identity data."
+      "Декодирование payload без проверки signature и claims позволяет attacker подставить произвольную identity."
     ],
-    "short_answer": "Decoding payload without signature/claim verification lets an attacker supply arbitrary identity data.",
-    "junior_answer": "Decoding payload without signature/claim verification lets an attacker supply arbitrary identity data.",
+    "short_answer": "Декодирование payload без проверки signature и claims позволяет attacker подставить произвольную identity.",
+    "junior_answer": "Декодирование payload без проверки signature и claims позволяет attacker подставить произвольную identity.",
     "follow_up_question": "Что такое JWT structure и как это работает?",
-    "follow_up_answer": "JWT is a signed token format with header, payload claims and signature; it is normally encoded, not encrypted. The server verifies signature, allowed algorithm, issuer, audience and time claims before trusting identity/permissions. Важное ограничение: Revocation and refresh lifecycle still need design; a long-lived access JWT is not automatically secure or stateless in the operational sense.",
+    "follow_up_answer": "JWT — формат подписанного token с header, payload claims и signature; обычно он закодирован, но не зашифрован. Server проверяет signature, разрешённый algorithm, issuer, audience и time claims до доверия identity и permissions. Важное ограничение: Revocation и refresh lifecycle всё равно нужно проектировать; долгоживущий access JWT не становится безопасным автоматически.",
     "expected_answer": {
       "must_mention": [
         "claims",
@@ -72,10 +72,10 @@
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Decoding payload without signature/claim verification lets an attacker supply arbitrary identity data."
+        "Декодирование payload без проверки signature и claims позволяет attacker подставить произвольную identity."
       ],
       "red_flags": [
-        "Decoding payload without signature/claim verification lets an attacker supply arbitrary identity data."
+        "Декодирование payload без проверки signature и claims позволяет attacker подставить произвольную identity."
       ],
       "follow_up_questions": [
         "Что такое JWT structure и как это работает?"

@@ -26,16 +26,16 @@ def test_lesson_exposes_learn_flow_and_answer_levels(client):
     payload = client.get("/api/lessons/s02-dict").json()
     markdown = payload["markdown"]
     headings = [
-        "## Theory",
+        "## Теория",
         "### Что это",
         "### Как работает",
         "### Пример",
         "## Что нужно знать на Junior",
-        "## Common mistakes",
-        "## Practice",
-        "## Interview questions",
-        "## Good answers",
-        "## Expected answer rubric",
+        "## Типичные ошибки",
+        "## Практика",
+        "## Вопросы с собеседований",
+        "## Хорошие ответы",
+        "## Критерии хорошего ответа",
     ]
     positions = [markdown.index(heading) for heading in headings]
     assert positions == sorted(positions)

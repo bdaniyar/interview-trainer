@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: high · 12 минут.** PostgreSQL явно встречался в 13/18; indexes/transactions/concurrency критичны для backend.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-Normalization structures relations to reduce duplicated facts and update anomalies; Junior depth focuses on practical 1NF–3NF intuition.
+Normalization организует relations так, чтобы уменьшить дублирование фактов и update anomalies; для Junior важна практическая идея 1NF–3NF.
 
 ### Как работает
 
-Separate entities and connect them by keys so one fact has one authoritative storage location. Denormalization intentionally duplicates derived/read data for a measured need.
+Сущности разделяют и связывают keys, чтобы у факта был один source of truth. Denormalization намеренно дублирует данные ради измеренной задачи чтения.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Normalization is not maximum table count; boundaries follow data meaning and update dependencies.
+Normalization не означает максимальное число таблицами: границы определяются смыслом данных и зависимостями обновления.
 
-## Mental model
+## Модель понимания
 
 Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -40,17 +40,17 @@ Constraint защищает истину, transaction объединяет из�
 - duplication
 - update anomalies
 - 1NF/2NF/3NF at practical Junior depth
-- deliberate denormalization only with reason
+- осознанная денормализация допустима только при понятной причине
 
 ### Полезно
 
-- one short code/result example
+- один короткий пример кода с результатом
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Normalization: отдельный пример
 
@@ -62,88 +62,88 @@ SELECT 's11_normalization' AS example_key;
 
 Проверь invariant, конкурентный сценарий и фактический query plan вместо догадки.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Storing the same user email in many order rows makes updates inconsistent and obscures the source of truth.
+Копирование email пользователя во множество order rows создаёт противоречия при обновлении и размывает source of truth.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `duplication` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `duplication` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `update anomalies` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `update anomalies`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `duplication` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `duplication`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Normalization in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Normalization за 45–60 секунд и назови одно ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Normalization и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Normalization?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-Normalization structures relations to reduce duplicated facts and update anomalies; Junior depth focuses on practical 1NF–3NF intuition.
+Normalization организует relations так, чтобы уменьшить дублирование фактов и update anomalies; для Junior важна практическая идея 1NF–3NF.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> Normalization structures relations to reduce duplicated facts and update anomalies; Junior depth focuses on practical 1NF–3NF intuition. Separate entities and connect them by keys so one fact has one authoritative storage location. Denormalization intentionally duplicates derived/read data for a measured need. Важное ограничение: Normalization is not maximum table count; boundaries follow data meaning and update dependencies.
+> Normalization организует relations так, чтобы уменьшить дублирование фактов и update anomalies; для Junior важна практическая идея 1NF–3NF. Сущности разделяют и связывают keys, чтобы у факта был один source of truth. Denormalization намеренно дублирует данные ради измеренной задачи чтения. Важное ограничение: Normalization не означает максимальное число таблицами: границы определяются смыслом данных и зависимостями обновления.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Normalization?**
 
-Storing the same user email in many order rows makes updates inconsistent and obscures the source of truth.
+Копирование email пользователя во множество order rows создаёт противоречия при обновлении и размывает source of truth.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - duplication
 - update anomalies
 - 1NF/2NF/3NF at practical Junior depth
-- deliberate denormalization only with reason
+- осознанная денормализация допустима только при понятной причине
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Storing the same user email in many order rows makes updates inconsistent and obscures the source of truth.
+- Копирование email пользователя во множество order rows создаёт противоречия при обновлении и размывает source of truth.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Normalization?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Normalization**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Normalization**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** Normalization structures relations to reduce duplicated facts and update anomalies; Junior depth focuses on practical 1NF–3NF intuition.
+- **Что это:** Normalization организует relations так, чтобы уменьшить дублирование фактов и update anomalies; для Junior важна практическая идея 1NF–3NF.
 - **Механизм:** Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
-- **Ограничение:** Storing the same user email in many order rows makes updates inconsistent and obscures the source of truth.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Копирование email пользователя во множество order rows создаёт противоречия при обновлении и размывает source of truth.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

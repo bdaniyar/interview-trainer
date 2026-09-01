@@ -3,7 +3,7 @@
   "slug": "s08-sync-concurrency-and-parallelism",
   "title": "Sync, concurrency and parallelism",
   "module_slug": "stage-08",
-  "module_title": "Stage 8 · Async Python",
+  "module_title": "Этап 8 · Async Python",
   "module_order": 8,
   "order": 80,
   "duration": 12,
@@ -16,7 +16,7 @@
     "I/O-bound",
     "CPU-bound."
   ],
-  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": true,
   "has_solution": true,
   "priority": "P0",

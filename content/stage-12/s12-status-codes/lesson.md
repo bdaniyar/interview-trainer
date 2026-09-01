@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** HTTP/REST/API явно встречались в 13/18 — P0 внешний контракт backend.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-HTTP status codes communicate the outcome category and specific result of processing a request.
+HTTP status code сообщает категорию и конкретный результат обработки request.
 
 ### Как работает
 
-Typical API codes include 200, 201 with Location where useful, 204 without body, 400 malformed request, 401 unauthenticated, 403 forbidden, 404, 409 conflict, 422 validation and 500 unexpected server error.
+Частые API-коды: 200, 201, 204 без body, 400 для некорректного request, 401 без аутентификацию, 403 без права, 404, 409 conflict, 422 validation и 500 для неожиданной server error.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Use one consistent error body with a machine-readable code; do not leak stack traces.
+Используй единый error body с machine-readable code и не раскрывай stack trace.
 
-## Mental model
+## Модель понимания
 
 Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -49,9 +49,9 @@ Use one consistent error body with a machine-readable code; do not leak stack tr
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Status codes: отдельный пример
 
@@ -63,88 +63,88 @@ X-Request-ID: req-12-7
 
 Зафиксируй method/path/headers/body, status и поведение повторного request. Здесь route и request-id привязаны именно к теме «Status codes».
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Returning 200 for every error forces clients to reverse-engineer success from response text.
+Ответ 200 на любую ошибку заставляет client угадывать успех по тексту response.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `200` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `200` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `201` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `201`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `200` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `200`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Status codes in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Status codes за 45–60 секунд и назови одно ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Status codes и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Status codes?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-HTTP status codes communicate the outcome category and specific result of processing a request.
+HTTP status code сообщает категорию и конкретный результат обработки request.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> HTTP status codes communicate the outcome category and specific result of processing a request. Typical API codes include 200, 201 with Location where useful, 204 without body, 400 malformed request, 401 unauthenticated, 403 forbidden, 404, 409 conflict, 422 validation and 500 unexpected server error. Важное ограничение: Use one consistent error body with a machine-readable code; do not leak stack traces.
+> HTTP status code сообщает категорию и конкретный результат обработки request. Частые API-коды: 200, 201, 204 без body, 400 для некорректного request, 401 без аутентификацию, 403 без права, 404, 409 conflict, 422 validation и 500 для неожиданной server error. Важное ограничение: Используй единый error body с machine-readable code и не раскрывай stack trace.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Status codes?**
 
-Returning 200 for every error forces clients to reverse-engineer success from response text.
+Ответ 200 на любую ошибку заставляет client угадывать успех по тексту response.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - 200
 - 201
 - 202
 - 204
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Returning 200 for every error forces clients to reverse-engineer success from response text.
+- Ответ 200 на любую ошибку заставляет client угадывать успех по тексту response.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Status codes?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Status codes**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Status codes**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** HTTP status codes communicate the outcome category and specific result of processing a request.
+- **Что это:** HTTP status code сообщает категорию и конкретный результат обработки request.
 - **Механизм:** Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
-- **Ограничение:** Returning 200 for every error forces clients to reverse-engineer success from response text.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Ответ 200 на любую ошибку заставляет client угадывать успех по тексту response.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

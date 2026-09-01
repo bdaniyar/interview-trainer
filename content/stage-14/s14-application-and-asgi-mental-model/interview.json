@@ -1,23 +1,23 @@
 [
   {
-    "question": "Что такое Application and ASGI mental model и как это работает?",
+    "question": "Что такое Application and ASGI модель понимания и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
       "application object",
-      "request lifecycle",
+      "жизненный цикл запроса",
       "ASGI awareness",
       "no server internals deep dive"
     ],
-    "short_answer": "A FastAPI application is an ASGI callable that participates in an asynchronous request lifecycle.",
-    "junior_answer": "A FastAPI application is an ASGI callable that participates in an asynchronous request lifecycle. The ASGI server receives connection events, FastAPI matches a route, validates inputs, resolves dependencies, calls the endpoint and serializes a response. Важное ограничение: The endpoint should be an adapter; business rules and transaction boundaries remain testable outside framework request objects.",
-    "follow_up_question": "Какая типичная ошибка связана с Application and ASGI mental model?",
-    "follow_up_answer": "Putting DB session creation and domain logic directly in every route duplicates lifecycle and error handling.",
+    "short_answer": "FastAPI application — ASGI callable, участвующий в асинхронном жизненный цикл запроса.",
+    "junior_answer": "FastAPI application — ASGI callable, участвующий в асинхронном жизненный цикл запроса. ASGI server принимает события соединения, FastAPI выбирает route, валидирует input, разрешает dependencies, вызывает endpoint и сериализует response. Важное ограничение: Endpoint лучше оставлять adapter-ом, а business rules и transaction boundary тестировать без framework request objects.",
+    "follow_up_question": "Какая типичная ошибка связана с Application and ASGI модель понимания?",
+    "follow_up_answer": "Создание DB session и domain logic прямо в каждом route дублирует lifecycle и error handling.",
     "expected_answer": {
       "must_mention": [
         "application object",
-        "request lifecycle",
+        "жизненный цикл запроса",
         "ASGI awareness",
         "no server internals deep dive"
       ],
@@ -26,18 +26,18 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Putting DB session creation and domain logic directly in every route duplicates lifecycle and error handling.",
+        "Создание DB session и domain logic прямо в каждом route дублирует lifecycle и error handling.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Putting DB session creation and domain logic directly in every route duplicates lifecycle and error handling."
+        "Создание DB session и domain logic прямо в каждом route дублирует lifecycle и error handling."
       ],
       "follow_up_questions": [
-        "Какая типичная ошибка связана с Application and ASGI mental model?"
+        "Какая типичная ошибка связана с Application and ASGI модель понимания?"
       ]
     },
     "follow_ups": [
-      "Какая типичная ошибка связана с Application and ASGI mental model?"
+      "Какая типичная ошибка связана с Application and ASGI модель понимания?"
     ],
     "tags": [
       "stage-14",
@@ -50,37 +50,37 @@
     ]
   },
   {
-    "question": "Какая типичная ошибка связана с Application and ASGI mental model?",
+    "question": "Какая типичная ошибка связана с Application and ASGI модель понимания?",
     "level": "follow_up",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "one short code/result example",
-      "Putting DB session creation and domain logic directly in every route duplicates lifecycle and error handling."
+      "один короткий пример кода с результатом",
+      "Создание DB session и domain logic прямо в каждом route дублирует lifecycle и error handling."
     ],
-    "short_answer": "Putting DB session creation and domain logic directly in every route duplicates lifecycle and error handling.",
-    "junior_answer": "Putting DB session creation and domain logic directly in every route duplicates lifecycle and error handling.",
-    "follow_up_question": "Что такое Application and ASGI mental model и как это работает?",
-    "follow_up_answer": "A FastAPI application is an ASGI callable that participates in an asynchronous request lifecycle. The ASGI server receives connection events, FastAPI matches a route, validates inputs, resolves dependencies, calls the endpoint and serializes a response. Важное ограничение: The endpoint should be an adapter; business rules and transaction boundaries remain testable outside framework request objects.",
+    "short_answer": "Создание DB session и domain logic прямо в каждом route дублирует lifecycle и error handling.",
+    "junior_answer": "Создание DB session и domain logic прямо в каждом route дублирует lifecycle и error handling.",
+    "follow_up_question": "Что такое Application and ASGI модель понимания и как это работает?",
+    "follow_up_answer": "FastAPI application — ASGI callable, участвующий в асинхронном жизненный цикл запроса. ASGI server принимает события соединения, FastAPI выбирает route, валидирует input, разрешает dependencies, вызывает endpoint и сериализует response. Важное ограничение: Endpoint лучше оставлять adapter-ом, а business rules и transaction boundary тестировать без framework request objects.",
     "expected_answer": {
       "must_mention": [
-        "one short code/result example"
+        "один короткий пример кода с результатом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Putting DB session creation and domain logic directly in every route duplicates lifecycle and error handling."
+        "Создание DB session и domain logic прямо в каждом route дублирует lifecycle и error handling."
       ],
       "red_flags": [
-        "Putting DB session creation and domain logic directly in every route duplicates lifecycle and error handling."
+        "Создание DB session и domain logic прямо в каждом route дублирует lifecycle и error handling."
       ],
       "follow_up_questions": [
-        "Что такое Application and ASGI mental model и как это работает?"
+        "Что такое Application and ASGI модель понимания и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что такое Application and ASGI mental model и как это работает?"
+      "Что такое Application and ASGI модель понимания и как это работает?"
     ],
     "tags": [
       "stage-14",

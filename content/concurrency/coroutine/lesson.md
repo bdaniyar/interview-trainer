@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** Async явно встречался в 5/18 и является P0/P1 для FastAPI async-проектов кандидата.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-A coroutine function is declared with `async def`; calling it creates a coroutine object rather than executing the body to completion.
+Coroutine function объявляется через `async def`; вызов создаёт coroutine object, а не выполняет тело до конца.
 
 ### Как работает
 
-The object runs when awaited or scheduled as a Task. Dropping it without either usually produces a 'coroutine was never awaited' warning.
+Объект запускается через `await` или scheduling как Task. Потерянная coroutine обычно приводит к warning `coroutine was never awaited`.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-A coroutine object is single-use and cannot be awaited again after completion.
+Coroutine object одноразовый: после завершения его нельзя await повторно.
 
-## Mental model
+## Модель понимания
 
 Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -40,17 +40,17 @@ Event loop планирует готовые tasks; await не создаёт о
 - `async def`
 - calling async function
 - coroutine object
-- execution begins when awaited/scheduled
+- выполнение начинается после ожидания через await или планирования
 
 ### Полезно
 
-- one short code/result example
+- один короткий пример кода с результатом
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Coroutine function and coroutine object: отдельный пример
 
@@ -67,23 +67,23 @@ print(asyncio.run(coroutine))
 
 Вызов `async def` создаёт coroutine object; event loop выполняет его до результата.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Returning a coroutine object from code that promised a final value leaks the async boundary to the wrong caller.
+Возврат coroutine object из кода, обещавшего готовое значение, переносит async boundary не тому caller.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the ``async def`` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере ``async def`` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `calling async function` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `calling async function`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates ``async def`` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие ``async def``, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Coroutine function and coroutine object in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Coroutine function and coroutine object за 45–60 секунд и назови одно ограничение.
 
-## Code prediction
+## Предсказание результата кода
 
 ### Вызов async def
 
@@ -99,7 +99,7 @@ value.close()
 
 <details><summary>Показать ответ</summary>
 
-Expected:
+Ожидаемый результат:
 
 ```text
 coroutine
@@ -107,59 +107,59 @@ coroutine
 
 Вызов async def создаёт coroutine object; выполнение требует await/event loop.
 
-Misconception: `coroutine-object`.
+Типичная ошибка мышления: `coroutine-object`.
 
 </details>
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Coroutine function and coroutine object и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Coroutine function and coroutine object?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-A coroutine function is declared with `async def`; calling it creates a coroutine object rather than executing the body to completion.
+Coroutine function объявляется через `async def`; вызов создаёт coroutine object, а не выполняет тело до конца.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> A coroutine function is declared with `async def`; calling it creates a coroutine object rather than executing the body to completion. The object runs when awaited or scheduled as a Task. Dropping it without either usually produces a 'coroutine was never awaited' warning. Важное ограничение: A coroutine object is single-use and cannot be awaited again after completion.
+> Coroutine function объявляется через `async def`; вызов создаёт coroutine object, а не выполняет тело до конца. Объект запускается через `await` или scheduling как Task. Потерянная coroutine обычно приводит к warning `coroutine was never awaited`. Важное ограничение: Coroutine object одноразовый: после завершения его нельзя await повторно.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Coroutine function and coroutine object?**
 
-Returning a coroutine object from code that promised a final value leaks the async boundary to the wrong caller.
+Возврат coroutine object из кода, обещавшего готовое значение, переносит async boundary не тому caller.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - `async def`
 - calling async function
 - coroutine object
-- execution begins when awaited/scheduled
+- выполнение начинается после ожидания через await или планирования
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Returning a coroutine object from code that promised a final value leaks the async boundary to the wrong caller.
+- Возврат coroutine object из кода, обещавшего готовое значение, переносит async boundary не тому caller.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Coroutine function and coroutine object?
 
@@ -169,17 +169,17 @@ Returning a coroutine object from code that promised a final value leaks the asy
 
 Реализуй async fetch_name(client,user_id): await client.get_user и верни name.
 
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
-## Cheat sheet
+Работай в main.py. Не меняй публичные имена и сигнатуры: скрытые тесты импортируют их напрямую. Проверь основной сценарий, граничные значения, повторные вызовы и распространение ошибок.
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** A coroutine function is declared with `async def`; calling it creates a coroutine object rather than executing the body to completion.
+- **Что это:** Coroutine function объявляется через `async def`; вызов создаёт coroutine object, а не выполняет тело до конца.
 - **Механизм:** Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.
-- **Ограничение:** Returning a coroutine object from code that promised a final value leaks the async boundary to the wrong caller.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Возврат coroutine object из кода, обещавшего готовое значение, переносит async boundary не тому caller.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

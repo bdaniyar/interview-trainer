@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** ORM/SQLAlchemy явно встречались в 4/18, но Session/transaction знание фундаментально для FastAPI backend.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,49 +12,49 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-N+1 is one query for parent rows followed by one relationship query per parent.
+N+1 — один query для parent rows и затем отдельный relationship query для каждого parent.
 
 ### Как работает
 
-Lazy loading triggers the repeated queries; detect it in SQL logs or a query-count test and choose `selectinload`, `joinedload` or explicit projection based on cardinality.
+Lazy loading запускает повторные queries; проблему находят по SQL logs или query-count test и выбирают `selectinload`, `joinedload` либо explicit projection по cardinality.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Eager-load only data the use case needs; a giant joined graph can create row multiplication and memory cost.
+Eager load должен загружать только нужные use case данные; огромный joined graph размножает rows и расходует память.
 
 ### Где используется в backend
 
-Listing users with roles is a common N+1 path when serialization touches each lazy relationship.
+Список users с roles часто создаёт N+1, когда serialization обращается к каждой lazy relationship.
 
-## Mental model
+## Модель понимания
 
 Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
-- one parent query plus per-row child query
+- один запрос родительских строк и отдельный дочерний запрос для каждой строки
 - detection
 - logs/query count
 - eager loading
 
 ### Полезно
 
-- one short code/result example
+- один короткий пример кода с результатом
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### N+1: отдельный пример
 
@@ -67,81 +67,81 @@ Listing users with roles is a common N+1 path when serialization touches each la
 
 Это отдельный debugging example для данного subtopic, а не общий пример stage.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Adding a cache does not fix an ORM query shape that issues hundreds of avoidable round trips.
+Cache не исправляет ORM query shape, который делает сотни лишних round trips.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `one parent query plus per-row child query` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `one parent query plus per-row child query` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `detection` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `detection`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `one parent query plus per-row child query` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `one parent query plus per-row child query`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain N+1 in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни N+1 за 45–60 секунд и назови одно ограничение.
 
-## Debugging practice
+## Практика: Отладка
 
 ### N+1
 
 **Сценарий:** Список 100 users выполняет ещё 100 SELECT roles.
 
-**Rubric:** Посчитать queries и использовать selectinload/joinedload по cardinality; integration test с query counter.
+**Критерии ответа:** Посчитать queries и использовать selectinload/joinedload по cardinality; integration test с query counter.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое N+1 и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с N+1?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-N+1 is one query for parent rows followed by one relationship query per parent.
+N+1 — один query для parent rows и затем отдельный relationship query для каждого parent.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> N+1 is one query for parent rows followed by one relationship query per parent. Lazy loading triggers the repeated queries; detect it in SQL logs or a query-count test and choose `selectinload`, `joinedload` or explicit projection based on cardinality. Важное ограничение: Eager-load only data the use case needs; a giant joined graph can create row multiplication and memory cost.
+> N+1 — один query для parent rows и затем отдельный relationship query для каждого parent. Lazy loading запускает повторные queries; проблему находят по SQL logs или query-count test и выбирают `selectinload`, `joinedload` либо explicit projection по cardinality. Важное ограничение: Eager load должен загружать только нужные use case данные; огромный joined graph размножает rows и расходует память.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с N+1?**
 
-Adding a cache does not fix an ORM query shape that issues hundreds of avoidable round trips.
+Cache не исправляет ORM query shape, который делает сотни лишних round trips.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
-- one parent query plus per-row child query
+- один запрос родительских строк и отдельный дочерний запрос для каждой строки
 - detection
 - logs/query count
 - eager loading
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Adding a cache does not fix an ORM query shape that issues hundreds of avoidable round trips.
+- Cache не исправляет ORM query shape, который делает сотни лишних round trips.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с N+1?
 
@@ -151,17 +151,17 @@ Adding a cache does not fix an ORM query shape that issues hundreds of avoidable
 
 users_with_roles(User): select + selectinload(User.roles), order id.
 
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
-## Cheat sheet
+Работай в main.py. Не меняй публичные имена и сигнатуры: скрытые тесты импортируют их напрямую. Проверь основной сценарий, граничные значения, повторные вызовы и распространение ошибок.
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** N+1 is one query for parent rows followed by one relationship query per parent.
+- **Что это:** N+1 — один query для parent rows и затем отдельный relationship query для каждого parent.
 - **Механизм:** Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
-- **Ограничение:** Adding a cache does not fix an ORM query shape that issues hundreds of avoidable round trips.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Cache не исправляет ORM query shape, который делает сотни лишних round trips.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

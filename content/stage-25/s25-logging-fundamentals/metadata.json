@@ -3,7 +3,7 @@
   "slug": "s25-logging-fundamentals",
   "title": "Logging fundamentals",
   "module_slug": "stage-25",
-  "module_title": "Stage 25 · Logging and Observability",
+  "module_title": "Этап 25 · Logging and Observability",
   "module_order": 25,
   "order": 315,
   "duration": 10,
@@ -14,7 +14,7 @@
     "no print-debugging as final solution",
     "no secrets/PII."
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

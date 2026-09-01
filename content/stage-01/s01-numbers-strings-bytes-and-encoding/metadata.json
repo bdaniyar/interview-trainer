@@ -3,7 +3,7 @@
   "slug": "s01-numbers-strings-bytes-and-encoding",
   "title": "Numbers, strings, bytes and encoding",
   "module_slug": "stage-01",
-  "module_title": "Stage 1 · Python Object Model and Core Types",
+  "module_title": "Этап 1 · Python Object Model and Core Types",
   "module_order": 1,
   "order": 11,
   "duration": 10,
@@ -18,7 +18,7 @@
     "JSON/text boundaries",
     "money should not use binary float blindly."
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

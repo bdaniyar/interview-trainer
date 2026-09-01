@@ -14,6 +14,11 @@ import re
 from collections import defaultdict
 from pathlib import Path
 
+try:
+    from .learning_materials import russianize_prose
+except ImportError:  # direct `python tools/personalize_examples.py` execution
+    from learning_materials import russianize_prose
+
 
 ROOT = Path(__file__).resolve().parents[1]
 CONTENT = ROOT / "content"
@@ -22,7 +27,7 @@ CONTENT = ROOT / "content"
 # adjacent lessons must demonstrate different mechanics rather than share a stage
 # example with renamed variables.
 CURATED: dict[str, tuple[str, str, str]] = {
-    "0.1": ("text", "Question: Почему `is` и `==` дают разные ответы?\nAnswer plan: definition → mechanism → example → limitation\nFollow-up: что изменит custom `__eq__`?", "Диагностика проверяет не угадывание термина, а структуру объяснения и готовность к follow-up."),
+    "0.1": ("text", "Вопрос: почему `is` и `==` дают разные ответы?\nПлан ответа: определение → механизм → пример → ограничение\nДополнительный вопрос: что изменит собственный `__eq__`?", "Диагностика проверяет не угадывание термина, а структуру объяснения и готовность к дополнительному вопросу."),
     "0.2": ("text", "Определение: Session — unit of work и identity map.\nМеханизм: владеет transaction state.\nПример: одна Session на request/use case.\nОграничение: после failed flush нужен rollback.", "Такой ответ коротко покрывает определение, механизм, практику и failure mode."),
     "0.3": ("text", "Проблема: live-события между API-инстансами.\nМоё решение: WebSocket + Redis Pub/Sub.\nГраница: PostgreSQL хранит durable history.\nПроверка: reconnect читает пропущенные события из БД.", "Защита проекта связывает конкретное решение с ограничением и способом проверки."),
     "1.1": ("python", "message = \"Learn with Pythoria\"\nalias = message\n\nprint(type(message).__name__)\nprint(message is alias)\n\nalias = alias.upper()\nprint(message, alias)", "Имена `message` и `alias` сначала связаны с одним `str`; новый assignment переводит только `alias` на новый объект."),
@@ -288,17 +293,17 @@ def lesson_example(lesson: dict, directory: Path, practices: dict[str, list[tupl
 def render_section(lesson: dict, example: tuple[str, str, str]) -> str:
     language, source, explanation = example
     return (
-        "## Code examples\n\n"
+        "## Примеры кода\n\n"
         f"### {lesson['title']}: отдельный пример\n\n"
         f"```{language}\n{source.rstrip()}\n```\n\n"
-        f"{explanation.rstrip()}\n"
+        f"{russianize_prose(explanation.rstrip())}\n"
     )
 
 
 def replace_section(markdown: str, section: str) -> str:
-    pattern = r"^## Code examples\n.*?(?=^## |\Z)"
+    pattern = r"^## Примеры кода\n.*?(?=^## |\Z)"
     if not re.search(pattern, markdown, re.MULTILINE | re.DOTALL):
-        raise ValueError("lesson has no Code examples section")
+        raise ValueError("lesson has no Примеры кода section")
     return re.sub(pattern, section.rstrip() + "\n\n", markdown, count=1, flags=re.MULTILINE | re.DOTALL)
 
 

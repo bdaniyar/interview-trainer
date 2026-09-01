@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** SQL/relational DB явно встречались в 15/18 — один из главных P0-разделов.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-`WHERE` filters source rows using boolean predicates before grouping and aggregation.
+`WHERE` фильтрует исходные rows по boolean predicates до grouping и aggregation.
 
 ### Как работает
 
-AND binds tighter than OR, so parentheses make intended logic explicit. NULL comparisons yield UNKNOWN and require `IS NULL`/`IS NOT NULL`.
+AND имеет более высокий приоритет, чем OR, поэтому parentheses фиксируют намерение. Сравнения с NULL дают UNKNOWN и требуют `IS NULL` или `IS NOT NULL`.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Functions applied to an indexed column can prevent a simple index access path; confirm with EXPLAIN rather than guessing.
+Функция вокруг indexed column может помешать простому index access path; решение проверяют через EXPLAIN.
 
-## Mental model
+## Модель понимания
 
 Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -48,9 +48,9 @@ Functions applied to an indexed column can prevent a simple index access path; c
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### WHERE and boolean logic: отдельный пример
 
@@ -63,23 +63,23 @@ WHERE active IS TRUE
 
 WHERE оставляет только строки, для которых всё boolean expression истинно.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-`status = 'paid' OR status = 'new' AND active` usually means something different from the visually assumed grouping.
+`status = 'paid' OR status = 'new' AND active` часто означает не ту группировку, которую читатель предполагает визуально.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `comparisons` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `comparisons` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `AND/OR/NOT` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `AND/OR/NOT`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `comparisons` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `comparisons`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain WHERE and boolean logic in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни WHERE and boolean logic за 45–60 секунд и назови одно ограничение.
 
-## SQL practice
+## Практика SQL
 
 ### Email domain
 
@@ -113,7 +113,7 @@ CREATE TABLE order_items (
 );
 ```
 
-Seed:
+Начальные данные:
 
 ```sql
 INSERT INTO users VALUES
@@ -132,9 +132,9 @@ INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,1
 
 **Вопрос:** Найди email, заканчивающиеся на @example.com.
 
-Expected columns: email. Comparison: unordered.
+Ожидаемые столбцы: email. Сравнение: без учёта порядка строк.
 
-SQL runner пока не подключён: выполни запрос в локальном PostgreSQL и сверь result с rubric.
+Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
 
 ### Пользователи после даты
 
@@ -168,7 +168,7 @@ CREATE TABLE order_items (
 );
 ```
 
-Seed:
+Начальные данные:
 
 ```sql
 INSERT INTO users VALUES
@@ -187,76 +187,76 @@ INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,1
 
 **Вопрос:** Выбери id пользователей, созданных не раньше 2026-01-03.
 
-Expected columns: id. Comparison: unordered.
+Ожидаемые столбцы: id. Сравнение: без учёта порядка строк.
 
-SQL runner пока не подключён: выполни запрос в локальном PostgreSQL и сверь result с rubric.
+Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое WHERE and boolean logic и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с WHERE and boolean logic?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-`WHERE` filters source rows using boolean predicates before grouping and aggregation.
+`WHERE` фильтрует исходные rows по boolean predicates до grouping и aggregation.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> `WHERE` filters source rows using boolean predicates before grouping and aggregation. AND binds tighter than OR, so parentheses make intended logic explicit. NULL comparisons yield UNKNOWN and require `IS NULL`/`IS NOT NULL`. Важное ограничение: Functions applied to an indexed column can prevent a simple index access path; confirm with EXPLAIN rather than guessing.
+> `WHERE` фильтрует исходные rows по boolean predicates до grouping и aggregation. AND имеет более высокий приоритет, чем OR, поэтому parentheses фиксируют намерение. Сравнения с NULL дают UNKNOWN и требуют `IS NULL` или `IS NOT NULL`. Важное ограничение: Функция вокруг indexed column может помешать простому index access path; решение проверяют через EXPLAIN.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с WHERE and boolean logic?**
 
-`status = 'paid' OR status = 'new' AND active` usually means something different from the visually assumed grouping.
+`status = 'paid' OR status = 'new' AND active` часто означает не ту группировку, которую читатель предполагает визуально.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - comparisons
 - AND/OR/NOT
 - parentheses
 - ranges
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- `status = 'paid' OR status = 'new' AND active` usually means something different from the visually assumed grouping.
+- `status = 'paid' OR status = 'new' AND active` часто означает не ту группировку, которую читатель предполагает визуально.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с WHERE and boolean logic?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **WHERE and boolean logic**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **WHERE and boolean logic**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** `WHERE` filters source rows using boolean predicates before grouping and aggregation.
+- **Что это:** `WHERE` фильтрует исходные rows по boolean predicates до grouping и aggregation.
 - **Механизм:** Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
-- **Ограничение:** `status = 'paid' OR status = 'new' AND active` usually means something different from the visually assumed grouping.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** `status = 'paid' OR status = 'new' AND active` часто означает не ту группировку, которую читатель предполагает визуально.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

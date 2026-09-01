@@ -3,7 +3,7 @@
   "slug": "s32-websockets-plus-redis-pub-sub",
   "title": "WebSockets + Redis Pub/Sub",
   "module_slug": "stage-32",
-  "module_title": "Stage 32 · Personalized Resume Defense",
+  "module_title": "Этап 32 · Personalized Resume Defense",
   "module_order": 32,
   "order": 389,
   "duration": 12,
@@ -14,7 +14,7 @@
     "Pub/Sub distributes live events between instances",
     "API instances fan out to local clients."
   ],
-  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P0",

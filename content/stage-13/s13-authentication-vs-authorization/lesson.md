@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** Auth/security защищают заявленные JWT/OAuth2/PKCE и API permissions.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,42 +12,42 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-Authentication establishes who the requester is; authorization decides whether that identity may perform an action on a resource.
+Аутентификацию устанавливает личность requester, authorization решает, может ли эта identity выполнить действие над конкретным resource.
 
 ### Как работает
 
-Credentials/token/session are verified first, then policy checks roles, permissions, ownership or attributes for the concrete operation.
+Сначала проверяется credential, token или session, затем policy проверяет role, permission, ownership или attributes для операции.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-A logged-in user is not automatically allowed to read another user's object.
+Авторизованный вход в систему не даёт автоматического права читать чужой объект.
 
-## Mental model
+## Модель понимания
 
 Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
-- Authentication vs authorization
+- Аутентификацию vs authorization
 
 ### Полезно
 
-- one short code/result example
+- один короткий пример кода с результатом
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Authentication vs authorization: отдельный пример
 
@@ -59,87 +59,87 @@ def example_s13_authentication_vs_authorization() -> tuple[str, ...]:
 assert example_s13_authentication_vs_authorization()
 ```
 
-Назови threat, trust boundary, server-side check и безопасный отказ.
+Назови threat, trust boundary, на стороне сервера check и безопасный отказ.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Hiding an admin button in the frontend is neither authentication nor authorization; the API must enforce the rule.
+Скрытая admin-кнопка во frontend не является ни аутентификацию, ни authorization: правило обязан проверять API.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `Authentication vs authorization` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `Authentication vs authorization` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `Authentication vs authorization` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `Authentication vs authorization`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `Authentication vs authorization` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `Authentication vs authorization`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Authentication vs authorization in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Аутентификацию vs authorization за 45–60 секунд и назови одно ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
-Что такое Authentication vs authorization и как это работает?
+Что такое Аутентификацию vs authorization и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
-Какая типичная ошибка связана с Authentication vs authorization?
+Какая типичная ошибка связана с Аутентификацию vs authorization?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-Authentication establishes who the requester is; authorization decides whether that identity may perform an action on a resource.
+Аутентификацию устанавливает личность requester, authorization решает, может ли эта identity выполнить действие над конкретным resource.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> Authentication establishes who the requester is; authorization decides whether that identity may perform an action on a resource. Credentials/token/session are verified first, then policy checks roles, permissions, ownership or attributes for the concrete operation. Важное ограничение: A logged-in user is not automatically allowed to read another user's object.
+> Аутентификацию устанавливает личность requester, authorization решает, может ли эта identity выполнить действие над конкретным resource. Сначала проверяется credential, token или session, затем policy проверяет role, permission, ownership или attributes для операции. Важное ограничение: Авторизованный вход в систему не даёт автоматического права читать чужой объект.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
-**Какая типичная ошибка связана с Authentication vs authorization?**
+**Какая типичная ошибка связана с Аутентификацию vs authorization?**
 
-Hiding an admin button in the frontend is neither authentication nor authorization; the API must enforce the rule.
+Скрытая admin-кнопка во frontend не является ни аутентификацию, ни authorization: правило обязан проверять API.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
-- Authentication vs authorization
+- Аутентификацию vs authorization
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Hiding an admin button in the frontend is neither authentication nor authorization; the API must enforce the rule.
+- Скрытая admin-кнопка во frontend не является ни аутентификацию, ни authorization: правило обязан проверять API.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
-- Какая типичная ошибка связана с Authentication vs authorization?
+- Какая типичная ошибка связана с Аутентификацию vs authorization?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Authentication vs authorization**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Authentication vs authorization**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** Authentication establishes who the requester is; authorization decides whether that identity may perform an action on a resource.
+- **Что это:** Аутентификацию устанавливает личность requester, authorization решает, может ли эта identity выполнить действие над конкретным resource.
 - **Механизм:** Всегда определяй threat, trust boundary, проверяемое утверждение и последствия компрометации.
-- **Ограничение:** Hiding an admin button in the frontend is neither authentication nor authorization; the API must enforce the rule.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Скрытая admin-кнопка во frontend не является ни аутентификацию, ни authorization: правило обязан проверять API.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

@@ -3,7 +3,7 @@
   "slug": "s10-group-by",
   "title": "GROUP BY",
   "module_slug": "stage-10",
-  "module_title": "Stage 10 · SQL Fundamentals and Practice",
+  "module_title": "Этап 10 · SQL Fundamentals and Practice",
   "module_order": 10,
   "order": 104,
   "duration": 12,
@@ -14,7 +14,7 @@
     "selected non-aggregate columns",
     "common errors."
   ],
-  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P0",

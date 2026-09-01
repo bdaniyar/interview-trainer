@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: high · 12 минут.** HTTP/REST/API явно встречались в 13/18 — P0 внешний контракт backend.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-A cookie is a name/value set by response header and automatically returned by a browser according to domain, path, expiry and security attributes.
+Cookie — пара name/value, которую response устанавливает header-ом, а browser автоматически возвращает с учётом domain, path, срока и security attributes.
 
 ### Как работает
 
-HttpOnly blocks JavaScript reads, Secure restricts HTTPS transport and SameSite limits cross-site sending; none replaces server-side authorization.
+HttpOnly запрещает чтение из JavaScript, Secure ограничивает передачу HTTPS, SameSite ограничивает cross-site отправку; ни один атрибут не заменяет на стороне сервера authorization.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Cookie authentication needs CSRF considerations because the browser attaches cookies automatically.
+Cookie аутентификацию требует защиты от CSRF, потому что browser прикрепляет cookies автоматически.
 
-## Mental model
+## Модель понимания
 
 Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -49,9 +49,9 @@ Cookie authentication needs CSRF considerations because the browser attaches coo
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Cookies: отдельный пример
 
@@ -63,88 +63,88 @@ X-Request-ID: req-12-11
 
 Зафиксируй method/path/headers/body, status и поведение повторного request. Здесь route и request-id привязаны именно к теме «Cookies».
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Putting a session cookie without HttpOnly/Secure/SameSite defaults unnecessarily expands the attack surface.
+Session cookie без HttpOnly, Secure и подходящего SameSite неоправданно расширяет поверхность атаки.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `request/response headers` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `request/response headers` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `domain/path` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `domain/path`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `request/response headers` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `request/response headers`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Cookies in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Cookies за 45–60 секунд и назови одно ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Cookies и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Cookies?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-A cookie is a name/value set by response header and automatically returned by a browser according to domain, path, expiry and security attributes.
+Cookie — пара name/value, которую response устанавливает header-ом, а browser автоматически возвращает с учётом domain, path, срока и security attributes.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> A cookie is a name/value set by response header and automatically returned by a browser according to domain, path, expiry and security attributes. HttpOnly blocks JavaScript reads, Secure restricts HTTPS transport and SameSite limits cross-site sending; none replaces server-side authorization. Важное ограничение: Cookie authentication needs CSRF considerations because the browser attaches cookies automatically.
+> Cookie — пара name/value, которую response устанавливает header-ом, а browser автоматически возвращает с учётом domain, path, срока и security attributes. HttpOnly запрещает чтение из JavaScript, Secure ограничивает передачу HTTPS, SameSite ограничивает cross-site отправку; ни один атрибут не заменяет на стороне сервера authorization. Важное ограничение: Cookie аутентификацию требует защиты от CSRF, потому что browser прикрепляет cookies автоматически.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Cookies?**
 
-Putting a session cookie without HttpOnly/Secure/SameSite defaults unnecessarily expands the attack surface.
+Session cookie без HttpOnly, Secure и подходящего SameSite неоправданно расширяет поверхность атаки.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - request/response headers
 - domain/path
 - expiration
 - HttpOnly
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Putting a session cookie without HttpOnly/Secure/SameSite defaults unnecessarily expands the attack surface.
+- Session cookie без HttpOnly, Secure и подходящего SameSite неоправданно расширяет поверхность атаки.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Cookies?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Cookies**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Cookies**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** A cookie is a name/value set by response header and automatically returned by a browser according to domain, path, expiry and security attributes.
+- **Что это:** Cookie — пара name/value, которую response устанавливает header-ом, а browser автоматически возвращает с учётом domain, path, срока и security attributes.
 - **Механизм:** Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
-- **Ограничение:** Putting a session cookie without HttpOnly/Secure/SameSite defaults unnecessarily expands the attack surface.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Session cookie без HttpOnly, Secure и подходящего SameSite неоправданно расширяет поверхность атаки.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

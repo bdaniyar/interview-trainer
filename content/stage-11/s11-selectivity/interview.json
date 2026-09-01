@@ -6,7 +6,7 @@
     "interview_probability": "high",
     "answer": [
       "low-cardinality fields",
-      "why planner may prefer sequential scan"
+      "почему планировщик может предпочесть последовательное сканирование"
     ],
     "short_answer": "Selectivity: Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.",
     "junior_answer": "Selectivity — тема, в которой я сначала фиксирую `low-cardinality fields`, затем объясняю `why planner may prefer sequential scan` на коротком примере. Ключевой механизм: Назови invariant и concurrent scenario, затем проверь constraint, transaction boundary и фактический query plan. Главная практическая ошибка — Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
@@ -15,7 +15,7 @@
     "expected_answer": {
       "must_mention": [
         "low-cardinality fields",
-        "why planner may prefer sequential scan"
+        "почему планировщик может предпочесть последовательное сканирование"
       ],
       "good_additions": [
         "короткий рабочий пример",

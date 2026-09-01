@@ -8,29 +8,29 @@
       "duplication",
       "update anomalies",
       "1NF/2NF/3NF at practical Junior depth",
-      "deliberate denormalization only with reason"
+      "осознанная денормализация допустима только при понятной причине"
     ],
-    "short_answer": "Normalization structures relations to reduce duplicated facts and update anomalies; Junior depth focuses on practical 1NF–3NF intuition.",
-    "junior_answer": "Normalization structures relations to reduce duplicated facts and update anomalies; Junior depth focuses on practical 1NF–3NF intuition. Separate entities and connect them by keys so one fact has one authoritative storage location. Denormalization intentionally duplicates derived/read data for a measured need. Важное ограничение: Normalization is not maximum table count; boundaries follow data meaning and update dependencies.",
+    "short_answer": "Normalization организует relations так, чтобы уменьшить дублирование фактов и update anomalies; для Junior важна практическая идея 1NF–3NF.",
+    "junior_answer": "Normalization организует relations так, чтобы уменьшить дублирование фактов и update anomalies; для Junior важна практическая идея 1NF–3NF. Сущности разделяют и связывают keys, чтобы у факта был один source of truth. Denormalization намеренно дублирует данные ради измеренной задачи чтения. Важное ограничение: Normalization не означает максимальное число таблицами: границы определяются смыслом данных и зависимостями обновления.",
     "follow_up_question": "Какая типичная ошибка связана с Normalization?",
-    "follow_up_answer": "Storing the same user email in many order rows makes updates inconsistent and obscures the source of truth.",
+    "follow_up_answer": "Копирование email пользователя во множество order rows создаёт противоречия при обновлении и размывает source of truth.",
     "expected_answer": {
       "must_mention": [
         "duplication",
         "update anomalies",
         "1NF/2NF/3NF at practical Junior depth",
-        "deliberate denormalization only with reason"
+        "осознанная денормализация допустима только при понятной причине"
       ],
       "good_additions": [
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Storing the same user email in many order rows makes updates inconsistent and obscures the source of truth.",
+        "Копирование email пользователя во множество order rows создаёт противоречия при обновлении и размывает source of truth.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Storing the same user email in many order rows makes updates inconsistent and obscures the source of truth."
+        "Копирование email пользователя во множество order rows создаёт противоречия при обновлении и размывает source of truth."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Normalization?"
@@ -55,25 +55,25 @@
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "one short code/result example",
-      "Storing the same user email in many order rows makes updates inconsistent and obscures the source of truth."
+      "один короткий пример кода с результатом",
+      "Копирование email пользователя во множество order rows создаёт противоречия при обновлении и размывает source of truth."
     ],
-    "short_answer": "Storing the same user email in many order rows makes updates inconsistent and obscures the source of truth.",
-    "junior_answer": "Storing the same user email in many order rows makes updates inconsistent and obscures the source of truth.",
+    "short_answer": "Копирование email пользователя во множество order rows создаёт противоречия при обновлении и размывает source of truth.",
+    "junior_answer": "Копирование email пользователя во множество order rows создаёт противоречия при обновлении и размывает source of truth.",
     "follow_up_question": "Что такое Normalization и как это работает?",
-    "follow_up_answer": "Normalization structures relations to reduce duplicated facts and update anomalies; Junior depth focuses on practical 1NF–3NF intuition. Separate entities and connect them by keys so one fact has one authoritative storage location. Denormalization intentionally duplicates derived/read data for a measured need. Важное ограничение: Normalization is not maximum table count; boundaries follow data meaning and update dependencies.",
+    "follow_up_answer": "Normalization организует relations так, чтобы уменьшить дублирование фактов и update anomalies; для Junior важна практическая идея 1NF–3NF. Сущности разделяют и связывают keys, чтобы у факта был один source of truth. Denormalization намеренно дублирует данные ради измеренной задачи чтения. Важное ограничение: Normalization не означает максимальное число таблицами: границы определяются смыслом данных и зависимостями обновления.",
     "expected_answer": {
       "must_mention": [
-        "one short code/result example"
+        "один короткий пример кода с результатом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Storing the same user email in many order rows makes updates inconsistent and obscures the source of truth."
+        "Копирование email пользователя во множество order rows создаёт противоречия при обновлении и размывает source of truth."
       ],
       "red_flags": [
-        "Storing the same user email in many order rows makes updates inconsistent and obscures the source of truth."
+        "Копирование email пользователя во множество order rows создаёт противоречия при обновлении и размывает source of truth."
       ],
       "follow_up_questions": [
         "Что такое Normalization и как это работает?"

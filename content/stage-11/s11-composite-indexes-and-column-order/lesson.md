@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P1 · вероятность на интервью: very_high · 10 минут.** PostgreSQL явно встречался в 13/18; indexes/transactions/concurrency критичны для backend.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,7 +12,7 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
@@ -26,10 +26,10 @@
 
 **filter/order patterns.** `filter/order patterns` влияет на database invariant, concurrent transactions или access path; правильность подтверждают constraint и фактический query plan.
 
-**equality before range as a heuristic, not dogma.** `equality before range as a heuristic, not dogma` влияет на database invariant, concurrent transactions или access path; правильность подтверждают constraint и фактический query plan.
+**равенство перед диапазоном — практическая эвристика, а не догма.** `equality before range as a heuristic, not dogma` влияет на database invariant, concurrent transactions или access path; правильность подтверждают constraint и фактический query plan.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
 Граница Junior: уверенно объясняй `leftmost prefix intuition` и `filter/order patterns` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
@@ -37,11 +37,11 @@
 
 В backend эта тема важна в том месте, где применяется `leftmost prefix intuition`; проверяй именно наблюдаемый contract, а не название инструмента.
 
-## Mental model
+## Модель понимания
 
 Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -49,7 +49,7 @@ Constraint защищает истину, transaction объединяет из�
 
 - leftmost prefix intuition
 - filter/order patterns
-- equality before range as a heuristic, not dogma
+- равенство перед диапазоном — практическая эвристика, а не догма
 
 ### Полезно
 
@@ -57,9 +57,9 @@ Constraint защищает истину, transaction объединяет из�
 
 ### Можно не учить глубоко
 
-- implementation internals, не влияющие на Junior-код и типичный interview follow-up
+- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Composite indexes and column order: отдельный пример
 
@@ -71,21 +71,21 @@ SELECT 's11_composite_indexes_and_column_order' AS example_key;
 
 Проверь invariant, конкурентный сценарий и фактический query plan вместо догадки.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
 Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
 
-## Practice
+## Практика
 
-**A · Prediction/reasoning.** Предскажи результат минимального примера для `leftmost prefix intuition` до запуска.
+**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для `leftmost prefix intuition` до запуска.
 
-**B · Find the bug.** Найди нарушение `filter/order patterns` и объясни конкретное последствие.
+**B · Найди ошибку.** Найди нарушение `filter/order patterns` и объясни конкретное последствие.
 
-**E · Interview explanation.** Дай ответ про Composite indexes and column order за 60 секунд: определение, механизм, пример, ограничение.
+**E · Ответ на собеседовании.** Дай ответ про Composite indexes and column order за 60 секунд: определение, механизм, пример, ограничение.
 
-## SQL practice
+## Практика SQL
 
 ### Composite index order
 
@@ -106,7 +106,7 @@ CREATE TABLE bookings (
 );
 ```
 
-Seed:
+Начальные данные:
 
 ```sql
 INSERT INTO rooms VALUES (1,10,'101'),(2,10,'102');
@@ -117,75 +117,75 @@ INSERT INTO bookings VALUES
 
 **Вопрос:** Запрос WHERE hotel_id=$1 AND starts_at >= $2 ORDER BY starts_at. Предложи индекс.
 
-Expected columns: reasoning rubric. Comparison: reasoning_rubric.
+Ожидаемые столбцы: критерии рассуждения. Сравнение: по критериям рассуждения.
 
-SQL runner пока не подключён: выполни запрос в локальном PostgreSQL и сверь result с rubric.
+Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Composite indexes and column order и какой механизм здесь важно понимать Junior-разработчику?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какое ограничение или типичная ошибка относится именно к теме Composite indexes and column order?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
 Composite indexes and column order: Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
 > Composite indexes and column order — тема, в которой я сначала фиксирую `leftmost prefix intuition`, затем объясняю `filter/order patterns` на коротком примере. Ключевой механизм: Назови invariant и concurrent scenario, затем проверь constraint, transaction boundary и фактический query plan. Главная практическая ошибка — Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какое ограничение или типичная ошибка относится именно к теме Composite indexes and column order?**
 
 Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - leftmost prefix intuition
 - filter/order patterns
-- equality before range as a heuristic, not dogma
+- равенство перед диапазоном — практическая эвристика, а не догма
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
 - Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какое ограничение или типичная ошибка относится именно к теме Composite indexes and column order?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Composite indexes and column order**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Composite indexes and column order**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
 - **Что это:** Composite indexes and column order: Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.
 - **Механизм:** Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
 - **Ограничение:** Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

@@ -3,7 +3,7 @@
   "slug": "s30-one-simple-deployment-mental-model",
   "title": "One simple deployment mental model",
   "module_slug": "stage-30",
-  "module_title": "Stage 30 · Cloud, Nginx and Advanced Infrastructure",
+  "module_title": "Этап 30 · Cloud, Nginx and Advanced Infrastructure",
   "module_order": 30,
   "order": 368,
   "duration": 10,
@@ -17,7 +17,7 @@
     "healthcheck",
     "rollback."
   ],
-  "description": "P2 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P2 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P2",

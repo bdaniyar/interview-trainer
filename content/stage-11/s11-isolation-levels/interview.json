@@ -10,10 +10,10 @@
       "serializable",
       "anomalies at reasonable depth"
     ],
-    "short_answer": "Isolation levels define which effects of concurrent transactions can be observed.",
-    "junior_answer": "Isolation levels define which effects of concurrent transactions can be observed. PostgreSQL commonly uses Read Committed per statement; Repeatable Read keeps a transaction snapshot; Serializable may abort a transaction to preserve serial behavior. Важное ограничение: Higher isolation is not free and serialization failures require retry of the entire transaction.",
+    "short_answer": "Isolation levels определяют, какие эффекты concurrent transactions могут наблюдать друг у друга.",
+    "junior_answer": "Isolation levels определяют, какие эффекты concurrent transactions могут наблюдать друг у друга. PostgreSQL Read Committed использует snapshot на statement, Repeatable Read сохраняет snapshot transaction, а Serializable может отменить transaction ради последовательной семантики. Важное ограничение: Более строгая isolation не бесплатна, а serialization failure требует retry всей transaction.",
     "follow_up_question": "Какая типичная ошибка связана с Isolation levels?",
-    "follow_up_answer": "Changing isolation without identifying the anomaly often adds contention while leaving the actual invariant unprotected.",
+    "follow_up_answer": "Повышение isolation без названной anomaly увеличивает contention и может не защитить реальный invariant.",
     "expected_answer": {
       "must_mention": [
         "read committed",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Changing isolation without identifying the anomaly often adds contention while leaving the actual invariant unprotected.",
+        "Повышение isolation без названной anomaly увеличивает contention и может не защитить реальный invariant.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Changing isolation without identifying the anomaly often adds contention while leaving the actual invariant unprotected."
+        "Повышение isolation без названной anomaly увеличивает contention и может не защитить реальный invariant."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Isolation levels?"
@@ -56,12 +56,12 @@
     "interview_probability": "high",
     "answer": [
       "PostgreSQL-specific behavior",
-      "Changing isolation without identifying the anomaly often adds contention while leaving the actual invariant unprotected."
+      "Повышение isolation без названной anomaly увеличивает contention и может не защитить реальный invariant."
     ],
-    "short_answer": "Changing isolation without identifying the anomaly often adds contention while leaving the actual invariant unprotected.",
-    "junior_answer": "Changing isolation without identifying the anomaly often adds contention while leaving the actual invariant unprotected.",
+    "short_answer": "Повышение isolation без названной anomaly увеличивает contention и может не защитить реальный invariant.",
+    "junior_answer": "Повышение isolation без названной anomaly увеличивает contention и может не защитить реальный invariant.",
     "follow_up_question": "Что такое Isolation levels и как это работает?",
-    "follow_up_answer": "Isolation levels define which effects of concurrent transactions can be observed. PostgreSQL commonly uses Read Committed per statement; Repeatable Read keeps a transaction snapshot; Serializable may abort a transaction to preserve serial behavior. Важное ограничение: Higher isolation is not free and serialization failures require retry of the entire transaction.",
+    "follow_up_answer": "Isolation levels определяют, какие эффекты concurrent transactions могут наблюдать друг у друга. PostgreSQL Read Committed использует snapshot на statement, Repeatable Read сохраняет snapshot transaction, а Serializable может отменить transaction ради последовательной семантики. Важное ограничение: Более строгая isolation не бесплатна, а serialization failure требует retry всей transaction.",
     "expected_answer": {
       "must_mention": [
         "PostgreSQL-specific behavior"
@@ -70,10 +70,10 @@
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Changing isolation without identifying the anomaly often adds contention while leaving the actual invariant unprotected."
+        "Повышение isolation без названной anomaly увеличивает contention и может не защитить реальный invariant."
       ],
       "red_flags": [
-        "Changing isolation without identifying the anomaly often adds contention while leaving the actual invariant unprotected."
+        "Повышение isolation без названной anomaly увеличивает contention и может не защитить реальный invariant."
       ],
       "follow_up_questions": [
         "Что такое Isolation levels и как это работает?"

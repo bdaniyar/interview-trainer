@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P1 · вероятность на интервью: high · 10 минут.** HTTP/REST/API явно встречались в 13/18 — P0 внешний контракт backend.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,34 +12,34 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-HTTPS is HTTP carried through TLS, providing encryption in transit, integrity and server authentication through certificates.
+HTTPS — HTTP поверх TLS, который даёт шифрование в пути, целостность и аутентификацию сервера по сертификату.
 
 ### Как работает
 
-A TLS handshake negotiates keys and verifies the certificate chain; a reverse proxy may terminate TLS before forwarding to the app on a trusted network.
+TLS handshake согласует keys и проверяет сертификату chain; reverse proxy может завершить TLS и передать request приложению по доверенной сети.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-HTTPS does not validate business permissions or encrypt data at rest.
+HTTPS не проверяет business permissions и не шифрует данные at rest.
 
-## Mental model
+## Модель понимания
 
 Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
-- encryption
-- authentication
-- certificate
+- шифрование
+- аутентификацию
+- сертификату
 - TLS termination
 
 ### Полезно
@@ -48,9 +48,9 @@ HTTPS does not validate business permissions or encrypt data at rest.
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### HTTP/HTTPS and TLS basics: отдельный пример
 
@@ -62,88 +62,88 @@ X-Request-ID: req-12-13
 
 Зафиксируй method/path/headers/body, status и поведение повторного request. Здесь route и request-id привязаны именно к теме «HTTP/HTTPS and TLS basics».
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Trusting forwarded scheme/client headers from arbitrary peers can make an app believe an insecure request was HTTPS.
+Безусловное доверие forwarded headers позволяет внешнему client выдать insecure request за HTTPS.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `encryption` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `encryption` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `authentication` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `authentication`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `encryption` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `encryption`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain HTTP/HTTPS and TLS basics in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни HTTP/HTTPS and TLS basics за 45–60 секунд и назови одно ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое HTTP/HTTPS and TLS basics и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с HTTP/HTTPS and TLS basics?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-HTTPS is HTTP carried through TLS, providing encryption in transit, integrity and server authentication through certificates.
+HTTPS — HTTP поверх TLS, который даёт шифрование в пути, целостность и аутентификацию сервера по сертификату.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> HTTPS is HTTP carried through TLS, providing encryption in transit, integrity and server authentication through certificates. A TLS handshake negotiates keys and verifies the certificate chain; a reverse proxy may terminate TLS before forwarding to the app on a trusted network. Важное ограничение: HTTPS does not validate business permissions or encrypt data at rest.
+> HTTPS — HTTP поверх TLS, который даёт шифрование в пути, целостность и аутентификацию сервера по сертификату. TLS handshake согласует keys и проверяет сертификату chain; reverse proxy может завершить TLS и передать request приложению по доверенной сети. Важное ограничение: HTTPS не проверяет business permissions и не шифрует данные at rest.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с HTTP/HTTPS and TLS basics?**
 
-Trusting forwarded scheme/client headers from arbitrary peers can make an app believe an insecure request was HTTPS.
+Безусловное доверие forwarded headers позволяет внешнему client выдать insecure request за HTTPS.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
-- encryption
-- authentication
-- certificate
+- шифрование
+- аутентификацию
+- сертификату
 - TLS termination
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Trusting forwarded scheme/client headers from arbitrary peers can make an app believe an insecure request was HTTPS.
+- Безусловное доверие forwarded headers позволяет внешнему client выдать insecure request за HTTPS.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с HTTP/HTTPS and TLS basics?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **HTTP/HTTPS and TLS basics**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **HTTP/HTTPS and TLS basics**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** HTTPS is HTTP carried through TLS, providing encryption in transit, integrity and server authentication through certificates.
+- **Что это:** HTTPS — HTTP поверх TLS, который даёт шифрование в пути, целостность и аутентификацию сервера по сертификату.
 - **Механизм:** Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
-- **Ограничение:** Trusting forwarded scheme/client headers from arbitrary peers can make an app believe an insecure request was HTTPS.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Безусловное доверие forwarded headers позволяет внешнему client выдать insecure request за HTTPS.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

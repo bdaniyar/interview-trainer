@@ -8,7 +8,7 @@
       "hierarchy",
       "useful context",
       "mapping to HTTP errors",
-      "avoiding exception-driven normal flow"
+      "не использовать исключения для обычного управления потоком"
     ],
     "short_answer": "Custom exceptions: Это протокол управления потоком: consumer и объект договариваются о шагах, завершении и обработке ошибок.",
     "junior_answer": "Custom exceptions — тема, в которой я сначала фиксирую `hierarchy`, затем объясняю `useful context` на коротком примере. Ключевой механизм: Определи инициатора шага, сохраняемое state, сигнал нормального завершения и cleanup при exception. Главная практическая ошибка — Забыть состояние protocol, сигнал завершения или cleanup при exception.",
@@ -19,7 +19,7 @@
         "hierarchy",
         "useful context",
         "mapping to HTTP errors",
-        "avoiding exception-driven normal flow"
+        "не использовать исключения для обычного управления потоком"
       ],
       "good_additions": [
         "короткий рабочий пример",

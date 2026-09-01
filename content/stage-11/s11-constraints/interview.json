@@ -10,10 +10,10 @@
       "CHECK",
       "FK"
     ],
-    "short_answer": "Database constraints enforce invariants for every writer: NOT NULL, UNIQUE, CHECK, primary/foreign keys.",
-    "junior_answer": "Database constraints enforce invariants for every writer: NOT NULL, UNIQUE, CHECK, primary/foreign keys. The database evaluates constraints during writes/transaction completion and rejects invalid state; application code translates the specific conflict. Важное ограничение: Validation improves UX but cannot replace a DB constraint under concurrent requests.",
+    "short_answer": "Ограничения базы данных защищают инварианты для всех клиенты записи: NOT NULL, UNIQUE, CHECK, первичный ключ и внешний ключ.",
+    "junior_answer": "Ограничения базы данных защищают инварианты для всех клиенты записи: NOT NULL, UNIQUE, CHECK, первичный ключ и внешний ключ. База проверяет constraints во время write или завершения transaction и отклоняет неверное состояние; приложение преобразует конкретный conflict в понятную ошибку. Важное ограничение: Application validation улучшает UX, но не заменяет DB constraint при конкурентных requests.",
     "follow_up_question": "Какая типичная ошибка связана с Constraints?",
-    "follow_up_answer": "Checking uniqueness only with SELECT then INSERT races; a UNIQUE constraint must be the final authority.",
+    "follow_up_answer": "Проверка уникальности через SELECT перед INSERT подвержена race; окончательной гарантией должен быть UNIQUE constraint.",
     "expected_answer": {
       "must_mention": [
         "NOT NULL",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Checking uniqueness only with SELECT then INSERT races; a UNIQUE constraint must be the final authority.",
+        "Проверка уникальности через SELECT перед INSERT подвержена race; окончательной гарантией должен быть UNIQUE constraint.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Checking uniqueness only with SELECT then INSERT races; a UNIQUE constraint must be the final authority."
+        "Проверка уникальности через SELECT перед INSERT подвержена race; окончательной гарантией должен быть UNIQUE constraint."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Constraints?"
@@ -56,12 +56,12 @@
     "interview_probability": "very_high",
     "answer": [
       "business invariant in DB",
-      "Checking uniqueness only with SELECT then INSERT races; a UNIQUE constraint must be the final authority."
+      "Проверка уникальности через SELECT перед INSERT подвержена race; окончательной гарантией должен быть UNIQUE constraint."
     ],
-    "short_answer": "Checking uniqueness only with SELECT then INSERT races; a UNIQUE constraint must be the final authority.",
-    "junior_answer": "Checking uniqueness only with SELECT then INSERT races; a UNIQUE constraint must be the final authority.",
+    "short_answer": "Проверка уникальности через SELECT перед INSERT подвержена race; окончательной гарантией должен быть UNIQUE constraint.",
+    "junior_answer": "Проверка уникальности через SELECT перед INSERT подвержена race; окончательной гарантией должен быть UNIQUE constraint.",
     "follow_up_question": "Что такое Constraints и как это работает?",
-    "follow_up_answer": "Database constraints enforce invariants for every writer: NOT NULL, UNIQUE, CHECK, primary/foreign keys. The database evaluates constraints during writes/transaction completion and rejects invalid state; application code translates the specific conflict. Важное ограничение: Validation improves UX but cannot replace a DB constraint under concurrent requests.",
+    "follow_up_answer": "Ограничения базы данных защищают инварианты для всех клиенты записи: NOT NULL, UNIQUE, CHECK, первичный ключ и внешний ключ. База проверяет constraints во время write или завершения transaction и отклоняет неверное состояние; приложение преобразует конкретный conflict в понятную ошибку. Важное ограничение: Application validation улучшает UX, но не заменяет DB constraint при конкурентных requests.",
     "expected_answer": {
       "must_mention": [
         "business invariant in DB"
@@ -70,10 +70,10 @@
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Checking uniqueness only with SELECT then INSERT races; a UNIQUE constraint must be the final authority."
+        "Проверка уникальности через SELECT перед INSERT подвержена race; окончательной гарантией должен быть UNIQUE constraint."
       ],
       "red_flags": [
-        "Checking uniqueness only with SELECT then INSERT races; a UNIQUE constraint must be the final authority."
+        "Проверка уникальности через SELECT перед INSERT подвержена race; окончательной гарантией должен быть UNIQUE constraint."
       ],
       "follow_up_questions": [
         "Что такое Constraints и как это работает?"

@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P1 · вероятность на интервью: very_high · 10 минут.** Docker/containers явно встречались в 11/18 — обязательный P1 practical skill.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,7 +12,7 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
@@ -20,16 +20,16 @@
 
 ### Как работает
 
-Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы сценарий ошибки.
 
-**service name.** `service name` относится либо к build-time image, либо к runtime container и наблюдается через DNS, ports, mounts и process lifecycle.
+**service name.** `service name` относится либо к во время сборки image, либо к runtime container и наблюдается через DNS, ports, mounts и жизненный цикл процесса.
 
-**`localhost` means current container.** Container — изолированный process из image, а не VM; сеть, environment и persistent volumes задаются отдельно при runtime.
+**`localhost` means current container.** Container — изолированный process из image, а не VM; сеть, окружением и persistent volumes задаются отдельно при runtime.
 
-**common DB connection bug.** `common DB connection bug` относится либо к build-time image, либо к runtime container и наблюдается через DNS, ports, mounts и process lifecycle.
+**common DB connection bug.** `common DB connection bug` относится либо к во время сборки image, либо к runtime container и наблюдается через DNS, ports, mounts и жизненный цикл процесса.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
 Граница Junior: уверенно объясняй `service name` и ``localhost` means current container` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
@@ -37,11 +37,11 @@
 
 В backend эта тема важна в том месте, где применяется `service name`; проверяй именно наблюдаемый contract, а не название инструмента.
 
-## Mental model
+## Модель понимания
 
-Разделяй build-time layers, runtime config, network DNS и persistent volumes.
+Разделяй во время сборки layers, runtime config, network DNS и persistent volumes.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -57,9 +57,9 @@
 
 ### Можно не учить глубоко
 
-- implementation internals, не влияющие на Junior-код и типичный interview follow-up
+- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Networks and service discovery: отдельный пример
 
@@ -72,105 +72,105 @@ Compose service name; shared network/DNS.
 
 Это отдельный operations example для данного subtopic, а не общий пример stage.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Игнорировать ограничение механизма и проверять только happy path.
+Игнорировать ограничение механизма и проверять только основной сценарий.
 
-## Practice
+## Практика
 
-**A · Prediction/reasoning.** Предскажи результат минимального примера для `service name` до запуска.
+**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для `service name` до запуска.
 
-**B · Find the bug.** Найди нарушение ``localhost` means current container` и объясни конкретное последствие.
+**B · Найди ошибку.** Найди нарушение ``localhost` means current container` и объясни конкретное последствие.
 
-**E · Interview explanation.** Дай ответ про Networks and service discovery за 60 секунд: определение, механизм, пример, ограничение.
+**E · Ответ на собеседовании.** Дай ответ про Networks and service discovery за 60 секунд: определение, механизм, пример, ограничение.
 
-## Operations practice
+## Практика: Эксплуатация
 
 ### Service discovery
 
 **Сценарий:** API config содержит DB_HOST=localhost.
 
-**Rubric:** Compose service name; shared network/DNS.
+**Критерии ответа:** Compose service name; shared network/DNS.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
-## Debugging practice
+## Практика: Отладка
 
 ### Container localhost
 
 **Сценарий:** API не видит PostgreSQL по localhost.
 
-**Rubric:** localhost — тот же container; Compose DNS service name + container port.
+**Критерии ответа:** localhost — тот же container; Compose DNS service name + container port.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Networks and service discovery и какой механизм здесь важно понимать Junior-разработчику?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какое ограничение или типичная ошибка относится именно к теме Networks and service discovery?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
 Networks and service discovery: это отдельный технический контракт
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
 > Networks and service discovery — тема, в которой я сначала фиксирую `service name`, затем объясняю ``localhost` means current container` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какое ограничение или типичная ошибка относится именно к теме Networks and service discovery?**
 
-Нужно назвать конкретный failure path и способ его проверить.
+Нужно назвать конкретный сценарий ошибки и способ его проверить.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - service name
 - `localhost` means current container
 - common DB connection bug
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Игнорировать ограничение механизма и проверять только happy path.
+- Игнорировать ограничение механизма и проверять только основной сценарий.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какое ограничение или типичная ошибка относится именно к теме Networks and service discovery?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Networks and service discovery**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Networks and service discovery**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
 - **Что это:** Networks and service discovery: это отдельный технический контракт
-- **Механизм:** Разделяй build-time layers, runtime config, network DNS и persistent volumes.
-- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Механизм:** Разделяй во время сборки layers, runtime config, network DNS и persistent volumes.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только основной сценарий.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

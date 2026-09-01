@@ -3,7 +3,7 @@
   "slug": "data-model",
   "title": "`__len__`, `__bool__`, `__contains__`, `__getitem__`",
   "module_slug": "stage-05",
-  "module_title": "Stage 5 · OOP and Python Data Model",
+  "module_title": "Этап 5 · OOP and Python Data Model",
   "module_order": 5,
   "order": 60,
   "duration": 10,
@@ -15,7 +15,7 @@
     "membership",
     "indexing/iteration fallback."
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

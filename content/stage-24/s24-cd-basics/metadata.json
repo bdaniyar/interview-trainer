@@ -3,7 +3,7 @@
   "slug": "s24-cd-basics",
   "title": "CD basics",
   "module_slug": "stage-24",
-  "module_title": "Stage 24 · CI/CD",
+  "module_title": "Этап 24 · CI/CD",
   "module_order": 24,
   "order": 311,
   "duration": 10,
@@ -17,7 +17,7 @@
     "rollback",
     "no cloud-specific deep dive."
   ],
-  "description": "P2 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P2 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P2",

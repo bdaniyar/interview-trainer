@@ -9,10 +9,10 @@
       "condition in `ON` vs `WHERE`",
       "finding missing related rows"
     ],
-    "short_answer": "`LEFT JOIN` preserves every left row and fills right-side columns with NULL when no match exists.",
-    "junior_answer": "`LEFT JOIN` preserves every left row and fills right-side columns with NULL when no match exists. Right-table filters in ON affect which matches attach; the same filter in WHERE can remove NULL-extended rows and effectively turn the result into INNER JOIN. Важное ограничение: Count a nullable right primary key, not `COUNT(*)`, when measuring related rows per left entity.",
+    "short_answer": "`LEFT JOIN` сохраняет каждую row левой таблицы и подставляет NULL в columns правой стороны при отсутствии совпадения.",
+    "junior_answer": "`LEFT JOIN` сохраняет каждую row левой таблицы и подставляет NULL в columns правой стороны при отсутствии совпадения. Фильтр правой таблицы в ON влияет на присоединяемые совпадения; тот же фильтр в WHERE удаляет NULL-rows и фактически превращает результат в INNER JOIN. Важное ограничение: Для числа связанных rows считай nullable первичный ключ правой таблицы, а не `COUNT(*)`.",
     "follow_up_question": "Какая типичная ошибка связана с LEFT JOIN?",
-    "follow_up_answer": "Putting `right.active = true` in WHERE unexpectedly removes left rows with no active relation.",
+    "follow_up_answer": "Условие `right.active = true` в WHERE неожиданно удаляет left rows без активной связи.",
     "expected_answer": {
       "must_mention": [
         "preserving left rows",
@@ -24,11 +24,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Putting `right.active = true` in WHERE unexpectedly removes left rows with no active relation.",
+        "Условие `right.active = true` в WHERE неожиданно удаляет left rows без активной связи.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Putting `right.active = true` in WHERE unexpectedly removes left rows with no active relation."
+        "Условие `right.active = true` в WHERE неожиданно удаляет left rows без активной связи."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с LEFT JOIN?"
@@ -53,25 +53,25 @@
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "one short code/result example",
-      "Putting `right.active = true` in WHERE unexpectedly removes left rows with no active relation."
+      "один короткий пример кода с результатом",
+      "Условие `right.active = true` в WHERE неожиданно удаляет left rows без активной связи."
     ],
-    "short_answer": "Putting `right.active = true` in WHERE unexpectedly removes left rows with no active relation.",
-    "junior_answer": "Putting `right.active = true` in WHERE unexpectedly removes left rows with no active relation.",
+    "short_answer": "Условие `right.active = true` в WHERE неожиданно удаляет left rows без активной связи.",
+    "junior_answer": "Условие `right.active = true` в WHERE неожиданно удаляет left rows без активной связи.",
     "follow_up_question": "Что такое LEFT JOIN и как это работает?",
-    "follow_up_answer": "`LEFT JOIN` preserves every left row and fills right-side columns with NULL when no match exists. Right-table filters in ON affect which matches attach; the same filter in WHERE can remove NULL-extended rows and effectively turn the result into INNER JOIN. Важное ограничение: Count a nullable right primary key, not `COUNT(*)`, when measuring related rows per left entity.",
+    "follow_up_answer": "`LEFT JOIN` сохраняет каждую row левой таблицы и подставляет NULL в columns правой стороны при отсутствии совпадения. Фильтр правой таблицы в ON влияет на присоединяемые совпадения; тот же фильтр в WHERE удаляет NULL-rows и фактически превращает результат в INNER JOIN. Важное ограничение: Для числа связанных rows считай nullable первичный ключ правой таблицы, а не `COUNT(*)`.",
     "expected_answer": {
       "must_mention": [
-        "one short code/result example"
+        "один короткий пример кода с результатом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Putting `right.active = true` in WHERE unexpectedly removes left rows with no active relation."
+        "Условие `right.active = true` в WHERE неожиданно удаляет left rows без активной связи."
       ],
       "red_flags": [
-        "Putting `right.active = true` in WHERE unexpectedly removes left rows with no active relation."
+        "Условие `right.active = true` в WHERE неожиданно удаляет left rows без активной связи."
       ],
       "follow_up_questions": [
         "Что такое LEFT JOIN и как это работает?"

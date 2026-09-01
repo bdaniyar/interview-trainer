@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: high · 12 минут.** Python указан в 18/18 primary вакансий; object model — базовый screening foundation.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-A hashable object has a stable hash and equality behavior, so it can be a dict key or set element.
+Hashable-объект имеет стабильный hash и согласованное равенство, поэтому может быть ключом dict или элементом set.
 
 ### Как работает
 
-A hash table uses `hash(key)` to find candidates and `==` to confirm a match. Objects that compare equal must have equal hashes; state involved in equality must not change while used as a key.
+Hash table использует `hash(key)` для поиска кандидатов, а `==` — для подтверждения совпадения. Равные объекты обязаны иметь одинаковый hash; значимое для равенства состояние ключа не должно меняться.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-A tuple is hashable only when all elements are hashable. Custom equality often requires an explicit, consistent `__hash__` decision.
+Tuple является hashable только тогда, когда hashable все его элементы. При собственном `__eq__` решение о `__hash__` должно быть явным и согласованным.
 
-## Mental model
+## Модель понимания
 
 Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -49,9 +49,9 @@ A tuple is hashable only when all elements are hashable. Custom equality often r
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Hashability: отдельный пример
 
@@ -67,23 +67,23 @@ except TypeError as exc:
 
 Tuple из hashable элементов допустим как ключ, mutable list — нет.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Using list or dict as a key raises `TypeError: unhashable type`; making mutable state hashable can corrupt lookup semantics.
+List или dict в роли ключа вызывает `TypeError`; изменяемый hashable-ключ способен нарушить корректность lookup.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `hashable object` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `hashable object` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `dict key/set member` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `dict key/set member`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `hashable object` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `hashable object`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Hashability in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Hashability за 45–60 секунд и назови одно ограничение.
 
-## Code prediction
+## Предсказание результата кода
 
 ### Равные ключи dict
 
@@ -96,7 +96,7 @@ print(len(data), data[True])
 
 <details><summary>Показать ответ</summary>
 
-Expected:
+Ожидаемый результат:
 
 ```text
 1 one
@@ -104,76 +104,76 @@ Expected:
 
 True == 1 и их hashes равны, поэтому второй assignment заменяет значение того же ключа.
 
-Misconception: `hash-equality-contract`.
+Типичная ошибка мышления: `hash-equality-contract`.
 
 </details>
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Hashability и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Hashability?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-A hashable object has a stable hash and equality behavior, so it can be a dict key or set element.
+Hashable-объект имеет стабильный hash и согласованное равенство, поэтому может быть ключом dict или элементом set.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> A hashable object has a stable hash and equality behavior, so it can be a dict key or set element. A hash table uses `hash(key)` to find candidates and `==` to confirm a match. Objects that compare equal must have equal hashes; state involved in equality must not change while used as a key. Важное ограничение: A tuple is hashable only when all elements are hashable. Custom equality often requires an explicit, consistent `__hash__` decision.
+> Hashable-объект имеет стабильный hash и согласованное равенство, поэтому может быть ключом dict или элементом set. Hash table использует `hash(key)` для поиска кандидатов, а `==` — для подтверждения совпадения. Равные объекты обязаны иметь одинаковый hash; значимое для равенства состояние ключа не должно меняться. Важное ограничение: Tuple является hashable только тогда, когда hashable все его элементы. При собственном `__eq__` решение о `__hash__` должно быть явным и согласованным.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Hashability?**
 
-Using list or dict as a key raises `TypeError: unhashable type`; making mutable state hashable can corrupt lookup semantics.
+List или dict в роли ключа вызывает `TypeError`; изменяемый hashable-ключ способен нарушить корректность lookup.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - hashable object
 - dict key/set member
 - equality/hash contract
 - mutable object as key
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Using list or dict as a key raises `TypeError: unhashable type`; making mutable state hashable can corrupt lookup semantics.
+- List или dict в роли ключа вызывает `TypeError`; изменяемый hashable-ключ способен нарушить корректность lookup.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Hashability?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Hashability**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Hashability**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** A hashable object has a stable hash and equality behavior, so it can be a dict key or set element.
+- **Что это:** Hashable-объект имеет стабильный hash и согласованное равенство, поэтому может быть ключом dict или элементом set.
 - **Механизм:** Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию.
-- **Ограничение:** Using list or dict as a key raises `TypeError: unhashable type`; making mutable state hashable can corrupt lookup semantics.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** List или dict в роли ключа вызывает `TypeError`; изменяемый hashable-ключ способен нарушить корректность lookup.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

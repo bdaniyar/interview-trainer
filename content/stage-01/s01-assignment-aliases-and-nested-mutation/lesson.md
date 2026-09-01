@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** Python указан в 18/18 primary вакансий; object model — базовый screening foundation.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-Aliases are multiple names or container slots referring to one object; nested mutation through any alias changes that same object.
+Aliases — несколько имён или ячеек контейнера, указывающих на один объект; вложенная мутация через любую ссылку меняет тот же объект.
 
 ### Как работает
 
-Assignment and sequence repetition copy references. `[[]] * 3` repeats one inner-list reference three times, so mutating one visible row changes all three positions.
+Присваивание и повторение последовательности копируют ссылки. `[[]] * 3` трижды помещает ссылку на один внутренний список, поэтому изменение одной строки видно во всех позициях.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Build independent nested values with a comprehension such as `[[] for _ in range(3)]`.
+Независимые вложенные значения создавай comprehension-выражением: `[[] for _ in range(3)]`.
 
-## Mental model
+## Модель понимания
 
 Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -48,9 +48,9 @@ Build independent nested values with a comprehension such as `[[] for _ in range
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Assignment, aliases and nested mutation: отдельный пример
 
@@ -66,23 +66,23 @@ print(alias is matrix[1])
 
 Comprehension создаёт независимые внутренние lists, а `alias` указывает только на первую строку.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Using multiplication for mutable nested defaults creates shared state that is difficult to notice in tests with one element.
+Умножение последовательности с изменяемым вложенным значением создаёт общее состояние, которое легко пропустить в простом тесте.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `aliases` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `aliases` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `shared nested structures` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `shared nested structures`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `aliases` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `aliases`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Assignment, aliases and nested mutation in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Assignment, aliases and nested mutation за 45–60 секунд и назови одно ограничение.
 
-## Code prediction
+## Предсказание результата кода
 
 ### Повтор вложенного списка
 
@@ -96,7 +96,7 @@ print(rows)
 
 <details><summary>Показать ответ</summary>
 
-Expected:
+Ожидаемый результат:
 
 ```text
 [[0, 1], [0, 1], [0, 1]]
@@ -104,86 +104,86 @@ Expected:
 
 Оператор * повторил одну ссылку на внутренний список, а не создал три списка.
 
-Misconception: `nested-aliasing`.
+Типичная ошибка мышления: `nested-aliasing`.
 
 </details>
 
-## Debugging practice
+## Практика: Отладка
 
 ### Nested alias
 
 **Сценарий:** [[]] * 3 меняет все строки после append.
 
-**Rubric:** Повторяется одна reference; comprehension создаёт независимые lists.
+**Критерии ответа:** Повторяется одна reference; comprehension создаёт независимые lists.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Assignment, aliases and nested mutation и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Assignment, aliases and nested mutation?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-Aliases are multiple names or container slots referring to one object; nested mutation through any alias changes that same object.
+Aliases — несколько имён или ячеек контейнера, указывающих на один объект; вложенная мутация через любую ссылку меняет тот же объект.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> Aliases are multiple names or container slots referring to one object; nested mutation through any alias changes that same object. Assignment and sequence repetition copy references. `[[]] * 3` repeats one inner-list reference three times, so mutating one visible row changes all three positions. Важное ограничение: Build independent nested values with a comprehension such as `[[] for _ in range(3)]`.
+> Aliases — несколько имён или ячеек контейнера, указывающих на один объект; вложенная мутация через любую ссылку меняет тот же объект. Присваивание и повторение последовательности копируют ссылки. `[[]] * 3` трижды помещает ссылку на один внутренний список, поэтому изменение одной строки видно во всех позициях. Важное ограничение: Независимые вложенные значения создавай comprehension-выражением: `[[] for _ in range(3)]`.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Assignment, aliases and nested mutation?**
 
-Using multiplication for mutable nested defaults creates shared state that is difficult to notice in tests with one element.
+Умножение последовательности с изменяемым вложенным значением создаёт общее состояние, которое легко пропустить в простом тесте.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - aliases
 - shared nested structures
 - repeated references
 - `[[]] * 3`
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Using multiplication for mutable nested defaults creates shared state that is difficult to notice in tests with one element.
+- Умножение последовательности с изменяемым вложенным значением создаёт общее состояние, которое легко пропустить в простом тесте.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Assignment, aliases and nested mutation?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Assignment, aliases and nested mutation**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Assignment, aliases and nested mutation**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** Aliases are multiple names or container slots referring to one object; nested mutation through any alias changes that same object.
+- **Что это:** Aliases — несколько имён или ячеек контейнера, указывающих на один объект; вложенная мутация через любую ссылку меняет тот же объект.
 - **Механизм:** Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию.
-- **Ограничение:** Using multiplication for mutable nested defaults creates shared state that is difficult to notice in tests with one element.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Умножение последовательности с изменяемым вложенным значением создаёт общее состояние, которое легко пропустить в простом тесте.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

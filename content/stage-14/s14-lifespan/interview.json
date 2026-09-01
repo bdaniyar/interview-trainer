@@ -6,31 +6,31 @@
     "interview_probability": "high",
     "answer": [
       "startup/shutdown",
-      "shared client/pool initialization",
+      "инициализация общего клиента или пула",
       "cleanup",
-      "modern lifespan over scattered legacy hooks"
+      "современный lifespan предпочтительнее разрозненных устаревших обработчиков"
     ],
-    "short_answer": "FastAPI lifespan manages resources that live for the application process, such as connection pools and shared HTTP clients.",
-    "junior_answer": "FastAPI lifespan manages resources that live for the application process, such as connection pools and shared HTTP clients. An async context manager runs setup before yield and cleanup after yield during shutdown; tests should enter lifespan too. Важное ограничение: Application-level resources are shared, but request-specific Session/user state must not be stored in them.",
+    "short_answer": "FastAPI lifespan управляет ресурсами уровня application process: connection pools и общими HTTP clients.",
+    "junior_answer": "FastAPI lifespan управляет ресурсами уровня application process: connection pools и общими HTTP clients. Async Контекстный менеджер выполняет setup до `yield` и cleanup после него при shutdown; tests тоже должны входить в lifespan. Важное ограничение: Application resources могут быть общими, но request-specific Session и user state хранить в них нельзя.",
     "follow_up_question": "Какая типичная ошибка связана с Lifespan?",
-    "follow_up_answer": "Creating a new expensive client per request wastes pools, while never closing a shared client leaks resources at shutdown.",
+    "follow_up_answer": "Новый дорогой client на каждый request разрушает pooling, а незакрытый общий client оставляет ресурсы при shutdown.",
     "expected_answer": {
       "must_mention": [
         "startup/shutdown",
-        "shared client/pool initialization",
+        "инициализация общего клиента или пула",
         "cleanup",
-        "modern lifespan over scattered legacy hooks"
+        "современный lifespan предпочтительнее разрозненных устаревших обработчиков"
       ],
       "good_additions": [
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Creating a new expensive client per request wastes pools, while never closing a shared client leaks resources at shutdown.",
+        "Новый дорогой client на каждый request разрушает pooling, а незакрытый общий client оставляет ресурсы при shutdown.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Creating a new expensive client per request wastes pools, while never closing a shared client leaks resources at shutdown."
+        "Новый дорогой client на каждый request разрушает pooling, а незакрытый общий client оставляет ресурсы при shutdown."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Lifespan?"
@@ -55,25 +55,25 @@
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "one short code/result example",
-      "Creating a new expensive client per request wastes pools, while never closing a shared client leaks resources at shutdown."
+      "один короткий пример кода с результатом",
+      "Новый дорогой client на каждый request разрушает pooling, а незакрытый общий client оставляет ресурсы при shutdown."
     ],
-    "short_answer": "Creating a new expensive client per request wastes pools, while never closing a shared client leaks resources at shutdown.",
-    "junior_answer": "Creating a new expensive client per request wastes pools, while never closing a shared client leaks resources at shutdown.",
+    "short_answer": "Новый дорогой client на каждый request разрушает pooling, а незакрытый общий client оставляет ресурсы при shutdown.",
+    "junior_answer": "Новый дорогой client на каждый request разрушает pooling, а незакрытый общий client оставляет ресурсы при shutdown.",
     "follow_up_question": "Что такое Lifespan и как это работает?",
-    "follow_up_answer": "FastAPI lifespan manages resources that live for the application process, such as connection pools and shared HTTP clients. An async context manager runs setup before yield and cleanup after yield during shutdown; tests should enter lifespan too. Важное ограничение: Application-level resources are shared, but request-specific Session/user state must not be stored in them.",
+    "follow_up_answer": "FastAPI lifespan управляет ресурсами уровня application process: connection pools и общими HTTP clients. Async Контекстный менеджер выполняет setup до `yield` и cleanup после него при shutdown; tests тоже должны входить в lifespan. Важное ограничение: Application resources могут быть общими, но request-specific Session и user state хранить в них нельзя.",
     "expected_answer": {
       "must_mention": [
-        "one short code/result example"
+        "один короткий пример кода с результатом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Creating a new expensive client per request wastes pools, while never closing a shared client leaks resources at shutdown."
+        "Новый дорогой client на каждый request разрушает pooling, а незакрытый общий client оставляет ресурсы при shutdown."
       ],
       "red_flags": [
-        "Creating a new expensive client per request wastes pools, while never closing a shared client leaks resources at shutdown."
+        "Новый дорогой client на каждый request разрушает pooling, а незакрытый общий client оставляет ресурсы при shutdown."
       ],
       "follow_up_questions": [
         "Что такое Lifespan и как это работает?"

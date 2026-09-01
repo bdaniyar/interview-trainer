@@ -5,7 +5,7 @@
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "evaluation at function definition",
+      "вычисление в момент определения функции",
       "mutable default bug",
       "sentinel pattern",
       "`None` pattern and its limitations"
@@ -16,7 +16,7 @@
     "follow_up_answer": "Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.",
     "expected_answer": {
       "must_mention": [
-        "evaluation at function definition",
+        "вычисление в момент определения функции",
         "mutable default bug",
         "sentinel pattern",
         "`None` pattern and its limitations"

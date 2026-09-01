@@ -3,7 +3,7 @@
   "slug": "s18-coverage",
   "title": "Coverage",
   "module_slug": "stage-18",
-  "module_title": "Stage 18 · Testing",
+  "module_title": "Этап 18 · Testing",
   "module_order": 18,
   "order": 250,
   "duration": 10,
@@ -14,7 +14,7 @@
     "branch/critical path",
     "80% does not mean 80% quality."
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

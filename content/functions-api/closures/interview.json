@@ -10,10 +10,10 @@
       "free variable",
       "retained state"
     ],
-    "short_answer": "A closure is an inner function that retains access to free variables from its enclosing scope after the outer function returns.",
-    "junior_answer": "A closure is an inner function that retains access to free variables from its enclosing scope after the outer function returns. The function stores references to enclosing cells, not a frozen copy of every value. A factory can therefore capture configuration or deliberately retain mutable state. Важное ограничение: Closures created in a loop exhibit late binding unless the current value is bound through a factory, default argument or `partial`.",
+    "short_answer": "Closure — внутренняя функция, сохраняющая доступ к свободным именам enclosing scope после завершения внешней функции.",
+    "junior_answer": "Closure — внутренняя функция, сохраняющая доступ к свободным именам enclosing scope после завершения внешней функции. Функция хранит ссылки на enclosing cells, а не замороженную копию каждого значения. Factory может захватить конфигурацию или намеренно сохранить изменяемое состояние. Важное ограничение: Closures, созданные в цикле, используют late binding; текущее значение фиксируют через factory, default argument или `partial`.",
     "follow_up_question": "Какая типичная ошибка связана с Closures and free variables?",
-    "follow_up_answer": "Expecting each loop-created lambda to remember its loop iteration usually produces the final loop value for all callbacks.",
+    "follow_up_answer": "Ожидание, что каждая lambda из цикла запомнит свою итерацию, обычно даёт последнее значение цикла во всех callback.",
     "expected_answer": {
       "must_mention": [
         "closure",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Expecting each loop-created lambda to remember its loop iteration usually produces the final loop value for all callbacks.",
+        "Ожидание, что каждая lambda из цикла запомнит свою итерацию, обычно даёт последнее значение цикла во всех callback.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Expecting each loop-created lambda to remember its loop iteration usually produces the final loop value for all callbacks."
+        "Ожидание, что каждая lambda из цикла запомнит свою итерацию, обычно даёт последнее значение цикла во всех callback."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Closures and free variables?"
@@ -55,25 +55,25 @@
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "practical factory/callback examples",
-      "Expecting each loop-created lambda to remember its loop iteration usually produces the final loop value for all callbacks."
+      "практические примеры фабрики и функции обратного вызова",
+      "Ожидание, что каждая lambda из цикла запомнит свою итерацию, обычно даёт последнее значение цикла во всех callback."
     ],
-    "short_answer": "Expecting each loop-created lambda to remember its loop iteration usually produces the final loop value for all callbacks.",
-    "junior_answer": "Expecting each loop-created lambda to remember its loop iteration usually produces the final loop value for all callbacks.",
+    "short_answer": "Ожидание, что каждая lambda из цикла запомнит свою итерацию, обычно даёт последнее значение цикла во всех callback.",
+    "junior_answer": "Ожидание, что каждая lambda из цикла запомнит свою итерацию, обычно даёт последнее значение цикла во всех callback.",
     "follow_up_question": "Что такое Closures and free variables и как это работает?",
-    "follow_up_answer": "A closure is an inner function that retains access to free variables from its enclosing scope after the outer function returns. The function stores references to enclosing cells, not a frozen copy of every value. A factory can therefore capture configuration or deliberately retain mutable state. Важное ограничение: Closures created in a loop exhibit late binding unless the current value is bound through a factory, default argument or `partial`.",
+    "follow_up_answer": "Closure — внутренняя функция, сохраняющая доступ к свободным именам enclosing scope после завершения внешней функции. Функция хранит ссылки на enclosing cells, а не замороженную копию каждого значения. Factory может захватить конфигурацию или намеренно сохранить изменяемое состояние. Важное ограничение: Closures, созданные в цикле, используют late binding; текущее значение фиксируют через factory, default argument или `partial`.",
     "expected_answer": {
       "must_mention": [
-        "practical factory/callback examples"
+        "практические примеры фабрики и функции обратного вызова"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Expecting each loop-created lambda to remember its loop iteration usually produces the final loop value for all callbacks."
+        "Ожидание, что каждая lambda из цикла запомнит свою итерацию, обычно даёт последнее значение цикла во всех callback."
       ],
       "red_flags": [
-        "Expecting each loop-created lambda to remember its loop iteration usually produces the final loop value for all callbacks."
+        "Ожидание, что каждая lambda из цикла запомнит свою итерацию, обычно даёт последнее значение цикла во всех callback."
       ],
       "follow_up_questions": [
         "Что такое Closures and free variables и как это работает?"

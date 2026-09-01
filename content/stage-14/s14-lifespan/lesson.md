@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P1 · вероятность на интервью: high · 10 минут.** FastAPI явно встречался в 9/18, любой Python web framework — в 16/18.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,45 +12,45 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-FastAPI lifespan manages resources that live for the application process, such as connection pools and shared HTTP clients.
+FastAPI lifespan управляет ресурсами уровня application process: connection pools и общими HTTP clients.
 
 ### Как работает
 
-An async context manager runs setup before yield and cleanup after yield during shutdown; tests should enter lifespan too.
+Async Контекстный менеджер выполняет setup до `yield` и cleanup после него при shutdown; tests тоже должны входить в lifespan.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Application-level resources are shared, but request-specific Session/user state must not be stored in them.
+Application resources могут быть общими, но request-specific Session и user state хранить в них нельзя.
 
-## Mental model
+## Модель понимания
 
 Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
 - startup/shutdown
-- shared client/pool initialization
+- инициализация общего клиента или пула
 - cleanup
-- modern lifespan over scattered legacy hooks
+- современный lifespan предпочтительнее разрозненных устаревших обработчиков
 
 ### Полезно
 
-- one short code/result example
+- один короткий пример кода с результатом
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Lifespan: отдельный пример
 
@@ -63,98 +63,98 @@ Lifespan async context manager с cleanup в finally; test lifespan and close st
 
 Это отдельный debugging example для данного subtopic, а не общий пример stage.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Creating a new expensive client per request wastes pools, while never closing a shared client leaks resources at shutdown.
+Новый дорогой client на каждый request разрушает pooling, а незакрытый общий client оставляет ресурсы при shutdown.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `startup/shutdown` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `startup/shutdown` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `shared client/pool initialization` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `shared client/pool initialization`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `startup/shutdown` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `startup/shutdown`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Lifespan in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Lifespan за 45–60 секунд и назови одно ограничение.
 
-## Debugging practice
+## Практика: Отладка
 
 ### Resource not closed
 
 **Сценарий:** HTTP client создаётся на startup, но socket остаётся после shutdown.
 
-**Rubric:** Lifespan async context manager с cleanup в finally; test lifespan and close state.
+**Критерии ответа:** Lifespan async context manager с cleanup в finally; test lifespan and close state.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Lifespan и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Lifespan?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-FastAPI lifespan manages resources that live for the application process, such as connection pools and shared HTTP clients.
+FastAPI lifespan управляет ресурсами уровня application process: connection pools и общими HTTP clients.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> FastAPI lifespan manages resources that live for the application process, such as connection pools and shared HTTP clients. An async context manager runs setup before yield and cleanup after yield during shutdown; tests should enter lifespan too. Важное ограничение: Application-level resources are shared, but request-specific Session/user state must not be stored in them.
+> FastAPI lifespan управляет ресурсами уровня application process: connection pools и общими HTTP clients. Async Контекстный менеджер выполняет setup до `yield` и cleanup после него при shutdown; tests тоже должны входить в lifespan. Важное ограничение: Application resources могут быть общими, но request-specific Session и user state хранить в них нельзя.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Lifespan?**
 
-Creating a new expensive client per request wastes pools, while never closing a shared client leaks resources at shutdown.
+Новый дорогой client на каждый request разрушает pooling, а незакрытый общий client оставляет ресурсы при shutdown.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - startup/shutdown
-- shared client/pool initialization
+- инициализация общего клиента или пула
 - cleanup
-- modern lifespan over scattered legacy hooks
+- современный lifespan предпочтительнее разрозненных устаревших обработчиков
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Creating a new expensive client per request wastes pools, while never closing a shared client leaks resources at shutdown.
+- Новый дорогой client на каждый request разрушает pooling, а незакрытый общий client оставляет ресурсы при shutdown.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Lifespan?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Lifespan**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Lifespan**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** FastAPI lifespan manages resources that live for the application process, such as connection pools and shared HTTP clients.
+- **Что это:** FastAPI lifespan управляет ресурсами уровня application process: connection pools и общими HTTP clients.
 - **Механизм:** Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
-- **Ограничение:** Creating a new expensive client per request wastes pools, while never closing a shared client leaks resources at shutdown.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Новый дорогой client на каждый request разрушает pooling, а незакрытый общий client оставляет ресурсы при shutdown.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

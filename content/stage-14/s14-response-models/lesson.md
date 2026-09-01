@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** FastAPI явно встречался в 9/18, любой Python web framework — в 16/18.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-A response model defines the public output schema and filters/serializes endpoint results.
+Response model задаёт публичную output schema и фильтрует или сериализует результат endpoint.
 
 ### Как работает
 
-FastAPI validates the returned value against the model and emits the declared representation in OpenAPI.
+FastAPI проверяет возвращённое значение по model и публикует представление в OpenAPI.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Use a separate public schema so password hashes and internal flags cannot leak from an ORM object.
+Отдельная public schema не позволяет password hash и внутренним flags случайно попасть из ORM object в response.
 
-## Mental model
+## Модель понимания
 
 Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -44,13 +44,13 @@ Path operation — внешний адаптер; бизнес-правила л
 
 ### Полезно
 
-- one short code/result example
+- один короткий пример кода с результатом
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Response models: отдельный пример
 
@@ -63,81 +63,81 @@ Path operation — внешний адаптер; бизнес-правила л
 
 Это отдельный debugging example для данного subtopic, а не общий пример stage.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Returning ORM `__dict__` or an unrestricted model can expose secret/internal fields.
+Возврат ORM `__dict__` или неограниченной model способен раскрыть secret и internal fields.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `contract` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `contract` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `serialization` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `serialization`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `contract` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `contract`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Response models in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Response models за 45–60 секунд и назови одно ограничение.
 
-## Debugging practice
+## Практика: Отладка
 
 ### Secret ORM field
 
 **Сценарий:** Endpoint возвращает ORM object вместе с password_hash.
 
-**Rubric:** Явная response model/DTO с allowlist полей; contract test проверяет отсутствие secret.
+**Критерии ответа:** Явная response model/DTO с allowlist полей; contract test проверяет отсутствие secret.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Response models и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Response models?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-A response model defines the public output schema and filters/serializes endpoint results.
+Response model задаёт публичную output schema и фильтрует или сериализует результат endpoint.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> A response model defines the public output schema and filters/serializes endpoint results. FastAPI validates the returned value against the model and emits the declared representation in OpenAPI. Важное ограничение: Use a separate public schema so password hashes and internal flags cannot leak from an ORM object.
+> Response model задаёт публичную output schema и фильтрует или сериализует результат endpoint. FastAPI проверяет возвращённое значение по model и публикует представление в OpenAPI. Важное ограничение: Отдельная public schema не позволяет password hash и внутренним flags случайно попасть из ORM object в response.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Response models?**
 
-Returning ORM `__dict__` or an unrestricted model can expose secret/internal fields.
+Возврат ORM `__dict__` или неограниченной model способен раскрыть secret и internal fields.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - contract
 - serialization
 - filtering fields
 - avoiding secret leakage
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Returning ORM `__dict__` or an unrestricted model can expose secret/internal fields.
+- Возврат ORM `__dict__` или неограниченной model способен раскрыть secret и internal fields.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Response models?
 
@@ -147,17 +147,17 @@ Returning ORM `__dict__` or an unrestricted model can expose secret/internal fie
 
 UserPublic response_model для GET /users/me должен удалить password_hash из handler result.
 
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
-## Cheat sheet
+Работай в main.py. Не меняй публичные имена и сигнатуры: скрытые тесты импортируют их напрямую. Проверь основной сценарий, граничные значения, повторные вызовы и распространение ошибок.
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** A response model defines the public output schema and filters/serializes endpoint results.
+- **Что это:** Response model задаёт публичную output schema и фильтрует или сериализует результат endpoint.
 - **Механизм:** Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
-- **Ограничение:** Returning ORM `__dict__` or an unrestricted model can expose secret/internal fields.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Возврат ORM `__dict__` или неограниченной model способен раскрыть secret и internal fields.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

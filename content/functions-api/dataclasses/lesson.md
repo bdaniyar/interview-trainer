@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: high · 12 минут.** Python указан в 18/18; OOP/data model важны для чтения framework и domain code.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-`@dataclass` generates methods such as `__init__`, `__repr__` and equality from declared fields.
+`@dataclass` генерирует `__init__`, `__repr__`, equality и другие методы по объявленным fields.
 
 ### Как работает
 
-Fields are processed in order; `field(default_factory=list)` creates a fresh mutable default per instance. `frozen=True` blocks normal field assignment but is not deep immutability.
+Fields обрабатываются по порядку; `field(default_factory=list)` создаёт новый mutable default для каждого instance. `frozen=True` запрещает обычное присваивание полям, но не даёт глубокой неизменяемости.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Dataclass is good for internal data/value objects; Pydantic handles untrusted validation and ORM models handle persistence.
+Dataclass подходит для внутренних data/value objects; Pydantic валидирует недоверенный input, а ORM models отвечают за persistence.
 
-## Mental model
+## Модель понимания
 
 У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -49,9 +49,9 @@ Dataclass is good for internal data/value objects; Pydantic handles untrusted va
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Dataclasses: отдельный пример
 
@@ -70,23 +70,23 @@ print(b.roles)
 
 `default_factory` создаёт независимый mutable default для каждого dataclass instance.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Using `items: list = []` is rejected/unsafe; mutable defaults need `default_factory`.
+Mutable default нужно задавать через `default_factory`, иначе instances получат общее состояние или dataclass отклонит объявление.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `generated methods` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `generated methods` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `equality/repr` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `equality/repr`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `generated methods` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `generated methods`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Dataclasses in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Dataclasses за 45–60 секунд и назови одно ограничение.
 
-## Code prediction
+## Предсказание результата кода
 
 ### dataclass equality
 
@@ -102,7 +102,7 @@ print(Point(1) == Point(1), Point(1) is Point(1))
 
 <details><summary>Показать ответ</summary>
 
-Expected:
+Ожидаемый результат:
 
 ```text
 True False
@@ -110,59 +110,59 @@ True False
 
 dataclass генерирует equality по полям, но каждый constructor call создаёт новый объект.
 
-Misconception: `dataclass-equality`.
+Типичная ошибка мышления: `dataclass-equality`.
 
 </details>
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Dataclasses и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Dataclasses?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-`@dataclass` generates methods such as `__init__`, `__repr__` and equality from declared fields.
+`@dataclass` генерирует `__init__`, `__repr__`, equality и другие методы по объявленным fields.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> `@dataclass` generates methods such as `__init__`, `__repr__` and equality from declared fields. Fields are processed in order; `field(default_factory=list)` creates a fresh mutable default per instance. `frozen=True` blocks normal field assignment but is not deep immutability. Важное ограничение: Dataclass is good for internal data/value objects; Pydantic handles untrusted validation and ORM models handle persistence.
+> `@dataclass` генерирует `__init__`, `__repr__`, equality и другие методы по объявленным fields. Fields обрабатываются по порядку; `field(default_factory=list)` создаёт новый mutable default для каждого instance. `frozen=True` запрещает обычное присваивание полям, но не даёт глубокой неизменяемости. Важное ограничение: Dataclass подходит для внутренних data/value objects; Pydantic валидирует недоверенный input, а ORM models отвечают за persistence.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Dataclasses?**
 
-Using `items: list = []` is rejected/unsafe; mutable defaults need `default_factory`.
+Mutable default нужно задавать через `default_factory`, иначе instances получат общее состояние или dataclass отклонит объявление.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - generated methods
 - equality/repr
 - mutable fields
 - `field(default_factory=...)`
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Using `items: list = []` is rejected/unsafe; mutable defaults need `default_factory`.
+- Mutable default нужно задавать через `default_factory`, иначе instances получат общее состояние или dataclass отклонит объявление.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Dataclasses?
 
@@ -172,17 +172,17 @@ Using `items: list = []` is rejected/unsafe; mutable defaults need `default_fact
 
 Создай frozen slots dataclass BookingWindow(start,end); end строго больше start; duration возвращает разницу.
 
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
-## Cheat sheet
+Работай в main.py. Не меняй публичные имена и сигнатуры: скрытые тесты импортируют их напрямую. Проверь основной сценарий, граничные значения, повторные вызовы и распространение ошибок.
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** `@dataclass` generates methods such as `__init__`, `__repr__` and equality from declared fields.
+- **Что это:** `@dataclass` генерирует `__init__`, `__repr__`, equality и другие методы по объявленным fields.
 - **Механизм:** У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.
-- **Ограничение:** Using `items: list = []` is rejected/unsafe; mutable defaults need `default_factory`.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Mutable default нужно задавать через `default_factory`, иначе instances получат общее состояние или dataclass отклонит объявление.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

@@ -6,20 +6,20 @@
     "interview_probability": "high",
     "answer": [
       "expand/contract",
-      "nullable → backfill → constraint",
-      "indexes on large tables",
-      "backward compatibility"
+      "nullable → заполнение существующих данных → constraint",
+      "indexes on large таблицами",
+      "обратная совместимость"
     ],
     "short_answer": "Safe schema changes: Это версионированный переход schema, который должен безопасно работать с кодом во время deploy.",
-    "junior_answer": "Safe schema changes — тема, в которой я сначала фиксирую `expand/contract`, затем объясняю `nullable → backfill → constraint` на коротком примере. Ключевой механизм: Раздели upgrade, совместимость старого/нового кода, backfill и rollback; autogenerate обязательно review. Главная практическая ошибка — Принять autogenerate без review или выпустить несовместимые schema/code изменения одним шагом.",
+    "junior_answer": "Safe schema changes — тема, в которой я сначала фиксирую `expand/contract`, затем объясняю `nullable → backfill → constraint` на коротком примере. Ключевой механизм: Раздели upgrade, совместимость старого/нового кода, заполнение существующих данных и rollback; autogenerate обязательно review. Главная практическая ошибка — Принять autogenerate без review или выпустить несовместимые schema/code изменения одним шагом.",
     "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Safe schema changes?",
     "follow_up_answer": "Принять autogenerate без review или выпустить несовместимые schema/code изменения одним шагом.",
     "expected_answer": {
       "must_mention": [
         "expand/contract",
-        "nullable → backfill → constraint",
-        "indexes on large tables",
-        "backward compatibility"
+        "nullable → заполнение существующих данных → constraint",
+        "indexes on large таблицами",
+        "обратная совместимость"
       ],
       "good_additions": [
         "короткий рабочий пример",
@@ -61,7 +61,7 @@
     "short_answer": "Принять autogenerate без review или выпустить несовместимые schema/code изменения одним шагом.",
     "junior_answer": "Принять autogenerate без review или выпустить несовместимые schema/code изменения одним шагом.",
     "follow_up_question": "Что такое Safe schema changes и какой механизм здесь важно понимать Junior-разработчику?",
-    "follow_up_answer": "Safe schema changes — тема, в которой я сначала фиксирую `expand/contract`, затем объясняю `nullable → backfill → constraint` на коротком примере. Ключевой механизм: Раздели upgrade, совместимость старого/нового кода, backfill и rollback; autogenerate обязательно review. Главная практическая ошибка — Принять autogenerate без review или выпустить несовместимые schema/code изменения одним шагом.",
+    "follow_up_answer": "Safe schema changes — тема, в которой я сначала фиксирую `expand/contract`, затем объясняю `nullable → backfill → constraint` на коротком примере. Ключевой механизм: Раздели upgrade, совместимость старого/нового кода, заполнение существующих данных и rollback; autogenerate обязательно review. Главная практическая ошибка — Принять autogenerate без review или выпустить несовместимые schema/code изменения одним шагом.",
     "expected_answer": {
       "must_mention": [
         "связать Safe schema changes с коротким рабочим примером"

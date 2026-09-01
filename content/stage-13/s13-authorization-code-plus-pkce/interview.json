@@ -11,7 +11,7 @@
       "`state`"
     ],
     "short_answer": "Authorization Code + PKCE: Это security boundary: сервер проверяет утверждение и безопасно отказывает, не доверяя клиентскому UI.",
-    "junior_answer": "Authorization Code + PKCE — тема, в которой я сначала фиксирую `verifier`, затем объясняю `challenge` на коротком примере. Ключевой механизм: Назови asset, threat, trust boundary, server-side verification и безопасный failure result. Главная практическая ошибка — Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.",
+    "junior_answer": "Authorization Code + PKCE — тема, в которой я сначала фиксирую `verifier`, затем объясняю `challenge` на коротком примере. Ключевой механизм: Назови asset, threat, trust boundary, на стороне сервера verification и безопасный failure result. Главная практическая ошибка — Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.",
     "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Authorization Code + PKCE?",
     "follow_up_answer": "Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.",
     "expected_answer": {
@@ -56,17 +56,17 @@
     "interview_probability": "high",
     "answer": [
       "redirect URI",
-      "PKCE does not replace all CSRF protections",
+      "PKCE не заменяет все меры защиты от CSRF",
       "Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией."
     ],
     "short_answer": "Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.",
     "junior_answer": "Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.",
     "follow_up_question": "Что такое Authorization Code + PKCE и какой механизм здесь важно понимать Junior-разработчику?",
-    "follow_up_answer": "Authorization Code + PKCE — тема, в которой я сначала фиксирую `verifier`, затем объясняю `challenge` на коротком примере. Ключевой механизм: Назови asset, threat, trust boundary, server-side verification и безопасный failure result. Главная практическая ошибка — Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.",
+    "follow_up_answer": "Authorization Code + PKCE — тема, в которой я сначала фиксирую `verifier`, затем объясняю `challenge` на коротком примере. Ключевой механизм: Назови asset, threat, trust boundary, на стороне сервера verification и безопасный failure result. Главная практическая ошибка — Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.",
     "expected_answer": {
       "must_mention": [
         "redirect URI",
-        "PKCE does not replace all CSRF protections"
+        "PKCE не заменяет все меры защиты от CSRF"
       ],
       "good_additions": [
         "короткий пример именно этой темы"

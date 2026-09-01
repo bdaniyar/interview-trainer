@@ -9,8 +9,8 @@
       "`asyncio.timeout` or version-appropriate API",
       "cleanup"
     ],
-    "short_answer": "Timeouts: Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг await points.",
-    "junior_answer": "Timeouts — тема, в которой я сначала фиксирую `bounded waiting`, затем объясняю ``asyncio.timeout` or version-appropriate API` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и await points до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
+    "short_answer": "Timeouts: Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг точки приостановки await.",
+    "junior_answer": "Timeouts — тема, в которой я сначала фиксирую `bounded waiting`, затем объясняю ``asyncio.timeout` or version-appropriate API` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и точки приостановки await до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
     "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Timeouts?",
     "follow_up_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
     "expected_answer": {
@@ -59,7 +59,7 @@
     "short_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
     "junior_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
     "follow_up_question": "Что такое Timeouts и какой механизм здесь важно понимать Junior-разработчику?",
-    "follow_up_answer": "Timeouts — тема, в которой я сначала фиксирую `bounded waiting`, затем объясняю ``asyncio.timeout` or version-appropriate API` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и await points до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
+    "follow_up_answer": "Timeouts — тема, в которой я сначала фиксирую `bounded waiting`, затем объясняю ``asyncio.timeout` or version-appropriate API` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и точки приостановки await до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
     "expected_answer": {
       "must_mention": [
         "связать Timeouts с коротким рабочим примером"

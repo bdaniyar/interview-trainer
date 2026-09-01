@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P1 · вероятность на интервью: high · 10 минут.** SQL/relational DB явно встречались в 15/18 — один из главных P0-разделов.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,30 +12,30 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-A window function computes across related rows while keeping each original row visible, unlike GROUP BY.
+Window function вычисляет значение по связанным rows, сохраняя каждую исходную row, в отличие от GROUP BY.
 
 ### Как работает
 
-`OVER` defines partition, order and frame. Ranking, running totals and comparisons to previous rows are common uses.
+`OVER` задаёт partition, order и frame. Типичные случаи — ranking, running total и сравнение с предыдущей row.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Ordering inside OVER controls the window calculation; final output order still requires a separate ORDER BY.
+Ordering внутри OVER управляет window calculation; финальный порядок результата всё равно требует отдельного ORDER BY.
 
 ### Где используется в backend
 
-Reports can add per-customer running totals without losing individual transactions.
+Report может добавить накопительную сумму по customer, не теряя отдельные transactions.
 
-## Mental model
+## Модель понимания
 
 Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -47,13 +47,13 @@ Reports can add per-customer running totals without losing individual transactio
 
 ### Полезно
 
-- one short code/result example
+- один короткий пример кода с результатом
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Window functions: отдельный пример
 
@@ -68,23 +68,23 @@ FROM ledger_entries;
 
 Window aggregate сохраняет каждую ledger row и добавляет накопительный итог в пределах account.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Omitting a tie-breaker from window ordering can make row_number results nondeterministic.
+Отсутствие tie-breaker в window ordering делает `row_number` недетерминированным при равных значениях.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `rows remain visible` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `rows remain visible` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `difference from GROUP BY` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `difference from GROUP BY`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `rows remain visible` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `rows remain visible`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Window functions in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Window functions за 45–60 секунд и назови одно ограничение.
 
-## SQL practice
+## Практика SQL
 
 ### Предыдущий order total
 
@@ -118,7 +118,7 @@ CREATE TABLE order_items (
 );
 ```
 
-Seed:
+Начальные данные:
 
 ```sql
 INSERT INTO users VALUES
@@ -137,9 +137,9 @@ INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,1
 
 **Вопрос:** Добавь previous_total через LAG в рамках user.
 
-Expected columns: id, user_id, total, previous_total. Comparison: ordered.
+Ожидаемые столбцы: id, user_id, total, previous_total. Сравнение: с учётом порядка строк.
 
-SQL runner пока не подключён: выполни запрос в локальном PostgreSQL и сверь result с rubric.
+Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
 
 ### Следующий order time
 
@@ -173,7 +173,7 @@ CREATE TABLE order_items (
 );
 ```
 
-Seed:
+Начальные данные:
 
 ```sql
 INSERT INTO users VALUES
@@ -192,75 +192,75 @@ INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,1
 
 **Вопрос:** Добавь next_created_at через LEAD в рамках user.
 
-Expected columns: id, user_id, next_created_at. Comparison: ordered.
+Ожидаемые столбцы: id, user_id, next_created_at. Сравнение: с учётом порядка строк.
 
-SQL runner пока не подключён: выполни запрос в локальном PostgreSQL и сверь result с rubric.
+Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Window functions и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Window functions?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-A window function computes across related rows while keeping each original row visible, unlike GROUP BY.
+Window function вычисляет значение по связанным rows, сохраняя каждую исходную row, в отличие от GROUP BY.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> A window function computes across related rows while keeping each original row visible, unlike GROUP BY. `OVER` defines partition, order and frame. Ranking, running totals and comparisons to previous rows are common uses. Важное ограничение: Ordering inside OVER controls the window calculation; final output order still requires a separate ORDER BY.
+> Window function вычисляет значение по связанным rows, сохраняя каждую исходную row, в отличие от GROUP BY. `OVER` задаёт partition, order и frame. Типичные случаи — ranking, running total и сравнение с предыдущей row. Важное ограничение: Ordering внутри OVER управляет window calculation; финальный порядок результата всё равно требует отдельного ORDER BY.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Window functions?**
 
-Omitting a tie-breaker from window ordering can make row_number results nondeterministic.
+Отсутствие tie-breaker в window ordering делает `row_number` недетерминированным при равных значениях.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - rows remain visible
 - difference from GROUP BY
 - window definition
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Omitting a tie-breaker from window ordering can make row_number results nondeterministic.
+- Отсутствие tie-breaker в window ordering делает `row_number` недетерминированным при равных значениях.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Window functions?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Window functions**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Window functions**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** A window function computes across related rows while keeping each original row visible, unlike GROUP BY.
+- **Что это:** Window function вычисляет значение по связанным rows, сохраняя каждую исходную row, в отличие от GROUP BY.
 - **Механизм:** Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
-- **Ограничение:** Omitting a tie-breaker from window ordering can make row_number results nondeterministic.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Отсутствие tie-breaker в window ordering делает `row_number` недетерминированным при равных значениях.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

@@ -6,7 +6,7 @@
     "interview_probability": "high",
     "answer": [
       "optional value",
-      "required nullable field distinction",
+      "различие между обязательным и допускающим null полем",
       "narrowing"
     ],
     "short_answer": "Union, Optional and `|`: Это статический контракт для checker и IDE; runtime-поведение Python и validation остаются отдельными слоями.",
@@ -16,7 +16,7 @@
     "expected_answer": {
       "must_mention": [
         "optional value",
-        "required nullable field distinction",
+        "различие между обязательным и допускающим null полем",
         "narrowing"
       ],
       "good_additions": [

@@ -5,7 +5,7 @@
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "generator-based context manager",
+      "контекстный менеджер на основе генератора",
       "transaction/file/timer examples"
     ],
     "short_answer": "`contextlib.contextmanager`: Это протокол управления потоком: consumer и объект договариваются о шагах, завершении и обработке ошибок.",
@@ -14,7 +14,7 @@
     "follow_up_answer": "Забыть состояние protocol, сигнал завершения или cleanup при exception.",
     "expected_answer": {
       "must_mention": [
-        "generator-based context manager",
+        "контекстный менеджер на основе генератора",
         "transaction/file/timer examples"
       ],
       "good_additions": [

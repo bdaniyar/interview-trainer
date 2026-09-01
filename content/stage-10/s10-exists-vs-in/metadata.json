@@ -3,7 +3,7 @@
   "slug": "s10-exists-vs-in",
   "title": "EXISTS vs IN",
   "module_slug": "stage-10",
-  "module_title": "Stage 10 · SQL Fundamentals and Practice",
+  "module_title": "Этап 10 · SQL Fundamentals and Practice",
   "module_order": 10,
   "order": 112,
   "duration": 10,
@@ -14,7 +14,7 @@
     "NULL caveats",
     "no simplistic universal performance rule."
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

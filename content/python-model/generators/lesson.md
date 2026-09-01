@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** Python указан в 18/18; iteration/exceptions/resource cleanup нужны в production code.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,30 +12,30 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-A generator function contains `yield`; calling it returns a generator object without running the body immediately.
+Generator function содержит `yield`; её вызов возвращает generator object и не запускает тело немедленно.
 
 ### Как работает
 
-Each `next` resumes execution until the next `yield`, preserving local variables and instruction position. Return or falling off the end raises `StopIteration` to the consumer.
+Каждый `next` продолжает выполнение до следующего `yield`, сохраняя локальные переменные и позицию. `return` или конец функции превращается для consumer в `StopIteration`.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Laziness reduces peak memory but generators are single-use and defer exceptions until iteration reaches the failing line.
+Ленивость уменьшает пиковую память, но generator одноразовый, а исключения откладываются до достижения проблемной строки.
 
 ### Где используется в backend
 
-Generators naturally stream rows or chunks instead of collecting the entire result in memory.
+Generators позволяют потоково отдавать строки или chunks, не собирая весь результат в памяти.
 
-## Mental model
+## Модель понимания
 
 Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -52,9 +52,9 @@ Generators naturally stream rows or chunks instead of collecting the entire resu
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Generator function and `yield`: отдельный пример
 
@@ -70,23 +70,23 @@ print(list(stream))
 
 Generator сохраняет suspended frame между `yield` и лениво продолжает с текущей позиции.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Converting a generator to list for logging before real use accidentally exhausts it.
+Преобразование generator в list ради логирования расходует его до основного использования.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `generator object` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `generator object` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `suspension/resume` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `suspension/resume`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `generator object` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `generator object`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Generator function and `yield` in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Generator function and `yield` за 45–60 секунд и назови одно ограничение.
 
-## Code prediction
+## Предсказание результата кода
 
 ### Generator ленивый
 
@@ -103,7 +103,7 @@ print(next(g))
 
 <details><summary>Показать ответ</summary>
 
-Expected:
+Ожидаемый результат:
 
 ```text
 made
@@ -113,7 +113,7 @@ start
 
 Тело generator не выполняется при вызове функции, а стартует на первом next.
 
-Misconception: `generator-laziness`.
+Типичная ошибка мышления: `generator-laziness`.
 
 </details>
 
@@ -130,7 +130,7 @@ print(list(numbers()))
 
 <details><summary>Показать ответ</summary>
 
-Expected:
+Ожидаемый результат:
 
 ```text
 [1, 2, 3]
@@ -138,76 +138,76 @@ Expected:
 
 yield from делегирует итерацию вложенному iterable до его исчерпания.
 
-Misconception: `yield-from`.
+Типичная ошибка мышления: `yield-from`.
 
 </details>
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Generator function and `yield` и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Generator function and `yield`?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-A generator function contains `yield`; calling it returns a generator object without running the body immediately.
+Generator function содержит `yield`; её вызов возвращает generator object и не запускает тело немедленно.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> A generator function contains `yield`; calling it returns a generator object without running the body immediately. Each `next` resumes execution until the next `yield`, preserving local variables and instruction position. Return or falling off the end raises `StopIteration` to the consumer. Важное ограничение: Laziness reduces peak memory but generators are single-use and defer exceptions until iteration reaches the failing line.
+> Generator function содержит `yield`; её вызов возвращает generator object и не запускает тело немедленно. Каждый `next` продолжает выполнение до следующего `yield`, сохраняя локальные переменные и позицию. `return` или конец функции превращается для consumer в `StopIteration`. Важное ограничение: Ленивость уменьшает пиковую память, но generator одноразовый, а исключения откладываются до достижения проблемной строки.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Generator function and `yield`?**
 
-Converting a generator to list for logging before real use accidentally exhausts it.
+Преобразование generator в list ради логирования расходует его до основного использования.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - generator object
 - suspension/resume
 - lazy evaluation
 - generator state
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Converting a generator to list for logging before real use accidentally exhausts it.
+- Преобразование generator в list ради логирования расходует его до основного использования.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Generator function and `yield`?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Generator function and `yield`**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Generator function and `yield`**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** A generator function contains `yield`; calling it returns a generator object without running the body immediately.
+- **Что это:** Generator function содержит `yield`; её вызов возвращает generator object и не запускает тело немедленно.
 - **Механизм:** Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка.
-- **Ограничение:** Converting a generator to list for logging before real use accidentally exhausts it.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Преобразование generator в list ради логирования расходует его до основного использования.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

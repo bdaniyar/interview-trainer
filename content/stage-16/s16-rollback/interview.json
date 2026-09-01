@@ -9,10 +9,10 @@
       "rollback before reuse",
       "exception boundary"
     ],
-    "short_answer": "Rollback cancels the current database transaction and is required before reusing a Session after a flush/commit error.",
-    "junior_answer": "Rollback cancels the current database transaction and is required before reusing a Session after a flush/commit error. SQLAlchemy marks the failed transaction state; catching IntegrityError without rollback leaves later operations failing. Важное ограничение: Translate known constraint conflicts after rollback and re-raise unexpected failures with their cause/context.",
+    "short_answer": "Rollback отменяет текущую database transaction и обязателен перед повторным использованием Session после flush или commit error.",
+    "junior_answer": "Rollback отменяет текущую database transaction и обязателен перед повторным использованием Session после flush или commit error. SQLAlchemy помечает transaction как failed; перехват `IntegrityError` без rollback оставляет дальнейшие операции нерабочими. Важное ограничение: После rollback известный constraint conflict переводят в domain error, а неожиданный сбой поднимают с исходной причиной.",
     "follow_up_question": "Какая типичная ошибка связана с Rollback?",
-    "follow_up_answer": "Continuing queries immediately after IntegrityError produces a pending-rollback error and obscures the original conflict.",
+    "follow_up_answer": "Query сразу после IntegrityError без rollback вызывает pending-rollback error и скрывает исходный conflict.",
     "expected_answer": {
       "must_mention": [
         "failed transaction state",
@@ -24,11 +24,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Continuing queries immediately after IntegrityError produces a pending-rollback error and obscures the original conflict.",
+        "Query сразу после IntegrityError без rollback вызывает pending-rollback error и скрывает исходный conflict.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Continuing queries immediately after IntegrityError produces a pending-rollback error and obscures the original conflict."
+        "Query сразу после IntegrityError без rollback вызывает pending-rollback error и скрывает исходный conflict."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Rollback?"
@@ -53,25 +53,25 @@
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "one short code/result example",
-      "Continuing queries immediately after IntegrityError produces a pending-rollback error and obscures the original conflict."
+      "один короткий пример кода с результатом",
+      "Query сразу после IntegrityError без rollback вызывает pending-rollback error и скрывает исходный conflict."
     ],
-    "short_answer": "Continuing queries immediately after IntegrityError produces a pending-rollback error and obscures the original conflict.",
-    "junior_answer": "Continuing queries immediately after IntegrityError produces a pending-rollback error and obscures the original conflict.",
+    "short_answer": "Query сразу после IntegrityError без rollback вызывает pending-rollback error и скрывает исходный conflict.",
+    "junior_answer": "Query сразу после IntegrityError без rollback вызывает pending-rollback error и скрывает исходный conflict.",
     "follow_up_question": "Что такое Rollback и как это работает?",
-    "follow_up_answer": "Rollback cancels the current database transaction and is required before reusing a Session after a flush/commit error. SQLAlchemy marks the failed transaction state; catching IntegrityError without rollback leaves later operations failing. Важное ограничение: Translate known constraint conflicts after rollback and re-raise unexpected failures with their cause/context.",
+    "follow_up_answer": "Rollback отменяет текущую database transaction и обязателен перед повторным использованием Session после flush или commit error. SQLAlchemy помечает transaction как failed; перехват `IntegrityError` без rollback оставляет дальнейшие операции нерабочими. Важное ограничение: После rollback известный constraint conflict переводят в domain error, а неожиданный сбой поднимают с исходной причиной.",
     "expected_answer": {
       "must_mention": [
-        "one short code/result example"
+        "один короткий пример кода с результатом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Continuing queries immediately after IntegrityError produces a pending-rollback error and obscures the original conflict."
+        "Query сразу после IntegrityError без rollback вызывает pending-rollback error и скрывает исходный conflict."
       ],
       "red_flags": [
-        "Continuing queries immediately after IntegrityError produces a pending-rollback error and obscures the original conflict."
+        "Query сразу после IntegrityError без rollback вызывает pending-rollback error и скрывает исходный conflict."
       ],
       "follow_up_questions": [
         "Что такое Rollback и как это работает?"

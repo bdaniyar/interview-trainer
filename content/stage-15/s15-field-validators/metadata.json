@@ -3,7 +3,7 @@
   "slug": "s15-field-validators",
   "title": "Field validators",
   "module_slug": "stage-15",
-  "module_title": "Stage 15 · Pydantic v2",
+  "module_title": "Этап 15 · Pydantic v2",
   "module_order": 15,
   "order": 207,
   "duration": 10,
@@ -14,7 +14,7 @@
     "before/after",
     "avoid DB I/O inside schema validation."
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": true,
   "has_solution": true,
   "priority": "P1",

@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** Python указан в 18/18; iteration/exceptions/resource cleanup нужны в production code.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-`try/except/else/finally` separates risky work, recovery, success-only work and unconditional cleanup.
+`try/except/else/finally` разделяет рискованную операцию, восстановление, действия только при успехе и обязательный cleanup.
 
 ### Как работает
 
-`except` runs for a matching exception, `else` only when the try block succeeds, and `finally` runs before control leaves by success, return or exception.
+`except` выполняется для подходящего исключения, `else` — только без ошибки в try, а `finally` — перед любым выходом по успеху, return или exception.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Keep the try block narrow so unrelated bugs are not mistaken for the expected failure.
+Делай try-блок узким, чтобы несвязанные ошибки не выглядели как ожидаемый failure.
 
-## Mental model
+## Модель понимания
 
 Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -44,13 +44,13 @@ Keep the try block narrow so unrelated bugs are not mistaken for the expected fa
 
 ### Полезно
 
-- one short code/result example
+- один короткий пример кода с результатом
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### `try/except/else/finally`: отдельный пример
 
@@ -70,71 +70,71 @@ print(parse("7"))
 
 `else` выполняется только без exception, `finally` — при любом пути выхода.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-A return inside finally overrides an earlier return or exception and can silently destroy diagnostic information.
+`return` внутри finally перекрывает предыдущий return или exception и может уничтожить диагностическую информацию.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `control flow` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `control flow` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `cleanup` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `cleanup`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `control flow` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `control flow`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain `try/except/else/finally` in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни `try/except/else/finally` за 45–60 секунд и назови одно ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое `try/except/else/finally` и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с `try/except/else/finally`?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-`try/except/else/finally` separates risky work, recovery, success-only work and unconditional cleanup.
+`try/except/else/finally` разделяет рискованную операцию, восстановление, действия только при успехе и обязательный cleanup.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> `try/except/else/finally` separates risky work, recovery, success-only work and unconditional cleanup. `except` runs for a matching exception, `else` only when the try block succeeds, and `finally` runs before control leaves by success, return or exception. Важное ограничение: Keep the try block narrow so unrelated bugs are not mistaken for the expected failure.
+> `try/except/else/finally` разделяет рискованную операцию, восстановление, действия только при успехе и обязательный cleanup. `except` выполняется для подходящего исключения, `else` — только без ошибки в try, а `finally` — перед любым выходом по успеху, return или exception. Важное ограничение: Делай try-блок узким, чтобы несвязанные ошибки не выглядели как ожидаемый failure.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с `try/except/else/finally`?**
 
-A return inside finally overrides an earlier return or exception and can silently destroy diagnostic information.
+`return` внутри finally перекрывает предыдущий return или exception и может уничтожить диагностическую информацию.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - control flow
 - cleanup
 - return inside try/finally
 - narrow exception scope
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- A return inside finally overrides an earlier return or exception and can silently destroy diagnostic information.
+- `return` внутри finally перекрывает предыдущий return или exception и может уничтожить диагностическую информацию.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с `try/except/else/finally`?
 
@@ -144,17 +144,17 @@ A return inside finally overrides an earlier return or exception and can silentl
 
 None и пустая строка дают None; str/int преобразуются в int; bool и мусор дают ValueError с explicit cause.
 
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
-## Cheat sheet
+Работай в main.py. Не меняй публичные имена и сигнатуры: скрытые тесты импортируют их напрямую. Проверь основной сценарий, граничные значения, повторные вызовы и распространение ошибок.
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** `try/except/else/finally` separates risky work, recovery, success-only work and unconditional cleanup.
+- **Что это:** `try/except/else/finally` разделяет рискованную операцию, восстановление, действия только при успехе и обязательный cleanup.
 - **Механизм:** Думай о протоколе как о договоре между вызывающим кодом и объектом: кто начинает, кто завершает и как сигнализируется ошибка.
-- **Ограничение:** A return inside finally overrides an earlier return or exception and can silently destroy diagnostic information.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** `return` внутри finally перекрывает предыдущий return или exception и может уничтожить диагностическую информацию.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

@@ -5,7 +5,7 @@
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "environment",
+      "окружением",
       "functions",
       "async dependencies",
       "correct patch location"
@@ -16,7 +16,7 @@
     "follow_up_answer": "Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior.",
     "expected_answer": {
       "must_mention": [
-        "environment",
+        "окружением",
         "functions",
         "async dependencies",
         "correct patch location"

@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: high · 12 минут.** Python указан в 18/18; collections — ежедневная data transformation работа backend.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-A comprehension builds a list, dict or set from an expression, source iterable and optional filters; a generator expression stays lazy.
+Comprehension создаёт list, dict или set из выражения, исходного iterable и необязательного фильтра; generator expression остаётся ленивым.
 
 ### Как работает
 
-The expression runs once per selected input item. Comprehension loop variables have their own scope in Python 3, while referenced outer names are read normally.
+Выражение выполняется по одному разу для каждого выбранного элемента. В Python 3 переменная цикла comprehension имеет собственную область видимости.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Prefer a regular loop when there are several branches, side effects or nested transformations that hide intent.
+Обычный цикл лучше, когда есть несколько ветвей, побочные эффекты или вложенная трансформация, скрывающая смысл.
 
-## Mental model
+## Модель понимания
 
 Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -49,9 +49,9 @@ Prefer a regular loop when there are several branches, side effects or nested tr
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Comprehensions: отдельный пример
 
@@ -67,71 +67,71 @@ print(active_ids)
 
 Comprehension объединяет преобразование и короткий filter без скрытых side effects.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-A dense nested comprehension can be syntactically valid but harder to review and debug than a four-line loop.
+Плотный вложенный comprehension может быть корректным, но заметно сложнее для чтения и отладки, чем короткий цикл.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `list/dict/set comprehensions` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `list/dict/set comprehensions` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `generator expressions` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `generator expressions`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `list/dict/set comprehensions` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `list/dict/set comprehensions`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Comprehensions in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Comprehensions за 45–60 секунд и назови одно ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Comprehensions и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Comprehensions?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-A comprehension builds a list, dict or set from an expression, source iterable and optional filters; a generator expression stays lazy.
+Comprehension создаёт list, dict или set из выражения, исходного iterable и необязательного фильтра; generator expression остаётся ленивым.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> A comprehension builds a list, dict or set from an expression, source iterable and optional filters; a generator expression stays lazy. The expression runs once per selected input item. Comprehension loop variables have their own scope in Python 3, while referenced outer names are read normally. Важное ограничение: Prefer a regular loop when there are several branches, side effects or nested transformations that hide intent.
+> Comprehension создаёт list, dict или set из выражения, исходного iterable и необязательного фильтра; generator expression остаётся ленивым. Выражение выполняется по одному разу для каждого выбранного элемента. В Python 3 переменная цикла comprehension имеет собственную область видимости. Важное ограничение: Обычный цикл лучше, когда есть несколько ветвей, побочные эффекты или вложенная трансформация, скрывающая смысл.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Comprehensions?**
 
-A dense nested comprehension can be syntactically valid but harder to review and debug than a four-line loop.
+Плотный вложенный comprehension может быть корректным, но заметно сложнее для чтения и отладки, чем короткий цикл.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - list/dict/set comprehensions
 - generator expressions
 - nested comprehensions
 - scope
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- A dense nested comprehension can be syntactically valid but harder to review and debug than a four-line loop.
+- Плотный вложенный comprehension может быть корректным, но заметно сложнее для чтения и отладки, чем короткий цикл.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Comprehensions?
 
@@ -141,17 +141,17 @@ A dense nested comprehension can be syntactically valid but harder to review and
 
 Верни lower-case email активных пользователей с непустым email. Не изменяй вход.
 
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
-## Cheat sheet
+Работай в main.py. Не меняй публичные имена и сигнатуры: скрытые тесты импортируют их напрямую. Проверь основной сценарий, граничные значения, повторные вызовы и распространение ошибок.
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** A comprehension builds a list, dict or set from an expression, source iterable and optional filters; a generator expression stays lazy.
+- **Что это:** Comprehension создаёт list, dict или set из выражения, исходного iterable и необязательного фильтра; generator expression остаётся ленивым.
 - **Механизм:** Начинай с инварианта данных и операций, а затем выбирай list, tuple, dict или set.
-- **Ограничение:** A dense nested comprehension can be syntactically valid but harder to review and debug than a four-line loop.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Плотный вложенный comprehension может быть корректным, но заметно сложнее для чтения и отладки, чем короткий цикл.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

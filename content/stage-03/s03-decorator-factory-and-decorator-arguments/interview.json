@@ -6,7 +6,7 @@
     "interview_probability": "high",
     "answer": [
       "three levels of functions",
-      "configuration captured by closure",
+      "конфигурация, захваченная замыканием",
       "retry/timing/permission examples"
     ],
     "short_answer": "Decorator factory and decorator arguments: Это часть контракта Python function: важно различать definition time, call time, signature и разрешение имён.",
@@ -16,7 +16,7 @@
     "expected_answer": {
       "must_mention": [
         "three levels of functions",
-        "configuration captured by closure",
+        "конфигурация, захваченная замыканием",
         "retry/timing/permission examples"
       ],
       "good_additions": [

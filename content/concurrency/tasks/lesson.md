@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: high · 12 минут.** Async явно встречался в 5/18 и является P0/P1 для FastAPI async-проектов кандидата.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-An asyncio Task schedules one coroutine and stores its completion, result, exception or cancellation state.
+Asyncio Task планирует одну coroutine и хранит её состояние завершения, result, exception или cancellation.
 
 ### Как работает
 
-`create_task` makes a coroutine eligible to run; the caller should keep a reference and eventually await it or otherwise handle its outcome.
+`create_task` делает coroutine готовой к выполнению; caller должен сохранить reference и затем дождаться результата либо явно обработать outcome.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Fire-and-forget inside a web process is not durable: process shutdown can lose the task, and unobserved exceptions may surface only in logs.
+Fire-and-forget внутри web process не является durable: shutdown может потерять task, а необработанное исключение останется только в logs.
 
-## Mental model
+## Модель понимания
 
 Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -44,13 +44,13 @@ Event loop планирует готовые tasks; await не создаёт о
 
 ### Полезно
 
-- one short code/result example
+- один короткий пример кода с результатом
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Tasks and `asyncio.create_task`: отдельный пример
 
@@ -71,23 +71,23 @@ asyncio.run(main())
 
 Task планирует coroutine и хранит её completion/result; reference нужно сохранить и дождаться.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Creating a task and dropping the reference hides failures and does not guarantee completion before request/process shutdown.
+Создание task без сохранения reference скрывает сбои и не гарантирует завершение до остановки request или process.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `scheduling` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `scheduling` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `keeping references` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `keeping references`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `scheduling` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `scheduling`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Tasks and `asyncio.create_task` in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Tasks and `asyncio.create_task` за 45–60 секунд и назови одно ограничение.
 
-## Code prediction
+## Предсказание результата кода
 
 ### create_task планирует работу
 
@@ -106,7 +106,7 @@ asyncio.run(main())
 
 <details><summary>Показать ответ</summary>
 
-Expected:
+Ожидаемый результат:
 
 ```text
 parent
@@ -115,69 +115,69 @@ child
 
 create_task ставит coroutine в планирование; текущая task продолжает до await.
 
-Misconception: `task-scheduling`.
+Типичная ошибка мышления: `task-scheduling`.
 
 </details>
 
-## Debugging practice
+## Практика: Отладка
 
 ### Unhandled task
 
 **Сценарий:** create_task потерян, exception logged later.
 
-**Rubric:** Хранить reference, await/supervise, done callback.
+**Критерии ответа:** Хранить reference, await/supervise, done callback.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Tasks and `asyncio.create_task` и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Tasks and `asyncio.create_task`?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-An asyncio Task schedules one coroutine and stores its completion, result, exception or cancellation state.
+Asyncio Task планирует одну coroutine и хранит её состояние завершения, result, exception или cancellation.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> An asyncio Task schedules one coroutine and stores its completion, result, exception or cancellation state. `create_task` makes a coroutine eligible to run; the caller should keep a reference and eventually await it or otherwise handle its outcome. Важное ограничение: Fire-and-forget inside a web process is not durable: process shutdown can lose the task, and unobserved exceptions may surface only in logs.
+> Asyncio Task планирует одну coroutine и хранит её состояние завершения, result, exception или cancellation. `create_task` делает coroutine готовой к выполнению; caller должен сохранить reference и затем дождаться результата либо явно обработать outcome. Важное ограничение: Fire-and-forget внутри web process не является durable: shutdown может потерять task, а необработанное исключение останется только в logs.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Tasks and `asyncio.create_task`?**
 
-Creating a task and dropping the reference hides failures and does not guarantee completion before request/process shutdown.
+Создание task без сохранения reference скрывает сбои и не гарантирует завершение до остановки request или process.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - scheduling
 - keeping references
 - awaiting completion
 - exception handling
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Creating a task and dropping the reference hides failures and does not guarantee completion before request/process shutdown.
+- Создание task без сохранения reference скрывает сбои и не гарантирует завершение до остановки request или process.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Tasks and `asyncio.create_task`?
 
@@ -187,17 +187,17 @@ Creating a task and dropping the reference hides failures and does not guarantee
 
 Создай task, добавь в registry set, удали done callback и верни task.
 
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
-## Cheat sheet
+Работай в main.py. Не меняй публичные имена и сигнатуры: скрытые тесты импортируют их напрямую. Проверь основной сценарий, граничные значения, повторные вызовы и распространение ошибок.
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** An asyncio Task schedules one coroutine and stores its completion, result, exception or cancellation state.
+- **Что это:** Asyncio Task планирует одну coroutine и хранит её состояние завершения, result, exception или cancellation.
 - **Механизм:** Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.
-- **Ограничение:** Creating a task and dropping the reference hides failures and does not guarantee completion before request/process shutdown.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Создание task без сохранения reference скрывает сбои и не гарантирует завершение до остановки request или process.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

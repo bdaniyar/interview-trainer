@@ -10,10 +10,10 @@
       "`IN`",
       "nested aggregation"
     ],
-    "short_answer": "A subquery is a query used as an expression or table source inside another statement.",
-    "junior_answer": "A subquery is a query used as an expression or table source inside another statement. A scalar subquery must return at most one row; `IN` compares against a set of values; a FROM subquery exposes a derived table with an alias. Важное ограничение: Prefer the form that expresses intent clearly. Performance depends on the planner and data, not a universal 'JOIN is faster' rule.",
+    "short_answer": "Subquery — запрос, используемый как expression или table source внутри другого SQL statement.",
+    "junior_answer": "Subquery — запрос, используемый как expression или table source внутри другого SQL statement. Scalar subquery должен вернуть не больше одной row; `IN` сравнивает с набором values; subquery в FROM создаёт derived table с alias. Важное ограничение: Выбирай форму по ясности смысла. Производительность зависит от planner и данных, поэтому универсального правила «JOIN всегда быстрее» нет.",
     "follow_up_question": "Какая типичная ошибка связана с Subqueries?",
-    "follow_up_answer": "A scalar subquery returning multiple rows raises an error; `NOT IN` with NULL can also produce surprising UNKNOWN results.",
+    "follow_up_answer": "Scalar subquery с несколькими rows вызывает ошибку, а `NOT IN` при наличии NULL может дать неожиданный UNKNOWN.",
     "expected_answer": {
       "must_mention": [
         "scalar",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "A scalar subquery returning multiple rows raises an error; `NOT IN` with NULL can also produce surprising UNKNOWN results.",
+        "Scalar subquery с несколькими rows вызывает ошибку, а `NOT IN` при наличии NULL может дать неожиданный UNKNOWN.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "A scalar subquery returning multiple rows raises an error; `NOT IN` with NULL can also produce surprising UNKNOWN results."
+        "Scalar subquery с несколькими rows вызывает ошибку, а `NOT IN` при наличии NULL может дать неожиданный UNKNOWN."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Subqueries?"
@@ -55,25 +55,25 @@
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "one short code/result example",
-      "A scalar subquery returning multiple rows raises an error; `NOT IN` with NULL can also produce surprising UNKNOWN results."
+      "один короткий пример кода с результатом",
+      "Scalar subquery с несколькими rows вызывает ошибку, а `NOT IN` при наличии NULL может дать неожиданный UNKNOWN."
     ],
-    "short_answer": "A scalar subquery returning multiple rows raises an error; `NOT IN` with NULL can also produce surprising UNKNOWN results.",
-    "junior_answer": "A scalar subquery returning multiple rows raises an error; `NOT IN` with NULL can also produce surprising UNKNOWN results.",
+    "short_answer": "Scalar subquery с несколькими rows вызывает ошибку, а `NOT IN` при наличии NULL может дать неожиданный UNKNOWN.",
+    "junior_answer": "Scalar subquery с несколькими rows вызывает ошибку, а `NOT IN` при наличии NULL может дать неожиданный UNKNOWN.",
     "follow_up_question": "Что такое Subqueries и как это работает?",
-    "follow_up_answer": "A subquery is a query used as an expression or table source inside another statement. A scalar subquery must return at most one row; `IN` compares against a set of values; a FROM subquery exposes a derived table with an alias. Важное ограничение: Prefer the form that expresses intent clearly. Performance depends on the planner and data, not a universal 'JOIN is faster' rule.",
+    "follow_up_answer": "Subquery — запрос, используемый как expression или table source внутри другого SQL statement. Scalar subquery должен вернуть не больше одной row; `IN` сравнивает с набором values; subquery в FROM создаёт derived table с alias. Важное ограничение: Выбирай форму по ясности смысла. Производительность зависит от planner и данных, поэтому универсального правила «JOIN всегда быстрее» нет.",
     "expected_answer": {
       "must_mention": [
-        "one short code/result example"
+        "один короткий пример кода с результатом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "A scalar subquery returning multiple rows raises an error; `NOT IN` with NULL can also produce surprising UNKNOWN results."
+        "Scalar subquery с несколькими rows вызывает ошибку, а `NOT IN` при наличии NULL может дать неожиданный UNKNOWN."
       ],
       "red_flags": [
-        "A scalar subquery returning multiple rows raises an error; `NOT IN` with NULL can also produce surprising UNKNOWN results."
+        "Scalar subquery с несколькими rows вызывает ошибку, а `NOT IN` при наличии NULL может дать неожиданный UNKNOWN."
       ],
       "follow_up_questions": [
         "Что такое Subqueries и как это работает?"

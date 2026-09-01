@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P1 · вероятность на интервью: high · 10 минут.** Docker/containers явно встречались в 11/18 — обязательный P1 practical skill.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,7 +12,7 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
@@ -20,18 +20,18 @@
 
 ### Как работает
 
-Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы сценарий ошибки.
 
-**named volume.** `named volume` относится либо к build-time image, либо к runtime container и наблюдается через DNS, ports, mounts и process lifecycle.
+**named volume.** `named volume` относится либо к во время сборки image, либо к runtime container и наблюдается через DNS, ports, mounts и жизненный цикл процесса.
 
-**bind mount.** `bind mount` относится либо к build-time image, либо к runtime container и наблюдается через DNS, ports, mounts и process lifecycle.
+**bind mount.** `bind mount` относится либо к во время сборки image, либо к runtime container и наблюдается через DNS, ports, mounts и жизненный цикл процесса.
 
-**persistence.** `persistence` относится либо к build-time image, либо к runtime container и наблюдается через DNS, ports, mounts и process lifecycle.
+**persistence.** `persistence` относится либо к во время сборки image, либо к runtime container и наблюдается через DNS, ports, mounts и жизненный цикл процесса.
 
-**source mount pitfalls.** `source mount pitfalls` относится либо к build-time image, либо к runtime container и наблюдается через DNS, ports, mounts и process lifecycle.
+**source mount pitfalls.** `source mount pitfalls` относится либо к во время сборки image, либо к runtime container и наблюдается через DNS, ports, mounts и жизненный цикл процесса.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
 Граница Junior: уверенно объясняй `named volume` и `bind mount` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
@@ -39,11 +39,11 @@
 
 В backend эта тема важна в том месте, где применяется `named volume`; проверяй именно наблюдаемый contract, а не название инструмента.
 
-## Mental model
+## Модель понимания
 
-Разделяй build-time layers, runtime config, network DNS и persistent volumes.
+Разделяй во время сборки layers, runtime config, network DNS и persistent volumes.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -60,9 +60,9 @@
 
 ### Можно не учить глубоко
 
-- implementation internals, не влияющие на Junior-код и типичный interview follow-up
+- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Volumes: отдельный пример
 
@@ -75,37 +75,37 @@ Named volume; backups; down -v destructive.
 
 Это отдельный operations example для данного subtopic, а не общий пример stage.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Игнорировать ограничение механизма и проверять только happy path.
+Игнорировать ограничение механизма и проверять только основной сценарий.
 
-## Practice
+## Практика
 
-**A · Prediction/reasoning.** Предскажи результат минимального примера для `named volume` до запуска.
+**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для `named volume` до запуска.
 
-**B · Find the bug.** Найди нарушение `bind mount` и объясни конкретное последствие.
+**B · Найди ошибку.** Найди нарушение `bind mount` и объясни конкретное последствие.
 
-**E · Interview explanation.** Дай ответ про Volumes за 60 секунд: определение, механизм, пример, ограничение.
+**E · Ответ на собеседовании.** Дай ответ про Volumes за 60 секунд: определение, механизм, пример, ограничение.
 
-## Operations practice
+## Практика: Эксплуатация
 
 ### Lost data
 
 **Сценарий:** После recreate DB данные исчезли.
 
-**Rubric:** Named volume; backups; down -v destructive.
+**Критерии ответа:** Named volume; backups; down -v destructive.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
-## Debugging practice
+## Практика: Отладка
 
 ### Bind mount hides files
 
 **Сценарий:** Mount ./app:/app скрыл dependencies, созданные в image path.
 
-**Rubric:** Проверить mount target; отделить source и dependency paths, использовать named volume где уместно.
+**Критерии ответа:** Проверить mount target; отделить source и dependency paths, использовать named volume где уместно.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
@@ -113,76 +113,76 @@ Named volume; backups; down -v destructive.
 
 **Сценарий:** После compose down/recreate PostgreSQL пуст.
 
-**Rubric:** Named volume и backup/restore; документировать, что down -v удаляет данные.
+**Критерии ответа:** Named volume и backup/restore; документировать, что down -v удаляет данные.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Volumes и какой механизм здесь важно понимать Junior-разработчику?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какое ограничение или типичная ошибка относится именно к теме Volumes?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
 Volumes: это отдельный технический контракт
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
 > Volumes — тема, в которой я сначала фиксирую `named volume`, затем объясняю `bind mount` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какое ограничение или типичная ошибка относится именно к теме Volumes?**
 
-Нужно назвать конкретный failure path и способ его проверить.
+Нужно назвать конкретный сценарий ошибки и способ его проверить.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - named volume
 - bind mount
 - persistence
 - source mount pitfalls
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Игнорировать ограничение механизма и проверять только happy path.
+- Игнорировать ограничение механизма и проверять только основной сценарий.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какое ограничение или типичная ошибка относится именно к теме Volumes?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Volumes**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Volumes**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
 - **Что это:** Volumes: это отдельный технический контракт
-- **Механизм:** Разделяй build-time layers, runtime config, network DNS и persistent volumes.
-- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Механизм:** Разделяй во время сборки layers, runtime config, network DNS и persistent volumes.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только основной сценарий.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

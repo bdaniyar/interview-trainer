@@ -10,10 +10,10 @@
       "types",
       "primary keys"
     ],
-    "short_answer": "Declarative ORM models map Python classes/attributes to tables/columns using `Mapped` and `mapped_column` in SQLAlchemy 2.x.",
-    "junior_answer": "Declarative ORM models map Python classes/attributes to tables/columns using `Mapped` and `mapped_column` in SQLAlchemy 2.x. Class metadata builds a SQL schema description used by ORM statements and migrations tooling; instances represent rows within Session state. Важное ограничение: Changing model code does not migrate an existing production database; Alembic revision must apply the schema transition.",
+    "short_answer": "Декларативные ORM-модели сопоставляют Python classes и attributes с таблицами и columns через `Mapped` и `mapped_column` в SQLAlchemy 2.x.",
+    "junior_answer": "Декларативные ORM-модели сопоставляют Python classes и attributes с таблицами и columns через `Mapped` и `mapped_column` в SQLAlchemy 2.x. Class metadata формирует описание schema для ORM statements и migration tooling; instances представляют rows в состоянии Session. Важное ограничение: Изменение model code не мигрирует существующую production database: schema transition выполняет Alembic revision.",
     "follow_up_question": "Какая типичная ошибка связана с Declarative models?",
-    "follow_up_answer": "Calling `create_all` as a production migration strategy loses versioned, reviewable schema history.",
+    "follow_up_answer": "`create_all` как стратегия миграций рабочего окружения не даёт versioned и reviewable истории schema.",
     "expected_answer": {
       "must_mention": [
         "`Mapped`",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Calling `create_all` as a production migration strategy loses versioned, reviewable schema history.",
+        "`create_all` как стратегия миграций рабочего окружения не даёт versioned и reviewable истории schema.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Calling `create_all` as a production migration strategy loses versioned, reviewable schema history."
+        "`create_all` как стратегия миграций рабочего окружения не даёт versioned и reviewable истории schema."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Declarative models?"
@@ -56,12 +56,12 @@
     "interview_probability": "very_high",
     "answer": [
       "constraints",
-      "Calling `create_all` as a production migration strategy loses versioned, reviewable schema history."
+      "`create_all` как стратегия миграций рабочего окружения не даёт versioned и reviewable истории schema."
     ],
-    "short_answer": "Calling `create_all` as a production migration strategy loses versioned, reviewable schema history.",
-    "junior_answer": "Calling `create_all` as a production migration strategy loses versioned, reviewable schema history.",
+    "short_answer": "`create_all` как стратегия миграций рабочего окружения не даёт versioned и reviewable истории schema.",
+    "junior_answer": "`create_all` как стратегия миграций рабочего окружения не даёт versioned и reviewable истории schema.",
     "follow_up_question": "Что такое Declarative models и как это работает?",
-    "follow_up_answer": "Declarative ORM models map Python classes/attributes to tables/columns using `Mapped` and `mapped_column` in SQLAlchemy 2.x. Class metadata builds a SQL schema description used by ORM statements and migrations tooling; instances represent rows within Session state. Важное ограничение: Changing model code does not migrate an existing production database; Alembic revision must apply the schema transition.",
+    "follow_up_answer": "Декларативные ORM-модели сопоставляют Python classes и attributes с таблицами и columns через `Mapped` и `mapped_column` в SQLAlchemy 2.x. Class metadata формирует описание schema для ORM statements и migration tooling; instances представляют rows в состоянии Session. Важное ограничение: Изменение model code не мигрирует существующую production database: schema transition выполняет Alembic revision.",
     "expected_answer": {
       "must_mention": [
         "constraints"
@@ -70,10 +70,10 @@
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Calling `create_all` as a production migration strategy loses versioned, reviewable schema history."
+        "`create_all` как стратегия миграций рабочего окружения не даёт versioned и reviewable истории schema."
       ],
       "red_flags": [
-        "Calling `create_all` as a production migration strategy loses versioned, reviewable schema history."
+        "`create_all` как стратегия миграций рабочего окружения не даёт versioned и reviewable истории schema."
       ],
       "follow_up_questions": [
         "Что такое Declarative models и как это работает?"

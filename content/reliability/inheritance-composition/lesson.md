@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** Python указан в 18/18; OOP/data model важны для чтения framework и domain code.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,30 +12,30 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-Inheritance models an is-a relationship; composition models has-a by giving an object explicit collaborators.
+Inheritance моделирует отношение «является», composition — отношение «содержит», передавая объекту явные collaborators.
 
 ### Как работает
 
-Inheritance reuses and overrides behavior through MRO. Composition delegates to injected objects, reducing coupling and making substitutions local.
+Inheritance переиспользует и переопределяет поведение через MRO. Composition делегирует внедрённым объектам, снижая coupling и упрощая замену.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Prefer composition for services/repositories. Inheritance is justified for a stable substitutable hierarchy or framework contract, not only code reuse.
+Для services и repositories обычно лучше composition. Inheritance оправдано стабильной взаимозаменяемой иерархией или framework contract, а не только повторным использованием кода.
 
 ### Где используется в backend
 
-A notification service composed with an email provider is easier to test than a deep service subclass tree.
+Notification service с внедрённым email provider тестируется проще глубокой иерархии сервисов.
 
-## Mental model
+## Модель понимания
 
 У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -52,9 +52,9 @@ A notification service composed with an email provider is easier to test than a 
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Inheritance vs composition: отдельный пример
 
@@ -75,88 +75,88 @@ print(RegistrationService(EmailSender()).register("a@example.com"))
 
 Composition передаёт collaborator явно и не заставляет service наследоваться от sender.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Adding subclasses for every combination of behavior creates a fragile hierarchy and unclear MRO.
+Подкласс для каждой комбинации поведения создаёт хрупкую иерархию и неочевидный MRO.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `is-a vs has-a` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `is-a vs has-a` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `coupling` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `coupling`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `is-a vs has-a` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `is-a vs has-a`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Inheritance vs composition in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Inheritance vs composition за 45–60 секунд и назови одно ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Inheritance vs composition и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Inheritance vs composition?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-Inheritance models an is-a relationship; composition models has-a by giving an object explicit collaborators.
+Inheritance моделирует отношение «является», composition — отношение «содержит», передавая объекту явные collaborators.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> Inheritance models an is-a relationship; composition models has-a by giving an object explicit collaborators. Inheritance reuses and overrides behavior through MRO. Composition delegates to injected objects, reducing coupling and making substitutions local. Важное ограничение: Prefer composition for services/repositories. Inheritance is justified for a stable substitutable hierarchy or framework contract, not only code reuse.
+> Inheritance моделирует отношение «является», composition — отношение «содержит», передавая объекту явные collaborators. Inheritance переиспользует и переопределяет поведение через MRO. Composition делегирует внедрённым объектам, снижая coupling и упрощая замену. Важное ограничение: Для services и repositories обычно лучше composition. Inheritance оправдано стабильной взаимозаменяемой иерархией или framework contract, а не только повторным использованием кода.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Inheritance vs composition?**
 
-Adding subclasses for every combination of behavior creates a fragile hierarchy and unclear MRO.
+Подкласс для каждой комбинации поведения создаёт хрупкую иерархию и неочевидный MRO.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - is-a vs has-a
 - coupling
 - testability
 - service composition
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Adding subclasses for every combination of behavior creates a fragile hierarchy and unclear MRO.
+- Подкласс для каждой комбинации поведения создаёт хрупкую иерархию и неочевидный MRO.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Inheritance vs composition?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Inheritance vs composition**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Inheritance vs composition**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** Inheritance models an is-a relationship; composition models has-a by giving an object explicit collaborators.
+- **Что это:** Inheritance моделирует отношение «является», composition — отношение «содержит», передавая объекту явные collaborators.
 - **Механизм:** У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.
-- **Ограничение:** Adding subclasses for every combination of behavior creates a fragile hierarchy and unclear MRO.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Подкласс для каждой комбинации поведения создаёт хрупкую иерархию и неочевидный MRO.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

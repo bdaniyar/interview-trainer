@@ -7,7 +7,7 @@
     "answer": [
       "leftmost prefix intuition",
       "filter/order patterns",
-      "equality before range as a heuristic, not dogma"
+      "равенство перед диапазоном — практическая эвристика, а не догма"
     ],
     "short_answer": "Composite indexes and column order: Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.",
     "junior_answer": "Composite indexes and column order — тема, в которой я сначала фиксирую `leftmost prefix intuition`, затем объясняю `filter/order patterns` на коротком примере. Ключевой механизм: Назови invariant и concurrent scenario, затем проверь constraint, transaction boundary и фактический query plan. Главная практическая ошибка — Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
@@ -17,7 +17,7 @@
       "must_mention": [
         "leftmost prefix intuition",
         "filter/order patterns",
-        "equality before range as a heuristic, not dogma"
+        "равенство перед диапазоном — практическая эвристика, а не догма"
       ],
       "good_additions": [
         "короткий рабочий пример",

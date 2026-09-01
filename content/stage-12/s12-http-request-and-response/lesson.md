@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** HTTP/REST/API явно встречались в 13/18 — P0 внешний контракт backend.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-HTTP is a request/response application protocol: a request contains method, target, headers and optional body; a response contains status, headers and optional body.
+HTTP — request/response protocol: request содержит method, target, headers и необязательное body, response — status, headers и необязательное body.
 
 ### Как работает
 
-The server parses the request, routes it, applies application logic and serializes a response. HTTP semantics remain distinct from JSON and framework implementation.
+Server разбирает request, выбирает route, выполняет application logic и сериализует response. HTTP semantics отделены от JSON и framework implementation.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Transport success does not mean business success; status and body must describe the application result.
+Успешная передача по сети не означает успех бизнес-операции: результат выражают status и body.
 
-## Mental model
+## Модель понимания
 
 Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -49,9 +49,9 @@ Transport success does not mean business success; status and body must describe 
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### HTTP request and response: отдельный пример
 
@@ -63,88 +63,88 @@ X-Request-ID: req-12-1
 
 Зафиксируй method/path/headers/body, status и поведение повторного request. Здесь route и request-id привязаны именно к теме «HTTP request and response».
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Returning 200 with an error hidden in JSON breaks clients, monitoring and standard retry/cache behavior.
+Ответ 200 с ошибкой внутри JSON ломает clients, monitoring и стандартную retry/cache semantics.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `start line` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `start line` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `method` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `method`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `start line` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `start line`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain HTTP request and response in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни HTTP request and response за 45–60 секунд и назови одно ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое HTTP request and response и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с HTTP request and response?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-HTTP is a request/response application protocol: a request contains method, target, headers and optional body; a response contains status, headers and optional body.
+HTTP — request/response protocol: request содержит method, target, headers и необязательное body, response — status, headers и необязательное body.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> HTTP is a request/response application protocol: a request contains method, target, headers and optional body; a response contains status, headers and optional body. The server parses the request, routes it, applies application logic and serializes a response. HTTP semantics remain distinct from JSON and framework implementation. Важное ограничение: Transport success does not mean business success; status and body must describe the application result.
+> HTTP — request/response protocol: request содержит method, target, headers и необязательное body, response — status, headers и необязательное body. Server разбирает request, выбирает route, выполняет application logic и сериализует response. HTTP semantics отделены от JSON и framework implementation. Важное ограничение: Успешная передача по сети не означает успех бизнес-операции: результат выражают status и body.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с HTTP request and response?**
 
-Returning 200 with an error hidden in JSON breaks clients, monitoring and standard retry/cache behavior.
+Ответ 200 с ошибкой внутри JSON ломает clients, monitoring и стандартную retry/cache semantics.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - start line
 - method
 - path
 - headers
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Returning 200 with an error hidden in JSON breaks clients, monitoring and standard retry/cache behavior.
+- Ответ 200 с ошибкой внутри JSON ломает clients, monitoring и стандартную retry/cache semantics.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с HTTP request and response?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **HTTP request and response**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **HTTP request and response**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** HTTP is a request/response application protocol: a request contains method, target, headers and optional body; a response contains status, headers and optional body.
+- **Что это:** HTTP — request/response protocol: request содержит method, target, headers и необязательное body, response — status, headers и необязательное body.
 - **Механизм:** Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
-- **Ограничение:** Returning 200 with an error hidden in JSON breaks clients, monitoring and standard retry/cache behavior.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Ответ 200 с ошибкой внутри JSON ломает clients, monitoring и стандартную retry/cache semantics.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

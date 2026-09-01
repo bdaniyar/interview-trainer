@@ -3,7 +3,7 @@
   "slug": "s03-decorator-factory-and-decorator-arguments",
   "title": "Decorator factory and decorator arguments",
   "module_slug": "stage-03",
-  "module_title": "Stage 3 · Functions, Scope, Closures and Decorators",
+  "module_title": "Этап 3 · Functions, Scope, Closures and Decorators",
   "module_order": 3,
   "order": 31,
   "duration": 10,
@@ -14,7 +14,7 @@
     "configuration captured by closure",
     "retry/timing/permission examples."
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": true,
   "has_solution": true,
   "priority": "P1",

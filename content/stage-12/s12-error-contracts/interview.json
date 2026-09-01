@@ -8,29 +8,29 @@
       "stable shape",
       "machine-readable code",
       "human message",
-      "field errors"
+      "ошибок отдельных полей"
     ],
-    "short_answer": "An API error contract is a stable response shape for failures, usually containing a machine code, human message and optional field details.",
-    "junior_answer": "An API error contract is a stable response shape for failures, usually containing a machine code, human message and optional field details. Domain/infrastructure exceptions are translated at the boundary to an appropriate status and safe payload; internal trace and secrets remain in protected logs. Важное ограничение: Clients should branch on stable code/status, not exact human wording.",
+    "short_answer": "API error contract — стабильная форма failure response с machine code, понятным message и необязательными field details.",
+    "junior_answer": "API error contract — стабильная форма failure response с machine code, понятным message и необязательными field details. Domain и infrastructure exceptions переводятся на границе в подходящий status и безопасный payload; trace и секретов остаются в защищённых logs. Важное ограничение: Clients должны ветвиться по стабильному code/status, а не по точному человеческому тексту.",
     "follow_up_question": "Какая типичная ошибка связана с Error contracts?",
-    "follow_up_answer": "Returning raw exception strings leaks implementation details and creates an unstable public contract.",
+    "follow_up_answer": "Возврат raw exception string раскрывает детали реализации и создаёт нестабильный публичный contract.",
     "expected_answer": {
       "must_mention": [
         "stable shape",
         "machine-readable code",
         "human message",
-        "field errors"
+        "ошибок отдельных полей"
       ],
       "good_additions": [
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Returning raw exception strings leaks implementation details and creates an unstable public contract.",
+        "Возврат raw exception string раскрывает детали реализации и создаёт нестабильный публичный contract.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Returning raw exception strings leaks implementation details and creates an unstable public contract."
+        "Возврат raw exception string раскрывает детали реализации и создаёт нестабильный публичный contract."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Error contracts?"
@@ -56,12 +56,12 @@
     "interview_probability": "high",
     "answer": [
       "no internal traces",
-      "Returning raw exception strings leaks implementation details and creates an unstable public contract."
+      "Возврат raw exception string раскрывает детали реализации и создаёт нестабильный публичный contract."
     ],
-    "short_answer": "Returning raw exception strings leaks implementation details and creates an unstable public contract.",
-    "junior_answer": "Returning raw exception strings leaks implementation details and creates an unstable public contract.",
+    "short_answer": "Возврат raw exception string раскрывает детали реализации и создаёт нестабильный публичный contract.",
+    "junior_answer": "Возврат raw exception string раскрывает детали реализации и создаёт нестабильный публичный contract.",
     "follow_up_question": "Что такое Error contracts и как это работает?",
-    "follow_up_answer": "An API error contract is a stable response shape for failures, usually containing a machine code, human message and optional field details. Domain/infrastructure exceptions are translated at the boundary to an appropriate status and safe payload; internal trace and secrets remain in protected logs. Важное ограничение: Clients should branch on stable code/status, not exact human wording.",
+    "follow_up_answer": "API error contract — стабильная форма failure response с machine code, понятным message и необязательными field details. Domain и infrastructure exceptions переводятся на границе в подходящий status и безопасный payload; trace и секретов остаются в защищённых logs. Важное ограничение: Clients должны ветвиться по стабильному code/status, а не по точному человеческому тексту.",
     "expected_answer": {
       "must_mention": [
         "no internal traces"
@@ -70,10 +70,10 @@
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Returning raw exception strings leaks implementation details and creates an unstable public contract."
+        "Возврат raw exception string раскрывает детали реализации и создаёт нестабильный публичный contract."
       ],
       "red_flags": [
-        "Returning raw exception strings leaks implementation details and creates an unstable public contract."
+        "Возврат raw exception string раскрывает детали реализации и создаёт нестабильный публичный contract."
       ],
       "follow_up_questions": [
         "Что такое Error contracts и как это работает?"

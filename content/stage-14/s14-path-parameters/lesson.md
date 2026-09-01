@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** FastAPI явно встречался в 9/18, любой Python web framework — в 16/18.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-A path parameter identifies part of the routed resource path and is converted/validated from text using the endpoint annotation.
+Path parameter идентифицирует часть resource path и преобразуется из текста по annotation endpoint.
 
 ### Как работает
 
-`/users/{user_id}` binds the segment; constraints can reject invalid values before handler execution. Static routes must not be accidentally shadowed by a broad dynamic route.
+`/users/{user_id}` связывает segment с параметром; constraints отклоняют значение до handler. Static routes не должны случайно затеняться широким dynamic route.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Path parameters are required by the matched path; optional filters belong in query parameters.
+Path parameter обязателен для совпавшего route; необязательные filters относятся к query parameters.
 
-## Mental model
+## Модель понимания
 
 Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -43,13 +43,13 @@ Path operation — внешний адаптер; бизнес-правила л
 
 ### Полезно
 
-- one short code/result example
+- один короткий пример кода с результатом
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Path parameters: отдельный пример
 
@@ -65,70 +65,70 @@ def article(article_id: int = Path(gt=0)):
 
 Router сначала сопоставляет path, затем FastAPI преобразует segment в `int` и применяет constraint `gt=0`.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Registering `/users/{user_id}` before a conflicting `/users/me` design can route `me` into integer validation instead of the intended handler.
+Конфликт `/users/{user_id}` и `/users/me` может отправить `me` в int validation вместо нужного handler.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `type conversion` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `type conversion` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `validation` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `validation`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `type conversion` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `type conversion`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Path parameters in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Path parameters за 45–60 секунд и назови одно ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Path parameters и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Path parameters?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-A path parameter identifies part of the routed resource path and is converted/validated from text using the endpoint annotation.
+Path parameter идентифицирует часть resource path и преобразуется из текста по annotation endpoint.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> A path parameter identifies part of the routed resource path and is converted/validated from text using the endpoint annotation. `/users/{user_id}` binds the segment; constraints can reject invalid values before handler execution. Static routes must not be accidentally shadowed by a broad dynamic route. Важное ограничение: Path parameters are required by the matched path; optional filters belong in query parameters.
+> Path parameter идентифицирует часть resource path и преобразуется из текста по annotation endpoint. `/users/{user_id}` связывает segment с параметром; constraints отклоняют значение до handler. Static routes не должны случайно затеняться широким dynamic route. Важное ограничение: Path parameter обязателен для совпавшего route; необязательные filters относятся к query parameters.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Path parameters?**
 
-Registering `/users/{user_id}` before a conflicting `/users/me` design can route `me` into integer validation instead of the intended handler.
+Конфликт `/users/{user_id}` и `/users/me` может отправить `me` в int validation вместо нужного handler.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - type conversion
 - validation
 - routing order pitfalls
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Registering `/users/{user_id}` before a conflicting `/users/me` design can route `me` into integer validation instead of the intended handler.
+- Конфликт `/users/{user_id}` и `/users/me` может отправить `me` в int validation вместо нужного handler.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Path parameters?
 
@@ -138,17 +138,17 @@ Registering `/users/{user_id}` before a conflicting `/users/me` design can route
 
 GET /users/{user_id}: user_id >= 1; valid response содержит user_id, invalid даёт 422.
 
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
-## Cheat sheet
+Работай в main.py. Не меняй публичные имена и сигнатуры: скрытые тесты импортируют их напрямую. Проверь основной сценарий, граничные значения, повторные вызовы и распространение ошибок.
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** A path parameter identifies part of the routed resource path and is converted/validated from text using the endpoint annotation.
+- **Что это:** Path parameter идентифицирует часть resource path и преобразуется из текста по annotation endpoint.
 - **Механизм:** Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
-- **Ограничение:** Registering `/users/{user_id}` before a conflicting `/users/me` design can route `me` into integer validation instead of the intended handler.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Конфликт `/users/{user_id}` и `/users/me` может отправить `me` в int validation вместо нужного handler.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

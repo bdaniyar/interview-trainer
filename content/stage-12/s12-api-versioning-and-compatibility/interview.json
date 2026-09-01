@@ -8,7 +8,7 @@
       "additive changes",
       "breaking changes",
       "version strategies",
-      "avoid premature version complexity"
+      "избегать преждевременного усложнения версий"
     ],
     "short_answer": "API versioning and compatibility: Это часть наблюдаемого HTTP contract: method/target/headers/body на входе и status/headers/body на выходе.",
     "junior_answer": "API versioning and compatibility — тема, в которой я сначала фиксирую `additive changes`, затем объясняю `breaking changes` на коротком примере. Ключевой механизм: Опиши один request и один response, включая поведение retry, cache и error contract только там, где они относятся к теме. Главная практическая ошибка — Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency.",
@@ -19,7 +19,7 @@
         "additive changes",
         "breaking changes",
         "version strategies",
-        "avoid premature version complexity"
+        "избегать преждевременного усложнения версий"
       ],
       "good_additions": [
         "короткий рабочий пример",

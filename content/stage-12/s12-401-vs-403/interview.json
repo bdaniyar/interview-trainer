@@ -5,9 +5,9 @@
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "authentication absent/invalid",
+      "аутентификацию absent/invalid",
       "authenticated but forbidden",
-      "appropriate challenge/header context"
+      "подходящий контекст проверочного значения или заголовка"
     ],
     "short_answer": "401 vs 403: Это часть наблюдаемого HTTP contract: method/target/headers/body на входе и status/headers/body на выходе.",
     "junior_answer": "401 vs 403 — тема, в которой я сначала фиксирую `authentication absent/invalid`, затем объясняю `authenticated but forbidden` на коротком примере. Ключевой механизм: Опиши один request и один response, включая поведение retry, cache и error contract только там, где они относятся к теме. Главная практическая ошибка — Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency.",
@@ -15,9 +15,9 @@
     "follow_up_answer": "Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency.",
     "expected_answer": {
       "must_mention": [
-        "authentication absent/invalid",
+        "аутентификацию absent/invalid",
         "authenticated but forbidden",
-        "appropriate challenge/header context"
+        "подходящий контекст проверочного значения или заголовка"
       ],
       "good_additions": [
         "короткий рабочий пример",

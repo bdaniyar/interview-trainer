@@ -3,7 +3,7 @@
   "slug": "s13-jwt-structure",
   "title": "JWT structure",
   "module_slug": "stage-13",
-  "module_title": "Stage 13 · Authentication, Authorization and Security",
+  "module_title": "Этап 13 · Authentication, Authorization and Security",
   "module_order": 13,
   "order": 164,
   "duration": 12,
@@ -17,7 +17,7 @@
     "claims",
     "verification."
   ],
-  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P0",

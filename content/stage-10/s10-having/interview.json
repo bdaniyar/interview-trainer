@@ -7,28 +7,28 @@
     "answer": [
       "WHERE before grouping",
       "HAVING after grouping",
-      "realistic order/customer examples"
+      "реалистичные примеры заказов и клиентов"
     ],
-    "short_answer": "`HAVING` filters groups after aggregation, while `WHERE` filters source rows before groups exist.",
-    "junior_answer": "`HAVING` filters groups after aggregation, while `WHERE` filters source rows before groups exist. A condition on ordinary rows belongs in WHERE; a condition such as `COUNT(*) >= 2` belongs in HAVING. Важное ограничение: Moving a filter across aggregation can change both which rows contribute and which groups survive.",
+    "short_answer": "`HAVING` фильтрует группы после aggregation, а `WHERE` отбирает исходные rows до формирования групп.",
+    "junior_answer": "`HAVING` фильтрует группы после aggregation, а `WHERE` отбирает исходные rows до формирования групп. Условие на обычные rows относится к WHERE; условие вроде `COUNT(*) >= 2` — к HAVING. Важное ограничение: Перенос фильтра через границу aggregation способен изменить и состав групп, и набор surviving groups.",
     "follow_up_question": "Какая типичная ошибка связана с HAVING?",
-    "follow_up_answer": "Writing `WHERE COUNT(*) > 1` is invalid because the aggregate has not been computed at that stage.",
+    "follow_up_answer": "`WHERE COUNT(*) > 1` некорректен, потому что aggregate на этом этапе ещё не вычислен.",
     "expected_answer": {
       "must_mention": [
         "WHERE before grouping",
         "HAVING after grouping",
-        "realistic order/customer examples"
+        "реалистичные примеры заказов и клиентов"
       ],
       "good_additions": [
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Writing `WHERE COUNT(*) > 1` is invalid because the aggregate has not been computed at that stage.",
+        "`WHERE COUNT(*) > 1` некорректен, потому что aggregate на этом этапе ещё не вычислен.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Writing `WHERE COUNT(*) > 1` is invalid because the aggregate has not been computed at that stage."
+        "`WHERE COUNT(*) > 1` некорректен, потому что aggregate на этом этапе ещё не вычислен."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с HAVING?"
@@ -53,25 +53,25 @@
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "one short code/result example",
-      "Writing `WHERE COUNT(*) > 1` is invalid because the aggregate has not been computed at that stage."
+      "один короткий пример кода с результатом",
+      "`WHERE COUNT(*) > 1` некорректен, потому что aggregate на этом этапе ещё не вычислен."
     ],
-    "short_answer": "Writing `WHERE COUNT(*) > 1` is invalid because the aggregate has not been computed at that stage.",
-    "junior_answer": "Writing `WHERE COUNT(*) > 1` is invalid because the aggregate has not been computed at that stage.",
+    "short_answer": "`WHERE COUNT(*) > 1` некорректен, потому что aggregate на этом этапе ещё не вычислен.",
+    "junior_answer": "`WHERE COUNT(*) > 1` некорректен, потому что aggregate на этом этапе ещё не вычислен.",
     "follow_up_question": "Что такое HAVING и как это работает?",
-    "follow_up_answer": "`HAVING` filters groups after aggregation, while `WHERE` filters source rows before groups exist. A condition on ordinary rows belongs in WHERE; a condition such as `COUNT(*) >= 2` belongs in HAVING. Важное ограничение: Moving a filter across aggregation can change both which rows contribute and which groups survive.",
+    "follow_up_answer": "`HAVING` фильтрует группы после aggregation, а `WHERE` отбирает исходные rows до формирования групп. Условие на обычные rows относится к WHERE; условие вроде `COUNT(*) >= 2` — к HAVING. Важное ограничение: Перенос фильтра через границу aggregation способен изменить и состав групп, и набор surviving groups.",
     "expected_answer": {
       "must_mention": [
-        "one short code/result example"
+        "один короткий пример кода с результатом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Writing `WHERE COUNT(*) > 1` is invalid because the aggregate has not been computed at that stage."
+        "`WHERE COUNT(*) > 1` некорректен, потому что aggregate на этом этапе ещё не вычислен."
       ],
       "red_flags": [
-        "Writing `WHERE COUNT(*) > 1` is invalid because the aggregate has not been computed at that stage."
+        "`WHERE COUNT(*) > 1` некорректен, потому что aggregate на этом этапе ещё не вычислен."
       ],
       "follow_up_questions": [
         "Что такое HAVING и как это работает?"

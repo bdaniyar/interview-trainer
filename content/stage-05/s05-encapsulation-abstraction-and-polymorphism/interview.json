@@ -10,10 +10,10 @@
       "contracts",
       "avoid Java-style ceremony"
     ],
-    "short_answer": "Encapsulation groups state and behavior, abstraction exposes a relevant contract, and polymorphism lets different objects satisfy that contract.",
-    "junior_answer": "Encapsulation groups state and behavior, abstraction exposes a relevant contract, and polymorphism lets different objects satisfy that contract. Python often uses duck typing: caller depends on available behavior rather than a concrete inheritance tree. ABC and Protocol can make the contract explicit when useful. Важное ограничение: Leading underscores communicate non-public API but are not access control; invariants still need methods/properties and tests.",
+    "short_answer": "Encapsulation объединяет состояние и поведение, abstraction показывает значимый контракт, а polymorphism позволяет разным объектам удовлетворять этому контракту.",
+    "junior_answer": "Encapsulation объединяет состояние и поведение, abstraction показывает значимый контракт, а polymorphism позволяет разным объектам удовлетворять этому контракту. Python часто использует duck typing: caller зависит от доступного поведения, а не от конкретного дерева наследования. ABC и Protocol делают договор явным, когда это нужно. Важное ограничение: Начальный underscore обозначает непубличный API, но не является контролем доступа; инварианты всё равно защищают методами, properties и тестами.",
     "follow_up_question": "Какая типичная ошибка связана с Encapsulation, abstraction and polymorphism?",
-    "follow_up_answer": "Checking `type(obj) is ConcreteClass` blocks valid substitutes and defeats polymorphism.",
+    "follow_up_answer": "Проверка `type(obj) is ConcreteClass` запрещает корректные замены и ломает polymorphism.",
     "expected_answer": {
       "must_mention": [
         "practical Python meaning",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Checking `type(obj) is ConcreteClass` blocks valid substitutes and defeats polymorphism.",
+        "Проверка `type(obj) is ConcreteClass` запрещает корректные замены и ломает polymorphism.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Checking `type(obj) is ConcreteClass` blocks valid substitutes and defeats polymorphism."
+        "Проверка `type(obj) is ConcreteClass` запрещает корректные замены и ломает polymorphism."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Encapsulation, abstraction and polymorphism?"
@@ -55,25 +55,25 @@
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "one short code/result example",
-      "Checking `type(obj) is ConcreteClass` blocks valid substitutes and defeats polymorphism."
+      "один короткий пример кода с результатом",
+      "Проверка `type(obj) is ConcreteClass` запрещает корректные замены и ломает polymorphism."
     ],
-    "short_answer": "Checking `type(obj) is ConcreteClass` blocks valid substitutes and defeats polymorphism.",
-    "junior_answer": "Checking `type(obj) is ConcreteClass` blocks valid substitutes and defeats polymorphism.",
+    "short_answer": "Проверка `type(obj) is ConcreteClass` запрещает корректные замены и ломает polymorphism.",
+    "junior_answer": "Проверка `type(obj) is ConcreteClass` запрещает корректные замены и ломает polymorphism.",
     "follow_up_question": "Что такое Encapsulation, abstraction and polymorphism и как это работает?",
-    "follow_up_answer": "Encapsulation groups state and behavior, abstraction exposes a relevant contract, and polymorphism lets different objects satisfy that contract. Python often uses duck typing: caller depends on available behavior rather than a concrete inheritance tree. ABC and Protocol can make the contract explicit when useful. Важное ограничение: Leading underscores communicate non-public API but are not access control; invariants still need methods/properties and tests.",
+    "follow_up_answer": "Encapsulation объединяет состояние и поведение, abstraction показывает значимый контракт, а polymorphism позволяет разным объектам удовлетворять этому контракту. Python часто использует duck typing: caller зависит от доступного поведения, а не от конкретного дерева наследования. ABC и Protocol делают договор явным, когда это нужно. Важное ограничение: Начальный underscore обозначает непубличный API, но не является контролем доступа; инварианты всё равно защищают методами, properties и тестами.",
     "expected_answer": {
       "must_mention": [
-        "one short code/result example"
+        "один короткий пример кода с результатом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Checking `type(obj) is ConcreteClass` blocks valid substitutes and defeats polymorphism."
+        "Проверка `type(obj) is ConcreteClass` запрещает корректные замены и ломает polymorphism."
       ],
       "red_flags": [
-        "Checking `type(obj) is ConcreteClass` blocks valid substitutes and defeats polymorphism."
+        "Проверка `type(obj) is ConcreteClass` запрещает корректные замены и ломает polymorphism."
       ],
       "follow_up_questions": [
         "Что такое Encapsulation, abstraction and polymorphism и как это работает?"

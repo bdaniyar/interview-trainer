@@ -3,7 +3,7 @@
   "slug": "s22-reset-vs-revert",
   "title": "reset vs revert",
   "module_slug": "stage-22",
-  "module_title": "Stage 22 · Git and GitHub Workflow",
+  "module_title": "Этап 22 · Git and GitHub Workflow",
   "module_order": 22,
   "order": 298,
   "duration": 12,
@@ -14,7 +14,7 @@
     "working/index effects",
     "safe public-history undo."
   ],
-  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P0",

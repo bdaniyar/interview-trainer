@@ -3,7 +3,7 @@
   "slug": "s29-outbox-design",
   "title": "Outbox design",
   "module_slug": "stage-29",
-  "module_title": "Stage 29 · Junior Backend System Design",
+  "module_title": "Этап 29 · Junior Backend System Design",
   "module_order": 29,
   "order": 365,
   "duration": 10,
@@ -16,7 +16,7 @@
     "idempotency",
     "locking."
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

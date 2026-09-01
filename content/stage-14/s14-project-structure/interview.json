@@ -10,10 +10,10 @@
       "services",
       "repositories/data access"
     ],
-    "short_answer": "A practical FastAPI structure separates HTTP routers/schemas from use-case services and data-access details.",
-    "junior_answer": "A practical FastAPI structure separates HTTP routers/schemas from use-case services and data-access details. Routers adapt request/response, services hold business workflows/transaction decisions, repositories or query modules isolate persistence when they add value. Важное ограничение: Avoid pass-through layers with no behavior; boundaries should correspond to change/test seams.",
+    "short_answer": "Практичная структура FastAPI отделяет HTTP routers и schemas от use-case services и деталей data access.",
+    "junior_answer": "Практичная структура FastAPI отделяет HTTP routers и schemas от use-case services и деталей data access. Routers адаптируют request/response, services содержат business workflow и transaction decisions, repositories или query modules изолируют persistence, когда добавляют реальную ценность. Важное ограничение: Не создавай pass-through layers без поведения: boundary должна соответствовать изменению или test seam.",
     "follow_up_question": "Какая типичная ошибка связана с Project structure?",
-    "follow_up_answer": "Putting every concern into routes makes transaction testing and framework-independent business tests difficult.",
+    "follow_up_answer": "Все concerns внутри routes усложняют transaction tests и проверку business logic без framework.",
     "expected_answer": {
       "must_mention": [
         "routers",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Putting every concern into routes makes transaction testing and framework-independent business tests difficult.",
+        "Все concerns внутри routes усложняют transaction tests и проверку business logic без framework.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Putting every concern into routes makes transaction testing and framework-independent business tests difficult."
+        "Все concerns внутри routes усложняют transaction tests и проверку business logic без framework."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Project structure?"
@@ -57,12 +57,12 @@
     "answer": [
       "dependencies",
       "settings",
-      "Putting every concern into routes makes transaction testing and framework-independent business tests difficult."
+      "Все concerns внутри routes усложняют transaction tests и проверку business logic без framework."
     ],
-    "short_answer": "Putting every concern into routes makes transaction testing and framework-independent business tests difficult.",
-    "junior_answer": "Putting every concern into routes makes transaction testing and framework-independent business tests difficult.",
+    "short_answer": "Все concerns внутри routes усложняют transaction tests и проверку business logic без framework.",
+    "junior_answer": "Все concerns внутри routes усложняют transaction tests и проверку business logic без framework.",
     "follow_up_question": "Что такое Project structure и как это работает?",
-    "follow_up_answer": "A practical FastAPI structure separates HTTP routers/schemas from use-case services and data-access details. Routers adapt request/response, services hold business workflows/transaction decisions, repositories or query modules isolate persistence when they add value. Важное ограничение: Avoid pass-through layers with no behavior; boundaries should correspond to change/test seams.",
+    "follow_up_answer": "Практичная структура FastAPI отделяет HTTP routers и schemas от use-case services и деталей data access. Routers адаптируют request/response, services содержат business workflow и transaction decisions, repositories или query modules изолируют persistence, когда добавляют реальную ценность. Важное ограничение: Не создавай pass-through layers без поведения: boundary должна соответствовать изменению или test seam.",
     "expected_answer": {
       "must_mention": [
         "dependencies",
@@ -72,10 +72,10 @@
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Putting every concern into routes makes transaction testing and framework-independent business tests difficult."
+        "Все concerns внутри routes усложняют transaction tests и проверку business logic без framework."
       ],
       "red_flags": [
-        "Putting every concern into routes makes transaction testing and framework-independent business tests difficult."
+        "Все concerns внутри routes усложняют transaction tests и проверку business logic без framework."
       ],
       "follow_up_questions": [
         "Что такое Project structure и как это работает?"

@@ -3,7 +3,7 @@
   "slug": "s12-dns",
   "title": "DNS",
   "module_slug": "stage-12",
-  "module_title": "Stage 12 · HTTP, Networking and REST",
+  "module_title": "Этап 12 · HTTP, Networking and REST",
   "module_order": 12,
   "order": 153,
   "duration": 10,
@@ -14,7 +14,7 @@
     "service/container names",
     "common failure scenarios."
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

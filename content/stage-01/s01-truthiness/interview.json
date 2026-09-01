@@ -10,10 +10,10 @@
       "`__bool__`",
       "`__len__`"
     ],
-    "short_answer": "Truthiness is Python's protocol for converting an object to boolean context such as `if value`.",
-    "junior_answer": "Truthiness is Python's protocol for converting an object to boolean context such as `if value`. Python calls `__bool__`; if absent, it uses `__len__`; without both, an object is truthy. `None`, numeric zero and empty standard collections are falsy. Важное ограничение: `if value` merges several states. Use `is None` when zero, empty string or empty list is valid data rather than absence.",
+    "short_answer": "Truthiness — протокол преобразования объекта к логическому значению в условиях вроде `if value`.",
+    "junior_answer": "Truthiness — протокол преобразования объекта к логическому значению в условиях вроде `if value`. Python вызывает `__bool__`, затем при его отсутствии использует `__len__`; без обоих методов объект считается truthy. `None`, числовой ноль и пустые стандартные коллекции являются falsy. Важное ограничение: Проверка `if value` объединяет несколько состояний. Используй `is None`, если ноль, пустая строка или пустой список являются допустимыми данными.",
     "follow_up_question": "Какая типичная ошибка связана с Truthiness?",
-    "follow_up_answer": "Replacing `if limit is None` with `if not limit` incorrectly rejects a valid zero when the contract permits it.",
+    "follow_up_answer": "Замена `if limit is None` на `if not limit` ошибочно отклоняет допустимый ноль.",
     "expected_answer": {
       "must_mention": [
         "falsy values",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Replacing `if limit is None` with `if not limit` incorrectly rejects a valid zero when the contract permits it.",
+        "Замена `if limit is None` на `if not limit` ошибочно отклоняет допустимый ноль.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Replacing `if limit is None` with `if not limit` incorrectly rejects a valid zero when the contract permits it."
+        "Замена `if limit is None` на `if not limit` ошибочно отклоняет допустимый ноль."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Truthiness?"
@@ -56,26 +56,26 @@
     "interview_probability": "high",
     "answer": [
       "`if value` vs `if value is None`",
-      "backend bugs with `0`, `\"\"` and empty collections",
-      "Replacing `if limit is None` with `if not limit` incorrectly rejects a valid zero when the contract permits it."
+      "ошибки backend-кода со значениями `0`, `\"\"` и пустыми коллекциями",
+      "Замена `if limit is None` на `if not limit` ошибочно отклоняет допустимый ноль."
     ],
-    "short_answer": "Replacing `if limit is None` with `if not limit` incorrectly rejects a valid zero when the contract permits it.",
-    "junior_answer": "Replacing `if limit is None` with `if not limit` incorrectly rejects a valid zero when the contract permits it.",
+    "short_answer": "Замена `if limit is None` на `if not limit` ошибочно отклоняет допустимый ноль.",
+    "junior_answer": "Замена `if limit is None` на `if not limit` ошибочно отклоняет допустимый ноль.",
     "follow_up_question": "Что такое Truthiness и как это работает?",
-    "follow_up_answer": "Truthiness is Python's protocol for converting an object to boolean context such as `if value`. Python calls `__bool__`; if absent, it uses `__len__`; without both, an object is truthy. `None`, numeric zero and empty standard collections are falsy. Важное ограничение: `if value` merges several states. Use `is None` when zero, empty string or empty list is valid data rather than absence.",
+    "follow_up_answer": "Truthiness — протокол преобразования объекта к логическому значению в условиях вроде `if value`. Python вызывает `__bool__`, затем при его отсутствии использует `__len__`; без обоих методов объект считается truthy. `None`, числовой ноль и пустые стандартные коллекции являются falsy. Важное ограничение: Проверка `if value` объединяет несколько состояний. Используй `is None`, если ноль, пустая строка или пустой список являются допустимыми данными.",
     "expected_answer": {
       "must_mention": [
         "`if value` vs `if value is None`",
-        "backend bugs with `0`, `\"\"` and empty collections"
+        "ошибки backend-кода со значениями `0`, `\"\"` и пустыми коллекциями"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Replacing `if limit is None` with `if not limit` incorrectly rejects a valid zero when the contract permits it."
+        "Замена `if limit is None` на `if not limit` ошибочно отклоняет допустимый ноль."
       ],
       "red_flags": [
-        "Replacing `if limit is None` with `if not limit` incorrectly rejects a valid zero when the contract permits it."
+        "Замена `if limit is None` на `if not limit` ошибочно отклоняет допустимый ноль."
       ],
       "follow_up_questions": [
         "Что такое Truthiness и как это работает?"

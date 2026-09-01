@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** Resume Defense основан только на фактических StudyHub, Hotel Booking и Share Recipe claims.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,7 +12,7 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
@@ -20,16 +20,16 @@
 
 ### Как работает
 
-Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы сценарий ошибки.
 
-**PostgreSQL source of truth.** `PostgreSQL source of truth` защищается по реализованному flow: проблема, принятое решение, trade-off, failure mode и test/metric.
+**PostgreSQL source of truth.** `PostgreSQL source of truth` защищается по реализованному flow: проблема, принятое решение, компромисс, режим отказа и test/metric.
 
-**Redis ephemeral acceleration/coordination.** Redis хранит данные в памяти и полезен для cache/TTL/atomic counters, но durability, eviction и outage policy нужно проектировать явно.
+**Redis используется для временного ускорения и координации.** Redis хранит данные в памяти и полезен для cache/TTL/atomic counters, но durability, eviction и outage policy нужно проектировать явно.
 
 **durable state survives Redis loss.** Redis хранит данные в памяти и полезен для cache/TTL/atomic counters, но durability, eviction и outage policy нужно проектировать явно.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
 Граница Junior: уверенно объясняй `PostgreSQL source of truth` и `Redis ephemeral acceleration/coordination` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
@@ -37,18 +37,18 @@
 
 В backend эта тема важна в том месте, где применяется `PostgreSQL source of truth`; проверяй именно наблюдаемый contract, а не название инструмента.
 
-## Mental model
+## Модель понимания
 
-Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы.
+Отвечай только о реализованном: problem → own decision → компромисс → test/metric; честно обозначай границы.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
 - PostgreSQL source of truth
-- Redis ephemeral acceleration/coordination
+- Redis используется для временного ускорения и координации
 - durable state survives Redis loss
 
 ### Полезно
@@ -57,9 +57,9 @@
 
 ### Можно не учить глубоко
 
-- implementation internals, не влияющие на Junior-код и типичный interview follow-up
+- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Why PostgreSQL and Redis together?: отдельный пример
 
@@ -72,95 +72,95 @@ Durable truth vs cache/temp/fan-out.
 
 Это отдельный architecture example для данного subtopic, а не общий пример stage.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Игнорировать ограничение механизма и проверять только happy path.
+Игнорировать ограничение механизма и проверять только основной сценарий.
 
-## Practice
+## Практика
 
-**A · Prediction/reasoning.** Предскажи результат минимального примера для `PostgreSQL source of truth` до запуска.
+**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для `PostgreSQL source of truth` до запуска.
 
-**B · Find the bug.** Найди нарушение `Redis ephemeral acceleration/coordination` и объясни конкретное последствие.
+**B · Найди ошибку.** Найди нарушение `Redis ephemeral acceleration/coordination` и объясни конкретное последствие.
 
-**E · Interview explanation.** Дай ответ про Why PostgreSQL and Redis together? за 60 секунд: определение, механизм, пример, ограничение.
+**E · Ответ на собеседовании.** Дай ответ про Why PostgreSQL and Redis together? за 60 секунд: определение, механизм, пример, ограничение.
 
-## Architecture practice
+## Практика: Архитектура
 
 ### PostgreSQL plus Redis
 
 **Сценарий:** Почему оба?
 
-**Rubric:** Durable truth vs cache/temp/fan-out.
+**Критерии ответа:** Durable truth vs cache/temp/fan-out.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Why PostgreSQL and Redis together? и какой механизм здесь важно понимать Junior-разработчику?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какое ограничение или типичная ошибка относится именно к теме Why PostgreSQL and Redis together??
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
 Why PostgreSQL and Redis together?: это отдельный технический контракт
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
 > Why PostgreSQL and Redis together? — тема, в которой я сначала фиксирую `PostgreSQL source of truth`, затем объясняю `Redis ephemeral acceleration/coordination` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какое ограничение или типичная ошибка относится именно к теме Why PostgreSQL and Redis together??**
 
-Нужно назвать конкретный failure path и способ его проверить.
+Нужно назвать конкретный сценарий ошибки и способ его проверить.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - PostgreSQL source of truth
-- Redis ephemeral acceleration/coordination
+- Redis используется для временного ускорения и координации
 - durable state survives Redis loss
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Игнорировать ограничение механизма и проверять только happy path.
+- Игнорировать ограничение механизма и проверять только основной сценарий.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какое ограничение или типичная ошибка относится именно к теме Why PostgreSQL and Redis together??
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Why PostgreSQL and Redis together?**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Why PostgreSQL and Redis together?**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
 - **Что это:** Why PostgreSQL and Redis together?: это отдельный технический контракт
-- **Механизм:** Отвечай только о реализованном: problem → own decision → trade-off → test/metric; честно обозначай границы.
-- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Механизм:** Отвечай только о реализованном: problem → own decision → компромисс → test/metric; честно обозначай границы.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только основной сценарий.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

@@ -3,7 +3,7 @@
   "slug": "s12-status-codes",
   "title": "Status codes",
   "module_slug": "stage-12",
-  "module_title": "Stage 12 · HTTP, Networking and REST",
+  "module_title": "Этап 12 · HTTP, Networking and REST",
   "module_order": 12,
   "order": 145,
   "duration": 12,
@@ -19,7 +19,7 @@
     "401",
     "403"
   ],
-  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P0",

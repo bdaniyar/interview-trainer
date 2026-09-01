@@ -10,8 +10,8 @@
       "exceptions",
       "comparison with sequential await"
     ],
-    "short_answer": "`asyncio.gather`: Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг await points.",
-    "junior_answer": "`asyncio.gather` — тема, в которой я сначала фиксирую `concurrent waits`, затем объясняю `result order` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и await points до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
+    "short_answer": "`asyncio.gather`: Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг точки приостановки await.",
+    "junior_answer": "`asyncio.gather` — тема, в которой я сначала фиксирую `concurrent waits`, затем объясняю `result order` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и точки приостановки await до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
     "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме `asyncio.gather`?",
     "follow_up_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
     "expected_answer": {
@@ -61,7 +61,7 @@
     "short_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
     "junior_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
     "follow_up_question": "Что такое `asyncio.gather` и какой механизм здесь важно понимать Junior-разработчику?",
-    "follow_up_answer": "`asyncio.gather` — тема, в которой я сначала фиксирую `concurrent waits`, затем объясняю `result order` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и await points до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
+    "follow_up_answer": "`asyncio.gather` — тема, в которой я сначала фиксирую `concurrent waits`, затем объясняю `result order` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и точки приостановки await до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
     "expected_answer": {
       "must_mention": [
         "связать `asyncio.gather` с коротким рабочим примером"

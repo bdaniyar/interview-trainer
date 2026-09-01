@@ -7,7 +7,7 @@
     "answer": [
       "existence semantics",
       "NULL caveats",
-      "no simplistic universal performance rule"
+      "нет простого универсального правила производительности"
     ],
     "short_answer": "EXISTS vs IN: Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.",
     "junior_answer": "EXISTS vs IN — тема, в которой я сначала фиксирую `existence semantics`, затем объясняю `NULL caveats` на коротком примере. Ключевой механизм: Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа. Главная практическая ошибка — Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
@@ -17,7 +17,7 @@
       "must_mention": [
         "existence semantics",
         "NULL caveats",
-        "no simplistic universal performance rule"
+        "нет простого универсального правила производительности"
       ],
       "good_additions": [
         "короткий рабочий пример",

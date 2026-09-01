@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** SQL/relational DB явно встречались в 15/18 — один из главных P0-разделов.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,7 +12,7 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
@@ -38,7 +38,7 @@ ORDER BY o.id;
 | 11 | a@example.com |
 | 12 | b@example.com |
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
 JOIN не устраняет duplicates. Если условие отсутствует или неполное, появляется Cartesian multiplication. `DISTINCT` может скрыть ошибку cardinality, но не исправляет неверную связь. Всегда определяй grain результата.
 
@@ -46,11 +46,11 @@ JOIN не устраняет duplicates. Если условие отсутст�
 
 Типичный запрос связывает `orders.user_id` с `users.id`, чтобы вернуть заказ и email владельца одним result set.
 
-## Mental model
+## Модель понимания
 
 Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -71,7 +71,7 @@ JOIN не устраняет duplicates. Если условие отсутст�
 
 - внутренние алгоритмы hash/merge/nested-loop join до чтения EXPLAIN
 
-## Code examples
+## Примеры кода
 
 ### INNER JOIN: отдельный пример
 
@@ -84,7 +84,7 @@ ORDER BY a.id;
 
 INNER JOIN оставляет только пары строк, удовлетворяющие условию связи author_id → users.id.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
@@ -98,17 +98,17 @@ INNER JOIN оставляет только пары строк, удовлетв
 
 Выбрать INNER JOIN, когда бизнес-требование должно сохранить users без orders.
 
-## Practice
+## Практика
 
-**A · Result prediction.** По двум маленьким таблицам посчитай число result rows вручную.
+**A · Result предсказание результата.** По двум маленьким таблицам посчитай число result rows вручную.
 
-**B · Find the bug.** Найди отсутствующее условие JOIN.
+**B · Найди ошибку.** Найди отсутствующее условие JOIN.
 
-**C · Rewrite.** Замени correlated lookup понятным JOIN, не меняя cardinality.
+**C · Улучшение кода.** Замени correlated lookup понятным JOIN, не меняя cardinality.
 
 **D · SQL task.** Верни `order_id` и email владельца заказа.
 
-## SQL practice
+## Практика SQL
 
 ### Пользователь каждого заказа
 
@@ -142,7 +142,7 @@ CREATE TABLE order_items (
 );
 ```
 
-Seed:
+Начальные данные:
 
 ```sql
 INSERT INTO users VALUES
@@ -161,9 +161,9 @@ INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,1
 
 **Вопрос:** INNER JOIN orders/users; верни order_id и email.
 
-Expected columns: order_id, email. Comparison: unordered.
+Ожидаемые столбцы: order_id, email. Сравнение: без учёта порядка строк.
 
-SQL runner пока не подключён: выполни запрос в локальном PostgreSQL и сверь result с rubric.
+Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
 
 ### Товары заказа
 
@@ -197,7 +197,7 @@ CREATE TABLE order_items (
 );
 ```
 
-Seed:
+Начальные данные:
 
 ```sql
 INSERT INTO users VALUES
@@ -216,9 +216,9 @@ INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,1
 
 **Вопрос:** Для order 10 верни product name и quantity.
 
-Expected columns: name, quantity. Comparison: ordered.
+Ожидаемые столбцы: name, quantity. Сравнение: с учётом порядка строк.
 
-SQL runner пока не подключён: выполни запрос в локальном PostgreSQL и сверь result с rubric.
+Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
 
 ### Состав paid-заказов
 
@@ -252,7 +252,7 @@ CREATE TABLE order_items (
 );
 ```
 
-Seed:
+Начальные данные:
 
 ```sql
 INSERT INTO users VALUES
@@ -271,9 +271,9 @@ INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,1
 
 **Вопрос:** Соедини users, orders, items, products; верни email, order_id, product и quantity для paid.
 
-Expected columns: email, order_id, name, quantity. Comparison: unordered.
+Ожидаемые столбцы: email, order_id, name, quantity. Сравнение: без учёта порядка строк.
 
-SQL runner пока не подключён: выполни запрос в локальном PostgreSQL и сверь result с rubric.
+Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
 
 ### Количество товаров в заказе
 
@@ -307,7 +307,7 @@ CREATE TABLE order_items (
 );
 ```
 
-Seed:
+Начальные данные:
 
 ```sql
 INSERT INTO users VALUES
@@ -326,86 +326,86 @@ INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,1
 
 **Вопрос:** Для каждого order с items верни сумму quantity.
 
-Expected columns: id, units. Comparison: ordered.
+Ожидаемые столбцы: id, units. Сравнение: с учётом порядка строк.
 
-SQL runner пока не подключён: выполни запрос в локальном PostgreSQL и сверь result с rubric.
+Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
 
-## Debugging practice
+## Практика: Отладка
 
 ### Wrong JOIN condition
 
 **Сценарий:** JOIN orders/users размножил и сопоставил несвязанные строки.
 
-**Rubric:** Проверить foreign-key cardinality и ON u.id=o.user_id; сравнить row count до/после JOIN.
+**Критерии ответа:** Проверить foreign-key cardinality и ON u.id=o.user_id; сравнить row count до/после JOIN.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Как работает INNER JOIN и почему он может увеличить число строк?
 
-### Follow-up
+### Дополнительный вопрос
 
 Когда вместо INNER JOIN нужен LEFT JOIN?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
 INNER JOIN оставляет пары, удовлетворяющие ON; one-to-many даёт несколько rows на одну строку стороны one.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
 > INNER JOIN объединяет только совпавшие строки по условию `ON`. Перед запросом я определяю grain: например, одна строка результата на order. Если у user несколько orders, user повторится для каждого заказа — это не SQL duplicate, а cardinality связи. Отсутствующее условие создаёт Cartesian product, и `DISTINCT` не должен маскировать такую ошибку.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Когда вместо INNER JOIN нужен LEFT JOIN?**
 
 Когда нужно сохранить все строки левой таблицы, включая те, для которых связь не найдена; поля правой стороны тогда будут NULL.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - условие ON
 - только matched rows
 - one-to-many cardinality
 - Cartesian product
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
 - Забыть `ON` или часть composite key и получить резкий рост числа строк.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Когда вместо INNER JOIN нужен LEFT JOIN?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **INNER JOIN**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **INNER JOIN**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
 - **Что это:** INNER JOIN оставляет пары, удовлетворяющие ON; one-to-many даёт несколько rows на одну строку стороны one.
 - **Механизм:** Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
 - **Ограничение:** Забыть `ON` или часть composite key и получить резкий рост числа строк.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

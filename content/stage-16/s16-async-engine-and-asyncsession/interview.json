@@ -8,29 +8,29 @@
       "async driver",
       "awaitable operations",
       "one session per task/request",
-      "no concurrent use of one AsyncSession"
+      "не использовать одну AsyncSession конкурентно"
     ],
-    "short_answer": "AsyncEngine and AsyncSession use an async DB driver so SQL I/O can be awaited without blocking the event loop.",
-    "junior_answer": "AsyncEngine and AsyncSession use an async DB driver so SQL I/O can be awaited without blocking the event loop. ORM state/transaction semantics remain: one AsyncSession per request/task, explicit await for I/O and clear commit/rollback ownership. Важное ограничение: Do not share one AsyncSession across `gather` tasks; each concurrent unit needs its own session/transaction.",
+    "short_answer": "AsyncEngine и AsyncSession используют async DB driver, поэтому SQL I/O можно await без остановки event loop.",
+    "junior_answer": "AsyncEngine и AsyncSession используют async DB driver, поэтому SQL I/O можно await без остановки event loop. ORM state и transaction semantics сохраняются: одна AsyncSession на request или task, явный await для I/O и понятный владелец commit/rollback. Важное ограничение: Не разделяй одну AsyncSession между tasks в `gather`: каждой concurrent единице нужна своя session и transaction.",
     "follow_up_question": "Какая типичная ошибка связана с Async engine and AsyncSession?",
-    "follow_up_answer": "Switching to AsyncSession without an async driver or while using blocking migrations does not create an async data path.",
+    "follow_up_answer": "Переход на AsyncSession без async driver или с blocking data path не делает работу асинхронной.",
     "expected_answer": {
       "must_mention": [
         "async driver",
         "awaitable operations",
         "one session per task/request",
-        "no concurrent use of one AsyncSession"
+        "не использовать одну AsyncSession конкурентно"
       ],
       "good_additions": [
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Switching to AsyncSession without an async driver or while using blocking migrations does not create an async data path.",
+        "Переход на AsyncSession без async driver или с blocking data path не делает работу асинхронной.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Switching to AsyncSession without an async driver or while using blocking migrations does not create an async data path."
+        "Переход на AsyncSession без async driver или с blocking data path не делает работу асинхронной."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Async engine and AsyncSession?"
@@ -55,25 +55,25 @@
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "one short code/result example",
-      "Switching to AsyncSession without an async driver or while using blocking migrations does not create an async data path."
+      "один короткий пример кода с результатом",
+      "Переход на AsyncSession без async driver или с blocking data path не делает работу асинхронной."
     ],
-    "short_answer": "Switching to AsyncSession without an async driver or while using blocking migrations does not create an async data path.",
-    "junior_answer": "Switching to AsyncSession without an async driver or while using blocking migrations does not create an async data path.",
+    "short_answer": "Переход на AsyncSession без async driver или с blocking data path не делает работу асинхронной.",
+    "junior_answer": "Переход на AsyncSession без async driver или с blocking data path не делает работу асинхронной.",
     "follow_up_question": "Что такое Async engine and AsyncSession и как это работает?",
-    "follow_up_answer": "AsyncEngine and AsyncSession use an async DB driver so SQL I/O can be awaited without blocking the event loop. ORM state/transaction semantics remain: one AsyncSession per request/task, explicit await for I/O and clear commit/rollback ownership. Важное ограничение: Do not share one AsyncSession across `gather` tasks; each concurrent unit needs its own session/transaction.",
+    "follow_up_answer": "AsyncEngine и AsyncSession используют async DB driver, поэтому SQL I/O можно await без остановки event loop. ORM state и transaction semantics сохраняются: одна AsyncSession на request или task, явный await для I/O и понятный владелец commit/rollback. Важное ограничение: Не разделяй одну AsyncSession между tasks в `gather`: каждой concurrent единице нужна своя session и transaction.",
     "expected_answer": {
       "must_mention": [
-        "one short code/result example"
+        "один короткий пример кода с результатом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Switching to AsyncSession without an async driver or while using blocking migrations does not create an async data path."
+        "Переход на AsyncSession без async driver или с blocking data path не делает работу асинхронной."
       ],
       "red_flags": [
-        "Switching to AsyncSession without an async driver or while using blocking migrations does not create an async data path."
+        "Переход на AsyncSession без async driver или с blocking data path не делает работу асинхронной."
       ],
       "follow_up_questions": [
         "Что такое Async engine and AsyncSession и как это работает?"

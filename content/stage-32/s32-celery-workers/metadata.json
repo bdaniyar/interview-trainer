@@ -3,7 +3,7 @@
   "slug": "s32-celery-workers",
   "title": "Celery workers",
   "module_slug": "stage-32",
-  "module_title": "Stage 32 · Personalized Resume Defense",
+  "module_title": "Этап 32 · Personalized Resume Defense",
   "module_order": 32,
   "order": 402,
   "duration": 10,
@@ -17,7 +17,7 @@
     "backoff",
     "idempotency."
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

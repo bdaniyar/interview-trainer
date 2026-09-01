@@ -10,10 +10,10 @@
       "Global",
       "Builtins"
     ],
-    "short_answer": "LEGB is Python's name lookup order: Local, Enclosing, Global, Builtins.",
-    "junior_answer": "LEGB is Python's name lookup order: Local, Enclosing, Global, Builtins. A read searches those scopes in order. Assignment inside a function makes the name local unless declared `global` or `nonlocal`, which can cause `UnboundLocalError` when the name is read before local assignment. Важное ограничение: Shadowing `list`, `id` or another builtin works but makes later calls confusing or broken.",
+    "short_answer": "LEGB — порядок поиска имени в Python: Local, Enclosing, Global, Builtins.",
+    "junior_answer": "LEGB — порядок поиска имени в Python: Local, Enclosing, Global, Builtins. Чтение имени проходит эти области по порядку. Присваивание внутри функции делает имя локальным без `global` или `nonlocal`, поэтому чтение до присваивания может вызвать `UnboundLocalError`. Важное ограничение: Имена `list`, `id` и других builtins можно затенить, но последующие вызовы станут запутанными или сломаются.",
     "follow_up_question": "Какая типичная ошибка связана с LEGB?",
-    "follow_up_answer": "Assuming assignment updates a global while Python created a new local binding causes wrong state and `UnboundLocalError`.",
+    "follow_up_answer": "Ожидание, что присваивание изменит global, хотя Python создал local binding, приводит к неверному состоянию и `UnboundLocalError`.",
     "expected_answer": {
       "must_mention": [
         "Local",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Assuming assignment updates a global while Python created a new local binding causes wrong state and `UnboundLocalError`.",
+        "Ожидание, что присваивание изменит global, хотя Python создал local binding, приводит к неверному состоянию и `UnboundLocalError`.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Assuming assignment updates a global while Python created a new local binding causes wrong state and `UnboundLocalError`."
+        "Ожидание, что присваивание изменит global, хотя Python создал local binding, приводит к неверному состоянию и `UnboundLocalError`."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с LEGB?"
@@ -57,12 +57,12 @@
     "answer": [
       "name lookup",
       "shadowing",
-      "Assuming assignment updates a global while Python created a new local binding causes wrong state and `UnboundLocalError`."
+      "Ожидание, что присваивание изменит global, хотя Python создал local binding, приводит к неверному состоянию и `UnboundLocalError`."
     ],
-    "short_answer": "Assuming assignment updates a global while Python created a new local binding causes wrong state and `UnboundLocalError`.",
-    "junior_answer": "Assuming assignment updates a global while Python created a new local binding causes wrong state and `UnboundLocalError`.",
+    "short_answer": "Ожидание, что присваивание изменит global, хотя Python создал local binding, приводит к неверному состоянию и `UnboundLocalError`.",
+    "junior_answer": "Ожидание, что присваивание изменит global, хотя Python создал local binding, приводит к неверному состоянию и `UnboundLocalError`.",
     "follow_up_question": "Что такое LEGB и как это работает?",
-    "follow_up_answer": "LEGB is Python's name lookup order: Local, Enclosing, Global, Builtins. A read searches those scopes in order. Assignment inside a function makes the name local unless declared `global` or `nonlocal`, which can cause `UnboundLocalError` when the name is read before local assignment. Важное ограничение: Shadowing `list`, `id` or another builtin works but makes later calls confusing or broken.",
+    "follow_up_answer": "LEGB — порядок поиска имени в Python: Local, Enclosing, Global, Builtins. Чтение имени проходит эти области по порядку. Присваивание внутри функции делает имя локальным без `global` или `nonlocal`, поэтому чтение до присваивания может вызвать `UnboundLocalError`. Важное ограничение: Имена `list`, `id` и других builtins можно затенить, но последующие вызовы станут запутанными или сломаются.",
     "expected_answer": {
       "must_mention": [
         "name lookup",
@@ -72,10 +72,10 @@
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Assuming assignment updates a global while Python created a new local binding causes wrong state and `UnboundLocalError`."
+        "Ожидание, что присваивание изменит global, хотя Python создал local binding, приводит к неверному состоянию и `UnboundLocalError`."
       ],
       "red_flags": [
-        "Assuming assignment updates a global while Python created a new local binding causes wrong state and `UnboundLocalError`."
+        "Ожидание, что присваивание изменит global, хотя Python создал local binding, приводит к неверному состоянию и `UnboundLocalError`."
       ],
       "follow_up_questions": [
         "Что такое LEGB и как это работает?"

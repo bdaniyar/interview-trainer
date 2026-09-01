@@ -10,10 +10,10 @@
       "iterable/dict unpacking",
       "duplicate arguments"
     ],
-    "short_answer": "`*args` collects extra positional arguments into a tuple, `**kwargs` collects extra keyword arguments into a dict; the same stars unpack values at a call site.",
-    "junior_answer": "`*args` collects extra positional arguments into a tuple, `**kwargs` collects extra keyword arguments into a dict; the same stars unpack values at a call site. Argument binding still enforces the signature. Forwarding wrappers commonly call `fn(*args, **kwargs)`, and duplicate values for one parameter raise `TypeError`. Важное ограничение: Do not replace a clear public signature with unlimited kwargs. Explicit keyword-only parameters produce better typing and API errors.",
+    "short_answer": "`*args` собирает дополнительные позиционные аргументы в tuple, а `**kwargs` — именованные аргументы в dict; те же звёздочки распаковывают значения при вызове.",
+    "junior_answer": "`*args` собирает дополнительные позиционные аргументы в tuple, а `**kwargs` — именованные аргументы в dict; те же звёздочки распаковывают значения при вызове. Привязка аргументов всё равно проверяет сигнатуру. Wrapper обычно передаёт вызов как `fn(*args, **kwargs)`, а двойная передача одного параметра вызывает `TypeError`. Важное ограничение: Не заменяй понятную публичную сигнатуру неограниченным `**kwargs`: явные keyword-only параметры дают лучшую типизацию и понятные ошибки API.",
     "follow_up_question": "Какая типичная ошибка связана с `*args`, `**kwargs` and unpacking?",
-    "follow_up_answer": "Forwarding `fn(value, **{'value': other})` passes the same parameter twice and raises `TypeError`.",
+    "follow_up_answer": "Вызов `fn(value, **{'value': other})` передаёт один параметр дважды и завершается `TypeError`.",
     "expected_answer": {
       "must_mention": [
         "collection",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Forwarding `fn(value, **{'value': other})` passes the same parameter twice and raises `TypeError`.",
+        "Вызов `fn(value, **{'value': other})` передаёт один параметр дважды и завершается `TypeError`.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Forwarding `fn(value, **{'value': other})` passes the same parameter twice and raises `TypeError`."
+        "Вызов `fn(value, **{'value': other})` передаёт один параметр дважды и завершается `TypeError`."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с `*args`, `**kwargs` and unpacking?"
@@ -56,12 +56,12 @@
     "interview_probability": "high",
     "answer": [
       "wrapper functions",
-      "Forwarding `fn(value, **{'value': other})` passes the same parameter twice and raises `TypeError`."
+      "Вызов `fn(value, **{'value': other})` передаёт один параметр дважды и завершается `TypeError`."
     ],
-    "short_answer": "Forwarding `fn(value, **{'value': other})` passes the same parameter twice and raises `TypeError`.",
-    "junior_answer": "Forwarding `fn(value, **{'value': other})` passes the same parameter twice and raises `TypeError`.",
+    "short_answer": "Вызов `fn(value, **{'value': other})` передаёт один параметр дважды и завершается `TypeError`.",
+    "junior_answer": "Вызов `fn(value, **{'value': other})` передаёт один параметр дважды и завершается `TypeError`.",
     "follow_up_question": "Что такое `*args`, `**kwargs` and unpacking и как это работает?",
-    "follow_up_answer": "`*args` collects extra positional arguments into a tuple, `**kwargs` collects extra keyword arguments into a dict; the same stars unpack values at a call site. Argument binding still enforces the signature. Forwarding wrappers commonly call `fn(*args, **kwargs)`, and duplicate values for one parameter raise `TypeError`. Важное ограничение: Do not replace a clear public signature with unlimited kwargs. Explicit keyword-only parameters produce better typing and API errors.",
+    "follow_up_answer": "`*args` собирает дополнительные позиционные аргументы в tuple, а `**kwargs` — именованные аргументы в dict; те же звёздочки распаковывают значения при вызове. Привязка аргументов всё равно проверяет сигнатуру. Wrapper обычно передаёт вызов как `fn(*args, **kwargs)`, а двойная передача одного параметра вызывает `TypeError`. Важное ограничение: Не заменяй понятную публичную сигнатуру неограниченным `**kwargs`: явные keyword-only параметры дают лучшую типизацию и понятные ошибки API.",
     "expected_answer": {
       "must_mention": [
         "wrapper functions"
@@ -70,10 +70,10 @@
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Forwarding `fn(value, **{'value': other})` passes the same parameter twice and raises `TypeError`."
+        "Вызов `fn(value, **{'value': other})` передаёт один параметр дважды и завершается `TypeError`."
       ],
       "red_flags": [
-        "Forwarding `fn(value, **{'value': other})` passes the same parameter twice and raises `TypeError`."
+        "Вызов `fn(value, **{'value': other})` передаёт один параметр дважды и завершается `TypeError`."
       ],
       "follow_up_questions": [
         "Что такое `*args`, `**kwargs` and unpacking и как это работает?"

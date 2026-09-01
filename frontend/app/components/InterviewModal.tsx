@@ -64,10 +64,10 @@ export function InterviewModal({ onClose, onXp }: Props) {
   };
 
   return (
-    <div className="modal-backdrop" role="dialog" aria-modal="true" aria-label="Interview mode">
+    <div className="modal-backdrop" role="dialog" aria-modal="true" aria-label="Режим собеседования">
       <section className="interview-modal">
         <header>
-          <div className="interview-title"><span className="interview-icon"><Code2 size={18} /></span><div><b>Interview mode</b><small>{completedCount} из {questions.length} отвечено</small></div></div>
+          <div className="interview-title"><span className="interview-icon"><Code2 size={18} /></span><div><b>Режим собеседования</b><small>{completedCount} из {questions.length} отвечено</small></div></div>
           <select className="interview-set-select" value={activeSet} onChange={(event) => selectSet(event.target.value)} aria-label="Набор вопросов">
             {sets.map((item) => <option key={item.slug} value={item.slug}>{item.title}</option>)}
           </select>
@@ -77,7 +77,7 @@ export function InterviewModal({ onClose, onXp }: Props) {
         {error ? <p className="error-banner">{error}</p> : null}
         {!question ? <div className="interview-loading">Загружаем вопросы…</div> : (
           <div className="interview-content">
-            <div className="question-counter">QUESTION {index + 1} / {questions.length} · {question.lesson_title}</div>
+            <div className="question-counter">ВОПРОС {index + 1} / {questions.length} · {question.lesson_title}</div>
             <h2>{question.question}</h2>
             {question.code ? <pre className="question-code"><code>{question.code}</code></pre> : null}
             <label htmlFor="interview-answer">Твой ответ</label>
@@ -87,7 +87,7 @@ export function InterviewModal({ onClose, onXp }: Props) {
             ) : (
               <div className="expected-answer">
                 <div className="expected-heading"><CheckCircle2 size={17} /> Разбор ответа</div>
-                {question.expected ? <p><b>Expected:</b> {question.expected}</p> : null}
+                {question.expected ? <p><b>Ожидаемый ответ:</b> {question.expected}</p> : null}
                 {question.short_answer ? (
                   <div className="answer-level">
                     <b>Коротко</b>
@@ -96,7 +96,7 @@ export function InterviewModal({ onClose, onXp }: Props) {
                 ) : null}
                 {question.junior_answer ? (
                   <div className="answer-level primary-level">
-                    <b>Нормальный Junior answer</b>
+                    <b>Нормальный ответ уровня Junior</b>
                     <p>{question.junior_answer}</p>
                   </div>
                 ) : (
@@ -104,13 +104,13 @@ export function InterviewModal({ onClose, onXp }: Props) {
                 )}
                 {question.follow_up_question && question.follow_up_answer ? (
                   <div className="answer-level">
-                    <b>Follow-up: {question.follow_up_question}</b>
+                    <b>Дополнительный вопрос: {question.follow_up_question}</b>
                     <p>{question.follow_up_answer}</p>
                   </div>
                 ) : null}
                 {question.expected_answer?.must_mention?.length ? (
                   <details className="interview-rubric">
-                    <summary>Expected answer rubric</summary>
+                    <summary>Критерии хорошего ответа</summary>
                     <ul>{question.expected_answer.must_mention.map((item) => <li key={item}>{item}</li>)}</ul>
                   </details>
                 ) : null}

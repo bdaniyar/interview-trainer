@@ -10,10 +10,10 @@
       "path",
       "headers"
     ],
-    "short_answer": "HTTP is a request/response application protocol: a request contains method, target, headers and optional body; a response contains status, headers and optional body.",
-    "junior_answer": "HTTP is a request/response application protocol: a request contains method, target, headers and optional body; a response contains status, headers and optional body. The server parses the request, routes it, applies application logic and serializes a response. HTTP semantics remain distinct from JSON and framework implementation. Важное ограничение: Transport success does not mean business success; status and body must describe the application result.",
+    "short_answer": "HTTP — request/response protocol: request содержит method, target, headers и необязательное body, response — status, headers и необязательное body.",
+    "junior_answer": "HTTP — request/response protocol: request содержит method, target, headers и необязательное body, response — status, headers и необязательное body. Server разбирает request, выбирает route, выполняет application logic и сериализует response. HTTP semantics отделены от JSON и framework implementation. Важное ограничение: Успешная передача по сети не означает успех бизнес-операции: результат выражают status и body.",
     "follow_up_question": "Какая типичная ошибка связана с HTTP request and response?",
-    "follow_up_answer": "Returning 200 with an error hidden in JSON breaks clients, monitoring and standard retry/cache behavior.",
+    "follow_up_answer": "Ответ 200 с ошибкой внутри JSON ломает clients, monitoring и стандартную retry/cache semantics.",
     "expected_answer": {
       "must_mention": [
         "start line",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Returning 200 with an error hidden in JSON breaks clients, monitoring and standard retry/cache behavior.",
+        "Ответ 200 с ошибкой внутри JSON ломает clients, monitoring и стандартную retry/cache semantics.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Returning 200 with an error hidden in JSON breaks clients, monitoring and standard retry/cache behavior."
+        "Ответ 200 с ошибкой внутри JSON ломает clients, monitoring и стандартную retry/cache semantics."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с HTTP request and response?"
@@ -57,12 +57,12 @@
     "answer": [
       "body",
       "status",
-      "Returning 200 with an error hidden in JSON breaks clients, monitoring and standard retry/cache behavior."
+      "Ответ 200 с ошибкой внутри JSON ломает clients, monitoring и стандартную retry/cache semantics."
     ],
-    "short_answer": "Returning 200 with an error hidden in JSON breaks clients, monitoring and standard retry/cache behavior.",
-    "junior_answer": "Returning 200 with an error hidden in JSON breaks clients, monitoring and standard retry/cache behavior.",
+    "short_answer": "Ответ 200 с ошибкой внутри JSON ломает clients, monitoring и стандартную retry/cache semantics.",
+    "junior_answer": "Ответ 200 с ошибкой внутри JSON ломает clients, monitoring и стандартную retry/cache semantics.",
     "follow_up_question": "Что такое HTTP request and response и как это работает?",
-    "follow_up_answer": "HTTP is a request/response application protocol: a request contains method, target, headers and optional body; a response contains status, headers and optional body. The server parses the request, routes it, applies application logic and serializes a response. HTTP semantics remain distinct from JSON and framework implementation. Важное ограничение: Transport success does not mean business success; status and body must describe the application result.",
+    "follow_up_answer": "HTTP — request/response protocol: request содержит method, target, headers и необязательное body, response — status, headers и необязательное body. Server разбирает request, выбирает route, выполняет application logic и сериализует response. HTTP semantics отделены от JSON и framework implementation. Важное ограничение: Успешная передача по сети не означает успех бизнес-операции: результат выражают status и body.",
     "expected_answer": {
       "must_mention": [
         "body",
@@ -72,10 +72,10 @@
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Returning 200 with an error hidden in JSON breaks clients, monitoring and standard retry/cache behavior."
+        "Ответ 200 с ошибкой внутри JSON ломает clients, monitoring и стандартную retry/cache semantics."
       ],
       "red_flags": [
-        "Returning 200 with an error hidden in JSON breaks clients, monitoring and standard retry/cache behavior."
+        "Ответ 200 с ошибкой внутри JSON ломает clients, monitoring и стандартную retry/cache semantics."
       ],
       "follow_up_questions": [
         "Что такое HTTP request and response и как это работает?"

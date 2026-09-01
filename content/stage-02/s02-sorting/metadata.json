@@ -3,7 +3,7 @@
   "slug": "s02-sorting",
   "title": "Sorting",
   "module_slug": "stage-02",
-  "module_title": "Stage 2 · Collections and Comprehensions",
+  "module_title": "Этап 2 · Collections and Comprehensions",
   "module_order": 2,
   "order": 18,
   "duration": 10,
@@ -18,7 +18,7 @@
     "sorting dictionaries/objects",
     "complexity basics."
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": true,
   "has_solution": true,
   "priority": "P1",

@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: high · 12 минут.** Python указан в 18/18; OOP/data model важны для чтения framework и domain code.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,7 +12,7 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
@@ -28,18 +28,18 @@
 
 **namespace utility.** `namespace utility` определяет, где хранится object state, как идёт attribute lookup и насколько сильно тип зависит от collaborators.
 
-**when module-level function is simpler.** `when module-level function is simpler` определяет, где хранится object state, как идёт attribute lookup и насколько сильно тип зависит от collaborators.
+**когда функция уровня модуля проще.** `when module-level function is simpler` определяет, где хранится object state, как идёт attribute lookup и насколько сильно тип зависит от collaborators.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
 Граница Junior: уверенно объясняй `alternate constructors` и `class-aware behavior` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
-## Mental model
+## Модель понимания
 
 У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -48,7 +48,7 @@
 - alternate constructors
 - class-aware behavior
 - namespace utility
-- when module-level function is simpler
+- когда функция уровня модуля проще
 
 ### Полезно
 
@@ -56,9 +56,9 @@
 
 ### Можно не учить глубоко
 
-- implementation internals, не влияющие на Junior-код и типичный interview follow-up
+- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### `classmethod` and `staticmethod`: отдельный пример
 
@@ -80,69 +80,69 @@ print(UserId.from_text("7").value, UserId.is_valid("7"))
 
 Classmethod создаёт объект через polymorphic `cls`; staticmethod — namespaced helper без implicit receiver.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
 Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.
 
-## Practice
+## Практика
 
-**A · Prediction/reasoning.** Предскажи результат минимального примера для `alternate constructors` до запуска.
+**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для `alternate constructors` до запуска.
 
-**B · Find the bug.** Найди нарушение `class-aware behavior` и объясни конкретное последствие.
+**B · Найди ошибку.** Найди нарушение `class-aware behavior` и объясни конкретное последствие.
 
-**E · Interview explanation.** Дай ответ про `classmethod` and `staticmethod` за 60 секунд: определение, механизм, пример, ограничение.
+**E · Ответ на собеседовании.** Дай ответ про `classmethod` and `staticmethod` за 60 секунд: определение, механизм, пример, ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое `classmethod` and `staticmethod` и какой механизм здесь важно понимать Junior-разработчику?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какое ограничение или типичная ошибка относится именно к теме `classmethod` and `staticmethod`?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
 `classmethod` and `staticmethod`: Это элемент Python object model, который определяет состояние объекта, поиск поведения или способ композиции типов.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
 > `classmethod` and `staticmethod` — тема, в которой я сначала фиксирую `alternate constructors`, затем объясняю `class-aware behavior` на коротком примере. Ключевой механизм: Проследи instance/class namespaces, attribute lookup и направление зависимости между объектами. Главная практическая ошибка — Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какое ограничение или типичная ошибка относится именно к теме `classmethod` and `staticmethod`?**
 
 Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - alternate constructors
 - class-aware behavior
 - namespace utility
-- when module-level function is simpler
+- когда функция уровня модуля проще
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
 - Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какое ограничение или типичная ошибка относится именно к теме `classmethod` and `staticmethod`?
 
@@ -152,17 +152,17 @@ Classmethod создаёт объект через polymorphic `cls`; staticmeth
 
 Реализуй staticmethod normalize_email и classmethod from_mapping. Поддержи subclass и проверь positive id/non-empty email.
 
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
-## Cheat sheet
+Работай в main.py. Не меняй публичные имена и сигнатуры: скрытые тесты импортируют их напрямую. Проверь основной сценарий, граничные значения, повторные вызовы и распространение ошибок.
+## Шпаргалка
 
 Перед собеседованием запомни:
 
 - **Что это:** `classmethod` and `staticmethod`: Это элемент Python object model, который определяет состояние объекта, поиск поведения или способ композиции типов.
 - **Механизм:** У объекта есть тип, instance state и protocol-facing methods; composition обычно делает зависимости явнее.
 - **Ограничение:** Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

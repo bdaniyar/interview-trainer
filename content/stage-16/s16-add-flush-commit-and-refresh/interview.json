@@ -10,10 +10,10 @@
       "`commit` finalizes",
       "`refresh` reloads"
     ],
-    "short_answer": "`add` attaches a new entity, `flush` emits pending SQL inside the transaction, `commit` finalizes it and `refresh` reloads current DB values.",
-    "junior_answer": "`add` attaches a new entity, `flush` emits pending SQL inside the transaction, `commit` finalizes it and `refresh` reloads current DB values. Autoflush may run before a query; generated primary keys often become available after flush without commit. Важное ограничение: After commit objects may be expired depending on configuration; refresh is not a substitute for correct transaction ownership.",
+    "short_answer": "`add` присоединяет новую entity, `flush` отправляет pending SQL внутри transaction, `commit` фиксирует её, `refresh` перечитывает значения из БД.",
+    "junior_answer": "`add` присоединяет новую entity, `flush` отправляет pending SQL внутри transaction, `commit` фиксирует её, `refresh` перечитывает значения из БД. Autoflush может сработать перед query; generated первичный ключ часто доступен после flush без commit. Важное ограничение: После commit objects могут стать expired в зависимости от конфигурацию; refresh не заменяет правильного transaction ownership.",
     "follow_up_question": "Какая типичная ошибка связана с Add, flush, commit and refresh?",
-    "follow_up_answer": "Committing only to obtain an id breaks atomic use cases; flush is sufficient inside the still-open transaction.",
+    "follow_up_answer": "Commit только ради получения id ломает атомарный use case; внутри открытой transaction достаточно flush.",
     "expected_answer": {
       "must_mention": [
         "`add`",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Committing only to obtain an id breaks atomic use cases; flush is sufficient inside the still-open transaction.",
+        "Commit только ради получения id ломает атомарный use case; внутри открытой transaction достаточно flush.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Committing only to obtain an id breaks atomic use cases; flush is sufficient inside the still-open transaction."
+        "Commit только ради получения id ломает атомарный use case; внутри открытой transaction достаточно flush."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Add, flush, commit and refresh?"
@@ -55,25 +55,25 @@
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "generated ID may appear after flush",
-      "Committing only to obtain an id breaks atomic use cases; flush is sufficient inside the still-open transaction."
+      "созданный идентификатор может появиться после синхронизации с БД",
+      "Commit только ради получения id ломает атомарный use case; внутри открытой transaction достаточно flush."
     ],
-    "short_answer": "Committing only to obtain an id breaks atomic use cases; flush is sufficient inside the still-open transaction.",
-    "junior_answer": "Committing only to obtain an id breaks atomic use cases; flush is sufficient inside the still-open transaction.",
+    "short_answer": "Commit только ради получения id ломает атомарный use case; внутри открытой transaction достаточно flush.",
+    "junior_answer": "Commit только ради получения id ломает атомарный use case; внутри открытой transaction достаточно flush.",
     "follow_up_question": "Что такое Add, flush, commit and refresh и как это работает?",
-    "follow_up_answer": "`add` attaches a new entity, `flush` emits pending SQL inside the transaction, `commit` finalizes it and `refresh` reloads current DB values. Autoflush may run before a query; generated primary keys often become available after flush without commit. Важное ограничение: After commit objects may be expired depending on configuration; refresh is not a substitute for correct transaction ownership.",
+    "follow_up_answer": "`add` присоединяет новую entity, `flush` отправляет pending SQL внутри transaction, `commit` фиксирует её, `refresh` перечитывает значения из БД. Autoflush может сработать перед query; generated первичный ключ часто доступен после flush без commit. Важное ограничение: После commit objects могут стать expired в зависимости от конфигурацию; refresh не заменяет правильного transaction ownership.",
     "expected_answer": {
       "must_mention": [
-        "generated ID may appear after flush"
+        "созданный идентификатор может появиться после синхронизации с БД"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Committing only to obtain an id breaks atomic use cases; flush is sufficient inside the still-open transaction."
+        "Commit только ради получения id ломает атомарный use case; внутри открытой transaction достаточно flush."
       ],
       "red_flags": [
-        "Committing only to obtain an id breaks atomic use cases; flush is sufficient inside the still-open transaction."
+        "Commit только ради получения id ломает атомарный use case; внутри открытой transaction достаточно flush."
       ],
       "follow_up_questions": [
         "Что такое Add, flush, commit and refresh и как это работает?"

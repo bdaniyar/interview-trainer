@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** SQL/relational DB явно встречались в 15/18 — один из главных P0-разделов.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-`GROUP BY` forms groups of rows and returns one result row per unique grouping key.
+`GROUP BY` формирует группы rows и возвращает одну result row для каждого уникального grouping key.
 
 ### Как работает
 
-Aggregate functions compute inside each group. Selected non-aggregate columns must normally appear in GROUP BY or be functionally determined under DB rules.
+Aggregate functions считают значения внутри группы. Выбранные неагрегированные columns обычно должны находиться в GROUP BY.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Always state the grain, such as one row per `user_id`, before adding joins that may multiply source rows.
+Сначала назови grain результата, например «одна строка на `user_id`», и только потом добавляй joins, способные размножить source rows.
 
-## Mental model
+## Модель понимания
 
 Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -43,13 +43,13 @@ Always state the grain, such as one row per `user_id`, before adding joins that 
 
 ### Полезно
 
-- one short code/result example
+- один короткий пример кода с результатом
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### GROUP BY: отдельный пример
 
@@ -63,23 +63,23 @@ ORDER BY customer_id;
 
 GROUP BY задаёт grain «одна строка на customer», после чего SUM считает значение внутри каждой группы.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Grouping after a one-to-many join can double-count totals if the join has a finer grain than the measure.
+Grouping после one-to-many join может посчитать сумму дважды, если grain join мельче измеряемого показателя.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `grouping` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `grouping` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `selected non-aggregate columns` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `selected non-aggregate columns`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `grouping` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `grouping`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain GROUP BY in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни GROUP BY за 45–60 секунд и назови одно ограничение.
 
-## SQL practice
+## Практика SQL
 
 ### Заказы по status
 
@@ -113,7 +113,7 @@ CREATE TABLE order_items (
 );
 ```
 
-Seed:
+Начальные данные:
 
 ```sql
 INSERT INTO users VALUES
@@ -132,9 +132,9 @@ INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,1
 
 **Вопрос:** Посчитай заказы по status и отсортируй status.
 
-Expected columns: status, count. Comparison: ordered.
+Ожидаемые столбцы: status, count. Сравнение: с учётом порядка строк.
 
-SQL runner пока не подключён: выполни запрос в локальном PostgreSQL и сверь result с rubric.
+Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
 
 ### Выручка по пользователю
 
@@ -168,7 +168,7 @@ CREATE TABLE order_items (
 );
 ```
 
-Seed:
+Начальные данные:
 
 ```sql
 INSERT INTO users VALUES
@@ -187,9 +187,9 @@ INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,1
 
 **Вопрос:** Суммируй total только paid-заказов по user_id.
 
-Expected columns: user_id, revenue. Comparison: ordered.
+Ожидаемые столбцы: user_id, revenue. Сравнение: с учётом порядка строк.
 
-SQL runner пока не подключён: выполни запрос в локальном PostgreSQL и сверь result с rubric.
+Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
 
 ### Средний paid-чек
 
@@ -223,7 +223,7 @@ CREATE TABLE order_items (
 );
 ```
 
-Seed:
+Начальные данные:
 
 ```sql
 INSERT INTO users VALUES
@@ -242,17 +242,17 @@ INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,1
 
 **Вопрос:** Найди средний total paid-заказа.
 
-Expected columns: average_total. Comparison: ordered.
+Ожидаемые столбцы: average_total. Сравнение: с учётом порядка строк.
 
-SQL runner пока не подключён: выполни запрос в локальном PostgreSQL и сверь result с rubric.
+Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
 
-## Debugging practice
+## Практика: Отладка
 
 ### COUNT nullable
 
 **Сценарий:** COUNT(country) меньше COUNT(*).
 
-**Rubric:** COUNT(expression) пропускает NULL.
+**Критерии ответа:** COUNT(expression) пропускает NULL.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
@@ -260,75 +260,75 @@ SQL runner пока не подключён: выполни запрос в ло
 
 **Сценарий:** Запрос агрегирует по user_id, но выбирает произвольный email.
 
-**Rubric:** Все неагрегированные columns должны быть функционально зависимы/в GROUP BY; сначала определить grain результата.
+**Критерии ответа:** Все неагрегированные columns должны быть функционально зависимы/в GROUP BY; сначала определить grain результата.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое GROUP BY и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с GROUP BY?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-`GROUP BY` forms groups of rows and returns one result row per unique grouping key.
+`GROUP BY` формирует группы rows и возвращает одну result row для каждого уникального grouping key.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> `GROUP BY` forms groups of rows and returns one result row per unique grouping key. Aggregate functions compute inside each group. Selected non-aggregate columns must normally appear in GROUP BY or be functionally determined under DB rules. Важное ограничение: Always state the grain, such as one row per `user_id`, before adding joins that may multiply source rows.
+> `GROUP BY` формирует группы rows и возвращает одну result row для каждого уникального grouping key. Aggregate functions считают значения внутри группы. Выбранные неагрегированные columns обычно должны находиться в GROUP BY. Важное ограничение: Сначала назови grain результата, например «одна строка на `user_id`», и только потом добавляй joins, способные размножить source rows.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с GROUP BY?**
 
-Grouping after a one-to-many join can double-count totals if the join has a finer grain than the measure.
+Grouping после one-to-many join может посчитать сумму дважды, если grain join мельче измеряемого показателя.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - grouping
 - selected non-aggregate columns
 - common errors
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Grouping after a one-to-many join can double-count totals if the join has a finer grain than the measure.
+- Grouping после one-to-many join может посчитать сумму дважды, если grain join мельче измеряемого показателя.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с GROUP BY?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **GROUP BY**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **GROUP BY**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** `GROUP BY` forms groups of rows and returns one result row per unique grouping key.
+- **Что это:** `GROUP BY` формирует группы rows и возвращает одну result row для каждого уникального grouping key.
 - **Механизм:** Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
-- **Ограничение:** Grouping after a one-to-many join can double-count totals if the join has a finer grain than the measure.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Grouping после one-to-many join может посчитать сумму дважды, если grain join мельче измеряемого показателя.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

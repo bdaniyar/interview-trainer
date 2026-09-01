@@ -5,7 +5,7 @@
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "happy path",
+      "основной сценарий",
       "validation",
       "permissions",
       "not found"
@@ -16,7 +16,7 @@
     "follow_up_answer": "Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior.",
     "expected_answer": {
       "must_mention": [
-        "happy path",
+        "основной сценарий",
         "validation",
         "permissions",
         "not found"

@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P1 · вероятность на интервью: high · 10 минут.** PostgreSQL явно встречался в 13/18; indexes/transactions/concurrency критичны для backend.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-`EXPLAIN` shows the planned operations and estimates; `EXPLAIN ANALYZE` executes the statement and adds actual rows/timing.
+`EXPLAIN` показывает план и estimates, а `EXPLAIN ANALYZE` действительно выполняет statement и добавляет actual rows и timing.
 
 ### Как работает
 
-Read plan nodes from children upward and compare estimated vs actual rows, loops, scan type and buffers when requested.
+Plan читают от дочерних nodes вверх, сравнивая estimated и actual rows, loops, scan type и buffers.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-ANALYZE really executes data-changing statements unless wrapped and rolled back; test safely.
+ANALYZE реально выполняет изменяющий statement; такую проверку делают безопасно, например внутри transaction с rollback.
 
-## Mental model
+## Модель понимания
 
 Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -49,9 +49,9 @@ Constraint защищает истину, transaction объединяет из�
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### EXPLAIN and EXPLAIN ANALYZE: отдельный пример
 
@@ -64,23 +64,23 @@ Constraint защищает истину, transaction объединяет из�
 
 Это отдельный debugging example для данного subtopic, а не общий пример stage.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Looking only at total time misses a severe estimate error or loop count that becomes expensive on larger data.
+Просмотр только общего времени скрывает ошибку оценки rows или большое число loops, которое станет дорогим на реальных данных.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `estimated vs actual` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `estimated vs actual` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `scan types` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `scan types`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `estimated vs actual` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `estimated vs actual`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain EXPLAIN and EXPLAIN ANALYZE in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни EXPLAIN and EXPLAIN ANALYZE за 45–60 секунд и назови одно ограничение.
 
-## SQL practice
+## Практика SQL
 
 ### Sequential scan
 
@@ -101,7 +101,7 @@ CREATE TABLE bookings (
 );
 ```
 
-Seed:
+Начальные данные:
 
 ```sql
 INSERT INTO rooms VALUES (1,10,'101'),(2,10,'102');
@@ -112,86 +112,86 @@ INSERT INTO bookings VALUES
 
 **Вопрос:** После роста таблицы endpoint замедлился и plan показывает Seq Scan. План диагностики?
 
-Expected columns: reasoning rubric. Comparison: reasoning_rubric.
+Ожидаемые столбцы: критерии рассуждения. Сравнение: по критериям рассуждения.
 
-SQL runner пока не подключён: выполни запрос в локальном PostgreSQL и сверь result с rubric.
+Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
 
-## Debugging practice
+## Практика: Отладка
 
 ### Low-selectivity index
 
 **Сценарий:** Planner выбирает Seq Scan для boolean active, хотя index существует.
 
-**Rubric:** При высокой доле совпадений Seq Scan может быть дешевле; сравнить estimates/actual rows, не принуждать index вслепую.
+**Критерии ответа:** При высокой доле совпадений Seq Scan может быть дешевле; сравнить estimates/actual rows, не принуждать index вслепую.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое EXPLAIN and EXPLAIN ANALYZE и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с EXPLAIN and EXPLAIN ANALYZE?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-`EXPLAIN` shows the planned operations and estimates; `EXPLAIN ANALYZE` executes the statement and adds actual rows/timing.
+`EXPLAIN` показывает план и estimates, а `EXPLAIN ANALYZE` действительно выполняет statement и добавляет actual rows и timing.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> `EXPLAIN` shows the planned operations and estimates; `EXPLAIN ANALYZE` executes the statement and adds actual rows/timing. Read plan nodes from children upward and compare estimated vs actual rows, loops, scan type and buffers when requested. Важное ограничение: ANALYZE really executes data-changing statements unless wrapped and rolled back; test safely.
+> `EXPLAIN` показывает план и estimates, а `EXPLAIN ANALYZE` действительно выполняет statement и добавляет actual rows и timing. Plan читают от дочерних nodes вверх, сравнивая estimated и actual rows, loops, scan type и buffers. Важное ограничение: ANALYZE реально выполняет изменяющий statement; такую проверку делают безопасно, например внутри transaction с rollback.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с EXPLAIN and EXPLAIN ANALYZE?**
 
-Looking only at total time misses a severe estimate error or loop count that becomes expensive on larger data.
+Просмотр только общего времени скрывает ошибку оценки rows или большое число loops, которое станет дорогим на реальных данных.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - estimated vs actual
 - scan types
 - rows
 - loops
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Looking only at total time misses a severe estimate error or loop count that becomes expensive on larger data.
+- Просмотр только общего времени скрывает ошибку оценки rows или большое число loops, которое станет дорогим на реальных данных.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с EXPLAIN and EXPLAIN ANALYZE?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **EXPLAIN and EXPLAIN ANALYZE**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **EXPLAIN and EXPLAIN ANALYZE**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** `EXPLAIN` shows the planned operations and estimates; `EXPLAIN ANALYZE` executes the statement and adds actual rows/timing.
+- **Что это:** `EXPLAIN` показывает план и estimates, а `EXPLAIN ANALYZE` действительно выполняет statement и добавляет actual rows и timing.
 - **Механизм:** Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
-- **Ограничение:** Looking only at total time misses a severe estimate error or loop count that becomes expensive on larger data.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Просмотр только общего времени скрывает ошибку оценки rows или большое число loops, которое станет дорогим на реальных данных.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P1 · вероятность на интервью: high · 10 минут.** SQL/relational DB явно встречались в 15/18 — один из главных P0-разделов.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,7 +12,7 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
@@ -22,14 +22,14 @@
 
 Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа.
 
-**per-row evaluation mental model.** `per-row evaluation mental model` меняет набор SQL rows; его смысл проверяют через grain результата, cardinality, NULL semantics и явный ordering.
+**per-row evaluation модель понимания.** `per-row evaluation mental model` меняет набор SQL rows; его смысл проверяют через grain результата, cardinality, NULL semantics и явный ordering.
 
 **optimizer caveat.** `optimizer caveat` меняет набор SQL rows; его смысл проверяют через grain результата, cardinality, NULL semantics и явный ordering.
 
 **alternatives.** `alternatives` меняет набор SQL rows; его смысл проверяют через grain результата, cardinality, NULL semantics и явный ordering.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
 Граница Junior: уверенно объясняй `per-row evaluation mental model` и `optimizer caveat` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
@@ -37,17 +37,17 @@
 
 В backend эта тема важна в том месте, где применяется `per-row evaluation mental model`; проверяй именно наблюдаемый contract, а не название инструмента.
 
-## Mental model
+## Модель понимания
 
 Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
-- per-row evaluation mental model
+- per-row evaluation модель понимания
 - optimizer caveat
 - alternatives
 
@@ -57,9 +57,9 @@
 
 ### Можно не учить глубоко
 
-- implementation internals, не влияющие на Junior-код и типичный interview follow-up
+- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Correlated subquery: отдельный пример
 
@@ -75,21 +75,21 @@ WHERE p.created_at = (
 
 Correlated subquery ссылается на текущего outer author и выбирает его последний post.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
 Не определить cardinality результата и замаскировать неверный query через DISTINCT.
 
-## Practice
+## Практика
 
-**A · Prediction/reasoning.** Предскажи результат минимального примера для `per-row evaluation mental model` до запуска.
+**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для `per-row evaluation mental model` до запуска.
 
-**B · Find the bug.** Найди нарушение `optimizer caveat` и объясни конкретное последствие.
+**B · Найди ошибку.** Найди нарушение `optimizer caveat` и объясни конкретное последствие.
 
-**E · Interview explanation.** Дай ответ про Correlated subquery за 60 секунд: определение, механизм, пример, ограничение.
+**E · Ответ на собеседовании.** Дай ответ про Correlated subquery за 60 секунд: определение, механизм, пример, ограничение.
 
-## SQL practice
+## Практика SQL
 
 ### Последний заказ пользователя
 
@@ -123,7 +123,7 @@ CREATE TABLE order_items (
 );
 ```
 
-Seed:
+Начальные данные:
 
 ```sql
 INSERT INTO users VALUES
@@ -142,75 +142,75 @@ INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,1
 
 **Вопрос:** Correlated subquery: верни orders, чей created_at максимален для своего user.
 
-Expected columns: id, user_id. Comparison: ordered.
+Ожидаемые столбцы: id, user_id. Сравнение: с учётом порядка строк.
 
-SQL runner пока не подключён: выполни запрос в локальном PostgreSQL и сверь result с rubric.
+Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Correlated subquery и какой механизм здесь важно понимать Junior-разработчику?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какое ограничение или типичная ошибка относится именно к теме Correlated subquery?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
 Correlated subquery: Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
 > Correlated subquery — тема, в которой я сначала фиксирую `per-row evaluation mental model`, затем объясняю `optimizer caveat` на коротком примере. Ключевой механизм: Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа. Главная практическая ошибка — Не определить cardinality результата и замаскировать неверный query через DISTINCT.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какое ограничение или типичная ошибка относится именно к теме Correlated subquery?**
 
 Не определить cardinality результата и замаскировать неверный query через DISTINCT.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
-- per-row evaluation mental model
+- per-row evaluation модель понимания
 - optimizer caveat
 - alternatives
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
 - Не определить cardinality результата и замаскировать неверный query через DISTINCT.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какое ограничение или типичная ошибка относится именно к теме Correlated subquery?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Correlated subquery**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Correlated subquery**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
 - **Что это:** Correlated subquery: Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.
 - **Механизм:** Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
 - **Ограничение:** Не определить cardinality результата и замаскировать неверный query через DISTINCT.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

@@ -3,7 +3,7 @@
   "slug": "s18-database-tests",
   "title": "Database tests",
   "module_slug": "stage-18",
-  "module_title": "Stage 18 · Testing",
+  "module_title": "Этап 18 · Testing",
   "module_order": 18,
   "order": 246,
   "duration": 12,
@@ -16,7 +16,7 @@
     "migrations",
     "no production DB."
   ],
-  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P0",

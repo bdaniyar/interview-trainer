@@ -7,7 +7,7 @@
     "answer": [
       "application bottom-up",
       "execution nesting",
-      "prediction tasks"
+      "предсказание результата tasks"
     ],
     "short_answer": "Multiple decorators and order: Это часть контракта Python function: важно различать definition time, call time, signature и разрешение имён.",
     "junior_answer": "Multiple decorators and order — тема, в которой я сначала фиксирую `application bottom-up`, затем объясняю `execution nesting` на коротком примере. Ключевой механизм: Отдели выполнение `def`, связывание arguments при вызове и разрешение names по LEGB. Главная практическая ошибка — Смешать definition time и call time либо скрыть неясную signature за `**kwargs`.",
@@ -17,7 +17,7 @@
       "must_mention": [
         "application bottom-up",
         "execution nesting",
-        "prediction tasks"
+        "предсказание результата tasks"
       ],
       "good_additions": [
         "короткий рабочий пример",

@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: high · 12 минут.** Python указан в 18/18 primary вакансий; object model — базовый screening foundation.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,30 +12,30 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-Truthiness is Python's protocol for converting an object to boolean context such as `if value`.
+Truthiness — протокол преобразования объекта к логическому значению в условиях вроде `if value`.
 
 ### Как работает
 
-Python calls `__bool__`; if absent, it uses `__len__`; without both, an object is truthy. `None`, numeric zero and empty standard collections are falsy.
+Python вызывает `__bool__`, затем при его отсутствии использует `__len__`; без обоих методов объект считается truthy. `None`, числовой ноль и пустые стандартные коллекции являются falsy.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-`if value` merges several states. Use `is None` when zero, empty string or empty list is valid data rather than absence.
+Проверка `if value` объединяет несколько состояний. Используй `is None`, если ноль, пустая строка или пустой список являются допустимыми данными.
 
 ### Где используется в backend
 
-Pagination offset `0` and an empty JSON array may be valid values and must not be confused with missing input.
+Offset `0` и пустой JSON-массив могут быть корректными значениями и не должны смешиваться с отсутствующим параметром.
 
-## Mental model
+## Модель понимания
 
 Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -49,13 +49,13 @@ Pagination offset `0` and an empty JSON array may be valid values and must not b
 ### Полезно
 
 - `if value` vs `if value is None`
-- backend bugs with `0`, `""` and empty collections
+- ошибки backend-кода со значениями `0`, `""` и пустыми коллекциями
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Truthiness: отдельный пример
 
@@ -73,23 +73,23 @@ print(bool(Queue(["job"])))
 
 При отсутствии `__bool__` Python использует `__len__`: ноль означает falsy.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Replacing `if limit is None` with `if not limit` incorrectly rejects a valid zero when the contract permits it.
+Замена `if limit is None` на `if not limit` ошибочно отклоняет допустимый ноль.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `falsy values` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `falsy values` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates ``bool`` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий ``bool``, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `falsy values` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `falsy values`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Truthiness in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Truthiness за 45–60 секунд и назови одно ограничение.
 
-## Code prediction
+## Предсказание результата кода
 
 ### Truthiness пользовательского объекта
 
@@ -105,7 +105,7 @@ print(bool(Queue()))
 
 <details><summary>Показать ответ</summary>
 
-Expected:
+Ожидаемый результат:
 
 ```text
 False
@@ -113,59 +113,59 @@ False
 
 Если __bool__ не определён, bool использует __len__; нулевая длина означает falsy.
 
-Misconception: `truthiness`.
+Типичная ошибка мышления: `truthiness`.
 
 </details>
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Truthiness и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Truthiness?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-Truthiness is Python's protocol for converting an object to boolean context such as `if value`.
+Truthiness — протокол преобразования объекта к логическому значению в условиях вроде `if value`.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> Truthiness is Python's protocol for converting an object to boolean context such as `if value`. Python calls `__bool__`; if absent, it uses `__len__`; without both, an object is truthy. `None`, numeric zero and empty standard collections are falsy. Важное ограничение: `if value` merges several states. Use `is None` when zero, empty string or empty list is valid data rather than absence.
+> Truthiness — протокол преобразования объекта к логическому значению в условиях вроде `if value`. Python вызывает `__bool__`, затем при его отсутствии использует `__len__`; без обоих методов объект считается truthy. `None`, числовой ноль и пустые стандартные коллекции являются falsy. Важное ограничение: Проверка `if value` объединяет несколько состояний. Используй `is None`, если ноль, пустая строка или пустой список являются допустимыми данными.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Truthiness?**
 
-Replacing `if limit is None` with `if not limit` incorrectly rejects a valid zero when the contract permits it.
+Замена `if limit is None` на `if not limit` ошибочно отклоняет допустимый ноль.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - falsy values
 - `bool`
 - `__bool__`
 - `__len__`
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Replacing `if limit is None` with `if not limit` incorrectly rejects a valid zero when the contract permits it.
+- Замена `if limit is None` на `if not limit` ошибочно отклоняет допустимый ноль.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Truthiness?
 
@@ -175,17 +175,17 @@ Replacing `if limit is None` with `if not limit` incorrectly rejects a valid zer
 
 Верни default только для None. Целое значение от 0 до 100 сохрани; bool и остальные значения отклони через ValueError.
 
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
-## Cheat sheet
+Работай в main.py. Не меняй публичные имена и сигнатуры: скрытые тесты импортируют их напрямую. Проверь основной сценарий, граничные значения, повторные вызовы и распространение ошибок.
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** Truthiness is Python's protocol for converting an object to boolean context such as `if value`.
+- **Что это:** Truthiness — протокол преобразования объекта к логическому значению в условиях вроде `if value`.
 - **Механизм:** Отделяй identity объекта, его value и binding имени. Assignment обычно создаёт новую связь, а не копию.
-- **Ограничение:** Replacing `if limit is None` with `if not limit` incorrectly rejects a valid zero when the contract permits it.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Замена `if limit is None` на `if not limit` ошибочно отклоняет допустимый ноль.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

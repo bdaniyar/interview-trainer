@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: high · 12 минут.** Python указан в 18/18; typing повышает надёжность API contracts.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,30 +12,30 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-Type hints describe contracts for static checkers, IDEs and readers; Python remains dynamically typed at runtime.
+Type hints описывают контракт для static checker, IDE и читателя; Python остаётся динамически типизированным во время выполнения.
 
 ### Как работает
 
-Annotations are stored as metadata and do not automatically insert type checks. Frameworks such as FastAPI/Pydantic explicitly inspect them to build validation/schema behavior.
+Annotations хранятся как metadata и сами не добавляют проверки типов. FastAPI и Pydantic отдельно читают их для schema и validation.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-A passing type check is not input validation, and a runtime-valid coercion may still be undesirable for a domain rule.
+Успешная статическая проверка не заменяет input validation, а допустимое runtime-преобразование может нарушать domain rule.
 
 ### Где используется в backend
 
-Typed service boundaries catch many mistakes before tests while Pydantic validates incoming request data.
+Типизированные границы service находят ошибки до тестов, а Pydantic валидирует входящие request data.
 
-## Mental model
+## Модель понимания
 
 Аннотация — описание для инструментов; runtime validation выполняет отдельный код или библиотека.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -44,17 +44,17 @@ Typed service boundaries catch many mistakes before tests while Pydantic validat
 - type hints
 - static checker
 - Python remains dynamic
-- FastAPI/Pydantic use hints at runtime
+- FastAPI и Pydantic используют аннотации во время выполнения
 
 ### Полезно
 
-- one short code/result example
+- один короткий пример кода с результатом
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Static hints vs runtime behavior: отдельный пример
 
@@ -68,23 +68,23 @@ print(double("a"))
 
 Type checker отклонит второй вызов, но runtime Python выполнит operator строки без автоматической validation.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Assuming `value: int` prevents a caller from passing a string leads to runtime surprises.
+Аннотация `value: int` сама по себе не запрещает caller передать строку.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `type hints` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `type hints` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `static checker` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `static checker`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `type hints` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `type hints`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Static hints vs runtime behavior in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Static hints vs runtime behavior за 45–60 секунд и назови одно ограничение.
 
-## Code prediction
+## Предсказание результата кода
 
 ### Type hint не валидирует runtime
 
@@ -98,7 +98,7 @@ print(double('a'))
 
 <details><summary>Показать ответ</summary>
 
-Expected:
+Ожидаемый результат:
 
 ```text
 aa
@@ -106,76 +106,76 @@ aa
 
 Обычная annotation не вставляет runtime type check; строка использует собственный operator *.
 
-Misconception: `typing-runtime`.
+Типичная ошибка мышления: `typing-runtime`.
 
 </details>
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Static hints vs runtime behavior и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Static hints vs runtime behavior?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-Type hints describe contracts for static checkers, IDEs and readers; Python remains dynamically typed at runtime.
+Type hints описывают контракт для static checker, IDE и читателя; Python остаётся динамически типизированным во время выполнения.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> Type hints describe contracts for static checkers, IDEs and readers; Python remains dynamically typed at runtime. Annotations are stored as metadata and do not automatically insert type checks. Frameworks such as FastAPI/Pydantic explicitly inspect them to build validation/schema behavior. Важное ограничение: A passing type check is not input validation, and a runtime-valid coercion may still be undesirable for a domain rule.
+> Type hints описывают контракт для static checker, IDE и читателя; Python остаётся динамически типизированным во время выполнения. Annotations хранятся как metadata и сами не добавляют проверки типов. FastAPI и Pydantic отдельно читают их для schema и validation. Важное ограничение: Успешная статическая проверка не заменяет input validation, а допустимое runtime-преобразование может нарушать domain rule.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Static hints vs runtime behavior?**
 
-Assuming `value: int` prevents a caller from passing a string leads to runtime surprises.
+Аннотация `value: int` сама по себе не запрещает caller передать строку.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - type hints
 - static checker
 - Python remains dynamic
-- FastAPI/Pydantic use hints at runtime
+- FastAPI и Pydantic используют аннотации во время выполнения
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Assuming `value: int` prevents a caller from passing a string leads to runtime surprises.
+- Аннотация `value: int` сама по себе не запрещает caller передать строку.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Static hints vs runtime behavior?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Static hints vs runtime behavior**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Static hints vs runtime behavior**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** Type hints describe contracts for static checkers, IDEs and readers; Python remains dynamically typed at runtime.
+- **Что это:** Type hints описывают контракт для static checker, IDE и читателя; Python остаётся динамически типизированным во время выполнения.
 - **Механизм:** Аннотация — описание для инструментов; runtime validation выполняет отдельный код или библиотека.
-- **Ограничение:** Assuming `value: int` prevents a caller from passing a string leads to runtime surprises.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Аннотация `value: int` сама по себе не запрещает caller передать строку.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

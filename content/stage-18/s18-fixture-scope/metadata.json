@@ -3,7 +3,7 @@
   "slug": "s18-fixture-scope",
   "title": "Fixture scope",
   "module_slug": "stage-18",
-  "module_title": "Stage 18 · Testing",
+  "module_title": "Этап 18 · Testing",
   "module_order": 18,
   "order": 241,
   "duration": 10,
@@ -13,7 +13,7 @@
     "function/class/module/session",
     "isolation vs speed."
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

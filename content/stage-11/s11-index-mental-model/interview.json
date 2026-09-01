@@ -1,6 +1,6 @@
 [
   {
-    "question": "Что такое Index mental model и как это работает?",
+    "question": "Что такое Index модель понимания и как это работает?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
@@ -10,10 +10,10 @@
       "storage/write cost",
       "index is not magic"
     ],
-    "short_answer": "A database index is an auxiliary structure that can find ordered key ranges without scanning every table row.",
-    "junior_answer": "A database index is an auxiliary structure that can find ordered key ranges without scanning every table row. It speeds matching access paths but consumes storage and adds work to INSERT/UPDATE/DELETE. The planner may choose a sequential scan when many rows match. Важное ограничение: Design indexes from actual WHERE/JOIN/ORDER patterns and inspect EXPLAIN ANALYZE; an index on every column is harmful.",
-    "follow_up_question": "Какая типичная ошибка связана с Index mental model?",
-    "follow_up_answer": "Adding an index without the query shape or selectivity can increase write cost while never being selected.",
+    "short_answer": "Database index — вспомогательная структура, позволяющая находить упорядоченные ranges ключей без полного table scan.",
+    "junior_answer": "Database index — вспомогательная структура, позволяющая находить упорядоченные ranges ключей без полного table scan. Index ускоряет подходящий access path, но занимает место и добавляет работу INSERT/UPDATE/DELETE. Planner может выбрать sequential scan, когда совпадает большая часть rows. Важное ограничение: Проектируй indexes по реальным WHERE/JOIN/ORDER patterns и проверяй `EXPLAIN ANALYZE`; index на каждую column вреден.",
+    "follow_up_question": "Какая типичная ошибка связана с Index модель понимания?",
+    "follow_up_answer": "Index без конкретного query shape и selectivity увеличивает стоимость writes и может никогда не использоваться.",
     "expected_answer": {
       "must_mention": [
         "auxiliary data structure",
@@ -26,18 +26,18 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Adding an index without the query shape or selectivity can increase write cost while never being selected.",
+        "Index без конкретного query shape и selectivity увеличивает стоимость writes и может никогда не использоваться.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Adding an index without the query shape or selectivity can increase write cost while never being selected."
+        "Index без конкретного query shape и selectivity увеличивает стоимость writes и может никогда не использоваться."
       ],
       "follow_up_questions": [
-        "Какая типичная ошибка связана с Index mental model?"
+        "Какая типичная ошибка связана с Index модель понимания?"
       ]
     },
     "follow_ups": [
-      "Какая типичная ошибка связана с Index mental model?"
+      "Какая типичная ошибка связана с Index модель понимания?"
     ],
     "tags": [
       "stage-11",
@@ -50,37 +50,37 @@
     ]
   },
   {
-    "question": "Какая типичная ошибка связана с Index mental model?",
+    "question": "Какая типичная ошибка связана с Index модель понимания?",
     "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "one short code/result example",
-      "Adding an index without the query shape or selectivity can increase write cost while never being selected."
+      "один короткий пример кода с результатом",
+      "Index без конкретного query shape и selectivity увеличивает стоимость writes и может никогда не использоваться."
     ],
-    "short_answer": "Adding an index without the query shape or selectivity can increase write cost while never being selected.",
-    "junior_answer": "Adding an index without the query shape or selectivity can increase write cost while never being selected.",
-    "follow_up_question": "Что такое Index mental model и как это работает?",
-    "follow_up_answer": "A database index is an auxiliary structure that can find ordered key ranges without scanning every table row. It speeds matching access paths but consumes storage and adds work to INSERT/UPDATE/DELETE. The planner may choose a sequential scan when many rows match. Важное ограничение: Design indexes from actual WHERE/JOIN/ORDER patterns and inspect EXPLAIN ANALYZE; an index on every column is harmful.",
+    "short_answer": "Index без конкретного query shape и selectivity увеличивает стоимость writes и может никогда не использоваться.",
+    "junior_answer": "Index без конкретного query shape и selectivity увеличивает стоимость writes и может никогда не использоваться.",
+    "follow_up_question": "Что такое Index модель понимания и как это работает?",
+    "follow_up_answer": "Database index — вспомогательная структура, позволяющая находить упорядоченные ranges ключей без полного table scan. Index ускоряет подходящий access path, но занимает место и добавляет работу INSERT/UPDATE/DELETE. Planner может выбрать sequential scan, когда совпадает большая часть rows. Важное ограничение: Проектируй indexes по реальным WHERE/JOIN/ORDER patterns и проверяй `EXPLAIN ANALYZE`; index на каждую column вреден.",
     "expected_answer": {
       "must_mention": [
-        "one short code/result example"
+        "один короткий пример кода с результатом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Adding an index without the query shape or selectivity can increase write cost while never being selected."
+        "Index без конкретного query shape и selectivity увеличивает стоимость writes и может никогда не использоваться."
       ],
       "red_flags": [
-        "Adding an index without the query shape or selectivity can increase write cost while never being selected."
+        "Index без конкретного query shape и selectivity увеличивает стоимость writes и может никогда не использоваться."
       ],
       "follow_up_questions": [
-        "Что такое Index mental model и как это работает?"
+        "Что такое Index модель понимания и как это работает?"
       ]
     },
     "follow_ups": [
-      "Что такое Index mental model и как это работает?"
+      "Что такое Index модель понимания и как это работает?"
     ],
     "tags": [
       "stage-11",

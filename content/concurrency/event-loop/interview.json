@@ -10,10 +10,10 @@
       "callbacks/tasks",
       "one blocking call stalls the loop"
     ],
-    "short_answer": "The event loop schedules ready callbacks/tasks and waits for I/O readiness or timers when nothing is ready.",
-    "junior_answer": "The event loop schedules ready callbacks/tasks and waits for I/O readiness or timers when nothing is ready. A task runs cooperatively until it awaits. The loop then resumes another ready task and later returns to the suspended one. Важное ограничение: One blocking function in the event-loop thread delays every other task on that loop.",
+    "short_answer": "Event loop планирует готовые callbacks/tasks и ждёт I/O readiness или timers, когда готовой работы нет.",
+    "junior_answer": "Event loop планирует готовые callbacks/tasks и ждёт I/O readiness или timers, когда готовой работы нет. Task кооперативно выполняется до `await`; затем loop запускает другую готовую task и возвращается к приостановленной после готовности awaitable. Важное ограничение: Одна blocking function в event-loop thread задерживает все остальные tasks этого loop.",
     "follow_up_question": "Какая типичная ошибка связана с Event loop?",
-    "follow_up_answer": "Calling blocking network/DB code directly from an async endpoint stalls unrelated requests.",
+    "follow_up_answer": "Blocking network или DB call внутри async endpoint останавливает обслуживание несвязанных requests.",
     "expected_answer": {
       "must_mention": [
         "scheduling",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Calling blocking network/DB code directly from an async endpoint stalls unrelated requests.",
+        "Blocking network или DB call внутри async endpoint останавливает обслуживание несвязанных requests.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Calling blocking network/DB code directly from an async endpoint stalls unrelated requests."
+        "Blocking network или DB call внутри async endpoint останавливает обслуживание несвязанных requests."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Event loop?"
@@ -55,25 +55,25 @@
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "one short code/result example",
-      "Calling blocking network/DB code directly from an async endpoint stalls unrelated requests."
+      "один короткий пример кода с результатом",
+      "Blocking network или DB call внутри async endpoint останавливает обслуживание несвязанных requests."
     ],
-    "short_answer": "Calling blocking network/DB code directly from an async endpoint stalls unrelated requests.",
-    "junior_answer": "Calling blocking network/DB code directly from an async endpoint stalls unrelated requests.",
+    "short_answer": "Blocking network или DB call внутри async endpoint останавливает обслуживание несвязанных requests.",
+    "junior_answer": "Blocking network или DB call внутри async endpoint останавливает обслуживание несвязанных requests.",
     "follow_up_question": "Что такое Event loop и как это работает?",
-    "follow_up_answer": "The event loop schedules ready callbacks/tasks and waits for I/O readiness or timers when nothing is ready. A task runs cooperatively until it awaits. The loop then resumes another ready task and later returns to the suspended one. Важное ограничение: One blocking function in the event-loop thread delays every other task on that loop.",
+    "follow_up_answer": "Event loop планирует готовые callbacks/tasks и ждёт I/O readiness или timers, когда готовой работы нет. Task кооперативно выполняется до `await`; затем loop запускает другую готовую task и возвращается к приостановленной после готовности awaitable. Важное ограничение: Одна blocking function в event-loop thread задерживает все остальные tasks этого loop.",
     "expected_answer": {
       "must_mention": [
-        "one short code/result example"
+        "один короткий пример кода с результатом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Calling blocking network/DB code directly from an async endpoint stalls unrelated requests."
+        "Blocking network или DB call внутри async endpoint останавливает обслуживание несвязанных requests."
       ],
       "red_flags": [
-        "Calling blocking network/DB code directly from an async endpoint stalls unrelated requests."
+        "Blocking network или DB call внутри async endpoint останавливает обслуживание несвязанных requests."
       ],
       "follow_up_questions": [
         "Что такое Event loop и как это работает?"

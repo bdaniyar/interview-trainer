@@ -3,7 +3,7 @@
   "slug": "s12-401-vs-403",
   "title": "401 vs 403",
   "module_slug": "stage-12",
-  "module_title": "Stage 12 · HTTP, Networking and REST",
+  "module_title": "Этап 12 · HTTP, Networking and REST",
   "module_order": 12,
   "order": 146,
   "duration": 12,
@@ -14,7 +14,7 @@
     "authenticated but forbidden",
     "appropriate challenge/header context."
   ],
-  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P0",

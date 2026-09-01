@@ -5,7 +5,7 @@
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "shared mutable class attribute bug",
+      "ошибка общего изменяемого атрибута класса",
       "shadowing",
       "appropriate constants/config"
     ],
@@ -15,7 +15,7 @@
     "follow_up_answer": "Добавить inheritance ради нескольких строк переиспользования и получить жёсткую связь типов.",
     "expected_answer": {
       "must_mention": [
-        "shared mutable class attribute bug",
+        "ошибка общего изменяемого атрибута класса",
         "shadowing",
         "appropriate constants/config"
       ],

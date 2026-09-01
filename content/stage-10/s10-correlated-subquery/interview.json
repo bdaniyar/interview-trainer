@@ -5,7 +5,7 @@
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "per-row evaluation mental model",
+      "per-row evaluation модель понимания",
       "optimizer caveat",
       "alternatives"
     ],
@@ -15,7 +15,7 @@
     "follow_up_answer": "Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
     "expected_answer": {
       "must_mention": [
-        "per-row evaluation mental model",
+        "per-row evaluation модель понимания",
         "optimizer caveat",
         "alternatives"
       ],

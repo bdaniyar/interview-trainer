@@ -5,32 +5,32 @@
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "mature ecosystem and development speed",
+      "зрелая экосистема и скорость разработки",
       "type hints/Pydantic/OpenAPI",
-      "async stack suits WebSockets and I/O waits",
-      "FastAPI is not universally superior to Django"
+      "асинхронный стек подходит для WebSocket и ожидания ввода-вывода",
+      "FastAPI не лучше Django во всех возможных задачах"
     ],
     "short_answer": "Why Python and FastAPI?: это отдельный технический контракт",
     "junior_answer": "Why Python and FastAPI? — тема, в которой я сначала фиксирую `mature ecosystem and development speed`, затем объясняю `type hints/Pydantic/OpenAPI` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
     "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Why Python and FastAPI??",
-    "follow_up_answer": "Нужно назвать конкретный failure path и способ его проверить.",
+    "follow_up_answer": "Нужно назвать конкретный сценарий ошибки и способ его проверить.",
     "expected_answer": {
       "must_mention": [
-        "mature ecosystem and development speed",
+        "зрелая экосистема и скорость разработки",
         "type hints/Pydantic/OpenAPI",
-        "async stack suits WebSockets and I/O waits",
-        "FastAPI is not universally superior to Django"
+        "асинхронный стек подходит для WebSocket и ожидания ввода-вывода",
+        "FastAPI не лучше Django во всех возможных задачах"
       ],
       "good_additions": [
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Игнорировать ограничение механизма и проверять только happy path.",
+        "Игнорировать ограничение механизма и проверять только основной сценарий.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Игнорировать ограничение механизма и проверять только happy path."
+        "Игнорировать ограничение механизма и проверять только основной сценарий."
       ],
       "follow_up_questions": [
         "Какое ограничение или типичная ошибка относится именно к теме Why Python and FastAPI??"
@@ -56,25 +56,25 @@
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Django could reduce custom work for admin/content-heavy product",
-      "Нужно назвать конкретный failure path и способ его проверить."
+      "Django может сократить объём собственной разработки для продукта с админкой и большим количеством контента",
+      "Нужно назвать конкретный сценарий ошибки и способ его проверить."
     ],
-    "short_answer": "Нужно назвать конкретный failure path и способ его проверить.",
-    "junior_answer": "Нужно назвать конкретный failure path и способ его проверить.",
+    "short_answer": "Нужно назвать конкретный сценарий ошибки и способ его проверить.",
+    "junior_answer": "Нужно назвать конкретный сценарий ошибки и способ его проверить.",
     "follow_up_question": "Что такое Why Python and FastAPI? и какой механизм здесь важно понимать Junior-разработчику?",
     "follow_up_answer": "Why Python and FastAPI? — тема, в которой я сначала фиксирую `mature ecosystem and development speed`, затем объясняю `type hints/Pydantic/OpenAPI` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
     "expected_answer": {
       "must_mention": [
-        "Django could reduce custom work for admin/content-heavy product"
+        "Django может сократить объём собственной разработки для продукта с админкой и большим количеством контента"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Игнорировать ограничение механизма и проверять только happy path."
+        "Игнорировать ограничение механизма и проверять только основной сценарий."
       ],
       "red_flags": [
-        "Игнорировать ограничение механизма и проверять только happy path."
+        "Игнорировать ограничение механизма и проверять только основной сценарий."
       ],
       "follow_up_questions": [
         "Что такое Why Python and FastAPI? и какой механизм здесь важно понимать Junior-разработчику?"

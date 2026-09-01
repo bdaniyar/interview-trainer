@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: very_high · 12 минут.** SQL/relational DB явно встречались в 15/18 — один из главных P0-разделов.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-`HAVING` filters groups after aggregation, while `WHERE` filters source rows before groups exist.
+`HAVING` фильтрует группы после aggregation, а `WHERE` отбирает исходные rows до формирования групп.
 
 ### Как работает
 
-A condition on ordinary rows belongs in WHERE; a condition such as `COUNT(*) >= 2` belongs in HAVING.
+Условие на обычные rows относится к WHERE; условие вроде `COUNT(*) >= 2` — к HAVING.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Moving a filter across aggregation can change both which rows contribute and which groups survive.
+Перенос фильтра через границу aggregation способен изменить и состав групп, и набор surviving groups.
 
-## Mental model
+## Модель понимания
 
 Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -39,17 +39,17 @@ Moving a filter across aggregation can change both which rows contribute and whi
 
 - WHERE before grouping
 - HAVING after grouping
-- realistic order/customer examples
+- реалистичные примеры заказов и клиентов
 
 ### Полезно
 
-- one short code/result example
+- один короткий пример кода с результатом
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### HAVING: отдельный пример
 
@@ -62,23 +62,23 @@ HAVING COUNT(*) >= 3;
 
 HAVING фильтрует уже сформированные группы; аналогичный predicate нельзя применить в WHERE до aggregation.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Writing `WHERE COUNT(*) > 1` is invalid because the aggregate has not been computed at that stage.
+`WHERE COUNT(*) > 1` некорректен, потому что aggregate на этом этапе ещё не вычислен.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `WHERE before grouping` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `WHERE before grouping` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `HAVING after grouping` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `HAVING after grouping`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `WHERE before grouping` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `WHERE before grouping`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain HAVING in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни HAVING за 45–60 секунд и назови одно ограничение.
 
-## SQL practice
+## Практика SQL
 
 ### Пользователи с двумя заказами
 
@@ -112,7 +112,7 @@ CREATE TABLE order_items (
 );
 ```
 
-Seed:
+Начальные данные:
 
 ```sql
 INSERT INTO users VALUES
@@ -131,75 +131,75 @@ INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,1
 
 **Вопрос:** Верни user_id с минимум двумя заказами.
 
-Expected columns: user_id, count. Comparison: ordered.
+Ожидаемые столбцы: user_id, count. Сравнение: с учётом порядка строк.
 
-SQL runner пока не подключён: выполни запрос в локальном PostgreSQL и сверь result с rubric.
+Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое HAVING и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с HAVING?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-`HAVING` filters groups after aggregation, while `WHERE` filters source rows before groups exist.
+`HAVING` фильтрует группы после aggregation, а `WHERE` отбирает исходные rows до формирования групп.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> `HAVING` filters groups after aggregation, while `WHERE` filters source rows before groups exist. A condition on ordinary rows belongs in WHERE; a condition such as `COUNT(*) >= 2` belongs in HAVING. Важное ограничение: Moving a filter across aggregation can change both which rows contribute and which groups survive.
+> `HAVING` фильтрует группы после aggregation, а `WHERE` отбирает исходные rows до формирования групп. Условие на обычные rows относится к WHERE; условие вроде `COUNT(*) >= 2` — к HAVING. Важное ограничение: Перенос фильтра через границу aggregation способен изменить и состав групп, и набор surviving groups.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с HAVING?**
 
-Writing `WHERE COUNT(*) > 1` is invalid because the aggregate has not been computed at that stage.
+`WHERE COUNT(*) > 1` некорректен, потому что aggregate на этом этапе ещё не вычислен.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - WHERE before grouping
 - HAVING after grouping
-- realistic order/customer examples
+- реалистичные примеры заказов и клиентов
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Writing `WHERE COUNT(*) > 1` is invalid because the aggregate has not been computed at that stage.
+- `WHERE COUNT(*) > 1` некорректен, потому что aggregate на этом этапе ещё не вычислен.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с HAVING?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **HAVING**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **HAVING**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** `HAVING` filters groups after aggregation, while `WHERE` filters source rows before groups exist.
+- **Что это:** `HAVING` фильтрует группы после aggregation, а `WHERE` отбирает исходные rows до формирования групп.
 - **Механизм:** Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
-- **Ограничение:** Writing `WHERE COUNT(*) > 1` is invalid because the aggregate has not been computed at that stage.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** `WHERE COUNT(*) > 1` некорректен, потому что aggregate на этом этапе ещё не вычислен.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

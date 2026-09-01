@@ -218,7 +218,7 @@ export function CourseApp() {
           <span className="brand-mark">P</span><span className="brand-name">PYTHORIA</span>
           <button className="collapse-button" onClick={() => setSidebarCollapsed(!sidebarCollapsed)} title="Свернуть sidebar">{sidebarCollapsed ? <PanelLeftOpen size={16} /> : <PanelLeftClose size={16} />}</button>
         </div>
-        <div className="course-title"><span>{course.title}</span><small>{course.summary.completed} / {course.summary.total} lessons</small></div>
+        <div className="course-title"><span>{course.title}</span><small>{course.summary.completed} / {course.summary.total} уроков</small></div>
         <div className="top-actions">
           <span className="streak"><Flame size={14} /> 3 дня</span>
           <span className="xp"><Trophy size={14} /> {course.summary.xp} XP</span>
@@ -249,7 +249,7 @@ export function CourseApp() {
               );
             })}
           </nav>
-          <button className="interview-link" onClick={() => setInterviewOpen(true)}><GraduationCap size={16} /><span><b>Interview mode</b><small>Оригинальные вопросы курса</small></span><ChevronRight size={14} /></button>
+          <button className="interview-link" onClick={() => setInterviewOpen(true)}><GraduationCap size={16} /><span><b>Режим собеседования</b><small>Оригинальные вопросы курса</small></span><ChevronRight size={14} /></button>
         </aside>
 
         <div className="vertical-resizer sidebar-resizer" onPointerDown={startSidebarResize} />

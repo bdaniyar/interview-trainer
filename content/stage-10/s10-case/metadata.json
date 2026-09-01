@@ -3,7 +3,7 @@
   "slug": "s10-case",
   "title": "CASE",
   "module_slug": "stage-10",
-  "module_title": "Stage 10 · SQL Fundamentals and Practice",
+  "module_title": "Этап 10 · SQL Fundamentals and Practice",
   "module_order": 10,
   "order": 115,
   "duration": 10,
@@ -13,7 +13,7 @@
     "conditional projection",
     "grouped reporting."
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

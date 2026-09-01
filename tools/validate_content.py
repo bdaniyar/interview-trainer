@@ -34,19 +34,19 @@ REQUIRED_METADATA = {
     "last_verified",
 }
 REQUIRED_HEADINGS = {
-    "## Learning objectives",
-    "## Theory",
-    "## Mental model",
+    "## Учебные цели",
+    "## Теория",
+    "## Модель понимания",
     "## Что нужно знать на Junior",
-    "## Code examples",
-    "## Common mistakes",
-    "## Practice",
-    "## Interview questions",
-    "## Good answers",
-    "## Expected answer rubric",
+    "## Примеры кода",
+    "## Типичные ошибки",
+    "## Практика",
+    "## Вопросы с собеседований",
+    "## Хорошие ответы",
+    "## Критерии хорошего ответа",
     "## Задача",
-    "## Cheat sheet",
-    "## Sources",
+    "## Шпаргалка",
+    "## Источники",
 }
 PLACEHOLDERS = {"Материал урока пока не добавлен", "Задача будет добавлена позже", "Учебный блок:"}
 BOILERPLATE = {
@@ -56,10 +56,45 @@ BOILERPLATE = {
     "ответ по схеме «определение → механизм → пример → ограничение»",
     "Проверь модель вопросами: кто владеет состоянием",
 }
+RUSSIAN_PROSE_SECTIONS = {
+    "Теория",
+    "Модель понимания",
+    "Что нужно знать на Junior",
+    "Типичные ошибки",
+    "Практика",
+    "Хорошие ответы",
+    "Критерии хорошего ответа",
+    "Шпаргалка",
+}
 
 
 def fail(errors: list[str], message: str) -> None:
     errors.append(message)
+
+
+def english_only_prose(markdown: str) -> list[tuple[int, str]]:
+    """Find English explanatory lines while ignoring code and API identifiers."""
+
+    issues: list[tuple[int, str]] = []
+    section: str | None = None
+    fenced = False
+    for line_number, line in enumerate(markdown.splitlines(), 1):
+        if line.startswith("## "):
+            section = line[3:].strip()
+        if line.strip().startswith("```"):
+            fenced = not fenced
+            continue
+        if fenced or section not in RUSSIAN_PROSE_SECTIONS:
+            continue
+        prose = re.sub(r"`[^`]*`", "", line)
+        prose = re.sub(r"https?://\S+", "", prose)
+        latin = len(re.findall(r"[A-Za-z]", prose))
+        cyrillic = len(re.findall(r"[А-Яа-яЁё]", prose))
+        # Names such as FastAPI and SQL are expected. A long line with almost
+        # no Cyrillic text is an untranslated explanation, not a code symbol.
+        if latin >= 30 and cyrillic < 10:
+            issues.append((line_number, line.strip()))
+    return issues
 
 
 def validate(run_solutions: bool) -> None:
@@ -160,38 +195,40 @@ def validate(run_solutions: bool) -> None:
         for marker in BOILERPLATE:
             if marker in markdown:
                 fail(errors, f"generic boilerplate in published lesson {slug}: {marker}")
+        for line_number, line in english_only_prose(markdown):
+            fail(errors, f"{slug}: английский учебный текст в строке {line_number}: {line}")
         if metadata.get("generated_by"):
             for heading in REQUIRED_HEADINGS:
                 if heading not in markdown:
                     fail(errors, f"{slug}: missing heading {heading}")
-            for subheading in ("### Что это", "### Как работает", "### Важный нюанс / limitation", "### Обязательно"):
+            for subheading in ("### Что это", "### Как работает", "### Важный нюанс / ограничение", "### Обязательно"):
                 if subheading not in markdown:
                     fail(errors, f"{slug}: missing educational block {subheading}")
         example_section = re.search(
-            r"^## Code examples\n+(.*?)(?=^## |\Z)",
+            r"^## Примеры кода\n+(.*?)(?=^## |\Z)",
             markdown,
             re.MULTILINE | re.DOTALL,
         )
         if not example_section:
-            fail(errors, f"{slug}: Code examples section is empty")
+            fail(errors, f"{slug}: раздел «Примеры кода» пуст")
         else:
             blocks = re.findall(r"```([^\n]*)\n(.*?)```", example_section.group(1), re.DOTALL)
             if not blocks:
-                fail(errors, f"{slug}: Code examples has no fenced example")
+                fail(errors, f"{slug}: в разделе «Примеры кода» нет блока кода")
             else:
                 normalized_blocks = []
                 for language, source in blocks:
                     if language.strip().lower() in {"python", "py"}:
                         try:
-                            compile(source, f"<{slug}:Code examples>", "exec")
+                            compile(source, f"<{slug}:Примеры кода>", "exec")
                         except SyntaxError as exc:
-                            fail(errors, f"{slug}: invalid Python Code example: {exc.msg} at line {exc.lineno}")
+                            fail(errors, f"{slug}: некорректный пример Python: {exc.msg} at line {exc.lineno}")
                     normalized_source = re.sub(r"\s+", " ", source).strip()
                     normalized_blocks.append(f"{language.strip()}\n{normalized_source}")
                 signature = "\n---\n".join(normalized_blocks)
                 duplicate = seen_example_sources.get(signature)
                 if duplicate:
-                    fail(errors, f"duplicate Code examples in {duplicate} and {slug}")
+                    fail(errors, f"повторяющиеся примеры кода в {duplicate} и {slug}")
                 else:
                     seen_example_sources[signature] = slug
         interview_path = directory / "interview.json"

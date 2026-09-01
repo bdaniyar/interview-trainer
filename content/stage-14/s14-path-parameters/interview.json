@@ -9,10 +9,10 @@
       "validation",
       "routing order pitfalls"
     ],
-    "short_answer": "A path parameter identifies part of the routed resource path and is converted/validated from text using the endpoint annotation.",
-    "junior_answer": "A path parameter identifies part of the routed resource path and is converted/validated from text using the endpoint annotation. `/users/{user_id}` binds the segment; constraints can reject invalid values before handler execution. Static routes must not be accidentally shadowed by a broad dynamic route. Важное ограничение: Path parameters are required by the matched path; optional filters belong in query parameters.",
+    "short_answer": "Path parameter идентифицирует часть resource path и преобразуется из текста по annotation endpoint.",
+    "junior_answer": "Path parameter идентифицирует часть resource path и преобразуется из текста по annotation endpoint. `/users/{user_id}` связывает segment с параметром; constraints отклоняют значение до handler. Static routes не должны случайно затеняться широким dynamic route. Важное ограничение: Path parameter обязателен для совпавшего route; необязательные filters относятся к query parameters.",
     "follow_up_question": "Какая типичная ошибка связана с Path parameters?",
-    "follow_up_answer": "Registering `/users/{user_id}` before a conflicting `/users/me` design can route `me` into integer validation instead of the intended handler.",
+    "follow_up_answer": "Конфликт `/users/{user_id}` и `/users/me` может отправить `me` в int validation вместо нужного handler.",
     "expected_answer": {
       "must_mention": [
         "type conversion",
@@ -24,11 +24,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Registering `/users/{user_id}` before a conflicting `/users/me` design can route `me` into integer validation instead of the intended handler.",
+        "Конфликт `/users/{user_id}` и `/users/me` может отправить `me` в int validation вместо нужного handler.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Registering `/users/{user_id}` before a conflicting `/users/me` design can route `me` into integer validation instead of the intended handler."
+        "Конфликт `/users/{user_id}` и `/users/me` может отправить `me` в int validation вместо нужного handler."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Path parameters?"
@@ -53,25 +53,25 @@
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "one short code/result example",
-      "Registering `/users/{user_id}` before a conflicting `/users/me` design can route `me` into integer validation instead of the intended handler."
+      "один короткий пример кода с результатом",
+      "Конфликт `/users/{user_id}` и `/users/me` может отправить `me` в int validation вместо нужного handler."
     ],
-    "short_answer": "Registering `/users/{user_id}` before a conflicting `/users/me` design can route `me` into integer validation instead of the intended handler.",
-    "junior_answer": "Registering `/users/{user_id}` before a conflicting `/users/me` design can route `me` into integer validation instead of the intended handler.",
+    "short_answer": "Конфликт `/users/{user_id}` и `/users/me` может отправить `me` в int validation вместо нужного handler.",
+    "junior_answer": "Конфликт `/users/{user_id}` и `/users/me` может отправить `me` в int validation вместо нужного handler.",
     "follow_up_question": "Что такое Path parameters и как это работает?",
-    "follow_up_answer": "A path parameter identifies part of the routed resource path and is converted/validated from text using the endpoint annotation. `/users/{user_id}` binds the segment; constraints can reject invalid values before handler execution. Static routes must not be accidentally shadowed by a broad dynamic route. Важное ограничение: Path parameters are required by the matched path; optional filters belong in query parameters.",
+    "follow_up_answer": "Path parameter идентифицирует часть resource path и преобразуется из текста по annotation endpoint. `/users/{user_id}` связывает segment с параметром; constraints отклоняют значение до handler. Static routes не должны случайно затеняться широким dynamic route. Важное ограничение: Path parameter обязателен для совпавшего route; необязательные filters относятся к query parameters.",
     "expected_answer": {
       "must_mention": [
-        "one short code/result example"
+        "один короткий пример кода с результатом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Registering `/users/{user_id}` before a conflicting `/users/me` design can route `me` into integer validation instead of the intended handler."
+        "Конфликт `/users/{user_id}` и `/users/me` может отправить `me` в int validation вместо нужного handler."
       ],
       "red_flags": [
-        "Registering `/users/{user_id}` before a conflicting `/users/me` design can route `me` into integer validation instead of the intended handler."
+        "Конфликт `/users/{user_id}` и `/users/me` может отправить `me` в int validation вместо нужного handler."
       ],
       "follow_up_questions": [
         "Что такое Path parameters и как это работает?"

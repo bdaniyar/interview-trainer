@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P1 · вероятность на интервью: high · 10 минут.** Django/DRF встречался в 7/18 и расширяет Казахстанскую junior-воронку.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,7 +12,7 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
@@ -20,16 +20,16 @@
 
 ### Как работает
 
-Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы failure path.
+Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы сценарий ошибки.
 
-**FastAPI: typed API/async flexibility.** `FastAPI: typed API/async flexibility` входит в Django/DRF request flow и влияет на ORM query count, validation, permissions или response serialization.
+**FastAPI: типизированный API и гибкая асинхронность.** `FastAPI: typed API/async flexibility` входит в Django/DRF обработка запроса и влияет на ORM query count, validation, permissions или сериализация ответа.
 
-**Django: batteries, ORM, admin, auth ecosystem.** `Django: batteries, ORM, admin, auth ecosystem` входит в Django/DRF request flow и влияет на ORM query count, validation, permissions или response serialization.
+**Django: готовая экосистема с ORM, админкой и аутентификацией.** `Django: batteries, ORM, admin, auth ecosystem` входит в Django/DRF обработка запроса и влияет на ORM query count, validation, permissions или сериализация ответа.
 
-**no claim that one is universally better.** `no claim that one is universally better` входит в Django/DRF request flow и влияет на ORM query count, validation, permissions или response serialization.
+**ни один вариант не является безусловно лучшим.** `no claim that one is universally better` входит в Django/DRF обработка запроса и влияет на ORM query count, validation, permissions или сериализация ответа.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
 Граница Junior: уверенно объясняй `FastAPI: typed API/async flexibility` и `Django: batteries, ORM, admin, auth ecosystem` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
 
@@ -37,19 +37,19 @@
 
 В backend эта тема важна в том месте, где применяется `FastAPI: typed API/async flexibility`; проверяй именно наблюдаемый contract, а не название инструмента.
 
-## Mental model
+## Модель понимания
 
-Django project содержит configuration, apps группируют domain capability, DRF serializer задаёт API boundary.
+Проект Django содержит конфигурацию, приложения группируют доменную возможность, Сериализатор DRF задаёт API boundary.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
-- FastAPI: typed API/async flexibility
-- Django: batteries, ORM, admin, auth ecosystem
-- no claim that one is universally better
+- FastAPI: типизированный API и гибкая асинхронность
+- Django: готовая экосистема с ORM, админкой и аутентификацией
+- ни один вариант не является безусловно лучшим
 
 ### Полезно
 
@@ -57,9 +57,9 @@ Django project содержит configuration, apps группируют domain 
 
 ### Можно не учить глубоко
 
-- implementation internals, не влияющие на Junior-код и типичный interview follow-up
+- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### FastAPI vs Django/DRF: отдельный пример
 
@@ -73,85 +73,85 @@ assert example_s26_fastapi_vs_django_drf()
 
 Проследи Django/DRF request, ORM query count, validation, permission и response.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Игнорировать ограничение механизма и проверять только happy path.
+Игнорировать ограничение механизма и проверять только основной сценарий.
 
-## Practice
+## Практика
 
-**A · Prediction/reasoning.** Предскажи результат минимального примера для `FastAPI: typed API/async flexibility` до запуска.
+**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для `FastAPI: typed API/async flexibility` до запуска.
 
-**B · Find the bug.** Найди нарушение `Django: batteries, ORM, admin, auth ecosystem` и объясни конкретное последствие.
+**B · Найди ошибку.** Найди нарушение `Django: batteries, ORM, admin, auth ecosystem` и объясни конкретное последствие.
 
-**E · Interview explanation.** Дай ответ про FastAPI vs Django/DRF за 60 секунд: определение, механизм, пример, ограничение.
+**E · Ответ на собеседовании.** Дай ответ про FastAPI vs Django/DRF за 60 секунд: определение, механизм, пример, ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое FastAPI vs Django/DRF и какой механизм здесь важно понимать Junior-разработчику?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какое ограничение или типичная ошибка относится именно к теме FastAPI vs Django/DRF?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
 FastAPI vs Django/DRF: это отдельный технический контракт
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
 > FastAPI vs Django/DRF — тема, в которой я сначала фиксирую `FastAPI: typed API/async flexibility`, затем объясняю `Django: batteries, ORM, admin, auth ecosystem` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какое ограничение или типичная ошибка относится именно к теме FastAPI vs Django/DRF?**
 
-Нужно назвать конкретный failure path и способ его проверить.
+Нужно назвать конкретный сценарий ошибки и способ его проверить.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
-- FastAPI: typed API/async flexibility
-- Django: batteries, ORM, admin, auth ecosystem
-- no claim that one is universally better
+- FastAPI: типизированный API и гибкая асинхронность
+- Django: готовая экосистема с ORM, админкой и аутентификацией
+- ни один вариант не является безусловно лучшим
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Игнорировать ограничение механизма и проверять только happy path.
+- Игнорировать ограничение механизма и проверять только основной сценарий.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какое ограничение или типичная ошибка относится именно к теме FastAPI vs Django/DRF?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **FastAPI vs Django/DRF**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **FastAPI vs Django/DRF**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
 - **Что это:** FastAPI vs Django/DRF: это отдельный технический контракт
-- **Механизм:** Django project содержит configuration, apps группируют domain capability, DRF serializer задаёт API boundary.
-- **Ограничение:** Игнорировать ограничение механизма и проверять только happy path.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Механизм:** Проект Django содержит конфигурацию, приложения группируют доменную возможность, Сериализатор DRF задаёт API boundary.
+- **Ограничение:** Игнорировать ограничение механизма и проверять только основной сценарий.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

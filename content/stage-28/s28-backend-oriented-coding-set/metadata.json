@@ -3,7 +3,7 @@
   "slug": "s28-backend-oriented-coding-set",
   "title": "Backend-oriented coding set",
   "module_slug": "stage-28",
-  "module_title": "Stage 28 · Algorithms and Data Structures",
+  "module_title": "Этап 28 · Algorithms and Data Structures",
   "module_order": 28,
   "order": 355,
   "duration": 10,
@@ -19,7 +19,7 @@
     "simple LRU mental model",
     "pagination cursor"
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

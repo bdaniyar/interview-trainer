@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P1 · вероятность на интервью: high · 10 минут.** Python указан в 18/18; CPython details приоритетны только там, где объясняют реальные bugs.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,45 +12,45 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-The CPython GIL allows one thread at a time to execute Python bytecode in a process.
+GIL в CPython позволяет только одному thread выполнять Python bytecode в процессе в конкретный момент.
 
 ### Как работает
 
-Threads can still overlap waiting I/O because the GIL is released around many blocking/native operations. CPU-bound pure Python usually needs processes, native code that releases the GIL or external workers.
+Threads всё равно перекрывают ожидание I/O, потому что GIL освобождается вокруг многих blocking/native операций. Для CPU-bound Python обычно нужны processes, native code без GIL или внешние workers.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-The GIL is not an application lock: multi-step shared-state operations and database invariants still race.
+GIL не является lock для приложения: многошаговые операции с общим состоянием и database инварианты всё равно подвержены race conditions.
 
-## Mental model
+## Модель понимания
 
 Разделяй спецификацию Python и конкретную реализацию CPython; GIL относится к выполнению bytecode, не к бизнес-инвариантам.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
-- one thread executing Python bytecode in one CPython process
+- один поток выполняет байткод Python в одном процессе CPython
 - threads still useful for I/O
 - processes/native code for CPU work
-- GIL is not a general lock for application data
+- GIL не является общей блокировкой данных приложения
 
 ### Полезно
 
-- one short code/result example
+- один короткий пример кода с результатом
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### GIL: отдельный пример
 
@@ -67,88 +67,88 @@ print(io_results, ProcessPoolExecutor)
 
 GIL не заменяет выбор workload: threads полезны для blocking I/O, processes обходят общий interpreter lock ценой IPC.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Claiming that threads cannot race because of the GIL confuses bytecode scheduling with atomic business operations.
+Утверждение, что из-за GIL в threads нет races, смешивает планирование bytecode с атомарностью бизнес-операции.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `one thread executing Python bytecode in one CPython process` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `one thread executing Python bytecode in one CPython process` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `threads still useful for I/O` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `threads still useful for I/O`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `one thread executing Python bytecode in one CPython process` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `one thread executing Python bytecode in one CPython process`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain GIL in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни GIL за 45–60 секунд и назови одно ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое GIL и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с GIL?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-The CPython GIL allows one thread at a time to execute Python bytecode in a process.
+GIL в CPython позволяет только одному thread выполнять Python bytecode в процессе в конкретный момент.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> The CPython GIL allows one thread at a time to execute Python bytecode in a process. Threads can still overlap waiting I/O because the GIL is released around many blocking/native operations. CPU-bound pure Python usually needs processes, native code that releases the GIL or external workers. Важное ограничение: The GIL is not an application lock: multi-step shared-state operations and database invariants still race.
+> GIL в CPython позволяет только одному thread выполнять Python bytecode в процессе в конкретный момент. Threads всё равно перекрывают ожидание I/O, потому что GIL освобождается вокруг многих blocking/native операций. Для CPU-bound Python обычно нужны processes, native code без GIL или внешние workers. Важное ограничение: GIL не является lock для приложения: многошаговые операции с общим состоянием и database инварианты всё равно подвержены race conditions.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с GIL?**
 
-Claiming that threads cannot race because of the GIL confuses bytecode scheduling with atomic business operations.
+Утверждение, что из-за GIL в threads нет races, смешивает планирование bytecode с атомарностью бизнес-операции.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
-- one thread executing Python bytecode in one CPython process
+- один поток выполняет байткод Python в одном процессе CPython
 - threads still useful for I/O
 - processes/native code for CPU work
-- GIL is not a general lock for application data
+- GIL не является общей блокировкой данных приложения
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Claiming that threads cannot race because of the GIL confuses bytecode scheduling with atomic business operations.
+- Утверждение, что из-за GIL в threads нет races, смешивает планирование bytecode с атомарностью бизнес-операции.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с GIL?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **GIL**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **GIL**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** The CPython GIL allows one thread at a time to execute Python bytecode in a process.
+- **Что это:** GIL в CPython позволяет только одному thread выполнять Python bytecode в процессе в конкретный момент.
 - **Механизм:** Разделяй спецификацию Python и конкретную реализацию CPython; GIL относится к выполнению bytecode, не к бизнес-инвариантам.
-- **Ограничение:** Claiming that threads cannot race because of the GIL confuses bytecode scheduling with atomic business operations.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Утверждение, что из-за GIL в threads нет races, смешивает планирование bytecode с атомарностью бизнес-операции.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

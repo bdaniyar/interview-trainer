@@ -3,7 +3,7 @@
   "slug": "dataclasses",
   "title": "Dataclasses",
   "module_slug": "stage-05",
-  "module_title": "Stage 5 · OOP and Python Data Model",
+  "module_title": "Этап 5 · OOP and Python Data Model",
   "module_order": 5,
   "order": 56,
   "duration": 12,
@@ -17,7 +17,7 @@
     "frozen",
     "domain data vs ORM/Pydantic models."
   ],
-  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": true,
   "has_solution": true,
   "priority": "P0",

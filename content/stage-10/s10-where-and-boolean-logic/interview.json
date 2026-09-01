@@ -10,10 +10,10 @@
       "parentheses",
       "ranges"
     ],
-    "short_answer": "`WHERE` filters source rows using boolean predicates before grouping and aggregation.",
-    "junior_answer": "`WHERE` filters source rows using boolean predicates before grouping and aggregation. AND binds tighter than OR, so parentheses make intended logic explicit. NULL comparisons yield UNKNOWN and require `IS NULL`/`IS NOT NULL`. Важное ограничение: Functions applied to an indexed column can prevent a simple index access path; confirm with EXPLAIN rather than guessing.",
+    "short_answer": "`WHERE` фильтрует исходные rows по boolean predicates до grouping и aggregation.",
+    "junior_answer": "`WHERE` фильтрует исходные rows по boolean predicates до grouping и aggregation. AND имеет более высокий приоритет, чем OR, поэтому parentheses фиксируют намерение. Сравнения с NULL дают UNKNOWN и требуют `IS NULL` или `IS NOT NULL`. Важное ограничение: Функция вокруг indexed column может помешать простому index access path; решение проверяют через EXPLAIN.",
     "follow_up_question": "Какая типичная ошибка связана с WHERE and boolean logic?",
-    "follow_up_answer": "`status = 'paid' OR status = 'new' AND active` usually means something different from the visually assumed grouping.",
+    "follow_up_answer": "`status = 'paid' OR status = 'new' AND active` часто означает не ту группировку, которую читатель предполагает визуально.",
     "expected_answer": {
       "must_mention": [
         "comparisons",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "`status = 'paid' OR status = 'new' AND active` usually means something different from the visually assumed grouping.",
+        "`status = 'paid' OR status = 'new' AND active` часто означает не ту группировку, которую читатель предполагает визуально.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "`status = 'paid' OR status = 'new' AND active` usually means something different from the visually assumed grouping."
+        "`status = 'paid' OR status = 'new' AND active` часто означает не ту группировку, которую читатель предполагает визуально."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с WHERE and boolean logic?"
@@ -56,12 +56,12 @@
     "interview_probability": "very_high",
     "answer": [
       "pattern matching",
-      "`status = 'paid' OR status = 'new' AND active` usually means something different from the visually assumed grouping."
+      "`status = 'paid' OR status = 'new' AND active` часто означает не ту группировку, которую читатель предполагает визуально."
     ],
-    "short_answer": "`status = 'paid' OR status = 'new' AND active` usually means something different from the visually assumed grouping.",
-    "junior_answer": "`status = 'paid' OR status = 'new' AND active` usually means something different from the visually assumed grouping.",
+    "short_answer": "`status = 'paid' OR status = 'new' AND active` часто означает не ту группировку, которую читатель предполагает визуально.",
+    "junior_answer": "`status = 'paid' OR status = 'new' AND active` часто означает не ту группировку, которую читатель предполагает визуально.",
     "follow_up_question": "Что такое WHERE and boolean logic и как это работает?",
-    "follow_up_answer": "`WHERE` filters source rows using boolean predicates before grouping and aggregation. AND binds tighter than OR, so parentheses make intended logic explicit. NULL comparisons yield UNKNOWN and require `IS NULL`/`IS NOT NULL`. Важное ограничение: Functions applied to an indexed column can prevent a simple index access path; confirm with EXPLAIN rather than guessing.",
+    "follow_up_answer": "`WHERE` фильтрует исходные rows по boolean predicates до grouping и aggregation. AND имеет более высокий приоритет, чем OR, поэтому parentheses фиксируют намерение. Сравнения с NULL дают UNKNOWN и требуют `IS NULL` или `IS NOT NULL`. Важное ограничение: Функция вокруг indexed column может помешать простому index access path; решение проверяют через EXPLAIN.",
     "expected_answer": {
       "must_mention": [
         "pattern matching"
@@ -70,10 +70,10 @@
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "`status = 'paid' OR status = 'new' AND active` usually means something different from the visually assumed grouping."
+        "`status = 'paid' OR status = 'new' AND active` часто означает не ту группировку, которую читатель предполагает визуально."
       ],
       "red_flags": [
-        "`status = 'paid' OR status = 'new' AND active` usually means something different from the visually assumed grouping."
+        "`status = 'paid' OR status = 'new' AND active` часто означает не ту группировку, которую читатель предполагает визуально."
       ],
       "follow_up_questions": [
         "Что такое WHERE and boolean logic и как это работает?"

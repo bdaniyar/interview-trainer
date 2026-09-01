@@ -5,7 +5,7 @@
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "connections are expensive/limited",
+      "соединения дороги и ограничены",
       "pool size",
       "async pool",
       "leaking sessions/connections"
@@ -16,7 +16,7 @@
     "follow_up_answer": "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
     "expected_answer": {
       "must_mention": [
-        "connections are expensive/limited",
+        "соединения дороги и ограничены",
         "pool size",
         "async pool",
         "leaking sessions/connections"

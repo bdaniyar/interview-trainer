@@ -6,18 +6,18 @@
     "interview_probability": "very_high",
     "answer": [
       "separate SELECT is insufficient",
-      "DB constraint/conditional write/lock",
+      "Ограничение БД, условная запись или блокировка",
       "short transaction",
       "`409 Conflict`"
     ],
     "short_answer": "Hotel Booking and double booking: это отдельный технический контракт",
     "junior_answer": "Hotel Booking and double booking — тема, в которой я сначала фиксирую `separate SELECT is insufficient`, затем объясняю `DB constraint/conditional write/lock` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
     "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Hotel Booking and double booking?",
-    "follow_up_answer": "Нужно назвать конкретный failure path и способ его проверить.",
+    "follow_up_answer": "Нужно назвать конкретный сценарий ошибки и способ его проверить.",
     "expected_answer": {
       "must_mention": [
         "separate SELECT is insufficient",
-        "DB constraint/conditional write/lock",
+        "Ограничение БД, условная запись или блокировка",
         "short transaction",
         "`409 Conflict`"
       ],
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Игнорировать ограничение механизма и проверять только happy path.",
+        "Игнорировать ограничение механизма и проверять только основной сценарий.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Игнорировать ограничение механизма и проверять только happy path."
+        "Игнорировать ограничение механизма и проверять только основной сценарий."
       ],
       "follow_up_questions": [
         "Какое ограничение или типичная ошибка относится именно к теме Hotel Booking and double booking?"
@@ -57,10 +57,10 @@
     "interview_probability": "very_high",
     "answer": [
       "idempotency where applicable",
-      "Нужно назвать конкретный failure path и способ его проверить."
+      "Нужно назвать конкретный сценарий ошибки и способ его проверить."
     ],
-    "short_answer": "Нужно назвать конкретный failure path и способ его проверить.",
-    "junior_answer": "Нужно назвать конкретный failure path и способ его проверить.",
+    "short_answer": "Нужно назвать конкретный сценарий ошибки и способ его проверить.",
+    "junior_answer": "Нужно назвать конкретный сценарий ошибки и способ его проверить.",
     "follow_up_question": "Что такое Hotel Booking and double booking и какой механизм здесь важно понимать Junior-разработчику?",
     "follow_up_answer": "Hotel Booking and double booking — тема, в которой я сначала фиксирую `separate SELECT is insufficient`, затем объясняю `DB constraint/conditional write/lock` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
     "expected_answer": {
@@ -71,10 +71,10 @@
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Игнорировать ограничение механизма и проверять только happy path."
+        "Игнорировать ограничение механизма и проверять только основной сценарий."
       ],
       "red_flags": [
-        "Игнорировать ограничение механизма и проверять только happy path."
+        "Игнорировать ограничение механизма и проверять только основной сценарий."
       ],
       "follow_up_questions": [
         "Что такое Hotel Booking and double booking и какой механизм здесь важно понимать Junior-разработчику?"

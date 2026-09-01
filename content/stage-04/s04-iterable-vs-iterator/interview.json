@@ -10,10 +10,10 @@
       "`iter`",
       "`next`"
     ],
-    "short_answer": "An iterable can produce an iterator; an iterator is a stateful object that yields next values and is consumed.",
-    "junior_answer": "An iterable can produce an iterator; an iterator is a stateful object that yields next values and is consumed. `iter(obj)` obtains the iterator and `next(it)` asks for one item. A list can create a fresh iterator for each loop, while a generator object is typically its own single-pass iterator. Важное ограничение: After exhaustion, an iterator stays exhausted; call the iterable again to obtain a new traversal when supported.",
+    "short_answer": "Iterable умеет создать iterator, а iterator — stateful-объект, который последовательно выдаёт значения и расходуется.",
+    "junior_answer": "Iterable умеет создать iterator, а iterator — stateful-объект, который последовательно выдаёт значения и расходуется. `iter(obj)` получает iterator, `next(it)` запрашивает один элемент. List создаёт новый iterator для каждого обхода, а generator object обычно сам является одноразовым iterator. Важное ограничение: После исчерпания iterator остаётся исчерпанным; для нового обхода нужен новый iterator, если исходный iterable позволяет его создать.",
     "follow_up_question": "Какая типичная ошибка связана с Iterable vs iterator?",
-    "follow_up_answer": "Storing one generator and iterating it twice gives an empty second pass, unlike iterating the original list twice.",
+    "follow_up_answer": "Повторный обход сохранённого generator даёт пустой результат, в отличие от повторного обхода исходного list.",
     "expected_answer": {
       "must_mention": [
         "iterable",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Storing one generator and iterating it twice gives an empty second pass, unlike iterating the original list twice.",
+        "Повторный обход сохранённого generator даёт пустой результат, в отличие от повторного обхода исходного list.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Storing one generator and iterating it twice gives an empty second pass, unlike iterating the original list twice."
+        "Повторный обход сохранённого generator даёт пустой результат, в отличие от повторного обхода исходного list."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Iterable vs iterator?"
@@ -57,12 +57,12 @@
     "answer": [
       "single-pass state",
       "exhaustion",
-      "Storing one generator and iterating it twice gives an empty second pass, unlike iterating the original list twice."
+      "Повторный обход сохранённого generator даёт пустой результат, в отличие от повторного обхода исходного list."
     ],
-    "short_answer": "Storing one generator and iterating it twice gives an empty second pass, unlike iterating the original list twice.",
-    "junior_answer": "Storing one generator and iterating it twice gives an empty second pass, unlike iterating the original list twice.",
+    "short_answer": "Повторный обход сохранённого generator даёт пустой результат, в отличие от повторного обхода исходного list.",
+    "junior_answer": "Повторный обход сохранённого generator даёт пустой результат, в отличие от повторного обхода исходного list.",
     "follow_up_question": "Что такое Iterable vs iterator и как это работает?",
-    "follow_up_answer": "An iterable can produce an iterator; an iterator is a stateful object that yields next values and is consumed. `iter(obj)` obtains the iterator and `next(it)` asks for one item. A list can create a fresh iterator for each loop, while a generator object is typically its own single-pass iterator. Важное ограничение: After exhaustion, an iterator stays exhausted; call the iterable again to obtain a new traversal when supported.",
+    "follow_up_answer": "Iterable умеет создать iterator, а iterator — stateful-объект, который последовательно выдаёт значения и расходуется. `iter(obj)` получает iterator, `next(it)` запрашивает один элемент. List создаёт новый iterator для каждого обхода, а generator object обычно сам является одноразовым iterator. Важное ограничение: После исчерпания iterator остаётся исчерпанным; для нового обхода нужен новый iterator, если исходный iterable позволяет его создать.",
     "expected_answer": {
       "must_mention": [
         "single-pass state",
@@ -72,10 +72,10 @@
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Storing one generator and iterating it twice gives an empty second pass, unlike iterating the original list twice."
+        "Повторный обход сохранённого generator даёт пустой результат, в отличие от повторного обхода исходного list."
       ],
       "red_flags": [
-        "Storing one generator and iterating it twice gives an empty second pass, unlike iterating the original list twice."
+        "Повторный обход сохранённого generator даёт пустой результат, в отличие от повторного обхода исходного list."
       ],
       "follow_up_questions": [
         "Что такое Iterable vs iterator и как это работает?"

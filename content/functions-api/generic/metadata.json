@@ -3,7 +3,7 @@
   "slug": "generic",
   "title": "TypeVar and Generic",
   "module_slug": "stage-06",
-  "module_title": "Stage 6 · Typing",
+  "module_title": "Этап 6 · Typing",
   "module_order": 6,
   "order": 70,
   "duration": 10,
@@ -14,7 +14,7 @@
     "repository example",
     "no unnecessary abstraction."
   ],
-  "description": "P2 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P2 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P2",

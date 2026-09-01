@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P1 · вероятность на интервью: high · 10 минут.** PostgreSQL явно встречался в 13/18; indexes/transactions/concurrency критичны для backend.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-Isolation levels define which effects of concurrent transactions can be observed.
+Isolation levels определяют, какие эффекты concurrent transactions могут наблюдать друг у друга.
 
 ### Как работает
 
-PostgreSQL commonly uses Read Committed per statement; Repeatable Read keeps a transaction snapshot; Serializable may abort a transaction to preserve serial behavior.
+PostgreSQL Read Committed использует snapshot на statement, Repeatable Read сохраняет snapshot transaction, а Serializable может отменить transaction ради последовательной семантики.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Higher isolation is not free and serialization failures require retry of the entire transaction.
+Более строгая isolation не бесплатна, а serialization failure требует retry всей transaction.
 
-## Mental model
+## Модель понимания
 
 Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -48,9 +48,9 @@ Constraint защищает истину, transaction объединяет из�
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Isolation levels: отдельный пример
 
@@ -62,23 +62,23 @@ SELECT 's11_isolation_levels' AS example_key;
 
 Проверь invariant, конкурентный сценарий и фактический query plan вместо догадки.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Changing isolation without identifying the anomaly often adds contention while leaving the actual invariant unprotected.
+Повышение isolation без названной anomaly увеличивает contention и может не защитить реальный invariant.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `read committed` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `read committed` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `repeatable read` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `repeatable read`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `read committed` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `read committed`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Isolation levels in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Isolation levels за 45–60 секунд и назови одно ограничение.
 
-## SQL practice
+## Практика SQL
 
 ### Isolation anomaly
 
@@ -99,7 +99,7 @@ CREATE TABLE bookings (
 );
 ```
 
-Seed:
+Начальные данные:
 
 ```sql
 INSERT INTO rooms VALUES (1,10,'101'),(2,10,'102');
@@ -110,76 +110,76 @@ INSERT INTO bookings VALUES
 
 **Вопрос:** Две transaction читают доступный balance и обе списывают средства. Что гарантирует Read Committed?
 
-Expected columns: reasoning rubric. Comparison: reasoning_rubric.
+Ожидаемые столбцы: критерии рассуждения. Сравнение: по критериям рассуждения.
 
-SQL runner пока не подключён: выполни запрос в локальном PostgreSQL и сверь result с rubric.
+Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Isolation levels и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Isolation levels?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-Isolation levels define which effects of concurrent transactions can be observed.
+Isolation levels определяют, какие эффекты concurrent transactions могут наблюдать друг у друга.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> Isolation levels define which effects of concurrent transactions can be observed. PostgreSQL commonly uses Read Committed per statement; Repeatable Read keeps a transaction snapshot; Serializable may abort a transaction to preserve serial behavior. Важное ограничение: Higher isolation is not free and serialization failures require retry of the entire transaction.
+> Isolation levels определяют, какие эффекты concurrent transactions могут наблюдать друг у друга. PostgreSQL Read Committed использует snapshot на statement, Repeatable Read сохраняет snapshot transaction, а Serializable может отменить transaction ради последовательной семантики. Важное ограничение: Более строгая isolation не бесплатна, а serialization failure требует retry всей transaction.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Isolation levels?**
 
-Changing isolation without identifying the anomaly often adds contention while leaving the actual invariant unprotected.
+Повышение isolation без названной anomaly увеличивает contention и может не защитить реальный invariant.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - read committed
 - repeatable read
 - serializable
 - anomalies at reasonable depth
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Changing isolation without identifying the anomaly often adds contention while leaving the actual invariant unprotected.
+- Повышение isolation без названной anomaly увеличивает contention и может не защитить реальный invariant.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Isolation levels?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Isolation levels**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Isolation levels**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** Isolation levels define which effects of concurrent transactions can be observed.
+- **Что это:** Isolation levels определяют, какие эффекты concurrent transactions могут наблюдать друг у друга.
 - **Механизм:** Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
-- **Ограничение:** Changing isolation without identifying the anomaly often adds contention while leaving the actual invariant unprotected.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Повышение isolation без названной anomaly увеличивает contention и может не защитить реальный invariant.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

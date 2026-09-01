@@ -3,7 +3,7 @@
   "slug": "s14-middleware",
   "title": "Middleware",
   "module_slug": "stage-14",
-  "module_title": "Stage 14 · FastAPI",
+  "module_title": "Этап 14 · FastAPI",
   "module_order": 14,
   "order": 190,
   "duration": 10,
@@ -15,7 +15,7 @@
     "ordering",
     "not for domain logic."
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": true,
   "has_solution": true,
   "priority": "P1",

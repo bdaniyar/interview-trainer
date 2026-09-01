@@ -3,7 +3,7 @@
   "slug": "s21-dockerignore",
   "title": "`.dockerignore`",
   "module_slug": "stage-21",
-  "module_title": "Stage 21 · Docker and Docker Compose",
+  "module_title": "Этап 21 · Docker and Docker Compose",
   "module_order": 21,
   "order": 282,
   "duration": 10,
@@ -12,7 +12,7 @@
   "topics": [
     "`.dockerignore`"
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: high · 12 минут.** ORM/SQLAlchemy явно встречались в 4/18, но Session/transaction знание фундаментально для FastAPI backend.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-AsyncEngine and AsyncSession use an async DB driver so SQL I/O can be awaited without blocking the event loop.
+AsyncEngine и AsyncSession используют async DB driver, поэтому SQL I/O можно await без остановки event loop.
 
 ### Как работает
 
-ORM state/transaction semantics remain: one AsyncSession per request/task, explicit await for I/O and clear commit/rollback ownership.
+ORM state и transaction semantics сохраняются: одна AsyncSession на request или task, явный await для I/O и понятный владелец commit/rollback.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Do not share one AsyncSession across `gather` tasks; each concurrent unit needs its own session/transaction.
+Не разделяй одну AsyncSession между tasks в `gather`: каждой concurrent единице нужна своя session и transaction.
 
-## Mental model
+## Модель понимания
 
 Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -40,17 +40,17 @@ Do not share one AsyncSession across `gather` tasks; each concurrent unit needs 
 - async driver
 - awaitable operations
 - one session per task/request
-- no concurrent use of one AsyncSession
+- не использовать одну AsyncSession конкурентно
 
 ### Полезно
 
-- one short code/result example
+- один короткий пример кода с результатом
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Async engine and AsyncSession: отдельный пример
 
@@ -63,98 +63,98 @@ Session per concurrent task/use case.
 
 Это отдельный debugging example для данного subtopic, а не общий пример stage.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Switching to AsyncSession without an async driver or while using blocking migrations does not create an async data path.
+Переход на AsyncSession без async driver или с blocking data path не делает работу асинхронной.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `async driver` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `async driver` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `awaitable operations` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `awaitable operations`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `async driver` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `async driver`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Async engine and AsyncSession in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Async engine and AsyncSession за 45–60 секунд и назови одно ограничение.
 
-## Debugging practice
+## Практика: Отладка
 
 ### Shared AsyncSession
 
 **Сценарий:** Две tasks используют одну AsyncSession.
 
-**Rubric:** Session per concurrent task/use case.
+**Критерии ответа:** Session per concurrent task/use case.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Async engine and AsyncSession и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Async engine and AsyncSession?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-AsyncEngine and AsyncSession use an async DB driver so SQL I/O can be awaited without blocking the event loop.
+AsyncEngine и AsyncSession используют async DB driver, поэтому SQL I/O можно await без остановки event loop.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> AsyncEngine and AsyncSession use an async DB driver so SQL I/O can be awaited without blocking the event loop. ORM state/transaction semantics remain: one AsyncSession per request/task, explicit await for I/O and clear commit/rollback ownership. Важное ограничение: Do not share one AsyncSession across `gather` tasks; each concurrent unit needs its own session/transaction.
+> AsyncEngine и AsyncSession используют async DB driver, поэтому SQL I/O можно await без остановки event loop. ORM state и transaction semantics сохраняются: одна AsyncSession на request или task, явный await для I/O и понятный владелец commit/rollback. Важное ограничение: Не разделяй одну AsyncSession между tasks в `gather`: каждой concurrent единице нужна своя session и transaction.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Async engine and AsyncSession?**
 
-Switching to AsyncSession without an async driver or while using blocking migrations does not create an async data path.
+Переход на AsyncSession без async driver или с blocking data path не делает работу асинхронной.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - async driver
 - awaitable operations
 - one session per task/request
-- no concurrent use of one AsyncSession
+- не использовать одну AsyncSession конкурентно
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Switching to AsyncSession without an async driver or while using blocking migrations does not create an async data path.
+- Переход на AsyncSession без async driver или с blocking data path не делает работу асинхронной.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Async engine and AsyncSession?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Async engine and AsyncSession**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Async engine and AsyncSession**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** AsyncEngine and AsyncSession use an async DB driver so SQL I/O can be awaited without blocking the event loop.
+- **Что это:** AsyncEngine и AsyncSession используют async DB driver, поэтому SQL I/O можно await без остановки event loop.
 - **Механизм:** Один request/use case обычно владеет одной Session и явно завершает commit или rollback.
-- **Ограничение:** Switching to AsyncSession without an async driver or while using blocking migrations does not create an async data path.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Переход на AsyncSession без async driver или с blocking data path не делает работу асинхронной.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

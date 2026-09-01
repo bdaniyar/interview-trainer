@@ -10,10 +10,10 @@
       "preflight",
       "credentials"
     ],
-    "short_answer": "CORS is a browser policy controlling whether frontend JavaScript from one origin may read responses from another origin.",
-    "junior_answer": "CORS is a browser policy controlling whether frontend JavaScript from one origin may read responses from another origin. For non-simple requests the browser sends a preflight OPTIONS request; the server returns allowed origins, methods, headers and credentials policy. Важное ограничение: CORS is not authentication and does not block curl or server-to-server clients.",
+    "short_answer": "CORS — browser policy, управляющая чтением responses JavaScript-кодом из другого origin.",
+    "junior_answer": "CORS — browser policy, управляющая чтением responses JavaScript-кодом из другого origin. Для несimple request browser сначала отправляет preflight OPTIONS; server отвечает разрешёнными origins, methods, headers и credentials policy. Важное ограничение: CORS не является аутентификацию и не блокирует curl или server-to-server clients.",
     "follow_up_question": "Какая типичная ошибка связана с CORS?",
-    "follow_up_answer": "Using wildcard origin with credentials is invalid/unsafe; allowed origins should be explicit.",
+    "follow_up_answer": "Wildcard origin вместе с credentials недопустим или опасен; разрешённые origins задают явно.",
     "expected_answer": {
       "must_mention": [
         "browser policy",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Using wildcard origin with credentials is invalid/unsafe; allowed origins should be explicit.",
+        "Wildcard origin вместе с credentials недопустим или опасен; разрешённые origins задают явно.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Using wildcard origin with credentials is invalid/unsafe; allowed origins should be explicit."
+        "Wildcard origin вместе с credentials недопустим или опасен; разрешённые origins задают явно."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с CORS?"
@@ -55,25 +55,25 @@
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "CORS is not authentication",
-      "Using wildcard origin with credentials is invalid/unsafe; allowed origins should be explicit."
+      "CORS is not аутентификацию",
+      "Wildcard origin вместе с credentials недопустим или опасен; разрешённые origins задают явно."
     ],
-    "short_answer": "Using wildcard origin with credentials is invalid/unsafe; allowed origins should be explicit.",
-    "junior_answer": "Using wildcard origin with credentials is invalid/unsafe; allowed origins should be explicit.",
+    "short_answer": "Wildcard origin вместе с credentials недопустим или опасен; разрешённые origins задают явно.",
+    "junior_answer": "Wildcard origin вместе с credentials недопустим или опасен; разрешённые origins задают явно.",
     "follow_up_question": "Что такое CORS и как это работает?",
-    "follow_up_answer": "CORS is a browser policy controlling whether frontend JavaScript from one origin may read responses from another origin. For non-simple requests the browser sends a preflight OPTIONS request; the server returns allowed origins, methods, headers and credentials policy. Важное ограничение: CORS is not authentication and does not block curl or server-to-server clients.",
+    "follow_up_answer": "CORS — browser policy, управляющая чтением responses JavaScript-кодом из другого origin. Для несimple request browser сначала отправляет preflight OPTIONS; server отвечает разрешёнными origins, methods, headers и credentials policy. Важное ограничение: CORS не является аутентификацию и не блокирует curl или server-to-server clients.",
     "expected_answer": {
       "must_mention": [
-        "CORS is not authentication"
+        "CORS is not аутентификацию"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Using wildcard origin with credentials is invalid/unsafe; allowed origins should be explicit."
+        "Wildcard origin вместе с credentials недопустим или опасен; разрешённые origins задают явно."
       ],
       "red_flags": [
-        "Using wildcard origin with credentials is invalid/unsafe; allowed origins should be explicit."
+        "Wildcard origin вместе с credentials недопустим или опасен; разрешённые origins задают явно."
       ],
       "follow_up_questions": [
         "Что такое CORS и как это работает?"

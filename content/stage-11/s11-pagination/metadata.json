@@ -3,7 +3,7 @@
   "slug": "s11-pagination",
   "title": "Pagination",
   "module_slug": "stage-11",
-  "module_title": "Stage 11 · Database Design and PostgreSQL",
+  "module_title": "Этап 11 · Database Design and PostgreSQL",
   "module_order": 11,
   "order": 136,
   "duration": 10,
@@ -15,7 +15,7 @@
     "cursor/keyset pagination",
     "stable ordering."
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

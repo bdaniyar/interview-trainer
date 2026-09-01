@@ -10,10 +10,10 @@
       "process startup/overhead",
       "CPU-bound work"
     ],
-    "short_answer": "Multiprocessing runs work in separate processes with isolated memory and separate Python interpreters.",
-    "junior_answer": "Multiprocessing runs work in separate processes with isolated memory and separate Python interpreters. Inputs/results cross process boundaries through serialization and IPC. This enables CPU parallelism but adds startup, memory and communication cost. Важное ограничение: Worker targets and arguments generally must be pickleable, and process startup behavior differs by platform.",
+    "short_answer": "Multiprocessing запускает работу в отдельных processes с изолированной памятью и отдельными Python interpreters.",
+    "junior_answer": "Multiprocessing запускает работу в отдельных processes с изолированной памятью и отдельными Python interpreters. Входы и результаты пересекают границу процесса через serialization и IPC. Это даёт CPU parallelism ценой startup, памяти и передачи данных. Важное ограничение: Targets и arguments обычно должны быть pickleable, а поведение запуска процесса различается между платформами.",
     "follow_up_question": "Какая типичная ошибка связана с Multiprocessing?",
-    "follow_up_answer": "Passing a live Session, lock-bound client or local closure to a process often fails serialization or creates invalid copied state.",
+    "follow_up_answer": "Передача живой Session, клиента с locks или локального closure в process часто ломает serialization или создаёт некорректную копию состояния.",
     "expected_answer": {
       "must_mention": [
         "separate processes",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Passing a live Session, lock-bound client or local closure to a process often fails serialization or creates invalid copied state.",
+        "Передача живой Session, клиента с locks или локального closure в process часто ломает serialization или создаёт некорректную копию состояния.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Passing a live Session, lock-bound client or local closure to a process often fails serialization or creates invalid copied state."
+        "Передача живой Session, клиента с locks или локального closure в process часто ломает serialization или создаёт некорректную копию состояния."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Multiprocessing?"
@@ -55,25 +55,25 @@
     "priority": "P1",
     "interview_probability": "medium",
     "answer": [
-      "one short code/result example",
-      "Passing a live Session, lock-bound client or local closure to a process often fails serialization or creates invalid copied state."
+      "один короткий пример кода с результатом",
+      "Передача живой Session, клиента с locks или локального closure в process часто ломает serialization или создаёт некорректную копию состояния."
     ],
-    "short_answer": "Passing a live Session, lock-bound client or local closure to a process often fails serialization or creates invalid copied state.",
-    "junior_answer": "Passing a live Session, lock-bound client or local closure to a process often fails serialization or creates invalid copied state.",
+    "short_answer": "Передача живой Session, клиента с locks или локального closure в process часто ломает serialization или создаёт некорректную копию состояния.",
+    "junior_answer": "Передача живой Session, клиента с locks или локального closure в process часто ломает serialization или создаёт некорректную копию состояния.",
     "follow_up_question": "Что такое Multiprocessing и как это работает?",
-    "follow_up_answer": "Multiprocessing runs work in separate processes with isolated memory and separate Python interpreters. Inputs/results cross process boundaries through serialization and IPC. This enables CPU parallelism but adds startup, memory and communication cost. Важное ограничение: Worker targets and arguments generally must be pickleable, and process startup behavior differs by platform.",
+    "follow_up_answer": "Multiprocessing запускает работу в отдельных processes с изолированной памятью и отдельными Python interpreters. Входы и результаты пересекают границу процесса через serialization и IPC. Это даёт CPU parallelism ценой startup, памяти и передачи данных. Важное ограничение: Targets и arguments обычно должны быть pickleable, а поведение запуска процесса различается между платформами.",
     "expected_answer": {
       "must_mention": [
-        "one short code/result example"
+        "один короткий пример кода с результатом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Passing a live Session, lock-bound client or local closure to a process often fails serialization or creates invalid copied state."
+        "Передача живой Session, клиента с locks или локального closure в process часто ломает serialization или создаёт некорректную копию состояния."
       ],
       "red_flags": [
-        "Passing a live Session, lock-bound client or local closure to a process often fails serialization or creates invalid copied state."
+        "Передача живой Session, клиента с locks или локального closure в process часто ломает serialization или создаёт некорректную копию состояния."
       ],
       "follow_up_questions": [
         "Что такое Multiprocessing и как это работает?"

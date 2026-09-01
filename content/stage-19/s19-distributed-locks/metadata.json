@@ -3,7 +3,7 @@
   "slug": "s19-distributed-locks",
   "title": "Distributed locks",
   "module_slug": "stage-19",
-  "module_title": "Stage 19 · Redis",
+  "module_title": "Этап 19 · Redis",
   "module_order": 19,
   "order": 260,
   "duration": 10,
@@ -16,7 +16,7 @@
     "DB constraints often stronger for business invariants",
     "no claims of perfect distributed correctness."
   ],
-  "description": "P2 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P2 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P2",

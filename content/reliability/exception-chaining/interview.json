@@ -7,7 +7,7 @@
     "answer": [
       "`raise ... from ...`",
       "preserving root cause",
-      "translating infrastructure errors into domain/API errors"
+      "преобразование инфраструктурных ошибок в доменные ошибки или ошибки API"
     ],
     "short_answer": "Exception chaining: Это протокол управления потоком: consumer и объект договариваются о шагах, завершении и обработке ошибок.",
     "junior_answer": "Exception chaining — тема, в которой я сначала фиксирую ``raise ... from ...``, затем объясняю `preserving root cause` на коротком примере. Ключевой механизм: Определи инициатора шага, сохраняемое state, сигнал нормального завершения и cleanup при exception. Главная практическая ошибка — Забыть состояние protocol, сигнал завершения или cleanup при exception.",
@@ -17,7 +17,7 @@
       "must_mention": [
         "`raise ... from ...`",
         "preserving root cause",
-        "translating infrastructure errors into domain/API errors"
+        "преобразование инфраструктурных ошибок в доменные ошибки или ошибки API"
       ],
       "good_additions": [
         "короткий рабочий пример",

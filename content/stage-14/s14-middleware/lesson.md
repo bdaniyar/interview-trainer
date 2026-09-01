@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P1 · вероятность на интервью: high · 10 минут.** FastAPI явно встречался в 9/18, любой Python web framework — в 16/18.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-Middleware wraps the request/response flow for cross-cutting behavior such as request IDs, timing or security headers.
+Middleware оборачивает request/response flow для cross-cutting задач: request ID, timing или security headers.
 
 ### Как работает
 
-Each middleware runs before the inner app and after it returns; order therefore changes observation and error behavior.
+Каждый middleware выполняется до внутреннего app и после его response; порядок влияет на наблюдение и обработку ошибок.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Domain authorization usually needs resolved user/resource context and belongs in dependencies/services, not generic middleware.
+Domain authorization обычно требует resolved user/resource и относится к dependencies или services, а не к общему middleware.
 
-## Mental model
+## Модель понимания
 
 Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -44,13 +44,13 @@ Path operation — внешний адаптер; бизнес-правила л
 
 ### Полезно
 
-- one short code/result example
+- один короткий пример кода с результатом
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Middleware: отдельный пример
 
@@ -63,71 +63,71 @@ app = FastAPI()
 
 Это публичный starter contract практики «Request-ID middleware». Реализация и hidden assertions в lesson Markdown не раскрываются.
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Reading a streaming request body in middleware without replaying it can leave the endpoint with no body.
+Чтение streaming request body в middleware без восстановления потока может оставить endpoint без body.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `request/response wrapper` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `request/response wrapper` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `timing/request ID` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `timing/request ID`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `request/response wrapper` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `request/response wrapper`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Middleware in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Middleware за 45–60 секунд и назови одно ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Middleware и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Middleware?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-Middleware wraps the request/response flow for cross-cutting behavior such as request IDs, timing or security headers.
+Middleware оборачивает request/response flow для cross-cutting задач: request ID, timing или security headers.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> Middleware wraps the request/response flow for cross-cutting behavior such as request IDs, timing or security headers. Each middleware runs before the inner app and after it returns; order therefore changes observation and error behavior. Важное ограничение: Domain authorization usually needs resolved user/resource context and belongs in dependencies/services, not generic middleware.
+> Middleware оборачивает request/response flow для cross-cutting задач: request ID, timing или security headers. Каждый middleware выполняется до внутреннего app и после его response; порядок влияет на наблюдение и обработку ошибок. Важное ограничение: Domain authorization обычно требует resolved user/resource и относится к dependencies или services, а не к общему middleware.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Middleware?**
 
-Reading a streaming request body in middleware without replaying it can leave the endpoint with no body.
+Чтение streaming request body в middleware без восстановления потока может оставить endpoint без body.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - request/response wrapper
 - timing/request ID
 - ordering
 - not for domain logic
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Reading a streaming request body in middleware without replaying it can leave the endpoint with no body.
+- Чтение streaming request body в middleware без восстановления потока может оставить endpoint без body.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Middleware?
 
@@ -137,17 +137,17 @@ Reading a streaming request body in middleware without replaying it can leave th
 
 Response X-Request-ID равен входному header либо новому UUID; GET /ping возвращает pong.
 
-Работай в main.py. Не меняй публичные имена и сигнатуры: hidden tests импортируют их напрямую. Проверь happy path, boundary values, повторные вызовы и propagation ошибок.
-## Cheat sheet
+Работай в main.py. Не меняй публичные имена и сигнатуры: скрытые тесты импортируют их напрямую. Проверь основной сценарий, граничные значения, повторные вызовы и распространение ошибок.
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** Middleware wraps the request/response flow for cross-cutting behavior such as request IDs, timing or security headers.
+- **Что это:** Middleware оборачивает request/response flow для cross-cutting задач: request ID, timing или security headers.
 - **Механизм:** Path operation — внешний адаптер; бизнес-правила лучше держать в сервисе, а ресурсы закрывать в lifespan/yield dependency.
-- **Ограничение:** Reading a streaming request body in middleware without replaying it can leave the endpoint with no body.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Чтение streaming request body в middleware без восстановления потока может оставить endpoint без body.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

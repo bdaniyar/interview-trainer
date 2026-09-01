@@ -5,20 +5,20 @@
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "encryption",
-      "authentication",
-      "certificate",
+      "шифрование",
+      "аутентификацию",
+      "сертификату",
       "TLS termination"
     ],
-    "short_answer": "HTTPS is HTTP carried through TLS, providing encryption in transit, integrity and server authentication through certificates.",
-    "junior_answer": "HTTPS is HTTP carried through TLS, providing encryption in transit, integrity and server authentication through certificates. A TLS handshake negotiates keys and verifies the certificate chain; a reverse proxy may terminate TLS before forwarding to the app on a trusted network. Важное ограничение: HTTPS does not validate business permissions or encrypt data at rest.",
+    "short_answer": "HTTPS — HTTP поверх TLS, который даёт шифрование в пути, целостность и аутентификацию сервера по сертификату.",
+    "junior_answer": "HTTPS — HTTP поверх TLS, который даёт шифрование в пути, целостность и аутентификацию сервера по сертификату. TLS handshake согласует keys и проверяет сертификату chain; reverse proxy может завершить TLS и передать request приложению по доверенной сети. Важное ограничение: HTTPS не проверяет business permissions и не шифрует данные at rest.",
     "follow_up_question": "Какая типичная ошибка связана с HTTP/HTTPS and TLS basics?",
-    "follow_up_answer": "Trusting forwarded scheme/client headers from arbitrary peers can make an app believe an insecure request was HTTPS.",
+    "follow_up_answer": "Безусловное доверие forwarded headers позволяет внешнему client выдать insecure request за HTTPS.",
     "expected_answer": {
       "must_mention": [
-        "encryption",
-        "authentication",
-        "certificate",
+        "шифрование",
+        "аутентификацию",
+        "сертификату",
         "TLS termination"
       ],
       "good_additions": [
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Trusting forwarded scheme/client headers from arbitrary peers can make an app believe an insecure request was HTTPS.",
+        "Безусловное доверие forwarded headers позволяет внешнему client выдать insecure request за HTTPS.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Trusting forwarded scheme/client headers from arbitrary peers can make an app believe an insecure request was HTTPS."
+        "Безусловное доверие forwarded headers позволяет внешнему client выдать insecure request за HTTPS."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с HTTP/HTTPS and TLS basics?"
@@ -56,12 +56,12 @@
     "interview_probability": "high",
     "answer": [
       "no cryptography deep dive",
-      "Trusting forwarded scheme/client headers from arbitrary peers can make an app believe an insecure request was HTTPS."
+      "Безусловное доверие forwarded headers позволяет внешнему client выдать insecure request за HTTPS."
     ],
-    "short_answer": "Trusting forwarded scheme/client headers from arbitrary peers can make an app believe an insecure request was HTTPS.",
-    "junior_answer": "Trusting forwarded scheme/client headers from arbitrary peers can make an app believe an insecure request was HTTPS.",
+    "short_answer": "Безусловное доверие forwarded headers позволяет внешнему client выдать insecure request за HTTPS.",
+    "junior_answer": "Безусловное доверие forwarded headers позволяет внешнему client выдать insecure request за HTTPS.",
     "follow_up_question": "Что такое HTTP/HTTPS and TLS basics и как это работает?",
-    "follow_up_answer": "HTTPS is HTTP carried through TLS, providing encryption in transit, integrity and server authentication through certificates. A TLS handshake negotiates keys and verifies the certificate chain; a reverse proxy may terminate TLS before forwarding to the app on a trusted network. Важное ограничение: HTTPS does not validate business permissions or encrypt data at rest.",
+    "follow_up_answer": "HTTPS — HTTP поверх TLS, который даёт шифрование в пути, целостность и аутентификацию сервера по сертификату. TLS handshake согласует keys и проверяет сертификату chain; reverse proxy может завершить TLS и передать request приложению по доверенной сети. Важное ограничение: HTTPS не проверяет business permissions и не шифрует данные at rest.",
     "expected_answer": {
       "must_mention": [
         "no cryptography deep dive"
@@ -70,10 +70,10 @@
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Trusting forwarded scheme/client headers from arbitrary peers can make an app believe an insecure request was HTTPS."
+        "Безусловное доверие forwarded headers позволяет внешнему client выдать insecure request за HTTPS."
       ],
       "red_flags": [
-        "Trusting forwarded scheme/client headers from arbitrary peers can make an app believe an insecure request was HTTPS."
+        "Безусловное доверие forwarded headers позволяет внешнему client выдать insecure request за HTTPS."
       ],
       "follow_up_questions": [
         "Что такое HTTP/HTTPS and TLS basics и как это работает?"

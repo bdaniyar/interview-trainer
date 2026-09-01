@@ -5,18 +5,18 @@
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "runs after response in same application process",
+      "выполняется после ответа в том же процессе приложения",
       "small non-critical work",
       "not durable",
       "lost on crash"
     ],
-    "short_answer": "FastAPI `BackgroundTasks` schedules small in-process work after the response is sent.",
-    "junior_answer": "FastAPI `BackgroundTasks` schedules small in-process work after the response is sent. The task runs in the same application process and has no durable delivery, distributed retry or crash recovery guarantee. Важное ограничение: Use it for small non-critical actions; use a queue/worker and idempotency for durable jobs.",
+    "short_answer": "FastAPI `BackgroundTasks` запускает небольшую in-process работу после отправки response.",
+    "junior_answer": "FastAPI `BackgroundTasks` запускает небольшую in-process работу после отправки response. Task работает в том же application process и не имеет гарантий durable delivery, distributed retry или восстановления после crash. Важное ограничение: Используй механизм для небольших некритичных действий; durable jobs требуют queue/worker и idempotency.",
     "follow_up_question": "Какая типичная ошибка связана с BackgroundTasks?",
-    "follow_up_answer": "Sending a critical payment/email only via BackgroundTasks can lose it on process restart.",
+    "follow_up_answer": "Критическое письмо или payment только через BackgroundTasks может потеряться при restart process.",
     "expected_answer": {
       "must_mention": [
-        "runs after response in same application process",
+        "выполняется после ответа в том же процессе приложения",
         "small non-critical work",
         "not durable",
         "lost on crash"
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Sending a critical payment/email only via BackgroundTasks can lose it on process restart.",
+        "Критическое письмо или payment только через BackgroundTasks может потеряться при restart process.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Sending a critical payment/email only via BackgroundTasks can lose it on process restart."
+        "Критическое письмо или payment только через BackgroundTasks может потеряться при restart process."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с BackgroundTasks?"
@@ -55,25 +55,25 @@
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "not a replacement for Celery/outbox",
-      "Sending a critical payment/email only via BackgroundTasks can lose it on process restart."
+      "не является заменой Celery или шаблону outbox",
+      "Критическое письмо или payment только через BackgroundTasks может потеряться при restart process."
     ],
-    "short_answer": "Sending a critical payment/email only via BackgroundTasks can lose it on process restart.",
-    "junior_answer": "Sending a critical payment/email only via BackgroundTasks can lose it on process restart.",
+    "short_answer": "Критическое письмо или payment только через BackgroundTasks может потеряться при restart process.",
+    "junior_answer": "Критическое письмо или payment только через BackgroundTasks может потеряться при restart process.",
     "follow_up_question": "Что такое BackgroundTasks и как это работает?",
-    "follow_up_answer": "FastAPI `BackgroundTasks` schedules small in-process work after the response is sent. The task runs in the same application process and has no durable delivery, distributed retry or crash recovery guarantee. Важное ограничение: Use it for small non-critical actions; use a queue/worker and idempotency for durable jobs.",
+    "follow_up_answer": "FastAPI `BackgroundTasks` запускает небольшую in-process работу после отправки response. Task работает в том же application process и не имеет гарантий durable delivery, distributed retry или восстановления после crash. Важное ограничение: Используй механизм для небольших некритичных действий; durable jobs требуют queue/worker и idempotency.",
     "expected_answer": {
       "must_mention": [
-        "not a replacement for Celery/outbox"
+        "не является заменой Celery или шаблону outbox"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Sending a critical payment/email only via BackgroundTasks can lose it on process restart."
+        "Критическое письмо или payment только через BackgroundTasks может потеряться при restart process."
       ],
       "red_flags": [
-        "Sending a critical payment/email only via BackgroundTasks can lose it on process restart."
+        "Критическое письмо или payment только через BackgroundTasks может потеряться при restart process."
       ],
       "follow_up_questions": [
         "Что такое BackgroundTasks и как это работает?"

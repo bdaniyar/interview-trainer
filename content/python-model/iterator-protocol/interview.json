@@ -10,10 +10,10 @@
       "`StopIteration`",
       "custom iterator exercise"
     ],
-    "short_answer": "The iterator protocol consists of `__iter__` returning an iterator and `__next__` returning an item or raising `StopIteration`.",
-    "junior_answer": "The iterator protocol consists of `__iter__` returning an iterator and `__next__` returning an item or raising `StopIteration`. A custom iterator stores its current position. A `for` loop calls `iter`, repeatedly calls `next` and catches `StopIteration` internally. Важное ограничение: `StopIteration` is a control signal for the protocol, not an ordinary error to print or broadly catch in consumer code.",
+    "short_answer": "Iterator protocol состоит из `__iter__`, возвращающего iterator, и `__next__`, возвращающего элемент либо поднимающего `StopIteration`.",
+    "junior_answer": "Iterator protocol состоит из `__iter__`, возвращающего iterator, и `__next__`, возвращающего элемент либо поднимающего `StopIteration`. Пользовательский iterator хранит текущую позицию. Цикл `for` вызывает `iter`, повторяет `next` и самостоятельно перехватывает `StopIteration`. Важное ограничение: `StopIteration` — служебный сигнал завершения protocol, а не обычная ошибка для вывода или широкого перехвата в consumer-коде.",
     "follow_up_question": "Какая типичная ошибка связана с Iterator protocol?",
-    "follow_up_answer": "Returning `None` instead of raising `StopIteration` creates an endless stream of None values instead of ending iteration.",
+    "follow_up_answer": "Возврат `None` вместо `StopIteration` создаёт бесконечную последовательность `None`, а не завершает обход.",
     "expected_answer": {
       "must_mention": [
         "`__iter__`",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Returning `None` instead of raising `StopIteration` creates an endless stream of None values instead of ending iteration.",
+        "Возврат `None` вместо `StopIteration` создаёт бесконечную последовательность `None`, а не завершает обход.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Returning `None` instead of raising `StopIteration` creates an endless stream of None values instead of ending iteration."
+        "Возврат `None` вместо `StopIteration` создаёт бесконечную последовательность `None`, а не завершает обход."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Iterator protocol?"
@@ -55,25 +55,25 @@
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "one short code/result example",
-      "Returning `None` instead of raising `StopIteration` creates an endless stream of None values instead of ending iteration."
+      "один короткий пример кода с результатом",
+      "Возврат `None` вместо `StopIteration` создаёт бесконечную последовательность `None`, а не завершает обход."
     ],
-    "short_answer": "Returning `None` instead of raising `StopIteration` creates an endless stream of None values instead of ending iteration.",
-    "junior_answer": "Returning `None` instead of raising `StopIteration` creates an endless stream of None values instead of ending iteration.",
+    "short_answer": "Возврат `None` вместо `StopIteration` создаёт бесконечную последовательность `None`, а не завершает обход.",
+    "junior_answer": "Возврат `None` вместо `StopIteration` создаёт бесконечную последовательность `None`, а не завершает обход.",
     "follow_up_question": "Что такое Iterator protocol и как это работает?",
-    "follow_up_answer": "The iterator protocol consists of `__iter__` returning an iterator and `__next__` returning an item or raising `StopIteration`. A custom iterator stores its current position. A `for` loop calls `iter`, repeatedly calls `next` and catches `StopIteration` internally. Важное ограничение: `StopIteration` is a control signal for the protocol, not an ordinary error to print or broadly catch in consumer code.",
+    "follow_up_answer": "Iterator protocol состоит из `__iter__`, возвращающего iterator, и `__next__`, возвращающего элемент либо поднимающего `StopIteration`. Пользовательский iterator хранит текущую позицию. Цикл `for` вызывает `iter`, повторяет `next` и самостоятельно перехватывает `StopIteration`. Важное ограничение: `StopIteration` — служебный сигнал завершения protocol, а не обычная ошибка для вывода или широкого перехвата в consumer-коде.",
     "expected_answer": {
       "must_mention": [
-        "one short code/result example"
+        "один короткий пример кода с результатом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Returning `None` instead of raising `StopIteration` creates an endless stream of None values instead of ending iteration."
+        "Возврат `None` вместо `StopIteration` создаёт бесконечную последовательность `None`, а не завершает обход."
       ],
       "red_flags": [
-        "Returning `None` instead of raising `StopIteration` creates an endless stream of None values instead of ending iteration."
+        "Возврат `None` вместо `StopIteration` создаёт бесконечную последовательность `None`, а не завершает обход."
       ],
       "follow_up_questions": [
         "Что такое Iterator protocol и как это работает?"

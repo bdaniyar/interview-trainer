@@ -3,7 +3,7 @@
   "slug": "s01-assignment-aliases-and-nested-mutation",
   "title": "Assignment, aliases and nested mutation",
   "module_slug": "stage-01",
-  "module_title": "Stage 1 · Python Object Model and Core Types",
+  "module_title": "Этап 1 · Python Object Model and Core Types",
   "module_order": 1,
   "order": 9,
   "duration": 12,
@@ -16,7 +16,7 @@
     "`[[]] * 3`",
     "passing objects into functions."
   ],
-  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P0",

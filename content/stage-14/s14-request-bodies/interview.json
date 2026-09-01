@@ -10,10 +10,10 @@
       "nested models",
       "validation"
     ],
-    "short_answer": "A request body carries structured input; FastAPI commonly validates JSON through a Pydantic model.",
-    "junior_answer": "A request body carries structured input; FastAPI commonly validates JSON through a Pydantic model. Body bytes are decoded by media type, parsed as JSON and validated recursively before the endpoint receives a typed model. Важное ограничение: Schema validation handles shape/ranges; database-dependent business invariants belong in service logic/constraints.",
+    "short_answer": "Request body переносит структурированный input; FastAPI обычно валидирует JSON через Pydantic model.",
+    "junior_answer": "Request body переносит структурированный input; FastAPI обычно валидирует JSON через Pydantic model. Body bytes декодируются по media type, разбираются как JSON и рекурсивно валидируются до передачи typed model в endpoint. Важное ограничение: Schema validation проверяет форму и ranges; business инварианты, зависящие от БД, относятся к service logic и constraints.",
     "follow_up_question": "Какая типичная ошибка связана с Request bodies?",
-    "follow_up_answer": "Using a raw dict everywhere loses generated schema, typed access and precise field errors.",
+    "follow_up_answer": "Необработанный словарь повсюду лишает код сгенерированной схемы, типизированного доступа и точных ошибок отдельных полей.",
     "expected_answer": {
       "must_mention": [
         "Pydantic model",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Using a raw dict everywhere loses generated schema, typed access and precise field errors.",
+        "Необработанный словарь повсюду лишает код сгенерированной схемы, типизированного доступа и точных ошибок отдельных полей.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Using a raw dict everywhere loses generated schema, typed access and precise field errors."
+        "Необработанный словарь повсюду лишает код сгенерированной схемы, типизированного доступа и точных ошибок отдельных полей."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Request bodies?"
@@ -55,25 +55,25 @@
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "one short code/result example",
-      "Using a raw dict everywhere loses generated schema, typed access and precise field errors."
+      "один короткий пример кода с результатом",
+      "Необработанный словарь повсюду лишает код сгенерированной схемы, типизированного доступа и точных ошибок отдельных полей."
     ],
-    "short_answer": "Using a raw dict everywhere loses generated schema, typed access and precise field errors.",
-    "junior_answer": "Using a raw dict everywhere loses generated schema, typed access and precise field errors.",
+    "short_answer": "Необработанный словарь повсюду лишает код сгенерированной схемы, типизированного доступа и точных ошибок отдельных полей.",
+    "junior_answer": "Необработанный словарь повсюду лишает код сгенерированной схемы, типизированного доступа и точных ошибок отдельных полей.",
     "follow_up_question": "Что такое Request bodies и как это работает?",
-    "follow_up_answer": "A request body carries structured input; FastAPI commonly validates JSON through a Pydantic model. Body bytes are decoded by media type, parsed as JSON and validated recursively before the endpoint receives a typed model. Важное ограничение: Schema validation handles shape/ranges; database-dependent business invariants belong in service logic/constraints.",
+    "follow_up_answer": "Request body переносит структурированный input; FastAPI обычно валидирует JSON через Pydantic model. Body bytes декодируются по media type, разбираются как JSON и рекурсивно валидируются до передачи typed model в endpoint. Важное ограничение: Schema validation проверяет форму и ranges; business инварианты, зависящие от БД, относятся к service logic и constraints.",
     "expected_answer": {
       "must_mention": [
-        "one short code/result example"
+        "один короткий пример кода с результатом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Using a raw dict everywhere loses generated schema, typed access and precise field errors."
+        "Необработанный словарь повсюду лишает код сгенерированной схемы, типизированного доступа и точных ошибок отдельных полей."
       ],
       "red_flags": [
-        "Using a raw dict everywhere loses generated schema, typed access and precise field errors."
+        "Необработанный словарь повсюду лишает код сгенерированной схемы, типизированного доступа и точных ошибок отдельных полей."
       ],
       "follow_up_questions": [
         "Что такое Request bodies и как это работает?"

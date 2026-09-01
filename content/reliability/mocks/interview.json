@@ -6,7 +6,7 @@
     "interview_probability": "high",
     "answer": [
       "mock the boundary",
-      "do not mock implementation details",
+      "не подменять внутренние детали реализации",
       "verify behavior carefully"
     ],
     "short_answer": "Mocking: Это инструмент проверки observable contract с контролируемым setup, failure и cleanup.",
@@ -16,7 +16,7 @@
     "expected_answer": {
       "must_mention": [
         "mock the boundary",
-        "do not mock implementation details",
+        "не подменять внутренние детали реализации",
         "verify behavior carefully"
       ],
       "good_additions": [

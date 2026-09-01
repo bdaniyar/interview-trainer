@@ -10,10 +10,10 @@
       "mutable fields",
       "`field(default_factory=...)`"
     ],
-    "short_answer": "`@dataclass` generates methods such as `__init__`, `__repr__` and equality from declared fields.",
-    "junior_answer": "`@dataclass` generates methods such as `__init__`, `__repr__` and equality from declared fields. Fields are processed in order; `field(default_factory=list)` creates a fresh mutable default per instance. `frozen=True` blocks normal field assignment but is not deep immutability. Важное ограничение: Dataclass is good for internal data/value objects; Pydantic handles untrusted validation and ORM models handle persistence.",
+    "short_answer": "`@dataclass` генерирует `__init__`, `__repr__`, equality и другие методы по объявленным fields.",
+    "junior_answer": "`@dataclass` генерирует `__init__`, `__repr__`, equality и другие методы по объявленным fields. Fields обрабатываются по порядку; `field(default_factory=list)` создаёт новый mutable default для каждого instance. `frozen=True` запрещает обычное присваивание полям, но не даёт глубокой неизменяемости. Важное ограничение: Dataclass подходит для внутренних data/value objects; Pydantic валидирует недоверенный input, а ORM models отвечают за persistence.",
     "follow_up_question": "Какая типичная ошибка связана с Dataclasses?",
-    "follow_up_answer": "Using `items: list = []` is rejected/unsafe; mutable defaults need `default_factory`.",
+    "follow_up_answer": "Mutable default нужно задавать через `default_factory`, иначе instances получат общее состояние или dataclass отклонит объявление.",
     "expected_answer": {
       "must_mention": [
         "generated methods",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Using `items: list = []` is rejected/unsafe; mutable defaults need `default_factory`.",
+        "Mutable default нужно задавать через `default_factory`, иначе instances получат общее состояние или dataclass отклонит объявление.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Using `items: list = []` is rejected/unsafe; mutable defaults need `default_factory`."
+        "Mutable default нужно задавать через `default_factory`, иначе instances получат общее состояние или dataclass отклонит объявление."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Dataclasses?"
@@ -57,12 +57,12 @@
     "answer": [
       "frozen",
       "domain data vs ORM/Pydantic models",
-      "Using `items: list = []` is rejected/unsafe; mutable defaults need `default_factory`."
+      "Mutable default нужно задавать через `default_factory`, иначе instances получат общее состояние или dataclass отклонит объявление."
     ],
-    "short_answer": "Using `items: list = []` is rejected/unsafe; mutable defaults need `default_factory`.",
-    "junior_answer": "Using `items: list = []` is rejected/unsafe; mutable defaults need `default_factory`.",
+    "short_answer": "Mutable default нужно задавать через `default_factory`, иначе instances получат общее состояние или dataclass отклонит объявление.",
+    "junior_answer": "Mutable default нужно задавать через `default_factory`, иначе instances получат общее состояние или dataclass отклонит объявление.",
     "follow_up_question": "Что такое Dataclasses и как это работает?",
-    "follow_up_answer": "`@dataclass` generates methods such as `__init__`, `__repr__` and equality from declared fields. Fields are processed in order; `field(default_factory=list)` creates a fresh mutable default per instance. `frozen=True` blocks normal field assignment but is not deep immutability. Важное ограничение: Dataclass is good for internal data/value objects; Pydantic handles untrusted validation and ORM models handle persistence.",
+    "follow_up_answer": "`@dataclass` генерирует `__init__`, `__repr__`, equality и другие методы по объявленным fields. Fields обрабатываются по порядку; `field(default_factory=list)` создаёт новый mutable default для каждого instance. `frozen=True` запрещает обычное присваивание полям, но не даёт глубокой неизменяемости. Важное ограничение: Dataclass подходит для внутренних data/value objects; Pydantic валидирует недоверенный input, а ORM models отвечают за persistence.",
     "expected_answer": {
       "must_mention": [
         "frozen",
@@ -72,10 +72,10 @@
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Using `items: list = []` is rejected/unsafe; mutable defaults need `default_factory`."
+        "Mutable default нужно задавать через `default_factory`, иначе instances получат общее состояние или dataclass отклонит объявление."
       ],
       "red_flags": [
-        "Using `items: list = []` is rejected/unsafe; mutable defaults need `default_factory`."
+        "Mutable default нужно задавать через `default_factory`, иначе instances получат общее состояние или dataclass отклонит объявление."
       ],
       "follow_up_questions": [
         "Что такое Dataclasses и как это работает?"

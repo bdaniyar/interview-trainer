@@ -5,30 +5,30 @@
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "threadpool behavior for sync endpoint",
+      "поведение пула потоков для синхронного эндпоинта",
       "blocking inside async",
-      "async only when dependency stack benefits"
+      "асинхронность нужна, только когда от неё выигрывает весь стек зависимостей"
     ],
-    "short_answer": "FastAPI supports sync and async endpoints; async is useful when the dependency stack performs awaitable I/O.",
-    "junior_answer": "FastAPI supports sync and async endpoints; async is useful when the dependency stack performs awaitable I/O. Async endpoints run on the event loop, while sync endpoints are normally dispatched through a thread pool so blocking work does not directly block the loop. Важное ограничение: Declaring `async def` does not make sync drivers non-blocking; use an async driver/client or deliberately offload work.",
+    "short_answer": "FastAPI поддерживает sync и async endpoints; async полезен, когда весь dependency stack выполняет awaitable I/O.",
+    "junior_answer": "FastAPI поддерживает sync и async endpoints; async полезен, когда весь dependency stack выполняет awaitable I/O. Async endpoint работает на event loop, а sync endpoint обычно отправляется в thread pool, чтобы blocking work не останавливал loop напрямую. Важное ограничение: `async def` не превращает sync driver в неблокирующий: нужен async driver/client или явный offload.",
     "follow_up_question": "Какая типичная ошибка связана с Sync vs async endpoints?",
-    "follow_up_answer": "Calling `requests` or a sync DB driver inside async endpoint blocks the loop despite the async function declaration.",
+    "follow_up_answer": "`requests` или sync DB driver внутри async endpoint блокирует loop несмотря на объявление async function.",
     "expected_answer": {
       "must_mention": [
-        "threadpool behavior for sync endpoint",
+        "поведение пула потоков для синхронного эндпоинта",
         "blocking inside async",
-        "async only when dependency stack benefits"
+        "асинхронность нужна, только когда от неё выигрывает весь стек зависимостей"
       ],
       "good_additions": [
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Calling `requests` or a sync DB driver inside async endpoint blocks the loop despite the async function declaration.",
+        "`requests` или sync DB driver внутри async endpoint блокирует loop несмотря на объявление async function.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Calling `requests` or a sync DB driver inside async endpoint blocks the loop despite the async function declaration."
+        "`requests` или sync DB driver внутри async endpoint блокирует loop несмотря на объявление async function."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Sync vs async endpoints?"
@@ -53,25 +53,25 @@
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "one short code/result example",
-      "Calling `requests` or a sync DB driver inside async endpoint blocks the loop despite the async function declaration."
+      "один короткий пример кода с результатом",
+      "`requests` или sync DB driver внутри async endpoint блокирует loop несмотря на объявление async function."
     ],
-    "short_answer": "Calling `requests` or a sync DB driver inside async endpoint blocks the loop despite the async function declaration.",
-    "junior_answer": "Calling `requests` or a sync DB driver inside async endpoint blocks the loop despite the async function declaration.",
+    "short_answer": "`requests` или sync DB driver внутри async endpoint блокирует loop несмотря на объявление async function.",
+    "junior_answer": "`requests` или sync DB driver внутри async endpoint блокирует loop несмотря на объявление async function.",
     "follow_up_question": "Что такое Sync vs async endpoints и как это работает?",
-    "follow_up_answer": "FastAPI supports sync and async endpoints; async is useful when the dependency stack performs awaitable I/O. Async endpoints run on the event loop, while sync endpoints are normally dispatched through a thread pool so blocking work does not directly block the loop. Важное ограничение: Declaring `async def` does not make sync drivers non-blocking; use an async driver/client or deliberately offload work.",
+    "follow_up_answer": "FastAPI поддерживает sync и async endpoints; async полезен, когда весь dependency stack выполняет awaitable I/O. Async endpoint работает на event loop, а sync endpoint обычно отправляется в thread pool, чтобы blocking work не останавливал loop напрямую. Важное ограничение: `async def` не превращает sync driver в неблокирующий: нужен async driver/client или явный offload.",
     "expected_answer": {
       "must_mention": [
-        "one short code/result example"
+        "один короткий пример кода с результатом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Calling `requests` or a sync DB driver inside async endpoint blocks the loop despite the async function declaration."
+        "`requests` или sync DB driver внутри async endpoint блокирует loop несмотря на объявление async function."
       ],
       "red_flags": [
-        "Calling `requests` or a sync DB driver inside async endpoint blocks the loop despite the async function declaration."
+        "`requests` или sync DB driver внутри async endpoint блокирует loop несмотря на объявление async function."
       ],
       "follow_up_questions": [
         "Что такое Sync vs async endpoints и как это работает?"

@@ -10,10 +10,10 @@
       "testability",
       "service composition"
     ],
-    "short_answer": "Inheritance models an is-a relationship; composition models has-a by giving an object explicit collaborators.",
-    "junior_answer": "Inheritance models an is-a relationship; composition models has-a by giving an object explicit collaborators. Inheritance reuses and overrides behavior through MRO. Composition delegates to injected objects, reducing coupling and making substitutions local. Важное ограничение: Prefer composition for services/repositories. Inheritance is justified for a stable substitutable hierarchy or framework contract, not only code reuse.",
+    "short_answer": "Inheritance моделирует отношение «является», composition — отношение «содержит», передавая объекту явные collaborators.",
+    "junior_answer": "Inheritance моделирует отношение «является», composition — отношение «содержит», передавая объекту явные collaborators. Inheritance переиспользует и переопределяет поведение через MRO. Composition делегирует внедрённым объектам, снижая coupling и упрощая замену. Важное ограничение: Для services и repositories обычно лучше composition. Inheritance оправдано стабильной взаимозаменяемой иерархией или framework contract, а не только повторным использованием кода.",
     "follow_up_question": "Какая типичная ошибка связана с Inheritance vs composition?",
-    "follow_up_answer": "Adding subclasses for every combination of behavior creates a fragile hierarchy and unclear MRO.",
+    "follow_up_answer": "Подкласс для каждой комбинации поведения создаёт хрупкую иерархию и неочевидный MRO.",
     "expected_answer": {
       "must_mention": [
         "is-a vs has-a",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Adding subclasses for every combination of behavior creates a fragile hierarchy and unclear MRO.",
+        "Подкласс для каждой комбинации поведения создаёт хрупкую иерархию и неочевидный MRO.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Adding subclasses for every combination of behavior creates a fragile hierarchy and unclear MRO."
+        "Подкласс для каждой комбинации поведения создаёт хрупкую иерархию и неочевидный MRO."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Inheritance vs composition?"
@@ -56,12 +56,12 @@
     "interview_probability": "very_high",
     "answer": [
       "when inheritance is justified",
-      "Adding subclasses for every combination of behavior creates a fragile hierarchy and unclear MRO."
+      "Подкласс для каждой комбинации поведения создаёт хрупкую иерархию и неочевидный MRO."
     ],
-    "short_answer": "Adding subclasses for every combination of behavior creates a fragile hierarchy and unclear MRO.",
-    "junior_answer": "Adding subclasses for every combination of behavior creates a fragile hierarchy and unclear MRO.",
+    "short_answer": "Подкласс для каждой комбинации поведения создаёт хрупкую иерархию и неочевидный MRO.",
+    "junior_answer": "Подкласс для каждой комбинации поведения создаёт хрупкую иерархию и неочевидный MRO.",
     "follow_up_question": "Что такое Inheritance vs composition и как это работает?",
-    "follow_up_answer": "Inheritance models an is-a relationship; composition models has-a by giving an object explicit collaborators. Inheritance reuses and overrides behavior through MRO. Composition delegates to injected objects, reducing coupling and making substitutions local. Важное ограничение: Prefer composition for services/repositories. Inheritance is justified for a stable substitutable hierarchy or framework contract, not only code reuse.",
+    "follow_up_answer": "Inheritance моделирует отношение «является», composition — отношение «содержит», передавая объекту явные collaborators. Inheritance переиспользует и переопределяет поведение через MRO. Composition делегирует внедрённым объектам, снижая coupling и упрощая замену. Важное ограничение: Для services и repositories обычно лучше composition. Inheritance оправдано стабильной взаимозаменяемой иерархией или framework contract, а не только повторным использованием кода.",
     "expected_answer": {
       "must_mention": [
         "when inheritance is justified"
@@ -70,10 +70,10 @@
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Adding subclasses for every combination of behavior creates a fragile hierarchy and unclear MRO."
+        "Подкласс для каждой комбинации поведения создаёт хрупкую иерархию и неочевидный MRO."
       ],
       "red_flags": [
-        "Adding subclasses for every combination of behavior creates a fragile hierarchy and unclear MRO."
+        "Подкласс для каждой комбинации поведения создаёт хрупкую иерархию и неочевидный MRO."
       ],
       "follow_up_questions": [
         "Что такое Inheritance vs composition и как это работает?"

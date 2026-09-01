@@ -5,18 +5,18 @@
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "one parent query plus per-row child query",
+      "один запрос родительских строк и отдельный дочерний запрос для каждой строки",
       "detection",
       "logs/query count",
       "eager loading"
     ],
-    "short_answer": "N+1 is one query for parent rows followed by one relationship query per parent.",
-    "junior_answer": "N+1 is one query for parent rows followed by one relationship query per parent. Lazy loading triggers the repeated queries; detect it in SQL logs or a query-count test and choose `selectinload`, `joinedload` or explicit projection based on cardinality. Важное ограничение: Eager-load only data the use case needs; a giant joined graph can create row multiplication and memory cost.",
+    "short_answer": "N+1 — один query для parent rows и затем отдельный relationship query для каждого parent.",
+    "junior_answer": "N+1 — один query для parent rows и затем отдельный relationship query для каждого parent. Lazy loading запускает повторные queries; проблему находят по SQL logs или query-count test и выбирают `selectinload`, `joinedload` либо explicit projection по cardinality. Важное ограничение: Eager load должен загружать только нужные use case данные; огромный joined graph размножает rows и расходует память.",
     "follow_up_question": "Какая типичная ошибка связана с N+1?",
-    "follow_up_answer": "Adding a cache does not fix an ORM query shape that issues hundreds of avoidable round trips.",
+    "follow_up_answer": "Cache не исправляет ORM query shape, который делает сотни лишних round trips.",
     "expected_answer": {
       "must_mention": [
-        "one parent query plus per-row child query",
+        "один запрос родительских строк и отдельный дочерний запрос для каждой строки",
         "detection",
         "logs/query count",
         "eager loading"
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Adding a cache does not fix an ORM query shape that issues hundreds of avoidable round trips.",
+        "Cache не исправляет ORM query shape, который делает сотни лишних round trips.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Adding a cache does not fix an ORM query shape that issues hundreds of avoidable round trips."
+        "Cache не исправляет ORM query shape, который делает сотни лишних round trips."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с N+1?"
@@ -55,25 +55,25 @@
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "one short code/result example",
-      "Adding a cache does not fix an ORM query shape that issues hundreds of avoidable round trips."
+      "один короткий пример кода с результатом",
+      "Cache не исправляет ORM query shape, который делает сотни лишних round trips."
     ],
-    "short_answer": "Adding a cache does not fix an ORM query shape that issues hundreds of avoidable round trips.",
-    "junior_answer": "Adding a cache does not fix an ORM query shape that issues hundreds of avoidable round trips.",
+    "short_answer": "Cache не исправляет ORM query shape, который делает сотни лишних round trips.",
+    "junior_answer": "Cache не исправляет ORM query shape, который делает сотни лишних round trips.",
     "follow_up_question": "Что такое N+1 и как это работает?",
-    "follow_up_answer": "N+1 is one query for parent rows followed by one relationship query per parent. Lazy loading triggers the repeated queries; detect it in SQL logs or a query-count test and choose `selectinload`, `joinedload` or explicit projection based on cardinality. Важное ограничение: Eager-load only data the use case needs; a giant joined graph can create row multiplication and memory cost.",
+    "follow_up_answer": "N+1 — один query для parent rows и затем отдельный relationship query для каждого parent. Lazy loading запускает повторные queries; проблему находят по SQL logs или query-count test и выбирают `selectinload`, `joinedload` либо explicit projection по cardinality. Важное ограничение: Eager load должен загружать только нужные use case данные; огромный joined graph размножает rows и расходует память.",
     "expected_answer": {
       "must_mention": [
-        "one short code/result example"
+        "один короткий пример кода с результатом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Adding a cache does not fix an ORM query shape that issues hundreds of avoidable round trips."
+        "Cache не исправляет ORM query shape, который делает сотни лишних round trips."
       ],
       "red_flags": [
-        "Adding a cache does not fix an ORM query shape that issues hundreds of avoidable round trips."
+        "Cache не исправляет ORM query shape, который делает сотни лишних round trips."
       ],
       "follow_up_questions": [
         "Что такое N+1 и как это работает?"

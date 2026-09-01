@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **P0 · вероятность на интервью: high · 12 минут.** HTTP/REST/API явно встречались в 13/18 — P0 внешний контракт backend.
 
-## Learning objectives
+## Учебные цели
 
 После урока ты сможешь:
 
@@ -12,26 +12,26 @@
 - распознать характерную ошибку и объяснить причину;
 - дать реалистичный ответ уровня Junior и выдержать follow-up.
 
-## Theory
+## Теория
 
 ### Что это
 
-An API error contract is a stable response shape for failures, usually containing a machine code, human message and optional field details.
+API error contract — стабильная форма failure response с machine code, понятным message и необязательными field details.
 
 ### Как работает
 
-Domain/infrastructure exceptions are translated at the boundary to an appropriate status and safe payload; internal trace and secrets remain in protected logs.
+Domain и infrastructure exceptions переводятся на границе в подходящий status и безопасный payload; trace и секретов остаются в защищённых logs.
 
 
-### Важный нюанс / limitation
+### Важный нюанс / ограничение
 
-Clients should branch on stable code/status, not exact human wording.
+Clients должны ветвиться по стабильному code/status, а не по точному человеческому тексту.
 
-## Mental model
+## Модель понимания
 
 Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
 
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из Theory.
+Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
 
 ## Что нужно знать на Junior
 
@@ -40,7 +40,7 @@ Clients should branch on stable code/status, not exact human wording.
 - stable shape
 - machine-readable code
 - human message
-- field errors
+- ошибок отдельных полей
 
 ### Полезно
 
@@ -48,9 +48,9 @@ Clients should branch on stable code/status, not exact human wording.
 
 ### Можно не учить глубоко
 
-- internal implementation details beyond common Junior follow-ups
+- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
 
-## Code examples
+## Примеры кода
 
 ### Error contracts: отдельный пример
 
@@ -62,88 +62,88 @@ X-Request-ID: req-12-20
 
 Зафиксируй method/path/headers/body, status и поведение повторного request. Здесь route и request-id привязаны именно к теме «Error contracts».
 
-## Common mistakes
+## Типичные ошибки
 
 ### Ошибка 1
 
-Returning raw exception strings leaks implementation details and creates an unstable public contract.
+Возврат raw exception string раскрывает детали реализации и создаёт нестабильный публичный contract.
 
-## Practice
+## Практика
 
-**A · Code/result prediction.** Change one input in the `stable shape` example and predict the result before running it.
+**A · Предсказание результата.** Измени один input в примере `stable shape` и предскажи результат до запуска.
 
-**B · Find the bug.** Find code that violates `machine-readable code` and explain the concrete consequence.
+**B · Найди ошибку.** Найди код, нарушающий `machine-readable code`, и объясни конкретное последствие.
 
-**D · Small task.** Implement the smallest function/query that demonstrates `stable shape` and add one edge-case test.
+**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `stable shape`, и добавь один граничный случай test.
 
-**E · Interview explanation.** Explain Error contracts in 45–60 seconds and include one limitation.
+**E · Ответ на собеседовании.** Объясни Error contracts за 45–60 секунд и назови одно ограничение.
 
-## Interview questions
+## Вопросы с собеседований
 
 ### Основной вопрос
 
 Что такое Error contracts и как это работает?
 
-### Follow-up
+### Дополнительный вопрос
 
 Какая типичная ошибка связана с Error contracts?
 
 Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
 
-## Good answers
+## Хорошие ответы
 
 ### Короткий ответ
 
-An API error contract is a stable response shape for failures, usually containing a machine code, human message and optional field details.
+API error contract — стабильная форма failure response с machine code, понятным message и необязательными field details.
 
-### Нормальный Junior answer
+### Нормальный ответ уровня Junior
 
-> An API error contract is a stable response shape for failures, usually containing a machine code, human message and optional field details. Domain/infrastructure exceptions are translated at the boundary to an appropriate status and safe payload; internal trace and secrets remain in protected logs. Важное ограничение: Clients should branch on stable code/status, not exact human wording.
+> API error contract — стабильная форма failure response с machine code, понятным message и необязательными field details. Domain и infrastructure exceptions переводятся на границе в подходящий status и безопасный payload; trace и секретов остаются в защищённых logs. Важное ограничение: Clients должны ветвиться по стабильному code/status, а не по точному человеческому тексту.
 
-### Углубление / follow-up
+### Углубление / дополнительный вопрос
 
 **Какая типичная ошибка связана с Error contracts?**
 
-Returning raw exception strings leaks implementation details and creates an unstable public contract.
+Возврат raw exception string раскрывает детали реализации и создаёт нестабильный публичный contract.
 
-## Expected answer rubric
+## Критерии хорошего ответа
 
-### Must mention
+### Что обязательно упомянуть
 
 - stable shape
 - machine-readable code
 - human message
-- field errors
+- ошибок отдельных полей
 
-### Good additions
+### Что улучшит ответ
 
 - один короткий пример с результатом;
 - одно ограничение или характерная ошибка именно этой темы;
-- backend-пример только при естественной связи.
+- пример из backend-разработки только при естественной связи.
 
-### Common wrong answers
+### Частые неправильные ответы
 
-- Returning raw exception strings leaks implementation details and creates an unstable public contract.
+- Возврат raw exception string раскрывает детали реализации и создаёт нестабильный публичный contract.
 - пересказ одного определения без механизма или примера.
 
-### Follow-up
+### Дополнительный вопрос
 
 - Какая типичная ошибка связана с Error contracts?
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Error contracts**: реши один пункт из раздела Practice, затем сравни своё объяснение с хорошим Junior answer. Для этого урока автоматические hidden tests не требуются.
+Сделай короткую письменную практику по теме **Error contracts**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
 
-## Cheat sheet
+## Шпаргалка
 
 Перед собеседованием запомни:
 
-- **Что это:** An API error contract is a stable response shape for failures, usually containing a machine code, human message and optional field details.
+- **Что это:** API error contract — стабильная форма failure response с machine code, понятным message и необязательными field details.
 - **Механизм:** Отделяй transport, HTTP semantics и доменную операцию; status code сообщает результат обработки запроса.
-- **Ограничение:** Returning raw exception strings leaks implementation details and creates an unstable public contract.
-- **Junior depth:** знать обязательные пункты выше; implementation internals можно уточнить по документации.
+- **Ограничение:** Возврат raw exception string раскрывает детали реализации и создаёт нестабильный публичный contract.
+- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
 
-## Sources
+## Источники
 
 Материал написан своими словами и сверён с актуальными разделами официальной документации:
 

@@ -6,7 +6,7 @@
     "interview_probability": "high",
     "answer": [
       "bound method",
-      "descriptor-level mental model only as needed",
+      "descriptor-level модель понимания only as needed",
       "explicit instance parameter"
     ],
     "short_answer": "Methods and `self`: Это элемент Python object model, который определяет состояние объекта, поиск поведения или способ композиции типов.",
@@ -16,7 +16,7 @@
     "expected_answer": {
       "must_mention": [
         "bound method",
-        "descriptor-level mental model only as needed",
+        "descriptor-level модель понимания only as needed",
         "explicit instance parameter"
       ],
       "good_additions": [

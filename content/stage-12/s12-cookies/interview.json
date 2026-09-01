@@ -10,10 +10,10 @@
       "expiration",
       "HttpOnly"
     ],
-    "short_answer": "A cookie is a name/value set by response header and automatically returned by a browser according to domain, path, expiry and security attributes.",
-    "junior_answer": "A cookie is a name/value set by response header and automatically returned by a browser according to domain, path, expiry and security attributes. HttpOnly blocks JavaScript reads, Secure restricts HTTPS transport and SameSite limits cross-site sending; none replaces server-side authorization. Важное ограничение: Cookie authentication needs CSRF considerations because the browser attaches cookies automatically.",
+    "short_answer": "Cookie — пара name/value, которую response устанавливает header-ом, а browser автоматически возвращает с учётом domain, path, срока и security attributes.",
+    "junior_answer": "Cookie — пара name/value, которую response устанавливает header-ом, а browser автоматически возвращает с учётом domain, path, срока и security attributes. HttpOnly запрещает чтение из JavaScript, Secure ограничивает передачу HTTPS, SameSite ограничивает cross-site отправку; ни один атрибут не заменяет на стороне сервера authorization. Важное ограничение: Cookie аутентификацию требует защиты от CSRF, потому что browser прикрепляет cookies автоматически.",
     "follow_up_question": "Какая типичная ошибка связана с Cookies?",
-    "follow_up_answer": "Putting a session cookie without HttpOnly/Secure/SameSite defaults unnecessarily expands the attack surface.",
+    "follow_up_answer": "Session cookie без HttpOnly, Secure и подходящего SameSite неоправданно расширяет поверхность атаки.",
     "expected_answer": {
       "must_mention": [
         "request/response headers",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Putting a session cookie without HttpOnly/Secure/SameSite defaults unnecessarily expands the attack surface.",
+        "Session cookie без HttpOnly, Secure и подходящего SameSite неоправданно расширяет поверхность атаки.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Putting a session cookie without HttpOnly/Secure/SameSite defaults unnecessarily expands the attack surface."
+        "Session cookie без HttpOnly, Secure и подходящего SameSite неоправданно расширяет поверхность атаки."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Cookies?"
@@ -57,12 +57,12 @@
     "answer": [
       "Secure",
       "SameSite",
-      "Putting a session cookie without HttpOnly/Secure/SameSite defaults unnecessarily expands the attack surface."
+      "Session cookie без HttpOnly, Secure и подходящего SameSite неоправданно расширяет поверхность атаки."
     ],
-    "short_answer": "Putting a session cookie without HttpOnly/Secure/SameSite defaults unnecessarily expands the attack surface.",
-    "junior_answer": "Putting a session cookie without HttpOnly/Secure/SameSite defaults unnecessarily expands the attack surface.",
+    "short_answer": "Session cookie без HttpOnly, Secure и подходящего SameSite неоправданно расширяет поверхность атаки.",
+    "junior_answer": "Session cookie без HttpOnly, Secure и подходящего SameSite неоправданно расширяет поверхность атаки.",
     "follow_up_question": "Что такое Cookies и как это работает?",
-    "follow_up_answer": "A cookie is a name/value set by response header and automatically returned by a browser according to domain, path, expiry and security attributes. HttpOnly blocks JavaScript reads, Secure restricts HTTPS transport and SameSite limits cross-site sending; none replaces server-side authorization. Важное ограничение: Cookie authentication needs CSRF considerations because the browser attaches cookies automatically.",
+    "follow_up_answer": "Cookie — пара name/value, которую response устанавливает header-ом, а browser автоматически возвращает с учётом domain, path, срока и security attributes. HttpOnly запрещает чтение из JavaScript, Secure ограничивает передачу HTTPS, SameSite ограничивает cross-site отправку; ни один атрибут не заменяет на стороне сервера authorization. Важное ограничение: Cookie аутентификацию требует защиты от CSRF, потому что browser прикрепляет cookies автоматически.",
     "expected_answer": {
       "must_mention": [
         "Secure",
@@ -72,10 +72,10 @@
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Putting a session cookie without HttpOnly/Secure/SameSite defaults unnecessarily expands the attack surface."
+        "Session cookie без HttpOnly, Secure и подходящего SameSite неоправданно расширяет поверхность атаки."
       ],
       "red_flags": [
-        "Putting a session cookie without HttpOnly/Secure/SameSite defaults unnecessarily expands the attack surface."
+        "Session cookie без HttpOnly, Secure и подходящего SameSite неоправданно расширяет поверхность атаки."
       ],
       "follow_up_questions": [
         "Что такое Cookies и как это работает?"

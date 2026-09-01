@@ -3,7 +3,7 @@
   "slug": "exceptions",
   "title": "Exception hierarchy",
   "module_slug": "stage-04",
-  "module_title": "Stage 4 · Iteration, Generators, Exceptions and Context Managers",
+  "module_title": "Этап 4 · Iteration, Generators, Exceptions and Context Managers",
   "module_order": 4,
   "order": 40,
   "duration": 12,
@@ -15,7 +15,7 @@
     "common built-ins",
     "why not catch bare `except`."
   ],
-  "description": "P0 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P0",

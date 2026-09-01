@@ -10,10 +10,10 @@
       "repeated references",
       "`[[]] * 3`"
     ],
-    "short_answer": "Aliases are multiple names or container slots referring to one object; nested mutation through any alias changes that same object.",
-    "junior_answer": "Aliases are multiple names or container slots referring to one object; nested mutation through any alias changes that same object. Assignment and sequence repetition copy references. `[[]] * 3` repeats one inner-list reference three times, so mutating one visible row changes all three positions. Важное ограничение: Build independent nested values with a comprehension such as `[[] for _ in range(3)]`.",
+    "short_answer": "Aliases — несколько имён или ячеек контейнера, указывающих на один объект; вложенная мутация через любую ссылку меняет тот же объект.",
+    "junior_answer": "Aliases — несколько имён или ячеек контейнера, указывающих на один объект; вложенная мутация через любую ссылку меняет тот же объект. Присваивание и повторение последовательности копируют ссылки. `[[]] * 3` трижды помещает ссылку на один внутренний список, поэтому изменение одной строки видно во всех позициях. Важное ограничение: Независимые вложенные значения создавай comprehension-выражением: `[[] for _ in range(3)]`.",
     "follow_up_question": "Какая типичная ошибка связана с Assignment, aliases and nested mutation?",
-    "follow_up_answer": "Using multiplication for mutable nested defaults creates shared state that is difficult to notice in tests with one element.",
+    "follow_up_answer": "Умножение последовательности с изменяемым вложенным значением создаёт общее состояние, которое легко пропустить в простом тесте.",
     "expected_answer": {
       "must_mention": [
         "aliases",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Using multiplication for mutable nested defaults creates shared state that is difficult to notice in tests with one element.",
+        "Умножение последовательности с изменяемым вложенным значением создаёт общее состояние, которое легко пропустить в простом тесте.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Using multiplication for mutable nested defaults creates shared state that is difficult to notice in tests with one element."
+        "Умножение последовательности с изменяемым вложенным значением создаёт общее состояние, которое легко пропустить в простом тесте."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Assignment, aliases and nested mutation?"
@@ -56,12 +56,12 @@
     "interview_probability": "very_high",
     "answer": [
       "passing objects into functions",
-      "Using multiplication for mutable nested defaults creates shared state that is difficult to notice in tests with one element."
+      "Умножение последовательности с изменяемым вложенным значением создаёт общее состояние, которое легко пропустить в простом тесте."
     ],
-    "short_answer": "Using multiplication for mutable nested defaults creates shared state that is difficult to notice in tests with one element.",
-    "junior_answer": "Using multiplication for mutable nested defaults creates shared state that is difficult to notice in tests with one element.",
+    "short_answer": "Умножение последовательности с изменяемым вложенным значением создаёт общее состояние, которое легко пропустить в простом тесте.",
+    "junior_answer": "Умножение последовательности с изменяемым вложенным значением создаёт общее состояние, которое легко пропустить в простом тесте.",
     "follow_up_question": "Что такое Assignment, aliases and nested mutation и как это работает?",
-    "follow_up_answer": "Aliases are multiple names or container slots referring to one object; nested mutation through any alias changes that same object. Assignment and sequence repetition copy references. `[[]] * 3` repeats one inner-list reference three times, so mutating one visible row changes all three positions. Важное ограничение: Build independent nested values with a comprehension such as `[[] for _ in range(3)]`.",
+    "follow_up_answer": "Aliases — несколько имён или ячеек контейнера, указывающих на один объект; вложенная мутация через любую ссылку меняет тот же объект. Присваивание и повторение последовательности копируют ссылки. `[[]] * 3` трижды помещает ссылку на один внутренний список, поэтому изменение одной строки видно во всех позициях. Важное ограничение: Независимые вложенные значения создавай comprehension-выражением: `[[] for _ in range(3)]`.",
     "expected_answer": {
       "must_mention": [
         "passing objects into functions"
@@ -70,10 +70,10 @@
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Using multiplication for mutable nested defaults creates shared state that is difficult to notice in tests with one element."
+        "Умножение последовательности с изменяемым вложенным значением создаёт общее состояние, которое легко пропустить в простом тесте."
       ],
       "red_flags": [
-        "Using multiplication for mutable nested defaults creates shared state that is difficult to notice in tests with one element."
+        "Умножение последовательности с изменяемым вложенным значением создаёт общее состояние, которое легко пропустить в простом тесте."
       ],
       "follow_up_questions": [
         "Что такое Assignment, aliases and nested mutation и как это работает?"

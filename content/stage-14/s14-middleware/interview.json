@@ -10,10 +10,10 @@
       "ordering",
       "not for domain logic"
     ],
-    "short_answer": "Middleware wraps the request/response flow for cross-cutting behavior such as request IDs, timing or security headers.",
-    "junior_answer": "Middleware wraps the request/response flow for cross-cutting behavior such as request IDs, timing or security headers. Each middleware runs before the inner app and after it returns; order therefore changes observation and error behavior. Важное ограничение: Domain authorization usually needs resolved user/resource context and belongs in dependencies/services, not generic middleware.",
+    "short_answer": "Middleware оборачивает request/response flow для cross-cutting задач: request ID, timing или security headers.",
+    "junior_answer": "Middleware оборачивает request/response flow для cross-cutting задач: request ID, timing или security headers. Каждый middleware выполняется до внутреннего app и после его response; порядок влияет на наблюдение и обработку ошибок. Важное ограничение: Domain authorization обычно требует resolved user/resource и относится к dependencies или services, а не к общему middleware.",
     "follow_up_question": "Какая типичная ошибка связана с Middleware?",
-    "follow_up_answer": "Reading a streaming request body in middleware without replaying it can leave the endpoint with no body.",
+    "follow_up_answer": "Чтение streaming request body в middleware без восстановления потока может оставить endpoint без body.",
     "expected_answer": {
       "must_mention": [
         "request/response wrapper",
@@ -26,11 +26,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Reading a streaming request body in middleware without replaying it can leave the endpoint with no body.",
+        "Чтение streaming request body в middleware без восстановления потока может оставить endpoint без body.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Reading a streaming request body in middleware without replaying it can leave the endpoint with no body."
+        "Чтение streaming request body в middleware без восстановления потока может оставить endpoint без body."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Middleware?"
@@ -55,25 +55,25 @@
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "one short code/result example",
-      "Reading a streaming request body in middleware without replaying it can leave the endpoint with no body."
+      "один короткий пример кода с результатом",
+      "Чтение streaming request body в middleware без восстановления потока может оставить endpoint без body."
     ],
-    "short_answer": "Reading a streaming request body in middleware without replaying it can leave the endpoint with no body.",
-    "junior_answer": "Reading a streaming request body in middleware without replaying it can leave the endpoint with no body.",
+    "short_answer": "Чтение streaming request body в middleware без восстановления потока может оставить endpoint без body.",
+    "junior_answer": "Чтение streaming request body в middleware без восстановления потока может оставить endpoint без body.",
     "follow_up_question": "Что такое Middleware и как это работает?",
-    "follow_up_answer": "Middleware wraps the request/response flow for cross-cutting behavior such as request IDs, timing or security headers. Each middleware runs before the inner app and after it returns; order therefore changes observation and error behavior. Важное ограничение: Domain authorization usually needs resolved user/resource context and belongs in dependencies/services, not generic middleware.",
+    "follow_up_answer": "Middleware оборачивает request/response flow для cross-cutting задач: request ID, timing или security headers. Каждый middleware выполняется до внутреннего app и после его response; порядок влияет на наблюдение и обработку ошибок. Важное ограничение: Domain authorization обычно требует resolved user/resource и относится к dependencies или services, а не к общему middleware.",
     "expected_answer": {
       "must_mention": [
-        "one short code/result example"
+        "один короткий пример кода с результатом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Reading a streaming request body in middleware without replaying it can leave the endpoint with no body."
+        "Чтение streaming request body в middleware без восстановления потока может оставить endpoint без body."
       ],
       "red_flags": [
-        "Reading a streaming request body in middleware without replaying it can leave the endpoint with no body."
+        "Чтение streaming request body в middleware без восстановления потока может оставить endpoint без body."
       ],
       "follow_up_questions": [
         "Что такое Middleware и как это работает?"

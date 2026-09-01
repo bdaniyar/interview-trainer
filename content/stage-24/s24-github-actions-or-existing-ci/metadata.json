@@ -3,7 +3,7 @@
   "slug": "s24-github-actions-or-existing-ci",
   "title": "GitHub Actions or existing CI",
   "module_slug": "stage-24",
-  "module_title": "Stage 24 · CI/CD",
+  "module_title": "Этап 24 · CI/CD",
   "module_order": 24,
   "order": 312,
   "duration": 10,
@@ -17,7 +17,7 @@
     "cache",
     "secrets."
   ],
-  "description": "P1 · Learn: теория, примеры, ошибки, практика и готовый Junior interview answer.",
+  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",

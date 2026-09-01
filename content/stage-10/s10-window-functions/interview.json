@@ -9,10 +9,10 @@
       "difference from GROUP BY",
       "window definition"
     ],
-    "short_answer": "A window function computes across related rows while keeping each original row visible, unlike GROUP BY.",
-    "junior_answer": "A window function computes across related rows while keeping each original row visible, unlike GROUP BY. `OVER` defines partition, order and frame. Ranking, running totals and comparisons to previous rows are common uses. Важное ограничение: Ordering inside OVER controls the window calculation; final output order still requires a separate ORDER BY.",
+    "short_answer": "Window function вычисляет значение по связанным rows, сохраняя каждую исходную row, в отличие от GROUP BY.",
+    "junior_answer": "Window function вычисляет значение по связанным rows, сохраняя каждую исходную row, в отличие от GROUP BY. `OVER` задаёт partition, order и frame. Типичные случаи — ranking, running total и сравнение с предыдущей row. Важное ограничение: Ordering внутри OVER управляет window calculation; финальный порядок результата всё равно требует отдельного ORDER BY.",
     "follow_up_question": "Какая типичная ошибка связана с Window functions?",
-    "follow_up_answer": "Omitting a tie-breaker from window ordering can make row_number results nondeterministic.",
+    "follow_up_answer": "Отсутствие tie-breaker в window ordering делает `row_number` недетерминированным при равных значениях.",
     "expected_answer": {
       "must_mention": [
         "rows remain visible",
@@ -24,11 +24,11 @@
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Omitting a tie-breaker from window ordering can make row_number results nondeterministic.",
+        "Отсутствие tie-breaker в window ordering делает `row_number` недетерминированным при равных значениях.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Omitting a tie-breaker from window ordering can make row_number results nondeterministic."
+        "Отсутствие tie-breaker в window ordering делает `row_number` недетерминированным при равных значениях."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Window functions?"
@@ -53,25 +53,25 @@
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "one short code/result example",
-      "Omitting a tie-breaker from window ordering can make row_number results nondeterministic."
+      "один короткий пример кода с результатом",
+      "Отсутствие tie-breaker в window ordering делает `row_number` недетерминированным при равных значениях."
     ],
-    "short_answer": "Omitting a tie-breaker from window ordering can make row_number results nondeterministic.",
-    "junior_answer": "Omitting a tie-breaker from window ordering can make row_number results nondeterministic.",
+    "short_answer": "Отсутствие tie-breaker в window ordering делает `row_number` недетерминированным при равных значениях.",
+    "junior_answer": "Отсутствие tie-breaker в window ordering делает `row_number` недетерминированным при равных значениях.",
     "follow_up_question": "Что такое Window functions и как это работает?",
-    "follow_up_answer": "A window function computes across related rows while keeping each original row visible, unlike GROUP BY. `OVER` defines partition, order and frame. Ranking, running totals and comparisons to previous rows are common uses. Важное ограничение: Ordering inside OVER controls the window calculation; final output order still requires a separate ORDER BY.",
+    "follow_up_answer": "Window function вычисляет значение по связанным rows, сохраняя каждую исходную row, в отличие от GROUP BY. `OVER` задаёт partition, order и frame. Типичные случаи — ranking, running total и сравнение с предыдущей row. Важное ограничение: Ordering внутри OVER управляет window calculation; финальный порядок результата всё равно требует отдельного ORDER BY.",
     "expected_answer": {
       "must_mention": [
-        "one short code/result example"
+        "один короткий пример кода с результатом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Omitting a tie-breaker from window ordering can make row_number results nondeterministic."
+        "Отсутствие tie-breaker в window ordering делает `row_number` недетерминированным при равных значениях."
       ],
       "red_flags": [
-        "Omitting a tie-breaker from window ordering can make row_number results nondeterministic."
+        "Отсутствие tie-breaker в window ordering делает `row_number` недетерминированным при равных значениях."
       ],
       "follow_up_questions": [
         "Что такое Window functions и как это работает?"

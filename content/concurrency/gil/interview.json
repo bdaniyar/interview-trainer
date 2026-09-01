@@ -5,32 +5,32 @@
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "one thread executing Python bytecode in one CPython process",
+      "один поток выполняет байткод Python в одном процессе CPython",
       "threads still useful for I/O",
       "processes/native code for CPU work",
-      "GIL is not a general lock for application data"
+      "GIL не является общей блокировкой данных приложения"
     ],
-    "short_answer": "The CPython GIL allows one thread at a time to execute Python bytecode in a process.",
-    "junior_answer": "The CPython GIL allows one thread at a time to execute Python bytecode in a process. Threads can still overlap waiting I/O because the GIL is released around many blocking/native operations. CPU-bound pure Python usually needs processes, native code that releases the GIL or external workers. Важное ограничение: The GIL is not an application lock: multi-step shared-state operations and database invariants still race.",
+    "short_answer": "GIL в CPython позволяет только одному thread выполнять Python bytecode в процессе в конкретный момент.",
+    "junior_answer": "GIL в CPython позволяет только одному thread выполнять Python bytecode в процессе в конкретный момент. Threads всё равно перекрывают ожидание I/O, потому что GIL освобождается вокруг многих blocking/native операций. Для CPU-bound Python обычно нужны processes, native code без GIL или внешние workers. Важное ограничение: GIL не является lock для приложения: многошаговые операции с общим состоянием и database инварианты всё равно подвержены race conditions.",
     "follow_up_question": "Какая типичная ошибка связана с GIL?",
-    "follow_up_answer": "Claiming that threads cannot race because of the GIL confuses bytecode scheduling with atomic business operations.",
+    "follow_up_answer": "Утверждение, что из-за GIL в threads нет races, смешивает планирование bytecode с атомарностью бизнес-операции.",
     "expected_answer": {
       "must_mention": [
-        "one thread executing Python bytecode in one CPython process",
+        "один поток выполняет байткод Python в одном процессе CPython",
         "threads still useful for I/O",
         "processes/native code for CPU work",
-        "GIL is not a general lock for application data"
+        "GIL не является общей блокировкой данных приложения"
       ],
       "good_additions": [
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
       "common_wrong_answers": [
-        "Claiming that threads cannot race because of the GIL confuses bytecode scheduling with atomic business operations.",
+        "Утверждение, что из-за GIL в threads нет races, смешивает планирование bytecode с атомарностью бизнес-операции.",
         "Ответ без механизма, примера и ограничения"
       ],
       "red_flags": [
-        "Claiming that threads cannot race because of the GIL confuses bytecode scheduling with atomic business operations."
+        "Утверждение, что из-за GIL в threads нет races, смешивает планирование bytecode с атомарностью бизнес-операции."
       ],
       "follow_up_questions": [
         "Какая типичная ошибка связана с GIL?"
@@ -55,25 +55,25 @@
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "one short code/result example",
-      "Claiming that threads cannot race because of the GIL confuses bytecode scheduling with atomic business operations."
+      "один короткий пример кода с результатом",
+      "Утверждение, что из-за GIL в threads нет races, смешивает планирование bytecode с атомарностью бизнес-операции."
     ],
-    "short_answer": "Claiming that threads cannot race because of the GIL confuses bytecode scheduling with atomic business operations.",
-    "junior_answer": "Claiming that threads cannot race because of the GIL confuses bytecode scheduling with atomic business operations.",
+    "short_answer": "Утверждение, что из-за GIL в threads нет races, смешивает планирование bytecode с атомарностью бизнес-операции.",
+    "junior_answer": "Утверждение, что из-за GIL в threads нет races, смешивает планирование bytecode с атомарностью бизнес-операции.",
     "follow_up_question": "Что такое GIL и как это работает?",
-    "follow_up_answer": "The CPython GIL allows one thread at a time to execute Python bytecode in a process. Threads can still overlap waiting I/O because the GIL is released around many blocking/native operations. CPU-bound pure Python usually needs processes, native code that releases the GIL or external workers. Важное ограничение: The GIL is not an application lock: multi-step shared-state operations and database invariants still race.",
+    "follow_up_answer": "GIL в CPython позволяет только одному thread выполнять Python bytecode в процессе в конкретный момент. Threads всё равно перекрывают ожидание I/O, потому что GIL освобождается вокруг многих blocking/native операций. Для CPU-bound Python обычно нужны processes, native code без GIL или внешние workers. Важное ограничение: GIL не является lock для приложения: многошаговые операции с общим состоянием и database инварианты всё равно подвержены race conditions.",
     "expected_answer": {
       "must_mention": [
-        "one short code/result example"
+        "один короткий пример кода с результатом"
       ],
       "good_additions": [
         "короткий пример именно этой темы"
       ],
       "common_wrong_answers": [
-        "Claiming that threads cannot race because of the GIL confuses bytecode scheduling with atomic business operations."
+        "Утверждение, что из-за GIL в threads нет races, смешивает планирование bytecode с атомарностью бизнес-операции."
       ],
       "red_flags": [
-        "Claiming that threads cannot race because of the GIL confuses bytecode scheduling with atomic business operations."
+        "Утверждение, что из-за GIL в threads нет races, смешивает планирование bytecode с атомарностью бизнес-операции."
       ],
       "follow_up_questions": [
         "Что такое GIL и как это работает?"
