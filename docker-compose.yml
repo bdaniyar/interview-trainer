@@ -38,7 +38,7 @@ services:
       - pythoria_data:/data
       - ./content:/content:ro
     ports:
-      - "8080:8000"
+      - "8000:8000"
     depends_on:
       - runner
     restart: unless-stopped
@@ -47,9 +47,9 @@ services:
     build:
       context: ./frontend
       args:
-        NEXT_PUBLIC_API_URL: http://localhost:8080
+        NEXT_PUBLIC_API_URL: http://localhost:8000
     environment:
-      NEXT_PUBLIC_API_URL: http://localhost:8080
+      NEXT_PUBLIC_API_URL: http://localhost:8000
     ports:
       - "3000:3000"
     depends_on:
