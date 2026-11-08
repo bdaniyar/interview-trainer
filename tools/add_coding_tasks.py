@@ -2,6 +2,11 @@
 
 from __future__ import annotations
 
+try:
+    from .curated_content import preserve_bundle
+except ImportError:  # direct script execution
+    from curated_content import preserve_bundle
+
 import json
 import re
 from dataclasses import dataclass
@@ -530,350 +535,10 @@ def test_frozen_slots():
 ]
 
 
-ASYNC_TASKS = [
-    Task(
-        "8.1", "Sync I/O вне event loop",
-        "Реализуй async run_blocking_calls(function, values) через asyncio.to_thread и gather; порядок результата как во входе.",
-        """import asyncio
-
-async def run_blocking_calls(function, values):
-    raise NotImplementedError
-""",
-        """import asyncio
-
-async def run_blocking_calls(function, values):
-    return await asyncio.gather(*(asyncio.to_thread(function, value) for value in values))
-""",
-        """import asyncio
-import threading
-from main import run_blocking_calls
-
-def test_order_and_thread():
-    owner = threading.get_ident()
-    def work(value): return value * 2, threading.get_ident() != owner
-    result = asyncio.run(run_blocking_calls(work, [3, 1, 2]))
-    assert [item[0] for item in result] == [6, 2, 4] and all(item[1] for item in result)
-""", ("asyncio.to_thread", "concurrency"),
-    ),
-    Task(
-        "8.2", "Coroutine result",
-        "Реализуй async fetch_name(client,user_id): await client.get_user и верни name.",
-        """async def fetch_name(client, user_id):
-    raise NotImplementedError
-""",
-        """async def fetch_name(client, user_id):
-    user = await client.get_user(user_id)
-    return user["name"]
-""",
-        """import asyncio
-import inspect
-from main import fetch_name
-
-class Client:
-    async def get_user(self, user_id): return {"id": user_id, "name": "Aida"}
-def test_coroutine():
-    assert inspect.iscoroutinefunction(fetch_name)
-    assert asyncio.run(fetch_name(Client(), 7)) == "Aida"
-""", ("coroutine", "await"),
-    ),
-    Task(
-        "8.3", "Конкурентный profile",
-        "Реализуй load_profile: get_user и get_roles запускаются конкурентно; верни объединённый dict.",
-        """import asyncio
-
-async def load_profile(client, user_id):
-    raise NotImplementedError
-""",
-        """import asyncio
-
-async def load_profile(client, user_id):
-    user, roles = await asyncio.gather(client.get_user(user_id), client.get_roles(user_id))
-    return {**user, "roles": roles}
-""",
-        """import asyncio
-from main import load_profile
-
-class Client:
-    def __init__(self): self.active = self.peak = 0
-    async def call(self, value):
-        self.active += 1; self.peak = max(self.peak, self.active)
-        await asyncio.sleep(0)
-        self.active -= 1
-        return value
-    async def get_user(self, user_id): return await self.call({"id": user_id})
-    async def get_roles(self, user_id): return await self.call(["reader"])
-def test_concurrent():
-    client = Client()
-    assert asyncio.run(load_profile(client, 4)) == {"id": 4, "roles": ["reader"]}
-    assert client.peak == 2
-""", ("await", "gather"),
-    ),
-    Task(
-        "8.4", "Cooperative checkpoint",
-        "append before, await asyncio.sleep(0), затем append after.",
-        """import asyncio
-
-async def checkpoint(log):
-    raise NotImplementedError
-""",
-        """import asyncio
-
-async def checkpoint(log):
-    log.append("before")
-    await asyncio.sleep(0)
-    log.append("after")
-""",
-        """import asyncio
-from main import checkpoint
-
-async def scenario():
-    log = []
-    task = asyncio.create_task(checkpoint(log))
-    await asyncio.sleep(0)
-    assert log == ["before"]
-    await task
-    return log
-def test_checkpoint(): assert asyncio.run(scenario()) == ["before", "after"]
-""", ("event-loop", "cooperative-scheduling"),
-    ),
-    Task(
-        "8.5", "Task lifecycle registry",
-        "Создай task, добавь в registry set, удали done callback и верни task.",
-        """import asyncio
-
-def start_job(coro, registry):
-    raise NotImplementedError
-""",
-        """import asyncio
-
-def start_job(coro, registry):
-    task = asyncio.create_task(coro)
-    registry.add(task)
-    task.add_done_callback(registry.discard)
-    return task
-""",
-        """import asyncio
-from main import start_job
-
-async def scenario():
-    registry = set()
-    task = start_job(asyncio.sleep(0, result=42), registry)
-    assert task in registry and await task == 42
-    await asyncio.sleep(0)
-    assert task not in registry
-def test_lifecycle(): asyncio.run(scenario())
-""", ("create_task", "task-lifecycle"),
-    ),
-    Task(
-        "8.6", "gather с порядком",
-        "Запусти fetch(value) конкурентно для ids и верни results в порядке ids.",
-        """import asyncio
-
-async def fetch_many(fetch, ids):
-    raise NotImplementedError
-""",
-        """import asyncio
-
-async def fetch_many(fetch, ids):
-    return await asyncio.gather(*(fetch(value) for value in ids))
-""",
-        """import asyncio
-from main import fetch_many
-
-async def fetch(value):
-    await asyncio.sleep((4 - value) * 0.001)
-    return value * 10
-def test_order(): assert asyncio.run(fetch_many(fetch, [1, 3, 2])) == [10, 30, 20]
-def test_empty(): assert asyncio.run(fetch_many(fetch, [])) == []
-""", ("gather", "ordering"),
-    ),
-    Task(
-        "8.7", "Timeout boundary",
-        "Реализуй await_with_timeout(awaitable,seconds) через asyncio.timeout; TimeoutError не подавляй.",
-        """import asyncio
-
-async def await_with_timeout(awaitable, seconds):
-    raise NotImplementedError
-""",
-        """import asyncio
-
-async def await_with_timeout(awaitable, seconds):
-    async with asyncio.timeout(seconds):
-        return await awaitable
-""",
-        """import asyncio
-import pytest
-from main import await_with_timeout
-
-def test_result(): assert asyncio.run(await_with_timeout(asyncio.sleep(0, result="ok"), 1)) == "ok"
-def test_timeout():
-    with pytest.raises(TimeoutError): asyncio.run(await_with_timeout(asyncio.sleep(0.05), 0.001))
-""", ("timeout", "cancellation"),
-    ),
-    Task(
-        "8.8", "Cancel and wait",
-        "Отмени task, await его, поглоти только CancelledError и верни True при отмене.",
-        """import asyncio
-
-async def cancel_and_wait(task):
-    raise NotImplementedError
-""",
-        """import asyncio
-
-async def cancel_and_wait(task):
-    task.cancel()
-    try:
-        await task
-    except asyncio.CancelledError:
-        return True
-    return False
-""",
-        """import asyncio
-from main import cancel_and_wait
-
-async def scenario():
-    cleaned = []
-    async def work():
-        try: await asyncio.sleep(10)
-        finally: cleaned.append(True)
-    task = asyncio.create_task(work())
-    await asyncio.sleep(0)
-    assert await cancel_and_wait(task) is True
-    assert task.cancelled() and cleaned == [True]
-def test_cancel(): asyncio.run(scenario())
-""", ("cancellation", "cleanup"),
-    ),
-    Task(
-        "8.9", "Вынести blocking call",
-        "Реализуй async call_blocking(function,*args,**kwargs) через asyncio.to_thread.",
-        """import asyncio
-
-async def call_blocking(function, *args, **kwargs):
-    raise NotImplementedError
-""",
-        """import asyncio
-
-async def call_blocking(function, *args, **kwargs):
-    return await asyncio.to_thread(function, *args, **kwargs)
-""",
-        """import asyncio
-import threading
-from main import call_blocking
-
-def test_arguments_and_thread():
-    owner = threading.get_ident()
-    def work(a, *, b): return a + b, threading.get_ident() != owner
-    assert asyncio.run(call_blocking(work, 2, b=3)) == (5, True)
-""", ("blocking-io", "to_thread"),
-    ),
-    Task(
-        "8.10", "Async resource manager",
-        "await opener при enter, await closer(resource) при exit, исключение не подавляй.",
-        """class AsyncResource:
-    def __init__(self, opener, closer):
-        self.opener, self.closer, self.resource = opener, closer, None
-    async def __aenter__(self):
-        raise NotImplementedError
-    async def __aexit__(self, exc_type, exc, traceback):
-        raise NotImplementedError
-""",
-        """class AsyncResource:
-    def __init__(self, opener, closer):
-        self.opener, self.closer, self.resource = opener, closer, None
-    async def __aenter__(self):
-        self.resource = await self.opener()
-        return self.resource
-    async def __aexit__(self, exc_type, exc, traceback):
-        await self.closer(self.resource)
-        return False
-""",
-        """import asyncio
-import pytest
-from main import AsyncResource
-
-async def scenario(fail=False):
-    events = []
-    async def open_(): events.append("open"); return 42
-    async def close_(value): events.append(("close", value))
-    async with AsyncResource(open_, close_) as value:
-        assert value == 42
-        if fail: raise RuntimeError("boom")
-    return events
-def test_lifecycle(): assert asyncio.run(scenario()) == ["open", ("close", 42)]
-def test_error():
-    with pytest.raises(RuntimeError): asyncio.run(scenario(True))
-""", ("async-context-manager", "cleanup"),
-    ),
-    Task(
-        "8.11", "AsyncRange",
-        "Реализуй async iterator, выдающий start..stop-1 и завершающийся StopAsyncIteration.",
-        """class AsyncRange:
-    def __init__(self, start, stop):
-        self.current, self.stop = start, stop
-    def __aiter__(self):
-        raise NotImplementedError
-    async def __anext__(self):
-        raise NotImplementedError
-""",
-        """class AsyncRange:
-    def __init__(self, start, stop):
-        self.current, self.stop = start, stop
-    def __aiter__(self):
-        return self
-    async def __anext__(self):
-        if self.current >= self.stop:
-            raise StopAsyncIteration
-        value = self.current
-        self.current += 1
-        return value
-""",
-        """import asyncio
-from main import AsyncRange
-
-async def collect(value): return [item async for item in value]
-def test_values(): assert asyncio.run(collect(AsyncRange(2, 5))) == [2, 3, 4]
-def test_empty(): assert asyncio.run(collect(AsyncRange(3, 3))) == []
-""", ("async-iterator", "StopAsyncIteration"),
-    ),
-    Task(
-        "8.12", "Ограничить concurrency",
-        "Реализуй map_limited через Semaphore и gather. Сохрани порядок; limit <= 0 вызывает ValueError.",
-        """import asyncio
-
-async def map_limited(function, values, limit):
-    raise NotImplementedError
-""",
-        """import asyncio
-
-async def map_limited(function, values, limit):
-    if limit <= 0:
-        raise ValueError("limit must be positive")
-    semaphore = asyncio.Semaphore(limit)
-    async def run(value):
-        async with semaphore:
-            return await function(value)
-    return await asyncio.gather(*(run(value) for value in values))
-""",
-        """import asyncio
-import pytest
-from main import map_limited
-
-async def scenario():
-    active = peak = 0
-    async def work(value):
-        nonlocal active, peak
-        active += 1; peak = max(peak, active)
-        await asyncio.sleep(0)
-        active -= 1
-        return value * 2
-    return await map_limited(work, [3, 1, 2, 4], 2), peak
-def test_limit_order(): assert asyncio.run(scenario()) == ([6, 2, 4, 8], 2)
-def test_invalid():
-    async def noop(value): return value
-    with pytest.raises(ValueError): asyncio.run(map_limited(noop, [1], 0))
-""", ("semaphore", "backpressure"),
-    ),
-]
+# Stage 8 task bundles are authored and reviewed in content/ (including the
+# saved-submission compatibility tests for 8.1). Never rebuild them from a
+# second, stale Python catalog.
+ASYNC_TASKS: list[Task] = []
 
 
 def indexes() -> tuple[dict[str, dict], dict[str, Path]]:
@@ -896,6 +561,8 @@ def replace_task(markdown: str, task: Task) -> str:
 
 
 def write_task(task: Task, lesson: dict, directory: Path) -> None:
+    if preserve_bundle(directory):
+        return
     for folder, content in (("starter", task.starter), ("solution", task.solution)):
         target = directory / folder
         target.mkdir(exist_ok=True)
@@ -928,7 +595,7 @@ def main() -> None:
     for task in tasks:
         lesson = lessons[task.number]
         write_task(task, lesson, directories[lesson["implementation_slug"]])
-    print(f"Added {len(CORE_TASKS)} Python Core and {len(ASYNC_TASKS)} asyncio tasks")
+    print("Task catalog checked; existing bundles preserved. Stage 8 tasks are authored in content/.")
 
 
 if __name__ == "__main__":

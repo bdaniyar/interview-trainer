@@ -11,6 +11,11 @@ import subprocess
 import sys
 import tempfile
 from collections import Counter
+
+try:
+    from .content_quality import audit, write_audit
+except ImportError:  # direct script execution
+    from content_quality import audit, write_audit
 from pathlib import Path
 
 
@@ -97,7 +102,7 @@ def english_only_prose(markdown: str) -> list[tuple[int, str]]:
     return issues
 
 
-def validate(run_solutions: bool) -> None:
+def validate(run_solutions: bool, strict_quality: bool = False) -> None:
     errors: list[str] = []
     curriculum = json.loads((CONTENT / "curriculum.json").read_text(encoding="utf-8"))
     taxonomy = [lesson for stage in curriculum["stages"] for lesson in stage["lessons"]]
@@ -255,6 +260,24 @@ def validate(run_solutions: bool) -> None:
     if len(tasks) < 60:
         fail(errors, f"expected at least 60 executable tasks, got {len(tasks)}")
 
+    quality = audit(CONTENT)
+    policy = json.loads((CONTENT / "curation-policy.json").read_text(encoding="utf-8"))
+    legacy_debt = set(policy["legacy_debt"])
+    for record in quality:
+        if not record["reviewed"] and record["id"] not in legacy_debt:
+            fail(errors, f"{record['slug']}: new Stage 8+ publication requires a reviewed bundle")
+        if record["reviewed"] and record["id"] in legacy_debt:
+            fail(errors, f"{record['slug']}: remove reviewed lesson from legacy_debt")
+    pending = sum(not record["reviewed"] for record in quality)
+    for record in quality:
+        if record["reviewed"] or strict_quality:
+            for issue in record["issues"]:
+                fail(errors, f"{record['slug']}: {issue['code']}: {issue['detail']}")
+    if strict_quality and pending:
+        fail(errors, f"{pending} lessons still require substantive review")
+    if pending:
+        print(f"Quality audit: {pending} Stage 8+ legacy lessons await review; use --audit-dir for all findings or --strict-quality to fail on debt")
+
     if run_solutions and not errors:
         for directory in tasks:
             with tempfile.TemporaryDirectory(prefix="pythoria-content-") as temporary:
@@ -294,8 +317,12 @@ def validate(run_solutions: bool) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--run-solutions", action="store_true")
+    parser.add_argument("--strict-quality", action="store_true", help="Also fail on legacy editorial debt")
+    parser.add_argument("--audit-dir", type=Path, help="Write deterministic findings for every published Stage 8+ lesson")
     args = parser.parse_args()
-    validate(args.run_solutions)
+    if args.audit_dir:
+        write_audit(CONTENT, args.audit_dir)
+    validate(args.run_solutions, args.strict_quality)
 
 
 if __name__ == "__main__":

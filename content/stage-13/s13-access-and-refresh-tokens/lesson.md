@@ -32,7 +32,7 @@
 
 **reuse detection.** `reuse detection` закрывает конкретную threat на trust boundary; проверка выполняется на стороне сервера, а отказ не раскрывает лишних данных.
 
-**на стороне сервера refresh session.** Session владеет identity map и transaction state; после ошибки flush требуется rollback до дальнейшей работы.
+**на стороне сервера refresh session.** Refresh session — запись о праве клиента получать новые access tokens. Сервер проверяет срок, отзыв и допустимость повторного использования refresh token. Это состояние авторизации, а не ORM Session. Отзыв refresh session прекращает обновление; уже выданный access token может действовать до своего срока.
 
 
 ### Важный нюанс / ограничение
@@ -178,3 +178,5 @@ Access and refresh tokens: Это security boundary: сервер проверя
 - [JWT RFC 7519](https://www.rfc-editor.org/rfc/rfc7519)
 
 Последняя проверка версий: **2026-08-27**.
+
+- Точечная проверка подтемы 2026-11-08: [OAuth refresh token protection](https://www.rfc-editor.org/rfc/rfc9700.html#name-refresh-token-protection). Остальной материал урока ещё ожидает содержательного аудита.

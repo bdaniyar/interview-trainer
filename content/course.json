@@ -3370,16 +3370,24 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-08",
           "generated_by": "populate_curriculum.py",
           "task_id": "backend-interview.8.1.sync-concurrency-and-parallelism.practice",
-          "task_title": "Sync I/O вне event loop",
+          "task_title": "Сравнить время ожиданий",
           "task_difficulty": "interview",
           "task_skills": [
-            "asyncio.to_thread",
-            "concurrency"
+            "sequential-execution",
+            "concurrency-model"
           ],
-          "task_estimated_minutes": 20
+          "task_estimated_minutes": 10,
+          "content_source": "curated",
+          "quality_revision": 1,
+          "reviewed_on": "2026-11-08",
+          "task_contract_version": 2,
+          "compatible_task_contracts": [
+            1,
+            2
+          ]
         },
         {
           "id": "backend-interview.8.2.coroutine-function-and-coroutine-object",
@@ -3426,7 +3434,7 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-08",
           "generated_by": "populate_curriculum.py",
           "task_id": "backend-interview.8.2.coroutine-function-and-coroutine-object.practice",
           "task_title": "Coroutine result",
@@ -3435,7 +3443,10 @@
             "coroutine",
             "await"
           ],
-          "task_estimated_minutes": 20
+          "task_estimated_minutes": 20,
+          "content_source": "curated",
+          "quality_revision": 1,
+          "reviewed_on": "2026-11-08"
         },
         {
           "id": "backend-interview.8.3.await-and-cooperative-scheduling",
@@ -3481,7 +3492,7 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-08",
           "generated_by": "populate_curriculum.py",
           "task_id": "backend-interview.8.3.await-and-cooperative-scheduling.practice",
           "task_title": "Конкурентный profile",
@@ -3490,7 +3501,10 @@
             "await",
             "gather"
           ],
-          "task_estimated_minutes": 20
+          "task_estimated_minutes": 20,
+          "content_source": "curated",
+          "quality_revision": 1,
+          "reviewed_on": "2026-11-08"
         },
         {
           "id": "backend-interview.8.4.event-loop",
@@ -3537,7 +3551,7 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-08",
           "generated_by": "populate_curriculum.py",
           "task_id": "backend-interview.8.4.event-loop.practice",
           "task_title": "Cooperative checkpoint",
@@ -3546,7 +3560,10 @@
             "event-loop",
             "cooperative-scheduling"
           ],
-          "task_estimated_minutes": 20
+          "task_estimated_minutes": 20,
+          "content_source": "curated",
+          "quality_revision": 1,
+          "reviewed_on": "2026-11-08"
         },
         {
           "id": "backend-interview.8.5.tasks-and-asyncio-create-task",
@@ -3593,7 +3610,7 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-08",
           "generated_by": "populate_curriculum.py",
           "task_id": "backend-interview.8.5.tasks-and-asyncio-create-task.practice",
           "task_title": "Task lifecycle registry",
@@ -3602,7 +3619,10 @@
             "create_task",
             "task-lifecycle"
           ],
-          "task_estimated_minutes": 20
+          "task_estimated_minutes": 20,
+          "content_source": "curated",
+          "quality_revision": 1,
+          "reviewed_on": "2026-11-08"
         },
         {
           "id": "backend-interview.8.6.asyncio-gather",
@@ -3649,7 +3669,7 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-08",
           "generated_by": "populate_curriculum.py",
           "task_id": "backend-interview.8.6.asyncio-gather.practice",
           "task_title": "gather с порядком",
@@ -3658,7 +3678,10 @@
             "gather",
             "ordering"
           ],
-          "task_estimated_minutes": 20
+          "task_estimated_minutes": 20,
+          "content_source": "curated",
+          "quality_revision": 1,
+          "reviewed_on": "2026-11-08"
         },
         {
           "id": "backend-interview.8.7.timeouts",
@@ -3704,7 +3727,7 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-08",
           "generated_by": "populate_curriculum.py",
           "task_id": "backend-interview.8.7.timeouts.practice",
           "task_title": "Timeout boundary",
@@ -3713,7 +3736,10 @@
             "timeout",
             "cancellation"
           ],
-          "task_estimated_minutes": 20
+          "task_estimated_minutes": 20,
+          "content_source": "curated",
+          "quality_revision": 1,
+          "reviewed_on": "2026-11-08"
         },
         {
           "id": "backend-interview.8.8.cancellation",
@@ -3760,7 +3786,7 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-08",
           "generated_by": "populate_curriculum.py",
           "task_id": "backend-interview.8.8.cancellation.practice",
           "task_title": "Cancel and wait",
@@ -3769,7 +3795,10 @@
             "cancellation",
             "cleanup"
           ],
-          "task_estimated_minutes": 20
+          "task_estimated_minutes": 20,
+          "content_source": "curated",
+          "quality_revision": 1,
+          "reviewed_on": "2026-11-08"
         },
         {
           "id": "backend-interview.8.9.blocking-code-inside-async-code",
@@ -3817,7 +3846,7 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-08",
           "generated_by": "populate_curriculum.py",
           "task_id": "backend-interview.8.9.blocking-code-inside-async-code.practice",
           "task_title": "Вынести blocking call",
@@ -3826,7 +3855,10 @@
             "blocking-io",
             "to_thread"
           ],
-          "task_estimated_minutes": 20
+          "task_estimated_minutes": 20,
+          "content_source": "curated",
+          "quality_revision": 1,
+          "reviewed_on": "2026-11-08"
         },
         {
           "id": "backend-interview.8.10.async-context-managers",
@@ -3872,7 +3904,7 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-08",
           "generated_by": "populate_curriculum.py",
           "task_id": "backend-interview.8.10.async-context-managers.practice",
           "task_title": "Async resource manager",
@@ -3881,7 +3913,10 @@
             "async-context-manager",
             "cleanup"
           ],
-          "task_estimated_minutes": 20
+          "task_estimated_minutes": 20,
+          "content_source": "curated",
+          "quality_revision": 1,
+          "reviewed_on": "2026-11-08"
         },
         {
           "id": "backend-interview.8.11.async-iterators-and-generators",
@@ -3928,7 +3963,7 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-08",
           "generated_by": "populate_curriculum.py",
           "task_id": "backend-interview.8.11.async-iterators-and-generators.practice",
           "task_title": "AsyncRange",
@@ -3937,7 +3972,10 @@
             "async-iterator",
             "StopAsyncIteration"
           ],
-          "task_estimated_minutes": 20
+          "task_estimated_minutes": 20,
+          "content_source": "curated",
+          "quality_revision": 1,
+          "reviewed_on": "2026-11-08"
         },
         {
           "id": "backend-interview.8.12.threads-vs-processes-vs-async",
@@ -3984,7 +4022,7 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-08",
           "generated_by": "populate_curriculum.py",
           "task_id": "backend-interview.8.12.threads-vs-processes-vs-async.practice",
           "task_title": "Ограничить concurrency",
@@ -3993,7 +4031,10 @@
             "semaphore",
             "backpressure"
           ],
-          "task_estimated_minutes": 20
+          "task_estimated_minutes": 20,
+          "content_source": "curated",
+          "quality_revision": 1,
+          "reviewed_on": "2026-11-08"
         }
       ]
     },
@@ -4048,8 +4089,11 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-08",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated",
+          "quality_revision": 1,
+          "reviewed_on": "2026-11-08"
         },
         {
           "id": "backend-interview.9.2.multiprocessing",
@@ -4096,8 +4140,11 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-08",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated",
+          "quality_revision": 1,
+          "reviewed_on": "2026-11-08"
         },
         {
           "id": "backend-interview.9.3.threadpoolexecutor",
@@ -4143,8 +4190,11 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-08",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated",
+          "quality_revision": 1,
+          "reviewed_on": "2026-11-08"
         }
       ]
     },
@@ -11651,8 +11701,11 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-08",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated",
+          "quality_revision": 1,
+          "reviewed_on": "2026-11-08"
         },
         {
           "id": "backend-interview.19.2.data-structures",

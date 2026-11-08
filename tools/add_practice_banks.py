@@ -2,6 +2,11 @@
 
 from __future__ import annotations
 
+try:
+    from .curated_content import preserve_bundle
+except ImportError:
+    from curated_content import preserve_bundle
+
 import json
 import re
 from collections import defaultdict
@@ -347,6 +352,8 @@ def main() -> None:
 
     for number, records in grouped_predictions.items():
         directory = directories[lessons[number]["implementation_slug"]]
+        if preserve_bundle(directory):
+            continue
         body = "\n\n".join(
             f"### {record['title']}\n\n```python\n{record['snippet']}\n```\n\n"
             f"**Вопрос:** {record['prompt']}\n\n"
@@ -398,6 +405,8 @@ def main() -> None:
 
     for number, tasks in grouped_sql.items():
         directory = directories[lessons[number]["implementation_slug"]]
+        if preserve_bundle(directory):
+            continue
         blocks = []
         for task in tasks:
             columns = ", ".join(task["expected_columns"]) or "критерии рассуждения"
@@ -440,6 +449,8 @@ def main() -> None:
             grouped[record["lesson_number"]].append(record)
         for number, records in grouped.items():
             directory = directories[lessons[number]["implementation_slug"]]
+            if preserve_bundle(directory):
+                continue
             body = "\n\n".join(
                 f"### {record['title']}\n\n**Сценарий:** {record['prompt']}\n\n"
                 f"**Критерии ответа:** {record['expected_reasoning']}\n\n"
@@ -451,9 +462,10 @@ def main() -> None:
                 upsert_section(lesson_path.read_text(encoding="utf-8"), f"## Практика: {practice_titles[kind]}", body),
                 encoding="utf-8",
             )
-    OUTPUT.write_text(json.dumps(banks, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    if not OUTPUT.exists():
+        OUTPUT.write_text(json.dumps(banks, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(
-        f"Added {len(prediction_records)} Python predictions, {len(sql_records)} SQL, "
+        f"Checked catalog: {len(prediction_records)} Python predictions, {len(sql_records)} SQL; existing lessons and banks preserved. "
         f"{len(TESTING)} testing, {len(OPERATIONS)} operations, "
         f"{len(DEBUGGING)} debugging and {len(ARCHITECTURE)} architecture scenarios"
     )

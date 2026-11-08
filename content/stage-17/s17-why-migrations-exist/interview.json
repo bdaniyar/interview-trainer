@@ -21,16 +21,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "`create_all` при startup не умеет безопасно выразить rename, заполнение существующих данных или поэтапное добавление constraint.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "`create_all` при startup не умеет безопасно выразить rename, заполнение существующих данных или поэтапное добавление constraint."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Why migrations exist?"
-      ]
+      ],
+      "coding_mistakes": [
+        "`create_all` при startup не умеет безопасно выразить rename, заполнение существующих данных или поэтапное добавление constraint."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какая типичная ошибка связана с Why migrations exist?"
@@ -65,15 +67,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "`create_all` при startup не умеет безопасно выразить rename, заполнение существующих данных или поэтапное добавление constraint."
-      ],
-      "red_flags": [
-        "`create_all` при startup не умеет безопасно выразить rename, заполнение существующих данных или поэтапное добавление constraint."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое Why migrations exist и как это работает?"
-      ]
+      ],
+      "coding_mistakes": [
+        "`create_all` при startup не умеет безопасно выразить rename, заполнение существующих данных или поэтапное добавление constraint."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое Why migrations exist и как это работает?"

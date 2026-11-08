@@ -2,6 +2,11 @@
 
 from __future__ import annotations
 
+try:
+    from .curated_content import preserve_bundle
+except ImportError:
+    from curated_content import preserve_bundle
+
 import json
 from pathlib import Path
 
@@ -87,6 +92,8 @@ def main() -> None:
             record = metadata_by_id.get(lesson["id"])
             if record:
                 path, metadata = record
+                if preserve_bundle(path.parent):
+                    continue
                 metadata["interview_probability"] = lesson["interview_probability"]
                 metadata["market_evidence"] = lesson["market_evidence"]
                 metadata["prerequisites"] = lesson["prerequisites"]

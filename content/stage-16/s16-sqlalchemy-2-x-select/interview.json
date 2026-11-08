@@ -25,16 +25,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "`.first()` там, где требуется уникальность, скрывает duplicate-data bug, который показал бы `.one_or_none()`.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "`.first()` там, где требуется уникальность, скрывает duplicate-data bug, который показал бы `.one_or_none()`."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какая типичная ошибка связана с SQLAlchemy 2.x `select`?"
-      ]
+      ],
+      "coding_mistakes": [
+        "`.first()` там, где требуется уникальность, скрывает duplicate-data bug, который показал бы `.one_or_none()`."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какая типичная ошибка связана с SQLAlchemy 2.x `select`?"
@@ -71,15 +73,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "`.first()` там, где требуется уникальность, скрывает duplicate-data bug, который показал бы `.one_or_none()`."
-      ],
-      "red_flags": [
-        "`.first()` там, где требуется уникальность, скрывает duplicate-data bug, который показал бы `.one_or_none()`."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое SQLAlchemy 2.x `select` и как это работает?"
-      ]
+      ],
+      "coding_mistakes": [
+        "`.first()` там, где требуется уникальность, скрывает duplicate-data bug, который показал бы `.one_or_none()`."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое SQLAlchemy 2.x `select` и как это работает?"

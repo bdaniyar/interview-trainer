@@ -25,16 +25,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "Безусловное доверие forwarded headers позволяет внешнему client выдать insecure request за HTTPS.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "Безусловное доверие forwarded headers позволяет внешнему client выдать insecure request за HTTPS."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какая типичная ошибка связана с HTTP/HTTPS and TLS basics?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Безусловное доверие forwarded headers позволяет внешнему client выдать insecure request за HTTPS."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какая типичная ошибка связана с HTTP/HTTPS and TLS basics?"
@@ -69,15 +71,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "Безусловное доверие forwarded headers позволяет внешнему client выдать insecure request за HTTPS."
-      ],
-      "red_flags": [
-        "Безусловное доверие forwarded headers позволяет внешнему client выдать insecure request за HTTPS."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое HTTP/HTTPS and TLS basics и как это работает?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Безусловное доверие forwarded headers позволяет внешнему client выдать insecure request за HTTPS."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое HTTP/HTTPS and TLS basics и как это работает?"

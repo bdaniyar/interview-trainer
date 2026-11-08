@@ -25,16 +25,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "Создание DB session и domain logic прямо в каждом route дублирует lifecycle и error handling.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "Создание DB session и domain logic прямо в каждом route дублирует lifecycle и error handling."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Application and ASGI модель понимания?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Создание DB session и domain logic прямо в каждом route дублирует lifecycle и error handling."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какая типичная ошибка связана с Application and ASGI модель понимания?"
@@ -69,15 +71,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "Создание DB session и domain logic прямо в каждом route дублирует lifecycle и error handling."
-      ],
-      "red_flags": [
-        "Создание DB session и domain logic прямо в каждом route дублирует lifecycle и error handling."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое Application and ASGI модель понимания и как это работает?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Создание DB session и domain logic прямо в каждом route дублирует lifecycle и error handling."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое Application and ASGI модель понимания и как это работает?"

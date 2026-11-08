@@ -43,7 +43,7 @@
     "interview_crash_course"
   ],
   "content_status": "complete",
-  "last_verified": "2026-08-27",
+  "last_verified": "2026-11-08",
   "generated_by": "populate_curriculum.py",
   "task_id": "backend-interview.8.5.tasks-and-asyncio-create-task.practice",
   "task_title": "Task lifecycle registry",
@@ -52,5 +52,8 @@
     "create_task",
     "task-lifecycle"
   ],
-  "task_estimated_minutes": 20
+  "task_estimated_minutes": 20,
+  "content_source": "curated",
+  "quality_revision": 1,
+  "reviewed_on": "2026-11-08"
 }

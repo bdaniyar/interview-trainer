@@ -25,16 +25,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "Cache не исправляет ORM query shape, который делает сотни лишних round trips.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "Cache не исправляет ORM query shape, который делает сотни лишних round trips."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какая типичная ошибка связана с N+1?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Cache не исправляет ORM query shape, который делает сотни лишних round trips."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какая типичная ошибка связана с N+1?"
@@ -69,15 +71,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "Cache не исправляет ORM query shape, который делает сотни лишних round trips."
-      ],
-      "red_flags": [
-        "Cache не исправляет ORM query shape, который делает сотни лишних round trips."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое N+1 и как это работает?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Cache не исправляет ORM query shape, который делает сотни лишних round trips."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое N+1 и как это работает?"

@@ -23,16 +23,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "Отсутствие tie-breaker в window ordering делает `row_number` недетерминированным при равных значениях.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "Отсутствие tie-breaker в window ordering делает `row_number` недетерминированным при равных значениях."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Window functions?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Отсутствие tie-breaker в window ordering делает `row_number` недетерминированным при равных значениях."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какая типичная ошибка связана с Window functions?"
@@ -67,15 +69,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "Отсутствие tie-breaker в window ordering делает `row_number` недетерминированным при равных значениях."
-      ],
-      "red_flags": [
-        "Отсутствие tie-breaker в window ordering делает `row_number` недетерминированным при равных значениях."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое Window functions и как это работает?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Отсутствие tie-breaker в window ordering делает `row_number` недетерминированным при равных значениях."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое Window functions и как это работает?"

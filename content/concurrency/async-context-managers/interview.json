@@ -1,41 +1,44 @@
 [
   {
-    "question": "Что такое Async context managers и какой механизм здесь важно понимать Junior-разработчику?",
+    "question": "Как работает async with и когда он подавляет ошибку?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "`async with`",
-      "жизненный цикл соединения, сессии или клиента",
-      "`__aenter__`/`__aexit__`"
+      "Вход и выход async with могут ожидать I/O.",
+      "__aenter__ возвращает используемый ресурс.",
+      "Истинный результат __aexit__ подавляет ошибку тела.",
+      "Ошибка входа требует очистки на этапе входа."
     ],
-    "short_answer": "Async context managers: Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг точки приостановки await.",
-    "junior_answer": "Async context managers — тема, в которой я сначала фиксирую ``async with``, затем объясняю `connection/session/client lifecycle` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и точки приостановки await до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
-    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Async context managers?",
-    "follow_up_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
+    "short_answer": "Async with ожидает вход через __aenter__ и использует возвращённый ресурс в теле.",
+    "junior_answer": "Async with ожидает вход через __aenter__ и использует возвращённый ресурс в теле. После успешного входа он ожидает __aexit__ и при нормальном завершении, и при исключении тела. Если __aexit__ возвращает истинное значение, ошибка тела подавляется. Для обычного освобождения ресурса возвращают None или False. Ошибка самого входа требует собственной очистки частично созданных ресурсов.",
+    "follow_up_question": "Вызовется ли __aexit__, если __aenter__ выбросил исключение?",
+    "follow_up_answer": "Нет. Контекст ещё не был успешно открыт. Если вход успел выделить часть ресурсов, очисткой до повторного raise управляет сам __aenter__.",
     "expected_answer": {
       "must_mention": [
-        "`async with`",
-        "жизненный цикл соединения, сессии или клиента",
-        "`__aenter__`/`__aexit__`"
+        "Вход и выход async with могут ожидать I/O.",
+        "__aenter__ возвращает используемый ресурс.",
+        "Истинный результат __aexit__ подавляет ошибку тела.",
+        "Ошибка входа требует очистки на этапе входа."
       ],
       "good_additions": [
-        "короткий рабочий пример",
-        "ограничение или типичная ошибка"
+        "asynccontextmanager превращает async-генератор с одним yield в менеджер. До yield происходит вход, значение yield попадает в connection. При ValueError finally добавляет close, затем ошибка попадает в except. Вывод: ['open', 'connection', 'close', 'handled']. Задание использует явные методы вместо декоратора."
       ],
       "common_wrong_answers": [
-        "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
-        "Ответ без механизма, примера и ограничения"
+        "True из __aexit__ просто сообщает, что ресурс успешно закрыт, и не влияет на исключение."
       ],
       "red_flags": [
-        "Выполнить blocking call в event loop или создать coroutine и не await/schedule её."
+        "True из __aexit__ просто сообщает, что ресурс успешно закрыт, и не влияет на исключение."
+      ],
+      "coding_mistakes": [
+        "Неправильно возвращать True из __aexit__ только потому, что close прошёл успешно. Это скрывает ошибку тела. Исправление: если подавление не входит в контракт, вернуть None или False после закрытия."
       ],
       "follow_up_questions": [
-        "Какое ограничение или типичная ошибка относится именно к теме Async context managers?"
+        "Вызовется ли __aexit__, если __aenter__ выбросил исключение?"
       ]
     },
     "follow_ups": [
-      "Какое ограничение или типичная ошибка относится именно к теме Async context managers?"
+      "Вызовется ли __aexit__, если __aenter__ выбросил исключение?"
     ],
     "tags": [
       "stage-08",
@@ -48,37 +51,35 @@
     ]
   },
   {
-    "question": "Какое ограничение или типичная ошибка относится именно к теме Async context managers?",
+    "question": "Вызовется ли __aexit__, если __aenter__ выбросил исключение?",
     "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "связать Async context managers с коротким рабочим примером",
-      "Выполнить blocking call в event loop или создать coroutine и не await/schedule её."
+      "Нет. Контекст ещё не был успешно открыт. Если вход успел выделить часть ресурсов, очисткой до повторного raise управляет сам __aenter__."
     ],
-    "short_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
-    "junior_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
-    "follow_up_question": "Что такое Async context managers и какой механизм здесь важно понимать Junior-разработчику?",
-    "follow_up_answer": "Async context managers — тема, в которой я сначала фиксирую ``async with``, затем объясняю `connection/session/client lifecycle` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и точки приостановки await до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
+    "short_answer": "Нет. Контекст ещё не был успешно открыт. Если вход успел выделить часть ресурсов, очисткой до повторного raise управляет сам __aenter__.",
+    "junior_answer": "Нет. Контекст ещё не был успешно открыт. Если вход успел выделить часть ресурсов, очисткой до повторного raise управляет сам __aenter__.",
+    "follow_up_question": "Как работает async with и когда он подавляет ошибку?",
+    "follow_up_answer": "Async with ожидает вход через __aenter__ и использует возвращённый ресурс в теле. После успешного входа он ожидает __aexit__ и при нормальном завершении, и при исключении тела. Если __aexit__ возвращает истинное значение, ошибка тела подавляется. Для обычного освобождения ресурса возвращают None или False. Ошибка самого входа требует собственной очистки частично созданных ресурсов.",
     "expected_answer": {
       "must_mention": [
-        "связать Async context managers с коротким рабочим примером"
+        "Нет. Контекст ещё не был успешно открыт. Если вход успел выделить часть ресурсов, очисткой до повторного raise управляет сам __aenter__."
       ],
       "good_additions": [
-        "короткий пример именно этой темы"
+        "asynccontextmanager превращает async-генератор с одним yield в менеджер. До yield происходит вход, значение yield попадает в connection. При ValueError finally добавляет close, затем ошибка попадает в except. Вывод: ['open', 'connection', 'close', 'handled']. Задание использует явные методы вместо декоратора."
       ],
-      "common_wrong_answers": [
-        "Выполнить blocking call в event loop или создать coroutine и не await/schedule её."
-      ],
-      "red_flags": [
-        "Выполнить blocking call в event loop или создать coroutine и не await/schedule её."
+      "common_wrong_answers": [],
+      "red_flags": [],
+      "coding_mistakes": [
+        "Неправильно возвращать True из __aexit__ только потому, что close прошёл успешно. Это скрывает ошибку тела. Исправление: если подавление не входит в контракт, вернуть None или False после закрытия."
       ],
       "follow_up_questions": [
-        "Что такое Async context managers и какой механизм здесь важно понимать Junior-разработчику?"
+        "Как работает async with и когда он подавляет ошибку?"
       ]
     },
     "follow_ups": [
-      "Что такое Async context managers и какой механизм здесь важно понимать Junior-разработчику?"
+      "Как работает async with и когда он подавляет ошибку?"
     ],
     "tags": [
       "stage-08",

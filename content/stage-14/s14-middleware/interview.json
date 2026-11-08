@@ -25,16 +25,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "Чтение streaming request body в middleware без восстановления потока может оставить endpoint без body.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "Чтение streaming request body в middleware без восстановления потока может оставить endpoint без body."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Middleware?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Чтение streaming request body в middleware без восстановления потока может оставить endpoint без body."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какая типичная ошибка связана с Middleware?"
@@ -69,15 +71,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "Чтение streaming request body в middleware без восстановления потока может оставить endpoint без body."
-      ],
-      "red_flags": [
-        "Чтение streaming request body в middleware без восстановления потока может оставить endpoint без body."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое Middleware и как это работает?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Чтение streaming request body в middleware без восстановления потока может оставить endpoint без body."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое Middleware и как это работает?"

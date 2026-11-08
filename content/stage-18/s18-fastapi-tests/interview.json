@@ -25,16 +25,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какое ограничение или типичная ошибка относится именно к теме FastAPI tests?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какое ограничение или типичная ошибка относится именно к теме FastAPI tests?"
@@ -69,15 +71,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior."
-      ],
-      "red_flags": [
-        "Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое FastAPI tests и какой механизм здесь важно понимать Junior-разработчику?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Mock-нуть реализацию вместо внешней границы и получить тест, не проверяющий observable behavior."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое FastAPI tests и какой механизм здесь важно понимать Junior-разработчику?"

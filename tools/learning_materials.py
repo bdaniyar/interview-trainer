@@ -1492,6 +1492,8 @@ COMPACT = COMPACT_RU
 
 
 def compact_dossier(lesson: dict, values: tuple[str, str, str, str | None, str]) -> LessonDossier:
+    if int(lesson["number"].split(".")[0]) >= 8:
+        raise ValueError("Stage 8+: use a reviewed lesson bundle, not compact_dossier")
     what, mechanism, nuance, backend, mistake = values
     outline = tuple(str(item).rstrip(".") for item in lesson.get("outline", [])) or (lesson["title"],)
     must = outline[:4]
@@ -1589,6 +1591,8 @@ STAGE_MISTAKE = {
 
 
 def fallback_dossier(lesson: dict, stage_number: int, explain_point) -> LessonDossier:
+    if stage_number >= 8:
+        raise ValueError("Stage 8+: use a reviewed lesson bundle, not fallback_dossier")
     outline = [str(item).rstrip(".") for item in lesson.get("outline", [])] or [lesson["title"]]
     explanations: list[str] = []
     for point in outline[:6]:
@@ -1631,6 +1635,8 @@ def fallback_dossier(lesson: dict, stage_number: int, explain_point) -> LessonDo
 
 
 def dossier_for(lesson: dict, stage_number: int, explain_point) -> LessonDossier:
+    if stage_number >= 8:
+        raise ValueError("Use the reviewed bundle by stable lesson ID; legacy dossier generation is disabled")
     if lesson["number"] in CURATED:
         dossier = CURATED[lesson["number"]]
     elif lesson["number"] in COMPACT:

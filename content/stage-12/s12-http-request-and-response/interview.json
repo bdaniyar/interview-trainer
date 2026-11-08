@@ -25,16 +25,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "Ответ 200 с ошибкой внутри JSON ломает clients, monitoring и стандартную retry/cache semantics.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "Ответ 200 с ошибкой внутри JSON ломает clients, monitoring и стандартную retry/cache semantics."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какая типичная ошибка связана с HTTP request and response?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Ответ 200 с ошибкой внутри JSON ломает clients, monitoring и стандартную retry/cache semantics."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какая типичная ошибка связана с HTTP request and response?"
@@ -71,15 +73,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "Ответ 200 с ошибкой внутри JSON ломает clients, monitoring и стандартную retry/cache semantics."
-      ],
-      "red_flags": [
-        "Ответ 200 с ошибкой внутри JSON ломает clients, monitoring и стандартную retry/cache semantics."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое HTTP request and response и как это работает?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Ответ 200 с ошибкой внутри JSON ломает clients, monitoring и стандартную retry/cache semantics."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое HTTP request and response и как это работает?"

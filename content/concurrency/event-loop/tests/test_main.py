@@ -9,3 +9,8 @@ async def scenario():
     await task
     return log
 def test_checkpoint(): assert asyncio.run(scenario()) == ["before", "after"]
+
+def test_existing_log():
+    log = ["existing"]
+    assert asyncio.run(checkpoint(log)) is None
+    assert log == ["existing", "before", "after"]

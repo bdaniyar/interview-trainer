@@ -1,41 +1,42 @@
 [
   {
-    "question": "Что такое Timeouts и какой механизм здесь важно понимать Junior-разработчику?",
+    "question": "Как работает asyncio.timeout и где ловить TimeoutError?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "bounded waiting",
-      "`asyncio.timeout` or version-appropriate API",
-      "cleanup"
+      "Срок ограничивает блок ожидания, а не скорость вычисления.",
+      "TimeoutError обрабатывается снаружи async with.",
+      "Очистка finally выполняется во время отмены."
     ],
-    "short_answer": "Timeouts: Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг точки приостановки await.",
-    "junior_answer": "Timeouts — тема, в которой я сначала фиксирую `bounded waiting`, затем объясняю ``asyncio.timeout` or version-appropriate API` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и точки приостановки await до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
-    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Timeouts?",
-    "follow_up_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
+    "short_answer": "Asyncio.timeout ограничивает блок ожидания.",
+    "junior_answer": "Asyncio.timeout ограничивает блок ожидания. Когда срок истекает, он отменяет текущую задачу и на выходе из контекста преобразует свою отмену в TimeoutError. Поэтому обработчик TimeoutError ставится вокруг async with. Ожидаемая coroutine получает возможность выполнить finally. Это кооперативный механизм: он не способен вовремя сработать, пока синхронный код блокирует loop.",
+    "follow_up_question": "Будет ли ValueError операции превращён в TimeoutError?",
+    "follow_up_answer": "Нет. Контекст преобразует свою отмену из-за срока. Независимая ошибка операции передаётся как была; внешнюю отмену также нельзя считать обычным истечением срока.",
     "expected_answer": {
       "must_mention": [
-        "bounded waiting",
-        "`asyncio.timeout` or version-appropriate API",
-        "cleanup"
+        "Срок ограничивает блок ожидания, а не скорость вычисления.",
+        "TimeoutError обрабатывается снаружи async with.",
+        "Очистка finally выполняется во время отмены."
       ],
       "good_additions": [
-        "короткий рабочий пример",
-        "ограничение или типичная ошибка"
+        "После истечения срока slow_read выходит через finally, добавляя closed. Снаружи контекста печатается deadline, затем ['closed']. Нормальный return \"ready\" не достигается. Здесь нет требования закончить ровно за 0.01 секунды."
       ],
       "common_wrong_answers": [
-        "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
-        "Ответ без механизма, примера и ограничения"
+        "Timeout принудительно прерывает любой синхронный вызов точно в заданную миллисекунду."
       ],
       "red_flags": [
-        "Выполнить blocking call в event loop или создать coroutine и не await/schedule её."
+        "Timeout принудительно прерывает любой синхронный вызов точно в заданную миллисекунду."
+      ],
+      "coding_mistakes": [
+        "Неправильно ловить TimeoutError только внутри async with: менеджер создаёт его при выходе. Исправление — try вокруг контекста. Ещё одна ошибка: использовать timeout как защиту от time.sleep внутри loop; заблокированный loop не сможет вовремя обработать свой таймер."
       ],
       "follow_up_questions": [
-        "Какое ограничение или типичная ошибка относится именно к теме Timeouts?"
+        "Будет ли ValueError операции превращён в TimeoutError?"
       ]
     },
     "follow_ups": [
-      "Какое ограничение или типичная ошибка относится именно к теме Timeouts?"
+      "Будет ли ValueError операции превращён в TimeoutError?"
     ],
     "tags": [
       "stage-08",
@@ -48,37 +49,35 @@
     ]
   },
   {
-    "question": "Какое ограничение или типичная ошибка относится именно к теме Timeouts?",
+    "question": "Будет ли ValueError операции превращён в TimeoutError?",
     "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "связать Timeouts с коротким рабочим примером",
-      "Выполнить blocking call в event loop или создать coroutine и не await/schedule её."
+      "Нет. Контекст преобразует свою отмену из-за срока. Независимая ошибка операции передаётся как была; внешнюю отмену также нельзя считать обычным истечением срока."
     ],
-    "short_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
-    "junior_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
-    "follow_up_question": "Что такое Timeouts и какой механизм здесь важно понимать Junior-разработчику?",
-    "follow_up_answer": "Timeouts — тема, в которой я сначала фиксирую `bounded waiting`, затем объясняю ``asyncio.timeout` or version-appropriate API` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и точки приостановки await до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
+    "short_answer": "Нет. Контекст преобразует свою отмену из-за срока. Независимая ошибка операции передаётся как была; внешнюю отмену также нельзя считать обычным истечением срока.",
+    "junior_answer": "Нет. Контекст преобразует свою отмену из-за срока. Независимая ошибка операции передаётся как была; внешнюю отмену также нельзя считать обычным истечением срока.",
+    "follow_up_question": "Как работает asyncio.timeout и где ловить TimeoutError?",
+    "follow_up_answer": "Asyncio.timeout ограничивает блок ожидания. Когда срок истекает, он отменяет текущую задачу и на выходе из контекста преобразует свою отмену в TimeoutError. Поэтому обработчик TimeoutError ставится вокруг async with. Ожидаемая coroutine получает возможность выполнить finally. Это кооперативный механизм: он не способен вовремя сработать, пока синхронный код блокирует loop.",
     "expected_answer": {
       "must_mention": [
-        "связать Timeouts с коротким рабочим примером"
+        "Нет. Контекст преобразует свою отмену из-за срока. Независимая ошибка операции передаётся как была; внешнюю отмену также нельзя считать обычным истечением срока."
       ],
       "good_additions": [
-        "короткий пример именно этой темы"
+        "После истечения срока slow_read выходит через finally, добавляя closed. Снаружи контекста печатается deadline, затем ['closed']. Нормальный return \"ready\" не достигается. Здесь нет требования закончить ровно за 0.01 секунды."
       ],
-      "common_wrong_answers": [
-        "Выполнить blocking call в event loop или создать coroutine и не await/schedule её."
-      ],
-      "red_flags": [
-        "Выполнить blocking call в event loop или создать coroutine и не await/schedule её."
+      "common_wrong_answers": [],
+      "red_flags": [],
+      "coding_mistakes": [
+        "Неправильно ловить TimeoutError только внутри async with: менеджер создаёт его при выходе. Исправление — try вокруг контекста. Ещё одна ошибка: использовать timeout как защиту от time.sleep внутри loop; заблокированный loop не сможет вовремя обработать свой таймер."
       ],
       "follow_up_questions": [
-        "Что такое Timeouts и какой механизм здесь важно понимать Junior-разработчику?"
+        "Как работает asyncio.timeout и где ловить TimeoutError?"
       ]
     },
     "follow_ups": [
-      "Что такое Timeouts и какой механизм здесь важно понимать Junior-разработчику?"
+      "Как работает asyncio.timeout и где ловить TimeoutError?"
     ],
     "tags": [
       "stage-08",

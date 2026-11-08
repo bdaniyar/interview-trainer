@@ -25,16 +25,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "Module-global Session переносит tracked objects и transaction failures между requests.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "Module-global Session переносит tracked objects и transaction failures между requests."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Session lifecycle?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Module-global Session переносит tracked objects и transaction failures между requests."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какая типичная ошибка связана с Session lifecycle?"
@@ -71,15 +73,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "Module-global Session переносит tracked objects и transaction failures между requests."
-      ],
-      "red_flags": [
-        "Module-global Session переносит tracked objects и transaction failures между requests."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое Session lifecycle и как это работает?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Module-global Session переносит tracked objects и transaction failures между requests."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое Session lifecycle и как это работает?"

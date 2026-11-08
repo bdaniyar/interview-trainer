@@ -25,16 +25,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "Неявный порядок или одинаковые имена columns делают pagination и mapping нестабильными.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "Неявный порядок или одинаковые имена columns делают pagination и mapping нестабильными."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какая типичная ошибка связана с SELECT, aliases and expressions?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Неявный порядок или одинаковые имена columns делают pagination и mapping нестабильными."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какая типичная ошибка связана с SELECT, aliases and expressions?"
@@ -69,15 +71,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "Неявный порядок или одинаковые имена columns делают pagination и mapping нестабильными."
-      ],
-      "red_flags": [
-        "Неявный порядок или одинаковые имена columns делают pagination и mapping нестабильными."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое SELECT, aliases and expressions и как это работает?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Неявный порядок или одинаковые имена columns делают pagination и mapping нестабильными."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое SELECT, aliases and expressions и как это работает?"

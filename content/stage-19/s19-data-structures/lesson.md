@@ -26,7 +26,7 @@
 
 **hashes.** Равные hashable-объекты обязаны иметь одинаковый hash, а состояние, влияющее на equality, не должно меняться в ключе.
 
-**lists.** `list` — ordered mutable sequence: индекс и append удобны, а поиск значения и вставка в начало линейны; aliases видят общие mutations.
+**lists.** Redis list — серверная упорядоченная последовательность строк. LPUSH/RPUSH добавляют элементы с выбранного конца, LPOP/RPOP извлекают их, LRANGE читает диапазон. Например, RPUSH queue a b, затем LPOP queue вернёт a. Это не общий Python list с aliases: клиент отправляет команды отдельному серверу. Простое извлечение само по себе не даёт подтверждения обработки сообщения.
 
 **sets.** `sets` влияет на Redis key/value lifecycle; корректная схема заранее определяет TTL, invalidation, concurrency и outage fallback.
 
@@ -177,3 +177,5 @@ Data structures: это отдельный технический контрак
 - [Redis caching](https://redis.io/docs/latest/develop/use/client-side-caching/)
 
 Последняя проверка версий: **2026-08-27**.
+
+- Точечная проверка подтемы 2026-11-08: [Redis lists](https://redis.io/docs/latest/develop/data-types/lists/). Остальной материал урока ещё ожидает содержательного аудита.

@@ -26,7 +26,7 @@
 
 **shared DB/cache.** Для cache заранее определяют key, TTL, invalidation и fallback, иначе ускорение создаёт stale-data bug.
 
-**sticky sessions компромисс.** Session владеет identity map и transaction state; после ошибки flush требуется rollback до дальнейшей работы.
+**sticky sessions компромисс.** Sticky sessions направляют запросы одного клиента к одному экземпляру backend. Это позволяет опираться на локальное состояние, но осложняет балансировку и отказ экземпляра: его состояние может потеряться. Stateless API не требует такой привязки для корректности; нужное общее состояние хранится отдельно. Это свойство маршрутизации, а не ORM identity map.
 
 
 ### Важный нюанс / ограничение
@@ -168,3 +168,5 @@ Stateless API and horizontal scaling: это отдельный техничес
 - [Redis architecture](https://redis.io/docs/latest/operate/oss_and_stack/management/architecture/)
 
 Последняя проверка версий: **2026-08-27**.
+
+- Точечная проверка подтемы 2026-11-08: [NGINX ip_hash](https://nginx.org/en/docs/http/ngx_http_upstream_module.html#ip_hash). Остальной материал урока ещё ожидает содержательного аудита.

@@ -1,195 +1,175 @@
 # Blocking code inside async code
 
-> [!IMPORTANT]
-> **P0 · вероятность на интервью: very_high · 12 минут.** Async явно встречался в 5/18 и является P0/P1 для FastAPI async-проектов кандидата.
-
 ## Учебные цели
 
-После урока ты сможешь:
-
-- восстановить mental model темы **Blocking code inside async code**, а не только запомнить термин;
-- прочитать и изменить короткий пример для ``time.sleep``;
-- распознать характерную ошибку и объяснить причину;
-- дать реалистичный ответ уровня Junior и выдержать follow-up.
+Увидеть блокировку loop; выбрать async-клиент или поток для I/O и отдельный процесс для тяжёлых Python-вычислений.
 
 ## Теория
 
 ### Что это
 
-Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг точки приостановки await.
+Blocking call — вызов, который удерживает вызывающий поток до результата. Loop работает в потоке; пока такой вызов не вернулся, loop не может продолжать другие coroutine. Наличие async def у окружающей функции это не меняет.
+
+### Зачем нужно
+
+Async endpoint, обращающийся к внешнему API через синхронный requests.get, задерживает не только свой ответ: другие запросы этого loop тоже ждут. Синхронный драйвер БД ведёт себя так же во время сетевого ожидания.
 
 ### Как работает
 
-Проследи coroutine от создания через scheduling и точки приостановки await до result, cancellation и cleanup.
-
-**`time.sleep`.** ``time.sleep`` является частью lifecycle coroutine/task между scheduling, точки приостановки await, cancellation и cleanup; отдельный thread автоматически не появляется.
-
-**`requests`.** ``requests`` является частью lifecycle coroutine/task между scheduling, точки приостановки await, cancellation и cleanup; отдельный thread автоматически не появляется.
-
-**synchronous DB driver.** `synchronous DB driver` является частью lifecycle coroutine/task между scheduling, точки приостановки await, cancellation и cleanup; отдельный thread автоматически не появляется.
-
-**CPU-heavy loop.** `CPU-heavy loop` является частью lifecycle coroutine/task между scheduling, точки приостановки await, cancellation и cleanup; отдельный thread автоматически не появляется.
-
-**альтернативы: асинхронный клиент, `to_thread`, отдельный обработчик или процесс.** Processes изолируют память и подходят для CPU-bound Python, но требуют serialization/IPC и имеют более дорогой startup.
-
+- `time.sleep(1)` усыпляет поток loop на секунду. Другие задачи этого loop не работают.
+- `await asyncio.sleep(1)` регистрирует таймер и уступает loop; он может обслуживать другие задачи до пробуждения.
+- `httpx.AsyncClient` предоставляет ожидаемые сетевые операции. Пока клиент ждёт готовности сети, loop свободен. Клиент нужно закрывать через async with; в сервере его обычно переиспользуют в пределах жизненного цикла приложения.
+- Если у старой библиотеки только синхронный I/O API, `await asyncio.to_thread(function, *args, **kwargs)` выполняет вызов в рабочем потоке и возвращает результат в loop. Потоки используют общую память: библиотека должна допускать такое использование. Созданное для конкретного потока соединение БД нельзя без проверки передавать в другой.
 
 ### Важный нюанс / ограничение
 
-Граница Junior: уверенно объясняй ``time.sleep`` и ``requests`` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
-
-### Где используется в backend
-
-В backend эта тема важна в том месте, где применяется ``time.sleep``; проверяй именно наблюдаемый contract, а не название инструмента.
+CPU-heavy Python-цикл продолжает занимать CPU даже внутри async def. В обычной CPython с GIL потоки не дают ожидаемого ускорения чистых Python-вычислений на ядрах: для тяжёлого расчёта выбирают процесс или worker. Исключения — расширения, освобождающие GIL; их поведение проверяют отдельно. Отмена ожидания to_thread не останавливает уже выполняющуюся функцию в потоке; её собственные таймауты и ограничения всё равно нужны.
 
 ## Модель понимания
 
-Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.
-
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
+Синхронный I/O удерживает поток loop.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
-- `time.sleep`
-- `requests`
-- synchronous DB driver
-- CPU-heavy loop
-
-### Полезно
-
-- альтернативы: асинхронный клиент, `to_thread`, отдельный обработчик или процесс
-
-### Можно не учить глубоко
-
-- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
+- Синхронный I/O удерживает поток loop.
+- Async-клиент уступает loop при сетевом ожидании.
+- to_thread принимает callable, передаёт аргументы и переносит I/O в поток.
+- CPU-bound Python не ускоряется от async def.
 
 ## Примеры кода
-
-### Blocking code inside async code: отдельный пример
 
 ```python
 import asyncio
 import time
 
-def blocking_read():
-    time.sleep(0.05)
-    return "done"
+async def heartbeat(log):
+    log.append("tick")
+
+async def bad(log):
+    log.append("begin")
+    time.sleep(0.01)  # неправильно: удерживает поток loop
+    log.append("end")
+
+async def good(log):
+    log.append("begin")
+    await asyncio.sleep(0.01)
+    log.append("end")
 
 async def main():
-    result = await asyncio.to_thread(blocking_read)
-    print(result)
+    for action in (bad, good):
+        log = []
+        await asyncio.gather(action(log), heartbeat(log))
+        print(log)
 
 asyncio.run(main())
 ```
 
-`to_thread` выносит неизбежный blocking call из event-loop thread; async-native client предпочтительнее.
+Неправильный HTTP-вызов внутри async endpoint:
+
+```python
+import requests
+
+async def bad_status(url):
+    return requests.get(url, timeout=2).status_code
+```
+
+Вариант с async-клиентом (нужен установленный httpx; сетевой пример здесь не запускается):
+
+```python
+import httpx
+
+async def read_status(url):
+    async with httpx.AsyncClient(timeout=2) as client:
+        response = await client.get(url)
+        return response.status_code
+```
+
+Если библиотеку заменить нельзя, короткий переходный вариант:
+
+```python
+import asyncio
+import requests
+
+async def legacy_status(url):
+    response = await asyncio.to_thread(requests.get, url, timeout=2)
+    return response.status_code
+```
+
+### Разбор выполнения
+
+Первый самостоятельный пример печатает ['begin', 'end', 'tick'], затем ['begin', 'tick', 'end']. В bad loop получает возможность выполнить heartbeat только после синхронного сна. В good таймер приостанавливает только текущую задачу. HTTP-варианты показывают два разных способа освободить loop: ожидаемый сетевой клиент и перенос синхронного вызова в поток.
 
 ## Типичные ошибки
 
-### Ошибка 1
-
-Выполнить blocking call в event loop или создать coroutine и не await/schedule её.
+Ошибка: написать `await requests.get(url)` и ожидать исправления. Сначала Python выполнит синхронный get в потоке loop, затем попытается await объекта Response, который не является awaitable. Исправление: async-клиент либо передача функции requests.get в to_thread без её предварительного вызова. Для sync DB driver выбирают async-драйвер или выносят весь допустимый по thread-safety unit of work в поток.
 
 ## Практика
 
-**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для ``time.sleep`` до запуска.
-
-**B · Найди ошибку.** Найди нарушение ``requests`` и объясни конкретное последствие.
-
-**E · Ответ на собеседовании.** Дай ответ про Blocking code inside async code за 60 секунд: определение, механизм, пример, ограничение.
-
-## Практика: Отладка
-
-### Blocking HTTP
-
-**Сценарий:** requests.get внутри async route блокирует loop.
-
-**Критерии ответа:** Async client или to_thread; timeout/cancellation.
-
-**Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
-
-### time.sleep in async
-
-**Сценарий:** Все concurrent requests замирают.
-
-**Критерии ответа:** asyncio.sleep для cooperative wait.
-
-**Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+1. Почему `asyncio.to_thread(requests.get(url))` неверно? Ответ: get вызывается до передачи управления в поток, а to_thread ожидает callable.
+2. В HTTP-примере клиент не закрыт. Как async with решает утечку соединений?
+3. Сортировка огромного списка занимает секунды. Почему async def вокруг sort не освобождает loop?
+4. Можно ли считать поток остановленным после TimeoutError ожидания to_thread? Ответ: нет.
 
 ## Вопросы с собеседований
 
 ### Основной вопрос
 
-Что такое Blocking code inside async code и какой механизм здесь важно понимать Junior-разработчику?
+Что делать с блокирующей библиотекой внутри async endpoint?
 
 ### Дополнительный вопрос
 
-Какое ограничение или типичная ошибка относится именно к теме Blocking code inside async code?
-
-Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+Почему await time.sleep(1) не заменяет asyncio.sleep(1)?
 
 ## Хорошие ответы
 
 ### Короткий ответ
 
-Blocking code inside async code: Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг точки приостановки await.
+Синхронный вызов удерживает поток event loop, поэтому задерживает другие задачи.
 
 ### Нормальный ответ уровня Junior
 
-> Blocking code inside async code — тема, в которой я сначала фиксирую ``time.sleep``, затем объясняю ``requests`` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и точки приостановки await до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.
+Синхронный вызов удерживает поток event loop, поэтому задерживает другие задачи. Для сети лучше использовать ожидаемый клиент, например httpx.AsyncClient, и правильно закрывать его. Если библиотека синхронная, допустимый по thread-safety I/O-вызов можно перенести через asyncio.to_thread. Тяжёлый чистый Python-расчёт требует другого решения, обычно процесса или worker. Отмена ожидания потока не останавливает его функцию.
 
 ### Углубление / дополнительный вопрос
 
-**Какое ограничение или типичная ошибка относится именно к теме Blocking code inside async code?**
-
-Выполнить blocking call в event loop или создать coroutine и не await/schedule её.
+Сначала выполняется time.sleep и блокирует поток. Затем await пытается ожидать возвращённый None, что вызывает TypeError. asyncio.sleep возвращает ожидаемую операцию, которая уступает loop.
 
 ## Критерии хорошего ответа
 
-### Что обязательно упомянуть
+Обязательные понятия:
 
-- `time.sleep`
-- `requests`
-- synchronous DB driver
-- CPU-heavy loop
+- Синхронный I/O удерживает поток loop.
+- Async-клиент уступает loop при сетевом ожидании.
+- to_thread принимает callable, передаёт аргументы и переносит I/O в поток.
+- CPU-bound Python не ускоряется от async def.
 
-### Что улучшит ответ
+Ошибочные утверждения кандидата:
 
-- один короткий пример с результатом;
-- одно ограничение или характерная ошибка именно этой темы;
-- пример из backend-разработки только при естественной связи.
+- «Async def автоматически делает requests.get неблокирующим.»
+- «Отмена await to_thread немедленно останавливает OS-поток.»
 
-### Частые неправильные ответы
-
-- Выполнить blocking call в event loop или создать coroutine и не await/schedule её.
-- пересказ одного определения без механизма или примера.
-
-### Дополнительный вопрос
-
-- Какое ограничение или типичная ошибка относится именно к теме Blocking code inside async code?
+Ошибки при написании кода разбираются отдельно в разделе «Типичные ошибки».
 
 ## Задача
 
-### Вынести blocking call
+### Вызвать синхронную I/O-функцию вне loop
 
-Реализуй async call_blocking(function,*args,**kwargs) через asyncio.to_thread.
+Реализуй `async def call_blocking(function, *args, **kwargs)`. Передай callable и аргументы в asyncio.to_thread, дождись результата, верни его без изменений. Не вызывай function заранее.
 
-Работай в main.py. Не меняй публичные имена и сигнатуры: скрытые тесты импортируют их напрямую. Проверь основной сценарий, граничные значения, повторные вызовы и распространение ошибок.
+Пример: функция `format_name(first, *, suffix)` с `("Aida", suffix="!")` возвращает `"Aida!"`; результат обёртки такой же. Функция без аргументов тоже допустима. Исключение ValueError из function передаётся вызывающему коду. Выполнение должно происходить в рабочем потоке, а не в потоке loop.
+
 ## Шпаргалка
 
-Перед собеседованием запомни:
-
-- **Что это:** Blocking code inside async code: Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг точки приостановки await.
-- **Механизм:** Event loop планирует готовые tasks; await не создаёт отдельный поток и не ускоряет CPU-bound код.
-- **Ограничение:** Выполнить blocking call в event loop или создать coroutine и не await/schedule её.
-- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
+- Синхронный I/O удерживает поток loop.
+- Async-клиент уступает loop при сетевом ожидании.
+- to_thread принимает callable, передаёт аргументы и переносит I/O в поток.
+- CPU-bound Python не ускоряется от async def.
 
 ## Источники
 
-Материал написан своими словами и сверён с актуальными разделами официальной документации:
+- [Running in threads](https://docs.python.org/3.12/library/asyncio-task.html#running-in-threads)
+- [HTTPX async support](https://www.python-httpx.org/async/)
 
-- [asyncio](https://docs.python.org/3.12/library/asyncio.html)
-- [Coroutines and Tasks](https://docs.python.org/3.12/library/asyncio-task.html)
-
-Последняя проверка версий: **2026-08-27**.
+Содержательная проверка: 2026-11-08. Примеры asyncio рассчитаны на Python 3.11+ и стандартную фабрику Task.

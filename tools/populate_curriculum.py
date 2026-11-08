@@ -6,6 +6,11 @@ use the repository's established folder format and stable slug-based progress.
 
 from __future__ import annotations
 
+try:
+    from .curated_content import preserve_bundle, reviewed_bundle
+except ImportError:  # direct script execution
+    from curated_content import preserve_bundle, reviewed_bundle
+
 import json
 import re
 from pathlib import Path
@@ -343,8 +348,12 @@ def explain_point(point: str, guide: tuple[str, str, str, str], stage_number: in
     }
     if (stage_number, lowered) in stage_overrides:
         return stage_overrides[(stage_number, lowered)]
-    for keyword, explanation in sorted(POINT_EXPLANATIONS, key=lambda item: len(item[0]), reverse=True):
-        if keyword in lowered:
+    # Exact, stage-scoped matches only. "optional persistence modes" must
+    # never select the Python Optional entry (or any other substring).
+    if stage_number >= 8:
+        raise ValueError(f"Stage {stage_number}: no reviewed explanation for {point!r}")
+    for keyword, explanation in POINT_EXPLANATIONS:
+        if keyword == lowered:
             return explanation
     return STAGE_POINT_FALLBACKS[stage_number].format(point=point.rstrip("."))
 
@@ -374,6 +383,8 @@ def extract_existing(path: Path) -> tuple[str | None, str | None]:
 
 def lesson_markdown(lesson: dict, stage: dict, existing_theory: str | None, existing_task: str | None) -> str:
     stage_number = stage["number"]
+    if stage_number >= 8:
+        return (reviewed_bundle(CONTENT, lesson) / "lesson.md").read_text(encoding="utf-8")
     guide = tuple(russianize_prose(item) for item in STAGE_GUIDES[stage_number])
     outline = lesson.get("outline") or [lesson["title"]]
     sources = SOURCES[stage_number]
@@ -544,6 +555,8 @@ def lesson_markdown(lesson: dict, stage: dict, existing_theory: str | None, exis
 
 
 def interview_questions(lesson: dict, stage: dict) -> list[dict]:
+    if stage["number"] >= 8:
+        return json.loads((reviewed_bundle(CONTENT, lesson) / "interview.json").read_text(encoding="utf-8"))
     guide = STAGE_GUIDES[stage["number"]]
     material = dossier_for(
         lesson,
@@ -551,7 +564,7 @@ def interview_questions(lesson: dict, stage: dict) -> list[dict]:
         lambda point: explain_point(point, guide, stage["number"]),
     )
     answer = list(material.rubric or material.required[:4])
-    common = [material.mistakes[0], "Ответ без механизма, примера и ограничения"]
+    common = []  # Wrong candidate assertions require separate editorial input.
     sets = [stage["slug"], "full-junior-backend"]
     if lesson["priority"] in {"P0", "P1"}:
         sets.append("interview-crash-course")
@@ -572,7 +585,8 @@ def interview_questions(lesson: dict, stage: dict) -> list[dict]:
                 "must_mention": answer,
                 "good_additions": ["короткий рабочий пример", "ограничение или типичная ошибка"],
                 "common_wrong_answers": common,
-                "red_flags": [material.mistakes[0]],
+                "red_flags": [],
+                "coding_mistakes": list(material.mistakes),
                 "follow_up_questions": [material.follow_up_question],
             },
             "follow_ups": [material.follow_up_question],
@@ -592,8 +606,9 @@ def interview_questions(lesson: dict, stage: dict) -> list[dict]:
             "expected_answer": {
                 "must_mention": list(material.useful) or list(material.required[:2]),
                 "good_additions": ["короткий пример именно этой темы"],
-                "common_wrong_answers": list(material.mistakes),
-                "red_flags": [material.mistakes[0]],
+                "common_wrong_answers": [],
+                "red_flags": [],
+                "coding_mistakes": list(material.mistakes),
                 "follow_up_questions": [material.question],
             },
             "follow_ups": [material.question],
@@ -638,6 +653,10 @@ def metadata_for(lesson: dict, stage: dict, slug: str, order: int, has_task: boo
 
 
 def main() -> None:
+    import argparse
+    parser = argparse.ArgumentParser(description="Preserve published bundles; opt in to rewriting legacy stages 0–7")
+    parser.add_argument("--rewrite-legacy", action="store_true")
+    args = parser.parse_args()
     curriculum = json.loads(CURRICULUM.read_text(encoding="utf-8"))
     directories = existing_directories()
     active_slugs: set[str] = set()
@@ -657,6 +676,14 @@ def main() -> None:
                 directory = CONTENT / stage["slug"] / slug
                 lesson["implementation_slug"] = slug
             active_slugs.add(slug)
+            if preserve_bundle(directory, rewrite_legacy=args.rewrite_legacy):
+                if lesson["content_status"] == "complete":
+                    published += 1
+                else:
+                    planned += 1
+                continue
+            if stage["number"] >= 8 and lesson["content_status"] == "complete":
+                raise ValueError(f"{lesson['id']}: author and review a complete lesson bundle before publishing")
             directory.mkdir(parents=True, exist_ok=True)
             if lesson["content_status"] == "planned":
                 planned += 1
@@ -686,7 +713,7 @@ def main() -> None:
 
     # Old URLs stay loadable, while unmapped placeholders no longer clutter navigation.
     for slug, directory in directories.items():
-        if slug in active_slugs:
+        if slug in active_slugs or preserve_bundle(directory, rewrite_legacy=args.rewrite_legacy):
             continue
         metadata_path = directory / "metadata.json"
         metadata = json.loads(metadata_path.read_text(encoding="utf-8"))

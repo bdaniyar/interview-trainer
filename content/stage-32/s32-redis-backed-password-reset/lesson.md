@@ -30,7 +30,7 @@
 
 **do not reveal whether email exists.** `EXISTS` проверяет наличие хотя бы одной строки correlated subquery и часто прямо выражает semi-join без размножения строк.
 
-**revoke sessions when appropriate.** Session владеет identity map и transaction state; после ошибки flush требуется rollback до дальнейшей работы.
+**revoke sessions when appropriate.** После сброса пароля политика безопасности может потребовать отзыва активных авторизаций пользователя. Для этого помечают серверные refresh sessions отозванными или удаляют соответствующее состояние. Уже выданный access token не обязательно перестанет действовать немедленно: это зависит от его срока и проверки отзыва на запросе. Состояние авторизации здесь не связано с ORM identity map.
 
 
 ### Важный нюанс / ограничение
@@ -175,3 +175,5 @@ Redis-backed password reset: это отдельный технический к
 - [Redis documentation](https://redis.io/docs/latest/)
 
 Последняя проверка версий: **2026-08-27**.
+
+- Точечная проверка подтемы 2026-11-08: [OAuth refresh token protection](https://www.rfc-editor.org/rfc/rfc9700.html#name-refresh-token-protection). Остальной материал урока ещё ожидает содержательного аудита.

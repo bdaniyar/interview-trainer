@@ -1,4 +1,8 @@
-import asyncio
-
-async def run_blocking_calls(function, values):
-    return await asyncio.gather(*(asyncio.to_thread(function, value) for value in values))
+def compare_waits(delays):
+    total = longest = 0
+    for delay in delays:
+        if delay < 0:
+            raise ValueError("delay must be non-negative")
+        total += delay
+        longest = max(longest, delay)
+    return total, longest

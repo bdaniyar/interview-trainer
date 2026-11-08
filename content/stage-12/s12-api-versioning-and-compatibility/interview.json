@@ -25,16 +25,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какое ограничение или типичная ошибка относится именно к теме API versioning and compatibility?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какое ограничение или типичная ошибка относится именно к теме API versioning and compatibility?"
@@ -69,15 +71,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency."
-      ],
-      "red_flags": [
-        "Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое API versioning and compatibility и какой механизм здесь важно понимать Junior-разработчику?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Возвращать 200 для любой ошибки или проектировать retry без понимания idempotency."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое API versioning and compatibility и какой механизм здесь важно понимать Junior-разработчику?"

@@ -23,16 +23,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "Смешение Accept и Content-Type приводит к ошибкам 415/406 или неверному parsing.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "Смешение Accept и Content-Type приводит к ошибкам 415/406 или неверному parsing."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Content negotiation and Content-Type?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Смешение Accept и Content-Type приводит к ошибкам 415/406 или неверному parsing."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какая типичная ошибка связана с Content negotiation and Content-Type?"
@@ -67,15 +69,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "Смешение Accept и Content-Type приводит к ошибкам 415/406 или неверному parsing."
-      ],
-      "red_flags": [
-        "Смешение Accept и Content-Type приводит к ошибкам 415/406 или неверному parsing."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое Content negotiation and Content-Type и как это работает?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Смешение Accept и Content-Type приводит к ошибкам 415/406 или неверному parsing."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое Content negotiation and Content-Type и как это работает?"

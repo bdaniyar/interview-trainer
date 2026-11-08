@@ -1,4 +1,3 @@
-import asyncio
-
-async def run_blocking_calls(function, values):
+def compare_waits(delays):
+    """Return (sequential seconds, ideal concurrent seconds). Reject negatives."""
     raise NotImplementedError

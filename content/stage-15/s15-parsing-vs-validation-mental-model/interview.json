@@ -23,16 +23,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "Смешать missing и явное значение null либо считать coercion бизнес-валидацией.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "Смешать missing и явное значение null либо считать coercion бизнес-валидацией."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какое ограничение или типичная ошибка относится именно к теме Parsing vs validation модель понимания?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Смешать missing и явное значение null либо считать coercion бизнес-валидацией."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какое ограничение или типичная ошибка относится именно к теме Parsing vs validation модель понимания?"
@@ -67,15 +69,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "Смешать missing и явное значение null либо считать coercion бизнес-валидацией."
-      ],
-      "red_flags": [
-        "Смешать missing и явное значение null либо считать coercion бизнес-валидацией."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое Parsing vs validation модель понимания и какой механизм здесь важно понимать Junior-разработчику?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Смешать missing и явное значение null либо считать coercion бизнес-валидацией."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое Parsing vs validation модель понимания и какой механизм здесь важно понимать Junior-разработчику?"

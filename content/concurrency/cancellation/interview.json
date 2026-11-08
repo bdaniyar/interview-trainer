@@ -1,43 +1,42 @@
 [
   {
-    "question": "Что такое Cancellation и какой механизм здесь важно понимать Junior-разработчику?",
+    "question": "Почему после task.cancel() обычно нужно await task?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "`CancelledError`",
-      "cleanup",
-      "cooperative cancellation",
-      "не поглощать отмену задачи случайно"
+      "cancel запрашивает отмену, await наблюдает завершение.",
+      "finally нужен для освобождения ресурса.",
+      "CancelledError нельзя случайно превращать в успех."
     ],
-    "short_answer": "Cancellation: Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг точки приостановки await.",
-    "junior_answer": "Cancellation — тема, в которой я сначала фиксирую ``CancelledError``, затем объясняю `cleanup` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и точки приостановки await до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
-    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Cancellation?",
-    "follow_up_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
+    "short_answer": "Cancel отправляет запрос отмены, но не означает, что задача уже остановилась.",
+    "junior_answer": "Cancel отправляет запрос отмены, но не означает, что задача уже остановилась. CancelledError доставляется кооперативно, и coroutine должна успеть выполнить finally. Await task позволяет дождаться очистки и увидеть итог. На границе управления можно обработать CancelledError; внутри рабочей coroutine после очистки отмену обычно передают дальше через raise.",
+    "follow_up_question": "Почему except Exception не всегда перехватывает отмену?",
+    "follow_up_answer": "Asyncio.CancelledError наследуется от BaseException. Для отмены нужен явный обработчик; широкий перехват BaseException может скрыть также системные сигналы завершения.",
     "expected_answer": {
       "must_mention": [
-        "`CancelledError`",
-        "cleanup",
-        "cooperative cancellation",
-        "не поглощать отмену задачи случайно"
+        "cancel запрашивает отмену, await наблюдает завершение.",
+        "finally нужен для освобождения ресурса.",
+        "CancelledError нельзя случайно превращать в успех."
       ],
       "good_additions": [
-        "короткий рабочий пример",
-        "ограничение или типичная ошибка"
+        "Event — сигнал между coroutine: set отмечает наступление события, wait ждёт его. Сигнал started гарантирует, что worker уже вошёл в try. После cancel выполняется finally и добавляется released. Затем main получает CancelledError и печатает cancelled, потом ['released']. Бесконечное ожидание Event прекращается отменой."
       ],
       "common_wrong_answers": [
-        "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
-        "Ответ без механизма, примера и ограничения"
+        "После task.cancel() задача уже точно завершила finally."
       ],
       "red_flags": [
-        "Выполнить blocking call в event loop или создать coroutine и не await/schedule её."
+        "После task.cancel() задача уже точно завершила finally."
+      ],
+      "coding_mistakes": [
+        "Неправильно: вызвать cancel и сразу считать ресурс закрытым. Исправление: await task, дождаться finally и обработать именно CancelledError. Внутри worker нельзя незаметно заменить отмену обычным return: вызывающий код тогда не увидит, что работа отменена."
       ],
       "follow_up_questions": [
-        "Какое ограничение или типичная ошибка относится именно к теме Cancellation?"
+        "Почему except Exception не всегда перехватывает отмену?"
       ]
     },
     "follow_ups": [
-      "Какое ограничение или типичная ошибка относится именно к теме Cancellation?"
+      "Почему except Exception не всегда перехватывает отмену?"
     ],
     "tags": [
       "stage-08",
@@ -50,37 +49,35 @@
     ]
   },
   {
-    "question": "Какое ограничение или типичная ошибка относится именно к теме Cancellation?",
+    "question": "Почему except Exception не всегда перехватывает отмену?",
     "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "связать Cancellation с коротким рабочим примером",
-      "Выполнить blocking call в event loop или создать coroutine и не await/schedule её."
+      "Asyncio.CancelledError наследуется от BaseException. Для отмены нужен явный обработчик; широкий перехват BaseException может скрыть также системные сигналы завершения."
     ],
-    "short_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
-    "junior_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
-    "follow_up_question": "Что такое Cancellation и какой механизм здесь важно понимать Junior-разработчику?",
-    "follow_up_answer": "Cancellation — тема, в которой я сначала фиксирую ``CancelledError``, затем объясняю `cleanup` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и точки приостановки await до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
+    "short_answer": "Asyncio.CancelledError наследуется от BaseException. Для отмены нужен явный обработчик; широкий перехват BaseException может скрыть также системные сигналы завершения.",
+    "junior_answer": "Asyncio.CancelledError наследуется от BaseException. Для отмены нужен явный обработчик; широкий перехват BaseException может скрыть также системные сигналы завершения.",
+    "follow_up_question": "Почему после task.cancel() обычно нужно await task?",
+    "follow_up_answer": "Cancel отправляет запрос отмены, но не означает, что задача уже остановилась. CancelledError доставляется кооперативно, и coroutine должна успеть выполнить finally. Await task позволяет дождаться очистки и увидеть итог. На границе управления можно обработать CancelledError; внутри рабочей coroutine после очистки отмену обычно передают дальше через raise.",
     "expected_answer": {
       "must_mention": [
-        "связать Cancellation с коротким рабочим примером"
+        "Asyncio.CancelledError наследуется от BaseException. Для отмены нужен явный обработчик; широкий перехват BaseException может скрыть также системные сигналы завершения."
       ],
       "good_additions": [
-        "короткий пример именно этой темы"
+        "Event — сигнал между coroutine: set отмечает наступление события, wait ждёт его. Сигнал started гарантирует, что worker уже вошёл в try. После cancel выполняется finally и добавляется released. Затем main получает CancelledError и печатает cancelled, потом ['released']. Бесконечное ожидание Event прекращается отменой."
       ],
-      "common_wrong_answers": [
-        "Выполнить blocking call в event loop или создать coroutine и не await/schedule её."
-      ],
-      "red_flags": [
-        "Выполнить blocking call в event loop или создать coroutine и не await/schedule её."
+      "common_wrong_answers": [],
+      "red_flags": [],
+      "coding_mistakes": [
+        "Неправильно: вызвать cancel и сразу считать ресурс закрытым. Исправление: await task, дождаться finally и обработать именно CancelledError. Внутри worker нельзя незаметно заменить отмену обычным return: вызывающий код тогда не увидит, что работа отменена."
       ],
       "follow_up_questions": [
-        "Что такое Cancellation и какой механизм здесь важно понимать Junior-разработчику?"
+        "Почему после task.cancel() обычно нужно await task?"
       ]
     },
     "follow_ups": [
-      "Что такое Cancellation и какой механизм здесь важно понимать Junior-разработчику?"
+      "Почему после task.cancel() обычно нужно await task?"
     ],
     "tags": [
       "stage-08",

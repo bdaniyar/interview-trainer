@@ -25,16 +25,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "Wildcard origin вместе с credentials недопустим или опасен; разрешённые origins задают явно.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "Wildcard origin вместе с credentials недопустим или опасен; разрешённые origins задают явно."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какая типичная ошибка связана с CORS?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Wildcard origin вместе с credentials недопустим или опасен; разрешённые origins задают явно."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какая типичная ошибка связана с CORS?"
@@ -69,15 +71,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "Wildcard origin вместе с credentials недопустим или опасен; разрешённые origins задают явно."
-      ],
-      "red_flags": [
-        "Wildcard origin вместе с credentials недопустим или опасен; разрешённые origins задают явно."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое CORS и как это работает?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Wildcard origin вместе с credentials недопустим или опасен; разрешённые origins задают явно."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое CORS и как это работает?"
