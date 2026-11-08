@@ -24,7 +24,7 @@
 
 **local history movement.** `local history movement` меняет одно из состояний Git: working tree, index, branch pointer или shared history; эти эффекты нельзя смешивать.
 
-**working/index effects.** Index — отдельная структура доступа с ценой записи и хранения; полезность зависит от конкретного predicate, ordering и selectivity.
+**working/index effects.** Git index — staging area: подготовленное содержимое следующего commit. Reset --soft перемещает HEAD, сохраняя index и рабочие файлы; --mixed также сбрасывает index; --hard меняет и рабочие файлы, поэтому может уничтожить незакоммиченные изменения. Revert создаёт новый commit с обратным изменением и сохраняет историю. Это не индекс доступа к строкам БД.
 
 **safe public-history undo.** `safe public-history undo` меняет одно из состояний Git: working tree, index, branch pointer или shared history; эти эффекты нельзя смешивать.
 
@@ -178,3 +178,5 @@ reset vs revert: это отдельный технический контрак
 - [Pro Git](https://git-scm.com/book/en/v2)
 
 Последняя проверка версий: **2026-08-27**.
+
+- Точечная проверка подтемы 2026-11-08: [Git reset](https://git-scm.com/docs/git-reset). Остальной материал урока ещё ожидает содержательного аудита.

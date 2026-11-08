@@ -25,16 +25,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "Проверка уникальности через SELECT перед INSERT подвержена race; окончательной гарантией должен быть UNIQUE constraint.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "Проверка уникальности через SELECT перед INSERT подвержена race; окончательной гарантией должен быть UNIQUE constraint."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Constraints?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Проверка уникальности через SELECT перед INSERT подвержена race; окончательной гарантией должен быть UNIQUE constraint."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какая типичная ошибка связана с Constraints?"
@@ -69,15 +71,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "Проверка уникальности через SELECT перед INSERT подвержена race; окончательной гарантией должен быть UNIQUE constraint."
-      ],
-      "red_flags": [
-        "Проверка уникальности через SELECT перед INSERT подвержена race; окончательной гарантией должен быть UNIQUE constraint."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое Constraints и как это работает?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Проверка уникальности через SELECT перед INSERT подвержена race; окончательной гарантией должен быть UNIQUE constraint."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое Constraints и как это работает?"

@@ -23,16 +23,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "Конфликт `/users/{user_id}` и `/users/me` может отправить `me` в int validation вместо нужного handler.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "Конфликт `/users/{user_id}` и `/users/me` может отправить `me` в int validation вместо нужного handler."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Path parameters?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Конфликт `/users/{user_id}` и `/users/me` может отправить `me` в int validation вместо нужного handler."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какая типичная ошибка связана с Path parameters?"
@@ -67,15 +69,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "Конфликт `/users/{user_id}` и `/users/me` может отправить `me` в int validation вместо нужного handler."
-      ],
-      "red_flags": [
-        "Конфликт `/users/{user_id}` и `/users/me` может отправить `me` в int validation вместо нужного handler."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое Path parameters и как это работает?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Конфликт `/users/{user_id}` и `/users/me` может отправить `me` в int validation вместо нужного handler."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое Path parameters и как это работает?"

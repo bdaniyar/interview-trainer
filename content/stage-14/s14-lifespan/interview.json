@@ -25,16 +25,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "Новый дорогой client на каждый request разрушает pooling, а незакрытый общий client оставляет ресурсы при shutdown.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "Новый дорогой client на каждый request разрушает pooling, а незакрытый общий client оставляет ресурсы при shutdown."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Lifespan?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Новый дорогой client на каждый request разрушает pooling, а незакрытый общий client оставляет ресурсы при shutdown."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какая типичная ошибка связана с Lifespan?"
@@ -69,15 +71,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "Новый дорогой client на каждый request разрушает pooling, а незакрытый общий client оставляет ресурсы при shutdown."
-      ],
-      "red_flags": [
-        "Новый дорогой client на каждый request разрушает pooling, а незакрытый общий client оставляет ресурсы при shutdown."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое Lifespan и как это работает?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Новый дорогой client на каждый request разрушает pooling, а незакрытый общий client оставляет ресурсы при shutdown."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое Lifespan и как это работает?"

@@ -25,16 +25,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "Смешение ORM relationship и ownership в БД может настроить delete cascade, удаляющий лишние данные.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "Смешение ORM relationship и ownership в БД может настроить delete cascade, удаляющий лишние данные."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Relationships?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Смешение ORM relationship и ownership в БД может настроить delete cascade, удаляющий лишние данные."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какая типичная ошибка связана с Relationships?"
@@ -69,15 +71,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "Смешение ORM relationship и ownership в БД может настроить delete cascade, удаляющий лишние данные."
-      ],
-      "red_flags": [
-        "Смешение ORM relationship и ownership в БД может настроить delete cascade, удаляющий лишние данные."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое Relationships и как это работает?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Смешение ORM relationship и ownership в БД может настроить delete cascade, удаляющий лишние данные."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое Relationships и как это работает?"

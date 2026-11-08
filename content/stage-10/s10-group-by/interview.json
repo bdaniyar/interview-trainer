@@ -23,16 +23,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "Grouping после one-to-many join может посчитать сумму дважды, если grain join мельче измеряемого показателя.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "Grouping после one-to-many join может посчитать сумму дважды, если grain join мельче измеряемого показателя."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какая типичная ошибка связана с GROUP BY?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Grouping после one-to-many join может посчитать сумму дважды, если grain join мельче измеряемого показателя."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какая типичная ошибка связана с GROUP BY?"
@@ -67,15 +69,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "Grouping после one-to-many join может посчитать сумму дважды, если grain join мельче измеряемого показателя."
-      ],
-      "red_flags": [
-        "Grouping после one-to-many join может посчитать сумму дважды, если grain join мельче измеряемого показателя."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое GROUP BY и как это работает?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Grouping после one-to-many join может посчитать сумму дважды, если grain join мельче измеряемого показателя."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое GROUP BY и как это работает?"

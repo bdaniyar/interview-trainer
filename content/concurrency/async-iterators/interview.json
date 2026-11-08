@@ -1,43 +1,44 @@
 [
   {
-    "question": "Что такое Async iterators and generators и какой механизм здесь важно понимать Junior-разработчику?",
+    "question": "Для чего нужен async for и чем он отличается от обычного for?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "medium",
     "answer": [
-      "`async for`",
-      "streaming",
-      "paginated I/O",
-      "cleanup"
+      "async for ожидает очередной __anext__.",
+      "StopAsyncIteration означает конец источника.",
+      "yield сохраняет позицию async generator.",
+      "Потоковое чтение и конкурентная обработка — разные решения."
     ],
-    "short_answer": "Async iterators and generators: Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг точки приостановки await.",
-    "junior_answer": "Async iterators and generators — тема, в которой я сначала фиксирую ``async for``, затем объясняю `streaming` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и точки приостановки await до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
-    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Async iterators and generators?",
-    "follow_up_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
+    "short_answer": "Async for получает следующий элемент через ожидаемый __anext__, поэтому источник может ждать сеть между элементами.",
+    "junior_answer": "Async for получает следующий элемент через ожидаемый __anext__, поэтому источник может ждать сеть между элементами. Обычный for использует синхронный next. Асинхронное завершение обозначается StopAsyncIteration. Async generator позволяет реализовать источник через async def и yield. Сам цикл остаётся последовательным, а закрытие ресурса при раннем выходе нужно организовать явно.",
+    "follow_up_question": "Как закрыть async generator при break?",
+    "follow_up_answer": "Можно окружить его contextlib.aclosing и async with. На выходе будет вызван aclose и выполнится finally генератора. Для другого типа источника нужно проверить его контракт закрытия.",
     "expected_answer": {
       "must_mention": [
-        "`async for`",
-        "streaming",
-        "paginated I/O",
-        "cleanup"
+        "async for ожидает очередной __anext__.",
+        "StopAsyncIteration означает конец источника.",
+        "yield сохраняет позицию async generator.",
+        "Потоковое чтение и конкурентная обработка — разные решения."
       ],
       "good_additions": [
-        "короткий рабочий пример",
-        "ограничение или типичная ошибка"
+        "Запрашивается только первый элемент: после sleep(0) генератор выдаёт page-1. break прекращает чтение. На выходе aclosing закрывает генератор, finally записывает closed. Вывод: page-1, затем ['closed']. Страницы 2 и 3 не запрашивались."
       ],
       "common_wrong_answers": [
-        "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
-        "Ответ без механизма, примера и ограничения"
+        "Async for автоматически запускает все итерации конкурентно."
       ],
       "red_flags": [
-        "Выполнить blocking call в event loop или создать coroutine и не await/schedule её."
+        "Async for автоматически запускает все итерации конкурентно."
+      ],
+      "coding_mistakes": [
+        "Неправильно поднимать StopIteration из __anext__. Для async-протокола нужен StopAsyncIteration. Другой неверный подход — считать, что async for заранее запрашивает все страницы: без отдельного планирования чтение идёт последовательно."
       ],
       "follow_up_questions": [
-        "Какое ограничение или типичная ошибка относится именно к теме Async iterators and generators?"
+        "Как закрыть async generator при break?"
       ]
     },
     "follow_ups": [
-      "Какое ограничение или типичная ошибка относится именно к теме Async iterators and generators?"
+      "Как закрыть async generator при break?"
     ],
     "tags": [
       "stage-08",
@@ -50,37 +51,35 @@
     ]
   },
   {
-    "question": "Какое ограничение или типичная ошибка относится именно к теме Async iterators and generators?",
+    "question": "Как закрыть async generator при break?",
     "level": "follow_up",
     "priority": "P1",
     "interview_probability": "medium",
     "answer": [
-      "связать Async iterators and generators с коротким рабочим примером",
-      "Выполнить blocking call в event loop или создать coroutine и не await/schedule её."
+      "Можно окружить его contextlib.aclosing и async with. На выходе будет вызван aclose и выполнится finally генератора. Для другого типа источника нужно проверить его контракт закрытия."
     ],
-    "short_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
-    "junior_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
-    "follow_up_question": "Что такое Async iterators and generators и какой механизм здесь важно понимать Junior-разработчику?",
-    "follow_up_answer": "Async iterators and generators — тема, в которой я сначала фиксирую ``async for``, затем объясняю `streaming` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и точки приостановки await до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
+    "short_answer": "Можно окружить его contextlib.aclosing и async with. На выходе будет вызван aclose и выполнится finally генератора. Для другого типа источника нужно проверить его контракт закрытия.",
+    "junior_answer": "Можно окружить его contextlib.aclosing и async with. На выходе будет вызван aclose и выполнится finally генератора. Для другого типа источника нужно проверить его контракт закрытия.",
+    "follow_up_question": "Для чего нужен async for и чем он отличается от обычного for?",
+    "follow_up_answer": "Async for получает следующий элемент через ожидаемый __anext__, поэтому источник может ждать сеть между элементами. Обычный for использует синхронный next. Асинхронное завершение обозначается StopAsyncIteration. Async generator позволяет реализовать источник через async def и yield. Сам цикл остаётся последовательным, а закрытие ресурса при раннем выходе нужно организовать явно.",
     "expected_answer": {
       "must_mention": [
-        "связать Async iterators and generators с коротким рабочим примером"
+        "Можно окружить его contextlib.aclosing и async with. На выходе будет вызван aclose и выполнится finally генератора. Для другого типа источника нужно проверить его контракт закрытия."
       ],
       "good_additions": [
-        "короткий пример именно этой темы"
+        "Запрашивается только первый элемент: после sleep(0) генератор выдаёт page-1. break прекращает чтение. На выходе aclosing закрывает генератор, finally записывает closed. Вывод: page-1, затем ['closed']. Страницы 2 и 3 не запрашивались."
       ],
-      "common_wrong_answers": [
-        "Выполнить blocking call в event loop или создать coroutine и не await/schedule её."
-      ],
-      "red_flags": [
-        "Выполнить blocking call в event loop или создать coroutine и не await/schedule её."
+      "common_wrong_answers": [],
+      "red_flags": [],
+      "coding_mistakes": [
+        "Неправильно поднимать StopIteration из __anext__. Для async-протокола нужен StopAsyncIteration. Другой неверный подход — считать, что async for заранее запрашивает все страницы: без отдельного планирования чтение идёт последовательно."
       ],
       "follow_up_questions": [
-        "Что такое Async iterators and generators и какой механизм здесь важно понимать Junior-разработчику?"
+        "Для чего нужен async for и чем он отличается от обычного for?"
       ]
     },
     "follow_ups": [
-      "Что такое Async iterators and generators и какой механизм здесь важно понимать Junior-разработчику?"
+      "Для чего нужен async for и чем он отличается от обычного for?"
     ],
     "tags": [
       "stage-08",

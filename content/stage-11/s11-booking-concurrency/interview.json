@@ -25,16 +25,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какое ограничение или типичная ошибка относится именно к теме Booking concurrency?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какое ограничение или типичная ошибка относится именно к теме Booking concurrency?"
@@ -71,15 +73,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case."
-      ],
-      "red_flags": [
-        "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое Booking concurrency и какой механизм здесь важно понимать Junior-разработчику?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое Booking concurrency и какой механизм здесь важно понимать Junior-разработчику?"

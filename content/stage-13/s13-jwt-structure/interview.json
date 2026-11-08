@@ -25,16 +25,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "Декодирование payload без проверки signature и claims позволяет attacker подставить произвольную identity.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "Декодирование payload без проверки signature и claims позволяет attacker подставить произвольную identity."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какая типичная ошибка связана с JWT structure?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Декодирование payload без проверки signature и claims позволяет attacker подставить произвольную identity."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какая типичная ошибка связана с JWT structure?"
@@ -71,15 +73,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "Декодирование payload без проверки signature и claims позволяет attacker подставить произвольную identity."
-      ],
-      "red_flags": [
-        "Декодирование payload без проверки signature и claims позволяет attacker подставить произвольную identity."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое JWT structure и как это работает?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Декодирование payload без проверки signature и claims позволяет attacker подставить произвольную identity."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое JWT structure и как это работает?"

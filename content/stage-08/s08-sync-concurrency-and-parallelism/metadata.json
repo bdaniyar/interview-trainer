@@ -44,14 +44,22 @@
     "interview_crash_course"
   ],
   "content_status": "complete",
-  "last_verified": "2026-08-27",
+  "last_verified": "2026-11-08",
   "generated_by": "populate_curriculum.py",
   "task_id": "backend-interview.8.1.sync-concurrency-and-parallelism.practice",
-  "task_title": "Sync I/O вне event loop",
+  "task_title": "Сравнить время ожиданий",
   "task_difficulty": "interview",
   "task_skills": [
-    "asyncio.to_thread",
-    "concurrency"
+    "sequential-execution",
+    "concurrency-model"
   ],
-  "task_estimated_minutes": 20
+  "task_estimated_minutes": 10,
+  "content_source": "curated",
+  "quality_revision": 1,
+  "reviewed_on": "2026-11-08",
+  "task_contract_version": 2,
+  "compatible_task_contracts": [
+    1,
+    2
+  ]
 }

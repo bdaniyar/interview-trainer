@@ -23,16 +23,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "Несколько скрытых commits в repository оставляют частичные данные после ошибки позднего шага.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "Несколько скрытых commits в repository оставляют частичные данные после ошибки позднего шага."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Explicit transactions?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Несколько скрытых commits в repository оставляют частичные данные после ошибки позднего шага."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какая типичная ошибка связана с Explicit transactions?"
@@ -67,15 +69,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "Несколько скрытых commits в repository оставляют частичные данные после ошибки позднего шага."
-      ],
-      "red_flags": [
-        "Несколько скрытых commits в repository оставляют частичные данные после ошибки позднего шага."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое Explicit transactions и как это работает?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Несколько скрытых commits в repository оставляют частичные данные после ошибки позднего шага."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое Explicit transactions и как это работает?"

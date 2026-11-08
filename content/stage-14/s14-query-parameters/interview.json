@@ -25,16 +25,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "`limit: int | None` без default всё равно остаётся обязательным параметром.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "`limit: int | None` без default всё равно остаётся обязательным параметром."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Query parameters?"
-      ]
+      ],
+      "coding_mistakes": [
+        "`limit: int | None` без default всё равно остаётся обязательным параметром."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какая типичная ошибка связана с Query parameters?"
@@ -69,15 +71,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "`limit: int | None` без default всё равно остаётся обязательным параметром."
-      ],
-      "red_flags": [
-        "`limit: int | None` без default всё равно остаётся обязательным параметром."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое Query parameters и как это работает?"
-      ]
+      ],
+      "coding_mistakes": [
+        "`limit: int | None` без default всё равно остаётся обязательным параметром."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое Query parameters и как это работает?"

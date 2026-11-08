@@ -9,6 +9,11 @@ not a generic stage-level snippet.
 
 from __future__ import annotations
 
+try:
+    from .curated_content import preserve_bundle
+except ImportError:  # direct script execution
+    from curated_content import preserve_bundle
+
 import json
 import re
 from collections import defaultdict
@@ -316,6 +321,8 @@ def main() -> None:
         if lesson["content_status"] != "complete":
             continue
         directory = directories[lesson["implementation_slug"]]
+        if preserve_bundle(directory):
+            continue
         example = lesson_example(lesson, directory, practices)
         section = render_section(lesson, example)
         normalized = re.sub(r"\s+", " ", f"{example[0]}\n{example[1]}").strip()

@@ -23,16 +23,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "Query сразу после IntegrityError без rollback вызывает pending-rollback error и скрывает исходный conflict.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "Query сразу после IntegrityError без rollback вызывает pending-rollback error и скрывает исходный conflict."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Rollback?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Query сразу после IntegrityError без rollback вызывает pending-rollback error и скрывает исходный conflict."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какая типичная ошибка связана с Rollback?"
@@ -67,15 +69,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "Query сразу после IntegrityError без rollback вызывает pending-rollback error и скрывает исходный conflict."
-      ],
-      "red_flags": [
-        "Query сразу после IntegrityError без rollback вызывает pending-rollback error и скрывает исходный conflict."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое Rollback и как это работает?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Query сразу после IntegrityError без rollback вызывает pending-rollback error и скрывает исходный conflict."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое Rollback и как это работает?"

@@ -25,16 +25,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "Session cookie без HttpOnly, Secure и подходящего SameSite неоправданно расширяет поверхность атаки.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "Session cookie без HttpOnly, Secure и подходящего SameSite неоправданно расширяет поверхность атаки."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Cookies?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Session cookie без HttpOnly, Secure и подходящего SameSite неоправданно расширяет поверхность атаки."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какая типичная ошибка связана с Cookies?"
@@ -71,15 +73,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "Session cookie без HttpOnly, Secure и подходящего SameSite неоправданно расширяет поверхность атаки."
-      ],
-      "red_flags": [
-        "Session cookie без HttpOnly, Secure и подходящего SameSite неоправданно расширяет поверхность атаки."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое Cookies и как это работает?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Session cookie без HttpOnly, Secure и подходящего SameSite неоправданно расширяет поверхность атаки."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое Cookies и как это работает?"

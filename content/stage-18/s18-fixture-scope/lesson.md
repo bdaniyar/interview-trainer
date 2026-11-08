@@ -22,7 +22,7 @@
 
 Сформулируй observable behavior, выбери isolation boundary и добавь case, который падает при реальном regression.
 
-**function/class/module/session.** Session владеет identity map и transaction state; после ошибки flush требуется rollback до дальнейшей работы.
+**function/class/module/session.** Scope определяет срок жизни pytest-fixture: function — один тест, class — класс, module — модуль, package — пакет, session — тестовая сессия. Широкий scope переиспользует объект между тестами и может переносить изменяемое состояние. Зависимость fixture не может требовать более узкую по времени fixture, например session-fixture не зависит от function-fixture. Это не жизненный цикл ORM Session.
 
 **isolation vs speed.** `isolation vs speed` помогает проверить observable contract; test задаёт isolation boundary, конкретный input и ожидаемый success/failure result.
 
@@ -164,3 +164,5 @@ Mock-нуть реализацию вместо внешней границы и
 - [pytest fixtures](https://docs.pytest.org/en/stable/how-to/fixtures.html)
 
 Последняя проверка версий: **2026-08-27**.
+
+- Точечная проверка подтемы 2026-11-08: [pytest fixture scopes](https://docs.pytest.org/en/stable/how-to/fixtures.html#scope-sharing-fixtures-across-classes-modules-packages-or-session). Остальной материал урока ещё ожидает содержательного аудита.

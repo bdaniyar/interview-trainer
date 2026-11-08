@@ -23,16 +23,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "Условие `right.active = true` в WHERE неожиданно удаляет left rows без активной связи.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "Условие `right.active = true` в WHERE неожиданно удаляет left rows без активной связи."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какая типичная ошибка связана с LEFT JOIN?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Условие `right.active = true` в WHERE неожиданно удаляет left rows без активной связи."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какая типичная ошибка связана с LEFT JOIN?"
@@ -67,15 +69,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "Условие `right.active = true` в WHERE неожиданно удаляет left rows без активной связи."
-      ],
-      "red_flags": [
-        "Условие `right.active = true` в WHERE неожиданно удаляет left rows без активной связи."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое LEFT JOIN и как это работает?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Условие `right.active = true` в WHERE неожиданно удаляет left rows без активной связи."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое LEFT JOIN и как это работает?"

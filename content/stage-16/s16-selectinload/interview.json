@@ -23,16 +23,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "Скрыть commit внутри repository, допустить N+1 или продолжить Session без rollback после ошибки.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "Скрыть commit внутри repository, допустить N+1 или продолжить Session без rollback после ошибки."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какое ограничение или типичная ошибка относится именно к теме `selectinload`?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Скрыть commit внутри repository, допустить N+1 или продолжить Session без rollback после ошибки."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какое ограничение или типичная ошибка относится именно к теме `selectinload`?"
@@ -67,15 +69,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "Скрыть commit внутри repository, допустить N+1 или продолжить Session без rollback после ошибки."
-      ],
-      "red_flags": [
-        "Скрыть commit внутри repository, допустить N+1 или продолжить Session без rollback после ошибки."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое `selectinload` и какой механизм здесь важно понимать Junior-разработчику?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Скрыть commit внутри repository, допустить N+1 или продолжить Session без rollback после ошибки."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое `selectinload` и какой механизм здесь важно понимать Junior-разработчику?"

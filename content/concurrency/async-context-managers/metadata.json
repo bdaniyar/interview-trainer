@@ -42,7 +42,7 @@
     "interview_crash_course"
   ],
   "content_status": "complete",
-  "last_verified": "2026-08-27",
+  "last_verified": "2026-11-08",
   "generated_by": "populate_curriculum.py",
   "task_id": "backend-interview.8.10.async-context-managers.practice",
   "task_title": "Async resource manager",
@@ -51,5 +51,8 @@
     "async-context-manager",
     "cleanup"
   ],
-  "task_estimated_minutes": 20
+  "task_estimated_minutes": 20,
+  "content_source": "curated",
+  "quality_revision": 1,
+  "reviewed_on": "2026-11-08"
 }

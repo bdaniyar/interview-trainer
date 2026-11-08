@@ -25,16 +25,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "Считать, что `WITH` автоматически ускоряет запрос.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "Считать, что `WITH` автоматически ускоряет запрос."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Чем CTE отличается от view?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Считать, что `WITH` автоматически ускоряет запрос."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Чем CTE отличается от view?"
@@ -73,17 +75,18 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
+      "common_wrong_answers": [],
+      "red_flags": [],
+      "follow_up_questions": [
+        "Что такое CTE и гарантирует ли он ускорение SQL-запроса?"
+      ],
+      "coding_mistakes": [
         "Считать, что `WITH` автоматически ускоряет запрос.",
         "Спрятать неверную cardinality в цепочке CTE и не проверять результат каждого шага.",
         "Использовать CTE из одного простого SELECT, когда он только увеличивает объём кода."
       ],
-      "red_flags": [
-        "Считать, что `WITH` автоматически ускоряет запрос."
-      ],
-      "follow_up_questions": [
-        "Что такое CTE и гарантирует ли он ускорение SQL-запроса?"
-      ]
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое CTE и гарантирует ли он ускорение SQL-запроса?"

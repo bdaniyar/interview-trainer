@@ -25,16 +25,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "Index без конкретного query shape и selectivity увеличивает стоимость writes и может никогда не использоваться.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "Index без конкретного query shape и selectivity увеличивает стоимость writes и может никогда не использоваться."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Index модель понимания?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Index без конкретного query shape и selectivity увеличивает стоимость writes и может никогда не использоваться."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какая типичная ошибка связана с Index модель понимания?"
@@ -69,15 +71,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "Index без конкретного query shape и selectivity увеличивает стоимость writes и может никогда не использоваться."
-      ],
-      "red_flags": [
-        "Index без конкретного query shape и selectivity увеличивает стоимость writes и может никогда не использоваться."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое Index модель понимания и как это работает?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Index без конкретного query shape и selectivity увеличивает стоимость writes и может никогда не использоваться."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое Index модель понимания и как это работает?"

@@ -8,3 +8,19 @@ async def scenario():
     await asyncio.sleep(0)
     assert task not in registry
 def test_lifecycle(): asyncio.run(scenario())
+
+import pytest
+
+def test_failure_cleanup_and_other_entries():
+    async def run():
+        marker = object()
+        registry = {marker}
+        async def broken():
+            raise ValueError("broken")
+        task = start_job(broken(), registry)
+        assert task in registry
+        with pytest.raises(ValueError, match="broken"):
+            await task
+        await asyncio.sleep(0)
+        assert registry == {marker}
+    asyncio.run(run())

@@ -23,16 +23,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "`WHERE COUNT(*) > 1` некорректен, потому что aggregate на этом этапе ещё не вычислен.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "`WHERE COUNT(*) > 1` некорректен, потому что aggregate на этом этапе ещё не вычислен."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какая типичная ошибка связана с HAVING?"
-      ]
+      ],
+      "coding_mistakes": [
+        "`WHERE COUNT(*) > 1` некорректен, потому что aggregate на этом этапе ещё не вычислен."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какая типичная ошибка связана с HAVING?"
@@ -67,15 +69,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "`WHERE COUNT(*) > 1` некорректен, потому что aggregate на этом этапе ещё не вычислен."
-      ],
-      "red_flags": [
-        "`WHERE COUNT(*) > 1` некорректен, потому что aggregate на этом этапе ещё не вычислен."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое HAVING и как это работает?"
-      ]
+      ],
+      "coding_mistakes": [
+        "`WHERE COUNT(*) > 1` некорректен, потому что aggregate на этом этапе ещё не вычислен."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое HAVING и как это работает?"

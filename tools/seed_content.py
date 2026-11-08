@@ -600,6 +600,9 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--force", action="store_true", help="overwrite generated lesson files")
     args = parser.parse_args()
+    if (CONTENT / "curriculum.json").exists():
+        print("Published curriculum exists; legacy seeding is disabled, including --force. Edit lesson bundles directly.")
+        return
     order = 0
     catalog = []
     for module_index, (module_slug, module_title, lessons) in enumerate(MODULES, start=1):

@@ -25,16 +25,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "`status = 'paid' OR status = 'new' AND active` часто означает не ту группировку, которую читатель предполагает визуально.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "`status = 'paid' OR status = 'new' AND active` часто означает не ту группировку, которую читатель предполагает визуально."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какая типичная ошибка связана с WHERE and boolean logic?"
-      ]
+      ],
+      "coding_mistakes": [
+        "`status = 'paid' OR status = 'new' AND active` часто означает не ту группировку, которую читатель предполагает визуально."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какая типичная ошибка связана с WHERE and boolean logic?"
@@ -69,15 +71,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "`status = 'paid' OR status = 'new' AND active` часто означает не ту группировку, которую читатель предполагает визуально."
-      ],
-      "red_flags": [
-        "`status = 'paid' OR status = 'new' AND active` часто означает не ту группировку, которую читатель предполагает визуально."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое WHERE and boolean logic и как это работает?"
-      ]
+      ],
+      "coding_mistakes": [
+        "`status = 'paid' OR status = 'new' AND active` часто означает не ту группировку, которую читатель предполагает визуально."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое WHERE and boolean logic и как это работает?"

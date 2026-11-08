@@ -1,43 +1,45 @@
 [
   {
-    "question": "Что такое Blocking code inside async code и какой механизм здесь важно понимать Junior-разработчику?",
+    "question": "Что делать с блокирующей библиотекой внутри async endpoint?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "`time.sleep`",
-      "`requests`",
-      "synchronous DB driver",
-      "CPU-heavy loop"
+      "Синхронный I/O удерживает поток loop.",
+      "Async-клиент уступает loop при сетевом ожидании.",
+      "to_thread принимает callable, передаёт аргументы и переносит I/O в поток.",
+      "CPU-bound Python не ускоряется от async def."
     ],
-    "short_answer": "Blocking code inside async code: Это часть asyncio: event loop кооперативно планирует coroutines/tasks вокруг точки приостановки await.",
-    "junior_answer": "Blocking code inside async code — тема, в которой я сначала фиксирую ``time.sleep``, затем объясняю ``requests`` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и точки приостановки await до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
-    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Blocking code inside async code?",
-    "follow_up_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
+    "short_answer": "Синхронный вызов удерживает поток event loop, поэтому задерживает другие задачи.",
+    "junior_answer": "Синхронный вызов удерживает поток event loop, поэтому задерживает другие задачи. Для сети лучше использовать ожидаемый клиент, например httpx.AsyncClient, и правильно закрывать его. Если библиотека синхронная, допустимый по thread-safety I/O-вызов можно перенести через asyncio.to_thread. Тяжёлый чистый Python-расчёт требует другого решения, обычно процесса или worker. Отмена ожидания потока не останавливает его функцию.",
+    "follow_up_question": "Почему await time.sleep(1) не заменяет asyncio.sleep(1)?",
+    "follow_up_answer": "Сначала выполняется time.sleep и блокирует поток. Затем await пытается ожидать возвращённый None, что вызывает TypeError. asyncio.sleep возвращает ожидаемую операцию, которая уступает loop.",
     "expected_answer": {
       "must_mention": [
-        "`time.sleep`",
-        "`requests`",
-        "synchronous DB driver",
-        "CPU-heavy loop"
+        "Синхронный I/O удерживает поток loop.",
+        "Async-клиент уступает loop при сетевом ожидании.",
+        "to_thread принимает callable, передаёт аргументы и переносит I/O в поток.",
+        "CPU-bound Python не ускоряется от async def."
       ],
       "good_additions": [
-        "короткий рабочий пример",
-        "ограничение или типичная ошибка"
+        "Первый самостоятельный пример печатает ['begin', 'end', 'tick'], затем ['begin', 'tick', 'end']. В bad loop получает возможность выполнить heartbeat только после синхронного сна. В good таймер приостанавливает только текущую задачу. HTTP-варианты показывают два разных способа освободить loop: ожидаемый сетевой клиент и перенос синхронного вызова в поток."
       ],
       "common_wrong_answers": [
-        "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
-        "Ответ без механизма, примера и ограничения"
+        "Async def автоматически делает requests.get неблокирующим.",
+        "Отмена await to_thread немедленно останавливает OS-поток."
       ],
       "red_flags": [
-        "Выполнить blocking call в event loop или создать coroutine и не await/schedule её."
+        "Async def автоматически делает requests.get неблокирующим."
+      ],
+      "coding_mistakes": [
+        "Ошибка: написать `await requests.get(url)` и ожидать исправления. Сначала Python выполнит синхронный get в потоке loop, затем попытается await объекта Response, который не является awaitable. Исправление: async-клиент либо передача функции requests.get в to_thread без её предварительного вызова. Для sync DB driver выбирают async-драйвер или выносят весь допустимый по thread-safety unit of work в поток."
       ],
       "follow_up_questions": [
-        "Какое ограничение или типичная ошибка относится именно к теме Blocking code inside async code?"
+        "Почему await time.sleep(1) не заменяет asyncio.sleep(1)?"
       ]
     },
     "follow_ups": [
-      "Какое ограничение или типичная ошибка относится именно к теме Blocking code inside async code?"
+      "Почему await time.sleep(1) не заменяет asyncio.sleep(1)?"
     ],
     "tags": [
       "stage-08",
@@ -50,37 +52,35 @@
     ]
   },
   {
-    "question": "Какое ограничение или типичная ошибка относится именно к теме Blocking code inside async code?",
+    "question": "Почему await time.sleep(1) не заменяет asyncio.sleep(1)?",
     "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "альтернативы: асинхронный клиент, `to_thread`, отдельный обработчик или процесс",
-      "Выполнить blocking call в event loop или создать coroutine и не await/schedule её."
+      "Сначала выполняется time.sleep и блокирует поток. Затем await пытается ожидать возвращённый None, что вызывает TypeError. asyncio.sleep возвращает ожидаемую операцию, которая уступает loop."
     ],
-    "short_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
-    "junior_answer": "Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
-    "follow_up_question": "Что такое Blocking code inside async code и какой механизм здесь важно понимать Junior-разработчику?",
-    "follow_up_answer": "Blocking code inside async code — тема, в которой я сначала фиксирую ``time.sleep``, затем объясняю ``requests`` на коротком примере. Ключевой механизм: Проследи coroutine от создания через scheduling и точки приостановки await до result, cancellation и cleanup. Главная практическая ошибка — Выполнить blocking call в event loop или создать coroutine и не await/schedule её.",
+    "short_answer": "Сначала выполняется time.sleep и блокирует поток. Затем await пытается ожидать возвращённый None, что вызывает TypeError. asyncio.sleep возвращает ожидаемую операцию, которая уступает loop.",
+    "junior_answer": "Сначала выполняется time.sleep и блокирует поток. Затем await пытается ожидать возвращённый None, что вызывает TypeError. asyncio.sleep возвращает ожидаемую операцию, которая уступает loop.",
+    "follow_up_question": "Что делать с блокирующей библиотекой внутри async endpoint?",
+    "follow_up_answer": "Синхронный вызов удерживает поток event loop, поэтому задерживает другие задачи. Для сети лучше использовать ожидаемый клиент, например httpx.AsyncClient, и правильно закрывать его. Если библиотека синхронная, допустимый по thread-safety I/O-вызов можно перенести через asyncio.to_thread. Тяжёлый чистый Python-расчёт требует другого решения, обычно процесса или worker. Отмена ожидания потока не останавливает его функцию.",
     "expected_answer": {
       "must_mention": [
-        "альтернативы: асинхронный клиент, `to_thread`, отдельный обработчик или процесс"
+        "Сначала выполняется time.sleep и блокирует поток. Затем await пытается ожидать возвращённый None, что вызывает TypeError. asyncio.sleep возвращает ожидаемую операцию, которая уступает loop."
       ],
       "good_additions": [
-        "короткий пример именно этой темы"
+        "Первый самостоятельный пример печатает ['begin', 'end', 'tick'], затем ['begin', 'tick', 'end']. В bad loop получает возможность выполнить heartbeat только после синхронного сна. В good таймер приостанавливает только текущую задачу. HTTP-варианты показывают два разных способа освободить loop: ожидаемый сетевой клиент и перенос синхронного вызова в поток."
       ],
-      "common_wrong_answers": [
-        "Выполнить blocking call в event loop или создать coroutine и не await/schedule её."
-      ],
-      "red_flags": [
-        "Выполнить blocking call в event loop или создать coroutine и не await/schedule её."
+      "common_wrong_answers": [],
+      "red_flags": [],
+      "coding_mistakes": [
+        "Ошибка: написать `await requests.get(url)` и ожидать исправления. Сначала Python выполнит синхронный get в потоке loop, затем попытается await объекта Response, который не является awaitable. Исправление: async-клиент либо передача функции requests.get в to_thread без её предварительного вызова. Для sync DB driver выбирают async-драйвер или выносят весь допустимый по thread-safety unit of work в поток."
       ],
       "follow_up_questions": [
-        "Что такое Blocking code inside async code и какой механизм здесь важно понимать Junior-разработчику?"
+        "Что делать с блокирующей библиотекой внутри async endpoint?"
       ]
     },
     "follow_ups": [
-      "Что такое Blocking code inside async code и какой механизм здесь важно понимать Junior-разработчику?"
+      "Что делать с блокирующей библиотекой внутри async endpoint?"
     ],
     "tags": [
       "stage-08",

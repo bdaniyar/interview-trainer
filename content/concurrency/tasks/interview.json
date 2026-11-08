@@ -1,43 +1,42 @@
 [
   {
-    "question": "Что такое Tasks and `asyncio.create_task` и как это работает?",
+    "question": "Чем Task отличается от coroutine object?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "scheduling",
-      "keeping references",
-      "awaiting completion",
-      "exception handling"
+      "Task планирует coroutine и хранит итог.",
+      "Ссылки и await результата имеют разные назначения.",
+      "Done callback получает завершённую Task."
     ],
-    "short_answer": "Asyncio Task планирует одну coroutine и хранит её состояние завершения, result, exception или cancellation.",
-    "junior_answer": "Asyncio Task планирует одну coroutine и хранит её состояние завершения, result, exception или cancellation. `create_task` делает coroutine готовой к выполнению; caller должен сохранить reference и затем дождаться результата либо явно обработать outcome. Важное ограничение: Fire-and-forget внутри web process не является durable: shutdown может потерять task, а необработанное исключение останется только в logs.",
-    "follow_up_question": "Какая типичная ошибка связана с Tasks and `asyncio.create_task`?",
-    "follow_up_answer": "Создание task без сохранения reference скрывает сбои и не гарантирует завершение до остановки request или process.",
+    "short_answer": "Coroutine object описывает ещё не выполненную или приостановленную работу.",
+    "junior_answer": "Coroutine object описывает ещё не выполненную или приостановленную работу. Task планирует её выполнение в event loop и хранит итог. Create_task возвращает Task сразу, поэтому независимые операции могут продвигаться конкурентно. Нужно сохранять ссылки на задачи и получать результаты или ошибки через await. Это конкурентность в loop, а не отдельный поток для каждой coroutine.",
+    "follow_up_question": "Удаление Task из реестра обрабатывает её исключение?",
+    "follow_up_answer": "Нет. Callback registry.discard управляет только ссылкой в set. За результат и исключение отвечает код, который ожидает Task или явно читает её итог.",
     "expected_answer": {
       "must_mention": [
-        "scheduling",
-        "keeping references",
-        "awaiting completion",
-        "exception handling"
+        "Task планирует coroutine и хранит итог.",
+        "Ссылки и await результата имеют разные назначения.",
+        "Done callback получает завершённую Task."
       ],
       "good_additions": [
-        "короткий рабочий пример",
-        "ограничение или типичная ошибка"
+        "При стандартной фабрике задач сначала scheduled. На await task main приостанавливается, quote печатает quote started и уступает на sleep(0). Затем quote возвращает 120; main получает его и печатает 120. Планирование не обещает выполнение на другом ядре."
       ],
       "common_wrong_answers": [
-        "Создание task без сохранения reference скрывает сбои и не гарантирует завершение до остановки request или process.",
-        "Ответ без механизма, примера и ограничения"
+        "Create_task создаёт отдельный OS-поток для coroutine."
       ],
       "red_flags": [
-        "Создание task без сохранения reference скрывает сбои и не гарантирует завершение до остановки request или process."
+        "Create_task создаёт отдельный OS-поток для coroutine."
+      ],
+      "coding_mistakes": [
+        "Неправильно: вызвать create_task(save()) и забыть задачу. Ошибка save может остаться ненаблюдаемой, а завершение процесса оборвёт работу. Исправление: сохранить Task, дождаться её результата и определить, кто отвечает за ошибку и завершение."
       ],
       "follow_up_questions": [
-        "Какая типичная ошибка связана с Tasks and `asyncio.create_task`?"
+        "Удаление Task из реестра обрабатывает её исключение?"
       ]
     },
     "follow_ups": [
-      "Какая типичная ошибка связана с Tasks and `asyncio.create_task`?"
+      "Удаление Task из реестра обрабатывает её исключение?"
     ],
     "tags": [
       "stage-08",
@@ -50,37 +49,35 @@
     ]
   },
   {
-    "question": "Какая типичная ошибка связана с Tasks and `asyncio.create_task`?",
+    "question": "Удаление Task из реестра обрабатывает её исключение?",
     "level": "follow_up",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "один короткий пример кода с результатом",
-      "Создание task без сохранения reference скрывает сбои и не гарантирует завершение до остановки request или process."
+      "Нет. Callback registry.discard управляет только ссылкой в set. За результат и исключение отвечает код, который ожидает Task или явно читает её итог."
     ],
-    "short_answer": "Создание task без сохранения reference скрывает сбои и не гарантирует завершение до остановки request или process.",
-    "junior_answer": "Создание task без сохранения reference скрывает сбои и не гарантирует завершение до остановки request или process.",
-    "follow_up_question": "Что такое Tasks and `asyncio.create_task` и как это работает?",
-    "follow_up_answer": "Asyncio Task планирует одну coroutine и хранит её состояние завершения, result, exception или cancellation. `create_task` делает coroutine готовой к выполнению; caller должен сохранить reference и затем дождаться результата либо явно обработать outcome. Важное ограничение: Fire-and-forget внутри web process не является durable: shutdown может потерять task, а необработанное исключение останется только в logs.",
+    "short_answer": "Нет. Callback registry.discard управляет только ссылкой в set. За результат и исключение отвечает код, который ожидает Task или явно читает её итог.",
+    "junior_answer": "Нет. Callback registry.discard управляет только ссылкой в set. За результат и исключение отвечает код, который ожидает Task или явно читает её итог.",
+    "follow_up_question": "Чем Task отличается от coroutine object?",
+    "follow_up_answer": "Coroutine object описывает ещё не выполненную или приостановленную работу. Task планирует её выполнение в event loop и хранит итог. Create_task возвращает Task сразу, поэтому независимые операции могут продвигаться конкурентно. Нужно сохранять ссылки на задачи и получать результаты или ошибки через await. Это конкурентность в loop, а не отдельный поток для каждой coroutine.",
     "expected_answer": {
       "must_mention": [
-        "один короткий пример кода с результатом"
+        "Нет. Callback registry.discard управляет только ссылкой в set. За результат и исключение отвечает код, который ожидает Task или явно читает её итог."
       ],
       "good_additions": [
-        "короткий пример именно этой темы"
+        "При стандартной фабрике задач сначала scheduled. На await task main приостанавливается, quote печатает quote started и уступает на sleep(0). Затем quote возвращает 120; main получает его и печатает 120. Планирование не обещает выполнение на другом ядре."
       ],
-      "common_wrong_answers": [
-        "Создание task без сохранения reference скрывает сбои и не гарантирует завершение до остановки request или process."
-      ],
-      "red_flags": [
-        "Создание task без сохранения reference скрывает сбои и не гарантирует завершение до остановки request или process."
+      "common_wrong_answers": [],
+      "red_flags": [],
+      "coding_mistakes": [
+        "Неправильно: вызвать create_task(save()) и забыть задачу. Ошибка save может остаться ненаблюдаемой, а завершение процесса оборвёт работу. Исправление: сохранить Task, дождаться её результата и определить, кто отвечает за ошибку и завершение."
       ],
       "follow_up_questions": [
-        "Что такое Tasks and `asyncio.create_task` и как это работает?"
+        "Чем Task отличается от coroutine object?"
       ]
     },
     "follow_ups": [
-      "Что такое Tasks and `asyncio.create_task` и как это работает?"
+      "Чем Task отличается от coroutine object?"
     ],
     "tags": [
       "stage-08",

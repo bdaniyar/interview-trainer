@@ -22,7 +22,7 @@
 
 Опиши один request и один response, включая поведение retry, cache и error contract только там, где они относятся к теме.
 
-**идентификатор ресурса выбирает сервер или заранее знает клиент.** `SELECT` формирует result columns после FROM/JOIN/WHERE/GROUP/HAVING; порядок строк существует только при явном `ORDER BY`.
+**идентификатор ресурса выбирает сервер или заранее знает клиент.** При POST коллекция может создать ресурс и назначить ему URI. При PUT клиент обращается к уже выбранному URI и задаёт желаемое состояние ресурса: сервер заменяет его либо создаёт, если это разрешено. PUT идемпотентен по намерению; повтор запроса не должен создавать ещё один ресурс. Выбор не связан с SQL SELECT.
 
 **creation/action semantics.** `creation/action semantics` является частью observable HTTP contract и влияет на request semantics, response status/body и допустимость повторного запроса.
 
@@ -153,3 +153,5 @@ POST vs PUT: Это часть наблюдаемого HTTP contract: method/ta
 - [MDN HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP)
 
 Последняя проверка версий: **2026-08-27**.
+
+- Точечная проверка подтемы 2026-11-08: [HTTP semantics · PUT](https://www.rfc-editor.org/rfc/rfc9110.html#name-put). Остальной материал урока ещё ожидает содержательного аудита.

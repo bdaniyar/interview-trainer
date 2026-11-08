@@ -19,16 +19,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какое ограничение или типичная ошибка относится именно к теме HTTPS and secure cookies?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какое ограничение или типичная ошибка относится именно к теме HTTPS and secure cookies?"
@@ -63,15 +65,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией."
-      ],
-      "red_flags": [
-        "Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое HTTPS and secure cookies и какой механизм здесь важно понимать Junior-разработчику?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Перенести security check в UI либо считать CORS/JWT самостоятельной авторизацией."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое HTTPS and secure cookies и какой механизм здесь важно понимать Junior-разработчику?"

@@ -23,16 +23,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "LIMIT/OFFSET без стабильного уникального ordering возвращает пропущенные или повторные rows между страницами.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "LIMIT/OFFSET без стабильного уникального ordering возвращает пропущенные или повторные rows между страницами."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какая типичная ошибка связана с ORDER BY, LIMIT and OFFSET?"
-      ]
+      ],
+      "coding_mistakes": [
+        "LIMIT/OFFSET без стабильного уникального ordering возвращает пропущенные или повторные rows между страницами."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какая типичная ошибка связана с ORDER BY, LIMIT and OFFSET?"
@@ -67,15 +69,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "LIMIT/OFFSET без стабильного уникального ordering возвращает пропущенные или повторные rows между страницами."
-      ],
-      "red_flags": [
-        "LIMIT/OFFSET без стабильного уникального ordering возвращает пропущенные или повторные rows между страницами."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое ORDER BY, LIMIT and OFFSET и как это работает?"
-      ]
+      ],
+      "coding_mistakes": [
+        "LIMIT/OFFSET без стабильного уникального ordering возвращает пропущенные или повторные rows между страницами."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое ORDER BY, LIMIT and OFFSET и как это работает?"

@@ -24,7 +24,7 @@
 
 **short access token.** `short access token` защищается по реализованному flow: проблема, принятое решение, компромисс, режим отказа и test/metric.
 
-**на стороне сервера refresh session.** Session владеет identity map и transaction state; после ошибки flush требуется rollback до дальнейшей работы.
+**на стороне сервера refresh session.** Здесь session — серверная запись о refresh token и его владельце. При обновлении проверяют срок, отзыв и признаки повторного использования; при rotation старый token заменяется новым. Это позволяет отозвать конкретную авторизацию. Подпись JWT сама по себе не подтверждает, что refresh session всё ещё разрешена.
 
 **hashed token identifier.** Равные hashable-объекты обязаны иметь одинаковый hash, а состояние, влияющее на equality, не должно меняться в ключе.
 
@@ -178,3 +178,5 @@ JWT refresh sessions: это отдельный технический конт�
 - [Redis documentation](https://redis.io/docs/latest/)
 
 Последняя проверка версий: **2026-08-27**.
+
+- Точечная проверка подтемы 2026-11-08: [OAuth refresh token protection](https://www.rfc-editor.org/rfc/rfc9700.html#name-refresh-token-protection). Остальной материал урока ещё ожидает содержательного аудита.

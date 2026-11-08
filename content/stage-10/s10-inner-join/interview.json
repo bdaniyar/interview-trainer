@@ -25,16 +25,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "Забыть `ON` или часть composite key и получить резкий рост числа строк.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "Забыть `ON` или часть composite key и получить резкий рост числа строк."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Когда вместо INNER JOIN нужен LEFT JOIN?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Забыть `ON` или часть composite key и получить резкий рост числа строк."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Когда вместо INNER JOIN нужен LEFT JOIN?"
@@ -73,17 +75,18 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
+      "common_wrong_answers": [],
+      "red_flags": [],
+      "follow_up_questions": [
+        "Как работает INNER JOIN и почему он может увеличить число строк?"
+      ],
+      "coding_mistakes": [
         "Забыть `ON` или часть composite key и получить резкий рост числа строк.",
         "Добавить `DISTINCT` вместо проверки one-to-many cardinality.",
         "Выбрать INNER JOIN, когда бизнес-требование должно сохранить users без orders."
       ],
-      "red_flags": [
-        "Забыть `ON` или часть composite key и получить резкий рост числа строк."
-      ],
-      "follow_up_questions": [
-        "Как работает INNER JOIN и почему он может увеличить число строк?"
-      ]
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Как работает INNER JOIN и почему он может увеличить число строк?"

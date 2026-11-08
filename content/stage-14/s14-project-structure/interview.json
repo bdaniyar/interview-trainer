@@ -25,16 +25,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "Все concerns внутри routes усложняют transaction tests и проверку business logic без framework.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "Все concerns внутри routes усложняют transaction tests и проверку business logic без framework."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Project structure?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Все concerns внутри routes усложняют transaction tests и проверку business logic без framework."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какая типичная ошибка связана с Project structure?"
@@ -71,15 +73,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "Все concerns внутри routes усложняют transaction tests и проверку business logic без framework."
-      ],
-      "red_flags": [
-        "Все concerns внутри routes усложняют transaction tests и проверку business logic без framework."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое Project structure и как это работает?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Все concerns внутри routes усложняют transaction tests и проверку business logic без framework."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое Project structure и как это работает?"

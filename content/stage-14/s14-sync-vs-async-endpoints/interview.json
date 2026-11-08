@@ -23,16 +23,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "`requests` или sync DB driver внутри async endpoint блокирует loop несмотря на объявление async function.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "`requests` или sync DB driver внутри async endpoint блокирует loop несмотря на объявление async function."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Sync vs async endpoints?"
-      ]
+      ],
+      "coding_mistakes": [
+        "`requests` или sync DB driver внутри async endpoint блокирует loop несмотря на объявление async function."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какая типичная ошибка связана с Sync vs async endpoints?"
@@ -67,15 +69,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "`requests` или sync DB driver внутри async endpoint блокирует loop несмотря на объявление async function."
-      ],
-      "red_flags": [
-        "`requests` или sync DB driver внутри async endpoint блокирует loop несмотря на объявление async function."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое Sync vs async endpoints и как это работает?"
-      ]
+      ],
+      "coding_mistakes": [
+        "`requests` или sync DB driver внутри async endpoint блокирует loop несмотря на объявление async function."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое Sync vs async endpoints и как это работает?"

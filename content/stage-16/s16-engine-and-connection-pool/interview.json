@@ -19,16 +19,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "Незакрытая Session удерживает transaction или connection, пока pool не исчерпается.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "Незакрытая Session удерживает transaction или connection, пока pool не исчерпается."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Engine and пулом соединений?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Незакрытая Session удерживает transaction или connection, пока pool не исчерпается."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какая типичная ошибка связана с Engine and пулом соединений?"
@@ -63,15 +65,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "Незакрытая Session удерживает transaction или connection, пока pool не исчерпается."
-      ],
-      "red_flags": [
-        "Незакрытая Session удерживает transaction или connection, пока pool не исчерпается."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое Engine and пулом соединений и как это работает?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Незакрытая Session удерживает transaction или connection, пока pool не исчерпается."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое Engine and пулом соединений и как это работает?"

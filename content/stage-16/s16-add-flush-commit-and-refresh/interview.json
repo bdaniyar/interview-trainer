@@ -25,16 +25,18 @@
         "короткий рабочий пример",
         "ограничение или типичная ошибка"
       ],
-      "common_wrong_answers": [
-        "Commit только ради получения id ломает атомарный use case; внутри открытой transaction достаточно flush.",
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "red_flags": [
-        "Commit только ради получения id ломает атомарный use case; внутри открытой transaction достаточно flush."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Какая типичная ошибка связана с Add, flush, commit and refresh?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Commit только ради получения id ломает атомарный use case; внутри открытой transaction достаточно flush."
+      ],
+      "assessment_notes": [
+        "Ответ без механизма, примера и ограничения"
+      ],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Какая типичная ошибка связана с Add, flush, commit and refresh?"
@@ -69,15 +71,16 @@
       "good_additions": [
         "короткий пример именно этой темы"
       ],
-      "common_wrong_answers": [
-        "Commit только ради получения id ломает атомарный use case; внутри открытой transaction достаточно flush."
-      ],
-      "red_flags": [
-        "Commit только ради получения id ломает атомарный use case; внутри открытой transaction достаточно flush."
-      ],
+      "common_wrong_answers": [],
+      "red_flags": [],
       "follow_up_questions": [
         "Что такое Add, flush, commit and refresh и как это работает?"
-      ]
+      ],
+      "coding_mistakes": [
+        "Commit только ради получения id ломает атомарный use case; внутри открытой transaction достаточно flush."
+      ],
+      "assessment_notes": [],
+      "review_status": "pending-substantive-review"
     },
     "follow_ups": [
       "Что такое Add, flush, commit and refresh и как это работает?"

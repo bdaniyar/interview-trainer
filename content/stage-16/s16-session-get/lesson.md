@@ -24,7 +24,7 @@
 
 **primary-key lookup.** `primary-key lookup` влияет на SQLAlchemy Session/transaction state, момент фактического SQL I/O и поведение rollback или relationship loading.
 
-**identity map behavior.** Identity отвечает на вопрос «тот же ли это объект» и сравнивается через `is`; равенство — отдельный протокол `__eq__`, обычно сравнивающий значения.
+**identity map behavior.** Session.get(Model, primary_key) сначала проверяет identity map текущей Session. Если нужный объект уже загружен и не полностью expired, он возвращается без нового SELECT. Иначе выполняется запрос по primary key; для отсутствующей строки возвращается None. Полностью expired объект требует обновления из БД. Кэш ограничен конкретной Session, а не всем приложением.
 
 
 ### Важный нюанс / ограничение
@@ -155,3 +155,5 @@ get_or_none использует Session.get и не commit.
 - [ORM Querying Guide](https://docs.sqlalchemy.org/en/20/orm/queryguide/index.html)
 
 Последняя проверка версий: **2026-08-27**.
+
+- Точечная проверка подтемы 2026-11-08: [SQLAlchemy Session.get](https://docs.sqlalchemy.org/en/20/orm/session_api.html#sqlalchemy.orm.Session.get). Остальной материал урока ещё ожидает содержательного аудита.

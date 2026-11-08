@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
-from add_coding_tasks import Task, indexes, write_task
+try:
+    from .add_coding_tasks import Task, indexes, write_task
+except ImportError:
+    from add_coding_tasks import Task, indexes, write_task
 
 
 FRAMEWORK_TASKS = [
@@ -814,7 +817,7 @@ def main() -> None:
     for task in tasks:
         lesson = lessons[task.number]
         write_task(task, lesson, directories[lesson["implementation_slug"]])
-    print(f"Added {len(FRAMEWORK_TASKS)} FastAPI/Pydantic and {len(ORM_TASKS)} SQLAlchemy/Alembic tasks")
+    print("Backend task catalog checked; existing bundles preserved")
 
 
 if __name__ == "__main__":

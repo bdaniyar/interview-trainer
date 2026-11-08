@@ -1,43 +1,42 @@
 [
   {
-    "question": "Что такое Coroutine function and coroutine object и как это работает?",
+    "question": "Что происходит при вызове async def и при await?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "`async def`",
-      "calling async function",
-      "coroutine object",
-      "выполнение начинается после ожидания через await или планирования"
+      "Вызов async def создаёт coroutine object.",
+      "await получает возвращённое значение или исключение.",
+      "asyncio.run запускает главную coroutine в обычном скрипте."
     ],
-    "short_answer": "Coroutine function объявляется через `async def`; вызов создаёт coroutine object, а не выполняет тело до конца.",
-    "junior_answer": "Coroutine function объявляется через `async def`; вызов создаёт coroutine object, а не выполняет тело до конца. Объект запускается через `await` или scheduling как Task. Потерянная coroutine обычно приводит к warning `coroutine was never awaited`. Важное ограничение: Coroutine object одноразовый: после завершения его нельзя await повторно.",
-    "follow_up_question": "Какая типичная ошибка связана с Coroutine function and coroutine object?",
-    "follow_up_answer": "Возврат coroutine object из кода, обещавшего готовое значение, переносит async boundary не тому caller.",
+    "short_answer": "Вызов async def создаёт coroutine object, но ещё не выполняет тело.",
+    "junior_answer": "Вызов async def создаёт coroutine object, но ещё не выполняет тело. Чтобы получить результат, его нужно ожидать через await или запланировать на выполнение. В скрипте главную coroutine можно запустить через asyncio.run. return становится значением await, а исключение передаётся в точку ожидания. Один только вызов не означает фоновую работу.",
+    "follow_up_question": "Почему нельзя сразу читать поле из результата async get_user()?",
+    "follow_up_answer": "До await у нас coroutine object. После await будет возвращённый словарь, и только тогда можно прочитать ключ name.",
     "expected_answer": {
       "must_mention": [
-        "`async def`",
-        "calling async function",
-        "coroutine object",
-        "выполнение начинается после ожидания через await или планирования"
+        "Вызов async def создаёт coroutine object.",
+        "await получает возвращённое значение или исключение.",
+        "asyncio.run запускает главную coroutine в обычном скрипте."
       ],
       "good_additions": [
-        "короткий рабочий пример",
-        "ограничение или типичная ошибка"
+        "Сначала created: создание pending не вошло в greeting. На await начинается тело, печатается inside. return передаёт строку в text; последняя строка вывода — Привет, Алия."
       ],
       "common_wrong_answers": [
-        "Возврат coroutine object из кода, обещавшего готовое значение, переносит async boundary не тому caller.",
-        "Ответ без механизма, примера и ограничения"
+        "Вызов async def сразу выполняет тело в отдельном потоке."
       ],
       "red_flags": [
-        "Возврат coroutine object из кода, обещавшего готовое значение, переносит async boundary не тому caller."
+        "Вызов async def сразу выполняет тело в отдельном потоке."
+      ],
+      "coding_mistakes": [
+        "Неправильно: `name = client.get_user(7)[\"name\"]`, если get_user объявлен через async def. Индексирование применяется к coroutine, а не к словарю. Исправление: сначала получить `user = await client.get_user(7)`, затем читать поля user."
       ],
       "follow_up_questions": [
-        "Какая типичная ошибка связана с Coroutine function and coroutine object?"
+        "Почему нельзя сразу читать поле из результата async get_user()?"
       ]
     },
     "follow_ups": [
-      "Какая типичная ошибка связана с Coroutine function and coroutine object?"
+      "Почему нельзя сразу читать поле из результата async get_user()?"
     ],
     "tags": [
       "stage-08",
@@ -50,37 +49,35 @@
     ]
   },
   {
-    "question": "Какая типичная ошибка связана с Coroutine function and coroutine object?",
+    "question": "Почему нельзя сразу читать поле из результата async get_user()?",
     "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "один короткий пример кода с результатом",
-      "Возврат coroutine object из кода, обещавшего готовое значение, переносит async boundary не тому caller."
+      "До await у нас coroutine object. После await будет возвращённый словарь, и только тогда можно прочитать ключ name."
     ],
-    "short_answer": "Возврат coroutine object из кода, обещавшего готовое значение, переносит async boundary не тому caller.",
-    "junior_answer": "Возврат coroutine object из кода, обещавшего готовое значение, переносит async boundary не тому caller.",
-    "follow_up_question": "Что такое Coroutine function and coroutine object и как это работает?",
-    "follow_up_answer": "Coroutine function объявляется через `async def`; вызов создаёт coroutine object, а не выполняет тело до конца. Объект запускается через `await` или scheduling как Task. Потерянная coroutine обычно приводит к warning `coroutine was never awaited`. Важное ограничение: Coroutine object одноразовый: после завершения его нельзя await повторно.",
+    "short_answer": "До await у нас coroutine object. После await будет возвращённый словарь, и только тогда можно прочитать ключ name.",
+    "junior_answer": "До await у нас coroutine object. После await будет возвращённый словарь, и только тогда можно прочитать ключ name.",
+    "follow_up_question": "Что происходит при вызове async def и при await?",
+    "follow_up_answer": "Вызов async def создаёт coroutine object, но ещё не выполняет тело. Чтобы получить результат, его нужно ожидать через await или запланировать на выполнение. В скрипте главную coroutine можно запустить через asyncio.run. return становится значением await, а исключение передаётся в точку ожидания. Один только вызов не означает фоновую работу.",
     "expected_answer": {
       "must_mention": [
-        "один короткий пример кода с результатом"
+        "До await у нас coroutine object. После await будет возвращённый словарь, и только тогда можно прочитать ключ name."
       ],
       "good_additions": [
-        "короткий пример именно этой темы"
+        "Сначала created: создание pending не вошло в greeting. На await начинается тело, печатается inside. return передаёт строку в text; последняя строка вывода — Привет, Алия."
       ],
-      "common_wrong_answers": [
-        "Возврат coroutine object из кода, обещавшего готовое значение, переносит async boundary не тому caller."
-      ],
-      "red_flags": [
-        "Возврат coroutine object из кода, обещавшего готовое значение, переносит async boundary не тому caller."
+      "common_wrong_answers": [],
+      "red_flags": [],
+      "coding_mistakes": [
+        "Неправильно: `name = client.get_user(7)[\"name\"]`, если get_user объявлен через async def. Индексирование применяется к coroutine, а не к словарю. Исправление: сначала получить `user = await client.get_user(7)`, затем читать поля user."
       ],
       "follow_up_questions": [
-        "Что такое Coroutine function and coroutine object и как это работает?"
+        "Что происходит при вызове async def и при await?"
       ]
     },
     "follow_ups": [
-      "Что такое Coroutine function and coroutine object и как это работает?"
+      "Что происходит при вызове async def и при await?"
     ],
     "tags": [
       "stage-08",
