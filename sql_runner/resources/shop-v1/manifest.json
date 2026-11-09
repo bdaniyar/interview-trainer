@@ -1,0 +1,14 @@
+{
+  "id": "shop-v1",
+  "revision": 1,
+  "postgres_major": 17,
+  "checksum": "a1de3973eb4a2febc818c026def43716109e7ffde6b0bc46721e11d1b2fa4b97",
+  "schema_sha256": "775190ef653c316222e2e3765b7351551c87138ed66ce90c3873663070dec2c5",
+  "seed_sha256": "132c5f02e57a77e330d5cd393c87ae0f637e38dc569b150aed47a47edfe3a4a7",
+  "rows": {
+    "users": 4,
+    "orders": 5,
+    "products": 3,
+    "order_items": 5
+  }
+}

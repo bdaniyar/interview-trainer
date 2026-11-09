@@ -1,4 +1,4 @@
 [tool.pytest.ini_options]
-testpaths = ["backend/tests", "runner/tests", "tools/tests"]
+testpaths = ["backend/tests", "runner/tests", "tools/tests", "sql_runner/tests/unit"]
 pythonpath = ["backend", "runner"]
 addopts = "-q"

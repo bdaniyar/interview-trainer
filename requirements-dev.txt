@@ -1,4 +1,5 @@
 -r backend/requirements.txt
 -r runner/requirements.txt
+-r sql_runner/requirements.txt
 pytest==8.4.1
 alembic==1.19.1

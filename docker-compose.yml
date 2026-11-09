@@ -1,6 +1,40 @@
 name: pythoria
 
 services:
+  sql-sandbox:
+    image: pythoria-sql-sandbox:phase1
+    build:
+      context: .
+      dockerfile: sql_runner/sandbox/Dockerfile
+    entrypoint: ["/opt/sql-venv/bin/python", "--version"]
+    network_mode: none
+    read_only: true
+    tmpfs:
+      - /var/lib/postgresql/data:size=1m
+    restart: "no"
+
+  sql-runner:
+    image: pythoria-sql-runner:phase1
+    build:
+      context: .
+      dockerfile: sql_runner/Dockerfile
+    environment:
+      SQL_SANDBOX_IMAGE: pythoria-sql-sandbox:phase1
+      SQL_RUNNER_NAMESPACE: pythoria-sql-local
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      sql-sandbox:
+        condition: service_completed_successfully
+    expose:
+      - "8002"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8002/health', timeout=2)"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+    restart: unless-stopped
+
   sandbox:
     image: pythoria-sandbox:local
     build:
