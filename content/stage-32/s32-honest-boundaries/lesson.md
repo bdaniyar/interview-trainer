@@ -100,9 +100,13 @@
 
 **Сценарий:** Спросили Kafka/Kubernetes/AWS.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Не заявлять опыт; learning plan; factual stack.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

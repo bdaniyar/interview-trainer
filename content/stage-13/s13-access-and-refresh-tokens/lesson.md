@@ -100,9 +100,13 @@
 
 **Сценарий:** Украденный access действует месяц без возможности быстро ограничить ущерб.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Короткий access, controlled refresh session/rotation/revocation; threat-based TTL.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

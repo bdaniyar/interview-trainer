@@ -86,9 +86,13 @@ dockerignore, rotation, runtime secrets.
 
 **Сценарий:** COPY . . добавил .env.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** dockerignore, rotation, runtime secrets.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Практика: Отладка
 
@@ -96,9 +100,13 @@ dockerignore, rotation, runtime secrets.
 
 **Сценарий:** COPY . . сохранил .env в старом image layer.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Rotate secret, .dockerignore, runtime injection/secrets; удаление в следующем layer не очищает историю.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

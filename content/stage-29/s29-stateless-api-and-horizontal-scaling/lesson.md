@@ -92,9 +92,13 @@ Local state; shared DB/cache/storage.
 
 **Сценарий:** Что мешает второму API instance?
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Local state; shared DB/cache/storage.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

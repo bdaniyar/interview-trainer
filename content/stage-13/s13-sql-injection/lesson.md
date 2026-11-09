@@ -92,9 +92,13 @@ Parameterized query/SQLAlchemy expression; test malicious input как data, н�
 
 **Сценарий:** Query строится из user input через f-string.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Parameterized query/SQLAlchemy expression; test malicious input как data, не SQL syntax.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

@@ -97,9 +97,13 @@ Mock-нуть реализацию вместо внешней границы и
 
 **Сценарий:** FastAPI test ходит в real DB.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** app.dependency_overrides и cleanup.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

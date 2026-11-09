@@ -97,9 +97,13 @@ Random high-entropy token, server-side hash, TTL и atomic one-time invalidation
 
 **Сценарий:** Один reset URL меняет пароль повторно.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Random high-entropy token, server-side hash, TTL и atomic one-time invalidation; revoke sessions по policy.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

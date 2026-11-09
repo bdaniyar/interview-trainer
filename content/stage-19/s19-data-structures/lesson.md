@@ -100,9 +100,13 @@ Key включает namespace/version/tenant/entity; authorization остаёт
 
 **Сценарий:** profile:42 разных tenants возвращает чужие данные.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Key включает namespace/version/tenant/entity; authorization остаётся server-side.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

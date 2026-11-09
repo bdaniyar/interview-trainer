@@ -92,9 +92,13 @@ Mock-нуть реализацию вместо внешней границы и
 
 **Сценарий:** Тест mock-ает private calls.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Mock external boundary; assert outcome.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

@@ -100,9 +100,13 @@
 
 **Сценарий:** API декодирует payload без проверки signature/issuer/audience/exp.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Полная verification с разрешённым algorithm и claims; invalid token всегда безопасно отклоняется.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

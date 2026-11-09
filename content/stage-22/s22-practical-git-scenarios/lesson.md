@@ -100,9 +100,13 @@
 
 **Сценарий:** Commit случайно в main local.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Создать branch at commit; безопасно restore main.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

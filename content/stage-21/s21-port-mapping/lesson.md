@@ -92,9 +92,13 @@ service:5432; host mapping только для host client.
 
 **Сценарий:** Host открывает 5433, какой port использует API container?
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** service:5432; host mapping только для host client.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Практика: Отладка
 
@@ -102,9 +106,13 @@ service:5432; host mapping только для host client.
 
 **Сценарий:** API container подключается к db:5433 из-за host mapping 5433:5432.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Между containers использовать service DNS и container port 5432; host port нужен только host client.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

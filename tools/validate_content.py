@@ -270,8 +270,8 @@ def validate(run_solutions: bool, strict_quality: bool = False) -> None:
             fail(errors, f"{record['slug']}: remove reviewed lesson from legacy_debt")
     pending = sum(not record["reviewed"] for record in quality)
     for record in quality:
-        if record["reviewed"] or strict_quality:
-            for issue in record["issues"]:
+        for issue in record["issues"]:
+            if record["reviewed"] or strict_quality or issue["code"].startswith("answer-"):
                 fail(errors, f"{record['slug']}: {issue['code']}: {issue['detail']}")
     if strict_quality and pending:
         fail(errors, f"{pending} lessons still require substantive review")

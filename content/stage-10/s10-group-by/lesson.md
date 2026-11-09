@@ -252,17 +252,25 @@ INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,1
 
 **Сценарий:** COUNT(country) меньше COUNT(*).
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** COUNT(expression) пропускает NULL.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ### Incorrect GROUP BY
 
 **Сценарий:** Запрос агрегирует по user_id, но выбирает произвольный email.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Все неагрегированные columns должны быть функционально зависимы/в GROUP BY; сначала определить grain результата.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

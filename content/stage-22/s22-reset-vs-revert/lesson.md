@@ -92,9 +92,13 @@ git revert; не rewrite shared history.
 
 **Сценарий:** Ошибка уже в main.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** git revert; не rewrite shared history.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Практика: Отладка
 
@@ -102,9 +106,13 @@ git revert; не rewrite shared history.
 
 **Сценарий:** force push после reset удалил commits коллег.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Для published history использовать revert; recovery через reflog/remote refs и coordination.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

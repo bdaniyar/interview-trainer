@@ -95,9 +95,13 @@ Named volume; backups; down -v destructive.
 
 **Сценарий:** После recreate DB данные исчезли.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Named volume; backups; down -v destructive.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Практика: Отладка
 
@@ -105,17 +109,25 @@ Named volume; backups; down -v destructive.
 
 **Сценарий:** Mount ./app:/app скрыл dependencies, созданные в image path.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Проверить mount target; отделить source и dependency paths, использовать named volume где уместно.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ### No database volume
 
 **Сценарий:** После compose down/recreate PostgreSQL пуст.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Named volume и backup/restore; документировать, что down -v удаляет данные.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

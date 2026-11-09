@@ -8,6 +8,7 @@ import { oneDark, oneLight } from 'react-syntax-highlighter/dist/cjs/styles/pris
 import remarkGfm from 'remark-gfm';
 
 import type { LessonData } from '../types';
+import { splitSections, splitContent } from './lessonMarkdown';
 
 interface Props {
   lesson: LessonData;
@@ -20,25 +21,8 @@ interface Props {
 
 type LessonMode = 'learn' | 'review';
 
-interface MarkdownSection {
-  title: string;
-  body: string;
-}
-
 const REVIEW_SECTION = /практика|предсказание|задача|вопросы с собеседований|хорошие ответы|критерии хорошего ответа/i;
 const COLLAPSED_SECTION = /модель понимания|хорошие ответы|критерии хорошего ответа|источники/i;
-
-function splitSections(markdown: string): { intro: string; sections: MarkdownSection[] } {
-  const matches = [...markdown.matchAll(/^## (.+)$/gm)];
-  if (!matches.length) return { intro: markdown, sections: [] };
-  const intro = markdown.slice(0, matches[0].index).trim();
-  const sections = matches.map((match, index) => {
-    const start = (match.index ?? 0) + match[0].length;
-    const end = matches[index + 1]?.index ?? markdown.length;
-    return { title: match[1].trim(), body: markdown.slice(start, end).trim() };
-  });
-  return { intro, sections };
-}
 
 interface MarkdownContentProps {
   source: string;
@@ -72,25 +56,14 @@ function MarkdownContent({ source, theme }: MarkdownContentProps) {
     </ReactMarkdown>
   );
 
-  const revealPattern = /<details><summary>(.*?)<\/summary>([\s\S]*?)<\/details>/g;
-  const reveals = [...source.matchAll(revealPattern)];
-  if (!reveals.length) return renderMarkdown(source, 'markdown');
-
-  const content = [];
-  let cursor = 0;
-  reveals.forEach((match, index) => {
-    const start = match.index ?? 0;
-    if (start > cursor) content.push(renderMarkdown(source.slice(cursor, start), `before-${index}`));
-    content.push(
-      <details className="answer-reveal" key={`reveal-${index}`}>
-        <summary>{match[1]}</summary>
-        <div>{renderMarkdown(match[2].trim(), `answer-${index}`)}</div>
-      </details>,
-    );
-    cursor = start + match[0].length;
-  });
-  if (cursor < source.length) content.push(renderMarkdown(source.slice(cursor), 'after'));
-  return <>{content}</>;
+  return <>{splitContent(source).map((block, index) => block.kind === 'markdown'
+    ? renderMarkdown(block.body, `markdown-${index}`)
+    : (
+      <details className="answer-reveal" key={`answer-${index}`}>
+        <summary>{block.summary}</summary>
+        <div><MarkdownContent source={block.body} theme={theme} /></div>
+      </details>
+    ))}</>;
 }
 
 export function MarkdownLesson({ lesson, theme, position, total, onCompleteTheory, onNavigate }: Props) {
@@ -133,7 +106,7 @@ export function MarkdownLesson({ lesson, theme, position, total, onCompleteTheor
           </button>
         </div>
 
-        <div className="markdown-body">
+        <div className="markdown-body" key={`${lesson.slug}:${mode}`}>
           {mode === 'learn' ? <MarkdownContent source={parsed.intro} theme={theme} /> : (
             <div className="review-intro">
               <b>Сначала реши без теории</b>

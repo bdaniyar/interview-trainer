@@ -84,9 +84,13 @@ Query сразу после IntegrityError без rollback вызывает pend
 
 **Сценарий:** После IntegrityError новые queries падают.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Rollback failed transaction before reuse.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

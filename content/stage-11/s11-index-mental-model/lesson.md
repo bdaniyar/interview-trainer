@@ -121,9 +121,13 @@ INSERT INTO bookings VALUES
 
 **Сценарий:** Lookup по уникальному external_id замедлился после роста таблицы.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Снять EXPLAIN ANALYZE, проверить predicate/type/statistics и добавить targeted unique B-tree index.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

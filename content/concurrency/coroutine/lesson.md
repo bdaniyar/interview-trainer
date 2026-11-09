@@ -64,9 +64,35 @@ asyncio.run(main())
 
 ## Практика
 
-1. В примере перенеси print("created") после await. Запиши новый порядок трёх строк.
-2. Вместо return в greeting подними ValueError("bad name"). На какой строке main возникнет ошибка? Ответ: на await pending.
-3. Почему два отдельных вызова greeting("Алия") создают разные объекты?
+### Вопрос 1
+
+В примере перенеси print("created") после await. Запиши новый порядок трёх строк.
+
+<details><summary>Показать ответ</summary>
+
+Порядок: inside → created → Привет, Алия. Await выполняет greeting до получения результата, после чего main доходит до print("created") и печати text.
+
+</details>
+
+### Вопрос 2
+
+Вместо return в greeting подними ValueError("bad name"). На какой строке main возникнет ошибка?
+
+<details><summary>Показать ответ</summary>
+
+ValueError возникнет в main на строке await pending. До await тело greeting ещё не выполнялось, поэтому создание pending само эту ошибку не вызывает.
+
+</details>
+
+### Вопрос 3
+
+Почему два отдельных вызова greeting("Алия") создают разные объекты?
+
+<details><summary>Показать ответ</summary>
+
+Каждый вызов coroutine function создаёт новый coroutine object с отдельным состоянием выполнения. Это не повторное использование одного и того же объекта.
+
+</details>
 
 ## Вопросы с собеседований
 

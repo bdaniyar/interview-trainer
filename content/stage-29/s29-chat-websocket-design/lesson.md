@@ -100,9 +100,13 @@ Redis Pub/Sub live + PostgreSQL history.
 
 **Сценарий:** Fan-out между processes.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Redis Pub/Sub live + PostgreSQL history.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

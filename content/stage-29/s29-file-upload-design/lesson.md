@@ -97,9 +97,13 @@ Presigned URL, policy, finalize validation.
 
 **Сценарий:** Большой upload не через API memory.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Presigned URL, policy, finalize validation.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

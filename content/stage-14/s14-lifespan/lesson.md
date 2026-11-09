@@ -85,9 +85,13 @@ Lifespan async context manager с cleanup в finally; test lifespan and close st
 
 **Сценарий:** HTTP client создаётся на startup, но socket остаётся после shutdown.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Lifespan async context manager с cleanup в finally; test lifespan and close state.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

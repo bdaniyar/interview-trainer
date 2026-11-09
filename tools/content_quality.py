@@ -1,10 +1,16 @@
 """Deterministic editorial checks. These do not certify semantic correctness."""
 from __future__ import annotations
 
+import ast
 import json
 import re
 from collections import Counter, defaultdict
 from pathlib import Path
+
+try:
+    from .lesson_markdown import sections, disclosures, public_markdown, structural_lines, fenced_blocks
+except ImportError:
+    from lesson_markdown import sections, disclosures, public_markdown, structural_lines, fenced_blocks
 
 GENERIC = (
     'восстановить mental model темы', 'найди нарушение `',
@@ -34,18 +40,82 @@ KNOWN_MISMATCHES = {
 
 
 def section(markdown: str, title: str) -> str:
-    match = re.search(r'^## ' + re.escape(title) + r'\s*\n(.*?)(?=^## |\Z)', markdown, re.M | re.S)
-    return match.group(1).strip() if match else ''
+    return next((s.body for s in sections(markdown) if s.title == title), '')
 
 
 def prose(markdown: str) -> str:
     return re.sub(r'```.*?```', '', markdown, flags=re.S)
 
 
-def lesson_issues(metadata: dict, markdown: str, questions: list[dict]) -> list[dict]:
+ANSWER_LABEL = re.compile(
+    r"(?i)(?:ответ(?:\s+для\s+самопроверки)?|правильный\s+ответ|проверка\s+ответа|"
+    r"критерии\s+ответа|слабый\s+ответ|ожидаем(?:ый|ые)\s+(?:вывод|результат|ответы)|"
+    r"исправление|решение)\s*\*{0,2}\s*:"
+)
+
+
+def answer_leaks(metadata: dict, markdown: str, solution_source: str = "") -> list[dict]:
+    """Check review-visible exercises, with explicit disclosures as boundaries.
+
+    Theory/walkthroughs and coding input/output contracts are deliberately not
+    classified as answers. This detects established authoring patterns; semantic
+    hints without a marker still require editorial review.
+    """
+    issues = []
+    for item in sections(markdown):
+        if not re.search(r'практика|предсказание|^задача$|вопросы с собеседований', item.title, re.I):
+            continue
+        for answer in disclosures(item.body):
+            if not answer.closed or not answer.summary or answer.initially_open:
+                issues.append({'code': 'answer-disclosure', 'detail': f'{item.title}: answer must have a summary, closing tag and no open attribute'})
+        if item.title == 'Задача' and metadata.get('has_task'):
+            if solution_source:
+                try:
+                    definitions = {ast.dump(node) for node in ast.parse(solution_source).body
+                                   if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef))}
+                    for language, source, _ in fenced_blocks(item.body):
+                        if language not in {'python', 'py'}:
+                            continue
+                        for node in ast.parse(source).body:
+                            if ast.dump(node) in definitions:
+                                issues.append({'code': 'answer-task-solution', 'detail': f'{item.title}: implementation copied from solution/main.py'})
+                except SyntaxError:
+                    pass  # Syntax diagnostics are handled separately.
+            continue  # Function name, I/O examples and edge cases stay public.
+        for _, line, code, _ in structural_lines(item.body):
+            if not code and '<details' in line.lower() and not re.match(r'^\s*<details(?:\s[^>]*)?>', line, re.I):
+                issues.append({'code': 'answer-disclosure', 'detail': f'{item.title}: disclosure must start on its own line'})
+        visible = public_markdown(item.body)
+        for offset, line, code, _ in structural_lines(visible):
+            label = ANSWER_LABEL.search(line)
+            contract_output = item.title == 'Задача' and label and label[0].lower().startswith('ожидаем')
+            heading_answer = re.match(r'^#{3,6}\s+(?:правильный ответ|ответ|решение|исправленный код|ожидаемый результат)\s*$', line.strip(), re.I)
+            if not code and ((label and not contract_output) or heading_answer):
+                line_number = markdown[:item.start].count('\n') + 2 + visible[:offset].count('\n')
+                issues.append({'code': 'answer-inline', 'detail': f'{item.title}, line {line_number}: {line.strip()}'})
+        # A supplied program is a question; a visible console/result block in a
+        # prediction exercise gives away the result, even without "Ответ:".
+        if re.search(r'предсказание', item.title, re.I):
+            for match in re.finditer(r'^```(text|output|console)\s*\n(.*?)^```', visible, re.M | re.S):
+                issues.append({'code': 'answer-prediction-output', 'detail': f'{item.title}: result block outside disclosure'})
+        # Catch answers copied out of a disclosure while retaining the hidden
+        # copy. Compare full prose lines, not matching words in the question.
+        normalize = lambda text: re.sub(r'[^\w]+', ' ', text.lower()).strip()
+        public_lines = [normalize(line) for _, line, code, _ in structural_lines(visible)
+                        if not code and line.strip() and not line.lstrip().startswith('#')]
+        for answer in disclosures(item.body):
+            for _, line, code, _ in structural_lines(answer.body):
+                normalized = normalize(line)
+                if not code and len(normalized) >= 15 and normalized in public_lines:
+                    issues.append({'code': 'answer-duplicate', 'detail': f'{item.title}: answer duplicated in open text: {line.strip()}'})
+    return issues
+
+
+def lesson_issues(metadata: dict, markdown: str, questions: list[dict], solution_source: str = "") -> list[dict]:
     issues = []
     def add(code, detail):
         issues.append({'code': code, 'detail': detail})
+    issues.extend(answer_leaks(metadata, markdown, solution_source))
     lowered = markdown.lower()
     for marker in GENERIC:
         if marker in lowered:
@@ -55,11 +125,12 @@ def lesson_issues(metadata: dict, markdown: str, questions: list[dict]) -> list[
     fences = [line for line in markdown.splitlines() if re.match(r'^\s*```', line)]
     if len(fences) % 2:
         add('markdown-fence', 'Unclosed fenced block')
-    headings = re.findall(r'^## (.+)$', prose(markdown), re.M)
+    headings = [item.title for item in sections(markdown)]
     for heading, count in Counter(headings).items():
         if count > 1:
             add('markdown-heading', f'Duplicate section {heading}')
-    if len(re.findall(r'^# [^#]', prose(markdown), re.M)) != 1:
+    titles = [line for _, line, code, depth in structural_lines(markdown) if not code and not depth and re.match(r'^# [^#]', line)]
+    if len(titles) != 1:
         add('markdown-title', 'Expected exactly one H1')
     for heading in headings:
         if not section(markdown, heading):
@@ -118,9 +189,11 @@ def audit(content: Path) -> list[dict]:
         directory = path.parent
         markdown = (directory / 'lesson.md').read_text(encoding='utf-8')
         questions = json.loads((directory / 'interview.json').read_text(encoding='utf-8'))
+        solution_path = directory / 'solution/main.py'
+        solution_source = solution_path.read_text(encoding='utf-8') if solution_path.exists() else ''
         record = {'id': meta['id'], 'slug': meta['slug'], 'stage': meta['module_order'],
                   'reviewed': meta.get('content_source') == 'curated',
-                  'issues': lesson_issues(meta, markdown, questions)}
+                  'issues': lesson_issues(meta, markdown, questions, solution_source)}
         records.append(record)
         # Titles, outline tokens and source footers cannot conceal exact repeats.
         body = re.sub(r'\s+', ' ', section(markdown, 'Теория')).strip()

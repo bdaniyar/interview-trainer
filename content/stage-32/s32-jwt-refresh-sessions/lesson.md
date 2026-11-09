@@ -100,9 +100,13 @@ Server session, rotation/revocation, short access.
 
 **Сценарий:** Отозвать stolen refresh.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Server session, rotation/revocation, short access.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

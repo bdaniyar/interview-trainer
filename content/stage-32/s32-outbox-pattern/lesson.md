@@ -97,9 +97,13 @@ Atomicity gap; at-least-once/idempotency.
 
 **Сценарий:** Почему outbox?
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Atomicity gap; at-least-once/idempotency.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

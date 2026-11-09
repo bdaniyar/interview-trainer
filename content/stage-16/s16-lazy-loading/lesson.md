@@ -92,17 +92,25 @@
 
 **Сценарий:** Доступ к relationship запускает SQL в serializer.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Загрузить данные явно, запретить accidental lazy load и не прятать I/O за attribute access.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ### Detached instance
 
 **Сценарий:** После закрытия Session serializer читает unloaded relationship и падает.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Сформировать DTO внутри session boundary или eager-load нужное; не возвращать live ORM entity наружу.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

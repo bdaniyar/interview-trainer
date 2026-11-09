@@ -128,9 +128,13 @@ INSERT INTO bookings VALUES
 
 **Сценарий:** Два flow блокируют resources A/B в противоположном порядке.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Единый порядок lock acquisition, короткие transactions и retry всей transaction после deadlock.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

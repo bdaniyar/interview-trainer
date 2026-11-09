@@ -95,9 +95,13 @@ Outbox/durable queue, retry, idempotency.
 
 **Сценарий:** Email без latency/loss.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Outbox/durable queue, retry, idempotency.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

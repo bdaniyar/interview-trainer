@@ -85,9 +85,13 @@ Path operation — внешний адаптер; бизнес-правила л
 
 **Сценарий:** Endpoint возвращает ORM object вместе с password_hash.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Явная response model/DTO с allowlist полей; contract test проверяет отсутствие secret.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

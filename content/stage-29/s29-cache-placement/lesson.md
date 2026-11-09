@@ -95,9 +95,13 @@ Auth-aware key; TTL/invalidation/fallback.
 
 **Сценарий:** Где cache profile read?
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Auth-aware key; TTL/invalidation/fallback.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

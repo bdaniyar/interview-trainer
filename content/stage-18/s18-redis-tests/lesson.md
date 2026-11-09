@@ -92,9 +92,13 @@ Mock-нуть реализацию вместо внешней границы и
 
 **Сценарий:** Fake не моделирует TTL/failure.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Отдельные unit fake и integration Redis tests.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

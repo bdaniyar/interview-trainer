@@ -85,9 +85,13 @@ Session per concurrent task/use case.
 
 **Сценарий:** Две tasks используют одну AsyncSession.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Session per concurrent task/use case.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

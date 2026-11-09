@@ -100,9 +100,13 @@ Invalidate/update after commit; key ownership, TTL, race.
 
 **Сценарий:** PUT commit успешен, GET отдаёт старое.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Invalidate/update after commit; key ownership, TTL, race.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

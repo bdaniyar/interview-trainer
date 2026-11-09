@@ -100,9 +100,13 @@ Problem, own role, stack, decision, verification.
 
 **Сценарий:** Проект за 60 секунд.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Problem, own role, stack, decision, verification.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

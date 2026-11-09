@@ -86,9 +86,13 @@ Boundaries, timeout, request id, source of truth.
 
 **Сценарий:** Покажи путь request.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Boundaries, timeout, request id, source of truth.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

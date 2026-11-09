@@ -100,9 +100,13 @@ Validation, auth, transaction, 201/409, idempotency.
 
 **Сценарий:** Спроектируй POST booking.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Validation, auth, transaction, 201/409, idempotency.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

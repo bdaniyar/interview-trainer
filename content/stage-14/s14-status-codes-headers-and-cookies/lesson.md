@@ -86,9 +86,13 @@ Path operation — внешний адаптер; бизнес-правила л
 
 **Сценарий:** API отдаёт 403 пользователю без валидной authentication.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** 401 — нет/невалидна authentication (с challenge), 403 — identity известна, permission недостаточно.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

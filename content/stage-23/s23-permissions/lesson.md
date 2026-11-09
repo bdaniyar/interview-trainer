@@ -92,9 +92,13 @@ uid/gid/mode, минимальный доступ.
 
 **Сценарий:** Container не читает mount.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** uid/gid/mode, минимальный доступ.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

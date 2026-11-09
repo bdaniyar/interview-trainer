@@ -92,9 +92,13 @@ Healthcheck/ready retry; start order не readiness.
 
 **Сценарий:** depends_on есть, migrations падают.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Healthcheck/ready retry; start order не readiness.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Практика: Отладка
 
@@ -102,9 +106,13 @@ Healthcheck/ready retry; start order не readiness.
 
 **Сценарий:** API стартует после container DB, но раньше готовности принимать SQL.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Healthcheck/retry/backoff или entrypoint wait; start order не является readiness guarantee.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 
