@@ -100,9 +100,13 @@ Policy, size validation, delete/reject.
 
 **Сценарий:** Слишком большой file.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Policy, size validation, delete/reject.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

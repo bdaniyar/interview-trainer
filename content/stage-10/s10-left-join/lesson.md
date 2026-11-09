@@ -252,9 +252,13 @@ INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,1
 
 **Сценарий:** WHERE right.status='paid' удалил NULL rows.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Условие правой таблицы в ON или explicit NULL semantics.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

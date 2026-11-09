@@ -84,9 +84,13 @@ Path operation — внешний адаптер; бизнес-правила л
 
 **Сценарий:** Async route вызывает sync dependency с долгим blocking client внутри event loop.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Использовать async client/driver или thread offload; измерить event-loop lag и concurrent latency.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

@@ -92,9 +92,13 @@ Map ORM to response data при открытой session; query-count test об�
 
 **Сценарий:** Response validation выполняет queries после service return.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Map ORM to response data при открытой session; query-count test обнаруживает hidden I/O.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

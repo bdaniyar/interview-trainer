@@ -95,9 +95,13 @@ Mock-нуть реализацию вместо внешней границы и
 
 **Сценарий:** Test завершился, background task осталась.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Await/cancel tasks; deterministic event.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

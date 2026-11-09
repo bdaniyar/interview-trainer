@@ -100,9 +100,13 @@ rg/grep + tail/context.
 
 **Сценарий:** Найди ERROR request_id=abc.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** rg/grep + tail/context.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

@@ -97,9 +97,13 @@ stderr/log, command, env, permissions, port.
 
 **Сценарий:** Uvicorn сразу code 1.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** stderr/log, command, env, permissions, port.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

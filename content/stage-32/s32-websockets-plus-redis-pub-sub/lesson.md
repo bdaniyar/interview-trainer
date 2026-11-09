@@ -92,9 +92,13 @@ Persist, publish, fan-out; offline reads DB.
 
 **Сценарий:** Cross-instance flow.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Persist, publish, fan-out; offline reads DB.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

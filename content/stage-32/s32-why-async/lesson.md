@@ -92,9 +92,13 @@ Concurrent I/O; not CPU speed; no blocking.
 
 **Сценарий:** Зачем async?
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Concurrent I/O; not CPU speed; no blocking.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

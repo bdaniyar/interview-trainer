@@ -95,9 +95,13 @@ Shared Redis counter + atomic operation/Lua, window semantics, TTL и fail-open/
 
 **Сценарий:** Два API process дают вдвое больший лимит.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Shared Redis counter + atomic operation/Lua, window semantics, TTL и fail-open/fail-closed policy.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

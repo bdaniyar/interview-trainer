@@ -86,9 +86,13 @@ Measure/ownership; modular monolith first.
 
 **Сценарий:** Когда microservice?
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Measure/ownership; modular monolith first.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

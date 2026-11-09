@@ -95,9 +95,13 @@ Mock-нуть реализацию вместо внешней границы и
 
 **Сценарий:** Resource остаётся после failed test.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** yield fixture, cleanup in finally, narrow scope.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

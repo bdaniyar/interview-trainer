@@ -97,9 +97,13 @@ Path operation — внешний адаптер; бизнес-правила л
 
 **Сценарий:** FastAPI test ходит в production-like DB.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Переопределить тот же dependency key через app.dependency_overrides и очищать override после test.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

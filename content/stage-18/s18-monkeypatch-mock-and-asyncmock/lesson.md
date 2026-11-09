@@ -95,9 +95,13 @@ Mock-нуть реализацию вместо внешней границы и
 
 **Сценарий:** patch library.client не влияет на imported symbol.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Patch имя в module under test.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

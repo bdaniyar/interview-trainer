@@ -92,9 +92,13 @@ Durable truth vs cache/temp/fan-out.
 
 **Сценарий:** Почему оба?
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Durable truth vs cache/temp/fan-out.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

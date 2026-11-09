@@ -97,9 +97,13 @@ ss/lsof, stop owner или change mapping.
 
 **Сценарий:** API не bind 8000.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** ss/lsof, stop owner или change mapping.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

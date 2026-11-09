@@ -100,9 +100,13 @@ Pub/Sub только live fan-out; durable history/read state хранить в 
 
 **Сценарий:** Offline WebSocket client потерял события.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Pub/Sub только live fan-out; durable history/read state хранить в PostgreSQL или durable stream.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

@@ -89,9 +89,13 @@ Cache не исправляет ORM query shape, который делает с�
 
 **Сценарий:** Список 100 users выполняет ещё 100 SELECT roles.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Посчитать queries и использовать selectinload/joinedload по cardinality; integration test с query counter.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

@@ -95,9 +95,13 @@ Runtime env source, quoting, restart.
 
 **Сценарий:** Local works, service KeyError APP_ENV.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Runtime env source, quoting, restart.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

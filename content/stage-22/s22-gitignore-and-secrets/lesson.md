@@ -89,9 +89,13 @@ Rotate; audit; history cleanup отдельно.
 
 **Сценарий:** Secret удалён из file.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Rotate; audit; history cleanup отдельно.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Практика: Отладка
 
@@ -99,9 +103,13 @@ Rotate; audit; history cleanup отдельно.
 
 **Сценарий:** Token удалён из Git, но им продолжают пользоваться.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Немедленно revoke/rotate, затем audit и при необходимости clean history; gitignore не лечит leak.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

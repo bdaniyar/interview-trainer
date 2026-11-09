@@ -85,9 +85,13 @@ Wildcard origin вместе с credentials недопустим или опас
 
 **Сценарий:** Backend разрешает действие, полагаясь на blocked browser origin.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** CORS — browser read policy; authentication/authorization проверяются на сервере для каждого request.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

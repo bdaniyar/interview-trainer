@@ -95,9 +95,13 @@ Mock-нуть реализацию вместо внешней границы и
 
 **Сценарий:** Тест падает без понятного expected/actual.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Один observable contract и plain assert.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

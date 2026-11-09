@@ -97,9 +97,13 @@ Mock-нуть реализацию вместо внешней границы и
 
 **Сценарий:** Порядок tests влияет на rows.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Transaction rollback/recreated schema.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

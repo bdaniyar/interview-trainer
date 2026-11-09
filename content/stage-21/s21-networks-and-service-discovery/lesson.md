@@ -92,9 +92,13 @@ Compose service name; shared network/DNS.
 
 **Сценарий:** API config содержит DB_HOST=localhost.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Compose service name; shared network/DNS.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Практика: Отладка
 
@@ -102,9 +106,13 @@ Compose service name; shared network/DNS.
 
 **Сценарий:** API не видит PostgreSQL по localhost.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** localhost — тот же container; Compose DNS service name + container port.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

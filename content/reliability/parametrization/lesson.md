@@ -119,9 +119,13 @@ pytest создаёт отдельный test case для каждого пар�
 
 **Сценарий:** Пять копий теста отличаются input/result.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** parametrize cases с ids и boundaries.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

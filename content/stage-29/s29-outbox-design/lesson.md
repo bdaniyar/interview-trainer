@@ -97,9 +97,13 @@ Same transaction outbox; retry/idempotency.
 
 **Сценарий:** Commit прошёл, publish упал.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Same transaction outbox; retry/idempotency.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

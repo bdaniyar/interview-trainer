@@ -95,9 +95,13 @@
 
 **Сценарий:** Rebase опубликованных commits.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Не rebase shared; coordinate/recover refs.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Практика: Отладка
 
@@ -105,9 +109,13 @@
 
 **Сценарий:** Коллеги получили divergent history после rebase main.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Не переписывать shared commits; merge/revert или явно координировать rare rewrite.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

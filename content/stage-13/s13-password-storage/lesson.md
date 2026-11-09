@@ -97,9 +97,13 @@ Argon2id/bcrypt/scrypt с индивидуальной солью и cost; те�
 
 **Сценарий:** Пароли сохранены через один SHA-256.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Argon2id/bcrypt/scrypt с индивидуальной солью и cost; тест verify и migration policy.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

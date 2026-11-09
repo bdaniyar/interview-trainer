@@ -97,9 +97,13 @@ Mock-нуть реализацию вместо внешней границы и
 
 **Сценарий:** Test зависит от timezone/unordered SELECT.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Fixed clock и explicit ORDER BY.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

@@ -92,9 +92,13 @@
 
 **Сценарий:** Удаление parent неожиданно удалило shared children.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Настроить cascade по ownership и DB FK semantics; тестировать delete/replace relationship на реальной БД.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

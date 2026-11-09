@@ -86,9 +86,13 @@ DB conflict, lock/constraint, test.
 
 **Сценарий:** Concurrent availability.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** DB conflict, lock/constraint, test.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

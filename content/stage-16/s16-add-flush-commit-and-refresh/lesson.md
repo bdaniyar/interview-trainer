@@ -85,9 +85,13 @@ Commit только ради получения id ломает атомарны
 
 **Сценарий:** repository.save неожиданно commit-ит половину use case.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Transaction boundary принадлежит service/use case; repository делает add/flush, caller решает commit/rollback.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

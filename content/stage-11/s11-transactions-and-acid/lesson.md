@@ -125,17 +125,25 @@ INSERT INTO bookings VALUES
 
 **Сценарий:** Request держит transaction открытой во время HTTP-вызова.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Сетевой I/O вынести за DB transaction; короткая boundary уменьшает locks, pool pressure и stale snapshot.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ### Double booking race
 
 **Сценарий:** Два SELECT видят свободный номер и создают booking.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Защитить invariant в БД constraint/lock/conditional write и проверить concurrent integration test.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

@@ -97,9 +97,13 @@ Mock-нуть реализацию вместо внешней границы и
 
 **Сценарий:** Раздели booking flow на unit, integration и API tests.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Unit domain decision; integration DB constraint; API status/body.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

@@ -97,9 +97,13 @@ DB invariant, short transaction, concurrent test.
 
 **Сценарий:** Не допустить double booking.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** DB invariant, short transaction, concurrent test.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

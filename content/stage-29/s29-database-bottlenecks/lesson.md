@@ -100,9 +100,13 @@ Slow queries, pool, plans, indexes, N+1.
 
 **Сценарий:** p95 вырос, DB CPU высокий.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Slow queries, pool, plans, indexes, N+1.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

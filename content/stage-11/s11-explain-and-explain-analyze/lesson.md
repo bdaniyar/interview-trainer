@@ -122,9 +122,13 @@ INSERT INTO bookings VALUES
 
 **Сценарий:** Planner выбирает Seq Scan для boolean active, хотя index существует.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** При высокой доле совпадений Seq Scan может быть дешевле; сравнить estimates/actual rows, не принуждать index вслепую.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 

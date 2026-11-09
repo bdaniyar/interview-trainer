@@ -92,9 +92,13 @@ Request-scoped dependency/context, immutable arguments; concurrent test обна
 
 **Сценарий:** Route пишет current_user в module global.
 
+<details><summary>Показать ответ</summary>
+
 **Критерии ответа:** Request-scoped dependency/context, immutable arguments; concurrent test обнаруживает утечку между запросами.
 
 **Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+
+</details>
 
 ## Вопросы с собеседований
 
