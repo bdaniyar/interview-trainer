@@ -126,6 +126,13 @@ def validate(run_solutions: bool, strict_quality: bool = False) -> None:
         fail(errors, "practice_banks.json is missing")
     else:
         banks = json.loads(practice_path.read_text(encoding="utf-8"))
+        # Standard-library-only integrity check; does not start SQL or Docker.
+        sys.path.insert(0, str(ROOT))
+        from sql_runner.app.datasets import validate_bank
+        try:
+            validate_bank(banks)
+        except (ValueError, OSError, KeyError) as exc:
+            fail(errors, f"SQL dataset integrity: {exc}")
         minimums = {
             "python_prediction": 40,
             "sql": 48,
