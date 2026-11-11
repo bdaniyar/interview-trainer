@@ -91,7 +91,7 @@ export function MarkdownLesson({ lesson, theme, position, total, onCompleteTheor
         </div>
         <div className="lesson-meta">
           <span><Clock3 size={14} /> {lesson.duration} мин</span>
-          <span><Code2 size={14} /> {lesson.has_task ? 'Практика' : 'Теория'}</span>
+          <span><Code2 size={14} /> {lesson.workspace_kind === 'sql' ? 'Практика SQL' : lesson.has_task ? 'Практика' : 'Теория'}</span>
           <span><Sparkles size={14} /> +{lesson.xp} XP</span>
         </div>
 

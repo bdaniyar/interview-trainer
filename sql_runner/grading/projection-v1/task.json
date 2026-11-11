@@ -1,0 +1,38 @@
+{
+  "task_id": "sql.guided.10.2.projection.v1",
+  "task_revision": 1,
+  "grader_revision": "projection-v1",
+  "dataset_id": "shop-v1",
+  "dataset_checksum": "a1de3973eb4a2febc818c026def43716109e7ffde6b0bc46721e11d1b2fa4b97",
+  "expected_columns": [
+    "user_id",
+    "email"
+  ],
+  "comparison": "unordered",
+  "numeric_compatible": true,
+  "reference_sql": "SELECT id AS user_id, email FROM users;",
+  "cases": [
+    {
+      "id": "public-v1",
+      "public": true
+    },
+    {
+      "id": "extra-users-v1",
+      "public": false,
+      "seed_file": "extra-users-v1.sql",
+      "sha256": "c75b3f99900c3347a8f9e7f16aa026f064275f2f47c0ba7213c082de73c254c7"
+    },
+    {
+      "id": "changed-users-v1",
+      "public": false,
+      "seed_file": "changed-users-v1.sql",
+      "sha256": "b085a847f4cc0c24f2851c68f4aeccd2e400306c19790ef553a3630fd11955c5"
+    },
+    {
+      "id": "empty-users-v1",
+      "public": false,
+      "seed_file": "empty-users-v1.sql",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

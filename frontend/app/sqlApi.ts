@@ -1,5 +1,5 @@
 import { API_ORIGIN } from './api';
-import type { SqlCatalog, SqlLesson, SqlResult, SqlSession } from './sqlTypes';
+import type { SqlCatalog, SqlCheckResult, SqlLesson, SqlResult, SqlSession } from './sqlTypes';
 
 export class SqlApiError extends Error {
   constructor(public status: number, public code: string, message: string) {
@@ -7,10 +7,10 @@ export class SqlApiError extends Error {
   }
 }
 
-async function request<T>(path: string, method = 'GET', payload?: unknown, keepalive = false): Promise<T> {
+async function request<T>(path: string, method = 'GET', payload?: unknown, keepalive = false, timeoutMs = 45000): Promise<T> {
   let response: Response;
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 45000);
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
     response = await fetch(`${API_ORIGIN}/api/sql${path}`, {
       method, headers: { 'Content-Type': 'application/json' },
@@ -39,4 +39,7 @@ export const sqlApi = {
     sidPath(session) + `/tables/${encodeURIComponent(handle)}/rows?generation=${session.generation}&limit=50&offset=${offset}`),
   reset: (session: SqlSession) => request<SqlSession>(sidPath(session) + '/reset', 'POST', { generation: session.generation }),
   close: (session: SqlSession) => request<void>(sidPath(session) + `?generation=${session.generation}`, 'DELETE', undefined, true),
+  check: (lessonSlug: string, taskId: string, sql: string, requestId: string) => request<SqlCheckResult>(
+    `/lessons/${encodeURIComponent(lessonSlug)}/tasks/${encodeURIComponent(taskId)}/check`, 'POST',
+    { request_id: requestId, sql }, false, 120000),
 };

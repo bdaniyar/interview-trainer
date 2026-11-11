@@ -1,8 +1,9 @@
 """Public SQL DTOs. No executor/Docker/application persistence dependencies."""
 from datetime import datetime
 from typing import Literal
+from uuid import UUID
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 
 class RequestModel(BaseModel):
@@ -32,11 +33,14 @@ class SqlLesson(BaseModel):
     lesson_id: str
     lesson_slug: str
     dataset_id: Literal["shop-v1"] = "shop-v1"
-    task_id: Literal["guided-select"] = "guided-select"
+    task_id: str = "guided-select"
+    task_revision: int = 1
     mode: Literal["lesson_read"] = "lesson_read"
     starter_sql: str
     prompt: str
-    can_check: Literal[False] = False
+    can_check: bool = False
+    expected_columns: list[str] = Field(default_factory=list)
+    completed: bool = False
 
 
 class RunnerSession(BaseModel):
@@ -60,7 +64,7 @@ class RunnerSession(BaseModel):
 class SqlSession(RunnerSession):
     lesson_id: str
     lesson_slug: str
-    task_id: Literal["guided-select"] = "guided-select"
+    task_id: str = "guided-select"
 
 
 class SqlError(BaseModel):
@@ -120,3 +124,56 @@ class SqlCatalog(BaseModel):
     session_id: str
     generation: int
     tables: list[SqlTable] = Field(max_length=4)
+
+
+class SqlCheck(RequestModel):
+    request_id: UUID
+    sql: str = Field(min_length=1, max_length=32768)
+
+    @field_validator("sql")
+    @classmethod
+    def sql_budget(cls, value):
+        return SqlRun.sql_budget(value)
+
+
+FeedbackCode = Literal["passed", "policy", "columns", "types", "rows", "sql_error", "timeout", "result_limit"]
+
+
+class GradeFeedback(BaseModel):
+    code: FeedbackCode
+    sqlstate: str | None = Field(default=None, pattern=r"^[0-9A-Z]{5}$")
+
+
+class RunnerGrade(BaseModel):
+    task_id: str
+    task_revision: int
+    grader_revision: str
+    dataset_checksum: str
+    passed: bool = Field(strict=True)
+    tests_passed: int = Field(ge=0, le=16, strict=True)
+    tests_total: int = Field(ge=1, le=16, strict=True)
+    feedback: list[GradeFeedback] = Field(min_length=1, max_length=4)
+
+    @model_validator(mode="after")
+    def coherent(self):
+        if self.tests_passed > self.tests_total or self.passed != (self.tests_passed == self.tests_total):
+            raise ValueError("Inconsistent grading summary")
+        if self.passed != all(item.code == "passed" and item.sqlstate is None for item in self.feedback):
+            raise ValueError("Inconsistent grading feedback")
+        return self
+
+
+class PublicFeedback(GradeFeedback):
+    message: str = Field(max_length=300)
+
+
+class SqlCheckResult(BaseModel):
+    request_id: UUID
+    task_id: str
+    task_revision: int
+    grader_revision: str
+    passed: bool
+    tests_passed: int
+    tests_total: int
+    completed: bool
+    feedback: list[PublicFeedback]

@@ -19,6 +19,20 @@ function loadLesson(directory: string): LessonData {
 }
 const props = { theme: 'light' as const, position: 1, total: 359, onCompleteTheory: () => {}, onNavigate: () => {} };
 
+it('keeps the graded SQL answer behind disclosure in Learn and Review', () => {
+  const lesson = loadLesson('stage-10/s10-select-aliases-and-expressions');
+  render(<MarkdownLesson {...props} lesson={lesson} />);
+  const answer = () => screen.getByText('Показать решение SQL для самопроверки').closest('details')!;
+  expect(answer().open).toBe(false);
+  expect(answer().textContent).toContain('id AS user_id');
+  fireEvent.click(within(answer()).getByText('Показать решение SQL для самопроверки'));
+  expect(answer().open).toBe(true);
+  review();
+  expect(answer().open).toBe(false);
+  learn();
+  expect(answer().open).toBe(false);
+});
+
 function review() { fireEvent.click(screen.getByRole('button', { name: /Повторение/ })); }
 function learn() { fireEvent.click(screen.getByRole('button', { name: /Обучение/ })); }
 function parentAnswer(text: string): HTMLDetailsElement {

@@ -5,7 +5,7 @@ import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testi
 import { api } from '../app/api';
 import { sqlApi, SqlApiError } from '../app/sqlApi';
 import { draftKey, sqlPosition } from '../app/sqlDraft';
-import type { SqlCatalog, SqlLesson, SqlResult, SqlSession } from '../app/sqlTypes';
+import type { SqlCatalog, SqlCheckResult, SqlLesson, SqlResult, SqlSession } from '../app/sqlTypes';
 import type { CourseData, LessonData } from '../app/types';
 import { SqlWorkspace } from '../app/components/SqlWorkspace';
 import { SqlResultsTable } from '../app/components/SqlResultsTable';
@@ -51,6 +51,7 @@ beforeEach(() => {
   vi.spyOn(sqlApi, 'run').mockImplementation(async session => result(session));
   vi.spyOn(sqlApi, 'reset').mockImplementation(async session => ({ ...session, generation: session.generation + 1 }));
   vi.spyOn(sqlApi, 'close').mockResolvedValue(undefined);
+  vi.spyOn(sqlApi, 'check');
   vi.spyOn(api, 'saveFiles').mockResolvedValue({});
   vi.spyOn(api, 'run');
 });
@@ -156,6 +157,99 @@ it('does not create duplicate leases in React StrictMode', async () => {
   render(<StrictMode><SqlWorkspace lessonSlug={slug} theme="light" /></StrictMode>);
   await ready();
   expect(sqlApi.create).toHaveBeenCalledTimes(1);
+});
+
+const graded: SqlLesson = { ...manifest, task_id: 'sql.guided.10.2.projection.v1', can_check: true,
+  task_revision: 1, completed: false, expected_columns: ['user_id', 'email'] };
+const gradeResult: SqlCheckResult = { request_id: '00000000-0000-4000-8000-000000000000', task_id: graded.task_id,
+  task_revision: 1, grader_revision: 'projection-v1', passed: true, tests_passed: 4, tests_total: 4,
+  completed: true, feedback: [{ code: 'passed', message: 'Запрос прошёл все проверки.', sqlstate: null }] };
+
+it('migrates the Phase 2 draft and checks via keyboard without a second simultaneous submission', async () => {
+  localStorage.setItem(draftKey(manifest), 'SELECT saved_draft FROM users;');
+  vi.mocked(sqlApi.lesson).mockResolvedValue(graded);
+  const pending = deferred<SqlCheckResult>();
+  vi.mocked(sqlApi.check).mockReturnValue(pending.promise);
+  render(<SqlWorkspace lessonSlug={slug} theme="dark" />);
+  await ready();
+  expect((screen.getByRole('textbox') as HTMLTextAreaElement).value).toBe('SELECT saved_draft FROM users;');
+  expect(localStorage.getItem(draftKey(graded))).toBe('SELECT saved_draft FROM users;');
+  const editorKeys = vi.fn((event: Event) => event.stopPropagation());
+  const editor = screen.getByRole('textbox');
+  editor.addEventListener('keydown', editorKeys);
+  fireEvent.keyDown(editor, { ctrlKey: true, shiftKey: true, key: 'Enter' });
+  fireEvent.keyDown(editor, { metaKey: true, shiftKey: true, key: 'Enter' });
+  expect(editorKeys).not.toHaveBeenCalled();
+  expect(sqlApi.check).toHaveBeenCalledTimes(1);
+  expect(vi.mocked(sqlApi.check).mock.calls[0].slice(0, 3)).toEqual([slug, graded.task_id, 'SELECT saved_draft FROM users;']);
+  expect((screen.getByRole('button', { name: 'Reset' }) as HTMLButtonElement).disabled).toBe(true);
+  await act(async () => pending.resolve(gradeResult));
+  expect(screen.getByText('Passed')).toBeTruthy();
+  expect(screen.getByText('4 / 4 проверок')).toBeTruthy();
+  expect(screen.getByText('Задача решена')).toBeTruthy();
+  expect(api.saveFiles).not.toHaveBeenCalled();
+});
+
+it('does not call a successful Run solved; failed Check keeps earlier completion after Reset', async () => {
+  vi.mocked(sqlApi.lesson).mockResolvedValue(graded);
+  vi.mocked(sqlApi.check).mockResolvedValueOnce(gradeResult).mockResolvedValueOnce({ ...gradeResult,
+    passed: false, tests_passed: 1, feedback: [{ code: 'rows', message: 'Проверьте строки.', sqlstate: null }] });
+  render(<SqlWorkspace lessonSlug={slug} theme="dark" />);
+  await ready();
+  fireEvent.click(screen.getByRole('button', { name: 'Run' }));
+  await screen.findByText('Строк: 1');
+  expect(screen.queryByText('Задача решена')).toBeNull();
+  fireEvent.click(screen.getByRole('button', { name: 'Check' }));
+  await screen.findByText('Passed');
+  fireEvent.click(screen.getByRole('tab', { name: 'query.sql' }));
+  edit('SELECT changed FROM users;');
+  fireEvent.click(screen.getByRole('button', { name: 'Check' }));
+  await screen.findByText('Failed');
+  expect(screen.getByText('Задача решена')).toBeTruthy();
+  fireEvent.click(screen.getByRole('button', { name: 'Reset' }));
+  await ready();
+  fireEvent.click(screen.getByRole('tab', { name: 'query.sql' }));
+  expect((screen.getByRole('textbox') as HTMLTextAreaElement).value).toBe('SELECT changed FROM users;');
+  expect(screen.getByText('Задача решена')).toBeTruthy();
+});
+
+it('restores solved progress on reload and allows Check after editor session expiry', async () => {
+  vi.mocked(sqlApi.lesson).mockResolvedValue({ ...graded, completed: true });
+  vi.mocked(sqlApi.run).mockRejectedValue(new SqlApiError(410, 'expired', 'Сессия истекла.'));
+  vi.mocked(sqlApi.check).mockResolvedValue(gradeResult);
+  render(<SqlWorkspace lessonSlug={slug} theme="light" />);
+  await ready();
+  expect(screen.getByText('Задача решена')).toBeTruthy();
+  fireEvent.click(screen.getByRole('button', { name: 'Run' }));
+  await screen.findByText('Сессия истекла.');
+  fireEvent.click(screen.getByRole('button', { name: 'Check' }));
+  await screen.findByText('Passed');
+  expect(sqlApi.create).toHaveBeenCalledTimes(1);
+});
+
+it('keeps editor and results together on a wide workspace after Run and Check', async () => {
+  vi.mocked(sqlApi.lesson).mockResolvedValue(graded);
+  vi.mocked(sqlApi.check).mockResolvedValue(gradeResult);
+  render(<SqlWorkspace lessonSlug={slug} theme="light" />);
+  await ready();
+  Object.defineProperty(screen.getByRole('region', { name: 'SQL Workspace' }), 'clientWidth', { value: 500 });
+  fireEvent.click(screen.getByRole('button', { name: 'Run' }));
+  await screen.findByText('Строк: 1');
+  expect(screen.getByRole('textbox', { name: 'SQL запрос' })).toBeTruthy();
+  fireEvent.click(screen.getByRole('button', { name: 'Check' }));
+  await screen.findByText('Passed');
+  expect(screen.getByRole('textbox', { name: 'SQL запрос' })).toBeTruthy();
+});
+
+it('Check errors preserve the draft and do not mark an unsolved task complete', async () => {
+  vi.mocked(sqlApi.lesson).mockResolvedValue(graded);
+  vi.mocked(sqlApi.check).mockRejectedValue(new SqlApiError(503, 'grading_unavailable', 'Проверка недоступна.'));
+  render(<SqlWorkspace lessonSlug={slug} theme="dark" />);
+  await ready(); edit('SELECT keep_me FROM users;');
+  fireEvent.click(screen.getByRole('button', { name: 'Check' }));
+  await screen.findByText('Проверка недоступна.');
+  expect(localStorage.getItem(draftKey(graded))).toBe('SELECT keep_me FROM users;');
+  expect(screen.queryByText('Задача решена')).toBeNull();
 });
 
 it('reports browser storage failure while keeping the query editable', async () => {

@@ -21,6 +21,7 @@ from .sql_content import workspace_kind
 from .sql_routes import SQLBodyLimit, router as sql_router
 from .sql_runner_client import SqlServiceError
 from .sql_sessions import SQLSessions
+from .sql_check import SQLChecks
 
 
 def get_state(db: Session) -> UserState:
@@ -66,6 +67,7 @@ async def lifespan(application: FastAPI):
         get_state(db)
         db.commit()
     application.state.sql_sessions = SQLSessions()
+    application.state.sql_checks = SQLChecks()
     application.state.sql_sessions.start()
     try:
         yield

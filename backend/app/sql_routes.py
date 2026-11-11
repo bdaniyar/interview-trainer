@@ -1,8 +1,11 @@
-from fastapi import APIRouter, Query, Request, Response
+from fastapi import APIRouter, Depends, Query, Request, Response
 from fastapi.responses import JSONResponse
+from sqlalchemy.orm import Session
 
 from .sql_content import public_lesson
-from .sql_schemas import SqlCatalog, SqlCreate, SqlGeneration, SqlLesson, SqlResult, SqlRun, SqlSession
+from .database import get_db
+from .sql_progress import completed
+from .sql_schemas import SqlCatalog, SqlCheck, SqlCheckResult, SqlCreate, SqlGeneration, SqlLesson, SqlResult, SqlRun, SqlSession
 
 router = APIRouter(prefix="/api/sql", tags=["SQL Lab"])
 
@@ -43,8 +46,15 @@ def sessions(request):
 
 
 @router.get("/lessons/{slug}", response_model=SqlLesson)
-def lesson(slug: str):
-    return public_lesson(slug)
+def lesson(slug: str, db: Session = Depends(get_db)):
+    manifest = public_lesson(slug)
+    manifest.completed = completed(db, manifest.task_id)
+    return manifest
+
+
+@router.post("/lessons/{slug}/tasks/{task_id}/check", response_model=SqlCheckResult)
+async def check(slug: str, task_id: str, payload: SqlCheck, request: Request):
+    return await request.app.state.sql_checks.check(slug, task_id, payload)
 
 
 @router.post("/sessions", response_model=SqlSession, status_code=201)

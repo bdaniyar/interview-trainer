@@ -2,11 +2,14 @@ export interface SqlLesson {
   lesson_id: string;
   lesson_slug: string;
   dataset_id: 'shop-v1';
-  task_id: 'guided-select';
+  task_id: string;
+  task_revision?: number;
   mode: 'lesson_read';
   starter_sql: string;
   prompt: string;
-  can_check: false;
+  can_check: boolean;
+  expected_columns?: string[];
+  completed?: boolean;
 }
 
 export interface SqlSession {
@@ -60,4 +63,16 @@ export interface SqlCatalog {
   session_id: string;
   generation: number;
   tables: SqlTable[];
+}
+
+export interface SqlCheckResult {
+  request_id: string;
+  task_id: string;
+  task_revision: number;
+  grader_revision: string;
+  passed: boolean;
+  tests_passed: number;
+  tests_total: number;
+  completed: boolean;
+  feedback: { code: string; message: string; sqlstate: string | null }[];
 }

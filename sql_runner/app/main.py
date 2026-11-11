@@ -6,7 +6,7 @@ from fastapi.responses import JSONResponse
 from .config import Settings
 from .docker_backend import DockerBackend
 from .lifecycle import Manager, SessionError
-from .schemas import Catalog, CreateSession, Generation, Result, Run, SessionInfo
+from .schemas import Catalog, CheckRequest, CheckResult, CreateSession, Generation, Result, Run, SessionInfo
 
 
 class BodyLimit:
@@ -75,6 +75,11 @@ def create_app(settings=None, backend_factory=DockerBackend):
 
     def manager(request: Request):
         return request.app.state.manager
+
+    @app.post("/v1/check", response_model=CheckResult)
+    def check(payload: CheckRequest, request: Request):
+        from .grader import check as grade
+        return grade(manager(request), payload.task_id, payload.task_revision, payload.grader_revision, payload.sql)
 
     @app.post("/v1/sessions", response_model=SessionInfo, status_code=201)
     def create(payload: CreateSession, request: Request):

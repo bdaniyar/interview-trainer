@@ -1,8 +1,10 @@
-# SQL Runner — Phase 1
+# SQL Runner
 
 Independent PostgreSQL 17 execution service for trusted, local, single-user
-Pythoria. There is no application backend/UI integration, grading, XP, draft
-storage or application database migration in this phase.
+Pythoria. Phase 1 established the execution boundary; Phase 2 integrated the
+workspace; Phase 3 adds a disposable grader for one task. Application integration
+is documented in [SQL_WORKSPACE](../docs/SQL_WORKSPACE.md), grading in
+[SQL_GRADING](../docs/SQL_GRADING.md). SQL rewards and server drafts remain future work.
 
 ## Run
 
@@ -62,7 +64,8 @@ Four users, five orders, three products, five order_items; constraints, precisio
 composite PK and users' self FK are preserved. Each session has its own copy.
 Both per-file and combined SHA-256 hashes are checked against a code-pinned
 digest. A dataset change requires a **new revision**. `validate_content.py` and
-unit tests check bank parity. No bank/lesson rewrite is part of this PR.
+unit tests check bank parity. Hidden fixtures use separate pinned revisions;
+they never alter the public dataset or its checksum.
 
 ## SQL capabilities
 
@@ -94,6 +97,7 @@ container ID, credentials, paths, owner, budgets or capability profiles.
 | Endpoint | Request | Response |
 | --- | --- | --- |
 | `GET /health` | — | readiness after startup cleanup |
+| `POST /v1/check` | `{task_id,task_revision,grader_revision,sql}` | counts, safe feedback codes/SQLSTATE; no hidden rows/reference |
 | `POST /v1/sessions` | `{"dataset_id":"shop-v1"}` or `{}` | 201 session ID, generation, dataset checksum, expiry, cold start |
 | `POST /v1/sessions/{id}/run` | `{"generation":1,"sql":"SELECT id,email FROM users"}` | typed SELECT result/error |
 | `GET /v1/sessions/{id}/catalog?generation=1` | — | columns/types/nullable, ordered PK/FK pairs, opaque table handles |
@@ -192,7 +196,16 @@ guarantees. No labeled SQL sandboxes remained after tests; application SQLite
 file checksums matched before/after. One upstream Starlette/AnyIO deprecation
 warning remains in the local dev environment.
 
-Phase 2 can build the backend client and workspace against this typed internal
-contract. It must bind sessions to the server's local principal, handle generation
-and expiry explicitly, keep SQL drafts separate from Python saved files, and
-render cells/errors as text. No SQL Check or XP should be inferred from Run.
+Phase 2 binds backend sessions to the local principal, handles generation/expiry,
+keeps SQL drafts separate from Python saved files and renders cells/errors as text.
+Successful Run does not imply a passed Check or SQL XP.
+
+Phase 3 Check acquires the same global admission lock and needs one free sandbox
+slot. Four cases run sequentially in separate containers, each with a 60-second
+PID1 lifetime, removed in `finally`. With two interactive sessions, Check returns
+429 without eviction. Failed removal retains capacity until reaping succeeds.
+The controller alone contains `grading/`; the student image has no hidden bundle
+or reference query. Current fixtures have at most seven rows; existing 500-row /
+1 MiB result budgets apply and truncation can never pass. The workflow deadline
+is 60 seconds, checked between bounded operations; the final operation/cleanup
+can extend this by its own deadline. See the grading guide for safe extension.

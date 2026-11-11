@@ -65,3 +65,36 @@ class InterviewProgress(Base):
     completed: Mapped[bool] = mapped_column(Boolean, default=True)
     answer: Mapped[str] = mapped_column(Text, default="")
     completed_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+
+class SqlAttempt(Base):
+    __tablename__ = "sql_attempts"
+    __table_args__ = (UniqueConstraint("owner", "request_id", name="uq_sql_attempt_request"),)
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    owner: Mapped[str] = mapped_column(String(40), nullable=False)
+    request_id: Mapped[str] = mapped_column(String(36), nullable=False)
+    lesson_id: Mapped[str] = mapped_column(String(180), nullable=False)
+    task_id: Mapped[str] = mapped_column(String(180), nullable=False, index=True)
+    task_revision: Mapped[int] = mapped_column(Integer, nullable=False)
+    grader_revision: Mapped[str] = mapped_column(String(80), nullable=False)
+    dataset_checksum: Mapped[str] = mapped_column(String(64), nullable=False)
+    sql_hash: Mapped[str] = mapped_column(String(64), nullable=False)
+    passed: Mapped[bool] = mapped_column(Boolean, nullable=False)
+    tests_passed: Mapped[int] = mapped_column(Integer, nullable=False)
+    tests_total: Mapped[int] = mapped_column(Integer, nullable=False)
+    result_json: Mapped[str] = mapped_column(Text, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+
+class SqlTaskProgress(Base):
+    __tablename__ = "sql_task_progress"
+    __table_args__ = (UniqueConstraint("owner", "task_id", name="uq_sql_task_progress"),)
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    owner: Mapped[str] = mapped_column(String(40), nullable=False)
+    lesson_id: Mapped[str] = mapped_column(String(180), nullable=False)
+    task_id: Mapped[str] = mapped_column(String(180), nullable=False)
+    first_passed_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    last_passed_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    last_passed_revision: Mapped[str] = mapped_column(String(80), nullable=False)

@@ -43,7 +43,7 @@ class DockerBackend:
             if container.id not in known:
                 self.remove(container.id)
 
-    def create(self, session_id, generation):
+    def create(self, session_id, generation, *, lifetime=None):
         container = None
         deadline = monotonic() + self.settings.provision_seconds
         try:
@@ -52,7 +52,7 @@ class DockerBackend:
                 name=f"sql-{self.settings.namespace}-{session_id}-{generation}",
                 labels={LABEL: self.settings.namespace, f"{LABEL}.session": session_id,
                         f"{LABEL}.generation": str(generation)},
-                environment={"SQL_ABSOLUTE_SECONDS": str(self.settings.absolute_seconds)},
+                environment={"SQL_ABSOLUTE_SECONDS": str(min(self.settings.absolute_seconds, lifetime or self.settings.absolute_seconds))},
                 network_disabled=True, network_mode="none", read_only=True,
                 mem_limit="512m", memswap_limit="512m", nano_cpus=1_000_000_000,
                 pids_limit=128, cap_drop=["ALL"], security_opt=["no-new-privileges:true"],
@@ -107,6 +107,18 @@ class DockerBackend:
                 result = Result.model_validate(result).model_dump(exclude_none=False)
             return result
 
+        return self._bounded(work, handle)
+
+    def install_fixture(self, handle, seed):
+        def work():
+            response = self.client.containers.get(handle).exec_run(
+                [PYTHON, "-m", "sql_runner.app.fixture_installer", seed], user="postgres", demux=True)
+            stdout, _stderr = response.output
+            if response.exit_code != 0 or stdout != b"ready":
+                raise SandboxUnavailable("Trusted fixture initialization failed")
+        return self._bounded(work, handle)
+
+    def _bounded(self, work, handle):
         with self.pending_lock:
             # A timed-out Docker RPC must not create an unbounded executor queue.
             if self.pending is not None and not self.pending.done():
