@@ -25,6 +25,7 @@ import type { CourseData, ExecutionResult, LessonData, LessonSummary } from '../
 import { CodeWorkspace } from './CodeWorkspace';
 import { InterviewModal } from './InterviewModal';
 import { MarkdownLesson } from './MarkdownLesson';
+import { SqlWorkspace } from './SqlWorkspace';
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 
@@ -53,6 +54,7 @@ export function CourseApp() {
   const [toast, setToast] = useState('');
   const filesRef = useRef(files);
   const activeSlugRef = useRef(activeSlug);
+  const loadedLessonRef = useRef<LessonData | null>(null);
 
   const flattened = useMemo(() => course?.modules.flatMap((module) => module.lessons) ?? [], [course]);
   const activePosition = flattened.findIndex((item) => item.slug === activeSlug) + 1;
@@ -82,6 +84,8 @@ export function CourseApp() {
     Promise.all([api.lesson(activeSlug), api.openLesson(activeSlug)])
       .then(([data]) => {
         if (cancelled) return;
+        loadedLessonRef.current = data;
+        filesRef.current = data.files;
         setLesson(data);
         setFiles(data.files);
         setLoadingLesson(false);
@@ -104,8 +108,9 @@ export function CourseApp() {
   }, [toast]);
 
   const saveFiles = useCallback(async () => {
-    if (!activeSlugRef.current) return;
-    await api.saveFiles(activeSlugRef.current, filesRef.current);
+    const loaded = loadedLessonRef.current;
+    if (!loaded || loaded.workspace_kind === 'sql') return;
+    await api.saveFiles(loaded.slug, filesRef.current);
   }, []);
 
   const selectLesson = useCallback((slug: string) => {
@@ -266,7 +271,7 @@ export function CourseApp() {
             {loadingLesson || !lesson ? <div className="lesson-loading"><div /><div /><div /></div> : (
               <MarkdownLesson lesson={lesson} theme={theme} position={activePosition} total={course.summary.total} onCompleteTheory={() => void completeTheory()} onNavigate={navigate} />
             )}
-            {mentorOpen && lesson ? <aside className="mentor-card"><header><Bot size={16} /><b>AI-ментор</b><button onClick={() => setMentorOpen(false)}><X size={14} /></button></header><p>Начни с контракта задачи. Для темы <b>{lesson.topics[0]}</b> проверь граничные случаи и не меняй публичную сигнатуру.</p><div className="mentor-tip"><BookOpenCheck size={14} /> Запусти Check: тесты укажут, какой сценарий ещё не покрыт.</div></aside> : null}
+            {mentorOpen && lesson ? <aside className="mentor-card"><header><Bot size={16} /><b>AI-ментор</b><button onClick={() => setMentorOpen(false)}><X size={14} /></button></header><p>Начни с контракта задачи. Для темы <b>{lesson.topics[0]}</b> проверь граничные случаи и не меняй публичную сигнатуру.</p><div className="mentor-tip"><BookOpenCheck size={14} /> {lesson.workspace_kind === 'sql' ? 'Открой схему базы, выбери столбцы и проверь результат через Run.' : 'Запусти Check: тесты укажут, какой сценарий ещё не покрыт.'}</div></aside> : null}
           </section>
           <div
             className="vertical-resizer workspace-resizer"
@@ -275,7 +280,7 @@ export function CourseApp() {
             aria-orientation="vertical"
             onPointerDown={startWorkspaceResize}
           />
-          {lesson ? (
+          {!loadingLesson && lesson?.workspace_kind === 'sql' ? <SqlWorkspace key={lesson.slug} lessonSlug={lesson.slug} theme={theme} /> : !loadingLesson && lesson ? (
             <CodeWorkspace
               key={lesson.slug}
               lessonSlug={lesson.slug}

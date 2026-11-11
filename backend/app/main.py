@@ -1,10 +1,14 @@
 from __future__ import annotations
 
 import shlex
+import os
 from contextlib import asynccontextmanager
 
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+from fastapi.exceptions import RequestValidationError
+from fastapi.exception_handlers import request_validation_exception_handler
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
@@ -13,6 +17,10 @@ from .database import Base, SessionLocal, engine, get_db
 from .models import Attempt, CodeFile, InterviewProgress, LessonProgress, UserState
 from .runner_client import execute_in_runner
 from .schemas import FilesPayload, InterviewAnswerPayload, PreferencesPayload, RunPayload, TerminalPayload, TheoryPayload
+from .sql_content import workspace_kind
+from .sql_routes import SQLBodyLimit, router as sql_router
+from .sql_runner_client import SqlServiceError
+from .sql_sessions import SQLSessions
 
 
 def get_state(db: Session) -> UserState:
@@ -52,22 +60,41 @@ def persist_files(db: Session, slug: str, files: dict[str, str]) -> None:
 
 
 @asynccontextmanager
-async def lifespan(_: FastAPI):
+async def lifespan(application: FastAPI):
     Base.metadata.create_all(engine)
     with SessionLocal() as db:
         get_state(db)
         db.commit()
-    yield
+    application.state.sql_sessions = SQLSessions()
+    application.state.sql_sessions.start()
+    try:
+        yield
+    finally:
+        await application.state.sql_sessions.shutdown()
 
 
 app = FastAPI(title="Pythoria API", version="0.1.0", lifespan=lifespan)
+app.add_middleware(SQLBodyLimit)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+    allow_origins=os.getenv("FRONTEND_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000").split(","),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+app.include_router(sql_router)
+
+
+@app.exception_handler(SqlServiceError)
+async def sql_error(request, exc):
+    return JSONResponse({"error": {"code": exc.code, "message": str(exc)}}, status_code=exc.status)
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_error(request, exc):
+    if request.url.path.startswith("/api/sql/"):
+        return JSONResponse({"error": {"code": "invalid_request", "message": "Некорректные параметры SQL-запроса."}}, status_code=422)
+    return await request_validation_exception_handler(request, exc)
 
 
 @app.get("/api/health")
@@ -111,6 +138,7 @@ def get_lesson(slug: str, db: Session = Depends(get_db)):
     db.commit()
     return {
         **lesson,
+        "workspace_kind": workspace_kind(lesson),
         "files": files,
         "progress": {
             "status": progress.status,
