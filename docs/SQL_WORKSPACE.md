@@ -1,9 +1,10 @@
-# SQL Workspace — Phase 2
+# SQL Workspace — Phases 2–3
 
 Enabled for **10.2**, stable lesson ID
 `backend-interview.10.2.select-aliases-and-expressions`, slug
 `s10-select-aliases-and-expressions`. The rest of the course keeps its existing
-workspace. No lesson IDs, task completion, XP rules or database tables change.
+workspace. Lesson IDs and Python completion/XP rules are unchanged. Phase 3 adds
+SQL-only attempt/progress tables and one graded task; see [SQL_GRADING.md](SQL_GRADING.md).
 
 ## Local use
 
@@ -17,6 +18,12 @@ Ctrl/Cmd+Enter, inspect real PostgreSQL results. The Database tab shows table
 columns, nullable/type metadata, ordered PK and FK pairs, and pages of 50 rows.
 FK links select the referenced table, including users' self-reference.
 
+For task `sql.guided.10.2.projection.v1`, Check (Ctrl/Cmd+Shift+Enter) evaluates
+four public/hidden fixture revisions. It shows Passed/Failed, counts and safe
+feedback. Run never marks the task solved. Successful Check persists «Задача
+решена» independently of Python completion, including after a later failed Check
+or reload. SQL Check awards no XP and works without an active Explorer session.
+
 Refresh updates catalog/data. Reset creates a fresh baseline and rotates the
 generation/handles, preserving the editor text. Result diagnostics include
 SQLSTATE and a clickable editor position; Unicode positions are translated to
@@ -24,19 +31,24 @@ Monaco's UTF-16 columns. Query errors/cells are rendered as text. Duplicate
 aliases, NULL, empty string, booleans, bigint/numeric and empty results remain
 distinct. Truncated results say there are more rows, without inventing a total.
 
-On narrow workspaces, tabs keep Editor, Database and Results usable. Learn/Review
-and theme changes do not create another session or clear the SQL draft. SQL Lab
-has no Python terminal, solution button, Check or SQL rewards.
+On desktop, editor and results remain together after Run/Check when the SQL pane
+is wider than 420px. At viewport widths up to 820px, tabs preserve editing space.
+Learn/Review and theme changes do not create another session or clear the draft.
+The task answer is behind an explicit disclosure in the lesson, closed in both
+modes. Guided-only capabilities do not render Check.
 
 ## Data ownership and persistence
 
 `backend/app/sql_content.py` owns the capability mapping by stable lesson ID.
-Its public manifest describes a guided SELECT activity; it never loads or returns
-practice-bank solutions, expected reasoning, hidden fixtures or grading fields.
+Its public manifest projects task ID/revision, prompt, starter, expected column
+names, Check capability and persisted completion. It never returns reference SQL,
+hidden fixtures, expected rows or grader rules.
 Only this published lesson gets `workspace_kind=sql` in the existing lesson API.
 
 SQL drafts are stored **only in this browser** under
-`pythoria:sql:<stable-lesson-id>:guided-select`. Each edit is saved synchronously;
+`pythoria:sql:<stable-lesson-id>:<task-id>`. Phase 2's `guided-select` draft is
+copied to the new key if no graded draft exists; the old value is retained.
+Each edit is saved synchronously;
 Ctrl/Cmd+S also saves locally. Storage errors are displayed without clearing the
 editor. SQL never goes to the Python `/files` endpoint. CourseApp saves Python
 files against the loaded Python lesson before navigation, and unmounts its Python
@@ -47,9 +59,12 @@ the runner's private session ID, fixed local principal, lesson and generation.
 It validates binding/generation before forwarding and rewrites IDs in responses.
 Clients cannot choose owner, dataset, image, paths, credentials or budgets. Per
 binding admission fails fast on concurrent Run/Reset; the runner still enforces
-its global limits independently. No SQL route opens an SQLite transaction or
-executes a database driver. Requests use a separate bounded HTTP client, with
-35-second provisioning/reset and 15-second other request timeouts. The SQL request
+its global limits independently. Run/Explorer routes never open an SQLite
+transaction or execute a database driver. Check uses short SQLite reads/writes,
+closed before contacting the grader; submitted SQL only executes in PostgreSQL
+sandboxes. Requests use a separate bounded HTTP client, with 35-second
+provisioning/reset, 15-second other session calls and 95-second Check timeouts
+(browser Check timeout: 120 seconds). The SQL request
 body limit is 256 KiB with a separate 32 KiB UTF-8 SQL budget.
 
 Idle expiry is 15 minutes, absolute expiry 30 minutes. Backend cleanup retries
@@ -64,14 +79,15 @@ retried. Capacity/busy errors explain how to retry.
 
 This remains a trusted local single-user application, one backend worker and one
 SQL controller per namespace. Authentication, tenant isolation, server drafts,
-durable playground databases, immediate query cancellation, grading and XP belong
+durable playground databases, immediate query cancellation and SQL XP belong
 to later phases.
 
 ## Public backend API
 
 | Endpoint | Contract |
 | --- | --- |
-| `GET /api/sql/lessons/{slug}` | Guided public manifest; unsupported/unpublished lesson returns 404 |
+| `GET /api/sql/lessons/{slug}` | Public capability/progress manifest; unsupported/unpublished lesson returns 404 |
+| `POST /api/sql/lessons/{slug}/tasks/{task_id}/check` | `{request_id: UUID,sql}` → safe grade and sticky `completed`; no session required |
 | `POST /api/sql/sessions` | `{lesson_slug}` → public session info, 201 |
 | `POST /api/sql/sessions/{id}/run` | `{generation,sql}` → typed result, errors, `session_closed` |
 | `GET /api/sql/sessions/{id}/catalog?generation=1` | Table handles and schema metadata |
@@ -113,6 +129,12 @@ unchanged Python files/progress. It then stops only the test SQL controller and
 verifies a sanitized SQL 503 while the backend and real Python Docker Run still
 work.
 
+Phase 3 extends this smoke with real Python Check and saved files first, then SQL
+correct 4/4, missing alias/columns/rows, duplicate rows, hardcoded public data 1/4,
+safe cast errors, idempotent replay and conflict, sticky completion, unchanged
+Explorer generation/handles/rows and unchanged Python progress/XP. SQL outage
+also verifies Check returns a sanitized 503.
+
 For a manual browser check with the disposable DB:
 
 ```sh
@@ -128,15 +150,9 @@ The real PostgreSQL execution/security tests from Phase 1 remain separate:
 session cleanup and late responses, StrictMode, shortcuts, typed result/error
 rendering, and navigation across Python/SQL without changing saved Python files.
 
-Local verification on 2026-11-11: **173 Python tests, 19 frontend tests**, content
-validation, lint, TypeScript and production builds passed. Both the Docker HTTP
-smoke and the SQL-controller-outage/Python regression smoke passed. The disposable
-stack was removed and no SQL sandboxes remained. User persistence was never
-mounted in this environment.
-
-Native Chrome rendered the real Monaco SQL editor and an active session. Window
-control errors prevented completing the remaining manual clicks; interactive
-scenarios are covered by component tests and the real backend/runner HTTP smoke.
+See [SQL_GRADING.md](SQL_GRADING.md) for Phase 3 verification and upgrade evidence.
+Browser interaction is covered by component tests; the real Docker HTTP smoke
+exercises backend/runner/PostgreSQL, rather than a browser automation walkthrough.
 
 Implementation references: [Monaco React](https://github.com/suren-atoyan/monaco-react),
 [React effect cleanup](https://react.dev/reference/react/useEffect),

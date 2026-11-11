@@ -86,3 +86,26 @@ class Catalog(StrictModel):
     session_id: str
     generation: int
     tables: list[Table]
+
+
+class CheckRequest(StrictModel):
+    task_id: str = Field(min_length=1, max_length=180)
+    task_revision: int = Field(ge=1)
+    grader_revision: str = Field(min_length=1, max_length=80)
+    sql: str = Field(min_length=1, max_length=32768)
+
+
+class CheckFeedback(StrictModel):
+    code: Literal["passed", "policy", "columns", "types", "rows", "sql_error", "timeout", "result_limit"]
+    sqlstate: str | None = Field(default=None, pattern=r"^[0-9A-Z]{5}$")
+
+
+class CheckResult(StrictModel):
+    task_id: str
+    task_revision: int
+    grader_revision: str
+    dataset_checksum: str
+    passed: bool
+    tests_passed: int = Field(ge=0, le=16)
+    tests_total: int = Field(ge=1, le=16)
+    feedback: list[CheckFeedback] = Field(min_length=1, max_length=4)

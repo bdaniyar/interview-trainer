@@ -41,6 +41,8 @@ def load_dataset(dataset_id: str = "shop-v1") -> Dataset:
 def validate_bank(bank: dict) -> None:
     dataset = load_dataset()
     for task in bank.get("sql", []):
-        if task.get("solution_sql") and (task["schema"] != dataset.schema
+        if (task.get("solution_sql") or task.get("kind") == "graded_select") and (task["schema"] != dataset.schema
                                          or task["seed"] != dataset.seed):
             raise ValueError(f"shop-v1 differs from practice bank task {task['id']}")
+    from .grading_content import validate_graded_bank
+    validate_graded_bank(bank)

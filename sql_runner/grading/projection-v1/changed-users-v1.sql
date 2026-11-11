@@ -1,0 +1,1 @@
+INSERT INTO users VALUES (42,'Renée+projection@example.test',NULL,false,NULL,'2026-04-01'), (9007199254740993,'Mixed.Case@example.test','KZ',true,42,'2026-04-02'), (9223372036854775806,'','GE',false,42,'2026-04-03');

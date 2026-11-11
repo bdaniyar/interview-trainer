@@ -42,6 +42,7 @@ class Manager:
         self.settings, self.backend, self.clock = settings, backend, clock
         self.dataset = load_dataset()
         self.sessions = {}
+        self.grading_handles = set()
         self.registry = RLock()
         self.operation = Lock()
         self.stop_event = Event()
@@ -106,19 +107,22 @@ class Manager:
             self._dispose(session, "failed")
             raise SessionError(503, "provision_failed", "Unable to initialize SQL sandbox") from None
 
+    def require_capacity(self):
+        try:
+            self._reap_locked()
+        except Exception:
+            raise SessionError(503, "cleanup_pending", "SQL cleanup is pending; retry later") from None
+        active = sum(s.status in {"creating", "active"} or s.handle is not None for s in self.sessions.values())
+        try:
+            live = self.backend.live_count()
+        except Exception:
+            raise SessionError(503, "docker_unavailable", "Docker is unavailable") from None
+        if max(active, live) >= self.settings.max_sessions:
+            raise SessionError(429, "capacity", "SQL session capacity reached; close an existing session")
+
     def create(self):
         with self.admission(), self.registry:
-            try:
-                self._reap_locked()
-            except Exception:
-                raise SessionError(503, "cleanup_pending", "SQL cleanup is pending; retry later") from None
-            active = sum(s.status in {"creating", "active"} or s.handle is not None for s in self.sessions.values())
-            try:
-                live = self.backend.live_count()
-            except Exception:
-                raise SessionError(503, "docker_unavailable", "Docker is unavailable") from None
-            if max(active, live) >= self.settings.max_sessions:
-                raise SessionError(429, "capacity", "SQL session capacity reached; close an existing session")
+            self.require_capacity()
             now = self.clock()
             session = Session(uuid4().hex, now, now)
             self.sessions[session.id] = session
@@ -209,6 +213,9 @@ class Manager:
             self._dispose(session, "closed")
 
     def _reap_locked(self):
+        for handle in list(self.grading_handles):
+            self.backend.remove(handle)
+            self.grading_handles.discard(handle)
         for session in list(self.sessions.values()):
             if session.status == "active" and self.clock() >= self.expiry(session):
                 self._dispose(session, "expired")
@@ -238,4 +245,9 @@ class Manager:
         with self.operation, self.registry:
             for session in self.sessions.values():
                 self._dispose(session, "closed")
+            for handle in list(self.grading_handles):
+                try:
+                    self.backend.remove(handle)
+                except Exception:
+                    log.warning("Grading sandbox cleanup deferred to startup reaper/watchdog")
             self.backend.close()

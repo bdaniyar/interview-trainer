@@ -6,12 +6,13 @@ import { CirclePlay, Database, FileCode2, RefreshCw, RotateCcw } from 'lucide-re
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 
 import { sqlApi, SqlApiError } from '../sqlApi';
-import { draftKey, sqlPosition } from '../sqlDraft';
-import type { SqlCatalog, SqlLesson, SqlResult, SqlSession } from '../sqlTypes';
+import { draftKey, loadDraft, sqlPosition } from '../sqlDraft';
+import type { SqlCatalog, SqlCheckResult, SqlLesson, SqlResult, SqlSession } from '../sqlTypes';
 import { DatabaseExplorer, SqlTableList } from './DatabaseExplorer';
 import { SqlResultsTable } from './SqlResultsTable';
+import { SqlCheckFeedback } from './SqlCheckFeedback';
 
-type Busy = 'create' | 'run' | 'reset' | 'refresh' | 'rows' | null;
+type Busy = 'create' | 'run' | 'check' | 'reset' | 'refresh' | 'rows' | null;
 interface Lease {
   alive: boolean;
   busy: boolean;
@@ -36,6 +37,9 @@ export function SqlWorkspace({ lessonSlug, theme }: { lessonSlug: string; theme:
   const [query, setQuery] = useState('');
   const [executedQuery, setExecutedQuery] = useState('');
   const [result, setResult] = useState<SqlResult | null>(null);
+  const [checkResult, setCheckResult] = useState<SqlCheckResult | null>(null);
+  const [checkedQuery, setCheckedQuery] = useState('');
+  const [completed, setCompleted] = useState(false);
   const [rows, setRows] = useState<SqlResult | null>(null);
   const [offset, setOffset] = useState(0);
   const [busy, setBusy] = useState<Busy>('create');
@@ -43,11 +47,15 @@ export function SqlWorkspace({ lessonSlug, theme }: { lessonSlug: string; theme:
   const [saved, setSaved] = useState(true);
   const [view, setView] = useState<'editor' | 'database' | 'results'>('editor');
   const panelId = useId();
+  const workspaceRef = useRef<HTMLElement | null>(null);
   const leaseRef = useRef<Lease | null>(null);
   const queryRef = useRef('');
   const editorRef = useRef<MonacoEditor.IStandaloneCodeEditor | null>(null);
   const monacoRef = useRef<Parameters<OnMount>[1] | null>(null);
   const markersRef = useRef<() => void>(() => undefined);
+  const showResultView = useCallback(() => {
+    setView(window.innerWidth > 820 && (workspaceRef.current?.clientWidth ?? 0) > 420 ? 'editor' : 'results');
+  }, []);
 
   const saveDraft = useCallback((value: string) => {
     const manifest = leaseRef.current?.lesson;
@@ -103,10 +111,10 @@ export function SqlWorkspace({ lessonSlug, theme }: { lessonSlug: string; theme:
       if (!current()) return;
       lease.lesson = manifest;
       let initial = manifest.starter_sql;
-      try { initial = localStorage.getItem(draftKey(manifest)) ?? initial; setSaved(true); }
+      try { const draft = loadDraft(manifest); initial = draft.value; setSaved(draft.saved); }
       catch { setSaved(false); }
       queryRef.current = initial;
-      setQuery(initial); setLesson(manifest);
+      setQuery(initial); setLesson(manifest); setCompleted(!!manifest.completed);
     }
     if (lease.session) {
       await sqlApi.close(lease.session);
@@ -149,7 +157,7 @@ export function SqlWorkspace({ lessonSlug, theme }: { lessonSlug: string; theme:
       const output = await sqlApi.run(active, source);
       sameSession(output, active);
       if (current()) {
-        setExecutedQuery(source); setResult(output); setView('results');
+        setExecutedQuery(source); setResult(output); showResultView();
         if (output.session_closed) {
           lease.session = null;
           setSession(null); setCatalog(null); setRows(null);
@@ -157,17 +165,33 @@ export function SqlWorkspace({ lessonSlug, theme }: { lessonSlug: string; theme:
         }
       }
     });
-  }, [operation]);
+  }, [operation, showResultView]);
+
+  const check = useCallback(() => {
+    const lease = leaseRef.current;
+    if (!lease?.lesson?.can_check || !queryRef.current.trim()) return;
+    operation(lease, 'check', async current => {
+      const source = queryRef.current;
+      saveDraft(source);
+      const output = await sqlApi.check(lessonSlug, lease.lesson!.task_id, source, crypto.randomUUID());
+      if (output.task_id !== lease.lesson!.task_id) throw new Error('Ответ относится к другому SQL-заданию. Повторите Check.');
+      if (current()) {
+        setCheckResult(output); setCheckedQuery(source); setCompleted(output.completed);
+        showResultView();
+      }
+    });
+  }, [lessonSlug, operation, saveDraft, showResultView]);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (!(event.metaKey || event.ctrlKey)) return;
-      if (event.key.toLowerCase() === 's') { event.preventDefault(); saveDraft(queryRef.current); }
-      if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); run(); }
+      if (event.key.toLowerCase() === 's') { event.preventDefault(); event.stopPropagation(); saveDraft(queryRef.current); }
+      if (event.key === 'Enter') { event.preventDefault(); event.stopPropagation(); if (event.shiftKey) check(); else run(); }
     };
-    window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
-  }, [run, saveDraft]);
+    // Capture before Monaco's built-in Ctrl+Enter / Ctrl+Shift+Enter line edits.
+    window.addEventListener('keydown', onKeyDown, true);
+    return () => window.removeEventListener('keydown', onKeyDown, true);
+  }, [check, run, saveDraft]);
 
   const reset = () => {
     const lease = leaseRef.current;
@@ -225,16 +249,19 @@ export function SqlWorkspace({ lessonSlug, theme }: { lessonSlug: string; theme:
     });
   };
 
-  return <section className="workspace-pane sql-workspace" aria-label="SQL Workspace">
+  return <section ref={workspaceRef} className="workspace-pane sql-workspace" aria-label="SQL Workspace">
     <header className="workspace-toolbar sql-toolbar">
       <div className="workspace-label"><Database size={15} /> SQL Lab <span>PostgreSQL 17 · shop-v1</span></div>
       <div className="workspace-actions">
         <button className="toolbar-button" disabled={!!busy || !session} onClick={refresh} title="Обновить схему и данные"><RefreshCw size={14} /> Refresh</button>
         <button className="toolbar-button" disabled={!!busy || !session} onClick={reset} title="Восстановить исходные данные"><RotateCcw size={14} /> Reset</button>
         <button className="run-button" disabled={!!busy || !session || !query.trim()} onClick={run}><CirclePlay size={15} /> {busy === 'run' ? 'Running…' : 'Run'}</button>
+        {lesson?.can_check ? <button className="check-button" disabled={!!busy || !query.trim()} onClick={check}>{busy === 'check' ? 'Checking…' : 'Check'}</button> : null}
       </div>
     </header>
-    <div className="sql-guidance"><p>{lesson?.prompt ?? 'Готовим учебную базу…'}</p><small>Один SELECT · Ctrl/⌘ + Enter</small></div>
+    <div className="sql-guidance"><p>{lesson?.prompt ?? 'Готовим учебную базу…'}</p>
+      <small>Run: Ctrl/⌘ + Enter{lesson?.can_check ? ' · Check: Ctrl/⌘ + Shift + Enter' : ''}</small>
+      {completed ? <strong className="sql-task-completed" role="status">Задача решена</strong> : null}</div>
     {error ? <div className="sql-connection-error" role="alert"><span>{error}</span><button disabled={!!busy} onClick={() => leaseRef.current && connect(leaseRef.current)}>Создать сессию</button></div> : null}
     <div className="sql-view-tabs" role="tablist" aria-label="SQL Lab">
       {(['editor', 'database', 'results'] as const).map((tab, index, tabs) => <button key={tab} id={`${panelId}-${tab}`} role="tab"
@@ -264,13 +291,15 @@ export function SqlWorkspace({ lessonSlug, theme }: { lessonSlug: string; theme:
             <span>{rows.rows_returned ? offset + 1 : 0}–{offset + rows.rows_returned}</span>
             <button disabled={!!busy || !rows.has_more || !session} onClick={() => browse(selected, offset + 50)}>Далее</button>
           </div> : null}</header>
+        {view !== 'database' && checkResult ? <SqlCheckFeedback result={checkResult} stale={query !== checkedQuery} /> : null}
+        {view !== 'database' && busy === 'check' ? <p className="sql-empty" role="status">Проверяем запрос на тестовых наборах…</p> : null}
         {view !== 'database' && result && query !== executedQuery ? <small className="sql-result-info">Результат предыдущего запроса</small> : null}
         {busy === 'run' ? <p className="sql-empty" role="status">Выполняем SELECT…</p>
           : <SqlResultsTable result={view === 'database' ? rows : result} query={executedQuery}
             onPosition={query === executedQuery ? focusPosition : undefined} />}
       </section>
     </div>
-    <footer className="sql-footer"><span role="status">{busy === 'create' ? 'Создаём сессию…' : busy ? 'Обновляем…' : session ? 'Read-only · сессия активна' : 'Сессия не подключена'}</span>
+    <footer className="sql-footer"><span role="status">{busy === 'create' ? 'Создаём сессию…' : busy === 'check' ? 'Проверяем запрос…' : busy ? 'Обновляем…' : session ? 'Read-only · сессия активна' : 'Сессия не подключена'}</span>
       <span className={saved ? '' : 'sql-save-failed'}>{saved ? 'Сохранено в этом браузере' : 'Сохранение недоступно — скопируйте запрос'}</span></footer>
   </section>;
 }

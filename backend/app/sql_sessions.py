@@ -28,7 +28,8 @@ class Binding:
 
     def public(self):
         return SqlSession(**(self.info.model_dump() | {"session_id": self.public_id}),
-                          lesson_id=self.lesson_id, lesson_slug=self.lesson_slug)
+                          lesson_id=self.lesson_id, lesson_slug=self.lesson_slug,
+                          task_id=public_lesson(self.lesson_slug).task_id)
 
 
 class SQLSessions:

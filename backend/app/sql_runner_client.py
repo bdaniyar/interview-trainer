@@ -5,7 +5,7 @@ import os
 import httpx
 from pydantic import ValidationError
 
-from .sql_schemas import RunnerSession, SqlCatalog, SqlResult
+from .sql_schemas import RunnerGrade, RunnerSession, SqlCatalog, SqlResult
 
 
 class SqlServiceError(RuntimeError):
@@ -29,8 +29,8 @@ class SQLRunnerClient:
         self.url = (url or os.getenv("SQL_RUNNER_URL", "http://sql-runner:8002")).rstrip("/")
         self.transport = transport
 
-    async def request(self, method, path, model=None, *, body=None, params=None, cold=False):
-        timeout = httpx.Timeout(35 if cold else 15, connect=3)
+    async def request(self, method, path, model=None, *, body=None, params=None, cold=False, grading=False):
+        timeout = httpx.Timeout(95 if grading else 35 if cold else 15, connect=3)
         try:
             async with httpx.AsyncClient(timeout=timeout, transport=self.transport, trust_env=False) as client:
                 async with client.stream(method, self.url + path, json=body, params=params) as response:
@@ -83,3 +83,7 @@ class SQLRunnerClient:
 
     async def close(self, sid, generation):
         await self.request("DELETE", f"/v1/sessions/{sid}", params={"generation": generation})
+
+    async def check(self, task, query):
+        return await self.request("POST", "/v1/check", RunnerGrade, grading=True, body={
+            "task_id": task["id"], "task_revision": task["revision"], "grader_revision": task["grader_revision"], "sql": query})

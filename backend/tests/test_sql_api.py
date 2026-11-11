@@ -84,8 +84,9 @@ def create(client):
 
 def test_public_manifest_has_guided_capability_and_no_answers(client):
     data = client.get(f"/api/sql/lessons/{SLUG}").json()
-    assert data["starter_sql"] == "SELECT id, email FROM users;\n" and data["can_check"] is False
-    for field in ("solution_sql", "expected_reasoning", "hidden_dataset", "seed", "expected_columns"):
+    assert data["starter_sql"] == "SELECT id, email FROM users;\n" and data["can_check"] is True
+    assert data["expected_columns"] == ["user_id", "email"]
+    for field in ("solution_sql", "expected_reasoning", "hidden_dataset", "seed"):
         assert field not in data
     assert client.get(f"/api/lessons/{SLUG}").json()["workspace_kind"] == "sql"
     assert client.get("/api/lessons/is-vs-eq").json()["workspace_kind"] == "python"
