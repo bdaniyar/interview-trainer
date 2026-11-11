@@ -1,0 +1,67 @@
+# Disposable end-to-end environment. No application persistence volume.
+name: pythoria-sql-workspace-test
+services:
+  sql-runner:
+    image: pythoria-sql-runner:phase1
+    environment:
+      SQL_SANDBOX_IMAGE: pythoria-sql-sandbox:phase1
+      SQL_RUNNER_NAMESPACE: pythoria-sql-workspace-test
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8002/health',timeout=2)"]
+      interval: 2s
+      timeout: 3s
+      retries: 15
+  runner:
+    image: pythoria-sql-python-runner:test
+    build: ./runner
+    environment:
+      RUNNER_MODE: docker
+      SANDBOX_IMAGE: pythoria-sandbox:local
+      EXECUTION_TIMEOUT: "4"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  backend:
+    image: pythoria-sql-backend:test
+    build: ./backend
+    environment:
+      DATABASE_URL: sqlite:////data/workspace-test.db
+      CONTENT_ROOT: /content
+      RUNNER_URL: http://runner:8001
+      SQL_RUNNER_URL: http://sql-runner:8002
+      FRONTEND_ORIGINS: http://localhost:13000,http://127.0.0.1:13000
+    volumes:
+      - ./content:/content:ro
+    tmpfs:
+      - /data:size=32m
+    ports:
+      - "127.0.0.1:18080:8000"
+    depends_on:
+      sql-runner:
+        condition: service_healthy
+      runner:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health',timeout=2)"]
+      interval: 2s
+      timeout: 3s
+      retries: 15
+  frontend:
+    image: pythoria-sql-frontend:test
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:18080
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:18080
+    ports:
+      - "127.0.0.1:13000:3000"
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3000').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 3s
+      timeout: 5s
+      retries: 20

@@ -68,6 +68,7 @@ services:
       DATABASE_URL: sqlite:////data/pythoria.db
       CONTENT_ROOT: /content
       RUNNER_URL: http://runner:8001
+      SQL_RUNNER_URL: http://sql-runner:8002
     volumes:
       - pythoria_data:/data
       - ./content:/content:ro
@@ -75,6 +76,7 @@ services:
       - "8080:8000"
     depends_on:
       - runner
+      - sql-runner
     restart: unless-stopped
 
   frontend:
