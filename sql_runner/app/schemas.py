@@ -90,7 +90,7 @@ class Catalog(StrictModel):
 
 class CheckRequest(StrictModel):
     task_id: str = Field(min_length=1, max_length=180)
-    task_revision: int = Field(ge=1)
+    task_revision: int = Field(ge=1, strict=True)
     grader_revision: str = Field(min_length=1, max_length=80)
     sql: str = Field(min_length=1, max_length=32768)
 

@@ -1,0 +1,44 @@
+{
+  "task_id": "sql.basic.03",
+  "task_revision": 1,
+  "grader_revision": "null-country-v1",
+  "dataset_id": "shop-v1",
+  "dataset_checksum": "a1de3973eb4a2febc818c026def43716109e7ffde6b0bc46721e11d1b2fa4b97",
+  "expected_columns": [
+    "id",
+    "email"
+  ],
+  "comparison": "unordered",
+  "numeric_compatible": true,
+  "reference_sql": "SELECT id, email FROM users WHERE country IS NULL;",
+  "cases": [
+    {
+      "id": "public-v1",
+      "public": true
+    },
+    {
+      "id": "multiple-null-v1",
+      "public": false,
+      "seed_file": "multiple-null-v1.sql",
+      "sha256": "2f14a7fb82b49166da41acfbde833ab07345077ec58f993ce291830d7c893e71"
+    },
+    {
+      "id": "no-null-v1",
+      "public": false,
+      "seed_file": "no-null-v1.sql",
+      "sha256": "bc47dba45e90602ce13e111ab9403483a287e9b3d14f5c72490e9245c73aca9e"
+    },
+    {
+      "id": "shifted-null-v1",
+      "public": false,
+      "seed_file": "shifted-null-v1.sql",
+      "sha256": "cebe6ca1e6cdd88d5286d120b2c7e67bcd1251a5f55aa84fd09326892864485d"
+    },
+    {
+      "id": "empty-v1",
+      "public": false,
+      "seed_file": "empty-v1.sql",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

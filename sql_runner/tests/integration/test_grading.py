@@ -7,10 +7,12 @@ from fastapi.testclient import TestClient
 import pytest
 
 from sql_runner.app.grader import check
-from sql_runner.app.grading_content import GRADER_REVISION, TASK_ID, load_task
+from sql_runner.app.grading_content import load_task
 from sql_runner.app.lifecycle import SessionError
 from sql_runner.app.main import create_app
 
+TASK_ID = "sql.guided.10.2.projection.v1"
+GRADER_REVISION = "projection-v1"
 CORRECT = "SELECT id AS user_id,email FROM users"
 SLOW = "SELECT sum(g) AS user_id, 'x' AS email FROM (SELECT generate_series(1,1000000000) AS g) s"
 
@@ -88,7 +90,7 @@ def test_actual_crash_during_grading_is_not_student_success_and_cleans_only_grad
     execute = manager.backend.execute
 
     def crash(handle, operation, payload):
-        if payload["sql"] == load_task().reference_sql:
+        if payload["sql"] == load_task(TASK_ID, 1, GRADER_REVISION).reference_sql:
             return execute(handle, operation, payload)
         with ThreadPoolExecutor(1) as pool:
             running = pool.submit(execute, handle, operation, payload)
@@ -109,7 +111,7 @@ def test_external_student_deadline_destroys_each_disposable_case(manager, monkey
     execute = manager.backend.execute
 
     def deadline(handle, operation, payload):
-        if payload["sql"] == load_task().reference_sql:
+        if payload["sql"] == load_task(TASK_ID, 1, GRADER_REVISION).reference_sql:
             return execute(handle, operation, payload)
         original = manager.backend.settings
         manager.backend.settings = replace(original, query_seconds=0.05)

@@ -46,6 +46,8 @@ def create_app(settings=None, backend_factory=DockerBackend):
 
     @asynccontextmanager
     async def lifespan(app):
+        from .grading_content import validate_registered_tasks
+        validate_registered_tasks()
         manager = Manager(settings, backend_factory(settings))
         try:
             manager.start()

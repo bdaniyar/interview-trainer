@@ -10,6 +10,12 @@ SLUG = "s10-select-aliases-and-expressions"
 TASK_ID = "sql.guided.10.2.projection.v1"
 CHECK = f"/api/sql/lessons/{SLUG}/tasks/{TASK_ID}/check"
 SOLUTION = "SELECT id AS user_id,email FROM users ORDER BY id DESC"
+FILTER_TASKS = [
+    ("s10-where-and-boolean-logic", "sql.basic.01", "SELECT id,email FROM users WHERE active = true",
+     "SELECT id,email FROM users", "фильтрации", "(1,'a@example.com'),(2,'b@example.com'),(4,'d@example.com')"),
+    ("s10-null-and-three-valued-logic", "sql.basic.03", "SELECT id,email FROM users WHERE country IS NULL",
+     "SELECT id,email FROM users WHERE country = NULL", "NULL", "(3,'c@example.com')"),
+]
 
 
 def call(path, data=None, method=None, expected=200):
@@ -26,12 +32,61 @@ def call(path, data=None, method=None, expected=200):
         return json.loads(wire) if wire else None
 
 
+def grade_task(slug, task_id, query, request_id=None, expected=200):
+    answer = call(f"/api/sql/lessons/{slug}/tasks/{task_id}/check",
+                  {"request_id": request_id or str(uuid4()), "sql": query}, expected=expected)
+    assert not {"reference_sql", "seed", "rows", "columns", "container_id", "session_id"}.intersection(answer)
+    for item in answer.get("feedback", []):
+        assert set(item) == {"code", "message", "sqlstate"}
+    wire = json.dumps(answer)
+    assert "@example.com" not in wire and "@example.test" not in wire
+    return answer
+
+
+def solve_filtering_tasks():
+    for index, (slug, task_id, correct, wrong, feedback, literals) in enumerate(FILTER_TASKS):
+        assert call(f"/api/lessons/{slug}")["workspace_kind"] == "sql"
+        assert not call(f"/api/sql/lessons/{slug}")["completed"]
+        session = call("/api/sql/sessions", {"lesson_slug": slug}, expected=201)
+        assert session["task_id"] == task_id and session["dataset_id"] == "shop-v1"
+        path, generation = "/api/sql/sessions/" + session["session_id"], session["generation"]
+        try:
+            catalog = call(path + f"/catalog?generation={generation}")
+            baseline = call(path + "/run", {"generation": generation, "sql": "SELECT * FROM users ORDER BY id"})
+            assert len(baseline["rows"]) == 4
+            failed = grade_task(slug, task_id, wrong)
+            assert not failed["passed"] and not failed["completed"]
+            assert feedback in failed["feedback"][0]["message"]
+            token = str(uuid4())
+            passed = grade_task(slug, task_id, correct + " ORDER BY id DESC", token)
+            assert passed["passed"] and passed["completed"] and passed["tests_passed"] == passed["tests_total"] == 5
+            assert grade_task(slug, task_id, correct + " ORDER BY id DESC", token) == passed
+            hardcoded = grade_task(slug, task_id, f"SELECT * FROM (VALUES {literals}) v(id,email)")
+            assert not hardcoded["passed"] and hardcoded["completed"] and hardcoded["tests_passed"] == 1
+            columns = grade_task(slug, task_id, "SELECT id AS user_id,email FROM users")
+            assert not columns["passed"] and "id, email" in columns["feedback"][0]["message"]
+            assert "user_id" not in columns["feedback"][0]["message"]
+            grade_task(slug, TASK_ID, correct, expected=404)
+            assert call(path + f"/catalog?generation={generation}") == catalog
+            assert call(path + "/run", {"generation": generation, "sql": "SELECT * FROM users ORDER BY id"})["rows"] == baseline["rows"]
+            generation = call(path + "/reset", {"generation": generation})["generation"]
+            assert call(f"/api/sql/lessons/{slug}")["completed"]
+            if index == 0:
+                assert not call(f"/api/sql/lessons/{FILTER_TASKS[1][0]}")["completed"]
+        finally:
+            call(path + f"?generation={generation}", method="DELETE", expected=204)
+    assert call(f"/api/sql/lessons/{SLUG}")["completed"]
+    print("WHERE/NULL HTTP smoke passed: independent 5/5 grades/progress, hardcoded 1/5, task-aware feedback, unchanged Explorer, Reset and cross-task rejection")
+
+
 def main():
     if "--sql-offline" in sys.argv:
         assert call("/api/health")["status"] == "ok"
         response = call("/api/sql/sessions", {"lesson_slug": SLUG}, expected=503)
         assert response["error"]["code"] == "runner_unavailable"
         call(CHECK, {"request_id": str(uuid4()), "sql": SOLUTION}, expected=503)
+        for slug, task_id, correct, *_ in FILTER_TASKS:
+            grade_task(slug, task_id, correct, expected=503)
         result = call("/api/run", {"lesson_slug": "is-vs-eq", "files": {"main.py": "print('python stays available')\n"}, "entrypoint": "main.py"})
         assert result["exit_code"] == 0 and result["stdout"] == "python stays available\n"
         print("SQL outage smoke passed: Run/Check sanitized 503; backend and Python Docker Run remain available")
@@ -68,13 +123,7 @@ def main():
         assert len(call(path + f"/tables/{handle}/rows?generation={generation}")["rows"]) == 4
 
         def check(query, request_id=None, expected=200):
-            answer = call(CHECK, {"request_id": request_id or str(uuid4()), "sql": query}, expected=expected)
-            wire = json.dumps(answer)
-            assert not {"reference_sql", "seed", "rows", "columns", "container_id", "session_id"}.intersection(answer)
-            for item in answer.get("feedback", []):
-                assert set(item) == {"code", "message", "sqlstate"}
-            assert "@example.com" not in wire and "@example.test" not in wire
-            return answer
+            return grade_task(SLUG, TASK_ID, query, request_id, expected)
 
         token = str(uuid4())
         passed = check(SOLUTION, token)
@@ -109,6 +158,7 @@ def main():
         assert run("SELECT count(*) FROM users")["rows"] == [["4"]]
     finally:
         call(path + f"?generation={generation}", method="DELETE", expected=204)
+    solve_filtering_tasks()
     assert call(f"/api/lessons/{SLUG}")["files"] == original["files"]
     assert call("/api/lessons/is-vs-eq")["files"] == python_before["files"] == python_files
     assert call("/api/lessons/is-vs-eq")["progress"] == python_before["progress"]

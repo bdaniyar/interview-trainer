@@ -1,0 +1,44 @@
+{
+  "task_id": "sql.basic.01",
+  "task_revision": 1,
+  "grader_revision": "active-users-v1",
+  "dataset_id": "shop-v1",
+  "dataset_checksum": "a1de3973eb4a2febc818c026def43716109e7ffde6b0bc46721e11d1b2fa4b97",
+  "expected_columns": [
+    "id",
+    "email"
+  ],
+  "comparison": "unordered",
+  "numeric_compatible": true,
+  "reference_sql": "SELECT id, email FROM users WHERE active IS TRUE;",
+  "cases": [
+    {
+      "id": "public-v1",
+      "public": true
+    },
+    {
+      "id": "mixed-v1",
+      "public": false,
+      "seed_file": "mixed-v1.sql",
+      "sha256": "e4654482a8fbe0b0ab35d8a9b5afd707fc0bc7ccbfccef02e6ca90d427494bc9"
+    },
+    {
+      "id": "all-active-v1",
+      "public": false,
+      "seed_file": "all-active-v1.sql",
+      "sha256": "a857301cb2b48b08ddbcc1e568746c301ce525900d18c54d3f29100fdabd9131"
+    },
+    {
+      "id": "none-active-v1",
+      "public": false,
+      "seed_file": "none-active-v1.sql",
+      "sha256": "d5930216b0e9c5cbfa1406650fd8b3c404096ddca6f440fd2a364078a26da479"
+    },
+    {
+      "id": "empty-v1",
+      "public": false,
+      "seed_file": "empty-v1.sql",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

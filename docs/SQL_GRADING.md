@@ -1,11 +1,40 @@
-# SQL Check — Phase 3
+# SQL Check — Phases 3–4
 
-One graded task is enabled in lesson **10.2**:
-`sql.guided.10.2.projection.v1`, task revision `1`, grader `projection-v1`.
-It requires all users, exactly `user_id` (alias of `id`) and `email`, in that
-column order. Row order is irrelevant. Existing `sql.basic.01` and the other
-48 bank records are unchanged. The bank now has 49 SQL records: 38 legacy
-executable references plus this one connected graded task, not 49 integrated labs.
+Three lessons use the same grader, dataset and comparator. Task revision is `1`
+for all three; comparison is unordered, with exact column names/order.
+
+| Lesson | Stable task ID | Grader revision | Columns | Cases |
+| --- | --- | --- | --- | ---: |
+| 10.2 SELECT/AS | `sql.guided.10.2.projection.v1` | `projection-v1` | `user_id`, `email` | 4 |
+| 10.3 WHERE | `sql.basic.01` | `active-users-v1` | `id`, `email` | 5 |
+| 10.4 NULL | `sql.basic.03` | `null-country-v1` | `id`, `email` | 5 |
+
+All **49 bank records are byte-for-byte unchanged by Phase 4**, including the
+supplemental email-domain/date tasks. Only these three capabilities are enabled,
+one per lesson. `sql.basic.01` retains its historical bank `lesson_number=10.2`;
+the explicit capability registry deliberately enables its unchanged active-user
+contract in 10.3, after WHERE is taught. Lesson IDs/slugs and interview IDs stay
+stable. No SQL progress schema migration is needed in Phase 4.
+
+## Explicit task registries
+
+`backend/app/sql_content.py` contains frozen registrations keyed by stable lesson
+ID: task ID, task/grader revisions, dataset/checksum, columns, comparison, case
+count, starter, prompt and concise task-aware feedback. Duplicate lessons/tasks
+are rejected. Bank contracts are validated before projecting a public manifest.
+Student requests cannot choose any of these fields.
+
+`sql_runner/app/grading_content.py` contains the separate execution allowlist:
+task ID → exact task/grader revisions, fixed bundle directory and SHA-256 pin.
+It rejects duplicate task IDs and wrong revisions, and validates manifest identity,
+comparison/types, case IDs, seed checksums and filenames. No request value becomes
+a filesystem path. The controller validates all reference queries against the
+existing AST policy at startup. Content validation stays stdlib-only; explicit
+tests verify parity between backend registrations, bank contracts and bundles.
+
+These registries separate lesson/UI capabilities from privileged execution
+configuration. Adding a task means adding data registrations and a pinned bundle,
+not adding branches to the grader. Missing/corrupt configuration fails closed.
 
 ## Execution and ownership
 
@@ -38,10 +67,10 @@ browser timeout 120 seconds. Current query/row/output caps apply unchanged.
 
 ## Deterministic fixtures
 
-The controller-only bundle is `sql_runner/grading/projection-v1/`. Its manifest
-is SHA-256 pinned in `app/grading_content.py`, as are each seed's bytes. Request
-IDs/revisions do not become paths: the loader accepts one explicit supported
-tuple. A future bundle change requires a new grader revision and pin.
+Controller-only bundles live in `sql_runner/grading/`. Each manifest is SHA-256
+pinned in the execution registry, and each seed is pinned by its manifest.
+The loader accepts only registered revision tuples. A future bundle change
+requires a new grader revision and pin. The projection bundle is unchanged.
 
 | Case revision | Purpose |
 | --- | --- |
@@ -49,6 +78,19 @@ tuple. A future bundle change requires a new grader revision and pin.
 | `extra-users-v1` | Seven users, retaining the baseline and adding different IDs/attributes |
 | `changed-users-v1` | Three different users, bigint beyond `2^53`, Unicode/case/empty email |
 | `empty-users-v1` | Empty tables; catches fabricated/extra rows while checking column types |
+
+`active-users-v1` uses public baseline (3 matches), `mixed-v1` (4 matches in 7
+users, different IDs/emails/insertion order including bigint >2^53),
+`all-active-v1` (3 matches), `none-active-v1` (0 matches in 3 users), and
+`empty-v1` (0 users). No extra restrictions on syntactically different but
+equivalent boolean predicates are imposed: the required result is what matters.
+
+`null-country-v1` uses public baseline (1 match), `multiple-null-v1` (3 matches
+in 6 users), `no-null-v1` (0 matches in 3 users), `shifted-null-v1` (1 match with
+different IDs/NULL placement) and `empty-v1`. Hidden known-country values include
+empty string and literal text `NULL`. Thus `= NULL`, `= ''`, `= 'NULL'` and
+baseline-ID hardcoding cannot pass. Fixture cardinalities and every fenced SQL
+example from the three lessons are checked against real PostgreSQL.
 
 Hidden seeds replace data inside their own disposable clusters. The public
 schema/seed and checksum remain unchanged:
@@ -66,7 +108,7 @@ Unordered mode uses `Counter` bags, preserving duplicate multiplicities. Ordered
 mode compares row sequences. SQL NULL, empty text, literal `NULL`, whitespace,
 case and booleans remain distinct. Integer/bigint/numeric strings become Python
 `Decimal` without a float/JavaScript Number conversion. Integer/numeric compatibility
-is explicitly enabled for this task. Float is a separate exact family with no
+is explicitly enabled for these tasks. Float is a separate exact family with no
 tolerance. Empty results still require the right names and type families.
 
 Unsupported types or malformed reference/wire results are infrastructure errors.
@@ -79,7 +121,11 @@ The runner returns only task/revision/checksum, counts, pass flag and up to four
 safe feedback codes/SQLSTATE. It discards PostgreSQL messages/details/hints/
 positions because even primary cast-error text can contain hidden values. The
 backend validates identity and coherent counts, then maps an allowlist of codes
-to its own Russian messages. No hidden rows, case identifiers, seeds, reference,
+to its own Russian messages. Column feedback uses the registered column names;
+row feedback distinguishes projection, filtering and unknown-value mistakes.
+Messages do not reveal the complete query. With more than four distinct failure
+diagnostics, feedback is capped while counts still include every case.
+No hidden rows, case identifiers, seeds, reference,
 Docker IDs or diagnostics enter the public Check response. Normal public Run
 retains PostgreSQL diagnostics. Crash/configuration/transport/cleanup failures
 return a sanitized service error and do not create a passing attempt.
@@ -99,12 +145,16 @@ reports the current sticky completion. Successful progress upserts preserve
 Python saved files, completion, attempts or XP. Course completion/rewards are
 deliberately not inferred from this SQL-only state.
 
-Drafts remain browser-local. The new task key imports the Phase 2 guided draft
+Drafts remain browser-local, keyed by stable lesson/task IDs. The projection key imports the Phase 2 guided draft
 when absent, retaining the old key. Reset, expiry, theme and Learn/Review do not
 clear the SQL text. The lesson's solution is available only after opening its
 explicit disclosure; entering Learn/Review closes disclosures. Run displays
 results, Check displays Passed/Failed/counts, and only passed Check persists
 «Задача решена». Shortcuts are Ctrl/Cmd+Enter and Ctrl/Cmd+Shift+Enter respectively.
+Changing lesson remounts the workspace state, discards stale result/feedback and
+loads that task's draft/completion. Pending bounded work and Close finish before
+the next lesson provisions its session, avoiding the runner's global busy race.
+Late replies from the previous lesson cannot change the new lesson's state.
 
 ## Verification
 
@@ -150,14 +200,37 @@ sandboxes were removed. One upstream Starlette/AnyIO deprecation warning remains
 content validation reports 279 pre-existing Stage 8+ lessons awaiting quality
 review. No manual browser walkthrough was claimed for this phase.
 
+Phase 4 verification on **2026-11-13**: **236 default Python tests, 29 frontend
+tests and 58 Docker integration tests passed**. The Docker suite includes all
+35 previous tests plus 23 WHERE/NULL, fixture-cardinality and lesson-example
+tests. After the bounded-feedback adjustment, the three isolation/Reset/fixture
+tests were rerun against the final grader and passed. Content validation,
+ESLint, TypeScript and production build passed. The real HTTP smoke solves all
+three tasks (4/4, 5/5, 5/5), rejects hardcoded public rows (1/4, 1/5, 1/5), checks
+task-aware feedback, replay/conflicts and independent completion/Reset, and
+confirms unchanged Python Check/files/progress/XP. SQL-controller outage returns
+safe errors while Python Docker Run remains available.
+
+An additional temporary networkless helper mounted the actual user volume
+read-only, copied SQLite to `/tmp`, ran `create_all` and the actual `record()`
+transactions for the two new tasks. Every pre-existing table schema and row
+(five legacy tables in this database) matched, and original SHA-256 was unchanged.
+Unit tests separately verify existing Phase 3 SQL attempt/progress rows remain
+identical while new tasks are completed. There are no model/schema changes in
+Phase 4. The two rewritten lesson/interview bundles are marked curated and
+removed from legacy debt, leaving 277 pending legacy lessons. Interview IDs
+remain the same four positional IDs (`<slug>:0`/`:1`). The upstream AnyIO warning
+remains. UI validation uses component tests; no manual browser walkthrough is
+claimed.
+
 ## Adding the next exercise
 
 1. Select a stable task ID tied to the lesson's taught concepts; preserve old IDs.
 2. Add an immutable controller bundle: reference, adversarial/edge fixtures, seed
    checksums, columns/types and ordered/bag contract. Register its exact tuple.
 3. Extend bank validation and backend capability/task mapping. Do not accept
-   client-selected fixture/rule/image fields. Current feedback text for columns
-   is specific to this projection task and must become task-aware.
+   client-selected fixture/rule/image fields. Configure task-aware row feedback;
+   column feedback is derived from the registered contract.
 4. Add comparator cases as needed, real restricted-role Docker tests, hardcoded
    public-result rejection and HTTP/frontend regressions. Verify each reference
    is complete within budgets before enabling Check.
@@ -165,5 +238,7 @@ review. No manual browser walkthrough was claimed for this phase.
 This is still a trusted local single-user app with one backend worker/controller
 per namespace. Authentication, distributed admission/idempotency, rate limits,
 SQL XP, server drafts, DML, free playground and Stage 11 labs need separate work.
-Only this single exercise is enabled; adding bank records alone does not expose
-new capabilities.
+Only the three listed exercises are enabled; adding bank records alone does not
+expose new capabilities. ORDER BY, LIMIT/OFFSET and DISTINCT need their own task
+registrations, adversarial fixtures and documented ordering contracts; they are
+not enabled by this PR.
