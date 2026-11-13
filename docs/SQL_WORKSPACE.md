@@ -1,10 +1,12 @@
-# SQL Workspace — Phases 2–3
+# SQL Workspace — Phases 2–4
 
-Enabled for **10.2**, stable lesson ID
-`backend-interview.10.2.select-aliases-and-expressions`, slug
-`s10-select-aliases-and-expressions`. The rest of the course keeps its existing
-workspace. Lesson IDs and Python completion/XP rules are unchanged. Phase 3 adds
-SQL-only attempt/progress tables and one graded task; see [SQL_GRADING.md](SQL_GRADING.md).
+Enabled for **10.2, 10.3 and 10.4**. Their stable lesson IDs are
+`backend-interview.10.2.select-aliases-and-expressions`,
+`backend-interview.10.3.where-and-boolean-logic` and
+`backend-interview.10.4.null-and-three-valued-logic`. Other lessons keep their
+existing workspace. Lesson IDs and Python completion/XP rules are unchanged.
+Phase 3 added SQL-only attempt/progress tables; Phase 4 reuses them without a
+migration. Registry/task details are in [SQL_GRADING.md](SQL_GRADING.md).
 
 ## Local use
 
@@ -13,13 +15,16 @@ docker compose up -d --build --wait
 ```
 
 Open [lesson 10.2](http://localhost:3000/?lesson=s10-select-aliases-and-expressions).
+The same workspace works in [10.3 WHERE](http://localhost:3000/?lesson=s10-where-and-boolean-logic)
+and [10.4 NULL](http://localhost:3000/?lesson=s10-null-and-three-valued-logic).
 SQL Lab opens a `shop-v1` session automatically. Edit `query.sql`, press Run or
 Ctrl/Cmd+Enter, inspect real PostgreSQL results. The Database tab shows table
 columns, nullable/type metadata, ordered PK and FK pairs, and pages of 50 rows.
 FK links select the referenced table, including users' self-reference.
 
-For task `sql.guided.10.2.projection.v1`, Check (Ctrl/Cmd+Shift+Enter) evaluates
-four public/hidden fixture revisions. It shows Passed/Failed, counts and safe
+Check (Ctrl/Cmd+Shift+Enter) evaluates four fixture revisions for
+`sql.guided.10.2.projection.v1`, five for `sql.basic.01` (WHERE) and five for
+`sql.basic.03` (NULL). It shows Passed/Failed, counts and task-aware safe
 feedback. Run never marks the task solved. Successful Check persists «Задача
 решена» independently of Python completion, including after a later failed Check
 or reload. SQL Check awards no XP and works without an active Explorer session.
@@ -43,7 +48,10 @@ modes. Guided-only capabilities do not render Check.
 Its public manifest projects task ID/revision, prompt, starter, expected column
 names, Check capability and persisted completion. It never returns reference SQL,
 hidden fixtures, expected rows or grader rules.
-Only this published lesson gets `workspace_kind=sql` in the existing lesson API.
+Only these three published lessons get `workspace_kind=sql` in the lesson API.
+Each lesson has its own task, draft, result, completion and disposable session.
+Navigation waits for pending work/Close before provisioning the next lesson's
+session; stale results cannot populate another lesson's workspace.
 
 SQL drafts are stored **only in this browser** under
 `pythoria:sql:<stable-lesson-id>:<task-id>`. Phase 2's `guided-select` draft is
@@ -134,6 +142,13 @@ correct 4/4, missing alias/columns/rows, duplicate rows, hardcoded public data 1
 safe cast errors, idempotent replay and conflict, sticky completion, unchanged
 Explorer generation/handles/rows and unchanged Python progress/XP. SQL outage
 also verifies Check returns a sanitized 503.
+
+Phase 4 extends the same smoke to solve WHERE/NULL (5/5), reject hardcoded public
+rows (1/5), verify task-aware feedback/cross-task rejection, and preserve each
+task's independent completion through failed attempts and Reset. It verifies
+Python Check, files, progress and XP before/after the three SQL tasks. Component
+tests cover 10.2 → 10.3 → 10.4, independent draft restoration, delayed Check/Close,
+theme, shortcuts and closed Learn/Review solutions for all three lessons.
 
 For a manual browser check with the disposable DB:
 

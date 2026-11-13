@@ -6,10 +6,12 @@ import pytest
 from sql_runner.app.config import Settings
 from sql_runner.app.docker_backend import QueryDeadline, SandboxUnavailable
 from sql_runner.app.grader import check
-from sql_runner.app.grading_content import GRADER_REVISION, TASK_ID, load_task
+from sql_runner.app.grading_content import load_task
 from sql_runner.app.lifecycle import Manager, SessionError
 from sql_runner.tests.unit.test_comparator import result
 
+TASK_ID = "sql.guided.10.2.projection.v1"
+GRADER_REVISION = "projection-v1"
 QUERY = "SELECT id AS user_id,email FROM users"
 
 
@@ -128,7 +130,22 @@ def test_failed_cleanup_holds_capacity_and_reaper_retries(manager):
 
 
 def test_unknown_config_and_immutable_bundle():
-    task = load_task()
+    task = load_task(TASK_ID, 1, GRADER_REVISION)
     assert len(task.cases) == 4 and task.cases[-1].seed == ""
     with pytest.raises(ValueError):
-        load_task("../../etc/passwd")
+        load_task("../../etc/passwd", 1, GRADER_REVISION)
+
+
+def test_more_cases_keep_feedback_within_public_dto_budget(manager, monkeypatch):
+    task = load_task("sql.basic.01", 1, "active-users-v1")
+
+    def execute(handle, operation, payload):
+        if payload["sql"] == task.reference_sql:
+            return result([], ("int8", "text"), ["id", "email"])
+        return dict(error={"kind": "postgres", "sqlstate": f"2200{handle}", "message": "private fixture value"})
+
+    monkeypatch.setattr(manager.backend, "execute", execute)
+    output = check(manager, task.id, task.revision, task.grader_revision, "SELECT id,email FROM users WHERE active")
+    assert output["tests_total"] == 5 and not output["passed"]
+    assert len(output["feedback"]) == 4 and "private" not in json.dumps(output)
+    assert not manager.backend.handles

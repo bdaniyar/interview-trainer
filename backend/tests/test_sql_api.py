@@ -90,7 +90,7 @@ def test_public_manifest_has_guided_capability_and_no_answers(client):
         assert field not in data
     assert client.get(f"/api/lessons/{SLUG}").json()["workspace_kind"] == "sql"
     assert client.get("/api/lessons/is-vs-eq").json()["workspace_kind"] == "python"
-    for slug in ("is-vs-eq", "s10-where-and-boolean-logic", "does-not-exist"):
+    for slug in ("is-vs-eq", "s10-order-by", "does-not-exist"):
         assert client.get(f"/api/sql/lessons/{slug}").status_code == 404
 
 

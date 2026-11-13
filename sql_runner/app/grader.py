@@ -66,7 +66,7 @@ def check(manager, task_id, task_revision, grader_revision, query):
                     # (e.g. a failing email::integer cast). Never forward it.
                     state = (actual.get("error") or {}).get("sqlstate")
                     item = dict(code=code, sqlstate=state if state and len(state) == 5 and state.isalnum() else None)
-                    if item not in feedback:
+                    if item not in feedback and len(feedback) < 4:
                         feedback.append(item)
             except SessionError:
                 raise

@@ -19,13 +19,17 @@ function loadLesson(directory: string): LessonData {
 }
 const props = { theme: 'light' as const, position: 1, total: 359, onCompleteTheory: () => {}, onNavigate: () => {} };
 
-it('keeps the graded SQL answer behind disclosure in Learn and Review', () => {
-  const lesson = loadLesson('stage-10/s10-select-aliases-and-expressions');
+it.each([
+  ['s10-select-aliases-and-expressions', 'Показать решение SQL для самопроверки', 'id AS user_id'],
+  ['s10-where-and-boolean-logic', 'Показать решение задачи для самопроверки', 'active IS TRUE'],
+  ['s10-null-and-three-valued-logic', 'Показать решение задачи для самопроверки', 'country IS NULL'],
+])('keeps the graded SQL answer closed in Learn and Review: %s', (slug, summary, sql) => {
+  const lesson = loadLesson(`stage-10/${slug}`);
   render(<MarkdownLesson {...props} lesson={lesson} />);
-  const answer = () => screen.getByText('Показать решение SQL для самопроверки').closest('details')!;
+  const answer = () => screen.getByText(summary).closest('details')!;
   expect(answer().open).toBe(false);
-  expect(answer().textContent).toContain('id AS user_id');
-  fireEvent.click(within(answer()).getByText('Показать решение SQL для самопроверки'));
+  expect(answer().textContent).toContain(sql);
+  fireEvent.click(within(answer()).getByText(summary));
   expect(answer().open).toBe(true);
   review();
   expect(answer().open).toBe(false);

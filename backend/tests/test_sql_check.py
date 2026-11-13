@@ -12,10 +12,11 @@ from sqlalchemy.orm import Session
 from backend.app import main
 from backend.app.database import Base, SessionLocal
 from backend.app.models import Attempt, CodeFile, InterviewProgress, LessonProgress, SqlAttempt, SqlTaskProgress, UserState
-from backend.app.sql_content import TASK_ID, task_record
+from backend.app.sql_content import task_record
 from backend.app.sql_runner_client import SQLRunnerClient, SqlServiceError
 from backend.app.sql_schemas import RunnerGrade, SqlCheckResult
 
+TASK_ID = "sql.guided.10.2.projection.v1"
 SLUG = "s10-select-aliases-and-expressions"
 PATH = f"/api/sql/lessons/{SLUG}/tasks/{TASK_ID}/check"
 QUERY = "SELECT id AS user_id,email FROM users"
@@ -40,7 +41,7 @@ class Grader:
         if self.failure:
             raise SqlServiceError(503, "grading_unavailable", "Проверка временно недоступна")
         return RunnerGrade(task_id=task["id"], task_revision=task["revision"], grader_revision=task["grader_revision"],
-            dataset_checksum=task["dataset_checksum"], passed=self.passed, tests_total=4, tests_passed=4 if self.passed else 1,
+            dataset_checksum=task["dataset_checksum"], passed=self.passed, tests_total=task["tests_total"], tests_passed=task["tests_total"] if self.passed else 1,
             feedback=[{"code": "passed" if self.passed else self.code, "sqlstate": None}])
 
 

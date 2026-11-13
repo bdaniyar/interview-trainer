@@ -11,13 +11,20 @@ from .sql_schemas import PublicFeedback, SqlCheckResult
 MESSAGES = {
     "passed": "Запрос прошёл все проверки.",
     "policy": "Разрешён один read-only SELECT. Изменение данных, системные таблицы и административные функции запрещены.",
-    "columns": "Проверьте названия и порядок столбцов: user_id, email. Для id нужен псевдоним user_id.",
-    "types": "Типы столбцов не соответствуют условию. Сохраняйте исходные значения id и email.",
-    "rows": "Результат не совпадает с условием на одном из наборов. Проверьте все строки, лишние строки и дубликаты.",
+    "types": "Типы столбцов не соответствуют условию. Сохраняйте исходные типы значений.",
     "sql_error": "Запрос вызвал ошибку PostgreSQL на одном из наборов. Исправьте запрос и повторите Check.",
     "timeout": "Превышен лимит времени выполнения запроса.",
     "result_limit": "Результат превысил лимит строк или размера. Обрезанный результат не считается верным решением.",
 }
+
+
+def feedback_message(task, code):
+    if code == "columns":
+        message = "Проверьте названия и порядок столбцов: " + ", ".join(task["expected_columns"]) + "."
+        return message + (" " + task["column_hint"] if task["column_hint"] else "")
+    if code == "rows":
+        return task["rows_feedback"]
+    return MESSAGES[code]
 
 
 class SQLChecks:
@@ -48,6 +55,6 @@ class SQLChecks:
             result = SqlCheckResult(request_id=payload.request_id, task_id=task["id"], task_revision=task["revision"],
                 grader_revision=task["grader_revision"], passed=grade.passed, tests_passed=grade.tests_passed,
                 tests_total=grade.tests_total, completed=False,
-                feedback=[PublicFeedback(code=f.code, message=MESSAGES[f.code], sqlstate=f.sqlstate) for f in grade.feedback])
+                feedback=[PublicFeedback(code=f.code, message=feedback_message(task, f.code), sqlstate=f.sqlstate) for f in grade.feedback])
             with self.session_factory() as db:
                 return record(db, task, digest, result)

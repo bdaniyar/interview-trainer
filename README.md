@@ -7,7 +7,7 @@ Pythoria — локальная платформа подготовки к со�
 - полная taxonomy из 406 стабильных lesson IDs в 33 stages;
 - 359 опубликованных P0/P1-уроков; P2/P3 остаются честно помеченными `planned` и не открывают пустые страницы;
 - 63 рабочие Python/FastAPI/Pydantic/SQLAlchemy/Alembic задачи со starter code, solutions и hidden pytest tests;
-- 40 Python code-prediction snippets, 12 asyncio-задач, 48 полностью специфицированных PostgreSQL practice tasks, 59 debugging и 20 architecture scenarios;
+- 40 Python code-prediction snippets, 12 asyncio-задач, 49 PostgreSQL practice records (3 задачи подключены к SQL Lab), 59 debugging и 20 architecture scenarios;
 - 20 interview sets, включая 25-вопросный Full Junior Interview, Crash Course и Resume Defense;
 - Markdown с заголовками, списками, GFM-таблицами, цитатами/callouts, inline code и подсвеченными Python-блоками;
 - Monaco Editor: Python highlighting, line numbers, tabs, auto-indent, несколько файлов, dark/light themes;
@@ -297,9 +297,11 @@ Sandbox Python 3.12 содержит pytest 8.4, FastAPI 0.116, Pydantic 2.11, S
 
 ## SQL practice
 
-SQL runner в текущей архитектуре отсутствует. Поэтому сайт не заявляет интерактивное SQL execution: 48 PostgreSQL-compatible tasks содержат schema, seed, question, expected columns, ordered/unordered comparison, hidden solution или reasoning rubric. Они видны внутри SQL/PostgreSQL lessons и структурированы в `content/practice_banks.json`.
+SQL Lab работает в уроках 10.2 (SELECT/AS), 10.3 (WHERE) и 10.4 (NULL): Monaco SQL, Run, Explorer, Reset и настоящий Check на публичных/скрытых наборах. Каждая сессия и каждый Check case выполняются в отдельном PostgreSQL 17 sandbox. Все три урока используют неизменный `shop-v1`.
 
-Безопасный disposable PostgreSQL design описан в `docs/SQL_RUNNER_DESIGN.md`. Не подменяй PostgreSQL SQLite-исполнением и не добавляй DB credentials в content.
+В банке `content/practice_banks.json` сохранены 49 записей; подключена одна задача на каждый из этих трёх уроков. Остальные пока являются дополнительной практикой. У SQL отдельные черновики в браузере и отдельный прогресс задач; Run не определяет правильность, SQL Check не начисляет XP.
+
+Запуск: `docker compose up -d --build --wait`. Подробности: [SQL Workspace](docs/SQL_WORKSPACE.md), [реестры, grader и hidden fixtures](docs/SQL_GRADING.md), [границы SQL Runner](sql_runner/README.md). SQL выполняется в PostgreSQL, а SQLite хранит только состояние приложения.
 
 ## Priorities and planned content
 
@@ -339,8 +341,10 @@ SQLite хранится в named volume `pythoria_data`. Основные таб
 - `code_files` — пользовательские файлы по lesson slug;
 - `attempts` — Run/Check history и результаты;
 - `interview_progress` — ответы и completion.
+- `sql_attempts` — отдельная история SQL Check;
+- `sql_task_progress` — независимое завершение SQL-задач.
 
-XP начисляется идемпотентно: +5 за первую отметку теории, +20 за первое успешное решение, +5 за первый ответ на interview question.
+XP начисляется идемпотентно: +5 за первую отметку теории, +20 за первое успешное решение Python-задачи, +5 за первый ответ на interview question. SQL Check XP не начисляет.
 
 ## Tests and verification
 

@@ -2,7 +2,8 @@
 
 Independent PostgreSQL 17 execution service for trusted, local, single-user
 Pythoria. Phase 1 established the execution boundary; Phase 2 integrated the
-workspace; Phase 3 adds a disposable grader for one task. Application integration
+workspace; Phase 3 adds a disposable grader and Phase 4 registers WHERE/NULL
+alongside projection. Application integration
 is documented in [SQL_WORKSPACE](../docs/SQL_WORKSPACE.md), grading in
 [SQL_GRADING](../docs/SQL_GRADING.md). SQL rewards and server drafts remain future work.
 
@@ -201,7 +202,7 @@ keeps SQL drafts separate from Python saved files and renders cells/errors as te
 Successful Run does not imply a passed Check or SQL XP.
 
 Phase 3 Check acquires the same global admission lock and needs one free sandbox
-slot. Four cases run sequentially in separate containers, each with a 60-second
+slot. Registered cases run sequentially in separate containers, each with a 60-second
 PID1 lifetime, removed in `finally`. With two interactive sessions, Check returns
 429 without eviction. Failed removal retains capacity until reaping succeeds.
 The controller alone contains `grading/`; the student image has no hidden bundle
@@ -209,3 +210,10 @@ or reference query. Current fixtures have at most seven rows; existing 500-row /
 1 MiB result budgets apply and truncation can never pass. The workflow deadline
 is 60 seconds, checked between bounded operations; the final operation/cleanup
 can extend this by its own deadline. See the grading guide for safe extension.
+
+Phase 4 uses the same engine for three tasks (4/5/5 cases). Its immutable
+execution registry explicitly maps task IDs/revisions to bundle directories and
+manifest SHA-256 pins. Reference AST/configuration validation runs at startup.
+No hidden resources are added to the student image; the public shop-v1 resources
+are unchanged. Results retain the same limits, and feedback remains capped at
+four safe diagnostics even when more cases fail differently.

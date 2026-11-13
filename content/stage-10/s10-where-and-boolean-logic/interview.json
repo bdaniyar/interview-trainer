@@ -1,45 +1,47 @@
 [
   {
-    "question": "Что такое WHERE and boolean logic и как это работает?",
+    "question": "Чем WHERE отличается от SELECT и как объединять условия фильтрации?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "comparisons",
-      "AND/OR/NOT",
-      "parentheses",
-      "ranges"
+      "выбор полей и отбор строк",
+      "WHERE пропускает TRUE",
+      "AND, OR и NOT",
+      "приоритет операторов и скобки"
     ],
-    "short_answer": "`WHERE` фильтрует исходные rows по boolean predicates до grouping и aggregation.",
-    "junior_answer": "`WHERE` фильтрует исходные rows по boolean predicates до grouping и aggregation. AND имеет более высокий приоритет, чем OR, поэтому parentheses фиксируют намерение. Сравнения с NULL дают UNKNOWN и требуют `IS NULL` или `IS NOT NULL`. Важное ограничение: Функция вокруг indexed column может помешать простому index access path; решение проверяют через EXPLAIN.",
-    "follow_up_question": "Какая типичная ошибка связана с WHERE and boolean logic?",
-    "follow_up_answer": "`status = 'paid' OR status = 'new' AND active` часто означает не ту группировку, которую читатель предполагает визуально.",
+    "short_answer": "SELECT выбирает поля, WHERE отбирает строки с истинным условием. AND требует оба условия, OR — хотя бы одно, NOT отрицает условие.",
+    "junior_answer": "Я отдельно определяю поля ответа и критерий отбора строк. Для оплаченных заказов с суммой не меньше 100 использую status = 'paid' AND total >= 100. В смешанных условиях ставлю скобки: NOT связывается раньше AND, а AND — раньше OR. В PostgreSQL boolean-поле можно использовать как условие напрямую.",
+    "follow_up_question": "Почему A OR B AND C отличается от (A OR B) AND C?",
+    "follow_up_answer": "Первое выражение группируется как A OR (B AND C). Поэтому C не ограничивает строки, для которых A истинно. Во втором выражении C обязательно для обеих альтернатив.",
     "expected_answer": {
       "must_mention": [
-        "comparisons",
-        "AND/OR/NOT",
-        "parentheses",
-        "ranges"
+        "выбор полей и отбор строк",
+        "WHERE пропускает TRUE",
+        "AND, OR и NOT",
+        "приоритет операторов и скобки"
       ],
       "good_additions": [
-        "короткий рабочий пример",
-        "ограничение или типичная ошибка"
+        "конкретный пример на shop-v1"
       ],
-      "common_wrong_answers": [],
+      "common_wrong_answers": [
+        "SELECT сам отфильтровывает строки по значению поля.",
+        "AND и OR всегда выполняются слева направо с одинаковым приоритетом."
+      ],
       "red_flags": [],
       "follow_up_questions": [
-        "Какая типичная ошибка связана с WHERE and boolean logic?"
+        "Почему A OR B AND C отличается от (A OR B) AND C?"
       ],
       "coding_mistakes": [
-        "`status = 'paid' OR status = 'new' AND active` часто означает не ту группировку, которую читатель предполагает визуально."
+        "Пропустить скобки у альтернатив, к которым должен относиться общий порог суммы."
       ],
       "assessment_notes": [
-        "Ответ без механизма, примера и ограничения"
+        "Проверить объяснение результата, а не только название SQL-конструкции."
       ],
-      "review_status": "pending-substantive-review"
+      "review_status": "reviewed"
     },
     "follow_ups": [
-      "Какая типичная ошибка связана с WHERE and boolean logic?"
+      "Почему A OR B AND C отличается от (A OR B) AND C?"
     ],
     "tags": [
       "stage-10",
@@ -52,38 +54,45 @@
     ]
   },
   {
-    "question": "Какая типичная ошибка связана с WHERE and boolean logic?",
+    "question": "Как проверить условие фильтрации на конкретных данных?",
     "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "pattern matching",
-      "`status = 'paid' OR status = 'new' AND active` часто означает не ту группировку, которую читатель предполагает визуально."
+      "подходящие и неподходящие строки",
+      "проверка границ сравнения",
+      "значение шаблонов LIKE"
     ],
-    "short_answer": "`status = 'paid' OR status = 'new' AND active` часто означает не ту группировку, которую читатель предполагает визуально.",
-    "junior_answer": "`status = 'paid' OR status = 'new' AND active` часто означает не ту группировку, которую читатель предполагает визуально.",
-    "follow_up_question": "Что такое WHERE and boolean logic и как это работает?",
-    "follow_up_answer": "`WHERE` фильтрует исходные rows по boolean predicates до grouping и aggregation. AND имеет более высокий приоритет, чем OR, поэтому parentheses фиксируют намерение. Сравнения с NULL дают UNKNOWN и требуют `IS NULL` или `IS NOT NULL`. Важное ограничение: Функция вокруг indexed column может помешать простому index access path; решение проверяют через EXPLAIN.",
+    "short_answer": "Нужны подходящие, неподходящие и граничные строки. Проверка одного видимого результата недостаточна.",
+    "junior_answer": "Для total >= 100 я проверю суммы 99, 100 и 101 и отдельно неподходящий статус. Для LIKE различаю начало, конец и вхождение подстроки: % обозначает последовательность символов, _ — один символ. Условия сопоставляю с формулировкой задачи, а не с набором известных ID.",
+    "follow_up_question": "Чем шаблоны SQL% и %Book отличаются по смыслу?",
+    "follow_up_answer": "SQL% означает начало текста SQL, а %Book — окончание Book. На публичных products первый выбирает SQL Book, второй — Python Book и SQL Book.",
     "expected_answer": {
       "must_mention": [
-        "pattern matching"
+        "подходящие и неподходящие строки",
+        "проверка границ сравнения",
+        "значение шаблонов LIKE"
       ],
       "good_additions": [
-        "короткий пример именно этой темы"
+        "конкретный пример на shop-v1"
       ],
-      "common_wrong_answers": [],
+      "common_wrong_answers": [
+        "Если запрос выполнился без ошибки, условие обязательно верно."
+      ],
       "red_flags": [],
       "follow_up_questions": [
-        "Что такое WHERE and boolean logic и как это работает?"
+        "Чем шаблоны SQL% и %Book отличаются по смыслу?"
       ],
       "coding_mistakes": [
-        "`status = 'paid' OR status = 'new' AND active` часто означает не ту группировку, которую читатель предполагает визуально."
+        "Заменить условие списком известных ID из публичного примера."
       ],
-      "assessment_notes": [],
-      "review_status": "pending-substantive-review"
+      "assessment_notes": [
+        "Проверить объяснение результата, а не только название SQL-конструкции."
+      ],
+      "review_status": "reviewed"
     },
     "follow_ups": [
-      "Что такое WHERE and boolean logic и как это работает?"
+      "Чем шаблоны SQL% и %Book отличаются по смыслу?"
     ],
     "tags": [
       "stage-10",

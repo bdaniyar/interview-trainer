@@ -29,7 +29,16 @@ function sameSession(value: { session_id: string; generation: number }, session:
   }
 }
 
-export function SqlWorkspace({ lessonSlug, theme }: { lessonSlug: string; theme: 'dark' | 'light' }) {
+type Props = { lessonSlug: string; theme: 'dark' | 'light' };
+// Serialize disposal with the next lesson's provisioning. The runner admits one
+// operation globally; starting Create alongside the previous Close races it.
+let releasedSession: Promise<void> = Promise.resolve();
+
+export function SqlWorkspace(props: Props) {
+  return <LessonSqlWorkspace key={props.lessonSlug} {...props} />;
+}
+
+function LessonSqlWorkspace({ lessonSlug, theme }: Props) {
   const [lesson, setLesson] = useState<SqlLesson | null>(null);
   const [session, setSession] = useState<SqlSession | null>(null);
   const [catalog, setCatalog] = useState<SqlCatalog | null>(null);
@@ -132,7 +141,7 @@ export function SqlWorkspace({ lessonSlug, theme }: { lessonSlug: string; theme:
   useEffect(() => {
     const lease: Lease = { alive: true, busy: false, token: 0, session: null, lesson: null, selected: 'users', pending: null };
     leaseRef.current = lease;
-    connect(lease);
+    const opening = releasedSession.then(() => { if (lease.alive) connect(lease); });
     const pageHide = () => {
       if (lease.session) void sqlApi.close(lease.session).catch(() => undefined);
     };
@@ -142,9 +151,9 @@ export function SqlWorkspace({ lessonSlug, theme }: { lessonSlug: string; theme:
       lease.alive = false;
       // Let bounded mutations finish before Close. Aborting create/reset can
       // otherwise lose the new session ID/generation and leak a capacity slot.
-      void Promise.resolve(lease.pending).finally(async () => {
+      releasedSession = opening.then(() => lease.pending).then(async () => {
         if (lease.session) await sqlApi.close(lease.session).catch(() => undefined);
-      });
+      }).catch(() => undefined);
     };
   }, [connect]);
 
