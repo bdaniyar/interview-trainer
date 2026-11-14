@@ -1,0 +1,49 @@
+{
+  "task_id": "sql.basic.05",
+  "task_revision": 1,
+  "grader_revision": "distinct-countries-v1",
+  "dataset_id": "shop-v1",
+  "dataset_checksum": "a1de3973eb4a2febc818c026def43716109e7ffde6b0bc46721e11d1b2fa4b97",
+  "expected_columns": [
+    "country"
+  ],
+  "comparison": "ordered",
+  "numeric_compatible": true,
+  "reference_sql": "SELECT DISTINCT country FROM users WHERE country IS NOT NULL ORDER BY country;",
+  "cases": [
+    {
+      "id": "public-v1",
+      "public": true
+    },
+    {
+      "id": "mixed-v1",
+      "public": false,
+      "seed_file": "mixed-v1.sql",
+      "sha256": "9d94542c3262533b53882853000214e807b111f3ba8d11d2e859cabfae18e13e"
+    },
+    {
+      "id": "all-same-v1",
+      "public": false,
+      "seed_file": "all-same-v1.sql",
+      "sha256": "26b7e7f39fca94e50462aec4e61ce7edc0b539ecd2f6d5363d66c95ace17ab68"
+    },
+    {
+      "id": "null-only-v1",
+      "public": false,
+      "seed_file": "null-only-v1.sql",
+      "sha256": "d2398b211d7400733c847a48b0abd0a5c6792f8042dce807ce8a057c3eb2cb30"
+    },
+    {
+      "id": "changed-v1",
+      "public": false,
+      "seed_file": "changed-v1.sql",
+      "sha256": "7bbc6f63f0c3b1e437a661da634edfa2fbecb7d58fbb5f09942babcaa9ea7617"
+    },
+    {
+      "id": "empty-v1",
+      "public": false,
+      "seed_file": "empty-v1.sql",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

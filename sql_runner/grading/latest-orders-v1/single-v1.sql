@@ -1,0 +1,4 @@
+INSERT INTO users VALUES
+(40,'latest-single@example.test',NULL,true,NULL,'2026-01-01');
+INSERT INTO orders VALUES
+(9007199254740993,40,'new',1,'2026-04-01T05:00:00.123456+05:00');

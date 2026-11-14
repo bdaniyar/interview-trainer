@@ -43,6 +43,10 @@ REGISTRY = build_registry((
         "2025fe522b74fd9b2644a03f657dbfffe059e26ba319d6771228e5faa3bcd2b4"),
     Registration("sql.basic.03", 1, "null-country-v1", "null-country-v1",
         "566c85cefbc748bb0d85583dd482cbfddbcbff9d6396d2ee104eb4790e73aeda"),
+    Registration("sql.basic.04", 1, "latest-orders-v1", "latest-orders-v1",
+        "f0dfddb0e8b4c25429561b4e78370436656b07b52bf1806fa39190cd733213ba"),
+    Registration("sql.basic.05", 1, "distinct-countries-v1", "distinct-countries-v1",
+        "c86a3312b1886cfbd69fd937504ceb41410c5f73108073d346c3ad3897c35989"),
 ))
 
 

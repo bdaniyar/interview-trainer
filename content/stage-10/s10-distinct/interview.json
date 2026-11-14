@@ -1,43 +1,45 @@
 [
   {
-    "question": "Что такое DISTINCT и какой механизм здесь важно понимать Junior-разработчику?",
+    "question": "Что делает DISTINCT по нескольким полям и как он обрабатывает NULL?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "deduplication",
-      "hiding join mistakes",
-      "cost"
+      "полная строка результата",
+      "комбинация выбранных полей",
+      "NULL при удалении повторов",
+      "отдельный ORDER BY"
     ],
-    "short_answer": "DISTINCT: Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.",
-    "junior_answer": "DISTINCT — тема, в которой я сначала фиксирую `deduplication`, затем объясняю `hiding join mistakes` на коротком примере. Ключевой механизм: Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа. Главная практическая ошибка — Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
-    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме DISTINCT?",
-    "follow_up_answer": "Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
+    "short_answer": "DISTINCT убирает одинаковые полные строки результата. Уникальна вся комбинация выбранных полей; несколько одинаково расположенных NULL считаются повтором.",
+    "junior_answer": "DISTINCT country, active оставляет уникальные пары, а не одну произвольную строку на страну. Добавление ID может сделать строки различными и помешать схлопыванию. Для удаления повторов у NULL есть специальное правило; обычное сравнение NULL = NULL остаётся UNKNOWN. Пустая строка является отдельным известным значением.",
+    "follow_up_question": "Гарантирует ли DISTINCT сортировку и исключение NULL?",
+    "follow_up_answer": "Нет. Для порядка нужен ORDER BY, для исключения неизвестных значений — WHERE с IS NOT NULL. Без фильтра один NULL может остаться в результате.",
     "expected_answer": {
       "must_mention": [
-        "deduplication",
-        "hiding join mistakes",
-        "cost"
+        "полная строка результата",
+        "комбинация выбранных полей",
+        "NULL при удалении повторов",
+        "отдельный ORDER BY"
       ],
       "good_additions": [
-        "короткий рабочий пример",
-        "ограничение или типичная ошибка"
+        "пример на shop-v1 и объяснение результата"
       ],
-      "common_wrong_answers": [],
+      "common_wrong_answers": [
+        "DISTINCT автоматически исключает все NULL.",
+        "DISTINCT сортирует результат независимо от ORDER BY."
+      ],
       "red_flags": [],
       "follow_up_questions": [
-        "Какое ограничение или типичная ошибка относится именно к теме DISTINCT?"
+        "Гарантирует ли DISTINCT сортировку и исключение NULL?"
       ],
-      "coding_mistakes": [
-        "Не определить cardinality результата и замаскировать неверный query через DISTINCT."
-      ],
+      "coding_mistakes": [],
       "assessment_notes": [
-        "Ответ без механизма, примера и ограничения"
+        "Проверить смысл результата, границы и ограничения."
       ],
-      "review_status": "pending-substantive-review"
+      "review_status": "reviewed"
     },
     "follow_ups": [
-      "Какое ограничение или типичная ошибка относится именно к теме DISTINCT?"
+      "Гарантирует ли DISTINCT сортировку и исключение NULL?"
     ],
     "tags": [
       "stage-10",
@@ -50,38 +52,46 @@
     ]
   },
   {
-    "question": "Какое ограничение или типичная ошибка относится именно к теме DISTINCT?",
+    "question": "Почему DISTINCT не является универсальным исправлением повторов после JOIN?",
     "level": "follow_up",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "связать DISTINCT с коротким рабочим примером",
-      "Не определить cardinality результата и замаскировать неверный query через DISTINCT."
+      "смысл строки ответа",
+      "связь один-ко-многим",
+      "проверка условия JOIN",
+      "DISTINCT не исправляет связь"
     ],
-    "short_answer": "Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
-    "junior_answer": "Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
-    "follow_up_question": "Что такое DISTINCT и какой механизм здесь важно понимать Junior-разработчику?",
-    "follow_up_answer": "DISTINCT — тема, в которой я сначала фиксирую `deduplication`, затем объясняю `hiding join mistakes` на коротком примере. Ключевой механизм: Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа. Главная практическая ошибка — Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
+    "short_answer": "Связь один-ко-многим может закономерно давать несколько строк. DISTINCT меняет результат, но не исправляет неверное условие соединения.",
+    "junior_answer": "Сначала я определяю смысл одной строки API. При соединении пользователей с заказами повтор пользователя нормален для строки на каждый заказ. Для списка владельцев заказов уникальные пользователи могут быть нужным результатом. Но неправильный JOIN способен добавить или потерять строки: DISTINCT лишь скрывает часть внешних повторов.",
+    "follow_up_question": "Чем отличается цель DISTINCT от GROUP BY?",
+    "follow_up_answer": "DISTINCT удаляет повторы проекции. GROUP BY формирует группы, обычно для вычисления показателей. В простой проекции они могут дать одинаковый набор, но выбор определяется задачей.",
     "expected_answer": {
       "must_mention": [
-        "связать DISTINCT с коротким рабочим примером"
+        "смысл строки ответа",
+        "связь один-ко-многим",
+        "проверка условия JOIN",
+        "DISTINCT не исправляет связь"
       ],
       "good_additions": [
-        "короткий пример именно этой темы"
+        "пример на shop-v1 и объяснение результата"
       ],
-      "common_wrong_answers": [],
+      "common_wrong_answers": [
+        "Любые повторы после JOIN означают ошибку базы.",
+        "Достаточно добавить DISTINCT к любому неправильному JOIN."
+      ],
       "red_flags": [],
       "follow_up_questions": [
-        "Что такое DISTINCT и какой механизм здесь важно понимать Junior-разработчику?"
+        "Чем отличается цель DISTINCT от GROUP BY?"
       ],
-      "coding_mistakes": [
-        "Не определить cardinality результата и замаскировать неверный query через DISTINCT."
+      "coding_mistakes": [],
+      "assessment_notes": [
+        "Проверить смысл результата, границы и ограничения."
       ],
-      "assessment_notes": [],
-      "review_status": "pending-substantive-review"
+      "review_status": "reviewed"
     },
     "follow_ups": [
-      "Что такое DISTINCT и какой механизм здесь важно понимать Junior-разработчику?"
+      "Чем отличается цель DISTINCT от GROUP BY?"
     ],
     "tags": [
       "stage-10",

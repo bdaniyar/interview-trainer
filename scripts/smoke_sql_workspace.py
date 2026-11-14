@@ -16,6 +16,22 @@ FILTER_TASKS = [
     ("s10-null-and-three-valued-logic", "sql.basic.03", "SELECT id,email FROM users WHERE country IS NULL",
      "SELECT id,email FROM users WHERE country = NULL", "NULL", "(3,'c@example.com')"),
 ]
+ORDERED_TASKS = [
+    ("s10-order-by-limit-and-offset", "sql.basic.04",
+     "SELECT id,created_at FROM orders ORDER BY created_at DESC,id DESC LIMIT 2",
+     "SELECT id,created_at FROM orders ORDER BY created_at DESC LIMIT 2",
+     "SELECT * FROM (VALUES (14::bigint,TIMESTAMPTZ '2026-02-05'),(13::bigint,TIMESTAMPTZ '2026-02-04')) v(id,created_at) ORDER BY created_at DESC,id DESC",
+     [["14", "2026-02-05T00:00:00Z"], ["13", "2026-02-04T00:00:00Z"]], "сортировки"),
+    ("s10-distinct", "sql.basic.05",
+     "SELECT DISTINCT country FROM users WHERE country IS NOT NULL ORDER BY country",
+     "SELECT country FROM users WHERE country IS NOT NULL ORDER BY country",
+     "SELECT country FROM (VALUES ('GE'),('KZ')) v(country) ORDER BY country",
+     [["GE"], ["KZ"]], "повторы"),
+]
+PYTHON_FILES = {
+    "main.py": "def compare_objects(a, b):\n    return {'same_identity': a is b, 'same_value': a == b}\n",
+    "notes.py": "SAVED_FILE = 'preserve me'\nif __name__ == '__main__':\n    print('python stays available')\n",
+}
 
 
 def call(path, data=None, method=None, expected=200):
@@ -79,21 +95,64 @@ def solve_filtering_tasks():
     print("WHERE/NULL HTTP smoke passed: independent 5/5 grades/progress, hardcoded 1/5, task-aware feedback, unchanged Explorer, Reset and cross-task rejection")
 
 
+def solve_ordered_tasks():
+    for index, (slug, task_id, correct, wrong, hardcoded_sql, rows, feedback) in enumerate(ORDERED_TASKS):
+        lesson_before = call(f"/api/lessons/{slug}")
+        assert lesson_before["workspace_kind"] == "sql"
+        manifest = call(f"/api/sql/lessons/{slug}")
+        assert manifest["task_id"] == task_id and not manifest["completed"]
+        session = call("/api/sql/sessions", {"lesson_slug": slug}, expected=201)
+        assert session["task_id"] == task_id
+        path, generation = "/api/sql/sessions/" + session["session_id"], session["generation"]
+        try:
+            catalog = call(path + f"/catalog?generation={generation}")
+            result = call(path + "/run", {"generation": generation, "sql": correct})
+            assert result["error"] is None and result["rows"] == rows
+            assert [c["name"] for c in result["columns"]] == manifest["expected_columns"]
+            assert not call(f"/api/sql/lessons/{slug}")["completed"]  # Run is not Check.
+            failed = grade_task(slug, task_id, wrong)
+            assert not failed["passed"] and not failed["completed"] and failed["tests_passed"] < 6
+            assert feedback in failed["feedback"][0]["message"]
+            token = str(uuid4())
+            passed = grade_task(slug, task_id, correct, token)
+            assert passed["passed"] and passed["completed"] and passed["tests_passed"] == passed["tests_total"] == 6
+            assert grade_task(slug, task_id, correct, token) == passed
+            grade_task(slug, task_id, correct + " OFFSET 1", token, expected=409)
+            hardcoded = grade_task(slug, task_id, hardcoded_sql)
+            assert not hardcoded["passed"] and hardcoded["completed"] and hardcoded["tests_passed"] == 1
+            assert call(path + f"/catalog?generation={generation}") == catalog
+            assert call(path + "/run", {"generation": generation, "sql": correct})["rows"] == rows
+            generation = call(path + "/reset", {"generation": generation})["generation"]
+            assert call(f"/api/sql/lessons/{slug}")["completed"]
+            if index == 0:
+                assert not call(f"/api/sql/lessons/{ORDERED_TASKS[1][0]}")["completed"]
+        finally:
+            call(path + f"?generation={generation}", method="DELETE", expected=204)
+        assert call(f"/api/lessons/{slug}")["files"] == lesson_before["files"]
+    for slug in [SLUG] + [t[0] for t in FILTER_TASKS + ORDERED_TASKS]:
+        assert call(f"/api/sql/lessons/{slug}")["completed"]
+    print("ORDER/DISTINCT HTTP smoke passed: five lessons complete independently; correct 6/6, hardcoded 1/6, ordered Run, safe feedback, replay/conflict, Reset and Explorer isolation")
+
+
 def main():
     if "--sql-offline" in sys.argv:
         assert call("/api/health")["status"] == "ok"
         response = call("/api/sql/sessions", {"lesson_slug": SLUG}, expected=503)
         assert response["error"]["code"] == "runner_unavailable"
         call(CHECK, {"request_id": str(uuid4()), "sql": SOLUTION}, expected=503)
-        for slug, task_id, correct, *_ in FILTER_TASKS:
+        for slug, task_id, correct, *_ in FILTER_TASKS + ORDERED_TASKS:
             grade_task(slug, task_id, correct, expected=503)
-        result = call("/api/run", {"lesson_slug": "is-vs-eq", "files": {"main.py": "print('python stays available')\n"}, "entrypoint": "main.py"})
+        before = call("/api/course")["summary"]["xp"]
+        result = call("/api/run", {"lesson_slug": "is-vs-eq", "files": PYTHON_FILES, "entrypoint": "notes.py"})
         assert result["exit_code"] == 0 and result["stdout"] == "python stays available\n"
-        print("SQL outage smoke passed: Run/Check sanitized 503; backend and Python Docker Run remain available")
+        checked = call("/api/check", {"lesson_slug": "is-vs-eq", "files": PYTHON_FILES})
+        assert checked["passed"] and checked["tests_total"] == 3 and checked["xp_awarded"] == 0
+        assert call("/api/course")["summary"]["xp"] == before
+        assert call("/api/lessons/is-vs-eq")["files"] == PYTHON_FILES
+        print("SQL outage smoke passed: SQL Run/Check sanitized 503; real Python Docker Run AND Check remain available; files and XP preserved")
         return
     # Seed real Python progress/files in this stack's disposable SQLite only.
-    python_files = {"main.py": "def compare_objects(a, b):\n    return {'same_identity': a is b, 'same_value': a == b}\n",
-                    "notes.py": "SAVED_FILE = 'preserve me'\n"}
+    python_files = PYTHON_FILES
     python_check = call("/api/check", {"lesson_slug": "is-vs-eq", "files": python_files})
     assert python_check["passed"] and python_check["tests_total"] == 3
     call("/api/progress/generators/theory", {"completed": True})
@@ -159,6 +218,7 @@ def main():
     finally:
         call(path + f"?generation={generation}", method="DELETE", expected=204)
     solve_filtering_tasks()
+    solve_ordered_tasks()
     assert call(f"/api/lessons/{SLUG}")["files"] == original["files"]
     assert call("/api/lessons/is-vs-eq")["files"] == python_before["files"] == python_files
     assert call("/api/lessons/is-vs-eq")["progress"] == python_before["progress"]

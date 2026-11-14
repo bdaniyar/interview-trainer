@@ -257,9 +257,14 @@ const where: SqlLesson = { ...graded, lesson_slug: 's10-where-and-boolean-logic'
   starter_sql: 'SELECT id, email\nFROM users;\n', prompt: 'Только активные пользователи.', expected_columns: ['id', 'email'] };
 const nullable: SqlLesson = { ...where, lesson_slug: 's10-null-and-three-valued-logic',
   lesson_id: 'backend-interview.10.4.null-and-three-valued-logic', task_id: 'sql.basic.03', prompt: 'Неизвестная страна.' };
+const latest: SqlLesson = { ...where, lesson_slug: 's10-order-by-limit-and-offset',
+  lesson_id: 'backend-interview.10.5.order-by-limit-and-offset', task_id: 'sql.basic.04',
+  starter_sql: 'SELECT id, created_at\nFROM orders;\n', prompt: 'Два последних заказа.', expected_columns: ['id', 'created_at'] };
+const countries: SqlLesson = { ...where, lesson_slug: 's10-distinct', lesson_id: 'backend-interview.10.6.distinct',
+  task_id: 'sql.basic.05', starter_sql: 'SELECT country\nFROM users;\n', prompt: 'Уникальные страны.', expected_columns: ['country'] };
 
 function multipleLessons() {
-  const manifests = [graded, where, nullable];
+  const manifests = [graded, where, nullable, latest, countries];
   const solved = new Set<string>();
   vi.mocked(sqlApi.lesson).mockImplementation(async slug => ({ ...manifests.find(m => m.lesson_slug === slug)!,
     completed: solved.has(slug) }));
@@ -270,13 +275,13 @@ function multipleLessons() {
   });
   vi.mocked(sqlApi.check).mockImplementation(async (slug, taskId) => {
     solved.add(slug);
-    return { ...gradeResult, task_id: taskId, tests_total: slug === graded.lesson_slug ? 4 : 5,
-      tests_passed: slug === graded.lesson_slug ? 4 : 5 };
+    const count = [4, 5, 5, 6, 6][manifests.findIndex(m => m.task_id === taskId)];
+    return { ...gradeResult, task_id: taskId, tests_total: count, tests_passed: count };
   });
   return solved;
 }
 
-it('navigates 10.2 → 10.3 → 10.4 with separate drafts, results, completion and serialized sessions', async () => {
+it('navigates 10.2 → 10.3 → 10.4 → 10.5 → 10.6 with independent state and serialized sessions', async () => {
   multipleLessons();
   const mounted = render(<SqlWorkspace lessonSlug={slug} theme="dark" />);
   await ready(); edit('SELECT projection_draft FROM users;');
@@ -308,6 +313,18 @@ it('navigates 10.2 → 10.3 → 10.4 with separate drafts, results, completion a
   expect(vi.mocked(sqlApi.check).mock.calls.at(-1)?.slice(0, 3)).toEqual([nullable.lesson_slug, nullable.task_id, 'SELECT null_draft FROM users;']);
   fireEvent.click(screen.getByRole('button', { name: 'Reset' })); await ready();
   expect(screen.getByText('Задача решена')).toBeTruthy();
+  for (const manifest of [latest, countries]) {
+    mounted.rerender(<SqlWorkspace lessonSlug={manifest.lesson_slug} theme="light" />); await ready();
+    expect(screen.getByText(manifest.prompt)).toBeTruthy();
+    expect((screen.getByRole('textbox') as HTMLTextAreaElement).value).toBe(manifest.starter_sql);
+    expect(screen.queryByText('Passed')).toBeNull();
+    expect(screen.queryByText('Задача решена')).toBeNull();
+    edit(`SELECT draft_for_${manifest.task_id};`);
+    fireEvent.keyDown(screen.getByRole('textbox'), { metaKey: true, shiftKey: true, key: 'Enter' });
+    await screen.findByText('6 / 6 проверок');
+    expect(vi.mocked(sqlApi.check).mock.calls.at(-1)?.slice(0, 3)).toEqual([
+      manifest.lesson_slug, manifest.task_id, `SELECT draft_for_${manifest.task_id};`]);
+  }
   mounted.rerender(<SqlWorkspace lessonSlug={where.lesson_slug} theme="light" />);
   await ready();
   expect((screen.getByRole('textbox') as HTMLTextAreaElement).value).toBe('SELECT where_draft FROM users;');
@@ -317,22 +334,28 @@ it('navigates 10.2 → 10.3 → 10.4 with separate drafts, results, completion a
   expect((screen.getByRole('textbox') as HTMLTextAreaElement).value).toBe('SELECT projection_draft FROM users;');
   expect(screen.getByText('Задача решена')).toBeTruthy();
   expect(localStorage.getItem(draftKey(nullable))).toBe('SELECT null_draft FROM users;');
+  for (const manifest of [latest, countries]) {
+    mounted.rerender(<SqlWorkspace lessonSlug={manifest.lesson_slug} theme="dark" />); await ready();
+    expect((screen.getByRole('textbox') as HTMLTextAreaElement).value).toBe(`SELECT draft_for_${manifest.task_id};`);
+    expect(screen.getByText('Задача решена')).toBeTruthy();
+    expect(screen.queryByText('Passed')).toBeNull();
+  }
   expect(api.saveFiles).not.toHaveBeenCalled();
 });
 
-it('ignores late Check from the previous SQL lesson and waits for its bounded cleanup', async () => {
+it.each([[graded, where], [latest, countries]])('ignores late Check and waits for previous SQL lesson cleanup (%#)', async (from, to) => {
   multipleLessons();
   const pending = deferred<SqlCheckResult>();
   vi.mocked(sqlApi.check).mockReturnValueOnce(pending.promise);
-  const mounted = render(<SqlWorkspace lessonSlug={slug} theme="dark" />); await ready();
+  const mounted = render(<SqlWorkspace lessonSlug={from.lesson_slug} theme="dark" />); await ready();
   fireEvent.click(screen.getByRole('button', { name: 'Check' }));
-  mounted.rerender(<SqlWorkspace lessonSlug={where.lesson_slug} theme="dark" />);
+  mounted.rerender(<SqlWorkspace lessonSlug={to.lesson_slug} theme="dark" />);
   await act(async () => {});
   expect(sqlApi.create).toHaveBeenCalledTimes(1);
   expect(sqlApi.close).not.toHaveBeenCalled();
-  await act(async () => pending.resolve(gradeResult)); await ready();
+  await act(async () => pending.resolve({ ...gradeResult, task_id: from.task_id })); await ready();
   expect(sqlApi.close).toHaveBeenCalledTimes(1);
-  expect(screen.getByText(where.prompt)).toBeTruthy();
+  expect(screen.getByText(to.prompt)).toBeTruthy();
   expect(screen.queryByText('Задача решена')).toBeNull();
   expect(screen.queryByText('Passed')).toBeNull();
 });

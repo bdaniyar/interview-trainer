@@ -83,3 +83,26 @@ def test_malformed_protocol_and_unsupported_types_fail_closed():
     for actual in [result([[True]]), result([["A", "B"]]), result([["A"]], ("jsonb",))]:
         with pytest.raises(ValueError):
             compare(expected, actual)
+
+
+def test_ordered_timestamp_ties_keep_exact_bigint_positions():
+    rows = [["9007199254740993", "2026-10-01T00:00:00.123456Z"],
+            ["9007199254740992", "2026-10-01T00:00:00.123456Z"]]
+    expected = result(rows, ("int8", "timestamptz"), ["id", "created_at"])
+    assert compare(expected, deepcopy(expected), comparison="ordered", numeric_compatible=True) == "passed"
+    assert compare(expected, result(rows[::-1], ("int8", "timestamptz"), ["id", "created_at"]), comparison="ordered") == "rows"
+    changed = deepcopy(expected); changed["rows"][0][1] = "2026-10-01T00:00:00.123455Z"
+    assert compare(expected, changed, comparison="ordered") == "rows"
+    wrong_type = result(rows, ("int8", "timestamp"), ["id", "created_at"])
+    assert compare(expected, wrong_type, comparison="ordered") == "types"
+
+
+def test_ordered_distinct_empty_null_duplicates_and_zero_rows():
+    expected = result([[""], ["AA"], ["NULL"], ["ZZ"]], names=["country"])
+    for rows in [[["AA"], [""], ["NULL"], ["ZZ"]], [[None], ["AA"], ["NULL"], ["ZZ"]],
+                 [[""], ["AA"], ["AA"], ["NULL"], ["ZZ"]]]:
+        assert compare(expected, result(rows, names=["country"]), comparison="ordered") == "rows"
+    empty = result([], names=["country"])
+    assert compare(empty, empty, comparison="ordered") == "passed"
+    incomplete = deepcopy(expected); incomplete["has_more"] = True
+    assert compare(expected, incomplete, comparison="ordered") == "result_limit"

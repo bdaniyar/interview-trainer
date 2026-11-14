@@ -23,6 +23,8 @@ it.each([
   ['s10-select-aliases-and-expressions', 'Показать решение SQL для самопроверки', 'id AS user_id'],
   ['s10-where-and-boolean-logic', 'Показать решение задачи для самопроверки', 'active IS TRUE'],
   ['s10-null-and-three-valued-logic', 'Показать решение задачи для самопроверки', 'country IS NULL'],
+  ['s10-order-by-limit-and-offset', 'Показать решение для самопроверки', 'created_at DESC, id DESC'],
+  ['s10-distinct', 'Показать решение для самопроверки', 'DISTINCT country'],
 ])('keeps the graded SQL answer closed in Learn and Review: %s', (slug, summary, sql) => {
   const lesson = loadLesson(`stage-10/${slug}`);
   render(<MarkdownLesson {...props} lesson={lesson} />);

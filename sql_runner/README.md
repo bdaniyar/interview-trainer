@@ -3,7 +3,8 @@
 Independent PostgreSQL 17 execution service for trusted, local, single-user
 Pythoria. Phase 1 established the execution boundary; Phase 2 integrated the
 workspace; Phase 3 adds a disposable grader and Phase 4 registers WHERE/NULL
-alongside projection. Application integration
+alongside projection; Phase 5 adds ordered latest-orders and distinct-country
+tasks through the same registries. Application integration
 is documented in [SQL_WORKSPACE](../docs/SQL_WORKSPACE.md), grading in
 [SQL_GRADING](../docs/SQL_GRADING.md). SQL rewards and server drafts remain future work.
 
@@ -217,3 +218,11 @@ manifest SHA-256 pins. Reference AST/configuration validation runs at startup.
 No hidden resources are added to the student image; the public shop-v1 resources
 are unchanged. Results retain the same limits, and feedback remains capped at
 four safe diagnostics even when more cases fail differently.
+
+Phase 5 adds `latest-orders-v1` and `distinct-countries-v1`, each with one public
+and five hidden cases. No comparator, AST policy, student privilege or resource
+limit changes were needed. The adversarial tie fixture uses a private opposite
+ID-order B-tree and a planner preference, with an explicit EXPLAIN assertion in
+tests; see SQL_GRADING for why date-only sorting is deterministically rejected.
+This does not add an EXPLAIN or DDL student mode. Public shop-v1 and all three
+earlier bundles/pins remain unchanged.

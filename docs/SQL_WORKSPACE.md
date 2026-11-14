@@ -1,9 +1,11 @@
-# SQL Workspace — Phases 2–4
+# SQL Workspace — Phases 2–5
 
-Enabled for **10.2, 10.3 and 10.4**. Their stable lesson IDs are
+Enabled for **10.2–10.6**. Their stable lesson IDs are
 `backend-interview.10.2.select-aliases-and-expressions`,
 `backend-interview.10.3.where-and-boolean-logic` and
-`backend-interview.10.4.null-and-three-valued-logic`. Other lessons keep their
+`backend-interview.10.4.null-and-three-valued-logic`,
+`backend-interview.10.5.order-by-limit-and-offset` and
+`backend-interview.10.6.distinct`. Other lessons keep their
 existing workspace. Lesson IDs and Python completion/XP rules are unchanged.
 Phase 3 added SQL-only attempt/progress tables; Phase 4 reuses them without a
 migration. Registry/task details are in [SQL_GRADING.md](SQL_GRADING.md).
@@ -17,6 +19,8 @@ docker compose up -d --build --wait
 Open [lesson 10.2](http://localhost:3000/?lesson=s10-select-aliases-and-expressions).
 The same workspace works in [10.3 WHERE](http://localhost:3000/?lesson=s10-where-and-boolean-logic)
 and [10.4 NULL](http://localhost:3000/?lesson=s10-null-and-three-valued-logic).
+Continue to [10.5 ORDER BY/LIMIT/OFFSET](http://localhost:3000/?lesson=s10-order-by-limit-and-offset)
+and [10.6 DISTINCT](http://localhost:3000/?lesson=s10-distinct).
 SQL Lab opens a `shop-v1` session automatically. Edit `query.sql`, press Run or
 Ctrl/Cmd+Enter, inspect real PostgreSQL results. The Database tab shows table
 columns, nullable/type metadata, ordered PK and FK pairs, and pages of 50 rows.
@@ -24,7 +28,8 @@ FK links select the referenced table, including users' self-reference.
 
 Check (Ctrl/Cmd+Shift+Enter) evaluates four fixture revisions for
 `sql.guided.10.2.projection.v1`, five for `sql.basic.01` (WHERE) and five for
-`sql.basic.03` (NULL). It shows Passed/Failed, counts and task-aware safe
+`sql.basic.03` (NULL), and six each for `sql.basic.04` (latest orders) and
+`sql.basic.05` (distinct countries). The last two use ordered comparison. It shows Passed/Failed, counts and task-aware safe
 feedback. Run never marks the task solved. Successful Check persists «Задача
 решена» independently of Python completion, including after a later failed Check
 or reload. SQL Check awards no XP and works without an active Explorer session.
@@ -48,7 +53,7 @@ modes. Guided-only capabilities do not render Check.
 Its public manifest projects task ID/revision, prompt, starter, expected column
 names, Check capability and persisted completion. It never returns reference SQL,
 hidden fixtures, expected rows or grader rules.
-Only these three published lessons get `workspace_kind=sql` in the lesson API.
+Only these five published lessons get `workspace_kind=sql` in the lesson API.
 Each lesson has its own task, draft, result, completion and disposable session.
 Navigation waits for pending work/Close before provisioning the next lesson's
 session; stale results cannot populate another lesson's workspace.
@@ -149,6 +154,14 @@ task's independent completion through failed attempts and Reset. It verifies
 Python Check, files, progress and XP before/after the three SQL tasks. Component
 tests cover 10.2 → 10.3 → 10.4, independent draft restoration, delayed Check/Close,
 theme, shortcuts and closed Learn/Review solutions for all three lessons.
+
+Phase 5 extends navigation/disclosure tests to all five lessons and adds real
+HTTP solutions for latest orders and distinct countries (6/6 each), ordered
+public Run results, incorrect tie/dedup queries, baseline hardcoding (1/6),
+independent completion/reload/Reset and unchanged Explorer. During SQL-controller
+outage the smoke now verifies both real Python Docker Run **and Check**, keeping
+the same saved Python files and awarding no repeat XP. Test SQLite remains tmpfs;
+the user's volume is not mounted by the stack.
 
 For a manual browser check with the disposable DB:
 
