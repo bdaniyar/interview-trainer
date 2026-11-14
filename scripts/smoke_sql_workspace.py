@@ -28,6 +28,22 @@ ORDERED_TASKS = [
      "SELECT country FROM (VALUES ('GE'),('KZ')) v(country) ORDER BY country",
      [["GE"], ["KZ"]], "повторы"),
 ]
+AGGREGATE_TASKS = [
+    ("s10-aggregates", "sql.aggregation.09",
+     "SELECT COUNT(*) AS orders_count FROM orders",
+     "SELECT COUNT(*) AS orders_count FROM users",
+     "SELECT 5::bigint AS orders_count", [["5"]], "источник"),
+    ("s10-group-by", "sql.aggregation.10",
+     "SELECT status,COUNT(*) AS count FROM orders GROUP BY status ORDER BY status",
+     "SELECT status,COUNT(*) AS count FROM orders GROUP BY status ORDER BY status DESC",
+     "SELECT * FROM (VALUES ('cancelled',1::bigint),('new',1::bigint),('paid',3::bigint)) v(status,count) ORDER BY status",
+     [["cancelled", "1"], ["new", "1"], ["paid", "3"]], "групп"),
+    ("s10-having", "sql.aggregation.13",
+     "SELECT user_id,COUNT(*) AS count FROM orders GROUP BY user_id HAVING COUNT(*) >= 2 ORDER BY user_id",
+     "SELECT user_id,COUNT(*) AS count FROM orders GROUP BY user_id HAVING COUNT(*) > 2 ORDER BY user_id",
+     "SELECT * FROM (VALUES (1::bigint,2::bigint),(2::bigint,2::bigint)) v(user_id,count) ORDER BY user_id",
+     [["1", "2"], ["2", "2"]], "минимум два"),
+]
 PYTHON_FILES = {
     "main.py": "def compare_objects(a, b):\n    return {'same_identity': a is b, 'same_value': a == b}\n",
     "notes.py": "SAVED_FILE = 'preserve me'\nif __name__ == '__main__':\n    print('python stays available')\n",
@@ -95,12 +111,15 @@ def solve_filtering_tasks():
     print("WHERE/NULL HTTP smoke passed: independent 5/5 grades/progress, hardcoded 1/5, task-aware feedback, unchanged Explorer, Reset and cross-task rejection")
 
 
-def solve_ordered_tasks():
-    for index, (slug, task_id, correct, wrong, hardcoded_sql, rows, feedback) in enumerate(ORDERED_TASKS):
+def solve_ordered_tasks(tasks=ORDERED_TASKS):
+    # Preserve every earlier manifest while enabling the three new completions.
+    previous = {slug: call(f"/api/sql/lessons/{slug}") for slug in
+                [SLUG] + [t[0] for t in FILTER_TASKS + ORDERED_TASKS if t not in tasks]}
+    for index, (slug, task_id, correct, wrong, hardcoded_sql, rows, feedback) in enumerate(tasks):
         lesson_before = call(f"/api/lessons/{slug}")
         assert lesson_before["workspace_kind"] == "sql"
         manifest = call(f"/api/sql/lessons/{slug}")
-        assert manifest["task_id"] == task_id and not manifest["completed"]
+        assert manifest["task_id"] == task_id and manifest["can_check"] and not manifest["completed"]
         session = call("/api/sql/sessions", {"lesson_slug": slug}, expected=201)
         assert session["task_id"] == task_id
         path, generation = "/api/sql/sessions/" + session["session_id"], session["generation"]
@@ -124,14 +143,16 @@ def solve_ordered_tasks():
             assert call(path + "/run", {"generation": generation, "sql": correct})["rows"] == rows
             generation = call(path + "/reset", {"generation": generation})["generation"]
             assert call(f"/api/sql/lessons/{slug}")["completed"]
-            if index == 0:
-                assert not call(f"/api/sql/lessons/{ORDERED_TASKS[1][0]}")["completed"]
+            if index + 1 < len(tasks):
+                assert not call(f"/api/sql/lessons/{tasks[index + 1][0]}")["completed"]
         finally:
             call(path + f"?generation={generation}", method="DELETE", expected=204)
         assert call(f"/api/lessons/{slug}")["files"] == lesson_before["files"]
-    for slug in [SLUG] + [t[0] for t in FILTER_TASKS + ORDERED_TASKS]:
+    for slug, snapshot in previous.items():
+        assert call(f"/api/sql/lessons/{slug}") == snapshot
+    for slug in [SLUG] + [t[0] for t in FILTER_TASKS + ORDERED_TASKS + tasks]:
         assert call(f"/api/sql/lessons/{slug}")["completed"]
-    print("ORDER/DISTINCT HTTP smoke passed: five lessons complete independently; correct 6/6, hardcoded 1/6, ordered Run, safe feedback, replay/conflict, Reset and Explorer isolation")
+    print(f"{[t[0] for t in tasks]} HTTP smoke passed: independent progress; correct 6/6, hardcoded 1/6, ordered Run, safe feedback, replay/conflict, Reset and Explorer isolation; earlier manifests unchanged")
 
 
 def main():
@@ -140,7 +161,7 @@ def main():
         response = call("/api/sql/sessions", {"lesson_slug": SLUG}, expected=503)
         assert response["error"]["code"] == "runner_unavailable"
         call(CHECK, {"request_id": str(uuid4()), "sql": SOLUTION}, expected=503)
-        for slug, task_id, correct, *_ in FILTER_TASKS + ORDERED_TASKS:
+        for slug, task_id, correct, *_ in FILTER_TASKS + ORDERED_TASKS + AGGREGATE_TASKS:
             grade_task(slug, task_id, correct, expected=503)
         before = call("/api/course")["summary"]["xp"]
         result = call("/api/run", {"lesson_slug": "is-vs-eq", "files": PYTHON_FILES, "entrypoint": "notes.py"})
@@ -219,6 +240,7 @@ def main():
         call(path + f"?generation={generation}", method="DELETE", expected=204)
     solve_filtering_tasks()
     solve_ordered_tasks()
+    solve_ordered_tasks(AGGREGATE_TASKS)
     assert call(f"/api/lessons/{SLUG}")["files"] == original["files"]
     assert call("/api/lessons/is-vs-eq")["files"] == python_before["files"] == python_files
     assert call("/api/lessons/is-vs-eq")["progress"] == python_before["progress"]

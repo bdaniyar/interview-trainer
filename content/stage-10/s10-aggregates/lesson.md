@@ -1,392 +1,263 @@
-# Aggregates
-
-> [!IMPORTANT]
-> **P0 · вероятность на интервью: very_high · 12 минут.** SQL/relational DB явно встречались в 15/18 — один из главных P0-разделов.
+# Агрегаты: количество, сумма, среднее и границы
 
 ## Учебные цели
 
 После урока ты сможешь:
 
-- восстановить mental model темы **Aggregates**, а не только запомнить термин;
-- прочитать и изменить короткий пример для ``COUNT``;
-- распознать характерную ошибку и объяснить причину;
-- дать реалистичный ответ уровня Junior и выдержать follow-up.
+- получить одно итоговое значение из нескольких строк;
+- отличить COUNT(*) от COUNT(column) и COUNT(DISTINCT column);
+- использовать SUM, AVG, MIN и MAX;
+- объяснить NULL и результат агрегатов на пустом входе;
+- посчитать заказы и проверить решение в SQL Lab.
 
 ## Теория
 
 ### Что это
 
-Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.
+Агрегатная функция сводит набор значений к итогу. Например, вместо списка пользователей API может вернуть их количество. Таблица не изменяется: мы получаем новый результат запроса.
+
+```sql
+SELECT COUNT(*) AS users_count
+FROM users;
+```
+
+В публичном `shop-v1` четыре пользователя. Запрос возвращает **одну строку**, в которой `users_count` равен 4. Это не четыре строки со значением 1.
 
 ### Как работает
 
-Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа.
+В простом запросе без GROUP BY все подходящие входные строки рассматриваются как одна общая группа. Агрегаты вычисляют итог по ней. WHERE сначала ограничивает входные строки; затем считается результат. Это модель для понимания, а не обязательный физический план PostgreSQL.
 
-**`COUNT`.** ``COUNT`` меняет набор SQL rows; его смысл проверяют через grain результата, cardinality, NULL semantics и явный ordering.
+Псевдоним через AS задаёт имя итогового столбца. Для API и Check это часть контракта: значение может быть правильным, а имя — неподходящим.
 
-**`SUM`.** ``SUM`` меняет набор SQL rows; его смысл проверяют через grain результата, cardinality, NULL semantics и явный ordering.
+### Три способа посчитать строки и значения
 
-**`AVG`.** ``AVG`` меняет набор SQL rows; его смысл проверяют через grain результата, cardinality, NULL semantics и явный ordering.
+Сравни три разных вопроса:
 
-**`MIN`.** ``MIN`` меняет набор SQL rows; его смысл проверяют через grain результата, cardinality, NULL semantics и явный ordering.
+```sql
+SELECT COUNT(*) AS users_count,
+       COUNT(country) AS known_country_count,
+       COUNT(DISTINCT country) AS distinct_country_count
+FROM users;
+```
 
-**`MAX`.** ``MAX`` меняет набор SQL rows; его смысл проверяют через grain результата, cardinality, NULL semantics и явный ordering.
+Публичный результат — одна строка со значениями **4, 3, 2**:
 
-**`COUNT(*)` vs `COUNT(column)`.** ``COUNT(*)` vs `COUNT(column)`` меняет набор SQL rows; его смысл проверяют через grain результата, cardinality, NULL semantics и явный ordering.
+- COUNT(*) считает все строки, включая пользователя без страны.
+- COUNT(country) считает только строки, где country не NULL. Пустая строка, если она есть, считается известным значением.
+- COUNT(DISTINCT country) считает разные не-NULL значения: KZ и GE, без повторного KZ.
 
+COUNT(column) не означает «число уникальных значений»: без DISTINCT повторы считаются. У `orders.id` есть PRIMARY KEY и NOT NULL, поэтому COUNT(id) и COUNT(*) для orders эквивалентны. Для nullable-поля такая замена меняет смысл.
+
+### SUM, AVG, MIN и MAX
+
+Для панели заказов нужны разные показатели:
+
+```sql
+SELECT SUM(total) AS orders_total,
+       ROUND(AVG(total), 2) AS average_order,
+       MIN(total) AS min_order,
+       MAX(total) AS max_order
+FROM orders;
+```
+
+На публичных данных это **470.00, 94.00, 40.00, 200.00**. Здесь учитываются все пять заказов независимо от статуса:
+
+- SUM складывает значения.
+- AVG вычисляет среднее по известным значениям.
+- MIN и MAX находят наименьшее и наибольшее значения.
+
+ROUND здесь округляет отображаемое среднее до двух знаков. Это отдельное решение для ответа API, а не универсальный способ сравнивать любые числа с погрешностью.
+
+В `orders.total` нет NULL по схеме. Но в общем случае эти агрегаты игнорируют NULL. Если входные значения — 0, 10 и NULL, среднее известных значений равно 5, а не 10/3. Неизвестное значение не подменяется нулём.
+
+### Пустой вход
+
+Следующий фильтр специально не оставляет ни одного заказа:
+
+```sql
+SELECT COUNT(*) AS rows_count,
+       SUM(total) AS sum_total,
+       AVG(total) AS avg_total,
+       MIN(total) AS min_total,
+       MAX(total) AS max_total
+FROM orders
+WHERE false;
+```
+
+Запрос всё равно возвращает одну строку. В ней COUNT равен **0**, остальные четыре результата — **NULL**. Для SUM/AVG/MIN/MAX нет известного входного значения, из которого можно получить обычный результат.
+
+Если бизнес-контракт требует сумму 0 для пустой выборки, это можно задать явно:
+
+```sql
+SELECT COALESCE(SUM(total), 0) AS sum_total
+FROM orders
+WHERE false;
+```
+
+Получим одну строку с 0. Решение подходит для суммы в этом контракте, но не означает, что любое неизвестное среднее тоже следует превращать в ноль.
+
+### Все значения NULL — не то же, что нет строк
+
+В публичной таблице у одного пользователя country неизвестна. length(country) для него тоже NULL:
+
+```sql
+SELECT COUNT(*) AS rows_count,
+       COUNT(country) AS known_count,
+       SUM(length(country)) AS length_sum,
+       AVG(length(country)) AS length_average,
+       MIN(country) AS first_country,
+       MAX(country) AS last_country
+FROM users
+WHERE country IS NULL;
+```
+
+Есть одна входная строка, поэтому COUNT(*) равен 1. COUNT(country) равен 0, остальные результаты — NULL. В предыдущем примере входных строк не было вообще: COUNT(*) был 0. Так можно отличить пустую выборку от строк с отсутствующими значениями.
 
 ### Важный нюанс / ограничение
 
-Граница Junior: уверенно объясняй ``COUNT`` и ``SUM`` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+Тип результата агрегата не всегда совпадает с типом столбца. COUNT возвращает bigint. SUM(integer) возвращает bigint, SUM(bigint) — numeric. Для наших денежных `numeric` SUM и AVG тоже возвращают numeric; ROUND в примере явно задаёт число знаков результата.
+
+SQL Lab сохраняет целые и numeric как точные строковые значения с типом PostgreSQL. Большой COUNT или точная сумма не должны проходить через JavaScript Number и терять цифры. AVG по real/double precision имеет другие свойства: приближённый тип нельзя автоматически считать точным decimal.
 
 ### Где используется в backend
 
-В backend эта тема важна в том месте, где применяется ``COUNT``; проверяй именно наблюдаемый contract, а не название инструмента.
+Панель заказов может показывать количество, общую сумму и средний чек. Сначала уточни, какие заказы входят в расчёт. Все заказы, только оплаченные и заказы за период — разные показатели. Агрегат сам не угадывает бизнес-фильтр.
 
 ## Модель понимания
 
-Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
-
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
+Сначала определи входные строки и nullable-поля. Затем выбери вопрос: сколько строк, сколько известных значений, сколько разных значений, сумма или среднее. После этого проверь имя, тип и количество строк результата.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
-- `COUNT`
-- `SUM`
-- `AVG`
-- `MIN`
+- COUNT(*) считает строки; COUNT(column) — не-NULL значения.
+- DISTINCT внутри COUNT убирает повторы известных значений.
+- SUM/AVG/MIN/MAX игнорируют NULL и возвращают NULL на пустом входе.
+- Агрегат без GROUP BY возвращает одну строку, даже если вход пустой.
 
 ### Полезно
 
-- `MAX`
-- `COUNT(*)` vs `COUNT(column)`
+Проверять точные типы bigint/numeric и осмысленно выбирать COALESCE для конкретного контракта.
 
 ### Можно не учить глубоко
 
-- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
+Внутренние состояния агрегатов и параллельное исполнение пока не нужны. Различия пустой выборки, NULL и нуля уже важны для обычного API.
 
 ## Примеры кода
 
-### Aggregates: отдельный пример
+Оплаченные заказы можно считать отдельно внутри одного агрегатного запроса. FILTER относится только к тому агрегату, после которого стоит:
 
 ```sql
-SELECT
-    COUNT(*) AS order_count,
-    AVG(total) AS average_total,
-    SUM(total) FILTER (WHERE status = 'paid') AS paid_total
+SELECT COUNT(*) FILTER (WHERE status = 'paid') AS paid_count,
+       COUNT(*) FILTER (WHERE status = 'cancelled') AS cancelled_count
 FROM orders;
 ```
 
-Aggregates сворачивают набор строк; FILTER считает условную метрику без отдельного запроса.
+В публичном наборе это 3 и 1. Новый заказ не попадает ни в один из этих счётчиков. Это дополнительный синтаксис для нескольких показателей; он не изменяет строки таблицы.
 
 ## Типичные ошибки
 
-### Ошибка 1
-
-Не определить cardinality результата и замаскировать неверный query через DISTINCT.
+- Считать users вместо orders, потому что на одном наборе числа случайно похожи.
+- Вернуть строку на каждый заказ вместо одного итога.
+- Заменить COUNT(*) nullable-полем и потерять строки с NULL.
+- Считать, что COUNT(column) автоматически убирает повторы.
+- Ожидать 0 от SUM пустой выборки без явного COALESCE.
+- Забыть псевдоним результата или применить лишний фильтр.
 
 ## Практика
 
-**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для ``COUNT`` до запуска.
+### Основная задача: количество заказов
 
-**B · Найди ошибку.** Найди нарушение ``SUM`` и объясни конкретное последствие.
+Посчитай **все** заказы в `orders`. Верни одну строку с одним столбцом `orders_count`. Если заказов нет, в этой строке должен быть 0.
 
-**E · Ответ на собеседовании.** Дай ответ про Aggregates за 60 секунд: определение, механизм, пример, ограничение.
+Посмотри orders в Explorer. Напиши запрос, выполни Run, затем Check. Проверка использует другое число заказов и пользователей, разные статусы и пустую таблицу. Не подставляй видимое публичное число вручную.
 
-## Практика SQL
-
-### Количество заказов
-
-```sql
-CREATE TABLE users (
-    id bigint PRIMARY KEY,
-    email text NOT NULL UNIQUE,
-    country text,
-    active boolean NOT NULL DEFAULT true,
-    manager_id bigint REFERENCES users(id),
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE orders (
-    id bigint PRIMARY KEY,
-    user_id bigint NOT NULL REFERENCES users(id),
-    status text NOT NULL,
-    total numeric(12, 2) NOT NULL,
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE products (
-    id bigint PRIMARY KEY,
-    name text NOT NULL,
-    category text NOT NULL,
-    price numeric(12, 2) NOT NULL
-);
-CREATE TABLE order_items (
-    order_id bigint REFERENCES orders(id),
-    product_id bigint REFERENCES products(id),
-    quantity integer NOT NULL CHECK (quantity > 0),
-    PRIMARY KEY (order_id, product_id)
-);
-```
-
-Начальные данные:
+<details>
+<summary>Показать решение для самопроверки</summary>
 
 ```sql
-INSERT INTO users VALUES
-(1,'a@example.com','KZ',true,NULL,'2026-01-01'),
-(2,'b@example.com','KZ',true,1,'2026-01-02'),
-(3,'c@example.com',NULL,false,1,'2026-01-03'),
-(4,'d@example.com','GE',true,2,'2026-01-04');
-INSERT INTO orders VALUES
-(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),
-(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),
-(14,4,'new',80,'2026-02-05');
-INSERT INTO products VALUES
-(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);
-INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);
+SELECT COUNT(*) AS orders_count
+FROM orders;
 ```
 
-**Вопрос:** Посчитай все строки orders.
+На публичных данных ответ равен 5. COUNT(id) с тем же псевдонимом тоже корректен: orders.id не допускает NULL. GROUP BY для общего количества здесь не нужен.
 
-Ожидаемые столбцы: orders_count. Сравнение: с учётом порядка строк.
+</details>
 
-Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
+### Дополнительная практика без отдельного Check
 
-### COUNT и NULL
+1. Посчитай всех пользователей и пользователей с известной страной в одной строке. Это дополнительная задача `sql.aggregation.14`.
+2. Найди минимальную и максимальную цену товара (`sql.aggregation.15`).
+3. Найди сумму и средний total только оплаченных заказов. Округли среднее до двух знаков. FILTER выше соответствует дополнительной задаче `sql.aggregation.16`.
+
+<details>
+<summary>Показать ответы к дополнительной практике</summary>
+
+Первый запрос с двумя COUNT из теории даёт 4 и 3. Для границ цены:
 
 ```sql
-CREATE TABLE users (
-    id bigint PRIMARY KEY,
-    email text NOT NULL UNIQUE,
-    country text,
-    active boolean NOT NULL DEFAULT true,
-    manager_id bigint REFERENCES users(id),
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE orders (
-    id bigint PRIMARY KEY,
-    user_id bigint NOT NULL REFERENCES users(id),
-    status text NOT NULL,
-    total numeric(12, 2) NOT NULL,
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE products (
-    id bigint PRIMARY KEY,
-    name text NOT NULL,
-    category text NOT NULL,
-    price numeric(12, 2) NOT NULL
-);
-CREATE TABLE order_items (
-    order_id bigint REFERENCES orders(id),
-    product_id bigint REFERENCES products(id),
-    quantity integer NOT NULL CHECK (quantity > 0),
-    PRIMARY KEY (order_id, product_id)
-);
+SELECT MIN(price) AS min_price, MAX(price) AS max_price
+FROM products;
 ```
 
-Начальные данные:
+Получим 30.00 и 90.00. Для оплаченных заказов:
 
 ```sql
-INSERT INTO users VALUES
-(1,'a@example.com','KZ',true,NULL,'2026-01-01'),
-(2,'b@example.com','KZ',true,1,'2026-01-02'),
-(3,'c@example.com',NULL,false,1,'2026-01-03'),
-(4,'d@example.com','GE',true,2,'2026-01-04');
-INSERT INTO orders VALUES
-(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),
-(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),
-(14,4,'new',80,'2026-02-05');
-INSERT INTO products VALUES
-(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);
-INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);
+SELECT SUM(total) AS paid_total,
+       ROUND(AVG(total), 2) AS paid_average
+FROM orders
+WHERE status = 'paid';
 ```
 
-**Вопрос:** Верни count всех users и count известных country в одной строке.
+Получим 350.00 и 116.67 по трём заказам. Дополнительные упражнения проверяются через Run и самопроверку, а Check этого урока относится только к общему количеству заказов.
 
-Ожидаемые столбцы: users_count, known_country_count. Сравнение: с учётом порядка строк.
-
-Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
-
-### Диапазон цен
-
-```sql
-CREATE TABLE users (
-    id bigint PRIMARY KEY,
-    email text NOT NULL UNIQUE,
-    country text,
-    active boolean NOT NULL DEFAULT true,
-    manager_id bigint REFERENCES users(id),
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE orders (
-    id bigint PRIMARY KEY,
-    user_id bigint NOT NULL REFERENCES users(id),
-    status text NOT NULL,
-    total numeric(12, 2) NOT NULL,
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE products (
-    id bigint PRIMARY KEY,
-    name text NOT NULL,
-    category text NOT NULL,
-    price numeric(12, 2) NOT NULL
-);
-CREATE TABLE order_items (
-    order_id bigint REFERENCES orders(id),
-    product_id bigint REFERENCES products(id),
-    quantity integer NOT NULL CHECK (quantity > 0),
-    PRIMARY KEY (order_id, product_id)
-);
-```
-
-Начальные данные:
-
-```sql
-INSERT INTO users VALUES
-(1,'a@example.com','KZ',true,NULL,'2026-01-01'),
-(2,'b@example.com','KZ',true,1,'2026-01-02'),
-(3,'c@example.com',NULL,false,1,'2026-01-03'),
-(4,'d@example.com','GE',true,2,'2026-01-04');
-INSERT INTO orders VALUES
-(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),
-(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),
-(14,4,'new',80,'2026-02-05');
-INSERT INTO products VALUES
-(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);
-INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);
-```
-
-**Вопрос:** Верни минимальную и максимальную product price.
-
-Ожидаемые столбцы: min_price, max_price. Сравнение: с учётом порядка строк.
-
-Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
-
-### Условные counts
-
-```sql
-CREATE TABLE users (
-    id bigint PRIMARY KEY,
-    email text NOT NULL UNIQUE,
-    country text,
-    active boolean NOT NULL DEFAULT true,
-    manager_id bigint REFERENCES users(id),
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE orders (
-    id bigint PRIMARY KEY,
-    user_id bigint NOT NULL REFERENCES users(id),
-    status text NOT NULL,
-    total numeric(12, 2) NOT NULL,
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE products (
-    id bigint PRIMARY KEY,
-    name text NOT NULL,
-    category text NOT NULL,
-    price numeric(12, 2) NOT NULL
-);
-CREATE TABLE order_items (
-    order_id bigint REFERENCES orders(id),
-    product_id bigint REFERENCES products(id),
-    quantity integer NOT NULL CHECK (quantity > 0),
-    PRIMARY KEY (order_id, product_id)
-);
-```
-
-Начальные данные:
-
-```sql
-INSERT INTO users VALUES
-(1,'a@example.com','KZ',true,NULL,'2026-01-01'),
-(2,'b@example.com','KZ',true,1,'2026-01-02'),
-(3,'c@example.com',NULL,false,1,'2026-01-03'),
-(4,'d@example.com','GE',true,2,'2026-01-04');
-INSERT INTO orders VALUES
-(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),
-(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),
-(14,4,'new',80,'2026-02-05');
-INSERT INTO products VALUES
-(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);
-INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);
-```
-
-**Вопрос:** Одной строкой посчитай paid и cancelled orders через FILTER.
-
-Ожидаемые столбцы: paid_count, cancelled_count. Сравнение: с учётом порядка строк.
-
-Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
+</details>
 
 ## Вопросы с собеседований
 
-### Основной вопрос
-
-Что такое Aggregates и какой механизм здесь важно понимать Junior-разработчику?
-
-### Дополнительный вопрос
-
-Какое ограничение или типичная ошибка относится именно к теме Aggregates?
-
-Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+1. Чем COUNT(*) отличается от COUNT(country)?
+2. Что вернут COUNT, SUM и AVG без входных строк?
+3. Как агрегаты обрабатывают NULL и повторы?
 
 ## Хорошие ответы
 
+<details>
+<summary>Показать ответы для собеседования</summary>
+
 ### Короткий ответ
 
-Aggregates: Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.
+COUNT(*) считает строки, COUNT(column) пропускает NULL, COUNT(DISTINCT column) считает разные известные значения. Остальные рассмотренные агрегаты тоже пропускают NULL, но на пустом входе возвращают NULL, а COUNT — 0.
 
-### Нормальный ответ уровня Junior
+### Ответ уровня Junior
 
-> Aggregates — тема, в которой я сначала фиксирую ``COUNT``, затем объясняю ``SUM`` на коротком примере. Ключевой механизм: Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа. Главная практическая ошибка — Не определить cardinality результата и замаскировать неверный query через DISTINCT.
+Я сначала определяю набор строк и смысл показателя. Проверяю пустой вход, nullable-поля и повторы. В запросе без GROUP BY итог — одна строка. Имя и точный тип результата важны для API; bigint и numeric нельзя бездумно переводить в число с плавающей точкой.
 
-### Углубление / дополнительный вопрос
+### Follow-up
 
-**Какое ограничение или типичная ошибка относится именно к теме Aggregates?**
+COALESCE задаёт запасное значение, но меняет смысл. Среднее неизвестных значений и реальный средний чек 0 — разные состояния, если контракт не говорит иначе.
 
-Не определить cardinality результата и замаскировать неверный query через DISTINCT.
+</details>
 
 ## Критерии хорошего ответа
 
-### Что обязательно упомянуть
-
-- `COUNT`
-- `SUM`
-- `AVG`
-- `MIN`
-
-### Что улучшит ответ
-
-- один короткий пример с результатом;
-- одно ограничение или характерная ошибка именно этой темы;
-- пример из backend-разработки только при естественной связи.
-
-### Частые неправильные ответы
-
-- Не определить cardinality результата и замаскировать неверный query через DISTINCT.
-- пересказ одного определения без механизма или примера.
-
-### Дополнительный вопрос
-
-- Какое ограничение или типичная ошибка относится именно к теме Aggregates?
+- Различаются строки, известные значения и уникальные значения.
+- Правильно объяснены пустой вход, NULL и ноль.
+- Уточнены фильтр, псевдоним и тип результата.
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Aggregates**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
+Получи Passed для «Количество заказов». Успех независим от прежних SQL-задач и сохраняется после неудачной перепроверки. Reset сохраняет черновик и завершение. SQL Check пока не начисляет XP.
 
 ## Шпаргалка
 
-Перед собеседованием запомни:
-
-- **Что это:** Aggregates: Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.
-- **Механизм:** Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
-- **Ограничение:** Не определить cardinality результата и замаскировать неверный query через DISTINCT.
-- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
+- COUNT(*) — строки; COUNT(column) — значения без NULL.
+- COUNT(DISTINCT column) — разные значения без NULL.
+- SUM — сумма, AVG — среднее, MIN/MAX — границы.
+- На пустом входе COUNT даёт 0, остальные рассмотренные агрегаты — NULL.
+- Без GROUP BY получается одна итоговая строка.
 
 ## Источники
 
-Материал написан своими словами и сверён с актуальными разделами официальной документации:
-
-- [PostgreSQL queries](https://www.postgresql.org/docs/current/queries.html)
-- [PostgreSQL functions](https://www.postgresql.org/docs/current/functions.html)
-
-Последняя проверка версий: **2026-08-27**.
+- [PostgreSQL 17: агрегатные функции](https://www.postgresql.org/docs/17/functions-aggregate.html).
+- [PostgreSQL 17: синтаксис агрегатов и FILTER](https://www.postgresql.org/docs/17/sql-expressions.html#SYNTAX-AGGREGATES).

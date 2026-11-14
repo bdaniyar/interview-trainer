@@ -106,3 +106,21 @@ def test_ordered_distinct_empty_null_duplicates_and_zero_rows():
     assert compare(empty, empty, comparison="ordered") == "passed"
     incomplete = deepcopy(expected); incomplete["has_more"] = True
     assert compare(expected, incomplete, comparison="ordered") == "result_limit"
+
+
+def test_aggregate_zero_null_and_no_groups_are_different_results():
+    zero = result([["0"]], ("int8",), ["orders_count"])
+    no_groups = result([], ("int8",), ["orders_count"])
+    null = result([[None]], ("numeric",), ["orders_count"])
+    assert compare(zero, no_groups, comparison="ordered", numeric_compatible=True) == "rows"
+    assert compare(zero, null, comparison="ordered", numeric_compatible=True) == "rows"
+    assert compare(zero, result([["0.000"]], ("numeric",), ["orders_count"]),
+                   comparison="ordered", numeric_compatible=True) == "passed"
+
+
+def test_aggregate_numeric_precision_and_group_sequence_are_exact():
+    expected = result([["18014398509481986.0000000001"]], ("numeric",))
+    assert compare(expected, result([["18014398509481986.0000000002"]], ("numeric",)), comparison="ordered") == "rows"
+    groups = result([["cancelled", "2"], ["new", "2"], ["paid", "2"]], ("text", "int8"), ["status", "count"])
+    reversed_groups = result(groups["rows"][::-1], ("text", "int8"), ["status", "count"])
+    assert compare(groups, reversed_groups, comparison="ordered") == "rows"

@@ -4,7 +4,8 @@ Independent PostgreSQL 17 execution service for trusted, local, single-user
 Pythoria. Phase 1 established the execution boundary; Phase 2 integrated the
 workspace; Phase 3 adds a disposable grader and Phase 4 registers WHERE/NULL
 alongside projection; Phase 5 adds ordered latest-orders and distinct-country
-tasks through the same registries. Application integration
+tasks through the same registries; Phase 6 adds COUNT, GROUP BY and HAVING
+for eight consecutive lessons. Application integration
 is documented in [SQL_WORKSPACE](../docs/SQL_WORKSPACE.md), grading in
 [SQL_GRADING](../docs/SQL_GRADING.md). SQL rewards and server drafts remain future work.
 
@@ -207,7 +208,7 @@ slot. Registered cases run sequentially in separate containers, each with a 60-s
 PID1 lifetime, removed in `finally`. With two interactive sessions, Check returns
 429 without eviction. Failed removal retains capacity until reaping succeeds.
 The controller alone contains `grading/`; the student image has no hidden bundle
-or reference query. Current fixtures have at most seven rows; existing 500-row /
+or reference query. Current fixtures have at most ten rows per table; existing 500-row /
 1 MiB result budgets apply and truncation can never pass. The workflow deadline
 is 60 seconds, checked between bounded operations; the final operation/cleanup
 can extend this by its own deadline. See the grading guide for safe extension.
@@ -226,3 +227,12 @@ ID-order B-tree and a planner preference, with an explicit EXPLAIN assertion in
 tests; see SQL_GRADING for why date-only sorting is deterministically rejected.
 This does not add an EXPLAIN or DDL student mode. Public shop-v1 and all three
 earlier bundles/pins remain unchanged.
+
+Phase 6 registers `count-orders-v1`, `orders-by-status-v1` and
+`users-with-two-orders-v1`, each one public plus five hidden fixtures. Empty COUNT
+is one zero row; empty GROUP BY is zero groups; HAVING includes exactly two and
+three or more orders. Exact Decimal/type handling, read-only policy, isolation,
+limits and cleanup are reused unchanged. Earlier five bundles/pins and public
+shop-v1 remain unchanged. All 18 new case outputs and all 30 lesson SQL blocks
+(including two expected errors) are independently checked on real PostgreSQL 17.
+See SQL_GRADING for the verification record and Phase 7 JOIN follow-up.

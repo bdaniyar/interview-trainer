@@ -45,6 +45,7 @@
     "interview_crash_course"
   ],
   "content_status": "complete",
-  "last_verified": "2026-08-27",
-  "generated_by": "populate_curriculum.py"
+  "last_verified": "2026-11-14",
+  "generated_by": "populate_curriculum.py",
+  "content_source": "curated"
 }

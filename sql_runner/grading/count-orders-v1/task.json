@@ -1,0 +1,49 @@
+{
+  "task_id": "sql.aggregation.09",
+  "task_revision": 1,
+  "grader_revision": "count-orders-v1",
+  "dataset_id": "shop-v1",
+  "dataset_checksum": "a1de3973eb4a2febc818c026def43716109e7ffde6b0bc46721e11d1b2fa4b97",
+  "expected_columns": [
+    "orders_count"
+  ],
+  "comparison": "ordered",
+  "numeric_compatible": true,
+  "reference_sql": "SELECT COUNT(*) AS orders_count FROM orders;",
+  "cases": [
+    {
+      "id": "public-v1",
+      "public": true
+    },
+    {
+      "id": "empty-v1",
+      "public": false,
+      "seed_file": "empty-v1.sql",
+      "sha256": "c7fd0c1f538a375724106ff80870e2c1aa7a72b84af1c885c4aa87a5849f6812"
+    },
+    {
+      "id": "one-v1",
+      "public": false,
+      "seed_file": "one-v1.sql",
+      "sha256": "9c62f8b177d46625f8b54b9db7043cb37f3560fc3540da8ae06a4a3a071003db"
+    },
+    {
+      "id": "same-user-v1",
+      "public": false,
+      "seed_file": "same-user-v1.sql",
+      "sha256": "58a479d8073a0cc6b9cfa55e5fd832f8f53f208e478db9606a666c0c166ea7b5"
+    },
+    {
+      "id": "mixed-v1",
+      "public": false,
+      "seed_file": "mixed-v1.sql",
+      "sha256": "96bcf64ed22412d7ad67dde1456af80a35c33fd43f0a8688a824812592ce5542"
+    },
+    {
+      "id": "sparse-v1",
+      "public": false,
+      "seed_file": "sparse-v1.sql",
+      "sha256": "daea4f13c4a6d2a77fb44387a79850f5599b70efe8a55785138906baea916467"
+    }
+  ]
+}

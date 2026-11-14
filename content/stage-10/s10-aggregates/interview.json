@@ -1,45 +1,45 @@
 [
   {
-    "question": "Что такое Aggregates и какой механизм здесь важно понимать Junior-разработчику?",
+    "question": "Чем отличаются COUNT(*), COUNT(country) и COUNT(DISTINCT country)?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "`COUNT`",
-      "`SUM`",
-      "`AVG`",
-      "`MIN`"
+      "все строки",
+      "только известные значения",
+      "различные известные значения"
     ],
-    "short_answer": "Aggregates: Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.",
-    "junior_answer": "Aggregates — тема, в которой я сначала фиксирую ``COUNT``, затем объясняю ``SUM`` на коротком примере. Ключевой механизм: Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа. Главная практическая ошибка — Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
-    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Aggregates?",
-    "follow_up_answer": "Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
+    "short_answer": "COUNT(*) считает строки, COUNT(country) — строки с известной страной, COUNT(DISTINCT country) — разные известные страны.",
+    "junior_answer": "В shop-v1 четыре пользователя: COUNT(*) даёт 4, COUNT(country) — 3, COUNT(DISTINCT country) — 2. COUNT по столбцу пропускает NULL, но учитывает повторы; DISTINCT дополнительно убирает повторы. Пустая строка является известным значением и учитывается. Результат COUNT имеет тип bigint; удобный alias задаёт имя столбца ответа.",
+    "follow_up_question": "Как получить число строк, если nullable-столбец у всех равен NULL?",
+    "follow_up_answer": "Использовать COUNT(*): он считает строки независимо от значений полей. COUNT(nullable_column) в этом случае вернёт 0.",
     "expected_answer": {
       "must_mention": [
-        "`COUNT`",
-        "`SUM`",
-        "`AVG`",
-        "`MIN`"
+        "все строки",
+        "только известные значения",
+        "различные известные значения"
       ],
       "good_additions": [
-        "короткий рабочий пример",
-        "ограничение или типичная ошибка"
+        "Пример на shop-v1 с объяснением числа строк и значений."
       ],
-      "common_wrong_answers": [],
+      "common_wrong_answers": [
+        "COUNT(column) считает NULL.",
+        "COUNT(DISTINCT column) включает NULL как отдельное значение."
+      ],
       "red_flags": [],
       "follow_up_questions": [
-        "Какое ограничение или типичная ошибка относится именно к теме Aggregates?"
+        "Как получить число строк, если nullable-столбец у всех равен NULL?"
       ],
       "coding_mistakes": [
-        "Не определить cardinality результата и замаскировать неверный query через DISTINCT."
+        "Подмена количества строк количеством заполненных значений nullable-столбца."
       ],
       "assessment_notes": [
-        "Ответ без механизма, примера и ограничения"
+        "Попросить объяснить результат, NULL и граничные случаи."
       ],
-      "review_status": "pending-substantive-review"
+      "review_status": "reviewed"
     },
     "follow_ups": [
-      "Какое ограничение или типичная ошибка относится именно к теме Aggregates?"
+      "Как получить число строк, если nullable-столбец у всех равен NULL?"
     ],
     "tags": [
       "stage-10",
@@ -52,40 +52,46 @@
     ]
   },
   {
-    "question": "Какое ограничение или типичная ошибка относится именно к теме Aggregates?",
+    "question": "Что вернут COUNT, SUM, AVG, MIN и MAX, если вход пустой или все значения NULL?",
     "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "`MAX`",
-      "`COUNT(*)` vs `COUNT(column)`",
-      "Не определить cardinality результата и замаскировать неверный query через DISTINCT."
+      "COUNT возвращает 0",
+      "остальные агрегаты возвращают NULL",
+      "пустой вход отличается от строки с NULL"
     ],
-    "short_answer": "Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
-    "junior_answer": "Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
-    "follow_up_question": "Что такое Aggregates и какой механизм здесь важно понимать Junior-разработчику?",
-    "follow_up_answer": "Aggregates — тема, в которой я сначала фиксирую ``COUNT``, затем объясняю ``SUM`` на коротком примере. Ключевой механизм: Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа. Главная практическая ошибка — Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
+    "short_answer": "Без GROUP BY агрегатный запрос вернёт одну строку: COUNT — 0, остальные агрегаты — NULL. При непустом входе COUNT(*) продолжит считать строки с NULL.",
+    "junior_answer": "Для orders WHERE false COUNT(*) равен 0, а SUM(total), AVG(total), MIN(total), MAX(total) равны NULL. У единственного пользователя с неизвестной страной COUNT(*) равен 1, COUNT(country) — 0; агрегаты над одним NULL остаются NULL. AVG считает среднее только по известным значениям. COALESCE может заменить NULL нулём, если это соответствует смыслу показателя; неизвестное среднее не обязательно означает нулевое.",
+    "follow_up_question": "Почему не следует переводить сумму numeric или COUNT в JavaScript Number без проверки?",
+    "follow_up_answer": "Number не хранит произвольные целые bigint и десятичные numeric точно. SQL Lab передаёт числа строками с метаданными типа; для точного сравнения numeric используется Decimal без общей погрешности.",
     "expected_answer": {
       "must_mention": [
-        "`MAX`",
-        "`COUNT(*)` vs `COUNT(column)`"
+        "COUNT возвращает 0",
+        "остальные агрегаты возвращают NULL",
+        "пустой вход отличается от строки с NULL"
       ],
       "good_additions": [
-        "короткий пример именно этой темы"
+        "Пример на shop-v1 с объяснением числа строк и значений."
       ],
-      "common_wrong_answers": [],
+      "common_wrong_answers": [
+        "SUM на пустом входе всегда равен 0.",
+        "Все агрегаты учитывают NULL как ноль."
+      ],
       "red_flags": [],
       "follow_up_questions": [
-        "Что такое Aggregates и какой механизм здесь важно понимать Junior-разработчику?"
+        "Почему не следует переводить сумму numeric или COUNT в JavaScript Number без проверки?"
       ],
       "coding_mistakes": [
-        "Не определить cardinality результата и замаскировать неверный query через DISTINCT."
+        "Потеря различия между нулём и NULL; перевод точного numeric в float."
       ],
-      "assessment_notes": [],
-      "review_status": "pending-substantive-review"
+      "assessment_notes": [
+        "Попросить объяснить результат, NULL и граничные случаи."
+      ],
+      "review_status": "reviewed"
     },
     "follow_ups": [
-      "Что такое Aggregates и какой механизм здесь важно понимать Junior-разработчику?"
+      "Почему не следует переводить сумму numeric или COUNT в JavaScript Number без проверки?"
     ],
     "tags": [
       "stage-10",

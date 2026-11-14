@@ -1,346 +1,279 @@
-# GROUP BY
-
-> [!IMPORTANT]
-> **P0 · вероятность на интервью: very_high · 12 минут.** SQL/relational DB явно встречались в 15/18 — один из главных P0-разделов.
+# GROUP BY: отдельный итог для каждой группы
 
 ## Учебные цели
 
 После урока ты сможешь:
 
-- восстановить mental model темы **GROUP BY**, а не только запомнить термин;
-- прочитать и изменить короткий пример для `grouping`;
-- распознать характерную ошибку и объяснить причину;
-- дать реалистичный ответ уровня Junior и выдержать follow-up.
+- выбрать, что означает одна строка сгруппированного результата;
+- сгруппировать данные по одному и нескольким полям;
+- вычислить агрегаты внутри каждой группы;
+- объяснить допустимые поля SELECT и роль ORDER BY;
+- посчитать заказы по статусам в SQL Lab.
 
 ## Теория
 
 ### Что это
 
-`GROUP BY` формирует группы rows и возвращает одну result row для каждого уникального grouping key.
+Агрегат без GROUP BY даёт общий итог. GROUP BY разделяет входные строки на группы, после чего агрегаты считаются отдельно для каждой группы.
+
+Например, в products две категории. Нужны количество товаров и сумма их цен в каждой:
+
+```sql
+SELECT category, COUNT(*) AS products_count, SUM(price) AS price_sum
+FROM products
+GROUP BY category
+ORDER BY category;
+```
+
+Публичный результат — books / 2 / 70.00 и hardware / 1 / 90.00. Одна строка ответа означает **одну категорию**, а не один товар. Это сумма цен каталога, не выручка от продаж.
 
 ### Как работает
 
-Aggregate functions считают значения внутри группы. Выбранные неагрегированные columns обычно должны находиться в GROUP BY.
+Представь, что раскладываешь подходящие строки по коробкам. Значение GROUP BY — подпись коробки; COUNT и SUM считаются только по её содержимому. Затем из каждой существующей коробки получается строка ответа.
 
+Например, сводка заказов по пользователям:
+
+```sql
+SELECT user_id, COUNT(*) AS orders_count, SUM(total) AS orders_total
+FROM orders
+GROUP BY user_id
+ORDER BY user_id;
+```
+
+В публичном наборе получим:
+
+| user_id | orders_count | orders_total |
+| --- | --- | --- |
+| 1 | 2 | 140.00 |
+| 2 | 2 | 250.00 |
+| 4 | 1 | 80.00 |
+
+Пользователя 3 нет: в orders нет его строк. Этот запрос не создаёт строку с нулём для каждого пользователя из users. Для такого отчёта позже понадобится другой способ построения входного набора.
+
+### Несколько полей GROUP BY
+
+Ключ группы может быть комбинацией полей:
+
+```sql
+SELECT user_id, status, COUNT(*) AS orders_count
+FROM orders
+GROUP BY user_id, status
+ORDER BY user_id, status;
+```
+
+На публичных данных это пары 1/cancelled — 1 заказ, 1/paid — 1, 2/paid — 2, 4/new — 1. Одна строка означает конкретную пару «пользователь + статус». Это не отдельная группировка по пользователю и отдельная по статусу.
+
+Добавление поля в GROUP BY может разделить прежнюю группу на несколько. Если сгруппировать по уникальному orders.id, получится группа на каждый заказ, а не итог по статусам.
+
+### Какие поля можно выбирать
+
+В типичном SELECT с группировкой выбирают ключи групп и агрегаты. У категории books две разные строки name, поэтому PostgreSQL не может произвольно выбрать одно имя товара.
+
+**Намеренно ошибочный пример:** Run должен вернуть ошибку группировки, а не результат.
+
+```sql
+SELECT category, name, COUNT(*) AS products_count
+FROM products
+GROUP BY category;
+```
+
+Для name здесь нет ни группировки, ни агрегата. Добавление name в GROUP BY изменит смысл на «одна строка на категорию и имя». MIN(name) тоже даст иной показатель — минимальное имя в группе. Сначала реши, какой результат нужен, а не устраняй ошибку случайным агрегатом.
+
+PostgreSQL допускает некоторые функциональные зависимости, например от сгруппированного первичного ключа. Для обычных запросов начинающему полезно явно выбирать ключи групп и осмысленные агрегаты; исключения не делают произвольный name допустимым в этом примере.
+
+### Группы с NULL
+
+Отсутствующие значения ключа попадают в одну группу:
+
+```sql
+SELECT country, COUNT(*) AS users_count, COUNT(country) AS known_count
+FROM users
+GROUP BY country
+ORDER BY country NULLS LAST;
+```
+
+Публичные группы: GE / 1 / 1, KZ / 2 / 2 и NULL / 1 / 0. В последней группе есть строка пользователя, но нет известного country. Несколько пользователей с NULL попали бы в ту же группу. Это правило группировки не меняет обычное сравнение NULL = NULL, которое даёт UNKNOWN.
+
+### GROUP BY и DISTINCT
+
+Для простого списка категорий без показателей DISTINCT и GROUP BY могут дать один набор:
+
+```sql
+SELECT DISTINCT category
+FROM products
+ORDER BY category;
+```
+
+```sql
+SELECT category
+FROM products
+GROUP BY category
+ORDER BY category;
+```
+
+Оба возвращают books, hardware. DISTINCT удаляет одинаковые строки проекции. GROUP BY формирует группы, к которым можно добавить агрегаты. Выбирай конструкцию по смыслу задачи, а не потому, что однажды она скрыла повторы.
+
+### WHERE перед группировкой
+
+Выручку по пользователям считаем только по paid-заказам:
+
+```sql
+SELECT user_id, SUM(total) AS revenue
+FROM orders
+WHERE status = 'paid'
+GROUP BY user_id
+ORDER BY user_id;
+```
+
+Получим user_id 1 с 100.00 и user_id 2 с 250.00. Пользователь 4 не имеет оплаченных заказов и не создаёт группу. Это дополнительная задача банка `sql.aggregation.11`; в этом уроке для неё отдельного Check нет.
 
 ### Важный нюанс / ограничение
 
-Сначала назови grain результата, например «одна строка на `user_id`», и только потом добавляй joins, способные размножить source rows.
+GROUP BY не обещает порядок результата. Даже если строки выглядят отсортированными по ключу, нужный порядок задаётся отдельным ORDER BY.
+
+Если после WHERE не осталось строк, обычный GROUP BY не создаст ни одной группы:
+
+```sql
+SELECT category, COUNT(*) AS products_count
+FROM products
+WHERE price > 1000
+GROUP BY category
+ORDER BY category;
+```
+
+В публичной базе все цены меньше 1000, поэтому результат пустой. Это отличается от COUNT(*) без GROUP BY: там была бы одна строка с нулём. Здесь и далее речь об обычной группировке по полям, без специальных grouping sets.
+
+### Где используется в backend
+
+Сводки API часто возвращают строку на статус заказа, пользователя или день. Перед SQL полезно закончить фразу «одна строка результата — это ...». Тогда проще выбрать ключи, проверить фильтр и заметить, что случайное дополнительное поле изменило детализацию отчёта.
 
 ## Модель понимания
 
-Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
-
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
+Подходящие входные строки → группы по полному ключу → показатели каждой группы → поля результата → явная сортировка. Это логическая модель, а не обещание конкретного алгоритма PostgreSQL.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
-- grouping
-- selected non-aggregate columns
-- common errors
+- GROUP BY задаёт ключ каждой группы.
+- Агрегаты вычисляются внутри группы.
+- Несколько полей образуют один составной ключ.
+- SELECT обычно содержит ключи групп и агрегаты.
+- ORDER BY задаётся отдельно, пустой вход даёт ноль обычных групп.
 
 ### Полезно
 
-- один короткий пример кода с результатом
+Понимать группы с NULL, отличие DISTINCT и влияние WHERE на состав групп.
 
 ### Можно не учить глубоко
 
-- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
+GROUPING SETS, ROLLUP и внутренние алгоритмы группировки пока не нужны для этой задачи.
 
 ## Примеры кода
 
-### GROUP BY: отдельный пример
+Средний размер заказа для каждого статуса:
 
 ```sql
-SELECT customer_id, SUM(total) AS revenue
-FROM invoices
-WHERE paid_at IS NOT NULL
-GROUP BY customer_id
-ORDER BY customer_id;
+SELECT status, ROUND(AVG(total), 2) AS average_total
+FROM orders
+GROUP BY status
+ORDER BY status;
 ```
 
-GROUP BY задаёт grain «одна строка на customer», после чего SUM считает значение внутри каждой группы.
+В публичном наборе cancelled — 40.00, new — 80.00, paid — 116.67. Это три разных средних, а не одно среднее всех заказов. Общий средний paid-чек из `sql.aggregation.12` можно получить без GROUP BY после фильтра WHERE status = 'paid'.
 
 ## Типичные ошибки
 
-### Ошибка 1
-
-Grouping после one-to-many join может посчитать сумму дважды, если grain join мельче измеряемого показателя.
+- Сгруппировать по user_id, хотя нужна строка на status.
+- Вернуть глобальный COUNT вместо COUNT внутри групп.
+- Выбрать произвольное поле, для которого в группе несколько значений.
+- Добавить ID в GROUP BY и получить одну строку на исходную запись.
+- Забыть ORDER BY или считать NULL-группу пустой группой.
+- Не учесть, что WHERE удаляет строки до подсчёта.
 
 ## Практика
 
-**A · Предсказание результата.** Измени один input в примере `grouping` и предскажи результат до запуска.
+### Основная задача: заказы по статусам
 
-**B · Найди ошибку.** Найди код, нарушающий `selected non-aggregate columns`, и объясни конкретное последствие.
+Посчитай количество заказов для каждого имеющегося `status`. Верни два столбца: `status`, затем `count`. Отсортируй строки по status по возрастанию.
 
-**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `grouping`, и добавь один граничный случай test.
+Посмотри orders в Explorer, напиши запрос, выполни Run и Check. Нужны все существующие группы с правильным количеством. Для пустой таблицы обычных групп нет. Публичные числа не заменяют расчёт на других наборах.
 
-**E · Ответ на собеседовании.** Объясни GROUP BY за 45–60 секунд и назови одно ограничение.
-
-## Практика SQL
-
-### Заказы по status
+<details>
+<summary>Показать решение для самопроверки</summary>
 
 ```sql
-CREATE TABLE users (
-    id bigint PRIMARY KEY,
-    email text NOT NULL UNIQUE,
-    country text,
-    active boolean NOT NULL DEFAULT true,
-    manager_id bigint REFERENCES users(id),
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE orders (
-    id bigint PRIMARY KEY,
-    user_id bigint NOT NULL REFERENCES users(id),
-    status text NOT NULL,
-    total numeric(12, 2) NOT NULL,
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE products (
-    id bigint PRIMARY KEY,
-    name text NOT NULL,
-    category text NOT NULL,
-    price numeric(12, 2) NOT NULL
-);
-CREATE TABLE order_items (
-    order_id bigint REFERENCES orders(id),
-    product_id bigint REFERENCES products(id),
-    quantity integer NOT NULL CHECK (quantity > 0),
-    PRIMARY KEY (order_id, product_id)
-);
+SELECT status, COUNT(*) AS count
+FROM orders
+GROUP BY status
+ORDER BY status;
 ```
 
-Начальные данные:
-
-```sql
-INSERT INTO users VALUES
-(1,'a@example.com','KZ',true,NULL,'2026-01-01'),
-(2,'b@example.com','KZ',true,1,'2026-01-02'),
-(3,'c@example.com',NULL,false,1,'2026-01-03'),
-(4,'d@example.com','GE',true,2,'2026-01-04');
-INSERT INTO orders VALUES
-(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),
-(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),
-(14,4,'new',80,'2026-02-05');
-INSERT INTO products VALUES
-(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);
-INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);
-```
-
-**Вопрос:** Посчитай заказы по status и отсортируй status.
-
-Ожидаемые столбцы: status, count. Сравнение: с учётом порядка строк.
-
-Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
-
-### Выручка по пользователю
-
-```sql
-CREATE TABLE users (
-    id bigint PRIMARY KEY,
-    email text NOT NULL UNIQUE,
-    country text,
-    active boolean NOT NULL DEFAULT true,
-    manager_id bigint REFERENCES users(id),
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE orders (
-    id bigint PRIMARY KEY,
-    user_id bigint NOT NULL REFERENCES users(id),
-    status text NOT NULL,
-    total numeric(12, 2) NOT NULL,
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE products (
-    id bigint PRIMARY KEY,
-    name text NOT NULL,
-    category text NOT NULL,
-    price numeric(12, 2) NOT NULL
-);
-CREATE TABLE order_items (
-    order_id bigint REFERENCES orders(id),
-    product_id bigint REFERENCES products(id),
-    quantity integer NOT NULL CHECK (quantity > 0),
-    PRIMARY KEY (order_id, product_id)
-);
-```
-
-Начальные данные:
-
-```sql
-INSERT INTO users VALUES
-(1,'a@example.com','KZ',true,NULL,'2026-01-01'),
-(2,'b@example.com','KZ',true,1,'2026-01-02'),
-(3,'c@example.com',NULL,false,1,'2026-01-03'),
-(4,'d@example.com','GE',true,2,'2026-01-04');
-INSERT INTO orders VALUES
-(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),
-(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),
-(14,4,'new',80,'2026-02-05');
-INSERT INTO products VALUES
-(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);
-INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);
-```
-
-**Вопрос:** Суммируй total только paid-заказов по user_id.
-
-Ожидаемые столбцы: user_id, revenue. Сравнение: с учётом порядка строк.
-
-Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
-
-### Средний paid-чек
-
-```sql
-CREATE TABLE users (
-    id bigint PRIMARY KEY,
-    email text NOT NULL UNIQUE,
-    country text,
-    active boolean NOT NULL DEFAULT true,
-    manager_id bigint REFERENCES users(id),
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE orders (
-    id bigint PRIMARY KEY,
-    user_id bigint NOT NULL REFERENCES users(id),
-    status text NOT NULL,
-    total numeric(12, 2) NOT NULL,
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE products (
-    id bigint PRIMARY KEY,
-    name text NOT NULL,
-    category text NOT NULL,
-    price numeric(12, 2) NOT NULL
-);
-CREATE TABLE order_items (
-    order_id bigint REFERENCES orders(id),
-    product_id bigint REFERENCES products(id),
-    quantity integer NOT NULL CHECK (quantity > 0),
-    PRIMARY KEY (order_id, product_id)
-);
-```
-
-Начальные данные:
-
-```sql
-INSERT INTO users VALUES
-(1,'a@example.com','KZ',true,NULL,'2026-01-01'),
-(2,'b@example.com','KZ',true,1,'2026-01-02'),
-(3,'c@example.com',NULL,false,1,'2026-01-03'),
-(4,'d@example.com','GE',true,2,'2026-01-04');
-INSERT INTO orders VALUES
-(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),
-(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),
-(14,4,'new',80,'2026-02-05');
-INSERT INTO products VALUES
-(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);
-INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);
-```
-
-**Вопрос:** Найди средний total paid-заказа.
-
-Ожидаемые столбцы: average_total. Сравнение: с учётом порядка строк.
-
-Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
-
-## Практика: Отладка
-
-### COUNT nullable
-
-**Сценарий:** COUNT(country) меньше COUNT(*).
-
-<details><summary>Показать ответ</summary>
-
-**Критерии ответа:** COUNT(expression) пропускает NULL.
-
-**Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+В публичном наборе cancelled / 1, new / 1, paid / 3. COUNT(id) с тем же именем count тоже подходит: первичный ключ не бывает NULL.
 
 </details>
 
-### Incorrect GROUP BY
+### Дополнительная практика без отдельного Check
 
-**Сценарий:** Запрос агрегирует по user_id, но выбирает произвольный email.
+Выполни `sql.aggregation.11` из теории. Затем получи одну строку со средним total оплаченного заказа — `sql.aggregation.12`. Результат назови average_total; округление не требуется.
 
-<details><summary>Показать ответ</summary>
+<details>
+<summary>Показать ответ к дополнительной практике</summary>
 
-**Критерии ответа:** Все неагрегированные columns должны быть функционально зависимы/в GROUP BY; сначала определить grain результата.
+```sql
+SELECT AVG(total) AS average_total
+FROM orders
+WHERE status = 'paid';
+```
 
-**Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+Значение равно 350/3; PostgreSQL numeric возвращает его с конечной десятичной точностью. При округлении до двух знаков будет 116.67. Это один общий показатель, а не строка на пользователя или статус.
 
 </details>
 
 ## Вопросы с собеседований
 
-### Основной вопрос
-
-Что такое GROUP BY и как это работает?
-
-### Дополнительный вопрос
-
-Какая типичная ошибка связана с GROUP BY?
-
-Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+1. Что означает одна строка сгруппированного результата?
+2. Почему нельзя произвольно выбрать name при группировке по category?
+3. Гарантирует ли GROUP BY порядок и что происходит с NULL?
 
 ## Хорошие ответы
 
+<details>
+<summary>Показать ответы для собеседования</summary>
+
 ### Короткий ответ
 
-`GROUP BY` формирует группы rows и возвращает одну result row для каждого уникального grouping key.
+GROUP BY объединяет строки по полному ключу, а агрегаты считают показатели внутри каждой группы. В SELECT обычно нужны ключи и агрегаты. Порядок требует отдельного ORDER BY.
 
-### Нормальный ответ уровня Junior
+### Ответ уровня Junior
 
-> `GROUP BY` формирует группы rows и возвращает одну result row для каждого уникального grouping key. Aggregate functions считают значения внутри группы. Выбранные неагрегированные columns обычно должны находиться в GROUP BY. Важное ограничение: Сначала назови grain результата, например «одна строка на `user_id`», и только потом добавляй joins, способные размножить source rows.
+Сначала я определяю смысл строки отчёта. Добавление ключа делает группы подробнее, а WHERE меняет их исходные строки. NULL-ключи образуют одну группу. На пустом входе обычных групп нет, поэтому сгруппированный COUNT отличается от общего COUNT без GROUP BY.
 
-### Углубление / дополнительный вопрос
+### Follow-up
 
-**Какая типичная ошибка связана с GROUP BY?**
+Если в группе несколько имён, PostgreSQL не может выбрать одно произвольно. Добавить имя в GROUP BY и взять MIN(name) — разные изменения контракта, а не взаимозаменяемые способы спрятать ошибку.
 
-Grouping после one-to-many join может посчитать сумму дважды, если grain join мельче измеряемого показателя.
+</details>
 
 ## Критерии хорошего ответа
 
-### Что обязательно упомянуть
-
-- grouping
-- selected non-aggregate columns
-- common errors
-
-### Что улучшит ответ
-
-- один короткий пример с результатом;
-- одно ограничение или характерная ошибка именно этой темы;
-- пример из backend-разработки только при естественной связи.
-
-### Частые неправильные ответы
-
-- Grouping после one-to-many join может посчитать сумму дважды, если grain join мельче измеряемого показателя.
-- пересказ одного определения без механизма или примера.
-
-### Дополнительный вопрос
-
-- Какая типичная ошибка связана с GROUP BY?
+- Ясно назван полный ключ группы.
+- Объяснены показатели, фильтр и количество строк результата.
+- Не перепутаны GROUP BY, DISTINCT и ORDER BY.
 
 ## Задача
 
-Сделай короткую письменную практику по теме **GROUP BY**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
+Получи Passed для «Заказы по status». Остальные упражнения остаются самопроверкой через Run. Завершение этой задачи независимо от соседних; неудачная перепроверка его не стирает. SQL XP не начисляется.
 
 ## Шпаргалка
 
-Перед собеседованием запомни:
-
-- **Что это:** `GROUP BY` формирует группы rows и возвращает одну result row для каждого уникального grouping key.
-- **Механизм:** Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
-- **Ограничение:** Grouping после one-to-many join может посчитать сумму дважды, если grain join мельче измеряемого показателя.
-- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
+- Группа — одинаковый полный ключ.
+- Агрегат считается внутри группы.
+- Дополнительный ключ меняет детализацию.
+- WHERE отбирает вход; ORDER BY упорядочивает выход.
+- Пустой вход без специальных группировок — ноль групп.
 
 ## Источники
 
-Материал написан своими словами и сверён с актуальными разделами официальной документации:
-
-- [PostgreSQL queries](https://www.postgresql.org/docs/current/queries.html)
-- [PostgreSQL functions](https://www.postgresql.org/docs/current/functions.html)
-
-Последняя проверка версий: **2026-08-27**.
+- [PostgreSQL 17: GROUP BY и HAVING](https://www.postgresql.org/docs/17/queries-table-expressions.html#QUERIES-GROUP).
+- [PostgreSQL 17: SELECT](https://www.postgresql.org/docs/17/sql-select.html).

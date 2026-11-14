@@ -33,10 +33,12 @@ def repin(entry, config, monkeypatch):
 
 def test_all_registered_tasks_and_references_validate_without_changing_projection():
     content.validate_registered_tasks()
-    assert set(content.REGISTRY) == {"sql.guided.10.2.projection.v1", "sql.basic.01", "sql.basic.03", "sql.basic.04", "sql.basic.05"}
+    assert set(content.REGISTRY) == {"sql.guided.10.2.projection.v1", "sql.basic.01", "sql.basic.03", "sql.basic.04", "sql.basic.05",
+                                     "sql.aggregation.09", "sql.aggregation.10", "sql.aggregation.13"}
     contracts = {"projection-v1": ("unordered", 4), "active-users-v1": ("unordered", 5),
                  "null-country-v1": ("unordered", 5), "latest-orders-v1": ("ordered", 6),
-                 "distinct-countries-v1": ("ordered", 6)}
+                 "distinct-countries-v1": ("ordered", 6), "count-orders-v1": ("ordered", 6),
+                 "orders-by-status-v1": ("ordered", 6), "users-with-two-orders-v1": ("ordered", 6)}
     for entry in content.REGISTRY.values():
         task = load(entry)
         assert task.id == entry.task_id and task.revision == 1
@@ -46,6 +48,8 @@ def test_all_registered_tasks_and_references_validate_without_changing_projectio
     assert projection.sha256 == "6ae7700181c75b63ba3c5060733fe2b90c1482f9723f3a04ccc866e79ef4fef6"
     assert content.REGISTRY["sql.basic.01"].sha256 == "2025fe522b74fd9b2644a03f657dbfffe059e26ba319d6771228e5faa3bcd2b4"
     assert content.REGISTRY["sql.basic.03"].sha256 == "566c85cefbc748bb0d85583dd482cbfddbcbff9d6396d2ee104eb4790e73aeda"
+    assert content.REGISTRY["sql.basic.04"].sha256 == "f0dfddb0e8b4c25429561b4e78370436656b07b52bf1806fa39190cd733213ba"
+    assert content.REGISTRY["sql.basic.05"].sha256 == "c86a3312b1886cfbd69fd937504ceb41410c5f73108073d346c3ad3897c35989"
 
 
 def test_duplicate_task_ids_and_invalid_bundle_names_are_rejected():

@@ -47,6 +47,12 @@ REGISTRY = build_registry((
         "f0dfddb0e8b4c25429561b4e78370436656b07b52bf1806fa39190cd733213ba"),
     Registration("sql.basic.05", 1, "distinct-countries-v1", "distinct-countries-v1",
         "c86a3312b1886cfbd69fd937504ceb41410c5f73108073d346c3ad3897c35989"),
+    Registration("sql.aggregation.09", 1, "count-orders-v1", "count-orders-v1",
+        "f2d259c30d38072ed0c169e7761f99254f39851cd231ad249da4cb6841bc39c7"),
+    Registration("sql.aggregation.10", 1, "orders-by-status-v1", "orders-by-status-v1",
+        "3b51098df8ef8df18f504f650ad77b5ea149229a2f31f4e86aa0bd4b4e8004c5"),
+    Registration("sql.aggregation.13", 1, "users-with-two-orders-v1", "users-with-two-orders-v1",
+        "d5a27f000cf187672630f6e430aa18a632fa46f9e4c32e2f3b1d6ae4791d2f44"),
 ))
 
 
