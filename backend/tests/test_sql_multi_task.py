@@ -12,7 +12,7 @@ from backend.tests.test_sql_check import Grader, legacy_snapshot
 from sql_runner.app.grading_content import load_task
 
 SLUGS = ["s10-select-aliases-and-expressions", "s10-where-and-boolean-logic", "s10-null-and-three-valued-logic",
-         "s10-order-by-limit-and-offset", "s10-distinct"]
+         "s10-order-by-limit-and-offset", "s10-distinct", "s10-aggregates", "s10-group-by", "s10-having"]
 
 
 def path(slug, task_id):
@@ -37,8 +37,8 @@ def test_backend_and_runner_registrations_agree_and_all_lessons_project_safe_man
         record = task_record(slug, spec.task_id)
         assert (task.dataset_id, task.dataset_checksum, task.expected_columns, task.comparison, len(task.cases)) == (
             record["dataset_id"], record["dataset_checksum"], tuple(record["expected_columns"]), record["comparison"], record["tests_total"])
-    assert client.get("/api/sql/lessons/s10-aggregates").status_code == 404
-    assert client.get("/api/lessons/s10-aggregates").json()["workspace_kind"] == "python"
+    assert client.get("/api/sql/lessons/s10-inner-join").status_code == 404
+    assert client.get("/api/lessons/s10-inner-join").json()["workspace_kind"] == "python"
 
 
 def test_backend_registry_rejects_duplicate_tasks_and_lessons():
@@ -48,7 +48,7 @@ def test_backend_registry_rejects_duplicate_tasks_and_lessons():
             build_registry([a, duplicate])
 
 
-def test_independent_progress_idempotency_and_legacy_rows_across_all_five_tasks(client, grader):
+def test_independent_progress_idempotency_and_legacy_rows_across_all_eight_tasks(client, grader):
     client.put("/api/lessons/is-vs-eq/files", json={"files": {"main.py": "KEEP = 123\n"}})
     client.post("/api/progress/generators/theory", json={"completed": True})
     with SessionLocal() as db:
@@ -74,18 +74,18 @@ def test_independent_progress_idempotency_and_legacy_rows_across_all_five_tasks(
         grader.passed = True
     with SessionLocal() as db:
         assert legacy_snapshot(db) == before
-        assert db.scalar(select(func.count()).select_from(SqlTaskProgress)) == 5
-        assert db.scalar(select(func.count()).select_from(SqlAttempt)) == 10
+        assert db.scalar(select(func.count()).select_from(SqlTaskProgress)) == 8
+        assert db.scalar(select(func.count()).select_from(SqlAttempt)) == 16
 
 
-def test_existing_first_three_task_attempt_and_progress_rows_are_preserved(client, grader):
-    previous = list(REGISTRY.values())[:3]
-    for slug, spec in zip(SLUGS[:3], previous):
+def test_existing_first_five_task_attempt_and_progress_rows_are_preserved(client, grader):
+    previous = list(REGISTRY.values())[:5]
+    for slug, spec in zip(SLUGS[:5], previous):
         client.post(path(slug, spec.task_id), json={"request_id": str(uuid4()), "sql": "SELECT saved_task"})
     with SessionLocal() as db:
         attempt = db.execute(select(SqlAttempt.__table__).order_by(SqlAttempt.id)).all()
         progress = db.execute(select(SqlTaskProgress.__table__).order_by(SqlTaskProgress.id)).all()
-    for slug, spec in zip(SLUGS[3:], list(REGISTRY.values())[3:]):
+    for slug, spec in zip(SLUGS[5:], list(REGISTRY.values())[5:]):
         assert client.post(path(slug, spec.task_id), json={"request_id": str(uuid4()), "sql": "SELECT new_task"}).json()["passed"]
     with SessionLocal() as db:
         ids = [spec.task_id for spec in previous]
@@ -103,8 +103,10 @@ def test_cross_lesson_requests_fail_before_grader_and_feedback_is_task_aware(cli
         grader.passed, grader.code = False, "columns"
         columns = client.post(path(slug, spec.task_id), json={"request_id": str(uuid4()), "sql": "SELECT 1"}).json()
         assert ", ".join(spec.expected_columns) in columns["feedback"][0]["message"]
-        if index:
+        if "user_id" not in spec.expected_columns:
             assert "user_id" not in columns["feedback"][0]["message"]
+        if not spec.column_hint:
+            assert "псевдоним user_id" not in columns["feedback"][0]["message"]
         grader.code = "rows"
         rows = client.post(path(slug, spec.task_id), json={"request_id": str(uuid4()), "sql": "SELECT 1"}).json()
         assert rows["feedback"][0]["message"] == spec.rows_feedback

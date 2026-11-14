@@ -1,7 +1,7 @@
-# SQL Check — Phases 3–5
+# SQL Check — Phases 3–6
 
-Five lessons use the same grader, dataset and comparator. Task revision is `1`
-for all five; column names/order are exact. 10.2–10.4 compare bags, while 10.5–10.6
+Eight lessons use the same grader, dataset and comparator. Task revision is `1`
+for all eight; column names/order are exact. 10.2–10.4 compare bags, while 10.5–10.9
 compare full ordered sequences using the existing comparator unchanged.
 
 | Lesson | Stable task ID | Grader revision | Columns | Cases |
@@ -11,13 +11,16 @@ compare full ordered sequences using the existing comparator unchanged.
 | 10.4 NULL | `sql.basic.03` | `null-country-v1` | `id`, `email` | 5 |
 | 10.5 ORDER BY/LIMIT/OFFSET | `sql.basic.04` | `latest-orders-v1` | `id`, `created_at` | 6 |
 | 10.6 DISTINCT | `sql.basic.05` | `distinct-countries-v1` | `country` | 6 |
+| 10.7 Aggregates | `sql.aggregation.09` | `count-orders-v1` | `orders_count` | 6 |
+| 10.8 GROUP BY | `sql.aggregation.10` | `orders-by-status-v1` | `status`, `count` | 6 |
+| 10.9 HAVING | `sql.aggregation.13` | `users-with-two-orders-v1` | `user_id`, `count` | 6 |
 
-All **49 bank records are byte-for-byte unchanged by Phases 4–5**, including the
-supplemental email-domain/date tasks. Only these five capabilities are enabled,
+All **49 bank records are byte-for-byte unchanged by Phases 4–6**, including the
+supplemental email-domain/date tasks. Only these eight capabilities are enabled,
 one per lesson. `sql.basic.01` retains its historical bank `lesson_number=10.2`;
 the explicit capability registry deliberately enables its unchanged active-user
 contract in 10.3, after WHERE is taught. Lesson IDs/slugs and interview IDs stay
-stable. No SQL progress schema migration is needed in Phases 4–5.
+stable. No SQL progress schema migration is needed in Phases 4–6.
 
 ## Explicit task registries
 
@@ -127,6 +130,34 @@ All 20 fenced SQL examples in the new lessons (including disclosed solutions)
 execute against real public shop-v1. Tests compare their exact typed rows to
 independently declared expectations, verifying the prose's described results.
 
+Phase 6 adds three more immutable bundles, each **one public + five hidden cases**:
+
+- `count-orders-v1`: empty, exactly one, seven orders for one user, mixed statuses,
+  sparse IDs and differing user/order counts. Empty input returns one row containing
+  bigint zero. Counting users, grouping by ID or returning public literal 5 fails.
+- `orders-by-status-v1`: empty, a single status, skewed/equal group counts and
+  shuffled insertion/ownership. Tests assert complete columns and ordered groups;
+  wrong keys, filtered or missing groups, incorrect counts and missing/reverse order fail.
+- `users-with-two-orders-v1`: empty, no qualifying users, 1/2/3 boundary, multiple
+  qualifying users (including bigint ID beyond 2^53), and a single qualifying user.
+  Users without orders exist in the fixtures. Both two and three qualify; `> 2`,
+  `= 2`, including single orders, wrong counts and reverse order fail.
+
+Seeds use proper user/order foreign keys and only existing `paid`, `new`,
+`cancelled` statuses; at most ten orders. Independent tests assert all 18 case
+outputs, rather than merely checking reference execution. Every correct reference,
+`COUNT(id)` variant and permitted equivalent grouped CTE passes 6/6; hardcoded public
+results pass only 1/6. No literal HAVING/text matching is enforced. These are new
+registrations, not a CTE lesson or expanded SELECT policy.
+
+All **30 SQL blocks** in the three curated lessons run against public PG17:
+28 successful examples have independently specified exact results, and two clearly
+marked invalid examples must produce SQLSTATE 42803. Tests cover empty/all-NULL
+aggregates, COUNT(column)/DISTINCT, SUM/AVG/MIN/MAX, bigint/numeric type metadata and
+exact high-precision values. No comparator change or numerical tolerance was needed.
+Bank exercises `.11`, `.12`, `.14`, `.15`, `.16` remain supplemental without Check.
+Solutions and complete interview answers stay closed in Learn and Review.
+
 Hidden seeds replace data inside their own disposable clusters. The public
 schema/seed and checksum remain unchanged:
 `a1de3973eb4a2febc818c026def43716109e7ffde6b0bc46721e11d1b2fa4b97`.
@@ -157,8 +188,8 @@ safe feedback codes/SQLSTATE. It discards PostgreSQL messages/details/hints/
 positions because even primary cast-error text can contain hidden values. The
 backend validates identity and coherent counts, then maps an allowlist of codes
 to its own Russian messages. Column feedback uses the registered column names;
-row feedback distinguishes projection, filtering, unknown-value, ordering/LIMIT
-and uniqueness mistakes.
+row feedback distinguishes projection, filtering, unknown-value, ordering/LIMIT,
+uniqueness, aggregate source, group counts and HAVING boundary mistakes.
 Messages do not reveal the complete query. With more than four distinct failure
 diagnostics, feedback is capped while counts still include every case.
 No hidden rows, case identifiers, seeds, reference,
@@ -298,6 +329,55 @@ use disposable copies. The copy's exact-row preservation and isolated HTTP/unit
 checks establish SQL progress compatibility without writing to production. No
 production services/sessions were stopped or reset.
 
+## Phase 6 verification — 2026-11-14
+
+**240 default Python tests, 37 frontend tests and the complete 98-test real Docker
+suite passed**, together with content validation, ESLint, TypeScript and the
+production build. All 24 new aggregation Docker scenarios passed in the full run.
+The existing upstream Starlette/AnyIO deprecation warning remains.
+
+The real HTTP smoke completed all eight tasks independently. New references
+score 6/6, baseline hardcoding 1/6; wrong-source/group/order/threshold submissions
+fail. Run leaves completion false, successful Check persists, failed retries do
+not clear it, UUID replay is idempotent and changed SQL with the same UUID returns
+409. Reset and grading leave Explorer unchanged. Earlier SQL manifests and Python
+files/progress/XP compare equal before and after the new tasks. During SQL-controller
+outage, all eight Check routes return sanitized 503 and real Python Docker Run
+**and Check** continue to pass with the same files and no repeat XP.
+
+Grading tests use unique namespaces; HTTP tests use the disposable tmpfs stack.
+A separate networkless helper opened the real user volume read-only and used
+SQLite's backup API for a consistent disposable copy. Actual `create_all` and
+`record()`/replay calls for all three new tasks preserved every pre-existing schema
+and row across all seven tables. Seeded regressions also preserve exact attempt
+and progress rows for the previous five SQL tasks. No persistence schema, XP rule
+or migration was changed. No production service/session was stopped for tests.
+
+The bank's 49 SQL entries, shop-v1 schema/seed/checksum, previous five bundles and
+SHA pins, grader, comparator, AST policy and persistence implementation are
+unchanged. Three lesson/interview bundles are curated, leaving 272 legacy lessons
+outside this phase; lesson IDs/slugs and the six positional interview IDs remain
+stable. All 30 new lesson SQL blocks have independently verified PG17 results,
+including two deliberately invalid examples checked as SQLSTATE 42803.
+
+Headless Chrome also traversed **10.2 → 10.9** against a fresh disposable stack:
+real Monaco, public Run/results and independent saved drafts in every lesson;
+6/6 Check in all three new lessons via Cmd+Shift+Enter, with Cmd+Enter Run;
+closed reference disclosures, theme switching and draft restoration on returning
+to GROUP BY. Desktop **1720×1050** keeps editor/results together; mobile
+**390×844** switches to the Results tab, hides the sidebar after its transition
+and has no horizontal page overflow. Stable desktop/light/mobile screenshots
+were inspected. The browser profile and test stack were removed afterwards.
+
+After verification, the user-authorized main **`pythoria`** project was rebuilt
+with `docker compose -p pythoria up -d --build --wait`. Frontend, backend and both
+runners passed health probes; all eight public manifests expose the expected task
+and `can_check=true`, and the running SQL controller validates all eight bundles.
+Consistent read-only SQLite backups before/after deployment have identical logical
+fingerprints: every schema and row is preserved. This update is a deployment,
+separate from test execution; the named volume was retained. Test stacks/profiles
+were removed and no labeled test/grade SQL containers remain.
+
 ## Adding the next exercise
 
 1. Select a stable task ID tied to the lesson's taught concepts; preserve old IDs.
@@ -313,7 +393,7 @@ production services/sessions were stopped or reset.
 This is still a trusted local single-user app with one backend worker/controller
 per namespace. Authentication, distributed admission/idempotency, rate limits,
 SQL XP, server drafts, DML, free playground and Stage 11 labs need separate work.
-Only the five listed exercises are enabled; adding bank records alone does not
-expose new capabilities. Phase 6 can register aggregation/GROUP BY/HAVING tasks
-with their own pinned bundles, empty-group/NULL fixtures, result types and
-ordering contracts. This PR does not enable aggregation or JOIN labs.
+Only the eight listed exercises are enabled; adding bank records alone does not
+expose new capabilities. A recommended Phase 7 is JOIN labs starting at 10.10,
+with fixtures for missing matches, one-to-many row multiplication and NULLs.
+JOIN labs are not enabled in Phase 6.

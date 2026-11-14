@@ -1,0 +1,50 @@
+{
+  "task_id": "sql.aggregation.13",
+  "task_revision": 1,
+  "grader_revision": "users-with-two-orders-v1",
+  "dataset_id": "shop-v1",
+  "dataset_checksum": "a1de3973eb4a2febc818c026def43716109e7ffde6b0bc46721e11d1b2fa4b97",
+  "expected_columns": [
+    "user_id",
+    "count"
+  ],
+  "comparison": "ordered",
+  "numeric_compatible": true,
+  "reference_sql": "SELECT user_id, COUNT(*) AS count FROM orders GROUP BY user_id HAVING COUNT(*) >= 2 ORDER BY user_id;",
+  "cases": [
+    {
+      "id": "public-v1",
+      "public": true
+    },
+    {
+      "id": "empty-v1",
+      "public": false,
+      "seed_file": "empty-v1.sql",
+      "sha256": "c7fd0c1f538a375724106ff80870e2c1aa7a72b84af1c885c4aa87a5849f6812"
+    },
+    {
+      "id": "none-v1",
+      "public": false,
+      "seed_file": "none-v1.sql",
+      "sha256": "3f1f39a0382f264f081f326ac62d5ab2ad20d2f4fc783ff016b88515a4597856"
+    },
+    {
+      "id": "boundary-v1",
+      "public": false,
+      "seed_file": "boundary-v1.sql",
+      "sha256": "5b9353301081def9af9ee9f5d692353dcef4b74c3f55799cfe85b06d91316af5"
+    },
+    {
+      "id": "several-v1",
+      "public": false,
+      "seed_file": "several-v1.sql",
+      "sha256": "9b43f553c5a03aaa1253fbcfe28745df24c602db35f32d22a41194dfc8deb968"
+    },
+    {
+      "id": "single-qualifier-v1",
+      "public": false,
+      "seed_file": "single-qualifier-v1.sql",
+      "sha256": "ac6b6a142e772165787db5ecfc08a444504a0e1374900a81b08a1f3973120d8b"
+    }
+  ]
+}

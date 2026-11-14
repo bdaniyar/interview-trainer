@@ -1,0 +1,50 @@
+{
+  "task_id": "sql.aggregation.10",
+  "task_revision": 1,
+  "grader_revision": "orders-by-status-v1",
+  "dataset_id": "shop-v1",
+  "dataset_checksum": "a1de3973eb4a2febc818c026def43716109e7ffde6b0bc46721e11d1b2fa4b97",
+  "expected_columns": [
+    "status",
+    "count"
+  ],
+  "comparison": "ordered",
+  "numeric_compatible": true,
+  "reference_sql": "SELECT status, COUNT(*) AS count FROM orders GROUP BY status ORDER BY status;",
+  "cases": [
+    {
+      "id": "public-v1",
+      "public": true
+    },
+    {
+      "id": "empty-v1",
+      "public": false,
+      "seed_file": "empty-v1.sql",
+      "sha256": "e0ec3bed15c7ba4f98dac59cc143624ec2803a7e267191949e53c6270854f104"
+    },
+    {
+      "id": "single-status-v1",
+      "public": false,
+      "seed_file": "single-status-v1.sql",
+      "sha256": "492da322eae515980abc1a0ba959b72298fcc405ce2e3a13ec8cc835eb3fb2f2"
+    },
+    {
+      "id": "skewed-v1",
+      "public": false,
+      "seed_file": "skewed-v1.sql",
+      "sha256": "48bbd83804104ad413ff5fa1b7d9d73836a7c2fed604411084f445d5a489281e"
+    },
+    {
+      "id": "equal-v1",
+      "public": false,
+      "seed_file": "equal-v1.sql",
+      "sha256": "ac892ac881b739857dbc6e8e182bda1b02e000ea07591e9b323eecada57d321f"
+    },
+    {
+      "id": "shuffled-v1",
+      "public": false,
+      "seed_file": "shuffled-v1.sql",
+      "sha256": "b1f8be8f630b2b8e2698cc6509a36320205442a26bda4aed06f2971f30250272"
+    }
+  ]
+}
