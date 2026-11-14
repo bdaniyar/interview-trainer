@@ -1,20 +1,23 @@
-# SQL Check — Phases 3–4
+# SQL Check — Phases 3–5
 
-Three lessons use the same grader, dataset and comparator. Task revision is `1`
-for all three; comparison is unordered, with exact column names/order.
+Five lessons use the same grader, dataset and comparator. Task revision is `1`
+for all five; column names/order are exact. 10.2–10.4 compare bags, while 10.5–10.6
+compare full ordered sequences using the existing comparator unchanged.
 
 | Lesson | Stable task ID | Grader revision | Columns | Cases |
 | --- | --- | --- | --- | ---: |
 | 10.2 SELECT/AS | `sql.guided.10.2.projection.v1` | `projection-v1` | `user_id`, `email` | 4 |
 | 10.3 WHERE | `sql.basic.01` | `active-users-v1` | `id`, `email` | 5 |
 | 10.4 NULL | `sql.basic.03` | `null-country-v1` | `id`, `email` | 5 |
+| 10.5 ORDER BY/LIMIT/OFFSET | `sql.basic.04` | `latest-orders-v1` | `id`, `created_at` | 6 |
+| 10.6 DISTINCT | `sql.basic.05` | `distinct-countries-v1` | `country` | 6 |
 
-All **49 bank records are byte-for-byte unchanged by Phase 4**, including the
-supplemental email-domain/date tasks. Only these three capabilities are enabled,
+All **49 bank records are byte-for-byte unchanged by Phases 4–5**, including the
+supplemental email-domain/date tasks. Only these five capabilities are enabled,
 one per lesson. `sql.basic.01` retains its historical bank `lesson_number=10.2`;
 the explicit capability registry deliberately enables its unchanged active-user
 contract in 10.3, after WHERE is taught. Lesson IDs/slugs and interview IDs stay
-stable. No SQL progress schema migration is needed in Phase 4.
+stable. No SQL progress schema migration is needed in Phases 4–5.
 
 ## Explicit task registries
 
@@ -92,6 +95,38 @@ empty string and literal text `NULL`. Thus `= NULL`, `= ''`, `= 'NULL'` and
 baseline-ID hardcoding cannot pass. Fixture cardinalities and every fenced SQL
 example from the three lessons are checked against real PostgreSQL.
 
+`latest-orders-v1` has **one public + five hidden cases**: baseline (IDs 14/13),
+`scrambled-v1` (unrelated dates/IDs/insertion order, latest orders from different
+users), `adversarial-ties-v1` (three equal latest instants crossing LIMIT 2),
+`single-v1` (one bigint >2^53 with microseconds/offset), `empty-orders-v1` and
+`instants-v1` (equal instants written with different timezone offsets and a
+one-microsecond boundary). Reference is the unchanged basic.04 bank query.
+
+The tie case does not depend on accidental heap order. Its pinned trusted seed
+adds a private B-tree `(created_at DESC, id ASC)` and sets the disposable student
+role's planner preference `enable_seqscan=off`. A test-only EXPLAIN as the exact
+student OS/PG role asserts a forward index scan on that index: date-only sorting
+then returns IDs 11/12, while the required total order returns 21/12. Repeated
+executions verify the distinction. This preference changes neither privileges
+nor time/memory limits. The index/configuration exists only inside that case;
+public shop-v1, Run and Explorer are unchanged. No EXPLAIN/student DDL capability
+or SQL text-matching rule was added. Ordinal ORDER BY/FETCH FIRST and other
+semantically equivalent restricted SELECTs can pass.
+
+`distinct-countries-v1` also has **one public + five hidden cases**: baseline,
+`mixed-v1` (duplicates, multiple NULLs, empty string, literal text NULL, unsorted
+insertion), `all-same-v1`, `null-only-v1`, `changed-v1` and `empty-v1`. The pinned
+cluster uses `initdb --locale=C`; fixtures use ASCII uppercase country codes,
+and tests assert `pg_database.datcollate/datctype=C`, the libc provider and exact ordered values. Empty string stays in
+the result, SQL NULL does not. NULL-only data also distinguishes replacing NULL
+with empty string from excluding it. The reference is basic.05's unchanged
+query; its historically ambiguous bank word «непустые» is explicitly clarified
+as «not SQL NULL» in the lesson/public prompt without rewriting the bank record.
+
+All 20 fenced SQL examples in the new lessons (including disclosed solutions)
+execute against real public shop-v1. Tests compare their exact typed rows to
+independently declared expectations, verifying the prose's described results.
+
 Hidden seeds replace data inside their own disposable clusters. The public
 schema/seed and checksum remain unchanged:
 `a1de3973eb4a2febc818c026def43716109e7ffde6b0bc46721e11d1b2fa4b97`.
@@ -114,7 +149,7 @@ tolerance. Empty results still require the right names and type families.
 Unsupported types or malformed reference/wire results are infrastructure errors.
 Student SQL errors, statement/external timeouts and truncated/oversized results
 cannot pass. The current limits are 500 rows, 1 MiB output and 64 KiB per cell;
-fixtures have at most seven rows. Larger future tasks need a separate reviewed
+current reference results have at most seven rows. Larger future tasks need a separate reviewed
 grader result budget, rather than accepting an incomplete prefix.
 
 The runner returns only task/revision/checksum, counts, pass flag and up to four
@@ -122,7 +157,8 @@ safe feedback codes/SQLSTATE. It discards PostgreSQL messages/details/hints/
 positions because even primary cast-error text can contain hidden values. The
 backend validates identity and coherent counts, then maps an allowlist of codes
 to its own Russian messages. Column feedback uses the registered column names;
-row feedback distinguishes projection, filtering and unknown-value mistakes.
+row feedback distinguishes projection, filtering, unknown-value, ordering/LIMIT
+and uniqueness mistakes.
 Messages do not reveal the complete query. With more than four distinct failure
 diagnostics, feedback is capped while counts still include every case.
 No hidden rows, case identifiers, seeds, reference,
@@ -223,6 +259,45 @@ remain the same four positional IDs (`<slug>:0`/`:1`). The upstream AnyIO warnin
 remains. UI validation uses component tests; no manual browser walkthrough is
 claimed.
 
+Phase 5 verification on **2026-11-14**: **238 default Python tests, 32 frontend
+tests, content validation, ESLint, TypeScript and production build passed**.
+All **58 existing Docker regression scenarios** passed. The full 74-test run
+identified one error in the new locale inspection test: PostgreSQL 17 has no
+`SHOW lc_collate` GUC. The assertion now reads database collation/provider from
+`pg_database` using trusted bootstrap access, without changing student grants.
+The entire corrected **16-test ORDER/DISTINCT Docker file was rerun and passed**;
+all 74 distinct Docker scenarios are therefore verified. Correct/equivalent SQL
+passes 6/6, hardcoded baseline literals pass only 1/6. Adversarial checks cover
+tie-breaking, directions, row/column order, LIMIT/OFFSET, duplicates, NULL/empty
+string, bigint/timestamp precision, truncation, timeouts and cleanup.
+
+The real Workspace HTTP smoke solves all five lessons, verifies independent
+durable completion/replay/failed retries/Reset, ordered public Run results and
+unchanged Explorer. During SQL-controller outage, real Python Docker Run **and
+Check** still pass with unchanged saved files and no repeat XP. The stack uses
+SQLite tmpfs and was removed. No test/helper SQL sandbox remains after cleanup;
+an independently started production namespace is left intact.
+
+The actual user SQLite volume was mounted read-only for before/after SHA-256
+fingerprints. A networkless temporary helper additionally copied it to `/tmp`
+and ran `create_all` plus real `record()` writes for both new tasks; every old
+schema/row was preserved on the copy, which was deleted with the helper. Unit
+tests preserve exact SQL attempt/progress rows for all three earlier tasks.
+Bank records, shop-v1, earlier bundle files/pins, AST policy, comparator and
+persistence models are unchanged. No application migration was added. Two
+lesson/interview bundles are now curated, leaving 275 legacy lessons outside
+scope. The upstream AnyIO warning remains; no manual browser walkthrough is
+claimed.
+
+The whole-run source fingerprint **did change**: a separate normal `pythoria`
+stack started during verification and has an active production SQL session.
+Therefore this phase does not claim that a live user's database stayed byte-for-
+byte identical over the entire run. Our test stack never mounts that volume;
+all helper mounts of the original are read-only, and all progress-write probes
+use disposable copies. The copy's exact-row preservation and isolated HTTP/unit
+checks establish SQL progress compatibility without writing to production. No
+production services/sessions were stopped or reset.
+
 ## Adding the next exercise
 
 1. Select a stable task ID tied to the lesson's taught concepts; preserve old IDs.
@@ -238,7 +313,7 @@ claimed.
 This is still a trusted local single-user app with one backend worker/controller
 per namespace. Authentication, distributed admission/idempotency, rate limits,
 SQL XP, server drafts, DML, free playground and Stage 11 labs need separate work.
-Only the three listed exercises are enabled; adding bank records alone does not
-expose new capabilities. ORDER BY, LIMIT/OFFSET and DISTINCT need their own task
-registrations, adversarial fixtures and documented ordering contracts; they are
-not enabled by this PR.
+Only the five listed exercises are enabled; adding bank records alone does not
+expose new capabilities. Phase 6 can register aggregation/GROUP BY/HAVING tasks
+with their own pinned bundles, empty-group/NULL fixtures, result types and
+ordering contracts. This PR does not enable aggregation or JOIN labs.

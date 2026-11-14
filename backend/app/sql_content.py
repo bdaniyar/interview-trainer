@@ -58,6 +58,18 @@ REGISTRY = build_registry((
         "Выведите id и email пользователей из users, для которых country неизвестна (NULL). Только столбцы id и email в этом порядке. Порядок строк несущественен.",
         "SELECT id, email\nFROM users;\n",
         "Проверьте работу с неизвестными значениями. SQL NULL отличается от пустой строки и обычного значения; учтите все нужные строки и дубликаты."),
+    Registration("backend-interview.10.5.order-by-limit-and-offset", "sql.basic.04", 1,
+        "latest-orders-v1", ("id", "created_at"), 6,
+        "Верните два последних заказа по created_at. При одинаковой дате заказ с большим id должен идти первым. Только столбцы id и created_at в этом порядке. Если заказов меньше двух, верните все имеющиеся.",
+        "SELECT id, created_at\nFROM orders;\n",
+        "Проверьте направление сортировки, порядок заказов при одинаковой дате и ограничение количества строк.",
+        comparison="ordered"),
+    Registration("backend-interview.10.6.distinct", "sql.basic.05", 1,
+        "distinct-countries-v1", ("country",), 6,
+        "Выведите уникальные значения country из users. Исключите SQL NULL и отсортируйте страны по возрастанию. Только столбец country. Пустая строка является значением и должна остаться, если встречается в данных.",
+        "SELECT country\nFROM users;\n",
+        "Проверьте повторы, исключение SQL NULL и сортировку по возрастанию. Пустая строка не равна NULL.",
+        comparison="ordered"),
 ))
 
 

@@ -1,0 +1,50 @@
+{
+  "task_id": "sql.basic.04",
+  "task_revision": 1,
+  "grader_revision": "latest-orders-v1",
+  "dataset_id": "shop-v1",
+  "dataset_checksum": "a1de3973eb4a2febc818c026def43716109e7ffde6b0bc46721e11d1b2fa4b97",
+  "expected_columns": [
+    "id",
+    "created_at"
+  ],
+  "comparison": "ordered",
+  "numeric_compatible": true,
+  "reference_sql": "SELECT id, created_at FROM orders ORDER BY created_at DESC, id DESC LIMIT 2;",
+  "cases": [
+    {
+      "id": "public-v1",
+      "public": true
+    },
+    {
+      "id": "scrambled-v1",
+      "public": false,
+      "seed_file": "scrambled-v1.sql",
+      "sha256": "0522dce1dcf78663adccdf0321374bc1abc892b68959696a6d70e5b057b84205"
+    },
+    {
+      "id": "adversarial-ties-v1",
+      "public": false,
+      "seed_file": "adversarial-ties-v1.sql",
+      "sha256": "e75cfa31866cbb9e61a29273f0438d8d6782e25ac77d0e0649e58471be0c1ea4"
+    },
+    {
+      "id": "single-v1",
+      "public": false,
+      "seed_file": "single-v1.sql",
+      "sha256": "68ccfeaed967e7f65910cb97e4c514c8bc81c500bd36c15cae4ef4787e53c305"
+    },
+    {
+      "id": "empty-orders-v1",
+      "public": false,
+      "seed_file": "empty-orders-v1.sql",
+      "sha256": "e8140602d68dea066d21982b96ea2bebda6c705fa4d5c31e9836ccb0da6b62ea"
+    },
+    {
+      "id": "instants-v1",
+      "public": false,
+      "seed_file": "instants-v1.sql",
+      "sha256": "04f036b3f5f05a91a933417a23ce89ddcd767f09a240459588d709d70e4618c5"
+    }
+  ]
+}
