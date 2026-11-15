@@ -1,0 +1,50 @@
+{
+  "task_id": "sql.join.20",
+  "task_revision": 1,
+  "grader_revision": "users-managers-v1",
+  "dataset_id": "shop-v1",
+  "dataset_checksum": "a1de3973eb4a2febc818c026def43716109e7ffde6b0bc46721e11d1b2fa4b97",
+  "expected_columns": [
+    "email",
+    "manager_email"
+  ],
+  "comparison": "ordered",
+  "numeric_compatible": true,
+  "reference_sql": "SELECT u.email, m.email AS manager_email FROM users u LEFT JOIN users m ON m.id=u.manager_id ORDER BY u.id;",
+  "cases": [
+    {
+      "id": "public-v1",
+      "public": true
+    },
+    {
+      "id": "hierarchy-v1",
+      "public": false,
+      "seed_file": "hierarchy-v1.sql",
+      "sha256": "b649114bfab5c53b3bec735650d0424182a9415e72ab33ac90e23a44fa3e5ce4"
+    },
+    {
+      "id": "one-v1",
+      "public": false,
+      "seed_file": "one-v1.sql",
+      "sha256": "d58eda93c34eafa970cb54206addffa42958f6f0cd8c8370196f055fa55272a8"
+    },
+    {
+      "id": "empty-v1",
+      "public": false,
+      "seed_file": "empty-v1.sql",
+      "sha256": "18d28e2eb3a774fec7047e275cae9e45fced80554cc1e8d954681bf9cd3696cb"
+    },
+    {
+      "id": "no-managers-v1",
+      "public": false,
+      "seed_file": "no-managers-v1.sql",
+      "sha256": "f2086397b5af70b1b51fc832cd677b5b29825d7d3666efa226a66b03cce4d3ef"
+    },
+    {
+      "id": "shared-manager-v1",
+      "public": false,
+      "seed_file": "shared-manager-v1.sql",
+      "sha256": "7e064bea48f1efbd1c5dc21768ce4192e3210941078f0ce95a3ac7e951aba939"
+    }
+  ]
+}

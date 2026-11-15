@@ -271,8 +271,18 @@ const grouped: SqlLesson = { ...where, lesson_slug: 's10-group-by', lesson_id: '
 const having: SqlLesson = { ...where, lesson_slug: 's10-having', lesson_id: 'backend-interview.10.9.having',
   task_id: 'sql.aggregation.13', starter_sql: 'SELECT user_id\nFROM orders;\n', prompt: 'Минимум два заказа у пользователя.', expected_columns: ['user_id', 'count'] };
 
+
+const orderOwners: SqlLesson = { ...where, lesson_slug: 's10-inner-join', lesson_id: 'backend-interview.10.10.inner-join',
+  task_id: 'sql.join.17', starter_sql: 'SELECT id, user_id\nFROM orders;\n', prompt: 'Владелец каждого заказа.', expected_columns: ['order_id', 'email'] };
+const withoutOrders: SqlLesson = { ...where, lesson_slug: 's10-left-join', lesson_id: 'backend-interview.10.11.left-join',
+  task_id: 'sql.join.18', starter_sql: 'SELECT id, email\nFROM users;\n', prompt: 'Пользователи без заказов.', expected_columns: ['id', 'email'] };
+const allProducts: SqlLesson = { ...where, lesson_slug: 's10-right-and-full-outer-join', lesson_id: 'backend-interview.10.12.right-and-full-outer-join',
+  task_id: 'sql.join.25', starter_sql: 'SELECT id, name\nFROM products;\n', prompt: 'Все товары, включая непроданные.', expected_columns: ['product_id', 'order_id'] };
+const managers: SqlLesson = { ...where, lesson_slug: 's10-self-join', lesson_id: 'backend-interview.10.13.self-join',
+  task_id: 'sql.join.20', starter_sql: 'SELECT id, email, manager_id\nFROM users;\n', prompt: 'Непосредственный руководитель каждого пользователя.', expected_columns: ['email', 'manager_email'] };
+
 function multipleLessons() {
-  const manifests = [graded, where, nullable, latest, countries, aggregates, grouped, having];
+  const manifests = [graded, where, nullable, latest, countries, aggregates, grouped, having, orderOwners, withoutOrders, allProducts, managers];
   const solved = new Set<string>();
   vi.mocked(sqlApi.lesson).mockImplementation(async slug => ({ ...manifests.find(m => m.lesson_slug === slug)!,
     completed: solved.has(slug) }));
@@ -283,13 +293,13 @@ function multipleLessons() {
   });
   vi.mocked(sqlApi.check).mockImplementation(async (slug, taskId) => {
     solved.add(slug);
-    const count = [4, 5, 5, 6, 6, 6, 6, 6][manifests.findIndex(m => m.task_id === taskId)];
+    const count = [4, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6][manifests.findIndex(m => m.task_id === taskId)];
     return { ...gradeResult, task_id: taskId, tests_total: count, tests_passed: count };
   });
   return solved;
 }
 
-it('navigates 10.2 → 10.9 with eight independent drafts/progress states and serialized sessions', async () => {
+it('navigates 10.2 → 10.13 with twelve independent drafts/progress states and serialized sessions', async () => {
   multipleLessons();
   const mounted = render(<SqlWorkspace lessonSlug={slug} theme="dark" />);
   await ready(); edit('SELECT projection_draft FROM users;');
@@ -321,7 +331,7 @@ it('navigates 10.2 → 10.9 with eight independent drafts/progress states and se
   expect(vi.mocked(sqlApi.check).mock.calls.at(-1)?.slice(0, 3)).toEqual([nullable.lesson_slug, nullable.task_id, 'SELECT null_draft FROM users;']);
   fireEvent.click(screen.getByRole('button', { name: 'Reset' })); await ready();
   expect(screen.getByText('Задача решена')).toBeTruthy();
-  for (const manifest of [latest, countries, aggregates, grouped, having]) {
+  for (const manifest of [latest, countries, aggregates, grouped, having, orderOwners, withoutOrders, allProducts, managers]) {
     mounted.rerender(<SqlWorkspace lessonSlug={manifest.lesson_slug} theme="light" />); await ready();
     expect(screen.getByText(manifest.prompt)).toBeTruthy();
     expect((screen.getByRole('textbox') as HTMLTextAreaElement).value).toBe(manifest.starter_sql);
@@ -342,7 +352,7 @@ it('navigates 10.2 → 10.9 with eight independent drafts/progress states and se
   expect((screen.getByRole('textbox') as HTMLTextAreaElement).value).toBe('SELECT projection_draft FROM users;');
   expect(screen.getByText('Задача решена')).toBeTruthy();
   expect(localStorage.getItem(draftKey(nullable))).toBe('SELECT null_draft FROM users;');
-  for (const manifest of [latest, countries, aggregates, grouped, having]) {
+  for (const manifest of [latest, countries, aggregates, grouped, having, orderOwners, withoutOrders, allProducts, managers]) {
     mounted.rerender(<SqlWorkspace lessonSlug={manifest.lesson_slug} theme="dark" />); await ready();
     expect((screen.getByRole('textbox') as HTMLTextAreaElement).value).toBe(`SELECT draft_for_${manifest.task_id};`);
     expect(screen.getByText('Задача решена')).toBeTruthy();
@@ -351,7 +361,7 @@ it('navigates 10.2 → 10.9 with eight independent drafts/progress states and se
   expect(api.saveFiles).not.toHaveBeenCalled();
 });
 
-it.each([[graded, where], [latest, countries], [aggregates, grouped], [grouped, having]])('ignores late Check and waits for previous SQL lesson cleanup (%#)', async (from, to) => {
+it.each([[graded, where], [latest, countries], [aggregates, grouped], [grouped, having], [having, orderOwners], [orderOwners, withoutOrders], [allProducts, managers]])('ignores late Check and waits for previous SQL lesson cleanup (%#)', async (from, to) => {
   multipleLessons();
   const pending = deferred<SqlCheckResult>();
   vi.mocked(sqlApi.check).mockReturnValueOnce(pending.promise);
@@ -408,20 +418,23 @@ describe('typed results and diagnostics', () => {
   });
 });
 
-it('switches CourseApp between SQL and Python without saving SQL via the Python files endpoint', async () => {
+it.each([manifest, orderOwners, withoutOrders, allProducts, managers])('switches CourseApp SQL/Python without saving SQL through Python files (%#)', async selected => {
+  const sqlSlug = selected.lesson_slug;
+  vi.mocked(sqlApi.lesson).mockResolvedValue(selected);
+  vi.mocked(sqlApi.create).mockResolvedValue({ ...initial, lesson_id: selected.lesson_id, lesson_slug: sqlSlug, task_id: selected.task_id });
   const base = { module_slug: 'test', module_title: 'Test', order: 1, duration: 10, xp: 5,
     topics: ['select'], description: '', has_task: false, has_solution: false,
     progress: { status: 'not_started' as const, theory_completed: false, task_completed: false },
     markdown: '# Lesson\n\n## Теория\nText\n\n## Практика\nQuestion', interview: [],
     files: { 'main.py': 'ORIGINAL = True\n', 'extra.py': 'SAVED = 42\n' } };
-  const sql: LessonData = { ...base, slug, title: 'SQL lesson', workspace_kind: 'sql' };
+  const sql: LessonData = { ...base, slug: sqlSlug, title: 'SQL lesson', workspace_kind: 'sql' };
   const python: LessonData = { ...base, slug: 'python', title: 'Python lesson', workspace_kind: 'python' };
   const course = { title: 'Test', modules: [{ slug: 'test', title: 'Test', order: 1, lessons: [
     { ...python, status: 'not_started', theory_completed: false, task_completed: false },
     { ...sql, status: 'not_started', theory_completed: false, task_completed: false },
-  ] }], summary: { total: 2, completed: 0, percent: 0, xp: 0, last_opened_lesson: slug, theme: 'light' } } as CourseData;
+  ] }], summary: { total: 2, completed: 0, percent: 0, xp: 0, last_opened_lesson: sqlSlug, theme: 'light' } } as CourseData;
   vi.spyOn(api, 'course').mockResolvedValue(course);
-  vi.spyOn(api, 'lesson').mockImplementation(async value => value === slug ? sql : python);
+  vi.spyOn(api, 'lesson').mockImplementation(async value => value === sqlSlug ? sql : python);
   vi.spyOn(api, 'openLesson').mockResolvedValue({});
   render(<CourseApp />);
   await ready(); edit('SELECT custom_draft FROM users;');
@@ -438,5 +451,5 @@ it('switches CourseApp between SQL and Python without saving SQL via the Python 
   expect((screen.getByRole('textbox', { name: 'SQL запрос' }) as HTMLTextAreaElement).value).toBe('SELECT custom_draft FROM users;');
   expect(vi.mocked(api.saveFiles).mock.calls.every(([lesson, files]) => lesson === 'python' && files['main.py'] === 'ORIGINAL = True\n')).toBe(true);
   expect(screen.queryByRole('region', { name: 'Python Workspace' })).toBeNull();
-  expect(within(screen.getByRole('region', { name: 'SQL Workspace' })).queryByText('Check')).toBeNull();
+  expect(!!within(screen.getByRole('region', { name: 'SQL Workspace' })).queryByText('Check')).toBe(selected.can_check);
 });

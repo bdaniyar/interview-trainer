@@ -297,11 +297,11 @@ Sandbox Python 3.12 содержит pytest 8.4, FastAPI 0.116, Pydantic 2.11, S
 
 ## SQL practice
 
-SQL Lab работает в уроках 10.2 (SELECT/AS), 10.3 (WHERE), 10.4 (NULL), 10.5 (ORDER BY/LIMIT/OFFSET), 10.6 (DISTINCT), 10.7 (агрегаты), 10.8 (GROUP BY) и 10.9 (HAVING): Monaco SQL, Run, Explorer, Reset и настоящий Check на публичных/скрытых наборах. Каждая сессия и каждый Check case выполняются в отдельном PostgreSQL 17 sandbox. Все восемь уроков используют неизменный `shop-v1`.
+SQL Lab работает в уроках 10.2 (SELECT/AS), 10.3 (WHERE), 10.4 (NULL), 10.5 (ORDER BY/LIMIT/OFFSET), 10.6 (DISTINCT), 10.7 (агрегаты), 10.8 (GROUP BY), 10.9 (HAVING), 10.10 (INNER JOIN), 10.11 (LEFT JOIN), 10.12 (RIGHT/FULL JOIN) и 10.13 (SELF JOIN): Monaco SQL, Run, Explorer, Reset и настоящий Check на публичных/скрытых наборах. Каждая сессия и каждый Check case выполняются в отдельном PostgreSQL 17 sandbox. Все двенадцать уроков используют неизменный `shop-v1`.
 
-В банке `content/practice_banks.json` сохранены 49 записей; подключена одна задача на каждый из этих восьми уроков. Остальные пока являются дополнительной практикой. У SQL отдельные черновики в браузере и отдельный прогресс задач; Run не определяет правильность, SQL Check не начисляет XP.
+В банке `content/practice_banks.json` сохранены 49 записей; подключена одна задача на каждый из этих двенадцати уроков. Остальные пока являются дополнительной практикой. У SQL отдельные черновики в браузере и отдельный прогресс задач; Run не определяет правильность, SQL Check не начисляет XP.
 
-Запуск: `docker compose up -d --build --wait`. Подробности: [SQL Workspace](docs/SQL_WORKSPACE.md), [реестры, grader и hidden fixtures](docs/SQL_GRADING.md), [границы SQL Runner](sql_runner/README.md). SQL выполняется в PostgreSQL, а SQLite хранит только состояние приложения.
+Запуск: `docker compose up -d --build --wait`. Подробности: [SQL Workspace](docs/SQL_WORKSPACE.md), [реестры, grader и hidden fixtures](docs/SQL_GRADING.md), [границы SQL Runner](sql_runner/README.md). SQL выполняется в PostgreSQL, а SQLite хранит только состояние приложения. FULL JOIN с несовпадениями с обеих сторон разбирается на независимых SELECT/VALUES: FK users/orders не допускает заказа без владельца. Check урока 10.12 оценивает существующую RIGHT JOIN задачу, а FULL-сверка и ON/WHERE остаются дополнительной практикой.
 
 ## Priorities and planned content
 

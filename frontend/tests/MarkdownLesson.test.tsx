@@ -28,6 +28,10 @@ it.each([
   ['s10-aggregates', 'Показать решение для самопроверки', 'COUNT(*) AS orders_count'],
   ['s10-group-by', 'Показать решение для самопроверки', 'COUNT(*) AS count'],
   ['s10-having', 'Показать решение для самопроверки', 'HAVING COUNT(*) >= 2'],
+  ['s10-inner-join', 'Показать решение для самопроверки', 'o.id AS order_id'],
+  ['s10-left-join', 'Показать решение для самопроверки', 'WHERE o.id IS NULL'],
+  ['s10-right-and-full-outer-join', 'Показать решение для самопроверки', 'RIGHT JOIN products'],
+  ['s10-self-join', 'Показать решение для самопроверки', 'm.email AS manager_email'],
 ])('keeps the graded SQL answer closed in Learn and Review: %s', (slug, summary, sql) => {
   const lesson = loadLesson(`stage-10/${slug}`);
   render(<MarkdownLesson {...props} lesson={lesson} />);

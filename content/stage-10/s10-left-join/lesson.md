@@ -1,334 +1,333 @@
-# LEFT JOIN
-
-> [!IMPORTANT]
-> **P0 · вероятность на интервью: very_high · 12 минут.** SQL/relational DB явно встречались в 15/18 — один из главных P0-разделов.
+# LEFT JOIN: сохранить строки без пары и правильно поставить фильтр
 
 ## Учебные цели
 
 После урока ты сможешь:
 
-- восстановить mental model темы **LEFT JOIN**, а не только запомнить термин;
-- прочитать и изменить короткий пример для `preserving left rows`;
-- распознать характерную ошибку и объяснить причину;
-- дать реалистичный ответ уровня Junior и выдержать follow-up.
+- объяснить, какие строки сохраняет левая сторона соединения;
+- распознавать NULL, добавленный из-за отсутствующей пары;
+- предсказать разницу между фильтром в ON и WHERE;
+- найти записи без связанных строк через anti-join;
+- отличить COUNT(*) от COUNT правого первичного ключа;
+- решить задачу о пользователях без заказов.
 
 ## Теория
 
 ### Что это
 
-`LEFT JOIN` сохраняет каждую row левой таблицы и подставляет NULL в columns правой стороны при отсутствии совпадения.
+Представь отчёт «все пользователи и их заказы». INNER JOIN не покажет человека, который ещё ничего не заказал. LEFT JOIN позволяет сохранить такого пользователя: его поля останутся, а поля отсутствующего заказа будут SQL NULL.
+
+Слово LEFT относится к источнику **слева от JOIN**, а не к расположению колонок в SELECT. Порядок выбранных столбцов не меняет сохраняемую сторону.
 
 ### Как работает
 
-Фильтр правой таблицы в ON влияет на присоединяемые совпадения; тот же фильтр в WHERE удаляет NULL-rows и фактически превращает результат в INNER JOIN.
+Для каждой строки слева ищутся строки справа, удовлетворяющие ON:
 
+- одно совпадение даёт одну пару;
+- несколько совпадений дают несколько пар;
+- если совпадений нет, добавляется одна строка с NULL во всех полях справа.
+
+Сначала выбираем допустимые пары, затем применяем WHERE к полученному результату. Это логическая модель; реальный план PostgreSQL может выполнять операции иначе, сохраняя смысл запроса.
+
+### Исходные отношения и результат
+
+В shop-v1 orders.user_id ссылается на users.id. Заказов у пользователей соответственно 2, 2, 0 и 1.
+
+```sql
+SELECT u.id AS user_id, o.id AS order_id
+FROM users AS u
+LEFT JOIN orders AS o ON o.user_id = u.id
+ORDER BY u.id, o.id;
+```
+
+| user_id | order_id | Почему строка есть |
+| --- | --- | --- |
+| 1 | 10 | Первый заказ пользователя 1 |
+| 1 | 11 | Второй заказ того же пользователя |
+| 2 | 12 | Первый заказ пользователя 2 |
+| 2 | 13 | Второй заказ того же пользователя |
+| 3 | NULL | Заказов нет, пользователь сохранён |
+| 4 | 14 | Есть один заказ |
+
+Всего шесть строк, хотя пользователей четыре. LEFT JOIN не означает «ровно одна строка на пользователя»: он сохраняет пользователя, но не сворачивает найденные заказы.
+
+NULL в order_id здесь появился в результате соединения. В сохранённой таблице orders первичный ключ id не может быть NULL. LEFT JOIN не вставляет фиктивный заказ с отсутствующим ID в базу.
+
+### Существенная разница: условие в ON
+
+Новый отчёт: **все пользователи**, но присоединять нужно **только оплаченные заказы**. Это дополнительное упражнение `sql.join.21`, без отдельного Check.
+
+```sql
+SELECT u.id AS user_id, o.id AS order_id
+FROM users AS u
+LEFT JOIN orders AS o
+    ON o.user_id = u.id
+   AND o.status = 'paid'
+ORDER BY u.id, o.id;
+```
+
+| user_id | order_id | Объяснение |
+| --- | --- | --- |
+| 1 | 10 | Заказ 11 отменён, остаётся только paid-заказ 10 |
+| 2 | 12 | Оплачен |
+| 2 | 13 | Оплачен, это отдельная строка |
+| 3 | NULL | Заказов вообще нет |
+| 4 | NULL | Есть new-заказ 14, но нет подходящего paid-заказа |
+
+Условие статуса участвует в поиске пары. Для пользователя 4 ни одна строка справа не удовлетворяет **всему** ON, поэтому LEFT JOIN создаёт NULL-расширенную строку.
+
+### То же условие в WHERE меняет вопрос
+
+```sql
+SELECT u.id AS user_id, o.id AS order_id
+FROM users AS u
+LEFT JOIN orders AS o ON o.user_id = u.id
+WHERE o.status = 'paid'
+ORDER BY u.id, o.id;
+```
+
+Останутся только три строки: 1/10, 2/12, 2/13.
+
+Разберём двух пропавших пользователей:
+
+- Для пользователя 3 соединение создало строку с o.status = NULL. Сравнение NULL с 'paid' даёт UNKNOWN; WHERE оставляет только TRUE.
+- Для пользователя 4 соединение нашло заказ 14 со статусом new. Он не прошёл WHERE. После фильтрации JOIN **не создаёт новую NULL-строку взамен удалённой**.
+
+Именно это условие на правую сторону делает результат эквивалентным INNER JOIN только оплаченных заказов. Нельзя обобщать до «любой WHERE уничтожает LEFT JOIN»: WHERE по левым полям или IS NULL может решать совсем другую задачу.
+
+### Почему OR ... IS NULL не всегда исправляет WHERE
+
+Попытка сохранить пользователей без заказов выглядит правдоподобно:
+
+```sql
+SELECT u.id AS user_id, o.id AS order_id
+FROM users AS u
+LEFT JOIN orders AS o ON o.user_id = u.id
+WHERE o.status = 'paid' OR o.id IS NULL
+ORDER BY u.id, o.id;
+```
+
+Получим четыре строки: 1/10, 2/12, 2/13 и 3/NULL. Пользователь 4 всё ещё исчез: для его настоящего new-заказа оба условия ложны. NULL-строка не возникала, потому что исходный ON уже нашёл заказ.
+
+Если отчёт должен сохранить всех пользователей без **подходящего** заказа, фильтр подходящих заказов размещается в ON. Сравни три результата через Run: 5 строк с фильтром в ON, 3 в WHERE, 4 с OR. Разница показывает смысл операции, а не вкусы оформления SQL.
+
+### Anti-join: найти отсутствие связи
+
+Anti-join — название приёма «оставить строки, у которых нет подходящей пары». Отдельного слова ANTI JOIN для этого SELECT писать не нужно.
+
+Например, товары без позиций заказов:
+
+```sql
+SELECT p.id, p.name
+FROM products AS p
+LEFT JOIN order_items AS oi ON oi.product_id = p.id
+WHERE oi.order_id IS NULL
+ORDER BY p.id;
+```
+
+В публичном shop-v1 результат пустой: каждый из трёх товаров встречался хотя бы в одной позиции. Пустой ответ здесь корректен. На допустимом наборе с новым товаром без позиций он появится в ответе.
+
+order_items.order_id входит в составной PRIMARY KEY и не бывает NULL в настоящей позиции. Поэтому NULL в этом поле надёжно показывает отсутствие правой строки. Проверка произвольного nullable-поля была бы ненадёжной: оно могло оказаться NULL и у реально найденной записи.
+
+Проверка IS NULL относится к результату **правой** стороны. Не подменяй её, например, отсутствующей страной у пользователя: users.country ничего не говорит о количестве его заказов.
+
+### Альтернатива NOT EXISTS
+
+Тот же вопрос про товары можно выразить как «не существует позиции с этим product_id»:
+
+```sql
+SELECT p.id, p.name
+FROM products AS p
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM order_items AS oi
+    WHERE oi.product_id = p.id
+)
+ORDER BY p.id;
+```
+
+Результат опять пустой. Внутри проверяется наличие хотя бы одной подходящей строки, а не значение числа 1. p.id относится к текущему товару из внешнего SELECT.
+
+Здесь достаточно понять эту альтернативу. Отдельный урок о подзапросах будет позже; Phase 7 его не подключает. Не нужно переписывать корректное решение исключительно ради другого синтаксиса. Check принимает разрешённый эквивалентный SELECT.
+
+### COUNT после LEFT JOIN
+
+Чтобы получить по одной строке на пользователя, можно сгруппировать результат:
+
+```sql
+SELECT u.id,
+       COUNT(*) AS joined_rows,
+       COUNT(o.id) AS orders_count
+FROM users AS u
+LEFT JOIN orders AS o ON o.user_id = u.id
+GROUP BY u.id
+ORDER BY u.id;
+```
+
+| id | joined_rows | orders_count |
+| --- | --- | --- |
+| 1 | 2 | 2 |
+| 2 | 2 | 2 |
+| 3 | 1 | 0 |
+| 4 | 1 | 1 |
+
+У пользователя 3 есть одна строка результата соединения, но нет ни одного известного o.id. Поэтому COUNT(*) равен 1, а COUNT(o.id) — 0. COUNT(o.id) не считает NULL-расширение за настоящий заказ.
 
 ### Важный нюанс / ограничение
 
-Для числа связанных rows считай nullable первичный ключ правой таблицы, а не `COUNT(*)`.
+Если правая таблица пуста, каждый пользователь останется один раз с правыми NULL. Если пуста левая, LEFT JOIN не создаст пользователей из правой таблицы. Если совпадений несколько, результат размножается, как и в INNER JOIN.
+
+NULL результата соединения — не число 0, не пустая строка и не текст 'NULL'. Подстановка COALESCE может быть полезна для отображения, но меняет значения; в заданиях с требованием SQL NULL её делать нельзя.
 
 ## Модель понимания
 
-Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
-
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
+Сначала сформулируй «кого сохраняем» и «что считается подходящей парой». Первое выбирает сторону LEFT JOIN, второе — ON. После этого реши, требуется ли фильтрация уже полученного результата через WHERE.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
-- preserving left rows
-- condition in `ON` vs `WHERE`
-- finding missing related rows
+- LEFT JOIN сохраняет строки слева, но допускает много совпадений.
+- Отсутствующая правая строка представляется NULL в её полях.
+- ON и WHERE действуют на разных логических этапах.
+- Для отсутствия пары проверяют гарантированно NOT NULL поле справа.
 
 ### Полезно
 
-- один короткий пример кода с результатом
+Anti-join, смысл NOT EXISTS и различие COUNT(*)/COUNT(right.id) после внешнего соединения.
 
 ### Можно не учить глубоко
 
-- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
+Как планировщик выбирает конкретный алгоритм anti-join и в каких формах переписывает запрос.
 
 ## Примеры кода
 
-### LEFT JOIN: отдельный пример
+WHERE по левой стороне может намеренно выбирать нужных пользователей, сохраняя отсутствие заказа справа:
 
 ```sql
-SELECT u.id, COUNT(s.id) AS active_sessions
+SELECT u.id AS user_id, o.id AS order_id
 FROM users AS u
-LEFT JOIN sessions AS s
-  ON s.user_id = u.id AND s.revoked_at IS NULL
-GROUP BY u.id;
+LEFT JOIN orders AS o ON o.user_id = u.id
+WHERE u.id = 3
+ORDER BY u.id, o.id;
 ```
 
-Условие правой таблицы находится в ON, поэтому users без active sessions не исчезают.
+Получим 3/NULL. Условие u.id = 3 истинно для сохранённой строки; оно не требует существования заказа. Теперь предскажи число paid-заказов у каждого пользователя, **включая нули**, и попробуй дополнительную практику ниже.
 
 ## Типичные ошибки
 
-### Ошибка 1
-
-Условие `right.active = true` в WHERE неожиданно удаляет left rows без активной связи.
+- Перенести правый фильтр из ON в WHERE и случайно удалить сохранённые строки.
+- Считать, что OR right.id IS NULL всегда восстанавливает потерянных пользователей.
+- Проверять nullable бизнес-поле вместо ключа найденной строки.
+- Писать = NULL вместо IS NULL.
+- Использовать COUNT(*) как число заказов пользователя без заказов.
+- Ожидать от LEFT JOIN одну строку на пользователя без GROUP BY.
 
 ## Практика
 
-**A · Предсказание результата.** Измени один input в примере `preserving left rows` и предскажи результат до запуска.
+### Основная задача: пользователи без заказов
 
-**B · Найди ошибку.** Найди код, нарушающий `condition in `ON` vs `WHERE``, и объясни конкретное последствие.
+Найди пользователей, у которых **нет ни одного заказа любого статуса**. Верни только id и email, в этом порядке. Каждый подходящий пользователь нужен один раз; порядок строк несущественен.
 
-**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `preserving left rows`, и добавь один граничный случай test.
+Исследуй связь users/orders, выполни Run и Check. Отсутствие paid-заказов и отсутствие любых заказов — разные условия. Нельзя проверять только известный ID из публичного набора.
 
-**E · Ответ на собеседовании.** Объясни LEFT JOIN за 45–60 секунд и назови одно ограничение.
-
-## Практика SQL
-
-### Пользователи без заказов
+<details>
+<summary>Показать решение для самопроверки</summary>
 
 ```sql
-CREATE TABLE users (
-    id bigint PRIMARY KEY,
-    email text NOT NULL UNIQUE,
-    country text,
-    active boolean NOT NULL DEFAULT true,
-    manager_id bigint REFERENCES users(id),
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE orders (
-    id bigint PRIMARY KEY,
-    user_id bigint NOT NULL REFERENCES users(id),
-    status text NOT NULL,
-    total numeric(12, 2) NOT NULL,
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE products (
-    id bigint PRIMARY KEY,
-    name text NOT NULL,
-    category text NOT NULL,
-    price numeric(12, 2) NOT NULL
-);
-CREATE TABLE order_items (
-    order_id bigint REFERENCES orders(id),
-    product_id bigint REFERENCES products(id),
-    quantity integer NOT NULL CHECK (quantity > 0),
-    PRIMARY KEY (order_id, product_id)
+SELECT u.id, u.email
+FROM users AS u
+LEFT JOIN orders AS o ON o.user_id = u.id
+WHERE o.id IS NULL;
+```
+
+В публичном наборе одна строка: 3/c@example.com. У пользователей 1, 2 и 4 есть заказы, поэтому они не подходят.
+
+Эквивалентная запись:
+
+```sql
+SELECT u.id, u.email
+FROM users AS u
+WHERE NOT EXISTS (
+    SELECT 1 FROM orders AS o WHERE o.user_id = u.id
 );
 ```
 
-Начальные данные:
+Оба варианта должны работать и когда у всех есть заказы, и когда заказов нет вообще. В первом случае ответ пустой, во втором нужны все пользователи. При пустых users и orders ответ тоже пустой.
+
+</details>
+
+### Дополнительная практика без отдельного Check
+
+1. Повтори `sql.join.21`: все пользователи и только paid-заказы. Убедись, что пользователь 4 остаётся с NULL.
+2. Получи по одному числу paid_orders_count на каждого пользователя, включая нули.
+3. Объясни, почему публичный anti-join товаров даёт пустой результат, хотя сам запрос корректен.
+
+<details>
+<summary>Показать ответ к дополнительной практике</summary>
 
 ```sql
-INSERT INTO users VALUES
-(1,'a@example.com','KZ',true,NULL,'2026-01-01'),
-(2,'b@example.com','KZ',true,1,'2026-01-02'),
-(3,'c@example.com',NULL,false,1,'2026-01-03'),
-(4,'d@example.com','GE',true,2,'2026-01-04');
-INSERT INTO orders VALUES
-(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),
-(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),
-(14,4,'new',80,'2026-02-05');
-INSERT INTO products VALUES
-(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);
-INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);
+SELECT u.id AS user_id, COUNT(o.id) AS paid_orders_count
+FROM users AS u
+LEFT JOIN orders AS o
+    ON o.user_id = u.id AND o.status = 'paid'
+GROUP BY u.id
+ORDER BY u.id;
 ```
 
-**Вопрос:** LEFT JOIN и найди users без orders.
+Ответ: 1/1, 2/2, 3/0, 4/0. Статус ограничивает правые совпадения внутри ON; COUNT(o.id) не считает NULL за заказ. Запрос `sql.join.21` уже разобран в теории, у него пять строк вместо четырёх агрегированных итогов.
 
-Ожидаемые столбцы: id, email. Сравнение: без учёта порядка строк.
-
-Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
-
-### LEFT JOIN с условием в ON
-
-```sql
-CREATE TABLE users (
-    id bigint PRIMARY KEY,
-    email text NOT NULL UNIQUE,
-    country text,
-    active boolean NOT NULL DEFAULT true,
-    manager_id bigint REFERENCES users(id),
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE orders (
-    id bigint PRIMARY KEY,
-    user_id bigint NOT NULL REFERENCES users(id),
-    status text NOT NULL,
-    total numeric(12, 2) NOT NULL,
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE products (
-    id bigint PRIMARY KEY,
-    name text NOT NULL,
-    category text NOT NULL,
-    price numeric(12, 2) NOT NULL
-);
-CREATE TABLE order_items (
-    order_id bigint REFERENCES orders(id),
-    product_id bigint REFERENCES products(id),
-    quantity integer NOT NULL CHECK (quantity > 0),
-    PRIMARY KEY (order_id, product_id)
-);
-```
-
-Начальные данные:
-
-```sql
-INSERT INTO users VALUES
-(1,'a@example.com','KZ',true,NULL,'2026-01-01'),
-(2,'b@example.com','KZ',true,1,'2026-01-02'),
-(3,'c@example.com',NULL,false,1,'2026-01-03'),
-(4,'d@example.com','GE',true,2,'2026-01-04');
-INSERT INTO orders VALUES
-(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),
-(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),
-(14,4,'new',80,'2026-02-05');
-INSERT INTO products VALUES
-(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);
-INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);
-```
-
-**Вопрос:** Верни всех users и id только paid orders, не теряя users без paid-заказов.
-
-Ожидаемые столбцы: user_id, order_id. Сравнение: с учётом порядка строк.
-
-Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
-
-### Категории без продаж
-
-```sql
-CREATE TABLE users (
-    id bigint PRIMARY KEY,
-    email text NOT NULL UNIQUE,
-    country text,
-    active boolean NOT NULL DEFAULT true,
-    manager_id bigint REFERENCES users(id),
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE orders (
-    id bigint PRIMARY KEY,
-    user_id bigint NOT NULL REFERENCES users(id),
-    status text NOT NULL,
-    total numeric(12, 2) NOT NULL,
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE products (
-    id bigint PRIMARY KEY,
-    name text NOT NULL,
-    category text NOT NULL,
-    price numeric(12, 2) NOT NULL
-);
-CREATE TABLE order_items (
-    order_id bigint REFERENCES orders(id),
-    product_id bigint REFERENCES products(id),
-    quantity integer NOT NULL CHECK (quantity > 0),
-    PRIMARY KEY (order_id, product_id)
-);
-```
-
-Начальные данные:
-
-```sql
-INSERT INTO users VALUES
-(1,'a@example.com','KZ',true,NULL,'2026-01-01'),
-(2,'b@example.com','KZ',true,1,'2026-01-02'),
-(3,'c@example.com',NULL,false,1,'2026-01-03'),
-(4,'d@example.com','GE',true,2,'2026-01-04');
-INSERT INTO orders VALUES
-(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),
-(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),
-(14,4,'new',80,'2026-02-05');
-INSERT INTO products VALUES
-(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);
-INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);
-```
-
-**Вопрос:** Верни products, которые ни разу не встречались в order_items.
-
-Ожидаемые столбцы: id, name. Сравнение: без учёта порядка строк.
-
-Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
-
-## Практика: Отладка
-
-### LEFT becomes INNER
-
-**Сценарий:** WHERE right.status='paid' удалил NULL rows.
-
-<details><summary>Показать ответ</summary>
-
-**Критерии ответа:** Условие правой таблицы в ON или explicit NULL semantics.
-
-**Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+Товары без позиций отсутствуют в публичных данных. Для проверки этого случая нужны другие допустимые входные данные, а не изменение ответа наугад. Check урока оценивает только пользователей без заказов; дополнительные упражнения остаются без отдельного Check.
 
 </details>
 
 ## Вопросы с собеседований
 
-### Основной вопрос
-
-Что такое LEFT JOIN и как это работает?
-
-### Дополнительный вопрос
-
-Какая типичная ошибка связана с LEFT JOIN?
-
-Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+1. Почему LEFT JOIN возвращает больше строк, чем левая таблица?
+2. Почему paid-фильтр в ON и WHERE даёт разные результаты?
+3. Почему COUNT(*) после LEFT JOIN может быть равен 1 при отсутствии заказов?
 
 ## Хорошие ответы
 
+<details>
+<summary>Показать ответы для собеседования</summary>
+
 ### Короткий ответ
 
-`LEFT JOIN` сохраняет каждую row левой таблицы и подставляет NULL в columns правой стороны при отсутствии совпадения.
+LEFT JOIN сохраняет левую строку, создавая NULL-поля справа, если нет совпадения. Несколько совпадений дают несколько строк.
 
-### Нормальный ответ уровня Junior
+### Ответ уровня Junior
 
-> `LEFT JOIN` сохраняет каждую row левой таблицы и подставляет NULL в columns правой стороны при отсутствии совпадения. Фильтр правой таблицы в ON влияет на присоединяемые совпадения; тот же фильтр в WHERE удаляет NULL-rows и фактически превращает результат в INNER JOIN. Важное ограничение: Для числа связанных rows считай nullable первичный ключ правой таблицы, а не `COUNT(*)`.
+Для отчёта обо всех пользователях с paid-заказами я ограничиваю подходящие заказы в ON. Условие статуса в WHERE отфильтрует уже соединённые строки и уберёт пользователей без paid-совпадения. COUNT правого ключа считает настоящие заказы, а COUNT(*) — также добавленную строку с NULL.
 
-### Углубление / дополнительный вопрос
+### Follow-up
 
-**Какая типичная ошибка связана с LEFT JOIN?**
+Добавление OR o.id IS NULL сохранит пользователя вообще без заказов, но не пользователя только с new-заказом. У последнего ON уже нашёл настоящую строку; после WHERE новая NULL-строка не появляется.
 
-Условие `right.active = true` в WHERE неожиданно удаляет left rows без активной связи.
+</details>
 
 ## Критерии хорошего ответа
 
-### Что обязательно упомянуть
-
-- preserving left rows
-- condition in `ON` vs `WHERE`
-- finding missing related rows
-
-### Что улучшит ответ
-
-- один короткий пример с результатом;
-- одно ограничение или характерная ошибка именно этой темы;
-- пример из backend-разработки только при естественной связи.
-
-### Частые неправильные ответы
-
-- Условие `right.active = true` в WHERE неожиданно удаляет left rows без активной связи.
-- пересказ одного определения без механизма или примера.
-
-### Дополнительный вопрос
-
-- Какая типичная ошибка связана с LEFT JOIN?
+- Указана сохраняемая сторона и объяснена кратность.
+- ON/WHERE разобраны на пользователях 3 и 4.
+- Отсутствующая запись отличена от NULL в nullable-поле.
 
 ## Задача
 
-Сделай короткую письменную практику по теме **LEFT JOIN**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
+Получи Passed для «Пользователи без заказов». Последующий Failed и Reset не стирают завершение. SQL XP отключён; черновик хранится отдельно от Python-файлов.
 
 ## Шпаргалка
 
-Перед собеседованием запомни:
-
-- **Что это:** `LEFT JOIN` сохраняет каждую row левой таблицы и подставляет NULL в columns правой стороны при отсутствии совпадения.
-- **Механизм:** Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
-- **Ограничение:** Условие `right.active = true` в WHERE неожиданно удаляет left rows без активной связи.
-- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
+- Сохраняем левую сторону; справа может быть несколько пар или NULL-расширение.
+- ON выбирает пары, WHERE фильтрует готовые строки.
+- Для anti-join нужен IS NULL правого NOT NULL ключа.
+- COUNT(right.id) и COUNT(*) отвечают на разные вопросы.
+- «Нет paid-заказов» не означает «нет заказов».
 
 ## Источники
 
-Материал написан своими словами и сверён с актуальными разделами официальной документации:
+- [PostgreSQL 17: LEFT JOIN и ON/WHERE](https://www.postgresql.org/docs/17/queries-table-expressions.html#QUERIES-JOIN).
+- [PostgreSQL 17: EXISTS](https://www.postgresql.org/docs/17/functions-subquery.html#FUNCTIONS-SUBQUERY-EXISTS).
+- [PostgreSQL 17: ограничения первичных и внешних ключей](https://www.postgresql.org/docs/17/ddl-constraints.html).
 
-- [PostgreSQL queries](https://www.postgresql.org/docs/current/queries.html)
-- [PostgreSQL functions](https://www.postgresql.org/docs/current/functions.html)
-
-Последняя проверка версий: **2026-08-27**.
+Примеры исполняются в публичном shop-v1; ожидаемые строки проверяются отдельно, включая разницу 5/3/4 для фильтра статуса.

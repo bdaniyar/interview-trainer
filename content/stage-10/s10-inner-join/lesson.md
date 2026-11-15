@@ -1,419 +1,315 @@
-# INNER JOIN
-
-> [!IMPORTANT]
-> **P0 · вероятность на интервью: very_high · 12 минут.** SQL/relational DB явно встречались в 15/18 — один из главных P0-разделов.
+# INNER JOIN: как связать строки и не потерять смысл результата
 
 ## Учебные цели
 
 После урока ты сможешь:
 
-- восстановить mental model темы **INNER JOIN**, а не только запомнить термин;
-- прочитать и изменить короткий пример для `join condition`;
-- распознать характерную ошибку и объяснить причину;
-- дать реалистичный ответ уровня Junior и выдержать follow-up.
+- читать связь первичного и внешнего ключей в Explorer;
+- объяснять, какая пара строк удовлетворяет ON;
+- предсказывать число строк при связи «один ко многим»;
+- отличать повтор значения от лишней строки результата;
+- находить ошибку ключа, декартово произведение и неверный DISTINCT;
+- решить задачу о владельце каждого заказа через Run и Check.
 
 ## Теория
 
 ### Что это
 
-`INNER JOIN` соединяет строки двух источников по условию и оставляет только совпавшие пары. Строка без пары с любой стороны в результат не попадёт.
+В таблице order_items хранится product_id, но не название товара. Название уже есть в products. JOIN позволяет получить поля из обоих источников в одном результате, не копируя название в каждую позицию заказа.
 
-### Как работает
+INNER JOIN оставляет **совпавшие пары** строк. Условие ON определяет, какие две строки относятся друг к другу. Если у строки нет подходящей пары, она не появится в результате этого соединения.
 
-Сначала формируются пары, для которых выражение `ON` истинно. Связь one-to-many размножает строку стороны one: один user с тремя orders даст три result rows. После JOIN применяются WHERE, grouping и projection.
+Это запрос на чтение: таблицы не склеиваются навсегда, внешний ключ не переписывается, исходные записи не меняются.
 
+### Сначала посмотрим на исходные данные
 
-### Пример
+Все примеры работают в публичном shop-v1. Открой products и order_items в Explorer или выполни:
 
 ```sql
-SELECT o.id AS order_id, u.email
-FROM orders AS o
-JOIN users AS u ON u.id = o.user_id
-ORDER BY o.id;
+SELECT id, name
+FROM products
+ORDER BY id;
 ```
 
-| order_id | email |
-|---:|---|
-| 10 | a@example.com |
-| 11 | a@example.com |
-| 12 | b@example.com |
+| id | name |
+| --- | --- |
+| 100 | Python Book |
+| 101 | Keyboard |
+| 102 | SQL Book |
+
+```sql
+SELECT order_id, product_id, quantity
+FROM order_items
+ORDER BY order_id, product_id;
+```
+
+| order_id | product_id | quantity |
+| --- | --- | --- |
+| 10 | 100 | 2 |
+| 10 | 101 | 1 |
+| 12 | 101 | 2 |
+| 13 | 102 | 1 |
+| 14 | 100 | 1 |
+
+Одна строка order_items — **одна позиция товара в заказе**. quantity = 2 означает две единицы в этой позиции, а не две строки. Первичный ключ позиции составной: пара order_id, product_id.
+
+### Как работает условие ON
+
+Получим название для каждой позиции:
+
+```sql
+SELECT oi.order_id, p.name, oi.quantity
+FROM order_items AS oi
+INNER JOIN products AS p
+    ON p.id = oi.product_id
+ORDER BY oi.order_id, p.id;
+```
+
+| order_id | name | quantity |
+| --- | --- | --- |
+| 10 | Python Book | 2 |
+| 10 | Keyboard | 1 |
+| 12 | Keyboard | 2 |
+| 13 | SQL Book | 1 |
+| 14 | Python Book | 1 |
+
+Разберём появление строк:
+
+- У позиции 10/100 product_id равен 100. Ей соответствует Python Book.
+- Позиция 10/101 относится к другому товару, поэтому в том же заказе есть ещё строка Keyboard.
+- У позиции 12/101 снова тот же товар Keyboard, но другой заказ. Это самостоятельная строка результата.
+- Позиции 13/102 и 14/100 дают ещё по одной строке.
+
+Запись INNER необязательна: обычный JOIN означает INNER JOIN. Сокращения oi и p — псевдонимы таблиц в этом запросе; они помогают видеть происхождение поля.
+
+### Связи PK/FK и число совпадений
+
+products.id — уникальный первичный ключ. order_items.product_id ссылается на него. У одной позиции есть ровно один товар; один товар может встречаться в нескольких позициях разных заказов.
+
+У пользователей и заказов похожая связь: orders.user_id ссылается на users.id. **Связываются значения внешнего и первичного ключей, а не любые два поля с названием id.** Номер заказа и номер пользователя — разные идентификаторы, даже если случайно равны.
+
+| Ситуация | Что происходит с одной строкой слева |
+| --- | --- |
+| Подходящих строк справа нет | INNER JOIN не выводит эту строку |
+| Есть одна подходящая строка | Получается одна пара |
+| Есть три подходящие строки | Получается три пары |
+
+Одна строка результата должна иметь понятный смысл: например, «позиция заказа с названием товара». Для связи «один к одному» одной ссылки недостаточно: нужны ограничения уникальности, исключающие несколько связанных записей. В orders.user_id такой уникальности нет — пользователь может сделать много заказов.
+
+Внешний ключ гарантирует существование указанного родителя. Он **не гарантирует**, что у каждого родителя найдётся дочерняя запись. У пользователя могут отсутствовать заказы; у товара — позиции. Внешний ключ также не заставляет PostgreSQL автоматически дописать правильный ON в произвольный запрос.
+
+### Почему повтор названия не является ошибкой
+
+Оставим в SELECT только название:
+
+```sql
+SELECT p.name
+FROM order_items AS oi
+JOIN products AS p ON p.id = oi.product_id
+ORDER BY oi.order_id, p.id;
+```
+
+Получим пять строк: Python Book, Keyboard, Keyboard, SQL Book, Python Book. Повторы появились потому, что одно название относится к нескольким позициям. Они передают полезную информацию о кратности связи.
+
+Другой вопрос — «какие разные товары встречались в позициях?»:
+
+```sql
+SELECT DISTINCT p.name
+FROM order_items AS oi
+JOIN products AS p ON p.id = oi.product_id
+ORDER BY p.name;
+```
+
+Теперь три строки: Keyboard, Python Book, SQL Book. Это корректно для нового вопроса, но уже не список позиций. DISTINCT не исправляет неверный ключ и не восстанавливает потерянные заказы.
+
+DISTINCT сравнивает всю выбранную строку. Если выводится уникальный order_id вместе с email, одинаковые email у разных заказов не делают полные строки одинаковыми. Такой DISTINCT может ничего не изменить; Check оценивает результат, а не запрещает слово.
+
+### Декартово произведение и ошибочный ключ
+
+CROSS JOIN намеренно создаёт каждую комбинацию двух строк:
+
+```sql
+SELECT COUNT(*) AS pairs
+FROM products AS p
+CROSS JOIN order_items AS oi;
+```
+
+Получится 15: три товара умножаются на пять позиций. Здесь нет проверки связи product_id. Такое соединение полезно для некоторых задач, но не подходит для поиска названия конкретного товара.
+
+ON TRUE даёт такое же произведение. Обычный INNER JOIN требует условие ON/USING или специальную форму соединения; пропущенный фильтр при перечислении таблиц через запятую тоже оставляет декартово произведение.
+
+Следующий запрос синтаксически допустим, но **логически неверен**:
+
+```sql
+SELECT oi.order_id, p.name, oi.quantity
+FROM order_items AS oi
+JOIN products AS p ON p.id = oi.order_id
+ORDER BY oi.order_id, p.id;
+```
+
+В публичном наборе результат пустой: номера товаров 100–102 не равны номерам заказов 10–14. Если ID случайно пересекутся на других данных, запрос может вернуть ещё более опасные правдоподобные, но чужие названия. Поэтому небольшой непустой результат сам по себе не доказывает правильность связи.
+
+### Поля нужно выбирать явно
+
+SELECT * после ON-соединения выводит поля обеих сторон, в том числе разные id. В API и учебной задаче это часто лишние столбцы и неоднозначные имена. Выбирай нужные поля и задавай псевдонимы результата отдельно от псевдонимов таблиц.
+
+**Намеренно ошибочный пример:** неуточнённый id есть в обеих таблицах. Ожидается PostgreSQL SQLSTATE 42702 — неоднозначное имя столбца.
+
+```sql
+SELECT id
+FROM users AS u
+JOIN orders AS o ON o.user_id = u.id;
+```
+
+Уточнение u.id или o.id отвечает на вопрос «чей это идентификатор?». Но имя столбца результата через AS — ещё отдельный вопрос контракта.
 
 ### Важный нюанс / ограничение
 
-JOIN не устраняет duplicates. Если условие отсутствует или неполное, появляется Cartesian multiplication. `DISTINCT` может скрыть ошибку cardinality, но не исправляет неверную связь. Всегда определяй grain результата.
+JOIN не обещает порядок строк. Его задаёт ORDER BY, если порядок нужен. Проверка основной задачи сравнивает набор строк с сохранением количества повторов; порядок **столбцов** при этом остаётся обязательным.
 
-### Где используется в backend
-
-Типичный запрос связывает `orders.user_id` с `users.id`, чтобы вернуть заказ и email владельца одним result set.
+Для размышления удобно сначала представить совпавшие пары, затем WHERE, группировку, SELECT и ORDER BY. Это логическая модель, а не обещание, что PostgreSQL физически построит все пары в памяти. Выбор алгоритма соединения и индексов — более поздняя тема.
 
 ## Модель понимания
 
-Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
-
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
+Перед запуском ответь на четыре вопроса: что означает одна исходная строка; по какой связи ищется пара; сколько пар у неё может быть; что означает одна итоговая строка. Затем проверь прогноз через Run и Explorer.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
-- условие ON
-- только matched rows
-- one-to-many cardinality
-- Cartesian product
+- INNER JOIN выводит совпавшие пары по ON.
+- PK/FK помогает выбрать связь; одинаковое имя id ещё не связь.
+- Несколько совпадений дают несколько строк.
+- Повтор поля и повтор всей строки — разные вещи.
 
 ### Полезно
 
-- aliases
-- оценка grain
-- проверка FK/index по join key
+Проверять отсутствующие связи, лишние строки после нового JOIN и необходимость DISTINCT по смыслу отчёта.
 
 ### Можно не учить глубоко
 
-- внутренние алгоритмы hash/merge/nested-loop join до чтения EXPLAIN
+Алгоритмы hash/merge/nested-loop join и настройку планировщика до уверенного понимания результата.
 
 ## Примеры кода
 
-### INNER JOIN: отдельный пример
+После присоединения позиций количество строк уже не означает количество заказов:
 
 ```sql
-SELECT a.id, a.title, u.email AS author_email
-FROM articles AS a
-JOIN users AS u ON u.id = a.author_id
-ORDER BY a.id;
+SELECT COUNT(*) AS joined_rows,
+       COUNT(DISTINCT o.id) AS orders_with_items
+FROM orders AS o
+JOIN order_items AS oi ON oi.order_id = o.id;
 ```
 
-INNER JOIN оставляет только пары строк, удовлетворяющие условию связи author_id → users.id.
+Получим 5 и 4. Заказ 10 дал две позиции; заказ 11 не имеет позиций и не попал в INNER JOIN. Число 5 случайно равно общему количеству заказов в публичной таблице — смысл показателя всё равно другой.
 
 ## Типичные ошибки
 
-### Ошибка 1
-
-Забыть `ON` или часть composite key и получить резкий рост числа строк.
-
-### Ошибка 2
-
-Добавить `DISTINCT` вместо проверки one-to-many cardinality.
-
-### Ошибка 3
-
-Выбрать INNER JOIN, когда бизнес-требование должно сохранить users без orders.
+- Соединить orders.id с users.id вместо внешнего ключа user_id.
+- Принять три заказа одного пользователя за лишние повторы email.
+- Сгруппировать по пользователю и потерять отдельные заказы.
+- Использовать SELECT * вместо требуемых столбцов и псевдонимов.
+- Скрыть размножение строк через DISTINCT, не проверив условие связи.
+- Забыть, что INNER JOIN убирает строки без пары.
 
 ## Практика
 
-**A · Result предсказание результата.** По двум маленьким таблицам посчитай число result rows вручную.
+### Основная задача: пользователь каждого заказа
 
-**B · Найди ошибку.** Найди отсутствующее условие JOIN.
+Для **каждого заказа** верни order_id и email его владельца, только эти два столбца и именно в этом порядке. Порядок строк несущественен. Несколько заказов одного пользователя должны остаться несколькими строками.
 
-**C · Улучшение кода.** Замени correlated lookup понятным JOIN, не меняя cardinality.
+Изучи FK orders.user_id в Explorer, выбери нужные поля, выполни Run и затем Check. Публичный результат не заменяет проверку: в скрытых наборах меняются владельцы, ID и число заказов, встречается пустая таблица orders.
 
-**D · SQL task.** Верни `order_id` и email владельца заказа.
-
-## Практика SQL
-
-### Пользователь каждого заказа
+<details>
+<summary>Показать решение для самопроверки</summary>
 
 ```sql
-CREATE TABLE users (
-    id bigint PRIMARY KEY,
-    email text NOT NULL UNIQUE,
-    country text,
-    active boolean NOT NULL DEFAULT true,
-    manager_id bigint REFERENCES users(id),
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE orders (
-    id bigint PRIMARY KEY,
-    user_id bigint NOT NULL REFERENCES users(id),
-    status text NOT NULL,
-    total numeric(12, 2) NOT NULL,
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE products (
-    id bigint PRIMARY KEY,
-    name text NOT NULL,
-    category text NOT NULL,
-    price numeric(12, 2) NOT NULL
-);
-CREATE TABLE order_items (
-    order_id bigint REFERENCES orders(id),
-    product_id bigint REFERENCES products(id),
-    quantity integer NOT NULL CHECK (quantity > 0),
-    PRIMARY KEY (order_id, product_id)
-);
+SELECT o.id AS order_id, u.email
+FROM orders AS o
+INNER JOIN users AS u ON u.id = o.user_id;
 ```
 
-Начальные данные:
+На публичных данных пять строк: 10/a@example.com, 11/a@example.com, 12/b@example.com, 13/b@example.com и 14/d@example.com. Два заказа пользователя 1 и два заказа пользователя 2 не должны схлопнуться в одну строку на email.
+
+</details>
+
+### Дополнительная практика без отдельного Check
+
+1. Выведи позиции только оплаченных заказов: order_id, name, quantity. Сортируй по заказу, затем ID товара.
+2. Посчитай число единиц каждого товара из order_items. Почему SUM(quantity) отличается от количества позиций?
+
+<details>
+<summary>Показать ответы к дополнительной практике</summary>
 
 ```sql
-INSERT INTO users VALUES
-(1,'a@example.com','KZ',true,NULL,'2026-01-01'),
-(2,'b@example.com','KZ',true,1,'2026-01-02'),
-(3,'c@example.com',NULL,false,1,'2026-01-03'),
-(4,'d@example.com','GE',true,2,'2026-01-04');
-INSERT INTO orders VALUES
-(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),
-(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),
-(14,4,'new',80,'2026-02-05');
-INSERT INTO products VALUES
-(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);
-INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);
+SELECT o.id AS order_id, p.name, oi.quantity
+FROM orders AS o
+JOIN order_items AS oi ON oi.order_id = o.id
+JOIN products AS p ON p.id = oi.product_id
+WHERE o.status = 'paid'
+ORDER BY o.id, p.id;
 ```
 
-**Вопрос:** INNER JOIN orders/users; верни order_id и email.
-
-Ожидаемые столбцы: order_id, email. Сравнение: без учёта порядка строк.
-
-Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
-
-### Товары заказа
+Четыре строки: 10/Python Book/2, 10/Keyboard/1, 12/Keyboard/2, 13/SQL Book/1. Это две позиции заказа 10 и по одной позиции заказов 12 и 13.
 
 ```sql
-CREATE TABLE users (
-    id bigint PRIMARY KEY,
-    email text NOT NULL UNIQUE,
-    country text,
-    active boolean NOT NULL DEFAULT true,
-    manager_id bigint REFERENCES users(id),
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE orders (
-    id bigint PRIMARY KEY,
-    user_id bigint NOT NULL REFERENCES users(id),
-    status text NOT NULL,
-    total numeric(12, 2) NOT NULL,
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE products (
-    id bigint PRIMARY KEY,
-    name text NOT NULL,
-    category text NOT NULL,
-    price numeric(12, 2) NOT NULL
-);
-CREATE TABLE order_items (
-    order_id bigint REFERENCES orders(id),
-    product_id bigint REFERENCES products(id),
-    quantity integer NOT NULL CHECK (quantity > 0),
-    PRIMARY KEY (order_id, product_id)
-);
+SELECT p.name, SUM(oi.quantity) AS units
+FROM products AS p
+JOIN order_items AS oi ON oi.product_id = p.id
+GROUP BY p.id, p.name
+ORDER BY p.id;
 ```
 
-Начальные данные:
-
-```sql
-INSERT INTO users VALUES
-(1,'a@example.com','KZ',true,NULL,'2026-01-01'),
-(2,'b@example.com','KZ',true,1,'2026-01-02'),
-(3,'c@example.com',NULL,false,1,'2026-01-03'),
-(4,'d@example.com','GE',true,2,'2026-01-04');
-INSERT INTO orders VALUES
-(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),
-(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),
-(14,4,'new',80,'2026-02-05');
-INSERT INTO products VALUES
-(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);
-INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);
-```
-
-**Вопрос:** Для order 10 верни product name и quantity.
-
-Ожидаемые столбцы: name, quantity. Сравнение: с учётом порядка строк.
-
-Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
-
-### Состав paid-заказов
-
-```sql
-CREATE TABLE users (
-    id bigint PRIMARY KEY,
-    email text NOT NULL UNIQUE,
-    country text,
-    active boolean NOT NULL DEFAULT true,
-    manager_id bigint REFERENCES users(id),
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE orders (
-    id bigint PRIMARY KEY,
-    user_id bigint NOT NULL REFERENCES users(id),
-    status text NOT NULL,
-    total numeric(12, 2) NOT NULL,
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE products (
-    id bigint PRIMARY KEY,
-    name text NOT NULL,
-    category text NOT NULL,
-    price numeric(12, 2) NOT NULL
-);
-CREATE TABLE order_items (
-    order_id bigint REFERENCES orders(id),
-    product_id bigint REFERENCES products(id),
-    quantity integer NOT NULL CHECK (quantity > 0),
-    PRIMARY KEY (order_id, product_id)
-);
-```
-
-Начальные данные:
-
-```sql
-INSERT INTO users VALUES
-(1,'a@example.com','KZ',true,NULL,'2026-01-01'),
-(2,'b@example.com','KZ',true,1,'2026-01-02'),
-(3,'c@example.com',NULL,false,1,'2026-01-03'),
-(4,'d@example.com','GE',true,2,'2026-01-04');
-INSERT INTO orders VALUES
-(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),
-(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),
-(14,4,'new',80,'2026-02-05');
-INSERT INTO products VALUES
-(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);
-INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);
-```
-
-**Вопрос:** Соедини users, orders, items, products; верни email, order_id, product и quantity для paid.
-
-Ожидаемые столбцы: email, order_id, name, quantity. Сравнение: без учёта порядка строк.
-
-Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
-
-### Количество товаров в заказе
-
-```sql
-CREATE TABLE users (
-    id bigint PRIMARY KEY,
-    email text NOT NULL UNIQUE,
-    country text,
-    active boolean NOT NULL DEFAULT true,
-    manager_id bigint REFERENCES users(id),
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE orders (
-    id bigint PRIMARY KEY,
-    user_id bigint NOT NULL REFERENCES users(id),
-    status text NOT NULL,
-    total numeric(12, 2) NOT NULL,
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE products (
-    id bigint PRIMARY KEY,
-    name text NOT NULL,
-    category text NOT NULL,
-    price numeric(12, 2) NOT NULL
-);
-CREATE TABLE order_items (
-    order_id bigint REFERENCES orders(id),
-    product_id bigint REFERENCES products(id),
-    quantity integer NOT NULL CHECK (quantity > 0),
-    PRIMARY KEY (order_id, product_id)
-);
-```
-
-Начальные данные:
-
-```sql
-INSERT INTO users VALUES
-(1,'a@example.com','KZ',true,NULL,'2026-01-01'),
-(2,'b@example.com','KZ',true,1,'2026-01-02'),
-(3,'c@example.com',NULL,false,1,'2026-01-03'),
-(4,'d@example.com','GE',true,2,'2026-01-04');
-INSERT INTO orders VALUES
-(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),
-(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),
-(14,4,'new',80,'2026-02-05');
-INSERT INTO products VALUES
-(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);
-INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);
-```
-
-**Вопрос:** Для каждого order с items верни сумму quantity.
-
-Ожидаемые столбцы: id, units. Сравнение: с учётом порядка строк.
-
-Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
-
-## Практика: Отладка
-
-### Wrong JOIN condition
-
-**Сценарий:** JOIN orders/users размножил и сопоставил несвязанные строки.
-
-<details><summary>Показать ответ</summary>
-
-**Критерии ответа:** Проверить foreign-key cardinality и ON u.id=o.user_id; сравнить row count до/после JOIN.
-
-**Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
+Python Book — 3, Keyboard — 3, SQL Book — 1. Всего семь единиц в пяти позициях. Дополнительные задачи проверяются через Run и самопроверку; Check относится только к владельцам заказов.
 
 </details>
 
 ## Вопросы с собеседований
 
-### Основной вопрос
-
-Как работает INNER JOIN и почему он может увеличить число строк?
-
-### Дополнительный вопрос
-
-Когда вместо INNER JOIN нужен LEFT JOIN?
-
-Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+1. Почему INNER JOIN может увеличить число строк?
+2. Гарантирует ли FK наличие хотя бы одного заказа у пользователя?
+3. Когда DISTINCT меняет смысл результата, а когда ничего не меняет?
 
 ## Хорошие ответы
 
+<details>
+<summary>Показать ответы для собеседования</summary>
+
 ### Короткий ответ
 
-INNER JOIN оставляет пары, удовлетворяющие ON; one-to-many даёт несколько rows на одну строку стороны one.
+INNER JOIN возвращает совпавшие пары. Один товар с несколькими позициями участвует в нескольких парах. Это нормальная кратность, а не автоматическое доказательство ошибки.
 
-### Нормальный ответ уровня Junior
+### Ответ уровня Junior
 
-> INNER JOIN объединяет только совпавшие строки по условию `ON`. Перед запросом я определяю grain: например, одна строка результата на order. Если у user несколько orders, user повторится для каждого заказа — это не SQL duplicate, а cardinality связи. Отсутствующее условие создаёт Cartesian product, и `DISTINCT` не должен маскировать такую ошибку.
+Я определяю смысл строки результата и проверяю PK/FK. FK позиции указывает на один существующий товар, но не ограничивает товар одной позицией. После JOIN сверяю число строк, пропуски и нужные поля. DISTINCT применяю только когда вопрос действительно требует разные полные строки.
 
-### Углубление / дополнительный вопрос
+### Follow-up
 
-**Когда вместо INNER JOIN нужен LEFT JOIN?**
+FK направлен от дочерней записи к родителю. Пользователь без заказов допустим. Для сохранения таких пользователей нужен другой тип соединения; INNER JOIN сам отсутствующую пару не создаст.
 
-Когда нужно сохранить все строки левой таблицы, включая те, для которых связь не найдена; поля правой стороны тогда будут NULL.
+</details>
 
 ## Критерии хорошего ответа
 
-### Что обязательно упомянуть
-
-- условие ON
-- только matched rows
-- one-to-many cardinality
-- Cartesian product
-
-### Что улучшит ответ
-
-- один короткий пример с результатом;
-- одно ограничение или характерная ошибка именно этой темы;
-- пример из backend-разработки только при естественной связи.
-
-### Частые неправильные ответы
-
-- Забыть `ON` или часть composite key и получить резкий рост числа строк.
-- пересказ одного определения без механизма или примера.
-
-### Дополнительный вопрос
-
-- Когда вместо INNER JOIN нужен LEFT JOIN?
+- Объяснено появление каждой строки, а не только синтаксис.
+- Правильно выбраны ключи и смысл результата.
+- Повторы и отсутствующие совпадения разобраны отдельно.
 
 ## Задача
 
-Сделай короткую письменную практику по теме **INNER JOIN**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
+Получи Passed для «Пользователь каждого заказа». Run показывает результат, а Check проверяет другие допустимые данные. SQL XP пока отключён; прогресс этой задачи независим от предыдущих уроков.
 
 ## Шпаргалка
 
-Перед собеседованием запомни:
-
-- **Что это:** INNER JOIN оставляет пары, удовлетворяющие ON; one-to-many даёт несколько rows на одну строку стороны one.
-- **Механизм:** Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
-- **Ограничение:** Забыть `ON` или часть composite key и получить резкий рост числа строк.
-- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
+- ON описывает связь, SELECT — нужные поля результата.
+- INNER JOIN оставляет совпавшие пары.
+- Один ко многим означает несколько итоговых строк.
+- DISTINCT работает со всей проекцией, а не чинит ключи.
+- Порядок гарантирует только ORDER BY.
 
 ## Источники
 
-Материал написан своими словами и сверён с актуальными разделами официальной документации:
+- [PostgreSQL 17: соединения таблиц](https://www.postgresql.org/docs/17/queries-table-expressions.html#QUERIES-JOIN).
+- [PostgreSQL 17: внешние ключи](https://www.postgresql.org/docs/17/ddl-constraints.html#DDL-CONSTRAINTS-FK).
 
-- [PostgreSQL queries](https://www.postgresql.org/docs/current/queries.html)
-- [PostgreSQL functions](https://www.postgresql.org/docs/current/functions.html)
-
-Последняя проверка версий: **2026-08-27**.
+Проверено на публичном shop-v1 в PostgreSQL 17; ожидаемые значения примеров отдельно закреплены в тестах.

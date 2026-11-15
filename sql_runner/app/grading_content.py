@@ -53,6 +53,14 @@ REGISTRY = build_registry((
         "3b51098df8ef8df18f504f650ad77b5ea149229a2f31f4e86aa0bd4b4e8004c5"),
     Registration("sql.aggregation.13", 1, "users-with-two-orders-v1", "users-with-two-orders-v1",
         "d5a27f000cf187672630f6e430aa18a632fa46f9e4c32e2f3b1d6ae4791d2f44"),
+    Registration("sql.join.17", 1, "join-order-users-v1", "join-order-users-v1",
+        "8316ccd5c366a5e1c14162e9840103a88360be5248f5a44407df2623f646d6cf"),
+    Registration("sql.join.18", 1, "users-without-orders-v1", "users-without-orders-v1",
+        "731d8847752ad3de61e3820403c6043a63183d3b6c64a48848a74aa2fd35203c"),
+    Registration("sql.join.25", 1, "right-join-products-v1", "right-join-products-v1",
+        "5230bd59e0b64827fa92aa6c283f97f808431d061f242c7d72cb279fcaaddb29"),
+    Registration("sql.join.20", 1, "users-managers-v1", "users-managers-v1",
+        "40fae9ee42c21d79a0eec3b148294dddf69e2fa02e13fc18490e2bebdaf2ab3e"),
 ))
 
 

@@ -34,11 +34,14 @@ def repin(entry, config, monkeypatch):
 def test_all_registered_tasks_and_references_validate_without_changing_projection():
     content.validate_registered_tasks()
     assert set(content.REGISTRY) == {"sql.guided.10.2.projection.v1", "sql.basic.01", "sql.basic.03", "sql.basic.04", "sql.basic.05",
-                                     "sql.aggregation.09", "sql.aggregation.10", "sql.aggregation.13"}
+                                     "sql.aggregation.09", "sql.aggregation.10", "sql.aggregation.13",
+                                     "sql.join.17", "sql.join.18", "sql.join.25", "sql.join.20"}
     contracts = {"projection-v1": ("unordered", 4), "active-users-v1": ("unordered", 5),
                  "null-country-v1": ("unordered", 5), "latest-orders-v1": ("ordered", 6),
                  "distinct-countries-v1": ("ordered", 6), "count-orders-v1": ("ordered", 6),
-                 "orders-by-status-v1": ("ordered", 6), "users-with-two-orders-v1": ("ordered", 6)}
+                 "orders-by-status-v1": ("ordered", 6), "users-with-two-orders-v1": ("ordered", 6),
+                 "join-order-users-v1": ("unordered", 6), "users-without-orders-v1": ("unordered", 6),
+                 "right-join-products-v1": ("ordered", 6), "users-managers-v1": ("ordered", 6)}
     for entry in content.REGISTRY.values():
         task = load(entry)
         assert task.id == entry.task_id and task.revision == 1
@@ -50,6 +53,11 @@ def test_all_registered_tasks_and_references_validate_without_changing_projectio
     assert content.REGISTRY["sql.basic.03"].sha256 == "566c85cefbc748bb0d85583dd482cbfddbcbff9d6396d2ee104eb4790e73aeda"
     assert content.REGISTRY["sql.basic.04"].sha256 == "f0dfddb0e8b4c25429561b4e78370436656b07b52bf1806fa39190cd733213ba"
     assert content.REGISTRY["sql.basic.05"].sha256 == "c86a3312b1886cfbd69fd937504ceb41410c5f73108073d346c3ad3897c35989"
+
+
+    assert content.REGISTRY["sql.aggregation.09"].sha256 == "f2d259c30d38072ed0c169e7761f99254f39851cd231ad249da4cb6841bc39c7"
+    assert content.REGISTRY["sql.aggregation.10"].sha256 == "3b51098df8ef8df18f504f650ad77b5ea149229a2f31f4e86aa0bd4b4e8004c5"
+    assert content.REGISTRY["sql.aggregation.13"].sha256 == "d5a27f000cf187672630f6e430aa18a632fa46f9e4c32e2f3b1d6ae4791d2f44"
 
 
 def test_duplicate_task_ids_and_invalid_bundle_names_are_rejected():

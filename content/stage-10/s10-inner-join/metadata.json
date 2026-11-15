@@ -6,8 +6,8 @@
   "module_title": "Этап 10 · SQL Fundamentals and Practice",
   "module_order": 10,
   "order": 106,
-  "duration": 12,
-  "estimated_minutes": 12,
+  "duration": 30,
+  "estimated_minutes": 30,
   "xp": 5,
   "topics": [
     "join condition",
@@ -15,7 +15,7 @@
     "duplicates",
     "missing condition/cartesian product."
   ],
-  "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+  "description": "Связи PK/FK, совпавшие пары, кратность и ошибки JOIN; практика владельцев заказов.",
   "has_task": false,
   "has_solution": false,
   "priority": "P0",
@@ -43,6 +43,7 @@
     "interview_crash_course"
   ],
   "content_status": "complete",
-  "last_verified": "2026-08-27",
-  "generated_by": "populate_curriculum.py"
+  "last_verified": "2026-11-15",
+  "generated_by": "populate_curriculum.py",
+  "content_source": "curated"
 }
