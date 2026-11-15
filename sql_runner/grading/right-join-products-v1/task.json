@@ -1,0 +1,50 @@
+{
+  "task_id": "sql.join.25",
+  "task_revision": 1,
+  "grader_revision": "right-join-products-v1",
+  "dataset_id": "shop-v1",
+  "dataset_checksum": "a1de3973eb4a2febc818c026def43716109e7ffde6b0bc46721e11d1b2fa4b97",
+  "expected_columns": [
+    "product_id",
+    "order_id"
+  ],
+  "comparison": "ordered",
+  "numeric_compatible": true,
+  "reference_sql": "SELECT p.id AS product_id,oi.order_id FROM order_items oi RIGHT JOIN products p ON p.id=oi.product_id ORDER BY p.id,oi.order_id;",
+  "cases": [
+    {
+      "id": "public-v1",
+      "public": true
+    },
+    {
+      "id": "mixed-v1",
+      "public": false,
+      "seed_file": "mixed-v1.sql",
+      "sha256": "8915959b0b5f709d47c710a3979269eff99e85a2002b93657dadfccf1e04a25b"
+    },
+    {
+      "id": "all-unsold-v1",
+      "public": false,
+      "seed_file": "all-unsold-v1.sql",
+      "sha256": "3895b192d7bde70cfca07e3f95c92e0e4fb8fe6f43056b1f5fce705e935a8275"
+    },
+    {
+      "id": "empty-products-v1",
+      "public": false,
+      "seed_file": "empty-products-v1.sql",
+      "sha256": "1ae33c1583e3d8153ae9f0581893e31be3a1c0b1480e372f558ca36b7ad3ee03"
+    },
+    {
+      "id": "one-item-v1",
+      "public": false,
+      "seed_file": "one-item-v1.sql",
+      "sha256": "c71bd6d4920cf5654995c80e1592b4d2741f8258b1cd3cde1fc6e635a0801ea1"
+    },
+    {
+      "id": "shuffled-v1",
+      "public": false,
+      "seed_file": "shuffled-v1.sql",
+      "sha256": "78391e6348e2b4aaa2249ec274c346717c8963bcc5d8282861232ad9454a2052"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "task_id": "sql.join.18",
+  "task_revision": 1,
+  "grader_revision": "users-without-orders-v1",
+  "dataset_id": "shop-v1",
+  "dataset_checksum": "a1de3973eb4a2febc818c026def43716109e7ffde6b0bc46721e11d1b2fa4b97",
+  "expected_columns": [
+    "id",
+    "email"
+  ],
+  "comparison": "unordered",
+  "numeric_compatible": true,
+  "reference_sql": "SELECT u.id, u.email FROM users u LEFT JOIN orders o ON o.user_id=u.id WHERE o.id IS NULL;",
+  "cases": [
+    {
+      "id": "public-v1",
+      "public": true
+    },
+    {
+      "id": "mixed-v1",
+      "public": false,
+      "seed_file": "mixed-v1.sql",
+      "sha256": "23edfd3df7c7bc3519a14b7fec600513622231ae776deb7c6a36369a1e77fc4e"
+    },
+    {
+      "id": "all-have-v1",
+      "public": false,
+      "seed_file": "all-have-v1.sql",
+      "sha256": "8f2b573c76667a23fc79c25667114b2c3f496624eeaadba910da664f2c6a3f96"
+    },
+    {
+      "id": "all-without-v1",
+      "public": false,
+      "seed_file": "all-without-v1.sql",
+      "sha256": "e631863f5ad86cb1add4d4866e13f7a2dd00ea617df3c463cdff2918756b48e8"
+    },
+    {
+      "id": "empty-v1",
+      "public": false,
+      "seed_file": "empty-v1.sql",
+      "sha256": "18d28e2eb3a774fec7047e275cae9e45fced80554cc1e8d954681bf9cd3696cb"
+    },
+    {
+      "id": "bigint-v1",
+      "public": false,
+      "seed_file": "bigint-v1.sql",
+      "sha256": "124a113d099a941338c8bbe37747a7b37e64804babc4b399262287c1406dd902"
+    }
+  ]
+}

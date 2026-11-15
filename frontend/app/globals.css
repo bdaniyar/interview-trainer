@@ -308,6 +308,10 @@ button:disabled { cursor: not-allowed; opacity: .48; }
   .sql-work-area[data-view=editor] .sql-output { display: none; }
 }
 @media (max-width: 820px) {
+  /* Long SQL prompts and Check feedback must leave room for result rows. */
+  .content-stack:has(.sql-work-area[data-view=results]) {
+    grid-template-rows: 25% minmax(0, 1fr) !important;
+  }
   .sql-work-area { grid-template-columns: minmax(0,1fr); }
   .sql-sidebar { display: none; }
   .sql-work-area[data-view=editor] .sql-editor { grid-row: 1 / -1; }

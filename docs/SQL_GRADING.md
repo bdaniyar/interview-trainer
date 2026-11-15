@@ -1,8 +1,9 @@
-# SQL Check — Phases 3–6
+# SQL Check — Phases 3–7
 
-Eight lessons use the same grader, dataset and comparator. Task revision is `1`
-for all eight; column names/order are exact. 10.2–10.4 compare bags, while 10.5–10.9
-compare full ordered sequences using the existing comparator unchanged.
+Twelve lessons use the same grader, dataset and comparator. Task revision is `1`
+for all twelve; column names/order are exact. 10.2–10.4 and 10.10–10.11
+compare bags; 10.5–10.9 and 10.12–10.13 compare full ordered sequences using
+the existing comparator unchanged.
 
 | Lesson | Stable task ID | Grader revision | Columns | Cases |
 | --- | --- | --- | --- | ---: |
@@ -14,13 +15,17 @@ compare full ordered sequences using the existing comparator unchanged.
 | 10.7 Aggregates | `sql.aggregation.09` | `count-orders-v1` | `orders_count` | 6 |
 | 10.8 GROUP BY | `sql.aggregation.10` | `orders-by-status-v1` | `status`, `count` | 6 |
 | 10.9 HAVING | `sql.aggregation.13` | `users-with-two-orders-v1` | `user_id`, `count` | 6 |
+| 10.10 INNER JOIN | `sql.join.17` | `join-order-users-v1` | `order_id`, `email` | 6 |
+| 10.11 LEFT JOIN | `sql.join.18` | `users-without-orders-v1` | `id`, `email` | 6 |
+| 10.12 RIGHT/FULL OUTER JOIN | `sql.join.25` | `right-join-products-v1` | `product_id`, `order_id` | 6 |
+| 10.13 SELF JOIN | `sql.join.20` | `users-managers-v1` | `email`, `manager_email` | 6 |
 
-All **49 bank records are byte-for-byte unchanged by Phases 4–6**, including the
-supplemental email-domain/date tasks. Only these eight capabilities are enabled,
+All **49 bank records are byte-for-byte unchanged by Phases 4–7**, including the
+supplemental email-domain/date tasks. Only these twelve capabilities are enabled,
 one per lesson. `sql.basic.01` retains its historical bank `lesson_number=10.2`;
 the explicit capability registry deliberately enables its unchanged active-user
 contract in 10.3, after WHERE is taught. Lesson IDs/slugs and interview IDs stay
-stable. No SQL progress schema migration is needed in Phases 4–6.
+stable. No SQL progress schema migration is needed in Phases 4–7.
 
 ## Explicit task registries
 
@@ -158,6 +163,52 @@ exact high-precision values. No comparator change or numerical tolerance was nee
 Bank exercises `.11`, `.12`, `.14`, `.15`, `.16` remain supplemental without Check.
 Solutions and complete interview answers stay closed in Learn and Review.
 
+Phase 7 adds four immutable bundles, each **one public + five hidden cases**:
+
+- `join-order-users-v1`: empty orders, repeated ownership, crossed primary IDs,
+  bigint order IDs above 2^53, shuffled inserts and users without orders. Unordered
+  comparison retains every order, including repeated owner emails.
+- `users-without-orders-v1`: mixed 0/1/many orders, everyone ordered, nobody
+  ordered, empty users/orders and large/nonsequential IDs. A nullable country is
+  deliberately unrelated to order absence. NOT EXISTS and checks of another
+  right-side NOT NULL key remain valid equivalents.
+- `right-join-products-v1`: unsold products, multiple orders per product, all
+  unsold, empty products, a real order ID zero, shuffled/bigint IDs and exact
+  product/order ordering. The public data has no unsold products, so INNER JOIN
+  coincides there and on the empty case, but fails the complete Check (2/6).
+- `users-managers-v1`: roots, a multi-level hierarchy, several roots, one user,
+  no users and several employees sharing a manager. Parent rows are inserted
+  before dependent rows and all self-FKs remain valid. Only the immediate manager
+  is requested; the original user's ID determines ordering.
+
+All 24 reference outputs have independent typed golden rows. Wrong keys,
+Cartesian products, missing/unmatched/extra rows, reversed relations and ordering,
+wrong aliases, NULL-to-zero/text substitutions and baseline hardcoding are tested.
+Every reference and equivalent comma/WHERE, NOT EXISTS, swapped LEFT/RIGHT or
+RIGHT self-join solution passes 6/6; public constants pass only 1/6.
+
+**DISTINCT nuance:** order IDs, full product/order pairs and user emails are
+unique under the schema. Full-row DISTINCT may be equivalent and is accepted.
+DISTINCT ON a product/manager alone can suppress required relationships and is
+rejected. Bag comparison also rejects extra copies of an otherwise correct row;
+it never reduces output to a set of emails or product IDs.
+
+**FULL/FK limitation:** with full unfiltered users/orders and the exact PK/FK
+condition, NOT NULL `orders.user_id` prevents orders without users. Bank task
+`sql.join.26` therefore cannot evaluate both unmatched sides. The 10.12 Check is
+only `sql.join.25`. Teaching and dedicated PG17 tests use independent VALUES
+relations: left-only key 1, matching key 2, right-only key 3, explicit ORDER BY and
+NULL-extended typed columns. The INNER/LEFT/RIGHT/FULL variants return 1/2/2/3 rows.
+No FK, schema, AST allowlist, student privilege or container limit is relaxed.
+
+The four curated Russian lessons contain **43 executable SQL blocks**. Independently
+specified column names, PG types, row values and sequences/bags are asserted:
+41 successful examples and two clearly marked ambiguous-column errors (42702).
+LEFT JOIN's substantive ON/WHERE comparison verifies 5/3/4 rows, including the
+case that `WHERE paid OR id IS NULL` still loses a user with only a new order.
+The ON-filter task `.21`, FULL task `.26` and other bank exercises stay ungraded.
+Reference solutions and full interview answers remain closed in Learn and Review.
+
 Hidden seeds replace data inside their own disposable clusters. The public
 schema/seed and checksum remain unchanged:
 `a1de3973eb4a2febc818c026def43716109e7ffde6b0bc46721e11d1b2fa4b97`.
@@ -189,7 +240,8 @@ positions because even primary cast-error text can contain hidden values. The
 backend validates identity and coherent counts, then maps an allowlist of codes
 to its own Russian messages. Column feedback uses the registered column names;
 row feedback distinguishes projection, filtering, unknown-value, ordering/LIMIT,
-uniqueness, aggregate source, group counts and HAVING boundary mistakes.
+uniqueness, aggregate source, group counts, HAVING boundaries, join relationships,
+missing matches, retained products and manager direction mistakes.
 Messages do not reveal the complete query. With more than four distinct failure
 diagnostics, feedback is capped while counts still include every case.
 No hidden rows, case identifiers, seeds, reference,
@@ -378,6 +430,82 @@ fingerprints: every schema and row is preserved. This update is a deployment,
 separate from test execution; the named volume was retained. Test stacks/profiles
 were removed and no labeled test/grade SQL containers remain.
 
+## Phase 7 verification — 2026-11-15
+
+**242 default Python tests and 48 frontend tests passed**, along with content
+validation, ESLint, TypeScript and the production build. The four JOIN lessons and
+eight positional interview records are curated; 268 older lessons remain outside
+this phase's review scope. Lesson IDs/slugs, question IDs and priority/set metadata
+are preserved. No AI-track planning files are changed.
+
+**The complete 132-test Docker suite passed in one run**, including all 98
+previous scenarios and all 34 new JOIN/content scenarios. The existing
+Starlette/AnyIO deprecation warning remains; no test was skipped.
+All 34 new JOIN/content scenarios cover references/equivalents at 6/6, public
+hardcoding at 1/6, correct and incorrect join keys/types, row multiplicity,
+column aliases/order, NULL versus text/zero, bigint IDs, timeouts/truncation,
+safe errors, unchanged Explorer and cleanup. An INNER JOIN in the RIGHT task
+coincides on public/all-sold and empty-product data but scores only 2/6 overall.
+No grading/query policy or comparator change was needed.
+
+All **43 lesson SQL blocks** have independently authored names, PG types, row
+values and ordered/bag expectations: 41 successful examples plus two expected
+42702 errors. The independent VALUES FULL example additionally verifies INNER,
+LEFT, RIGHT and FULL outputs, including both unmatched sides. FK-constrained
+users/orders is explicitly not advertised as a complete two-sided FULL test.
+
+A networkless helper mounted the actual user volume read-only and used SQLite's
+backup API for a consistent disposable copy. Real `create_all`, `record`, UUID
+replay and failed-retry writes for the four new tasks preserved every original
+schema and row across all seven tables. Seeded backend regressions separately
+preserve exact attempts/progress for all eight previously completed SQL tasks.
+No destructive migration, model change or SQL XP was introduced.
+
+An AST-based source comparison verifies that every field of the previous eight
+backend/runner registrations is identical, including prompts, starters, case
+counts and SHA pins. Git comparison protects all eight bundle directories,
+49 SQL bank entries, shop-v1 schema/seed/checksum, grader/comparator/AST policy,
+persistence implementation and AI curriculum plan.
+
+The real HTTP smoke passed across all 12 lessons using the disposable stack:
+public typed Run results and columns, Run not completing tasks, wrong/correct
+Check, baseline hardcoding, sticky completion, UUID replay/conflict, Reset and
+Explorer isolation. All earlier eight manifests and Python files/progress/XP
+compare equal before and after the four new tasks. Stopping only the test SQL
+controller returns sanitized 503 on all 12 Check routes while real Python Docker
+Run **and Check** still pass with unchanged files and no repeat XP. The tmpfs
+stack and test sandboxes were removed; production data is never mounted by it.
+
+Post-run screenshot review exposed a mobile-only layout issue: the longer self-join
+prompt plus Check feedback left almost no visible table body. A narrow CSS rule
+allocates 75% of the vertical split to the SQL pane only in mobile Results view;
+Editor and desktop layouts retain their existing behavior. After this UI-only
+change, all 48 frontend tests, ESLint, TypeScript and production build were rerun
+and passed. The SQL/backend code and all files read by the full 132-test Docker
+suite remained unchanged. The committed `scripts/smoke_sql_browser.mjs` adds a
+real browser regression requiring at least two complete visible mobile rows.
+
+The final committed Chrome walkthrough passed on a fresh disposable stack after
+that CSS change: all 12 lessons accepted actual Monaco typing, public Run and
+correct Check (4/4, 5/5 or 6/6 according to the existing contracts). All four new
+reference disclosures stayed closed in Learn and Review. Theme changes updated
+Monaco, Explorer showed the self-referencing FK, and drafts/completion remained
+independent. A real Python editor change survived SQL → Python → SQL navigation;
+the second Python file stayed byte-identical and SQL awarded no XP. Desktop
+1720×1050 and mobile 390×844 screenshots were inspected, with visible result rows
+and no horizontal overflow. Only explicit pre-execution busy responses receive
+bounded retries in the browser helper; failed grading and SQL errors fail the
+walkthrough. The private browser profile and tmpfs stack were removed afterwards.
+
+After testing, the main `pythoria` project was rebuilt under the user's standing
+instruction to update it after every phase, separately from the isolated tests.
+`docker compose -p pythoria up -d --build --wait` retained the named data volume.
+Frontend, backend and both runners passed health checks; all 12 public manifests
+expose the expected task and Check capability, and the running SQL controller
+validates all 12 registered bundles. Consistent read-only SQLite backups before
+and after deployment have the same logical SHA-256 fingerprint: every schema and
+row is preserved. No labeled test/grading SQL containers remain.
+
 ## Adding the next exercise
 
 1. Select a stable task ID tied to the lesson's taught concepts; preserve old IDs.
@@ -393,7 +521,8 @@ were removed and no labeled test/grade SQL containers remain.
 This is still a trusted local single-user app with one backend worker/controller
 per namespace. Authentication, distributed admission/idempotency, rate limits,
 SQL XP, server drafts, DML, free playground and Stage 11 labs need separate work.
-Only the eight listed exercises are enabled; adding bank records alone does not
-expose new capabilities. A recommended Phase 7 is JOIN labs starting at 10.10,
-with fixtures for missing matches, one-to-many row multiplication and NULLs.
-JOIN labs are not enabled in Phase 6.
+Only the twelve listed exercises are enabled; adding bank records alone does not
+expose new capabilities. A recommended Phase 8 is subquery/EXISTS labs starting
+at 10.14, with correlated/unrelated inputs, empty sets and NULL-sensitive cases.
+Recursive hierarchy traversal, windows, DML, server drafts and SQL XP remain
+separate work. No AI-track planning files are changed by Phase 7.

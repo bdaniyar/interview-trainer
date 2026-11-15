@@ -1,0 +1,50 @@
+{
+  "task_id": "sql.join.17",
+  "task_revision": 1,
+  "grader_revision": "join-order-users-v1",
+  "dataset_id": "shop-v1",
+  "dataset_checksum": "a1de3973eb4a2febc818c026def43716109e7ffde6b0bc46721e11d1b2fa4b97",
+  "expected_columns": [
+    "order_id",
+    "email"
+  ],
+  "comparison": "unordered",
+  "numeric_compatible": true,
+  "reference_sql": "SELECT o.id AS order_id, u.email FROM orders o JOIN users u ON u.id=o.user_id;",
+  "cases": [
+    {
+      "id": "public-v1",
+      "public": true
+    },
+    {
+      "id": "empty-orders-v1",
+      "public": false,
+      "seed_file": "empty-orders-v1.sql",
+      "sha256": "c6c7c4400120a2e2b9b7b6008154c2bec69c32d6c58ec66a5176c69008e0ada6"
+    },
+    {
+      "id": "repeated-owner-v1",
+      "public": false,
+      "seed_file": "repeated-owner-v1.sql",
+      "sha256": "9fe5dc98e3ec975d1182ef644e26a676958d59584afbda1e57354381615fcaa3"
+    },
+    {
+      "id": "crossed-ids-v1",
+      "public": false,
+      "seed_file": "crossed-ids-v1.sql",
+      "sha256": "cdb793fb187e0910898005a2fed801ec022981ac29e10134e5384b55b2da5655"
+    },
+    {
+      "id": "bigint-v1",
+      "public": false,
+      "seed_file": "bigint-v1.sql",
+      "sha256": "4076b1c806ca6a7237bfe01a32b6af1f0a7241530617b2f0960cfd1c35f3f936"
+    },
+    {
+      "id": "shuffled-v1",
+      "public": false,
+      "seed_file": "shuffled-v1.sql",
+      "sha256": "226c7db917e7f6201532fddaee4d851b9c1eeb8d06868f9727618a30ae132dda"
+    }
+  ]
+}

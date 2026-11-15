@@ -124,3 +124,21 @@ def test_aggregate_numeric_precision_and_group_sequence_are_exact():
     groups = result([["cancelled", "2"], ["new", "2"], ["paid", "2"]], ("text", "int8"), ["status", "count"])
     reversed_groups = result(groups["rows"][::-1], ("text", "int8"), ["status", "count"])
     assert compare(groups, reversed_groups, comparison="ordered") == "rows"
+
+
+def test_join_rows_allow_repeated_email_but_not_missing_or_duplicated_orders():
+    rows = [["9007199254740993", "owner@example.test"], ["2", "owner@example.test"]]
+    expected = result(rows, ("int8", "text"), ["order_id", "email"])
+    assert compare(expected, result(rows[::-1], ("int8", "text"), ["order_id", "email"])) == "passed"
+    for wrong in [rows[:1], rows + rows[:1]]:
+        assert compare(expected, result(wrong, ("int8", "text"), ["order_id", "email"])) == "rows"
+
+
+def test_outer_join_null_padding_is_not_zero_or_text_and_order_is_exact():
+    rows = [["1", None], ["2", "0"]]
+    expected = result(rows, ("int8", "int8"), ["product_id", "order_id"])
+    for wrong in [[["1", "0"], ["2", "0"]], rows[::-1]]:
+        assert compare(expected, result(wrong, ("int8", "int8"), ["product_id", "order_id"]), comparison="ordered") == "rows"
+    manager = result([["root@example.test", None]], ("text", "text"), ["email", "manager_email"])
+    for missing in ["NULL", ""]:
+        assert compare(manager, result([["root@example.test", missing]], ("text", "text"), ["email", "manager_email"])) == "rows"

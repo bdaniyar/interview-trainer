@@ -5,7 +5,8 @@ Pythoria. Phase 1 established the execution boundary; Phase 2 integrated the
 workspace; Phase 3 adds a disposable grader and Phase 4 registers WHERE/NULL
 alongside projection; Phase 5 adds ordered latest-orders and distinct-country
 tasks through the same registries; Phase 6 adds COUNT, GROUP BY and HAVING
-for eight consecutive lessons. Application integration
+for eight consecutive lessons; Phase 7 adds four JOIN labs for 12 lessons
+(10.2–10.13). Application integration
 is documented in [SQL_WORKSPACE](../docs/SQL_WORKSPACE.md), grading in
 [SQL_GRADING](../docs/SQL_GRADING.md). SQL rewards and server drafts remain future work.
 
@@ -236,3 +237,16 @@ limits and cleanup are reused unchanged. Earlier five bundles/pins and public
 shop-v1 remain unchanged. All 18 new case outputs and all 30 lesson SQL blocks
 (including two expected errors) are independently checked on real PostgreSQL 17.
 See SQL_GRADING for the verification record and Phase 7 JOIN follow-up.
+
+
+Phase 7 registers `join-order-users-v1`, `users-without-orders-v1`,
+`right-join-products-v1` and `users-managers-v1`: one public plus five hidden
+cases each. The first two compare bags; the latter two preserve exact sequences.
+Foreign keys stay enabled, including parent-before-child self-FK fixtures.
+All previous eight bundles/pins, shop-v1, comparison, policy and budgets remain
+unchanged. Full-row DISTINCT is accepted when PKs make it equivalent; suppressing
+multiple relationships with DISTINCT ON is rejected. Independent VALUES demonstrate
+both unmatched sides of FULL JOIN; ordinary users/orders cannot show an orphan
+order under the existing NOT NULL FK. No additional FULL Check or recursive
+hierarchy traversal is introduced. All 43 lesson SQL blocks have exact typed
+expectations, including two expected ambiguous-column errors (42702).

@@ -1,41 +1,45 @@
 [
   {
-    "question": "Что такое RIGHT and FULL OUTER JOIN и какой механизм здесь важно понимать Junior-разработчику?",
+    "question": "Как переписать RIGHT JOIN через LEFT JOIN без изменения контракта ответа?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "medium",
     "answer": [
-      "conceptual symmetry",
-      "practical alternatives"
+      "переставить источники",
+      "сохранить условие связи",
+      "явно сохранить поля и сортировку"
     ],
-    "short_answer": "RIGHT and FULL OUTER JOIN: Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.",
-    "junior_answer": "RIGHT and FULL OUTER JOIN — тема, в которой я сначала фиксирую `conceptual symmetry`, затем объясняю `practical alternatives` на коротком примере. Ключевой механизм: Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа. Главная практическая ошибка — Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
-    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме RIGHT and FULL OUTER JOIN?",
-    "follow_up_answer": "Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
+    "short_answer": "A RIGHT JOIN B переписывается как B LEFT JOIN A. Нужно сохранить смысл ON, выбранные поля, псевдонимы результата и требуемый ORDER BY.",
+    "junior_answer": "Для всех товаров сохраняемой стороной является products. Её можно поставить справа от RIGHT JOIN или слева от LEFT JOIN. При нескольких позициях одного товара нужны все пары, а при отсутствии позиций — одна строка с NULL order_id. Простая замена RIGHT на LEFT без перестановки таблиц меняет сохраняемый набор. SELECT * тоже может изменить порядок полей при перестановке, поэтому проекция задаётся явно.",
+    "follow_up_question": "Почему полный DISTINCT может быть корректен, а DISTINCT ON (product_id) — нет?",
+    "follow_up_answer": "Пара order_id/product_id уникальна по составному PK. Полный DISTINCT над этой парой ничего не убирает. DISTINCT ON только по товару теряет его другие заказы и меняет кратность ответа.",
     "expected_answer": {
       "must_mention": [
-        "conceptual symmetry",
-        "practical alternatives"
+        "переставить источники",
+        "сохранить условие связи",
+        "явно сохранить поля и сортировку"
       ],
       "good_additions": [
-        "короткий рабочий пример",
-        "ограничение или типичная ошибка"
+        "Разобрать строки публичного shop-v1 и граничный случай."
       ],
-      "common_wrong_answers": [],
+      "common_wrong_answers": [
+        "RIGHT JOIN нельзя переписать через LEFT JOIN.",
+        "Любой DISTINCT обязательно теряет позиции заказа."
+      ],
       "red_flags": [],
       "follow_up_questions": [
-        "Какое ограничение или типичная ошибка относится именно к теме RIGHT and FULL OUTER JOIN?"
+        "Почему полный DISTINCT может быть корректен, а DISTINCT ON (product_id) — нет?"
       ],
       "coding_mistakes": [
-        "Не определить cardinality результата и замаскировать неверный query через DISTINCT."
+        "Сохранение неправильной стороны или схлопывание нескольких позиций одного товара."
       ],
       "assessment_notes": [
-        "Ответ без механизма, примера и ограничения"
+        "Проверить роли источников, число строк, NULL и контракт результата."
       ],
-      "review_status": "pending-substantive-review"
+      "review_status": "reviewed"
     },
     "follow_ups": [
-      "Какое ограничение или типичная ошибка относится именно к теме RIGHT and FULL OUTER JOIN?"
+      "Почему полный DISTINCT может быть корректен, а DISTINCT ON (product_id) — нет?"
     ],
     "tags": [
       "stage-10",
@@ -48,38 +52,46 @@
     ]
   },
   {
-    "question": "Какое ограничение или типичная ошибка относится именно к теме RIGHT and FULL OUTER JOIN?",
+    "question": "Почему users/orders не показывает обе несовпавшие стороны FULL JOIN в shop-v1?",
     "level": "follow_up",
     "priority": "P1",
     "interview_probability": "medium",
     "answer": [
-      "связать RIGHT and FULL OUTER JOIN с коротким рабочим примером",
-      "Не определить cardinality результата и замаскировать неверный query через DISTINCT."
+      "NOT NULL FK orders.user_id",
+      "нет заказа без пользователя при полной PK/FK-связи",
+      "независимые VALUES показывают обе стороны"
     ],
-    "short_answer": "Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
-    "junior_answer": "Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
-    "follow_up_question": "Что такое RIGHT and FULL OUTER JOIN и какой механизм здесь важно понимать Junior-разработчику?",
-    "follow_up_answer": "RIGHT and FULL OUTER JOIN — тема, в которой я сначала фиксирую `conceptual symmetry`, затем объясняю `practical alternatives` на коротком примере. Ключевой механизм: Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа. Главная практическая ошибка — Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
+    "short_answer": "При соединении полных users/orders по FK каждый заказ имеет владельца. Возможны пользователи без заказов, но не заказы без пользователей. Для полной демонстрации нужны независимые источники.",
+    "junior_answer": "В примере VALUES локальные ключи 1 и 2, внешние — 2 и 3. FULL сохраняет левый 1 с NULL справа, совпавший 2 и правый 3 с NULL слева. INNER оставит только 2, LEFT — 1 и 2, RIGHT — 2 и 3. Источники существуют только внутри SELECT, FK shop-v1 не отключается. Дополнительный sql.join.26 ограничен своей схемой и не является полной скрытой оценкой обеих сторон.",
+    "follow_up_question": "Означает ли совпадение ключа при сверке, что записи полностью одинаковы?",
+    "follow_up_answer": "Нет. Соединение по ключу только сопоставляет записи. Остальные поля, например label или суммы, проверяются отдельно; COALESCE ключей не выполняет эту проверку.",
     "expected_answer": {
       "must_mention": [
-        "связать RIGHT and FULL OUTER JOIN с коротким рабочим примером"
+        "NOT NULL FK orders.user_id",
+        "нет заказа без пользователя при полной PK/FK-связи",
+        "независимые VALUES показывают обе стороны"
       ],
       "good_additions": [
-        "короткий пример именно этой темы"
+        "Разобрать строки публичного shop-v1 и граничный случай."
       ],
-      "common_wrong_answers": [],
+      "common_wrong_answers": [
+        "FULL JOIN users/orders обязательно даст заказ без владельца.",
+        "Совпавший ключ гарантирует равенство всех полей."
+      ],
       "red_flags": [],
       "follow_up_questions": [
-        "Что такое RIGHT and FULL OUTER JOIN и какой механизм здесь важно понимать Junior-разработчику?"
+        "Означает ли совпадение ключа при сверке, что записи полностью одинаковы?"
       ],
       "coding_mistakes": [
-        "Не определить cardinality результата и замаскировать неверный query через DISTINCT."
+        "Попытка изготовить несовпавший заказ отключением внешнего ключа вместо независимого SELECT-примера."
       ],
-      "assessment_notes": [],
-      "review_status": "pending-substantive-review"
+      "assessment_notes": [
+        "Проверить роли источников, число строк, NULL и контракт результата."
+      ],
+      "review_status": "reviewed"
     },
     "follow_ups": [
-      "Что такое RIGHT and FULL OUTER JOIN и какой механизм здесь важно понимать Junior-разработчику?"
+      "Означает ли совпадение ключа при сверке, что записи полностью одинаковы?"
     ],
     "tags": [
       "stage-10",

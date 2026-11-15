@@ -12,7 +12,8 @@ from backend.tests.test_sql_check import Grader, legacy_snapshot
 from sql_runner.app.grading_content import load_task
 
 SLUGS = ["s10-select-aliases-and-expressions", "s10-where-and-boolean-logic", "s10-null-and-three-valued-logic",
-         "s10-order-by-limit-and-offset", "s10-distinct", "s10-aggregates", "s10-group-by", "s10-having"]
+         "s10-order-by-limit-and-offset", "s10-distinct", "s10-aggregates", "s10-group-by", "s10-having",
+         "s10-inner-join", "s10-left-join", "s10-right-and-full-outer-join", "s10-self-join"]
 
 
 def path(slug, task_id):
@@ -37,8 +38,8 @@ def test_backend_and_runner_registrations_agree_and_all_lessons_project_safe_man
         record = task_record(slug, spec.task_id)
         assert (task.dataset_id, task.dataset_checksum, task.expected_columns, task.comparison, len(task.cases)) == (
             record["dataset_id"], record["dataset_checksum"], tuple(record["expected_columns"]), record["comparison"], record["tests_total"])
-    assert client.get("/api/sql/lessons/s10-inner-join").status_code == 404
-    assert client.get("/api/lessons/s10-inner-join").json()["workspace_kind"] == "python"
+    assert client.get("/api/sql/lessons/s10-subqueries").status_code == 404
+    assert client.get("/api/lessons/s10-subqueries").json()["workspace_kind"] == "python"
 
 
 def test_backend_registry_rejects_duplicate_tasks_and_lessons():
@@ -48,7 +49,7 @@ def test_backend_registry_rejects_duplicate_tasks_and_lessons():
             build_registry([a, duplicate])
 
 
-def test_independent_progress_idempotency_and_legacy_rows_across_all_eight_tasks(client, grader):
+def test_independent_progress_idempotency_and_legacy_rows_across_all_twelve_tasks(client, grader):
     client.put("/api/lessons/is-vs-eq/files", json={"files": {"main.py": "KEEP = 123\n"}})
     client.post("/api/progress/generators/theory", json={"completed": True})
     with SessionLocal() as db:
@@ -74,18 +75,18 @@ def test_independent_progress_idempotency_and_legacy_rows_across_all_eight_tasks
         grader.passed = True
     with SessionLocal() as db:
         assert legacy_snapshot(db) == before
-        assert db.scalar(select(func.count()).select_from(SqlTaskProgress)) == 8
-        assert db.scalar(select(func.count()).select_from(SqlAttempt)) == 16
+        assert db.scalar(select(func.count()).select_from(SqlTaskProgress)) == 12
+        assert db.scalar(select(func.count()).select_from(SqlAttempt)) == 24
 
 
-def test_existing_first_five_task_attempt_and_progress_rows_are_preserved(client, grader):
-    previous = list(REGISTRY.values())[:5]
-    for slug, spec in zip(SLUGS[:5], previous):
+def test_existing_first_eight_task_attempt_and_progress_rows_are_preserved(client, grader):
+    previous = list(REGISTRY.values())[:8]
+    for slug, spec in zip(SLUGS[:8], previous):
         client.post(path(slug, spec.task_id), json={"request_id": str(uuid4()), "sql": "SELECT saved_task"})
     with SessionLocal() as db:
         attempt = db.execute(select(SqlAttempt.__table__).order_by(SqlAttempt.id)).all()
         progress = db.execute(select(SqlTaskProgress.__table__).order_by(SqlTaskProgress.id)).all()
-    for slug, spec in zip(SLUGS[5:], list(REGISTRY.values())[5:]):
+    for slug, spec in zip(SLUGS[8:], list(REGISTRY.values())[8:]):
         assert client.post(path(slug, spec.task_id), json={"request_id": str(uuid4()), "sql": "SELECT new_task"}).json()["passed"]
     with SessionLocal() as db:
         ids = [spec.task_id for spec in previous]

@@ -1,268 +1,335 @@
-# RIGHT and FULL OUTER JOIN
-
-> [!IMPORTANT]
-> **P1 · вероятность на интервью: medium · 10 минут.** SQL/relational DB явно встречались в 15/18 — один из главных P0-разделов.
+# RIGHT и FULL OUTER JOIN: какую сторону сохраняет соединение
 
 ## Учебные цели
 
 После урока ты сможешь:
 
-- восстановить mental model темы **RIGHT and FULL OUTER JOIN**, а не только запомнить термин;
-- прочитать и изменить короткий пример для `conceptual symmetry`;
-- распознать характерную ошибку и объяснить причину;
-- дать реалистичный ответ уровня Junior и выдержать follow-up.
+- переписать RIGHT JOIN через LEFT JOIN с перестановкой источников;
+- различать совпавшие строки и строки только с одной стороны;
+- объяснять NULL-расширение FULL OUTER JOIN;
+- проверять сверку двух независимых списков через безопасный SELECT;
+- учитывать ограничения FK при выборе учебных примеров;
+- сохранить все товары в основной задаче, включая товары без позиций.
 
 ## Теория
 
 ### Что это
 
-Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.
+LEFT JOIN сохраняет источник слева. RIGHT JOIN сохраняет источник справа. FULL OUTER JOIN сохраняет оба источника: все совпавшие пары и строки, не нашедшие пары ни слева, ни справа.
 
-### Как работает
+Слова OUTER можно не писать. RIGHT JOIN и RIGHT OUTER JOIN обозначают один тип соединения; FULL JOIN и FULL OUTER JOIN — тоже.
 
-Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа.
+Выбор зависит от вопроса отчёта: «все пользователи», «все товары» или «все записи двух независимых реестров». Нужно сначала выбрать сохраняемый набор, а уже затем расположить его справа или слева в SQL.
 
-**conceptual symmetry.** `conceptual symmetry` меняет набор SQL rows; его смысл проверяют через grain результата, cardinality, NULL semantics и явный ordering.
+### Как работает RIGHT JOIN
 
-**practical alternatives.** `practical alternatives` меняет набор SQL rows; его смысл проверяют через grain результата, cardinality, NULL semantics и явный ordering.
+В публичном shop-v1 пользователь 3 не имеет заказов. Поставим users справа и сохраним эту сторону:
 
+```sql
+SELECT u.id AS user_id, o.id AS order_id
+FROM orders AS o
+RIGHT JOIN users AS u ON u.id = o.user_id
+ORDER BY u.id, o.id;
+```
+
+| user_id | order_id | Почему строка есть |
+| --- | --- | --- |
+| 1 | 10 | Найдена пара |
+| 1 | 11 | Ещё одна пара того же пользователя |
+| 2 | 12 | Найдена пара |
+| 2 | 13 | Ещё одна пара |
+| 3 | NULL | Пользователь справа сохранён без заказа |
+| 4 | 14 | Найдена пара |
+
+Получилось шесть строк, а не четыре: сохранение не отменяет кратность. При нескольких заказах пользователь участвует в нескольких парах.
+
+### Переписывание через LEFT JOIN
+
+Переставим таблицы, оставляя ту же связь и ту же проекцию:
+
+```sql
+SELECT u.id AS user_id, o.id AS order_id
+FROM users AS u
+LEFT JOIN orders AS o ON o.user_id = u.id
+ORDER BY u.id, o.id;
+```
+
+Ответ тот же: 1/10, 1/11, 2/12, 2/13, 3/NULL, 4/14. Во втором варианте сохраняемый набор читается слева направо, поэтому многие команды предпочитают такую запись.
+
+Переставить только слово RIGHT на LEFT без перестановки источников нельзя: тогда изменится сохраняемая сторона. Если написан SELECT *, порядок всех выводимых полей при перестановке таблиц тоже может измениться. Явный список SELECT помогает сохранить контракт ответа.
+
+### Два независимых списка для FULL JOIN
+
+Для сверки представим локальный и внешний реестры. Это **синтетические входные данные**, созданные прямо в SELECT через VALUES, а не таблицы приложения:
+
+| Локальный id | label |
+| --- | --- |
+| 1 | local-only |
+| 2 | local-match |
+
+| Внешний id | label |
+| --- | --- |
+| 2 | remote-match |
+| 3 | remote-only |
+
+VALUES задаёт небольшой набор строк без CREATE TABLE и INSERT. Эти списки не связаны внешним ключом, поэтому допустимы ключи, отсутствующие на другой стороне.
+
+```sql
+SELECT a.id AS left_id, a.label AS left_label,
+       b.id AS right_id, b.label AS right_label
+FROM (VALUES (1, 'local-only'), (2, 'local-match')) AS a(id, label)
+FULL OUTER JOIN
+     (VALUES (2, 'remote-match'), (3, 'remote-only')) AS b(id, label)
+    ON a.id = b.id
+ORDER BY COALESCE(a.id, b.id);
+```
+
+| `left_id` | `left_label` | `right_id` | `right_label` |
+| --- | --- | --- | --- |
+| 1 | local-only | NULL | NULL |
+| 2 | local-match | 2 | remote-match |
+| NULL | NULL | 3 | remote-only |
+
+Разбор каждой строки:
+
+1. Ключ 1 есть только слева. FULL JOIN сохраняет локальную запись, поля b становятся NULL.
+2. Ключ 2 есть с обеих сторон. Получается одна совпавшая пара с двумя исходными label.
+3. Ключ 3 есть только справа. Сохраняется внешняя запись, NULL стоят уже в полях a.
+
+Если заменить тип соединения в том же SELECT, получатся разные наборы:
+
+| Тип | Какие ключи останутся | Число строк |
+| --- | --- | --- |
+| INNER JOIN | 2 | 1 |
+| LEFT JOIN | 1, 2 | 2 |
+| RIGHT JOIN | 2, 3 | 2 |
+| FULL OUTER JOIN | 1, 2, 3 | 3 |
+
+Попробуй все четыре варианта через Run. В тестах закреплены не только числа строк, но и все четыре значения каждой строки, включая обе несовпавшие стороны.
+
+### Общий ключ через COALESCE
+
+В правой несовпавшей строке a.id равен NULL, а b.id известен. Для общей колонки отчёта можно выбрать первое не-NULL значение:
+
+```sql
+SELECT COALESCE(a.id, b.id) AS id,
+       a.label AS local_label, b.label AS remote_label
+FROM (VALUES (1, 'local-only'), (2, 'local-match')) AS a(id, label)
+FULL JOIN
+     (VALUES (2, 'remote-match'), (3, 'remote-only')) AS b(id, label)
+    ON a.id = b.id
+ORDER BY id;
+```
+
+Результат: 1/local-only/NULL, 2/local-match/remote-match, 3/NULL/remote-only. В столбце id известны все три ключа, но отсутствующие label по-прежнему NULL.
+
+COALESCE здесь объединяет идентификатор для отображения и сортировки. Он не создаёт недостающую запись и не доказывает равенство прочих полей совпавшей пары. При сверке реестров один ключ ещё не означает, что суммы, статусы или названия тоже одинаковы.
+
+### SQL NULL, текст и ноль
+
+```sql
+SELECT NULL::text AS sql_null,
+       'NULL'::text AS text_null,
+       0::bigint AS zero;
+```
+
+Одна строка содержит три разных значения: SQL NULL, строку из четырёх букв и число 0. В JSON SQL Lab первое значение передаётся как null, а bigint — точной строкой с метаданными типа. Подмена отсутствующего order_id нулём нарушает контракт, даже если визуально хочется заполнить пустую клетку.
+
+При ON a.id = b.id NULL не равен NULL: сравнение не даёт TRUE. Если в независимых списках есть записи с неизвестными ключами, они не соединятся друг с другом по обычному равенству. В shop-v1 первичные ключи не бывают NULL; NULL в ключевых полях результата может появиться из внешнего соединения.
+
+### Почему users/orders недостаточно для полной демонстрации FULL JOIN
+
+В схеме shop-v1 orders.user_id имеет NOT NULL и внешний ключ на users.id. При соединении **полных таблиц именно по этой связи**, без дополнительных условий, каждый заказ обязан найти пользователя.
+
+Проверим дополнительный банк `sql.join.26`:
+
+```sql
+SELECT u.id AS user_id, o.id AS order_id
+FROM users AS u
+FULL OUTER JOIN orders AS o ON o.user_id = u.id
+ORDER BY u.id, o.id;
+```
+
+Публичный ответ тот же набор из шести строк: 1/10, 1/11, 2/12, 2/13, 3/NULL, 4/14. Пользователь без заказа есть, а заказа без пользователя при соблюдении этих ограничений быть не может.
+
+```sql
+SELECT o.id
+FROM users AS u
+FULL JOIN orders AS o ON o.user_id = u.id
+WHERE u.id IS NULL
+ORDER BY o.id;
+```
+
+Результат пустой. Он подтверждает отсутствие потерянных родителей в этих входных данных, но **не проверяет полноту FULL JOIN для двух независимых источников**.
+
+Не нужно отключать FK или портить данные, чтобы получить другую сторону. Для неё выше есть независимые VALUES. Если изменить условие соединения или предварительно отфильтровать источник, ситуация тоже может измениться; вывод об отсутствии несовпавших заказов относится к указанной полной PK/FK-связи.
+
+В Phase 7 Check этого урока оценивает RIGHT JOIN товаров. Упражнение `sql.join.26` остаётся дополнительным, с описанным ограничением. Его нельзя считать скрытым экзаменом на обе несовпавшие стороны FULL JOIN.
 
 ### Важный нюанс / ограничение
 
-Граница Junior: уверенно объясняй `conceptual symmetry` и `practical alternatives` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
+Любое внешнее соединение по-прежнему выводит все подходящие пары. Если один ключ повторяется два раза слева и три раза справа, для него возможно шесть совпавших пар. FULL JOIN не «склеивает по одной строке на ключ» и не заменяет проверку уникальности реестров.
 
-### Где используется в backend
-
-В backend эта тема важна в том месте, где применяется `conceptual symmetry`; проверяй именно наблюдаемый contract, а не название инструмента.
+Обычное равенство ключей и явный ORDER BY достаточны для этих примеров. Студенческий режим остаётся SELECT-only; VALUES не создаёт новую writable-базу.
 
 ## Модель понимания
 
-Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
-
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
+Сначала выдели три группы: совпавшие пары, только левая сторона, только правая. Затем выбери, какие группы нужны отчёту. И наконец проверь кратность совпадений и поля, в которых появился NULL.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
-- conceptual symmetry
-- practical alternatives
+- RIGHT сохраняет правую сторону; LEFT с перестановкой источников эквивалентен.
+- FULL сохраняет совпадения и обе несовпавшие стороны.
+- NULL-расширенные поля относятся к отсутствующей стороне.
+- Ограничения схемы определяют, какие несовпадения вообще возможны.
 
 ### Полезно
 
-- связать RIGHT and FULL OUTER JOIN с коротким рабочим примером
+Сверка независимых реестров, общий ключ через COALESCE, явная проекция и сортировка.
 
 ### Можно не учить глубоко
 
-- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
+Оптимизацию сложной сверки больших реестров и физические алгоритмы FULL JOIN до понимания результата.
 
 ## Примеры кода
 
-### RIGHT and FULL OUTER JOIN: отдельный пример
+Для сверки обычно полезно отдельно увидеть несовпадения:
 
 ```sql
-SELECT old.id AS old_id, new.id AS new_id
-FROM old_catalog AS old
-FULL OUTER JOIN new_catalog AS new ON new.sku = old.sku
-WHERE old.id IS NULL OR new.id IS NULL;
+SELECT COALESCE(a.id, b.id) AS id,
+       a.label AS local_label, b.label AS remote_label
+FROM (VALUES (1, 'local-only'), (2, 'local-match')) AS a(id, label)
+FULL JOIN
+     (VALUES (2, 'remote-match'), (3, 'remote-only')) AS b(id, label)
+    ON a.id = b.id
+WHERE a.id IS NULL OR b.id IS NULL
+ORDER BY id;
 ```
 
-FULL OUTER JOIN полезен для reconciliation: сохраняет unmatched rows с обеих сторон.
+Останутся 1/local-only/NULL и 3/NULL/remote-only. Ключ 2 найден в обоих списках и исключается этим фильтром. При nullable неключевых полях нельзя определять отсутствие записи только по ним; здесь id входных списков известны.
 
 ## Типичные ошибки
 
-### Ошибка 1
-
-Не определить cardinality результата и замаскировать неверный query через DISTINCT.
+- Заменить RIGHT на LEFT, не переставив источники.
+- Использовать INNER JOIN, когда нужно сохранить непроданные товары.
+- Принять NULL за 0 или строку 'NULL'.
+- Считать FULL JOIN гарантией одной строки на бизнес-ключ.
+- Объявить users/orders полным тестом несовпадений с обеих сторон, игнорируя FK.
+- Схлопнуть несколько позиций одного товара в одну строку.
 
 ## Практика
 
-**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для `conceptual symmetry` до запуска.
+### Основная задача: сохранить все товары
 
-**B · Найди ошибку.** Найди нарушение `practical alternatives` и объясни конкретное последствие.
+Верни product_id и order_id для всех товаров, включая товары без позиций в order_items. Если позиций несколько, нужны все. Если их нет, order_id должен быть SQL NULL. Столбцы — именно в таком порядке; сортировка по product_id, затем order_id по возрастанию.
 
-**E · Ответ на собеседовании.** Дай ответ про RIGHT and FULL OUTER JOIN за 60 секунд: определение, механизм, пример, ограничение.
+Открой products/order_items в Explorer, проверь составной PK и FK. На публичных данных все три товара уже встречаются в позициях: один только Run не показывает случай непроданного товара. Check добавляет допустимые наборы с такими товарами и пустыми таблицами.
 
-## Практика SQL
-
-### RIGHT JOIN awareness
-
-```sql
-CREATE TABLE users (
-    id bigint PRIMARY KEY,
-    email text NOT NULL UNIQUE,
-    country text,
-    active boolean NOT NULL DEFAULT true,
-    manager_id bigint REFERENCES users(id),
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE orders (
-    id bigint PRIMARY KEY,
-    user_id bigint NOT NULL REFERENCES users(id),
-    status text NOT NULL,
-    total numeric(12, 2) NOT NULL,
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE products (
-    id bigint PRIMARY KEY,
-    name text NOT NULL,
-    category text NOT NULL,
-    price numeric(12, 2) NOT NULL
-);
-CREATE TABLE order_items (
-    order_id bigint REFERENCES orders(id),
-    product_id bigint REFERENCES products(id),
-    quantity integer NOT NULL CHECK (quantity > 0),
-    PRIMARY KEY (order_id, product_id)
-);
-```
-
-Начальные данные:
+<details>
+<summary>Показать решение для самопроверки</summary>
 
 ```sql
-INSERT INTO users VALUES
-(1,'a@example.com','KZ',true,NULL,'2026-01-01'),
-(2,'b@example.com','KZ',true,1,'2026-01-02'),
-(3,'c@example.com',NULL,false,1,'2026-01-03'),
-(4,'d@example.com','GE',true,2,'2026-01-04');
-INSERT INTO orders VALUES
-(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),
-(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),
-(14,4,'new',80,'2026-02-05');
-INSERT INTO products VALUES
-(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);
-INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);
+SELECT p.id AS product_id, oi.order_id
+FROM order_items AS oi
+RIGHT JOIN products AS p ON p.id = oi.product_id
+ORDER BY p.id, oi.order_id;
 ```
 
-**Вопрос:** Сохрани все products через RIGHT JOIN от items к products и верни product_id/order_id.
+Пять публичных строк: 100/10, 100/14, 101/10, 101/12, 102/13. Товар 100 нужен для двух заказов, как и 101. quantity в позиции не размножает строки: пара order_id/product_id задаёт одну позицию независимо от количества единиц.
 
-Ожидаемые столбцы: product_id, order_id. Сравнение: с учётом порядка строк.
+LEFT JOIN с products слева даёт тот же смысл и принимается Check. Проверка оценивает результат, а не наличие слова RIGHT.
 
-Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
+</details>
 
-### FULL OUTER reconciliation
+### Почему не нужно запрещать любой DISTINCT
+
+В order_items пара order_id, product_id уникальна по составному PK. Поэтому DISTINCT над **обоими** выбранными столбцами этой задачи не меняет пары. Его наличие само по себе не ошибка.
+
+Но DISTINCT только по product_id меняет проекцию, а DISTINCT ON (product_id) оставляет одну позицию на товар и теряет другие заказы. Именно такую потерю кратности проверяют скрытые наборы. Лишние копии всей строки тоже должны быть отклонены.
+
+### Дополнительная практика без отдельного Check
+
+1. В синтетическом FULL-примере оставь только совпавшие ключи. Какие label попадут в ответ?
+2. Для каждого товара посчитай число позиций, сохраняя товары без позиций с числом 0.
+3. Выполни `sql.join.26` и объясни, почему там нет заказа без пользователя при действующем FK.
+
+<details>
+<summary>Показать ответы к дополнительной практике</summary>
 
 ```sql
-CREATE TABLE users (
-    id bigint PRIMARY KEY,
-    email text NOT NULL UNIQUE,
-    country text,
-    active boolean NOT NULL DEFAULT true,
-    manager_id bigint REFERENCES users(id),
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE orders (
-    id bigint PRIMARY KEY,
-    user_id bigint NOT NULL REFERENCES users(id),
-    status text NOT NULL,
-    total numeric(12, 2) NOT NULL,
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE products (
-    id bigint PRIMARY KEY,
-    name text NOT NULL,
-    category text NOT NULL,
-    price numeric(12, 2) NOT NULL
-);
-CREATE TABLE order_items (
-    order_id bigint REFERENCES orders(id),
-    product_id bigint REFERENCES products(id),
-    quantity integer NOT NULL CHECK (quantity > 0),
-    PRIMARY KEY (order_id, product_id)
-);
+SELECT COALESCE(a.id, b.id) AS id,
+       a.label AS local_label, b.label AS remote_label
+FROM (VALUES (1, 'local-only'), (2, 'local-match')) AS a(id, label)
+FULL JOIN
+     (VALUES (2, 'remote-match'), (3, 'remote-only')) AS b(id, label)
+    ON a.id = b.id
+WHERE a.id IS NOT NULL AND b.id IS NOT NULL
+ORDER BY id;
 ```
 
-Начальные данные:
+Одна строка: 2/local-match/remote-match. Совпадение ключа не удаляет разные значения двух label.
 
 ```sql
-INSERT INTO users VALUES
-(1,'a@example.com','KZ',true,NULL,'2026-01-01'),
-(2,'b@example.com','KZ',true,1,'2026-01-02'),
-(3,'c@example.com',NULL,false,1,'2026-01-03'),
-(4,'d@example.com','GE',true,2,'2026-01-04');
-INSERT INTO orders VALUES
-(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),
-(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),
-(14,4,'new',80,'2026-02-05');
-INSERT INTO products VALUES
-(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);
-INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);
+SELECT p.id AS product_id, COUNT(oi.order_id) AS positions_count
+FROM products AS p
+LEFT JOIN order_items AS oi ON oi.product_id = p.id
+GROUP BY p.id
+ORDER BY p.id;
 ```
 
-**Вопрос:** Сопоставь users и orders по user_id, сохрани строки без пары с обеих сторон.
+На публичных данных 100/2, 101/2, 102/1. COUNT правого ключа даст 0 для товара без позиции, а COUNT(*) посчитал бы NULL-расширенную строку как 1. Дополнительная практика не добавляет второй Check к этому уроку.
 
-Ожидаемые столбцы: user_id, order_id. Сравнение: без учёта порядка строк.
-
-Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
+</details>
 
 ## Вопросы с собеседований
 
-### Основной вопрос
-
-Что такое RIGHT and FULL OUTER JOIN и какой механизм здесь важно понимать Junior-разработчику?
-
-### Дополнительный вопрос
-
-Какое ограничение или типичная ошибка относится именно к теме RIGHT and FULL OUTER JOIN?
-
-Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+1. Как переписать RIGHT JOIN через LEFT JOIN и сохранить столбцы ответа?
+2. Что добавляет FULL JOIN по сравнению с LEFT JOIN?
+3. Почему PK/FK-связь может мешать показать обе несовпавшие стороны?
 
 ## Хорошие ответы
 
+<details>
+<summary>Показать ответы для собеседования</summary>
+
 ### Короткий ответ
 
-RIGHT and FULL OUTER JOIN: Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.
+RIGHT сохраняет все строки справа, FULL — с обеих сторон. Для отсутствующей пары другая сторона представлена NULL.
 
-### Нормальный ответ уровня Junior
+### Ответ уровня Junior
 
-> RIGHT and FULL OUTER JOIN — тема, в которой я сначала фиксирую `conceptual symmetry`, затем объясняю `practical alternatives` на коротком примере. Ключевой механизм: Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа. Главная практическая ошибка — Не определить cardinality результата и замаскировать неверный query через DISTINCT.
+Я переписываю A RIGHT JOIN B как B LEFT JOIN A, сохраняя связь, выбранные поля и сортировку. Для FULL разбираю совпадения, левую и правую несовпавшие группы. Если нужны все товары, INNER JOIN недостаточен: он не вернёт товар без позиции.
 
-### Углубление / дополнительный вопрос
+### Follow-up
 
-**Какое ограничение или типичная ошибка относится именно к теме RIGHT and FULL OUTER JOIN?**
+В orders.user_id стоит NOT NULL FK на users.id. Для полных таблиц по этой связи заказ без пользователя невозможен. Поэтому обе несовпавшие стороны FULL я проверяю на независимых VALUES, а не отключаю ограничения shop-v1.
 
-Не определить cardinality результата и замаскировать неверный query через DISTINCT.
+</details>
 
 ## Критерии хорошего ответа
 
-### Что обязательно упомянуть
-
-- conceptual symmetry
-- practical alternatives
-
-### Что улучшит ответ
-
-- один короткий пример с результатом;
-- одно ограничение или характерная ошибка именно этой темы;
-- пример из backend-разработки только при естественной связи.
-
-### Частые неправильные ответы
-
-- Не определить cardinality результата и замаскировать неверный query через DISTINCT.
-- пересказ одного определения без механизма или примера.
-
-### Дополнительный вопрос
-
-- Какое ограничение или типичная ошибка относится именно к теме RIGHT and FULL OUTER JOIN?
+- Правильно выбрана сохраняемая сторона.
+- Объяснены все три строки синтетического FULL-результата.
+- Учитываются кратность, NULL и ограничения входных данных.
 
 ## Задача
 
-Сделай короткую письменную практику по теме **RIGHT and FULL OUTER JOIN**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
+Получи Passed для «RIGHT JOIN awareness». Это оценка сохранения всех товаров и их позиций, а не отдельный Check полного согласования двух независимых реестров. SQL XP остаётся отключённым.
 
 ## Шпаргалка
 
-Перед собеседованием запомни:
-
-- **Что это:** RIGHT and FULL OUTER JOIN: Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.
-- **Механизм:** Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
-- **Ограничение:** Не определить cardinality результата и замаскировать неверный query через DISTINCT.
-- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
+- A RIGHT JOIN B можно читать как B LEFT JOIN A.
+- FULL добавляет несовпавшие строки обеих сторон к совпавшим парам.
+- NULL-расширение не меняет исходную таблицу.
+- Проверяй, какие случаи допускает FK.
+- Сохраняй все пары и явно задавай ORDER BY, когда этого требует задача.
 
 ## Источники
 
-Материал написан своими словами и сверён с актуальными разделами официальной документации:
+- [PostgreSQL 17: RIGHT и FULL OUTER JOIN](https://www.postgresql.org/docs/17/queries-table-expressions.html#QUERIES-JOIN).
+- [PostgreSQL 17: VALUES](https://www.postgresql.org/docs/17/queries-values.html).
+- [PostgreSQL 17: внешние ключи](https://www.postgresql.org/docs/17/ddl-constraints.html#DDL-CONSTRAINTS-FK).
 
-- [PostgreSQL queries](https://www.postgresql.org/docs/current/queries.html)
-- [PostgreSQL functions](https://www.postgresql.org/docs/current/functions.html)
-
-Последняя проверка версий: **2026-08-27**.
+Результаты всех SQL-блоков проверяются в PostgreSQL 17; независимый FULL-пример дополнительно проверяется с INNER, LEFT и RIGHT вариантами.

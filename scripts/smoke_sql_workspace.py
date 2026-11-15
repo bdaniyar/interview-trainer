@@ -44,6 +44,27 @@ AGGREGATE_TASKS = [
      "SELECT * FROM (VALUES (1::bigint,2::bigint),(2::bigint,2::bigint)) v(user_id,count) ORDER BY user_id",
      [["1", "2"], ["2", "2"]], "минимум два"),
 ]
+JOIN_TASKS = [
+    ("s10-inner-join", "sql.join.17",
+     "SELECT o.id AS order_id,u.email FROM orders o JOIN users u ON u.id=o.user_id ORDER BY o.id",
+     "SELECT o.id AS order_id,u.email FROM orders o CROSS JOIN users u",
+     "SELECT * FROM (VALUES (10::bigint,'a@example.com'),(11::bigint,'a@example.com'),(12::bigint,'b@example.com'),(13::bigint,'b@example.com'),(14::bigint,'d@example.com')) v(order_id,email)",
+     [["10", "a@example.com"], ["11", "a@example.com"], ["12", "b@example.com"], ["13", "b@example.com"], ["14", "d@example.com"]], "ключ связи"),
+    ("s10-left-join", "sql.join.18",
+     "SELECT u.id,u.email FROM users u LEFT JOIN orders o ON o.user_id=u.id WHERE o.id IS NULL ORDER BY u.id",
+     "SELECT u.id,u.email FROM users u LEFT JOIN orders o ON o.user_id=u.id WHERE o.id IS NOT NULL",
+     "SELECT 3::bigint AS id,'c@example.com' AS email", [["3", "c@example.com"]], "отсутствие"),
+    ("s10-right-and-full-outer-join", "sql.join.25",
+     "SELECT p.id AS product_id,oi.order_id FROM order_items oi RIGHT JOIN products p ON p.id=oi.product_id ORDER BY p.id,oi.order_id",
+     "SELECT p.id AS product_id,oi.order_id FROM order_items oi JOIN products p ON p.id=oi.product_id ORDER BY p.id,oi.order_id",
+     "SELECT * FROM (VALUES (100::bigint,10::bigint),(100::bigint,14::bigint),(101::bigint,10::bigint),(101::bigint,12::bigint),(102::bigint,13::bigint)) v(product_id,order_id) ORDER BY product_id,order_id",
+     [["100", "10"], ["100", "14"], ["101", "10"], ["101", "12"], ["102", "13"]], "товаров"),
+    ("s10-self-join", "sql.join.20",
+     "SELECT u.email,m.email AS manager_email FROM users u LEFT JOIN users m ON m.id=u.manager_id ORDER BY u.id",
+     "SELECT u.email,m.email AS manager_email FROM users u JOIN users m ON m.id=u.manager_id ORDER BY u.id",
+     "SELECT email,manager_email FROM (VALUES (1,'a@example.com',NULL::text),(2,'b@example.com','a@example.com'),(3,'c@example.com','a@example.com'),(4,'d@example.com','b@example.com')) v(id,email,manager_email) ORDER BY id",
+     [["a@example.com", None], ["b@example.com", "a@example.com"], ["c@example.com", "a@example.com"], ["d@example.com", "b@example.com"]], "руководителем"),
+]
 PYTHON_FILES = {
     "main.py": "def compare_objects(a, b):\n    return {'same_identity': a is b, 'same_value': a == b}\n",
     "notes.py": "SAVED_FILE = 'preserve me'\nif __name__ == '__main__':\n    print('python stays available')\n",
@@ -111,10 +132,10 @@ def solve_filtering_tasks():
     print("WHERE/NULL HTTP smoke passed: independent 5/5 grades/progress, hardcoded 1/5, task-aware feedback, unchanged Explorer, Reset and cross-task rejection")
 
 
-def solve_ordered_tasks(tasks=ORDERED_TASKS):
-    # Preserve every earlier manifest while enabling the three new completions.
+def solve_six_case_tasks(tasks=ORDERED_TASKS, earlier_tasks=FILTER_TASKS):
+    # Preserve every earlier manifest while completing the next registered group.
     previous = {slug: call(f"/api/sql/lessons/{slug}") for slug in
-                [SLUG] + [t[0] for t in FILTER_TASKS + ORDERED_TASKS if t not in tasks]}
+                [SLUG] + [t[0] for t in earlier_tasks]}
     for index, (slug, task_id, correct, wrong, hardcoded_sql, rows, feedback) in enumerate(tasks):
         lesson_before = call(f"/api/lessons/{slug}")
         assert lesson_before["workspace_kind"] == "sql"
@@ -150,7 +171,7 @@ def solve_ordered_tasks(tasks=ORDERED_TASKS):
         assert call(f"/api/lessons/{slug}")["files"] == lesson_before["files"]
     for slug, snapshot in previous.items():
         assert call(f"/api/sql/lessons/{slug}") == snapshot
-    for slug in [SLUG] + [t[0] for t in FILTER_TASKS + ORDERED_TASKS + tasks]:
+    for slug in [SLUG] + [t[0] for t in earlier_tasks + tasks]:
         assert call(f"/api/sql/lessons/{slug}")["completed"]
     print(f"{[t[0] for t in tasks]} HTTP smoke passed: independent progress; correct 6/6, hardcoded 1/6, ordered Run, safe feedback, replay/conflict, Reset and Explorer isolation; earlier manifests unchanged")
 
@@ -161,7 +182,7 @@ def main():
         response = call("/api/sql/sessions", {"lesson_slug": SLUG}, expected=503)
         assert response["error"]["code"] == "runner_unavailable"
         call(CHECK, {"request_id": str(uuid4()), "sql": SOLUTION}, expected=503)
-        for slug, task_id, correct, *_ in FILTER_TASKS + ORDERED_TASKS + AGGREGATE_TASKS:
+        for slug, task_id, correct, *_ in FILTER_TASKS + ORDERED_TASKS + AGGREGATE_TASKS + JOIN_TASKS:
             grade_task(slug, task_id, correct, expected=503)
         before = call("/api/course")["summary"]["xp"]
         result = call("/api/run", {"lesson_slug": "is-vs-eq", "files": PYTHON_FILES, "entrypoint": "notes.py"})
@@ -239,8 +260,9 @@ def main():
     finally:
         call(path + f"?generation={generation}", method="DELETE", expected=204)
     solve_filtering_tasks()
-    solve_ordered_tasks()
-    solve_ordered_tasks(AGGREGATE_TASKS)
+    solve_six_case_tasks()
+    solve_six_case_tasks(AGGREGATE_TASKS, FILTER_TASKS + ORDERED_TASKS)
+    solve_six_case_tasks(JOIN_TASKS, FILTER_TASKS + ORDERED_TASKS + AGGREGATE_TASKS)
     assert call(f"/api/lessons/{SLUG}")["files"] == original["files"]
     assert call("/api/lessons/is-vs-eq")["files"] == python_before["files"] == python_files
     assert call("/api/lessons/is-vs-eq")["progress"] == python_before["progress"]

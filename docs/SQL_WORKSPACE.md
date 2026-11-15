@@ -1,14 +1,17 @@
-# SQL Workspace — Phases 2–6
+# SQL Workspace — Phases 2–7
 
-Enabled for **10.2–10.9**. Their stable lesson IDs are
+Enabled for **10.2–10.13**. Their stable lesson IDs are
 `backend-interview.10.2.select-aliases-and-expressions`,
 `backend-interview.10.3.where-and-boolean-logic`,
 `backend-interview.10.4.null-and-three-valued-logic`,
 `backend-interview.10.5.order-by-limit-and-offset`,
 `backend-interview.10.6.distinct`, `backend-interview.10.7.aggregates`,
-`backend-interview.10.8.group-by` and `backend-interview.10.9.having`. Other lessons keep their
+`backend-interview.10.8.group-by`, `backend-interview.10.9.having`,
+`backend-interview.10.10.inner-join`, `backend-interview.10.11.left-join`,
+`backend-interview.10.12.right-and-full-outer-join` and
+`backend-interview.10.13.self-join`. Other lessons keep their
 existing workspace. Lesson IDs and Python completion/XP rules are unchanged.
-Phase 3 added SQL-only attempt/progress tables; Phases 4–6 reuse them without a
+Phase 3 added SQL-only attempt/progress tables; Phases 4–7 reuse them without a
 migration. Registry/task details are in [SQL_GRADING.md](SQL_GRADING.md).
 
 ## Local use
@@ -24,7 +27,11 @@ Continue to [10.5 ORDER BY/LIMIT/OFFSET](http://localhost:3000/?lesson=s10-order
 and [10.6 DISTINCT](http://localhost:3000/?lesson=s10-distinct), then
 [10.7 Aggregates](http://localhost:3000/?lesson=s10-aggregates),
 [10.8 GROUP BY](http://localhost:3000/?lesson=s10-group-by) and
-[10.9 HAVING](http://localhost:3000/?lesson=s10-having).
+[10.9 HAVING](http://localhost:3000/?lesson=s10-having), then
+[10.10 INNER JOIN](http://localhost:3000/?lesson=s10-inner-join),
+[10.11 LEFT JOIN](http://localhost:3000/?lesson=s10-left-join),
+[10.12 RIGHT/FULL JOIN](http://localhost:3000/?lesson=s10-right-and-full-outer-join) and
+[10.13 SELF JOIN](http://localhost:3000/?lesson=s10-self-join).
 SQL Lab opens a `shop-v1` session automatically. Edit `query.sql`, press Run or
 Ctrl/Cmd+Enter, inspect real PostgreSQL results. The Database tab shows table
 columns, nullable/type metadata, ordered PK and FK pairs, and pages of 50 rows.
@@ -34,7 +41,9 @@ Check (Ctrl/Cmd+Shift+Enter) evaluates four fixture revisions for
 `sql.guided.10.2.projection.v1`, five for `sql.basic.01` (WHERE) and five for
 `sql.basic.03` (NULL), and six each for `sql.basic.04` (latest orders) and
 `sql.basic.05` (distinct countries), plus six each for `sql.aggregation.09`,
-`.10` and `.13` (aggregates/GROUP BY/HAVING). Lessons 10.5–10.9 use ordered comparison. It shows Passed/Failed, counts and task-aware safe
+`.10` and `.13` (aggregates/GROUP BY/HAVING). The four JOIN tasks `.17`, `.18`,
+`.25`, `.20` also have six cases each. Lessons 10.5–10.9 and 10.12–10.13 use
+ordered comparison; INNER/anti-join (10.10–10.11) compare complete bags of rows. It shows Passed/Failed, counts and task-aware safe
 feedback. Run never marks the task solved. Successful Check persists «Задача
 решена» independently of Python completion, including after a later failed Check
 or reload. SQL Check awards no XP and works without an active Explorer session.
@@ -47,7 +56,9 @@ aliases, NULL, empty string, booleans, bigint/numeric and empty results remain
 distinct. Truncated results say there are more rows, without inventing a total.
 
 On desktop, editor and results remain together after Run/Check when the SQL pane
-is wider than 420px. At viewport widths up to 820px, tabs preserve editing space.
+is wider than 420px. At viewport widths up to 820px, tabs preserve editing space. In mobile
+Results view the SQL pane gets 75% of the split height, so long prompts/Check
+feedback leave readable table rows; Editor view retains its existing split.
 Learn/Review and theme changes do not create another session or clear the draft.
 The task answer is behind an explicit disclosure in the lesson, closed in both
 modes. Guided-only capabilities do not render Check.
@@ -58,7 +69,7 @@ modes. Guided-only capabilities do not render Check.
 Its public manifest projects task ID/revision, prompt, starter, expected column
 names, Check capability and persisted completion. It never returns reference SQL,
 hidden fixtures, expected rows or grader rules.
-Only these eight published lessons get `workspace_kind=sql` in the lesson API.
+Only these twelve published lessons get `workspace_kind=sql` in the lesson API.
 Each lesson has its own task, draft, result, completion and disposable session.
 Navigation waits for pending work/Close before provisioning the next lesson's
 session; stale results cannot populate another lesson's workspace.
@@ -176,6 +187,19 @@ Every earlier SQL manifest and Python files/progress/XP remain unchanged. Outage
 checks cover all eight tasks while real Python Run and Check stay operational.
 No SQL is sent to Python `/files`; drafts stay in their task-specific browser keys.
 
+Phase 7 extends component navigation and late-reply isolation to **10.2 → 10.13**.
+The HTTP smoke completes all four JOIN tasks with real PostgreSQL, correct 6/6,
+incorrect Check, hardcoded 1/6, independent/sticky progress, replay/conflict,
+Reset and unchanged Explorer/earlier eight manifests. Outage checks include all
+12 task routes and real Python Docker Run/Check with preserved files and XP.
+The four lesson/interview bundles are curated; answers remain closed in both modes.
+
+10.12's Check preserves every product and position. The supplemental FULL users/
+orders query cannot show orders without users under the current FK. A SELECT-only
+VALUES example demonstrates both unmatched sides without changing shop-v1 or the
+read-only boundary. The ON/WHERE exercise `.21` and FULL `.26` remain ungraded;
+no lesson at 10.14 or later is enabled in this phase.
+
 After each implemented phase, the authorized local workflow is to rebuild and
 update the main `pythoria` project with `docker compose up -d --build --wait`,
 then check frontend, backend and both runners. The named data volume is retained.
@@ -183,13 +207,15 @@ A recreated SQL controller ends ephemeral sessions; the workspace can recreate
 its session while browser drafts and persistent task completion remain saved.
 Tests use only the separate stack and never stop main services for test purposes.
 
-For a manual browser check with the disposable DB:
+For a repeatable Chrome walkthrough, run this after the HTTP smoke has removed
+its stack. It requires a fresh tmpfs DB, Node 22 and Chrome (set
+`SQL_TEST_CHROME` to the executable path on another platform):
 
 ```sh
 docker compose build sandbox sql-sandbox sql-runner
 docker compose -f docker-compose.sql-workspace-test.yml up -d --build --wait
 # http://localhost:13000/?lesson=s10-select-aliases-and-expressions
-python3 scripts/smoke_sql_workspace.py
+node scripts/smoke_sql_browser.mjs
 docker compose -f docker-compose.sql-workspace-test.yml down
 ```
 
@@ -199,10 +225,13 @@ session cleanup and late responses, StrictMode, shortcuts, typed result/error
 rendering, and navigation across Python/SQL without changing saved Python files.
 
 See [SQL_GRADING.md](SQL_GRADING.md) for Phase 3 verification and upgrade evidence.
-Browser interaction is covered by component tests and the Phase 6 headless Chrome
-walkthrough at 1720×1050 and 390×844, including real Monaco shortcuts and new Check
-results. The separate Docker HTTP smoke exercises backend/runner/PostgreSQL and
-Python availability during SQL-controller outage.
+Browser interaction is covered by component tests and the completed Phase 7
+headless Chrome walkthrough at 1720×1050 and 390×844. The committed
+`scripts/smoke_sql_browser.mjs` passed all 12 tasks with real Monaco typing,
+Run/Check shortcuts, theme changes, draft restoration, visible mobile rows and a
+Python file-edit/navigation round trip. A mobile Results-only split adjustment
+keeps table rows visible below longer prompts and Check feedback. The separate Docker HTTP smoke exercises
+backend/runner/PostgreSQL and Python availability during SQL-controller outage.
 
 Implementation references: [Monaco React](https://github.com/suren-atoyan/monaco-react),
 [React effect cleanup](https://react.dev/reference/react/useEffect),
