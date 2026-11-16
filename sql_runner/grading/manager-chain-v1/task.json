@@ -1,0 +1,50 @@
+{
+  "task_id": "sql.subquery.32",
+  "task_revision": 1,
+  "grader_revision": "manager-chain-v1",
+  "dataset_id": "shop-v1",
+  "dataset_checksum": "a1de3973eb4a2febc818c026def43716109e7ffde6b0bc46721e11d1b2fa4b97",
+  "expected_columns": [
+    "id",
+    "depth"
+  ],
+  "comparison": "ordered",
+  "numeric_compatible": true,
+  "reference_sql": "WITH RECURSIVE chain AS (SELECT id,manager_id,0 depth FROM users WHERE id=4 UNION ALL SELECT u.id,u.manager_id,c.depth+1 FROM users u JOIN chain c ON u.id=c.manager_id) SELECT id,depth FROM chain ORDER BY depth;",
+  "cases": [
+    {
+      "id": "public-v1",
+      "public": true
+    },
+    {
+      "id": "absent-v1",
+      "public": false,
+      "seed_file": "absent-v1.sql",
+      "sha256": "edb81fe3954b08a76aa515c984b3c59924682dfcdaa299eab8cfabea53f573ca"
+    },
+    {
+      "id": "root-v1",
+      "public": false,
+      "seed_file": "root-v1.sql",
+      "sha256": "58ab71d6ae678f2f8ac515d4cb0206420ffe9110a5c0bd6cdc5fddec2ecafc8a"
+    },
+    {
+      "id": "deep-v1",
+      "public": false,
+      "seed_file": "deep-v1.sql",
+      "sha256": "92d2bb735a82039f7c00f95a2a26bfbb43e91bdc1bfadccf6b44152331a71b03"
+    },
+    {
+      "id": "branches-v1",
+      "public": false,
+      "seed_file": "branches-v1.sql",
+      "sha256": "f16896d0b2d4f269dc3173007d014a5dbbd06a6b5a85af6cb4d900077ab5817a"
+    },
+    {
+      "id": "bigint-v1",
+      "public": false,
+      "seed_file": "bigint-v1.sql",
+      "sha256": "a8cf398f5708f8cd8df26e8939593009b740d757a6485b797bc2c278c75a2ba8"
+    }
+  ]
+}

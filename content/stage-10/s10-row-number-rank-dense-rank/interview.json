@@ -1,38 +1,32 @@
 [
   {
-    "question": "Что такое `ROW_NUMBER`, `RANK`, `DENSE_RANK` и какой механизм здесь важно понимать Junior-разработчику?",
+    "question": "Чем RANK отличается от DENSE_RANK?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "ties",
-      "top-N per group"
+      "Обе функции дают одно место peers. RANK пропускает места после группы равных строк, DENSE_RANK считает группы подряд."
     ],
-    "short_answer": "`ROW_NUMBER`, `RANK`, `DENSE_RANK`: Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.",
-    "junior_answer": "`ROW_NUMBER`, `RANK`, `DENSE_RANK` — тема, в которой я сначала фиксирую `ties`, затем объясняю `top-N per group` на коротком примере. Ключевой механизм: Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа. Главная практическая ошибка — Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
-    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме `ROW_NUMBER`, `RANK`, `DENSE_RANK`?",
-    "follow_up_answer": "Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
+    "short_answer": "Обе функции дают одно место peers.",
+    "junior_answer": "Обе функции дают одно место peers. RANK пропускает места после группы равных строк, DENSE_RANK считает группы подряд.",
+    "follow_up_question": "Почему у ROW_NUMBER нужен tie-breaker?",
+    "follow_up_answer": "Иначе строки с равными ключами могут получить номера в любом порядке. Уникальный id завершает порядок, когда контракт требует однозначной нумерации.",
     "expected_answer": {
       "must_mention": [
-        "ties",
-        "top-N per group"
+        "Обе функции дают одно место peers. RANK пропускает места после группы равных строк, DENSE_RANK считает группы подряд."
       ],
       "good_additions": [
-        "короткий рабочий пример",
-        "ограничение или типичная ошибка"
+        "Номер строки: ROW_NUMBER. Место с пропусками: RANK. Номер peer-группы: DENSE_RANK. Полный порядок нужен для нумерации, но может разрушить желаемые равные места."
       ],
-      "common_wrong_answers": [],
-      "red_flags": [],
+      "common_wrong_answers": [
+        "RANK и ROW_NUMBER всегда присваивают одинаковые номера."
+      ],
+      "red_flags": [
+        "Подмена контракта результата без объяснения."
+      ],
       "follow_up_questions": [
-        "Какое ограничение или типичная ошибка относится именно к теме `ROW_NUMBER`, `RANK`, `DENSE_RANK`?"
-      ],
-      "coding_mistakes": [
-        "Не определить cardinality результата и замаскировать неверный query через DISTINCT."
-      ],
-      "assessment_notes": [
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "review_status": "pending-substantive-review"
+        "Почему у ROW_NUMBER нужен tie-breaker?"
+      ]
     },
     "follow_ups": [
       "Какое ограничение или типичная ошибка относится именно к теме `ROW_NUMBER`, `RANK`, `DENSE_RANK`?"
@@ -48,35 +42,33 @@
     ]
   },
   {
-    "question": "Какое ограничение или типичная ошибка относится именно к теме `ROW_NUMBER`, `RANK`, `DENSE_RANK`?",
+    "question": "Почему у ROW_NUMBER нужен tie-breaker?",
     "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "связать `ROW_NUMBER`, `RANK`, `DENSE_RANK` с коротким рабочим примером",
-      "Не определить cardinality результата и замаскировать неверный query через DISTINCT."
+      "Иначе строки с равными ключами могут получить номера в любом порядке. Уникальный id завершает порядок, когда контракт требует однозначной нумерации."
     ],
-    "short_answer": "Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
-    "junior_answer": "Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
-    "follow_up_question": "Что такое `ROW_NUMBER`, `RANK`, `DENSE_RANK` и какой механизм здесь важно понимать Junior-разработчику?",
-    "follow_up_answer": "`ROW_NUMBER`, `RANK`, `DENSE_RANK` — тема, в которой я сначала фиксирую `ties`, затем объясняю `top-N per group` на коротком примере. Ключевой механизм: Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа. Главная практическая ошибка — Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
+    "short_answer": "Иначе строки с равными ключами могут получить номера в любом порядке.",
+    "junior_answer": "Иначе строки с равными ключами могут получить номера в любом порядке. Уникальный id завершает порядок, когда контракт требует однозначной нумерации.",
+    "follow_up_question": "Чем RANK отличается от DENSE_RANK?",
+    "follow_up_answer": "Обе функции дают одно место peers. RANK пропускает места после группы равных строк, DENSE_RANK считает группы подряд.",
     "expected_answer": {
       "must_mention": [
-        "связать `ROW_NUMBER`, `RANK`, `DENSE_RANK` с коротким рабочим примером"
+        "Иначе строки с равными ключами могут получить номера в любом порядке. Уникальный id завершает порядок, когда контракт требует однозначной нумерации."
       ],
       "good_additions": [
-        "короткий пример именно этой темы"
+        "Номер строки: ROW_NUMBER. Место с пропусками: RANK. Номер peer-группы: DENSE_RANK. Полный порядок нужен для нумерации, но может разрушить желаемые равные места."
       ],
-      "common_wrong_answers": [],
-      "red_flags": [],
+      "common_wrong_answers": [
+        "RANK и ROW_NUMBER всегда присваивают одинаковые номера."
+      ],
+      "red_flags": [
+        "Подмена контракта результата без объяснения."
+      ],
       "follow_up_questions": [
-        "Что такое `ROW_NUMBER`, `RANK`, `DENSE_RANK` и какой механизм здесь важно понимать Junior-разработчику?"
-      ],
-      "coding_mistakes": [
-        "Не определить cardinality результата и замаскировать неверный query через DISTINCT."
-      ],
-      "assessment_notes": [],
-      "review_status": "pending-substantive-review"
+        "Чем RANK отличается от DENSE_RANK?"
+      ]
     },
     "follow_ups": [
       "Что такое `ROW_NUMBER`, `RANK`, `DENSE_RANK` и какой механизм здесь важно понимать Junior-разработчику?"

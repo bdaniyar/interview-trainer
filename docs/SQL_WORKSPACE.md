@@ -1,6 +1,6 @@
-# SQL Workspace — Phases 2–7
+# SQL Workspace — Phases 2–8A
 
-Enabled for **10.2–10.13**. Their stable lesson IDs are
+Enabled for **10.2–10.24** (23 lessons). The first twelve stable lesson IDs are
 `backend-interview.10.2.select-aliases-and-expressions`,
 `backend-interview.10.3.where-and-boolean-logic`,
 `backend-interview.10.4.null-and-three-valued-logic`,
@@ -9,9 +9,11 @@ Enabled for **10.2–10.13**. Their stable lesson IDs are
 `backend-interview.10.8.group-by`, `backend-interview.10.9.having`,
 `backend-interview.10.10.inner-join`, `backend-interview.10.11.left-join`,
 `backend-interview.10.12.right-and-full-outer-join` and
-`backend-interview.10.13.self-join`. Other lessons keep their
+`backend-interview.10.13.self-join`. Phase 8A adds all eleven IDs at 10.14–10.24
+listed in [SQL_GRADING.md](SQL_GRADING.md), including newly published recursive
+CTE and LAG/LEAD. Other lessons keep their
 existing workspace. Lesson IDs and Python completion/XP rules are unchanged.
-Phase 3 added SQL-only attempt/progress tables; Phases 4–7 reuse them without a
+Phase 3 added SQL-only attempt/progress tables; Phases 4–8A reuse them without a
 migration. Registry/task details are in [SQL_GRADING.md](SQL_GRADING.md).
 
 ## Local use
@@ -31,7 +33,9 @@ and [10.6 DISTINCT](http://localhost:3000/?lesson=s10-distinct), then
 [10.10 INNER JOIN](http://localhost:3000/?lesson=s10-inner-join),
 [10.11 LEFT JOIN](http://localhost:3000/?lesson=s10-left-join),
 [10.12 RIGHT/FULL JOIN](http://localhost:3000/?lesson=s10-right-and-full-outer-join) and
-[10.13 SELF JOIN](http://localhost:3000/?lesson=s10-self-join).
+[10.13 SELF JOIN](http://localhost:3000/?lesson=s10-self-join). Continue through
+[10.14 subqueries](http://localhost:3000/?lesson=s10-subqueries) to
+[10.24 LAG/LEAD](http://localhost:3000/?lesson=s10-lag-and-lead).
 SQL Lab opens a `shop-v1` session automatically. Edit `query.sql`, press Run or
 Ctrl/Cmd+Enter, inspect real PostgreSQL results. The Database tab shows table
 columns, nullable/type metadata, ordered PK and FK pairs, and pages of 50 rows.
@@ -42,7 +46,9 @@ Check (Ctrl/Cmd+Shift+Enter) evaluates four fixture revisions for
 `sql.basic.03` (NULL), and six each for `sql.basic.04` (latest orders) and
 `sql.basic.05` (distinct countries), plus six each for `sql.aggregation.09`,
 `.10` and `.13` (aggregates/GROUP BY/HAVING). The four JOIN tasks `.17`, `.18`,
-`.25`, `.20` also have six cases each. Lessons 10.5–10.9 and 10.12–10.13 use
+`.25`, `.20` also have six cases each. Each advanced SELECT task in 10.14–10.24
+has one public and five hidden cases. In 10.15, all tied latest orders are retained;
+Check enforces user_id group order but allows any order within each group. Lessons 10.5–10.9 and 10.12–10.13 use
 ordered comparison; INNER/anti-join (10.10–10.11) compare complete bags of rows. It shows Passed/Failed, counts and task-aware safe
 feedback. Run never marks the task solved. Successful Check persists «Задача
 решена» independently of Python completion, including after a later failed Check
@@ -236,3 +242,19 @@ backend/runner/PostgreSQL and Python availability during SQL-controller outage.
 Implementation references: [Monaco React](https://github.com/suren-atoyan/monaco-react),
 [React effect cleanup](https://react.dev/reference/react/useEffect),
 [FastAPI lifespan](https://fastapi.tiangolo.com/advanced/events/).
+
+## Phase 8A — advanced SELECT
+
+All 23 lessons from 10.2 through 10.24 now use the established workspace. The
+new tasks have six cases each; details and actual verification runs are recorded
+in [SQL_GRADING.md](SQL_GRADING.md#phase-8a-verification--2026-11-16).
+Recursive CTE and LAG/LEAD were published only with curated notes and real PG17
+verification. Historical bank mappings remain explicit rather than rewriting IDs.
+
+The committed Chrome smoke now traverses all 23 lessons with actual Monaco
+input, Run/Check, closed answers, themes, desktop/mobile results and SQL/Python
+file ownership. The HTTP smoke likewise covers all 23, including SQL outage and
+real Python Run/Check. The user data volume is excluded from both stacks.
+
+Lesson 10.25 remains outside this read-only workspace: writable transactions need
+the separate Phase 8B execution profile. No DML permission was added here.

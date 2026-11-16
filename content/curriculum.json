@@ -4353,7 +4353,7 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "estimated_minutes": 12,
+          "estimated_minutes": 35,
           "difficulty": "junior",
           "outline": [
             "scalar",
@@ -4361,7 +4361,7 @@
             "`IN`",
             "nested aggregation."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-16",
           "implementation_slug": "s10-subqueries"
         },
         {
@@ -4392,14 +4392,14 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "estimated_minutes": 10,
+          "estimated_minutes": 35,
           "difficulty": "junior",
           "outline": [
             "per-row evaluation mental model",
             "optimizer caveat",
             "alternatives."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-16",
           "implementation_slug": "s10-correlated-subquery"
         },
         {
@@ -4430,14 +4430,14 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "estimated_minutes": 10,
+          "estimated_minutes": 35,
           "difficulty": "junior",
           "outline": [
             "existence semantics",
             "NULL caveats",
             "no simplistic universal performance rule."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-16",
           "implementation_slug": "s10-exists-vs-in"
         },
         {
@@ -4468,7 +4468,7 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "estimated_minutes": 10,
+          "estimated_minutes": 35,
           "difficulty": "junior",
           "outline": [
             "`WITH`",
@@ -4476,7 +4476,7 @@
             "multiple stages",
             "planner/version caveats."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-16",
           "implementation_slug": "s10-cte"
         },
         {
@@ -4504,15 +4504,15 @@
           "tracks": [
             "full"
           ],
-          "content_status": "planned",
-          "estimated_minutes": 10,
+          "content_status": "complete",
+          "estimated_minutes": 35,
           "difficulty": "junior_plus",
           "outline": [
             "hierarchy basics",
             "termination",
             "not a Junior core requirement."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-16",
           "implementation_slug": "s10-recursive-cte"
         },
         {
@@ -4543,13 +4543,13 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "estimated_minutes": 10,
+          "estimated_minutes": 35,
           "difficulty": "junior",
           "outline": [
             "conditional projection",
             "grouped reporting."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-16",
           "implementation_slug": "s10-case"
         },
         {
@@ -4580,7 +4580,7 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "estimated_minutes": 10,
+          "estimated_minutes": 35,
           "difficulty": "junior",
           "outline": [
             "`UNION`",
@@ -4588,7 +4588,7 @@
             "`INTERSECT`",
             "`EXCEPT`."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-16",
           "implementation_slug": "s10-set-operations"
         },
         {
@@ -4619,14 +4619,14 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "estimated_minutes": 10,
+          "estimated_minutes": 35,
           "difficulty": "junior",
           "outline": [
             "rows remain visible",
             "difference from GROUP BY",
             "window definition."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-16",
           "implementation_slug": "s10-window-functions"
         },
         {
@@ -4657,13 +4657,13 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "estimated_minutes": 10,
+          "estimated_minutes": 35,
           "difficulty": "junior",
           "outline": [
             "ties",
             "top-N per group."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-16",
           "implementation_slug": "s10-row-number-rank-dense-rank"
         },
         {
@@ -4694,13 +4694,13 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "estimated_minutes": 10,
+          "estimated_minutes": 35,
           "difficulty": "junior",
           "outline": [
             "independent windows per group",
             "deterministic order."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-16",
           "implementation_slug": "s10-partition-by-and-window-ordering"
         },
         {
@@ -4728,14 +4728,14 @@
           "tracks": [
             "full"
           ],
-          "content_status": "planned",
-          "estimated_minutes": 10,
+          "content_status": "complete",
+          "estimated_minutes": 35,
           "difficulty": "junior_plus",
           "outline": [
             "previous/next event",
             "time-series examples."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-16",
           "implementation_slug": "s10-lag-and-lead"
         },
         {

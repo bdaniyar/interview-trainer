@@ -1,0 +1,355 @@
+{
+  "backend": [
+    {
+      "lesson_id": "backend-interview.10.2.select-aliases-and-expressions",
+      "task_id": "sql.guided.10.2.projection.v1",
+      "revision": 1,
+      "grader_revision": "projection-v1",
+      "expected_columns": [
+        "user_id",
+        "email"
+      ],
+      "tests_total": 4,
+      "prompt": "Выведите id и email всех пользователей из users. Назовите столбец id псевдонимом user_id. Результат должен содержать только столбцы user_id и email в этом порядке. Порядок строк несущественен.",
+      "starter_sql": "SELECT id, email FROM users;\n",
+      "rows_feedback": "Результат не совпадает с условием на одном из наборов. Проверьте все строки, лишние строки и дубликаты.",
+      "column_hint": "Для id нужен псевдоним user_id.",
+      "dataset_id": "shop-v1",
+      "dataset_checksum": "a1de3973eb4a2febc818c026def43716109e7ffde6b0bc46721e11d1b2fa4b97",
+      "comparison": "unordered"
+    },
+    {
+      "lesson_id": "backend-interview.10.3.where-and-boolean-logic",
+      "task_id": "sql.basic.01",
+      "revision": 1,
+      "grader_revision": "active-users-v1",
+      "expected_columns": [
+        "id",
+        "email"
+      ],
+      "tests_total": 5,
+      "prompt": "Выведите id и email пользователей из users, у которых active = true. Только столбцы id и email в этом порядке. Порядок строк несущественен.",
+      "starter_sql": "SELECT id, email\nFROM users;\n",
+      "rows_feedback": "Проверьте условие фильтрации: нужны все активные пользователи, без лишних строк и дубликатов.",
+      "column_hint": "",
+      "dataset_id": "shop-v1",
+      "dataset_checksum": "a1de3973eb4a2febc818c026def43716109e7ffde6b0bc46721e11d1b2fa4b97",
+      "comparison": "unordered"
+    },
+    {
+      "lesson_id": "backend-interview.10.4.null-and-three-valued-logic",
+      "task_id": "sql.basic.03",
+      "revision": 1,
+      "grader_revision": "null-country-v1",
+      "expected_columns": [
+        "id",
+        "email"
+      ],
+      "tests_total": 5,
+      "prompt": "Выведите id и email пользователей из users, для которых country неизвестна (NULL). Только столбцы id и email в этом порядке. Порядок строк несущественен.",
+      "starter_sql": "SELECT id, email\nFROM users;\n",
+      "rows_feedback": "Проверьте работу с неизвестными значениями. SQL NULL отличается от пустой строки и обычного значения; учтите все нужные строки и дубликаты.",
+      "column_hint": "",
+      "dataset_id": "shop-v1",
+      "dataset_checksum": "a1de3973eb4a2febc818c026def43716109e7ffde6b0bc46721e11d1b2fa4b97",
+      "comparison": "unordered"
+    },
+    {
+      "lesson_id": "backend-interview.10.5.order-by-limit-and-offset",
+      "task_id": "sql.basic.04",
+      "revision": 1,
+      "grader_revision": "latest-orders-v1",
+      "expected_columns": [
+        "id",
+        "created_at"
+      ],
+      "tests_total": 6,
+      "prompt": "Верните два последних заказа по created_at. При одинаковой дате заказ с большим id должен идти первым. Только столбцы id и created_at в этом порядке. Если заказов меньше двух, верните все имеющиеся.",
+      "starter_sql": "SELECT id, created_at\nFROM orders;\n",
+      "rows_feedback": "Проверьте направление сортировки, порядок заказов при одинаковой дате и ограничение количества строк.",
+      "column_hint": "",
+      "dataset_id": "shop-v1",
+      "dataset_checksum": "a1de3973eb4a2febc818c026def43716109e7ffde6b0bc46721e11d1b2fa4b97",
+      "comparison": "ordered"
+    },
+    {
+      "lesson_id": "backend-interview.10.6.distinct",
+      "task_id": "sql.basic.05",
+      "revision": 1,
+      "grader_revision": "distinct-countries-v1",
+      "expected_columns": [
+        "country"
+      ],
+      "tests_total": 6,
+      "prompt": "Выведите уникальные значения country из users. Исключите SQL NULL и отсортируйте страны по возрастанию. Только столбец country. Пустая строка является значением и должна остаться, если встречается в данных.",
+      "starter_sql": "SELECT country\nFROM users;\n",
+      "rows_feedback": "Проверьте повторы, исключение SQL NULL и сортировку по возрастанию. Пустая строка не равна NULL.",
+      "column_hint": "",
+      "dataset_id": "shop-v1",
+      "dataset_checksum": "a1de3973eb4a2febc818c026def43716109e7ffde6b0bc46721e11d1b2fa4b97",
+      "comparison": "ordered"
+    },
+    {
+      "lesson_id": "backend-interview.10.7.aggregates",
+      "task_id": "sql.aggregation.09",
+      "revision": 1,
+      "grader_revision": "count-orders-v1",
+      "expected_columns": [
+        "orders_count"
+      ],
+      "tests_total": 6,
+      "prompt": "Посчитайте общее количество заказов в orders. Верните одну строку с одним столбцом orders_count. Если заказов нет, результат должен содержать число 0.",
+      "starter_sql": "SELECT id, status\nFROM orders;\n",
+      "rows_feedback": "Проверьте источник подсчёта и число строк результата: нужна одна строка с количеством всех заказов, включая 0 для пустой таблицы.",
+      "column_hint": "",
+      "dataset_id": "shop-v1",
+      "dataset_checksum": "a1de3973eb4a2febc818c026def43716109e7ffde6b0bc46721e11d1b2fa4b97",
+      "comparison": "ordered"
+    },
+    {
+      "lesson_id": "backend-interview.10.8.group-by",
+      "task_id": "sql.aggregation.10",
+      "revision": 1,
+      "grader_revision": "orders-by-status-v1",
+      "expected_columns": [
+        "status",
+        "count"
+      ],
+      "tests_total": 6,
+      "prompt": "Посчитайте количество заказов для каждого status. Верните status и count в этом порядке, отсортировав строки по status по возрастанию.",
+      "starter_sql": "SELECT status\nFROM orders;\n",
+      "rows_feedback": "Проверьте состав групп, количество заказов в каждой группе и сортировку по status. Нужна одна строка на каждый имеющийся статус.",
+      "column_hint": "",
+      "dataset_id": "shop-v1",
+      "dataset_checksum": "a1de3973eb4a2febc818c026def43716109e7ffde6b0bc46721e11d1b2fa4b97",
+      "comparison": "ordered"
+    },
+    {
+      "lesson_id": "backend-interview.10.9.having",
+      "task_id": "sql.aggregation.13",
+      "revision": 1,
+      "grader_revision": "users-with-two-orders-v1",
+      "expected_columns": [
+        "user_id",
+        "count"
+      ],
+      "tests_total": 6,
+      "prompt": "Найдите пользователей, у которых минимум два заказа. Верните user_id и количество заказов под названием count. Отсортируйте результат по user_id по возрастанию.",
+      "starter_sql": "SELECT user_id\nFROM orders;\n",
+      "rows_feedback": "Проверьте количество заказов каждого пользователя и границу «минимум два»: два и больше подходят, один — нет. Учтите точный count и порядок user_id.",
+      "column_hint": "",
+      "dataset_id": "shop-v1",
+      "dataset_checksum": "a1de3973eb4a2febc818c026def43716109e7ffde6b0bc46721e11d1b2fa4b97",
+      "comparison": "ordered"
+    },
+    {
+      "lesson_id": "backend-interview.10.10.inner-join",
+      "task_id": "sql.join.17",
+      "revision": 1,
+      "grader_revision": "join-order-users-v1",
+      "expected_columns": [
+        "order_id",
+        "email"
+      ],
+      "tests_total": 6,
+      "prompt": "Для каждого заказа верните order_id и email его владельца. Только эти два столбца в указанном порядке. Один пользователь может владеть несколькими заказами; порядок строк несущественен.",
+      "starter_sql": "SELECT id, user_id\nFROM orders;\n",
+      "rows_feedback": "Проверьте ключ связи и число строк: каждый заказ должен встретиться один раз с email своего владельца. Сохраните все заказы одного пользователя.",
+      "column_hint": "",
+      "dataset_id": "shop-v1",
+      "dataset_checksum": "a1de3973eb4a2febc818c026def43716109e7ffde6b0bc46721e11d1b2fa4b97",
+      "comparison": "unordered"
+    },
+    {
+      "lesson_id": "backend-interview.10.11.left-join",
+      "task_id": "sql.join.18",
+      "revision": 1,
+      "grader_revision": "users-without-orders-v1",
+      "expected_columns": [
+        "id",
+        "email"
+      ],
+      "tests_total": 6,
+      "prompt": "Найдите пользователей без единого заказа. Верните только id и email в этом порядке, по одной строке на пользователя. Порядок строк несущественен.",
+      "starter_sql": "SELECT id, email\nFROM users;\n",
+      "rows_feedback": "Проверьте отсутствие заказов: нужны все пользователи без совпадений и только они, без пропущенных и повторных строк.",
+      "column_hint": "",
+      "dataset_id": "shop-v1",
+      "dataset_checksum": "a1de3973eb4a2febc818c026def43716109e7ffde6b0bc46721e11d1b2fa4b97",
+      "comparison": "unordered"
+    },
+    {
+      "lesson_id": "backend-interview.10.12.right-and-full-outer-join",
+      "task_id": "sql.join.25",
+      "revision": 1,
+      "grader_revision": "right-join-products-v1",
+      "expected_columns": [
+        "product_id",
+        "order_id"
+      ],
+      "tests_total": 6,
+      "prompt": "Сохраните все товары, включая не встречающиеся в order_items. Верните product_id и order_id. Для товара без позиций order_id должен быть SQL NULL. Сортировка: product_id по возрастанию, затем order_id по возрастанию.",
+      "starter_sql": "SELECT id, name\nFROM products;\n",
+      "rows_feedback": "Проверьте сохранение всех товаров, каждую связанную позицию заказа, SQL NULL для товара без пары и сортировку по product_id, order_id.",
+      "column_hint": "",
+      "dataset_id": "shop-v1",
+      "dataset_checksum": "a1de3973eb4a2febc818c026def43716109e7ffde6b0bc46721e11d1b2fa4b97",
+      "comparison": "ordered"
+    },
+    {
+      "lesson_id": "backend-interview.10.13.self-join",
+      "task_id": "sql.join.20",
+      "revision": 1,
+      "grader_revision": "users-managers-v1",
+      "expected_columns": [
+        "email",
+        "manager_email"
+      ],
+      "tests_total": 6,
+      "prompt": "Верните email каждого пользователя и email его непосредственного руководителя под названием manager_email. Без руководителя нужен SQL NULL. Сохраните каждого пользователя ровно один раз; сортируйте по id исходного пользователя по возрастанию.",
+      "starter_sql": "SELECT id, email, manager_id\nFROM users;\n",
+      "rows_feedback": "Проверьте направление связи пользователя с непосредственным руководителем. Сохраните пользователей без руководителя с SQL NULL и порядок по id пользователя.",
+      "column_hint": "",
+      "dataset_id": "shop-v1",
+      "dataset_checksum": "a1de3973eb4a2febc818c026def43716109e7ffde6b0bc46721e11d1b2fa4b97",
+      "comparison": "ordered"
+    }
+  ],
+  "runner": [
+    {
+      "task_id": "sql.guided.10.2.projection.v1",
+      "task_revision": 1,
+      "grader_revision": "projection-v1",
+      "bundle": "projection-v1",
+      "sha256": "6ae7700181c75b63ba3c5060733fe2b90c1482f9723f3a04ccc866e79ef4fef6"
+    },
+    {
+      "task_id": "sql.basic.01",
+      "task_revision": 1,
+      "grader_revision": "active-users-v1",
+      "bundle": "active-users-v1",
+      "sha256": "2025fe522b74fd9b2644a03f657dbfffe059e26ba319d6771228e5faa3bcd2b4"
+    },
+    {
+      "task_id": "sql.basic.03",
+      "task_revision": 1,
+      "grader_revision": "null-country-v1",
+      "bundle": "null-country-v1",
+      "sha256": "566c85cefbc748bb0d85583dd482cbfddbcbff9d6396d2ee104eb4790e73aeda"
+    },
+    {
+      "task_id": "sql.basic.04",
+      "task_revision": 1,
+      "grader_revision": "latest-orders-v1",
+      "bundle": "latest-orders-v1",
+      "sha256": "f0dfddb0e8b4c25429561b4e78370436656b07b52bf1806fa39190cd733213ba"
+    },
+    {
+      "task_id": "sql.basic.05",
+      "task_revision": 1,
+      "grader_revision": "distinct-countries-v1",
+      "bundle": "distinct-countries-v1",
+      "sha256": "c86a3312b1886cfbd69fd937504ceb41410c5f73108073d346c3ad3897c35989"
+    },
+    {
+      "task_id": "sql.aggregation.09",
+      "task_revision": 1,
+      "grader_revision": "count-orders-v1",
+      "bundle": "count-orders-v1",
+      "sha256": "f2d259c30d38072ed0c169e7761f99254f39851cd231ad249da4cb6841bc39c7"
+    },
+    {
+      "task_id": "sql.aggregation.10",
+      "task_revision": 1,
+      "grader_revision": "orders-by-status-v1",
+      "bundle": "orders-by-status-v1",
+      "sha256": "3b51098df8ef8df18f504f650ad77b5ea149229a2f31f4e86aa0bd4b4e8004c5"
+    },
+    {
+      "task_id": "sql.aggregation.13",
+      "task_revision": 1,
+      "grader_revision": "users-with-two-orders-v1",
+      "bundle": "users-with-two-orders-v1",
+      "sha256": "d5a27f000cf187672630f6e430aa18a632fa46f9e4c32e2f3b1d6ae4791d2f44"
+    },
+    {
+      "task_id": "sql.join.17",
+      "task_revision": 1,
+      "grader_revision": "join-order-users-v1",
+      "bundle": "join-order-users-v1",
+      "sha256": "8316ccd5c366a5e1c14162e9840103a88360be5248f5a44407df2623f646d6cf"
+    },
+    {
+      "task_id": "sql.join.18",
+      "task_revision": 1,
+      "grader_revision": "users-without-orders-v1",
+      "bundle": "users-without-orders-v1",
+      "sha256": "731d8847752ad3de61e3820403c6043a63183d3b6c64a48848a74aa2fd35203c"
+    },
+    {
+      "task_id": "sql.join.25",
+      "task_revision": 1,
+      "grader_revision": "right-join-products-v1",
+      "bundle": "right-join-products-v1",
+      "sha256": "5230bd59e0b64827fa92aa6c283f97f808431d061f242c7d72cb279fcaaddb29"
+    },
+    {
+      "task_id": "sql.join.20",
+      "task_revision": 1,
+      "grader_revision": "users-managers-v1",
+      "bundle": "users-managers-v1",
+      "sha256": "40fae9ee42c21d79a0eec3b148294dddf69e2fa02e13fc18490e2bebdaf2ab3e"
+    }
+  ],
+  "bank": {
+    "sql.basic.01": "a6ecf301c6bfafb136c1b30889a768598aea479b16a946068c46b5d30d87f7f2",
+    "sql.basic.02": "17a96042359bea8051cea8a2bc43fef04e6e534ac19f39b721083a4fc4cd665b",
+    "sql.basic.03": "dbb43e28fbd72c9ab00b22283ac8f16c1c0177387a13d12dc6cb5f262a58e8dc",
+    "sql.basic.04": "e76835611ff4a700b5b13b7e63e3e0d25b1928c79b7a88acd764bc6adafdcb3a",
+    "sql.basic.05": "832cb2fb5732be055c93244e04106934d1dffeb1f167e58ae38e014479b49556",
+    "sql.basic.06": "9edbf3bf1e3891f7a3424d674bf09617ff1517417c45351b479f8e7e47ff0292",
+    "sql.basic.07": "cd1870961cd7fb6ba7f7325d044c705523546e277b282089f33f84b66f6f79f6",
+    "sql.basic.08": "bcad1b36e69137510a1e6011413d35c170c65dd291b93e31ad27fad000903023",
+    "sql.aggregation.09": "c216099f3cdfb8a6dbfeec7ee1a72e6a1ac55957cb9e5cfad5972614f4a3a891",
+    "sql.aggregation.10": "264992d0036b979753f3cb86837e24ea026e96fd29f29d8380b7336153771df7",
+    "sql.aggregation.11": "72337b4bf353b23f0a741ee376bdd12ce8105dfdb96a7f6ca573fb15af7a7c5f",
+    "sql.aggregation.12": "93528611a69d9eca88c66ab095abdfff235debe3b07974a4a45b304c7b718906",
+    "sql.aggregation.13": "3b91944344e54434d9b9ff74e2795805bc7938ae58498de3484b19f109c9b38f",
+    "sql.aggregation.14": "1d04d5cf1e58ee994da4a7120b88ef180705b90ed18aba042b2cd1cbf9cfa450",
+    "sql.aggregation.15": "35486e1c21db9a18208360c58223e51ce75cd338fd14969a7d7700541878ae9f",
+    "sql.aggregation.16": "d29d7bfd2d34c1481fc97777048d668a96ef28fa9d24b298e6e10f42ea7467d0",
+    "sql.join.17": "f3b3b8bf63ccf2bc7b29c9b2abd670e6e291fb1fc68c6ee7b0191af7a80dbb8f",
+    "sql.join.18": "fd669da7d88e7a590329b98a4a0697212173872058bdfbf7b045a5964359ace1",
+    "sql.join.19": "4d7e7aeec2c4f3f979a8b3b04b054fd8a6dfd9b8d96cfef8e2cd55795698948b",
+    "sql.join.20": "acb053558bbc10d39e8ee10088fe041144d6c024365d8fbc5cd902ab2bad581b",
+    "sql.join.21": "c7649a20b71d42309fd4087379aba897f71d73c81025395de7b5fb1b48e185a6",
+    "sql.join.22": "a8dab1415caa76fc4145378a09c9ce42f2a0a7711bb286e5b74245e9d6d2c5d1",
+    "sql.join.23": "8dd41fa6af378bb727ec291bbde970a01704712e75de4ed2aea7e779ee11f104",
+    "sql.join.24": "d79922cab99f264e3f58466c4751ad4de374d7d0a789454b086f22930cc69027",
+    "sql.join.25": "52582f0ccd6d7909b0c3c058ce68ab42b9a630131dc1a7eeabde5e7561ac81d2",
+    "sql.join.26": "7313267220f29ec828f9af83106a16d66f7c67314731ff4078a2b70957da0f7e",
+    "sql.subquery.27": "80c16e0e37e140ee3a6adab40036cf62a490e6afc8886f3ad527725940e36fde",
+    "sql.subquery.28": "4d7094a8247e0fb213f1fcbe1ab26112d07b15b00c928b3dde510bb11003c022",
+    "sql.subquery.29": "fab23d8fca6e4c67c54841516c986698b7ccbe80d4e44da3e538651e7e86b582",
+    "sql.subquery.30": "b887e607b2f4a2e06a4475a6c3a8219e606a80d8e3f57f84c356bb43bfc05565",
+    "sql.subquery.31": "db110e95661e5ba6772a421e24d87749239468c073dd7ba4a130195f01968063",
+    "sql.subquery.32": "c76e17b77465281cb887e66b40c2ebc6693c303b387b837ca00113340a5b0418",
+    "sql.window.33": "e9f7c93bc0a856ca1eb204d1592299028eb3f18e86c23dc8e13aad7fffddf1d8",
+    "sql.window.34": "61412a776abbf9de205fd43a13e2edb967c25cc8d63b88b63f22336327dd203e",
+    "sql.window.35": "45d86370c84d2de31c929849f5cd831ea09d630edb6c16e2e3b0a44f4d876d41",
+    "sql.window.36": "48a5c602d354e4b13cbf9983179aa6f8ccceb2fac6bdd89fa7122605f7572fa2",
+    "sql.window.37": "6d75b7af12c09a7f56468097302783e576cb9ee522548039f6f99b3958f3f7cd",
+    "sql.window.38": "3aeb7d5ef2bde513d2b056938d5da76bcfed311b47b1d5047e5ac4027fb6335a",
+    "sql.postgresql.01": "16c0bf14a2272ea3f16837a39e1a16061f90e149f4d0c08556f1af0590cbb12e",
+    "sql.postgresql.02": "8858460c74c5e8036e9c8c42766c9f35d5696bc8055e8308aa4ed9636b7ba34c",
+    "sql.postgresql.03": "9a0a801c67decfcd8eee5d485e98aea35e02ddfa59ba362dcc9d20fb7421d140",
+    "sql.postgresql.04": "493de70c471e41c914f75d14cee4e4878f7d4da21d8b74913fa57bcf11548c93",
+    "sql.postgresql.05": "efe2948d1b54b1c6abf6036c4cfdb0e907bd002a36a848d1dd763014d1653d37",
+    "sql.postgresql.06": "e5df0c824a807ee7417426319be643fe96243df1263336da1c2666e0d849f41a",
+    "sql.postgresql.07": "6523ef65d1dbf2d2f88fa7f6bcd774e77e8943def195ce12b3ea630708899fa8",
+    "sql.postgresql.08": "fcbdbe6eecba72efad6290c21d1ecb773cca36a636b9e1bf6da71a09589c8d07",
+    "sql.postgresql.09": "77a8ebcaa6fddb054751247e416df20aee20f398e36cc12a1de9aeff084946a4",
+    "sql.postgresql.10": "9abceec3523ff8a3058487cd4dca0fce6ff549324dc85a86de074c8d90ce1f17",
+    "sql.guided.10.2.projection.v1": "1783e2ae6dec036073eb7b12e010bc78ac467d60b181ef4f3e63838109a1b9fb"
+  }
+}

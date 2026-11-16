@@ -1,38 +1,32 @@
 [
   {
-    "question": "Что такое CASE и какой механизм здесь важно понимать Junior-разработчику?",
+    "question": "Чем simple CASE отличается от searched CASE?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "conditional projection",
-      "grouped reporting"
+      "Simple сравнивает одно выражение с вариантами; searched проверяет самостоятельные булевы условия и выбирает первое истинное."
     ],
-    "short_answer": "CASE: Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.",
-    "junior_answer": "CASE — тема, в которой я сначала фиксирую `conditional projection`, затем объясняю `grouped reporting` на коротком примере. Ключевой механизм: Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа. Главная практическая ошибка — Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
-    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме CASE?",
-    "follow_up_answer": "Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
+    "short_answer": "Simple сравнивает одно выражение с вариантами; searched проверяет самостоятельные булевы условия и выбирает первое истинное..",
+    "junior_answer": "Simple сравнивает одно выражение с вариантами; searched проверяет самостоятельные булевы условия и выбирает первое истинное.",
+    "follow_up_question": "Что возвращает CASE без ELSE?",
+    "follow_up_answer": "При отсутствии TRUE-ветки возвращает NULL. Результирующие ветки всё равно должны иметь совместимые типы.",
     "expected_answer": {
       "must_mention": [
-        "conditional projection",
-        "grouped reporting"
+        "Simple сравнивает одно выражение с вариантами; searched проверяет самостоятельные булевы условия и выбирает первое истинное."
       ],
       "good_additions": [
-        "короткий рабочий пример",
-        "ограничение или типичная ошибка"
+        "Первая TRUE-ветка побеждает. Не забудьте ELSE, порядок границ, совместимость типов и отдельную проверку IS NULL."
       ],
-      "common_wrong_answers": [],
-      "red_flags": [],
+      "common_wrong_answers": [
+        "Без ELSE CASE синтаксически недопустим."
+      ],
+      "red_flags": [
+        "Подмена контракта результата без объяснения."
+      ],
       "follow_up_questions": [
-        "Какое ограничение или типичная ошибка относится именно к теме CASE?"
-      ],
-      "coding_mistakes": [
-        "Не определить cardinality результата и замаскировать неверный query через DISTINCT."
-      ],
-      "assessment_notes": [
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "review_status": "pending-substantive-review"
+        "Что возвращает CASE без ELSE?"
+      ]
     },
     "follow_ups": [
       "Какое ограничение или типичная ошибка относится именно к теме CASE?"
@@ -48,35 +42,33 @@
     ]
   },
   {
-    "question": "Какое ограничение или типичная ошибка относится именно к теме CASE?",
+    "question": "Что возвращает CASE без ELSE?",
     "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "связать CASE с коротким рабочим примером",
-      "Не определить cardinality результата и замаскировать неверный query через DISTINCT."
+      "При отсутствии TRUE-ветки возвращает NULL. Результирующие ветки всё равно должны иметь совместимые типы."
     ],
-    "short_answer": "Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
-    "junior_answer": "Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
-    "follow_up_question": "Что такое CASE и какой механизм здесь важно понимать Junior-разработчику?",
-    "follow_up_answer": "CASE — тема, в которой я сначала фиксирую `conditional projection`, затем объясняю `grouped reporting` на коротком примере. Ключевой механизм: Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа. Главная практическая ошибка — Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
+    "short_answer": "При отсутствии TRUE-ветки возвращает NULL.",
+    "junior_answer": "При отсутствии TRUE-ветки возвращает NULL. Результирующие ветки всё равно должны иметь совместимые типы.",
+    "follow_up_question": "Чем simple CASE отличается от searched CASE?",
+    "follow_up_answer": "Simple сравнивает одно выражение с вариантами; searched проверяет самостоятельные булевы условия и выбирает первое истинное.",
     "expected_answer": {
       "must_mention": [
-        "связать CASE с коротким рабочим примером"
+        "При отсутствии TRUE-ветки возвращает NULL. Результирующие ветки всё равно должны иметь совместимые типы."
       ],
       "good_additions": [
-        "короткий пример именно этой темы"
+        "Первая TRUE-ветка побеждает. Не забудьте ELSE, порядок границ, совместимость типов и отдельную проверку IS NULL."
       ],
-      "common_wrong_answers": [],
-      "red_flags": [],
+      "common_wrong_answers": [
+        "Без ELSE CASE синтаксически недопустим."
+      ],
+      "red_flags": [
+        "Подмена контракта результата без объяснения."
+      ],
       "follow_up_questions": [
-        "Что такое CASE и какой механизм здесь важно понимать Junior-разработчику?"
-      ],
-      "coding_mistakes": [
-        "Не определить cardinality результата и замаскировать неверный query через DISTINCT."
-      ],
-      "assessment_notes": [],
-      "review_status": "pending-substantive-review"
+        "Чем simple CASE отличается от searched CASE?"
+      ]
     },
     "follow_ups": [
       "Что такое CASE и какой механизм здесь важно понимать Junior-разработчику?"

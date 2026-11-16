@@ -35,13 +35,15 @@ def test_all_registered_tasks_and_references_validate_without_changing_projectio
     content.validate_registered_tasks()
     assert set(content.REGISTRY) == {"sql.guided.10.2.projection.v1", "sql.basic.01", "sql.basic.03", "sql.basic.04", "sql.basic.05",
                                      "sql.aggregation.09", "sql.aggregation.10", "sql.aggregation.13",
-                                     "sql.join.17", "sql.join.18", "sql.join.25", "sql.join.20"}
+                                     "sql.join.17", "sql.join.18", "sql.join.25", "sql.join.20",
+                                     'sql.subquery.27', 'sql.subquery.31', 'sql.subquery.28', 'sql.subquery.30', 'sql.subquery.32', 'sql.basic.06', 'sql.set.50', 'sql.window.37', 'sql.window.33', 'sql.window.36', 'sql.window.38'}
     contracts = {"projection-v1": ("unordered", 4), "active-users-v1": ("unordered", 5),
                  "null-country-v1": ("unordered", 5), "latest-orders-v1": ("ordered", 6),
                  "distinct-countries-v1": ("ordered", 6), "count-orders-v1": ("ordered", 6),
                  "orders-by-status-v1": ("ordered", 6), "users-with-two-orders-v1": ("ordered", 6),
                  "join-order-users-v1": ("unordered", 6), "users-without-orders-v1": ("unordered", 6),
-                 "right-join-products-v1": ("ordered", 6), "users-managers-v1": ("ordered", 6)}
+                 "right-join-products-v1": ("ordered", 6), "users-managers-v1": ("ordered", 6),
+                 'above-average-v1': ('unordered', 6), 'latest-per-user-v1': ('ordered', 6), 'paid-buyers-v1': ('unordered', 6), 'paid-revenue-v1': ('ordered', 6), 'manager-chain-v1': ('ordered', 6), 'status-label-v1': ('unordered', 6), 'active-countries-except-paid-v1': ('ordered', 6), 'previous-total-v1': ('ordered', 6), 'order-row-number-v1': ('ordered', 6), 'running-revenue-v1': ('ordered', 6), 'next-order-time-v1': ('ordered', 6)}
     for entry in content.REGISTRY.values():
         task = load(entry)
         assert task.id == entry.task_id and task.revision == 1
@@ -121,3 +123,13 @@ def test_bank_contracts_are_validated_for_all_tasks():
     bank["sql"].append(bank["sql"][0].copy())
     with pytest.raises(ValueError, match="Duplicate"):
         content.validate_graded_bank(bank)
+
+
+@pytest.mark.parametrize('keys', ['user_id', ['missing'], ['user_id','user_id'], [1], None])
+def test_invalid_ordered_group_configuration_fails_closed(bundles, monkeypatch, keys):
+    entry=content.REGISTRY['sql.subquery.31']
+    config=json.loads((bundles / entry.bundle / 'task.json').read_bytes())
+    config['ordered_key_columns']=keys
+    repin(entry,config,monkeypatch)
+    with pytest.raises(ValueError,match='ordered group'):
+        load(entry)

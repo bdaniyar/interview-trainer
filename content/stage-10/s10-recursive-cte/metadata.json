@@ -6,15 +6,15 @@
   "module_title": "Этап 10 · SQL Fundamentals and Practice",
   "module_order": 10,
   "order": 114,
-  "duration": 10,
-  "estimated_minutes": 10,
+  "duration": 35,
+  "estimated_minutes": 35,
   "xp": 5,
   "topics": [
     "hierarchy basics",
     "termination",
     "not a Junior core requirement."
   ],
-  "description": "P2 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+  "description": "SELF JOIN показывает только один шаг связи.",
   "has_task": false,
   "has_solution": false,
   "priority": "P2",
@@ -39,7 +39,8 @@
   "tracks": [
     "full"
   ],
-  "content_status": "planned",
-  "last_verified": "2026-08-27",
-  "generated_by": "populate_curriculum.py"
+  "content_status": "complete",
+  "last_verified": "2026-11-16",
+  "generated_by": "populate_curriculum.py",
+  "content_source": "curated"
 }

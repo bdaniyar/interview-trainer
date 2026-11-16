@@ -1,276 +1,145 @@
 # EXISTS vs IN
 
-> [!IMPORTANT]
-> **P1 · вероятность на интервью: high · 10 минут.** SQL/relational DB явно встречались в 15/18 — один из главных P0-разделов.
-
 ## Учебные цели
 
-После урока ты сможешь:
-
-- восстановить mental model темы **EXISTS vs IN**, а не только запомнить термин;
-- прочитать и изменить короткий пример для `existence semantics`;
-- распознать характерную ошибку и объяснить причину;
-- дать реалистичный ответ уровня Junior и выдержать follow-up.
+После урока вы сможете объяснить механизм EXISTS vs IN, предсказать строки на пустых и граничных входах, написать запрос и проверить его контракт.
 
 ## Теория
 
 ### Что это
 
-Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.
+EXISTS отвечает на вопрос «есть ли хотя бы одна подходящая строка?». Сервису иногда нужен список клиентов с обращениями, а не все пары клиент–обращение. Именно здесь проверка существования удобнее соединения, которое размножает строки.
 
 ### Как работает
 
-Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа.
+EXISTS возвращает TRUE для непустого результата и FALSE для пустого. Значение выбранного столбца обычно не важно: SELECT 1 и SELECT NULL оба свидетельствуют о существующей строке. Внешняя строка проходит один раз, даже если нашлось десять внутренних совпадений. Это логика semi-join; NOT EXISTS задаёт anti-join.
 
-**existence semantics.** `existence semantics` меняет набор SQL rows; его смысл проверяют через grain результата, cardinality, NULL semantics и явный ordering.
-
-**NULL caveats.** `NULL` означает отсутствие известного значения; сравнение с ним делают через `IS NULL`, а многие выражения дают `UNKNOWN`.
-
-**нет простого универсального правила производительности.** IN проверяет принадлежность значения результату подзапроса, EXISTS — наличие хотя бы одной подходящей строки. Универсально более быстрого варианта нет: план зависит от запроса, индексов и статистики. Сначала проверь смысл при NULL (особенно для NOT IN), затем сравни планы EXPLAIN на представительных данных.
-
+IN сравнивает значение с одностолбцовым результатом. Совпадение даёт TRUE. Если совпадения нет, но внутри есть NULL, ответ UNKNOWN; в WHERE такая строка не проходит. NOT IN инвертирует TRUE/FALSE, но UNKNOWN остаётся UNKNOWN. Поэтому присутствие NULL в подзапросе может убрать все несовпавшие значения. Для пустого результата IN даёт FALSE, NOT IN — TRUE, даже для NULL слева. NOT EXISTS с равенством проверяет отсутствие совпавшей строки и не наследует эту ловушку списка.
 
 ### Важный нюанс / ограничение
 
-Граница Junior: уверенно объясняй `existence semantics` и `NULL caveats` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
-
-### Где используется в backend
-
-В backend эта тема важна в том месте, где применяется `existence semantics`; проверяй именно наблюдаемый contract, а не название инструмента.
+У orders.user_id есть NOT NULL FK, но users.manager_id nullable. Нельзя автоматически переносить рассуждение об одном столбце на другой. NULL справа и NULL слева — отдельные случаи. Для бизнес-смысла «NULL равен NULL» явно выбирают IS NOT DISTINCT FROM; обычное = этого не делает. Проверять EXISTS как COUNT(*) > 0 можно, но считать все строки часто не требуется.
 
 ## Модель понимания
 
-Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
-
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
+EXISTS — есть строка; IN — есть равное значение. SELECT NULL тоже строка. NOT IN требует анализа nullable значений и пустого результата.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
-- existence semantics
-- NULL caveats
-- нет простого универсального правила производительности
+Он вычисляет одно булево условие для текущей внешней строки. Количество найденных внутренних строк не меняет число копий этой внешней строки.
 
-### Полезно
-
-- связать EXISTS vs IN с коротким рабочим примером
-
-### Можно не учить глубоко
-
-- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
+Если равного элемента нет, но правый результат содержит NULL, сравнение неизвестно. NOT сохраняет UNKNOWN, и WHERE отбрасывает строку. NOT EXISTS с нужным условием обычно яснее для поиска отсутствующих связей.
 
 ## Примеры кода
 
-### EXISTS vs IN: отдельный пример
+Все примеры ниже выполняются в PostgreSQL 17 на неизменном shop-v1 либо явно заданных синтетических VALUES. SQL NULL обозначает отсутствие значения; строка `NULL` была бы другим значением.
+
+### Пример 1
+
+У 1 два подчинённых, но id=1 выводится один раз. У 2 один; 3 и 4 не руководят никем.
 
 ```sql
-SELECT u.id
-FROM users AS u
-WHERE EXISTS (
-    SELECT 1 FROM sessions AS s
-    WHERE s.user_id = u.id AND s.revoked_at IS NULL
-);
+SELECT id FROM users u WHERE EXISTS(SELECT 1 FROM users staff WHERE staff.manager_id=u.id) ORDER BY id;
 ```
 
-EXISTS выражает проверку наличия связанной строки и не размножает users как обычный JOIN.
+Ожидаемый результат; типы: `id: int8`.
+
+| `id` |
+| --- |
+| 1 |
+| 2 |
+
+### Пример 2
+
+В списке manager_id есть NULL и нет 3. NOT IN неизвестен; NOT EXISTS истинно, поскольку совпавшей строки нет.
+
+```sql
+SELECT 3 NOT IN (SELECT manager_id FROM users) AS not_in_result, NOT EXISTS(SELECT 1 FROM users WHERE manager_id=3) AS not_exists_result;
+```
+
+Ожидаемый результат; типы: `not_in_result: bool`, `not_exists_result: bool`.
+
+| `not_in_result` | `not_exists_result` |
+| --- | --- |
+| SQL NULL | true |
+
+### Пример 3
+
+Пустой список не содержит совпадения. SELECT NULL возвращает строку, а не пустое отношение.
+
+```sql
+SELECT NULL::bigint IN (SELECT id FROM users WHERE false) AS in_empty, NULL::bigint NOT IN (SELECT id FROM users WHERE false) AS not_in_empty, EXISTS(SELECT NULL) AS null_row_exists;
+```
+
+Ожидаемый результат; типы: `in_empty: bool`, `not_in_empty: bool`, `null_row_exists: bool`.
+
+| `in_empty` | `not_in_empty` | `null_row_exists` |
+| --- | --- | --- |
+| false | true | true |
 
 ## Типичные ошибки
 
-### Ошибка 1
-
-Не определить cardinality результата и замаскировать неверный query через DISTINCT.
+JOIN без DISTINCT умножает пользователя с несколькими paid-заказами. EXISTS без корреляции проверяет весь магазин. Фильтр status снаружи не видит alias внутреннего запроса. NOT IN без анализа NULL может дать пустой результат вместо anti-join.
 
 ## Практика
 
-**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для `existence semantics` до запуска.
+Данные: `users.manager_id` в shop-v1 равны NULL,1,1,2 для id 1,2,3,4. Найдите пользователей без подчинённых через NOT EXISTS. Сравните с NOT IN(manager_id), затем исправьте nullable-подзапрос явным фильтром. Отдельно объясните, нужен ли в вашей постановке NULL слева.
 
-**B · Найди ошибку.** Найди нарушение `NULL caveats` и объясни конкретное последствие.
-
-**E · Ответ на собеседовании.** Дай ответ про EXISTS vs IN за 60 секунд: определение, механизм, пример, ограничение.
-
-## Практика SQL
-
-### Users с paid order
-
-```sql
-CREATE TABLE users (
-    id bigint PRIMARY KEY,
-    email text NOT NULL UNIQUE,
-    country text,
-    active boolean NOT NULL DEFAULT true,
-    manager_id bigint REFERENCES users(id),
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE orders (
-    id bigint PRIMARY KEY,
-    user_id bigint NOT NULL REFERENCES users(id),
-    status text NOT NULL,
-    total numeric(12, 2) NOT NULL,
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE products (
-    id bigint PRIMARY KEY,
-    name text NOT NULL,
-    category text NOT NULL,
-    price numeric(12, 2) NOT NULL
-);
-CREATE TABLE order_items (
-    order_id bigint REFERENCES orders(id),
-    product_id bigint REFERENCES products(id),
-    quantity integer NOT NULL CHECK (quantity > 0),
-    PRIMARY KEY (order_id, product_id)
-);
-```
-
-Начальные данные:
-
-```sql
-INSERT INTO users VALUES
-(1,'a@example.com','KZ',true,NULL,'2026-01-01'),
-(2,'b@example.com','KZ',true,1,'2026-01-02'),
-(3,'c@example.com',NULL,false,1,'2026-01-03'),
-(4,'d@example.com','GE',true,2,'2026-01-04');
-INSERT INTO orders VALUES
-(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),
-(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),
-(14,4,'new',80,'2026-02-05');
-INSERT INTO products VALUES
-(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);
-INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);
-```
-
-**Вопрос:** Через EXISTS верни users, у которых есть paid order.
-
-Ожидаемые столбцы: id, email. Сравнение: без учёта порядка строк.
-
-Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
-
-### Users без orders
-
-```sql
-CREATE TABLE users (
-    id bigint PRIMARY KEY,
-    email text NOT NULL UNIQUE,
-    country text,
-    active boolean NOT NULL DEFAULT true,
-    manager_id bigint REFERENCES users(id),
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE orders (
-    id bigint PRIMARY KEY,
-    user_id bigint NOT NULL REFERENCES users(id),
-    status text NOT NULL,
-    total numeric(12, 2) NOT NULL,
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE products (
-    id bigint PRIMARY KEY,
-    name text NOT NULL,
-    category text NOT NULL,
-    price numeric(12, 2) NOT NULL
-);
-CREATE TABLE order_items (
-    order_id bigint REFERENCES orders(id),
-    product_id bigint REFERENCES products(id),
-    quantity integer NOT NULL CHECK (quantity > 0),
-    PRIMARY KEY (order_id, product_id)
-);
-```
-
-Начальные данные:
-
-```sql
-INSERT INTO users VALUES
-(1,'a@example.com','KZ',true,NULL,'2026-01-01'),
-(2,'b@example.com','KZ',true,1,'2026-01-02'),
-(3,'c@example.com',NULL,false,1,'2026-01-03'),
-(4,'d@example.com','GE',true,2,'2026-01-04');
-INSERT INTO orders VALUES
-(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),
-(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),
-(14,4,'new',80,'2026-02-05');
-INSERT INTO products VALUES
-(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);
-INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);
-```
-
-**Вопрос:** Через NOT EXISTS верни users без orders.
-
-Ожидаемые столбцы: id. Сравнение: без учёта порядка строк.
-
-Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
+Сначала запишите ожидаемые столбцы, типы и строки вручную; затем используйте Run. Сравнивайте также пустой вход и повторные значения. Дополнительная практика не выдаёт статус основной задачи.
 
 ## Вопросы с собеседований
 
-### Основной вопрос
-
-Что такое EXISTS vs IN и какой механизм здесь важно понимать Junior-разработчику?
-
-### Дополнительный вопрос
-
-Какое ограничение или типичная ошибка относится именно к теме EXISTS vs IN?
-
-Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+1. Почему EXISTS не умножает строки?
+2. Как NULL влияет на NOT IN?
 
 ## Хорошие ответы
 
-### Короткий ответ
+<details>
+<summary>Раскрыть ответы</summary>
 
-EXISTS vs IN: Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.
+Он вычисляет одно булево условие для текущей внешней строки. Количество найденных внутренних строк не меняет число копий этой внешней строки.
 
-### Нормальный ответ уровня Junior
+Если равного элемента нет, но правый результат содержит NULL, сравнение неизвестно. NOT сохраняет UNKNOWN, и WHERE отбрасывает строку. NOT EXISTS с нужным условием обычно яснее для поиска отсутствующих связей.
 
-> EXISTS vs IN — тема, в которой я сначала фиксирую `existence semantics`, затем объясняю `NULL caveats` на коротком примере. Ключевой механизм: Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа. Главная практическая ошибка — Не определить cardinality результата и замаскировать неверный query через DISTINCT.
-
-### Углубление / дополнительный вопрос
-
-**Какое ограничение или типичная ошибка относится именно к теме EXISTS vs IN?**
-
-Не определить cardinality результата и замаскировать неверный query через DISTINCT.
+</details>
 
 ## Критерии хорошего ответа
 
-### Что обязательно упомянуть
+<details>
+<summary>Раскрыть критерии</summary>
 
-- existence semantics
-- NULL caveats
-- нет простого универсального правила производительности
+EXISTS — есть строка; IN — есть равное значение. SELECT NULL тоже строка. NOT IN требует анализа nullable значений и пустого результата. Объясните хотя бы один граничный пример из урока с точным результатом и причину типичной ошибки.
 
-### Что улучшит ответ
-
-- один короткий пример с результатом;
-- одно ограничение или характерная ошибка именно этой темы;
-- пример из backend-разработки только при естественной связи.
-
-### Частые неправильные ответы
-
-- Не определить cardinality результата и замаскировать неверный query через DISTINCT.
-- пересказ одного определения без механизма или примера.
-
-### Дополнительный вопрос
-
-- Какое ограничение или типичная ошибка относится именно к теме EXISTS vs IN?
+</details>
 
 ## Задача
 
-Сделай короткую письменную практику по теме **EXISTS vs IN**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
+**sql.subquery.28 — Users с paid order**
+
+Верните id,email пользователей, у которых есть хотя бы один paid-заказ. Каждый пользователь один раз; порядок строк несущественен.
+
+Исходные таблицы смотрите в Explorer. Run выполняет запрос на публичных данных, Check проверяет отдельные наборы. Нужны все требуемые строки и только указанные столбцы. Принимаются эквивалентные SELECT независимо от выбранного синтаксиса. SQL XP отключён; черновик сохраняется в браузере.
+
+<details>
+<summary>Показать решение для самопроверки</summary>
+
+```sql
+SELECT u.id,u.email FROM users u WHERE EXISTS (SELECT 1 FROM orders o WHERE o.user_id=u.id AND o.status='paid');
+```
+
+Проверьте paid-условие, связь с текущим пользователем и отсутствие умножения строк.
+
+</details>
 
 ## Шпаргалка
 
-Перед собеседованием запомни:
-
-- **Что это:** EXISTS vs IN: Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.
-- **Механизм:** Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
-- **Ограничение:** Не определить cardinality результата и замаскировать неверный query через DISTINCT.
-- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
+EXISTS — есть строка; IN — есть равное значение. SELECT NULL тоже строка. NOT IN требует анализа nullable значений и пустого результата.
 
 ## Источники
 
-Материал написан своими словами и сверён с актуальными разделами официальной документации:
+- PostgreSQL **17**, [9.24.1 EXISTS](https://www.postgresql.org/docs/17/functions-subquery.html#FUNCTIONS-SUBQUERY-EXISTS).
+- PostgreSQL **17**, [9.24.3 NOT IN](https://www.postgresql.org/docs/17/functions-subquery.html#FUNCTIONS-SUBQUERY-NOTIN).
 
-- [PostgreSQL queries](https://www.postgresql.org/docs/current/queries.html)
-- [PostgreSQL functions](https://www.postgresql.org/docs/current/functions.html)
-
-Последняя проверка версий: **2026-08-27**.
-
-- Точечная проверка подтемы 2026-11-08: [PostgreSQL subquery expressions](https://www.postgresql.org/docs/current/functions-subquery.html). Остальной материал урока ещё ожидает содержательного аудита.
+Секции официальной документации сверены 2026-11-16. Примеры проверяются отдельными PG17 integration tests с независимо заданными именами, типами и значениями; версия sandbox закреплена проектом и не обновляется этим уроком.

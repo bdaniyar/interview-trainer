@@ -1,0 +1,50 @@
+{
+  "task_id": "sql.subquery.27",
+  "task_revision": 1,
+  "grader_revision": "above-average-v1",
+  "dataset_id": "shop-v1",
+  "dataset_checksum": "a1de3973eb4a2febc818c026def43716109e7ffde6b0bc46721e11d1b2fa4b97",
+  "expected_columns": [
+    "id",
+    "total"
+  ],
+  "comparison": "unordered",
+  "numeric_compatible": true,
+  "reference_sql": "SELECT id,total FROM orders WHERE total > (SELECT AVG(total) FROM orders);",
+  "cases": [
+    {
+      "id": "public-v1",
+      "public": true
+    },
+    {
+      "id": "ties-v1",
+      "public": false,
+      "seed_file": "ties-v1.sql",
+      "sha256": "e51d56c6065bde181a1b299aa844facb239fa6c72ae5639b7059af7b1081139a"
+    },
+    {
+      "id": "empty-v1",
+      "public": false,
+      "seed_file": "empty-v1.sql",
+      "sha256": "7d0414232e28595cacd3a2344f60f0330734c438eb7798cfcc00a9417f801768"
+    },
+    {
+      "id": "singleton-v1",
+      "public": false,
+      "seed_file": "singleton-v1.sql",
+      "sha256": "4fddcb0f2601d985a938d841b0ea569de3c0f8e643a0c548602946de7bf698ce"
+    },
+    {
+      "id": "boundaries-v1",
+      "public": false,
+      "seed_file": "boundaries-v1.sql",
+      "sha256": "78496817654b8f030f465040fedcb741f254e602675fb819075357db985cee1c"
+    },
+    {
+      "id": "bigint-v1",
+      "public": false,
+      "seed_file": "bigint-v1.sql",
+      "sha256": "f03992d5bf9dad7a4c7effb61564569bad123016feb5c09cde8789fbeac0852d"
+    }
+  ]
+}

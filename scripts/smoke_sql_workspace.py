@@ -65,6 +65,127 @@ JOIN_TASKS = [
      "SELECT email,manager_email FROM (VALUES (1,'a@example.com',NULL::text),(2,'b@example.com','a@example.com'),(3,'c@example.com','a@example.com'),(4,'d@example.com','b@example.com')) v(id,email,manager_email) ORDER BY id",
      [["a@example.com", None], ["b@example.com", "a@example.com"], ["c@example.com", "a@example.com"], ["d@example.com", "b@example.com"]], "руководителем"),
 ]
+ADVANCED_TASKS = [('s10-subqueries',
+  'sql.subquery.27',
+  'SELECT id,total FROM orders WHERE total > (SELECT AVG(total) FROM orders)',
+  'SELECT id,total FROM orders WHERE total >= (SELECT AVG(total) FROM orders)',
+  "SELECT * FROM (VALUES ('10'::int8,'100.00'::numeric),('12'::int8,'200.00'::numeric)) v(id,total)",
+  [['10', '100.00'], ['12', '200.00']],
+  'Учитывайте все заказы при расчёте среднего, строгую границу и пустой набор.'),
+ ('s10-correlated-subquery',
+  'sql.subquery.31',
+  'SELECT o.id,o.user_id FROM orders o WHERE o.created_at=(SELECT MAX(i.created_at) FROM orders i WHERE '
+  'i.user_id=o.user_id) ORDER BY o.user_id',
+  'SELECT id,user_id FROM orders WHERE created_at=(SELECT MAX(created_at) FROM orders) ORDER BY user_id',
+  "SELECT * FROM (VALUES ('11'::int8,'1'::int8),('13'::int8,'2'::int8),('14'::int8,'4'::int8)) v(id,user_id)",
+  [['11', '1'], ['13', '2'], ['14', '4']],
+  'Сравнивайте дату в пределах своего пользователя; сохраните все максимальные совпадения и порядок групп '
+  'user_id.'),
+ ('s10-exists-vs-in',
+  'sql.subquery.28',
+  'SELECT u.id,u.email FROM users u WHERE EXISTS (SELECT 1 FROM orders o WHERE o.user_id=u.id AND '
+  "o.status='paid')",
+  "SELECT u.id,u.email FROM users u JOIN orders o ON u.id=o.user_id WHERE o.status='paid'",
+  "SELECT * FROM (VALUES ('1'::int8,'a@example.com'::text),('2'::int8,'b@example.com'::text)) v(id,email)",
+  [['1', 'a@example.com'], ['2', 'b@example.com']],
+  'Проверьте paid-условие, связь с текущим пользователем и отсутствие умножения строк.'),
+ ('s10-cte',
+  'sql.subquery.30',
+  "WITH paid_totals AS (SELECT user_id,SUM(total) revenue FROM orders WHERE status='paid' GROUP BY user_id) "
+  'SELECT user_id,revenue FROM paid_totals WHERE revenue>=150 ORDER BY user_id',
+  "SELECT user_id,SUM(total) revenue FROM orders WHERE status='paid' GROUP BY user_id HAVING SUM(total)>150 "
+  'ORDER BY user_id',
+  "SELECT * FROM (VALUES ('2'::int8,'250.00'::numeric)) v(user_id,revenue)",
+  [['2', '250.00']],
+  'Суммируйте только paid, включайте границу 150 и сортируйте по user_id.'),
+ ('s10-recursive-cte',
+  'sql.subquery.32',
+  'WITH RECURSIVE chain AS (SELECT id,manager_id,0 depth FROM users WHERE id=4 UNION ALL SELECT '
+  'u.id,u.manager_id,c.depth+1 FROM users u JOIN chain c ON u.id=c.manager_id) SELECT id,depth FROM chain '
+  'ORDER BY depth',
+  'WITH RECURSIVE c AS (SELECT id,manager_id,0 depth FROM users WHERE id=4 UNION ALL SELECT '
+  'u.id,u.manager_id,c.depth+1 FROM users u JOIN c ON u.id=c.manager_id WHERE c.depth<1) SELECT id,depth '
+  'FROM c ORDER BY depth',
+  "SELECT * FROM (VALUES ('4'::int8,'0'::int4),('2'::int8,'1'::int4),('1'::int8,'2'::int4)) v(id,depth)",
+  [['4', '0'], ['2', '1'], ['1', '2']],
+  'Нужны все предки вверх, исходная строка на depth=0 и пустой результат без стартового пользователя.'),
+ ('s10-case',
+  'sql.basic.06',
+  "SELECT id, CASE status WHEN 'paid' THEN 'completed' WHEN 'cancelled' THEN 'cancelled' ELSE 'pending' END "
+  'AS label FROM orders',
+  "SELECT id,CASE status WHEN 'paid' THEN 'completed' WHEN 'cancelled' THEN 'cancelled' END AS label FROM "
+  'orders',
+  'SELECT * FROM (VALUES '
+  "('10'::int8,'completed'::text),('11'::int8,'cancelled'::text),('12'::int8,'completed'::text),('13'::int8,'completed'::text),('14'::int8,'pending'::text)) "
+  'v(id,label)',
+  [['10', 'completed'], ['11', 'cancelled'], ['12', 'completed'], ['13', 'completed'], ['14', 'pending']],
+  'Проверьте все ветки, запасной ELSE и сохранение каждой строки заказа.'),
+ ('s10-set-operations',
+  'sql.set.50',
+  'SELECT country FROM users WHERE active EXCEPT SELECT u.country FROM users u JOIN orders o ON '
+  "o.user_id=u.id WHERE o.status='paid' ORDER BY country NULLS LAST",
+  'SELECT DISTINCT country FROM users WHERE active AND country NOT IN (SELECT u.country FROM users u JOIN '
+  "orders o ON o.user_id=u.id WHERE o.status='paid') ORDER BY country NULLS LAST",
+  "SELECT * FROM (VALUES ('GE'::text)) v(country)",
+  [['GE']],
+  'Сравните множества стран, устраните повторы и учитывайте NULL как одно значение EXCEPT.'),
+ ('s10-window-functions',
+  'sql.window.37',
+  'SELECT id,user_id,total,LAG(total) OVER(PARTITION BY user_id ORDER BY created_at,id) AS previous_total '
+  'FROM orders ORDER BY user_id,created_at,id',
+  'SELECT id,user_id,total,LAG(total) OVER(ORDER BY created_at,id) AS previous_total FROM orders ORDER BY '
+  'user_id,created_at,id',
+  'SELECT * FROM (VALUES '
+  "('10'::int8,'1'::int8,'100.00'::numeric,NULL::numeric),('11'::int8,'1'::int8,'40.00'::numeric,'100.00'::numeric),('12'::int8,'2'::int8,'200.00'::numeric,NULL::numeric),('13'::int8,'2'::int8,'50.00'::numeric,'200.00'::numeric),('14'::int8,'4'::int8,'80.00'::numeric,NULL::numeric)) "
+  'v(id,user_id,total,previous_total)',
+  [['10', '1', '100.00', None],
+   ['11', '1', '40.00', '100.00'],
+   ['12', '2', '200.00', None],
+   ['13', '2', '50.00', '200.00'],
+   ['14', '4', '80.00', None]],
+  'Окно должно начинаться заново для каждого пользователя; учитывайте id при одинаковых датах и SQL NULL у '
+  'первой строки.'),
+ ('s10-row-number-rank-dense-rank',
+  'sql.window.33',
+  'SELECT id,user_id,ROW_NUMBER() OVER(PARTITION BY user_id ORDER BY created_at DESC,id DESC) AS row_number '
+  'FROM orders ORDER BY user_id,row_number',
+  'SELECT id,user_id,ROW_NUMBER() OVER(PARTITION BY user_id ORDER BY created_at DESC) AS row_number FROM '
+  'orders ORDER BY user_id,row_number',
+  'SELECT * FROM (VALUES '
+  "('11'::int8,'1'::int8,'1'::int8),('10'::int8,'1'::int8,'2'::int8),('13'::int8,'2'::int8,'1'::int8),('12'::int8,'2'::int8,'2'::int8),('14'::int8,'4'::int8,'1'::int8)) "
+  'v(id,user_id,row_number)',
+  [['11', '1', '1'], ['10', '1', '2'], ['13', '2', '1'], ['12', '2', '2'], ['14', '4', '1']],
+  'Проверьте PARTITION BY, обе сортировки DESC, последовательность без пропусков и итоговый порядок.'),
+ ('s10-partition-by-and-window-ordering',
+  'sql.window.36',
+  'SELECT id,user_id,SUM(total) OVER(PARTITION BY user_id ORDER BY created_at,id) AS running_total FROM '
+  'orders ORDER BY user_id,created_at,id',
+  'SELECT id,user_id,SUM(total) OVER(PARTITION BY user_id ORDER BY created_at) AS running_total FROM orders '
+  'ORDER BY user_id,created_at,id',
+  'SELECT * FROM (VALUES '
+  "('10'::int8,'1'::int8,'100.00'::numeric),('11'::int8,'1'::int8,'140.00'::numeric),('12'::int8,'2'::int8,'200.00'::numeric),('13'::int8,'2'::int8,'250.00'::numeric),('14'::int8,'4'::int8,'80.00'::numeric)) "
+  'v(id,user_id,running_total)',
+  [['10', '1', '100.00'],
+   ['11', '1', '140.00'],
+   ['12', '2', '200.00'],
+   ['13', '2', '250.00'],
+   ['14', '4', '80.00']],
+  'Проверьте границы partition/frame, хронологический порядок с id и нарастание суммы вместо общего итога.'),
+ ('s10-lag-and-lead',
+  'sql.window.38',
+  'SELECT id,user_id,LEAD(created_at) OVER(PARTITION BY user_id ORDER BY created_at,id) AS next_created_at '
+  'FROM orders ORDER BY user_id,created_at,id',
+  'SELECT id,user_id,LAG(created_at) OVER(PARTITION BY user_id ORDER BY created_at,id) AS next_created_at '
+  'FROM orders ORDER BY user_id,created_at,id',
+  'SELECT * FROM (VALUES '
+  "('10'::int8,'1'::int8,'2026-02-02T00:00:00Z'::timestamptz),('11'::int8,'1'::int8,NULL::timestamptz),('12'::int8,'2'::int8,'2026-02-04T00:00:00Z'::timestamptz),('13'::int8,'2'::int8,NULL::timestamptz),('14'::int8,'4'::int8,NULL::timestamptz)) "
+  'v(id,user_id,next_created_at)',
+  [['10', '1', '2026-02-02T00:00:00Z'],
+   ['11', '1', None],
+   ['12', '2', '2026-02-04T00:00:00Z'],
+   ['13', '2', None],
+   ['14', '4', None]],
+  'Нужна следующая строка своего пользователя с корректным tie-breaker id и SQL NULL на конце.')]
 PYTHON_FILES = {
     "main.py": "def compare_objects(a, b):\n    return {'same_identity': a is b, 'same_value': a == b}\n",
     "notes.py": "SAVED_FILE = 'preserve me'\nif __name__ == '__main__':\n    print('python stays available')\n",
@@ -182,7 +303,7 @@ def main():
         response = call("/api/sql/sessions", {"lesson_slug": SLUG}, expected=503)
         assert response["error"]["code"] == "runner_unavailable"
         call(CHECK, {"request_id": str(uuid4()), "sql": SOLUTION}, expected=503)
-        for slug, task_id, correct, *_ in FILTER_TASKS + ORDERED_TASKS + AGGREGATE_TASKS + JOIN_TASKS:
+        for slug, task_id, correct, *_ in FILTER_TASKS + ORDERED_TASKS + AGGREGATE_TASKS + JOIN_TASKS + ADVANCED_TASKS:
             grade_task(slug, task_id, correct, expected=503)
         before = call("/api/course")["summary"]["xp"]
         result = call("/api/run", {"lesson_slug": "is-vs-eq", "files": PYTHON_FILES, "entrypoint": "notes.py"})
@@ -263,6 +384,7 @@ def main():
     solve_six_case_tasks()
     solve_six_case_tasks(AGGREGATE_TASKS, FILTER_TASKS + ORDERED_TASKS)
     solve_six_case_tasks(JOIN_TASKS, FILTER_TASKS + ORDERED_TASKS + AGGREGATE_TASKS)
+    solve_six_case_tasks(ADVANCED_TASKS, FILTER_TASKS + ORDERED_TASKS + AGGREGATE_TASKS + JOIN_TASKS)
     assert call(f"/api/lessons/{SLUG}")["files"] == original["files"]
     assert call("/api/lessons/is-vs-eq")["files"] == python_before["files"] == python_files
     assert call("/api/lessons/is-vs-eq")["progress"] == python_before["progress"]

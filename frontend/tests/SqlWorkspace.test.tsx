@@ -281,8 +281,136 @@ const allProducts: SqlLesson = { ...where, lesson_slug: 's10-right-and-full-oute
 const managers: SqlLesson = { ...where, lesson_slug: 's10-self-join', lesson_id: 'backend-interview.10.13.self-join',
   task_id: 'sql.join.20', starter_sql: 'SELECT id, email, manager_id\nFROM users;\n', prompt: 'Непосредственный руководитель каждого пользователя.', expected_columns: ['email', 'manager_email'] };
 
+const advanced: SqlLesson[] = [
+  { ...where,
+    "lesson_slug": "s10-subqueries",
+    "lesson_id": "backend-interview.10.14.subqueries",
+    "task_id": "sql.subquery.27",
+    "starter_sql": "SELECT id,total FROM orders;\n",
+    "prompt": "Заказы со строго большей, чем средняя по всем orders, суммой. Верните id,total; порядок строк несущественен.",
+    "expected_columns": [
+      "id",
+      "total"
+    ]
+  },
+  { ...where,
+    "lesson_slug": "s10-correlated-subquery",
+    "lesson_id": "backend-interview.10.15.correlated-subquery",
+    "task_id": "sql.subquery.31",
+    "starter_sql": "SELECT id,user_id,created_at FROM orders;\n",
+    "prompt": "Верните id,user_id всех заказов с максимальным created_at своего пользователя. При равных максимальных timestamps нужны все такие заказы. Сортировка по user_id; внутри одного пользователя порядок свободный.",
+    "expected_columns": [
+      "id",
+      "user_id"
+    ]
+  },
+  { ...where,
+    "lesson_slug": "s10-exists-vs-in",
+    "lesson_id": "backend-interview.10.16.exists-vs-in",
+    "task_id": "sql.subquery.28",
+    "starter_sql": "SELECT id,email FROM users;\n",
+    "prompt": "Верните id,email пользователей, у которых есть хотя бы один paid-заказ. Каждый пользователь один раз; порядок строк несущественен.",
+    "expected_columns": [
+      "id",
+      "email"
+    ]
+  },
+  { ...where,
+    "lesson_slug": "s10-cte",
+    "lesson_id": "backend-interview.10.17.cte",
+    "task_id": "sql.subquery.30",
+    "starter_sql": "SELECT user_id,total,status FROM orders;\n",
+    "prompt": "Посчитайте сумму total только paid-заказов каждого пользователя; оставьте revenue >= 150. Столбцы user_id,revenue, сортировка user_id по возрастанию.",
+    "expected_columns": [
+      "user_id",
+      "revenue"
+    ]
+  },
+  { ...where,
+    "lesson_slug": "s10-recursive-cte",
+    "lesson_id": "backend-interview.10.18.recursive-cte",
+    "task_id": "sql.subquery.32",
+    "starter_sql": "SELECT id,manager_id FROM users;\n",
+    "prompt": "От пользователя с id=4 пройдите вверх по manager_id. Верните id,depth: старт на глубине 0, далее непосредственный руководитель. Сортировка depth по возрастанию. В проверочных данных цепочка ациклична; при отсутствии id=4 результат пуст.",
+    "expected_columns": [
+      "id",
+      "depth"
+    ]
+  },
+  { ...where,
+    "lesson_slug": "s10-case",
+    "lesson_id": "backend-interview.10.19.case",
+    "task_id": "sql.basic.06",
+    "starter_sql": "SELECT id,status FROM orders;\n",
+    "prompt": "Для каждого заказа верните id,label: paid → completed; cancelled → cancelled; любой другой статус → pending. Порядок строк несущественен.",
+    "expected_columns": [
+      "id",
+      "label"
+    ]
+  },
+  { ...where,
+    "lesson_slug": "s10-set-operations",
+    "lesson_id": "backend-interview.10.20.set-operations",
+    "task_id": "sql.set.50",
+    "starter_sql": "SELECT country,active FROM users;\n",
+    "prompt": "Верните уникальные страны активных пользователей, в которых нет ни одного пользователя с paid-заказом. NULL рассматривается как одно значение множества. Столбец country; по возрастанию, NULL в конце.",
+    "expected_columns": [
+      "country"
+    ]
+  },
+  { ...where,
+    "lesson_slug": "s10-window-functions",
+    "lesson_id": "backend-interview.10.21.window-functions",
+    "task_id": "sql.window.37",
+    "starter_sql": "SELECT id,user_id,total,created_at FROM orders;\n",
+    "prompt": "Для каждого заказа верните id,user_id,total,previous_total — total предыдущего заказа этого пользователя. Порядок внутри окна created_at,id по возрастанию; итог по user_id,created_at,id. У первого заказа previous_total — SQL NULL.",
+    "expected_columns": [
+      "id",
+      "user_id",
+      "total",
+      "previous_total"
+    ]
+  },
+  { ...where,
+    "lesson_slug": "s10-row-number-rank-dense-rank",
+    "lesson_id": "backend-interview.10.22.row-number-rank-dense-rank",
+    "task_id": "sql.window.33",
+    "starter_sql": "SELECT id,user_id,created_at FROM orders;\n",
+    "prompt": "Верните id,user_id,row_number для всех заказов. Нумерация с 1 отдельно по user_id, created_at DESC,id DESC. Итог по user_id,row_number.",
+    "expected_columns": [
+      "id",
+      "user_id",
+      "row_number"
+    ]
+  },
+  { ...where,
+    "lesson_slug": "s10-partition-by-and-window-ordering",
+    "lesson_id": "backend-interview.10.23.partition-by-and-window-ordering",
+    "task_id": "sql.window.36",
+    "starter_sql": "SELECT id,user_id,total,created_at FROM orders;\n",
+    "prompt": "Верните id,user_id,running_total — накопительную сумму total пользователя по created_at,id ASC. Включайте текущую строку, все статусы и все заказы; итог по user_id,created_at,id.",
+    "expected_columns": [
+      "id",
+      "user_id",
+      "running_total"
+    ]
+  },
+  { ...where,
+    "lesson_slug": "s10-lag-and-lead",
+    "lesson_id": "backend-interview.10.24.lag-and-lead",
+    "task_id": "sql.window.38",
+    "starter_sql": "SELECT id,user_id,created_at FROM orders;\n",
+    "prompt": "Верните id,user_id,next_created_at — created_at следующего заказа пользователя по created_at,id ASC. У последнего SQL NULL. Итог по user_id,created_at,id.",
+    "expected_columns": [
+      "id",
+      "user_id",
+      "next_created_at"
+    ]
+  }
+];
+
 function multipleLessons() {
-  const manifests = [graded, where, nullable, latest, countries, aggregates, grouped, having, orderOwners, withoutOrders, allProducts, managers];
+  const manifests = [graded, where, nullable, latest, countries, aggregates, grouped, having, orderOwners, withoutOrders, allProducts, managers, ...advanced];
   const solved = new Set<string>();
   vi.mocked(sqlApi.lesson).mockImplementation(async slug => ({ ...manifests.find(m => m.lesson_slug === slug)!,
     completed: solved.has(slug) }));
@@ -293,13 +421,13 @@ function multipleLessons() {
   });
   vi.mocked(sqlApi.check).mockImplementation(async (slug, taskId) => {
     solved.add(slug);
-    const count = [4, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6][manifests.findIndex(m => m.task_id === taskId)];
+    const count = [4, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, ...advanced.map(() => 6)][manifests.findIndex(m => m.task_id === taskId)];
     return { ...gradeResult, task_id: taskId, tests_total: count, tests_passed: count };
   });
   return solved;
 }
 
-it('navigates 10.2 → 10.13 with twelve independent drafts/progress states and serialized sessions', async () => {
+it('navigates 10.2 → 10.24 with twenty-three independent drafts/progress states and serialized sessions', async () => {
   multipleLessons();
   const mounted = render(<SqlWorkspace lessonSlug={slug} theme="dark" />);
   await ready(); edit('SELECT projection_draft FROM users;');
@@ -331,7 +459,7 @@ it('navigates 10.2 → 10.13 with twelve independent drafts/progress states and 
   expect(vi.mocked(sqlApi.check).mock.calls.at(-1)?.slice(0, 3)).toEqual([nullable.lesson_slug, nullable.task_id, 'SELECT null_draft FROM users;']);
   fireEvent.click(screen.getByRole('button', { name: 'Reset' })); await ready();
   expect(screen.getByText('Задача решена')).toBeTruthy();
-  for (const manifest of [latest, countries, aggregates, grouped, having, orderOwners, withoutOrders, allProducts, managers]) {
+  for (const manifest of [latest, countries, aggregates, grouped, having, orderOwners, withoutOrders, allProducts, managers, ...advanced]) {
     mounted.rerender(<SqlWorkspace lessonSlug={manifest.lesson_slug} theme="light" />); await ready();
     expect(screen.getByText(manifest.prompt)).toBeTruthy();
     expect((screen.getByRole('textbox') as HTMLTextAreaElement).value).toBe(manifest.starter_sql);
@@ -352,7 +480,7 @@ it('navigates 10.2 → 10.13 with twelve independent drafts/progress states and 
   expect((screen.getByRole('textbox') as HTMLTextAreaElement).value).toBe('SELECT projection_draft FROM users;');
   expect(screen.getByText('Задача решена')).toBeTruthy();
   expect(localStorage.getItem(draftKey(nullable))).toBe('SELECT null_draft FROM users;');
-  for (const manifest of [latest, countries, aggregates, grouped, having, orderOwners, withoutOrders, allProducts, managers]) {
+  for (const manifest of [latest, countries, aggregates, grouped, having, orderOwners, withoutOrders, allProducts, managers, ...advanced]) {
     mounted.rerender(<SqlWorkspace lessonSlug={manifest.lesson_slug} theme="dark" />); await ready();
     expect((screen.getByRole('textbox') as HTMLTextAreaElement).value).toBe(`SELECT draft_for_${manifest.task_id};`);
     expect(screen.getByText('Задача решена')).toBeTruthy();
@@ -361,7 +489,7 @@ it('navigates 10.2 → 10.13 with twelve independent drafts/progress states and 
   expect(api.saveFiles).not.toHaveBeenCalled();
 });
 
-it.each([[graded, where], [latest, countries], [aggregates, grouped], [grouped, having], [having, orderOwners], [orderOwners, withoutOrders], [allProducts, managers]])('ignores late Check and waits for previous SQL lesson cleanup (%#)', async (from, to) => {
+it.each([[graded, where], [latest, countries], [aggregates, grouped], [grouped, having], [having, orderOwners], [orderOwners, withoutOrders], [allProducts, managers], [managers, advanced[0]], ...advanced.slice(1).map((to, i) => [advanced[i], to])])('ignores late Check and waits for previous SQL lesson cleanup (%#)', async (from, to) => {
   multipleLessons();
   const pending = deferred<SqlCheckResult>();
   vi.mocked(sqlApi.check).mockReturnValueOnce(pending.promise);
@@ -418,7 +546,7 @@ describe('typed results and diagnostics', () => {
   });
 });
 
-it.each([manifest, orderOwners, withoutOrders, allProducts, managers])('switches CourseApp SQL/Python without saving SQL through Python files (%#)', async selected => {
+it.each([manifest, orderOwners, withoutOrders, allProducts, managers, ...advanced])('switches CourseApp SQL/Python without saving SQL through Python files (%#)', async selected => {
   const sqlSlug = selected.lesson_slug;
   vi.mocked(sqlApi.lesson).mockResolvedValue(selected);
   vi.mocked(sqlApi.create).mockResolvedValue({ ...initial, lesson_id: selected.lesson_id, lesson_slug: sqlSlug, task_id: selected.task_id });

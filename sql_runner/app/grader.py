@@ -58,7 +58,8 @@ def check(manager, task_id, task_revision, grader_revision, query):
                 state = error.get("sqlstate") or ""
                 if error.get("kind") == "infrastructure" or state.startswith(("08", "58")) or state in {"57P01", "57P02", "57P03"}:
                     raise SandboxUnavailable("Grading connection failed")
-                code = compare(expected, actual, comparison=task.comparison, numeric_compatible=task.numeric_compatible)
+                code = compare(expected, actual, comparison=task.comparison, numeric_compatible=task.numeric_compatible,
+                               ordered_key_columns=task.ordered_key_columns)
                 if code == "passed":
                     passed += 1
                 else:

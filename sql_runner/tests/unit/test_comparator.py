@@ -142,3 +142,14 @@ def test_outer_join_null_padding_is_not_zero_or_text_and_order_is_exact():
     manager = result([["root@example.test", None]], ("text", "text"), ["email", "manager_email"])
     for missing in ["NULL", ""]:
         assert compare(manager, result([["root@example.test", missing]], ("text", "text"), ["email", "manager_email"])) == "rows"
+
+
+def test_ordered_groups_allow_only_within_key_ties_and_keep_multiplicity():
+    make = lambda rows: result(rows, ('int8', 'int8'), ['id', 'user_id'])
+    expected = make([['10','1'],['11','1'],['20','2']])
+    kwargs = dict(comparison='ordered', numeric_compatible=True, ordered_key_columns=('user_id',))
+    assert compare(expected, make([['11','1'],['10','1'],['20','2']]), **kwargs) == 'passed'
+    for rows in [[['20','2'],['11','1'],['10','1']], [['10','1'],['20','2'],['11','1']],
+                 [['10','1'],['10','1'],['20','2']], [['11','1'],['20','2']]]:
+        assert compare(expected, make(rows), **kwargs) == 'rows'
+    assert compare(expected, make([['11','1'],['10','1'],['20','2']]), comparison='ordered') == 'rows'

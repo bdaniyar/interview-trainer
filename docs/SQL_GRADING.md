@@ -1,9 +1,11 @@
-# SQL Check — Phases 3–7
+# SQL Check — Phases 3–8A
 
-Twelve lessons use the same grader, dataset and comparator. Task revision is `1`
-for all twelve; column names/order are exact. 10.2–10.4 and 10.10–10.11
-compare bags; 10.5–10.9 and 10.12–10.13 compare full ordered sequences using
-the existing comparator unchanged.
+Twenty-three consecutive lessons (10.2–10.24) reuse the same dataset, grader
+and typed comparator. All task revisions are `1`; exact columns are mandatory.
+The twelve Phase 7 capabilities retain every field and bundle pin. Phase 8A adds
+11 six-case bundles. Only `sql.subquery.31` uses ordered groups by `user_id`:
+tied latest timestamps retain every order, while order within a user is free.
+All other ordered tasks still compare full sequences; unordered tasks compare bags.
 
 | Lesson | Stable task ID | Grader revision | Columns | Cases |
 | --- | --- | --- | --- | ---: |
@@ -19,13 +21,25 @@ the existing comparator unchanged.
 | 10.11 LEFT JOIN | `sql.join.18` | `users-without-orders-v1` | `id`, `email` | 6 |
 | 10.12 RIGHT/FULL OUTER JOIN | `sql.join.25` | `right-join-products-v1` | `product_id`, `order_id` | 6 |
 | 10.13 SELF JOIN | `sql.join.20` | `users-managers-v1` | `email`, `manager_email` | 6 |
+| 10.14 subqueries | `sql.subquery.27` | `above-average-v1` | `id`, `total` | 6 |
+| 10.15 correlated-subquery | `sql.subquery.31` | `latest-per-user-v1` | `id`, `user_id` | 6 |
+| 10.16 exists-vs-in | `sql.subquery.28` | `paid-buyers-v1` | `id`, `email` | 6 |
+| 10.17 cte | `sql.subquery.30` | `paid-revenue-v1` | `user_id`, `revenue` | 6 |
+| 10.18 recursive-cte | `sql.subquery.32` | `manager-chain-v1` | `id`, `depth` | 6 |
+| 10.19 case | `sql.basic.06` | `status-label-v1` | `id`, `label` | 6 |
+| 10.20 set-operations | `sql.set.50` | `active-countries-except-paid-v1` | `country` | 6 |
+| 10.21 window-functions | `sql.window.37` | `previous-total-v1` | `id`, `user_id`, `total`, `previous_total` | 6 |
+| 10.22 row-number-rank-dense-rank | `sql.window.33` | `order-row-number-v1` | `id`, `user_id`, `row_number` | 6 |
+| 10.23 partition-by-and-window-ordering | `sql.window.36` | `running-revenue-v1` | `id`, `user_id`, `running_total` | 6 |
+| 10.24 lag-and-lead | `sql.window.38` | `next-order-time-v1` | `id`, `user_id`, `next_created_at` | 6 |
 
-All **49 bank records are byte-for-byte unchanged by Phases 4–7**, including the
-supplemental email-domain/date tasks. Only these twelve capabilities are enabled,
-one per lesson. `sql.basic.01` retains its historical bank `lesson_number=10.2`;
-the explicit capability registry deliberately enables its unchanged active-user
-contract in 10.3, after WHERE is taught. Lesson IDs/slugs and interview IDs stay
-stable. No SQL progress schema migration is needed in Phases 4–7.
+All **49 pre-existing bank records remain field-identical**; Phase 8A adds only
+`sql.set.50` for countries of active users EXCEPT countries of paid buyers.
+NULL is a set value, and sorting is country ASC NULLS LAST. The complete bank now
+contains 50 records. Explicit capabilities preserve historical lesson numbers:
+`basic.01` → 10.3, `subquery.32` (legacy 10.17) → 10.18, `window.38` (legacy 10.21)
+→ 10.24. No old task or lesson identity is rewritten. No persistence migration or
+SQL XP is introduced. Lesson 10.25 requires the separate Phase 8B write profile.
 
 ## Explicit task registries
 
@@ -45,7 +59,7 @@ tests verify parity between backend registrations, bank contracts and bundles.
 
 These registries separate lesson/UI capabilities from privileged execution
 configuration. Adding a task means adding data registrations and a pinned bundle,
-not adding branches to the grader. Missing/corrupt configuration fails closed.
+not adding per-task SQL text matching to the grader. Missing/corrupt configuration fails closed.
 
 ## Execution and ownership
 
@@ -231,7 +245,7 @@ tolerance. Empty results still require the right names and type families.
 Unsupported types or malformed reference/wire results are infrastructure errors.
 Student SQL errors, statement/external timeouts and truncated/oversized results
 cannot pass. The current limits are 500 rows, 1 MiB output and 64 KiB per cell;
-current reference results have at most seven rows. Larger future tasks need a separate reviewed
+current reference results have at most eight rows. Larger future tasks need a separate reviewed
 grader result budget, rather than accepting an incomplete prefix.
 
 The runner returns only task/revision/checksum, counts, pass flag and up to four
@@ -506,6 +520,69 @@ validates all 12 registered bundles. Consistent read-only SQLite backups before
 and after deployment have the same logical SHA-256 fingerprint: every schema and
 row is preserved. No labeled test/grading SQL containers remain.
 
+## Phase 8A verification — 2026-11-16
+
+Eleven advanced SELECT lessons (10.14–10.24) are curated, including publication
+of the existing recursive-CTE and LAG/LEAD identities. There are 361 published
+lessons, 259 remaining legacy reviews and still 406 taxonomy IDs. All existing
+question positions, lesson IDs/slugs, priorities and prerequisites are preserved.
+The read-only bank has 50 records: the previous 49 are field-identical, and only
+`sql.set.50` is added. Every previous registration field and bundle pin is checked
+against a committed Phase 7 snapshot.
+
+**251 default Python tests, 81 frontend tests**, content validation, ESLint,
+TypeScript and production build passed. Real HTTP smoke passed all 23 tasks:
+Run versus Check, correct/wrong/hardcoded results, replay/conflict, sticky progress,
+Reset, earlier manifests, unchanged Explorer and Python files/progress/XP. All
+23 Check routes return sanitized errors on test SQL-controller outage while
+real Python Docker Run and Check remain available.
+
+The initial complete 216-test Docker invocation produced **215 passes and one
+failure in a new test expectation**, not a runner change: recursive materialization
+hit the existing temporary-file budget (53400) before statement timeout. The
+corrected test separately proves resource exhaustion, a CPU-bound recursive
+57014 deadline, sandbox disposal and recovery through a fresh session. The whole
+**84-test advanced SELECT file was rerun and passed**; the other **132 existing
+Docker tests passed unchanged** in the original invocation. This records the
+actual runs rather than claiming a second complete 216-test invocation.
+
+All 66 new fixture outputs have independently calculated typed expectations.
+References and equivalent subquery/join/EXISTS/window formulations pass 6/6;
+public hardcoding passes only 1/6. Wrong global/group averages, missing correlation,
+latest-date ties, duplicate-producing joins, strict revenue boundaries, truncated
+manager chains, missing CASE ELSE, NULL-sensitive anti-sets, absent window
+partitions/tie-breakers and wrong frames/neighbour directions fail.
+
+All **43 lesson SQL blocks** were executed on the pinned PG17 sandbox: 42
+successful results with independent names/types/rows and one deliberate 21000
+cardinality error. Recursive fixtures are acyclic as promised by the immutable
+legacy reference; cycle-safe synthetic teaching and nontermination/resource tests
+are separate. No function/schema/AST privilege was added. The comparator's new
+optional ordered-key groups apply only to `sql.subquery.31`; legacy default bag
+and full-sequence comparisons remain unchanged.
+
+Headless Chrome passed actual Monaco typing and Run/Check across **all 23 lessons**,
+Learn/Review answer closure, independent drafts/completion, shortcuts, themes and
+Explorer relationships. Inspected screenshots cover 1720×1050 desktop and 390×844
+mobile with visible result rows and no horizontal page overflow. A SQL → Python
+editor change → SQL round trip preserved both Python files and the SQL draft;
+all SQL checks awarded zero XP. The private browser profile and tmpfs stack were
+removed afterwards.
+
+A networkless helper mounted the real user volume read-only, took a consistent
+SQLite backup, and performed actual success, UUID replay and failed-retry progress
+writes for all eleven new tasks on the disposable copy. Every pre-existing schema
+and row in all seven tables survived. Backend regressions separately seed and
+preserve exact attempts/progress for all twelve previous SQL tasks. The live
+volume is never mounted by the test stack. No AI-track planning files changed.
+
+After verification the user's standing per-phase update instruction was applied:
+the main `pythoria` project was rebuilt with `up -d --build --wait`, separately
+from tests. Frontend, backend and both runners passed health checks, all 23
+public task manifests expose Check, and the running controller validates every
+registered bundle. Consistent read-only SQLite backups before/after deployment
+have identical logical schema/row fingerprints; the named data volume is retained.
+
 ## Adding the next exercise
 
 1. Select a stable task ID tied to the lesson's taught concepts; preserve old IDs.
@@ -521,8 +598,7 @@ row is preserved. No labeled test/grading SQL containers remain.
 This is still a trusted local single-user app with one backend worker/controller
 per namespace. Authentication, distributed admission/idempotency, rate limits,
 SQL XP, server drafts, DML, free playground and Stage 11 labs need separate work.
-Only the twelve listed exercises are enabled; adding bank records alone does not
-expose new capabilities. A recommended Phase 8 is subquery/EXISTS labs starting
-at 10.14, with correlated/unrelated inputs, empty sets and NULL-sensitive cases.
-Recursive hierarchy traversal, windows, DML, server drafts and SQL XP remain
-separate work. No AI-track planning files are changed by Phase 7.
+Only the 23 listed exercises are enabled; adding bank records alone does not
+expose new capabilities. Phase 8A covers the remaining advanced SELECT lessons. Writable DML and actual
+multi-connection transaction labs require a separate execution profile in Phase 8B;
+server drafts and SQL XP remain separate work. No AI-track planning files are changed by these SQL implementation phases.

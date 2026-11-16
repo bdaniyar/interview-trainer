@@ -7,7 +7,7 @@ def test_course_catalog_contains_complete_backend_curriculum(client):
     response = client.get("/api/course")
     assert response.status_code == 200
     payload = response.json()
-    assert payload["summary"]["total"] == 359
+    assert payload["summary"]["total"] == 361
     assert len(payload["modules"]) >= 30
     assert payload["modules"][0]["lessons"][0]["slug"] == "s00-diagnosticheskii-junior-python-backend-interview"
 
