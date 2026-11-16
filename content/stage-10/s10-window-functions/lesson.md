@@ -1,270 +1,149 @@
 # Window functions
 
-> [!IMPORTANT]
-> **P1 · вероятность на интервью: high · 10 минут.** SQL/relational DB явно встречались в 15/18 — один из главных P0-разделов.
-
 ## Учебные цели
 
-После урока ты сможешь:
-
-- восстановить mental model темы **Window functions**, а не только запомнить термин;
-- прочитать и изменить короткий пример для `rows remain visible`;
-- распознать характерную ошибку и объяснить причину;
-- дать реалистичный ответ уровня Junior и выдержать follow-up.
+После урока вы сможете объяснить механизм Window functions, предсказать строки на пустых и граничных входах, написать запрос и проверить его контракт.
 
 ## Теория
 
 ### Что это
 
-Window function вычисляет значение по связанным rows, сохраняя каждую исходную row, в отличие от GROUP BY.
+Оконная функция добавляет вычисление к каждой исходной строке. GROUP BY сворачивает несколько заказов в одну строку пользователя; окно позволяет оставить каждый заказ и рядом показать общий итог, номер или значение соседнего заказа.
 
 ### Как работает
 
-`OVER` задаёт partition, order и frame. Типичные случаи — ranking, running total и сравнение с предыдущей row.
+OVER задаёт окно. PARTITION BY делит строки на независимые разделы. Если его нет, весь допустимый вход — один раздел. ORDER BY внутри OVER определяет последовательность вычисления, но не сортирует итоговую выдачу: для неё нужен внешний ORDER BY. WHERE отбирает строки раньше оконного вычисления, поэтому отброшенные строки уже не участвуют в окне.
 
+Оконные агрегаты сохраняют идентичность исходной строки. SUM(total) OVER(PARTITION BY user_id) повторяет итог пользователя рядом с каждым его заказом. LAG(total) берёт значение предыдущей строки, LEAD — следующей. На границе без явного default возникает SQL NULL. Для выбора по результату окна используют внешний SELECT: оконная функция недоступна в WHERE того же уровня.
 
 ### Важный нюанс / ограничение
 
-Ordering внутри OVER управляет window calculation; финальный порядок результата всё равно требует отдельного ORDER BY.
-
-### Где используется в backend
-
-Report может добавить накопительную сумму по customer, не теряя отдельные transactions.
+Упорядоченный оконный агрегат и агрегат по всему разделу — разные расчёты. По умолчанию при оконном ORDER BY frame охватывает начало раздела и текущую peer-группу; поэтому SUM может стать накопительным. Явные ROWS изучаются в 10.23. Равные timestamps требуют дополнительного id, когда нужно определить соседнюю строку. Это правило не подменяется порядком вставки.
 
 ## Модель понимания
 
-Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
-
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
+Сначала определите сохранённую строку, затем partition, оконный порядок, frame и итоговую сортировку. Фильтр до окна меняет вход.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
-- rows remain visible
-- difference from GROUP BY
-- window definition
+Оконное вычисление добавляет значение к каждой входной строке; GROUP BY заменяет группу одной агрегатной строкой.
 
-### Полезно
-
-- один короткий пример кода с результатом
-
-### Можно не учить глубоко
-
-- внутренние детали реализации за пределами обычных Junior дополнительный вопрос
+Внутри OVER он задаёт логическую последовательность окна. Внешний ORDER BY задаёт порядок результата. Они могут различаться и не заменяют друг друга.
 
 ## Примеры кода
 
-### Window functions: отдельный пример
+Все примеры ниже выполняются в PostgreSQL 17 на неизменном shop-v1 либо явно заданных синтетических VALUES. SQL NULL обозначает отсутствие значения; строка `NULL` была бы другим значением.
+
+### Пример 1
+
+Все три товара сохранены. Оба books получают размер раздела 2, hardware — 1.
 
 ```sql
-SELECT id, account_id, amount,
-       SUM(amount) OVER (
-           PARTITION BY account_id
-           ORDER BY created_at, id
-       ) AS running_balance
-FROM ledger_entries;
+SELECT id,category,COUNT(*) OVER(PARTITION BY category) AS category_size FROM products ORDER BY id;
 ```
 
-Window aggregate сохраняет каждую ledger row и добавляет накопительный итог в пределах account.
+Ожидаемый результат; типы: `id: int8`, `category: text`, `category_size: int8`.
+
+| `id` | `category` | `category_size` |
+| --- | --- | --- |
+| 100 | books | 2 |
+| 101 | hardware | 1 |
+| 102 | books | 2 |
+
+### Пример 2
+
+GROUP BY возвращает две строки вместо трёх. Это другой требуемый результат.
+
+```sql
+SELECT category,COUNT(*) AS category_size FROM products GROUP BY category ORDER BY category;
+```
+
+Ожидаемый результат; типы: `category: text`, `category_size: int8`.
+
+| `category` | `category_size` |
+| --- | --- |
+| books | 2 |
+| hardware | 1 |
+
+### Пример 3
+
+Без PARTITION и ORDER окно охватывает все товары; 160 повторяется в каждой строке.
+
+```sql
+SELECT id,price,SUM(price) OVER() AS catalog_total FROM products ORDER BY id;
+```
+
+Ожидаемый результат; типы: `id: int8`, `price: numeric`, `catalog_total: numeric`.
+
+| `id` | `price` | `catalog_total` |
+| --- | --- | --- |
+| 100 | 30.00 | 160.00 |
+| 101 | 90.00 | 160.00 |
+| 102 | 40.00 | 160.00 |
 
 ## Типичные ошибки
 
-### Ошибка 1
-
-Отсутствие tie-breaker в window ordering делает `row_number` недетерминированным при равных значениях.
+GROUP BY user_id удаляет отдельные заказы. Отсутствие PARTITION BY связывает разные семьи заказов. Внешний ORDER BY не задаёт порядок внутри LAG. WHERE status=paid до окна удаляет остальные заказы, хотя основная задача требует все статусы.
 
 ## Практика
 
-**A · Предсказание результата.** Измени один input в примере `rows remain visible` и предскажи результат до запуска.
+Данные: `products` содержит books: 30,40 и hardware: 90; ожидаемая средняя books равна 35. Добавьте каждому товару среднюю цену его категории через OVER. Затем оставьте только товары дороже этой средней во внешнем запросе. Объясните, почему попытка поместить AVG OVER прямо в WHERE вызывает ошибку и почему GROUP BY потеряет товары.
 
-**B · Найди ошибку.** Найди код, нарушающий `difference from GROUP BY`, и объясни конкретное последствие.
-
-**D · Небольшая задача.** Реализуй минимальную функцию или query, демонстрирующие `rows remain visible`, и добавь один граничный случай test.
-
-**E · Ответ на собеседовании.** Объясни Window functions за 45–60 секунд и назови одно ограничение.
-
-## Практика SQL
-
-### Предыдущий order total
-
-```sql
-CREATE TABLE users (
-    id bigint PRIMARY KEY,
-    email text NOT NULL UNIQUE,
-    country text,
-    active boolean NOT NULL DEFAULT true,
-    manager_id bigint REFERENCES users(id),
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE orders (
-    id bigint PRIMARY KEY,
-    user_id bigint NOT NULL REFERENCES users(id),
-    status text NOT NULL,
-    total numeric(12, 2) NOT NULL,
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE products (
-    id bigint PRIMARY KEY,
-    name text NOT NULL,
-    category text NOT NULL,
-    price numeric(12, 2) NOT NULL
-);
-CREATE TABLE order_items (
-    order_id bigint REFERENCES orders(id),
-    product_id bigint REFERENCES products(id),
-    quantity integer NOT NULL CHECK (quantity > 0),
-    PRIMARY KEY (order_id, product_id)
-);
-```
-
-Начальные данные:
-
-```sql
-INSERT INTO users VALUES
-(1,'a@example.com','KZ',true,NULL,'2026-01-01'),
-(2,'b@example.com','KZ',true,1,'2026-01-02'),
-(3,'c@example.com',NULL,false,1,'2026-01-03'),
-(4,'d@example.com','GE',true,2,'2026-01-04');
-INSERT INTO orders VALUES
-(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),
-(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),
-(14,4,'new',80,'2026-02-05');
-INSERT INTO products VALUES
-(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);
-INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);
-```
-
-**Вопрос:** Добавь previous_total через LAG в рамках user.
-
-Ожидаемые столбцы: id, user_id, total, previous_total. Сравнение: с учётом порядка строк.
-
-Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
-
-### Следующий order time
-
-```sql
-CREATE TABLE users (
-    id bigint PRIMARY KEY,
-    email text NOT NULL UNIQUE,
-    country text,
-    active boolean NOT NULL DEFAULT true,
-    manager_id bigint REFERENCES users(id),
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE orders (
-    id bigint PRIMARY KEY,
-    user_id bigint NOT NULL REFERENCES users(id),
-    status text NOT NULL,
-    total numeric(12, 2) NOT NULL,
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE products (
-    id bigint PRIMARY KEY,
-    name text NOT NULL,
-    category text NOT NULL,
-    price numeric(12, 2) NOT NULL
-);
-CREATE TABLE order_items (
-    order_id bigint REFERENCES orders(id),
-    product_id bigint REFERENCES products(id),
-    quantity integer NOT NULL CHECK (quantity > 0),
-    PRIMARY KEY (order_id, product_id)
-);
-```
-
-Начальные данные:
-
-```sql
-INSERT INTO users VALUES
-(1,'a@example.com','KZ',true,NULL,'2026-01-01'),
-(2,'b@example.com','KZ',true,1,'2026-01-02'),
-(3,'c@example.com',NULL,false,1,'2026-01-03'),
-(4,'d@example.com','GE',true,2,'2026-01-04');
-INSERT INTO orders VALUES
-(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),
-(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),
-(14,4,'new',80,'2026-02-05');
-INSERT INTO products VALUES
-(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);
-INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);
-```
-
-**Вопрос:** Добавь next_created_at через LEAD в рамках user.
-
-Ожидаемые столбцы: id, user_id, next_created_at. Сравнение: с учётом порядка строк.
-
-Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
+Сначала запишите ожидаемые столбцы, типы и строки вручную; затем используйте Run. Сравнивайте также пустой вход и повторные значения. Дополнительная практика не выдаёт статус основной задачи.
 
 ## Вопросы с собеседований
 
-### Основной вопрос
-
-Что такое Window functions и как это работает?
-
-### Дополнительный вопрос
-
-Какая типичная ошибка связана с Window functions?
-
-Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+1. Почему окно отличается от GROUP BY?
+2. Какие два ORDER BY бывают в оконном запросе?
 
 ## Хорошие ответы
 
-### Короткий ответ
+<details>
+<summary>Раскрыть ответы</summary>
 
-Window function вычисляет значение по связанным rows, сохраняя каждую исходную row, в отличие от GROUP BY.
+Оконное вычисление добавляет значение к каждой входной строке; GROUP BY заменяет группу одной агрегатной строкой.
 
-### Нормальный ответ уровня Junior
+Внутри OVER он задаёт логическую последовательность окна. Внешний ORDER BY задаёт порядок результата. Они могут различаться и не заменяют друг друга.
 
-> Window function вычисляет значение по связанным rows, сохраняя каждую исходную row, в отличие от GROUP BY. `OVER` задаёт partition, order и frame. Типичные случаи — ranking, running total и сравнение с предыдущей row. Важное ограничение: Ordering внутри OVER управляет window calculation; финальный порядок результата всё равно требует отдельного ORDER BY.
-
-### Углубление / дополнительный вопрос
-
-**Какая типичная ошибка связана с Window functions?**
-
-Отсутствие tie-breaker в window ordering делает `row_number` недетерминированным при равных значениях.
+</details>
 
 ## Критерии хорошего ответа
 
-### Что обязательно упомянуть
+<details>
+<summary>Раскрыть критерии</summary>
 
-- rows remain visible
-- difference from GROUP BY
-- window definition
+Сначала определите сохранённую строку, затем partition, оконный порядок, frame и итоговую сортировку. Фильтр до окна меняет вход. Объясните хотя бы один граничный пример из урока с точным результатом и причину типичной ошибки.
 
-### Что улучшит ответ
-
-- один короткий пример с результатом;
-- одно ограничение или характерная ошибка именно этой темы;
-- пример из backend-разработки только при естественной связи.
-
-### Частые неправильные ответы
-
-- Отсутствие tie-breaker в window ordering делает `row_number` недетерминированным при равных значениях.
-- пересказ одного определения без механизма или примера.
-
-### Дополнительный вопрос
-
-- Какая типичная ошибка связана с Window functions?
+</details>
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Window functions**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
+**sql.window.37 — Предыдущий order total**
+
+Для каждого заказа верните id,user_id,total,previous_total — total предыдущего заказа этого пользователя. Порядок внутри окна created_at,id по возрастанию; итог по user_id,created_at,id. У первого заказа previous_total — SQL NULL.
+
+Исходные таблицы смотрите в Explorer. Run выполняет запрос на публичных данных, Check проверяет отдельные наборы. Нужны все требуемые строки и только указанные столбцы. Принимаются эквивалентные SELECT независимо от выбранного синтаксиса. SQL XP отключён; черновик сохраняется в браузере.
+
+<details>
+<summary>Показать решение для самопроверки</summary>
+
+```sql
+SELECT id,user_id,total,LAG(total) OVER(PARTITION BY user_id ORDER BY created_at,id) AS previous_total FROM orders ORDER BY user_id,created_at,id;
+```
+
+Окно должно начинаться заново для каждого пользователя; учитывайте id при одинаковых датах и SQL NULL у первой строки.
+
+</details>
 
 ## Шпаргалка
 
-Перед собеседованием запомни:
-
-- **Что это:** Window function вычисляет значение по связанным rows, сохраняя каждую исходную row, в отличие от GROUP BY.
-- **Механизм:** Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
-- **Ограничение:** Отсутствие tie-breaker в window ordering делает `row_number` недетерминированным при равных значениях.
-- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
+Сначала определите сохранённую строку, затем partition, оконный порядок, frame и итоговую сортировку. Фильтр до окна меняет вход.
 
 ## Источники
 
-Материал написан своими словами и сверён с актуальными разделами официальной документации:
+- PostgreSQL **17**, [3.5 Window Functions](https://www.postgresql.org/docs/17/tutorial-window.html).
+- PostgreSQL **17**, [7.2.5 Window Function Processing](https://www.postgresql.org/docs/17/queries-table-expressions.html#QUERIES-WINDOW).
 
-- [PostgreSQL queries](https://www.postgresql.org/docs/current/queries.html)
-- [PostgreSQL functions](https://www.postgresql.org/docs/current/functions.html)
-
-Последняя проверка версий: **2026-08-27**.
+Секции официальной документации сверены 2026-11-16. Примеры проверяются отдельными PG17 integration tests с независимо заданными именами, типами и значениями; версия sandbox закреплена проектом и не обновляется этим уроком.

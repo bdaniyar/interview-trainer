@@ -8,7 +8,7 @@ import assert from 'node:assert/strict';
 const chromePath=process.env.SQL_TEST_CHROME || (process.platform==='darwin'
   ? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' : '/usr/bin/google-chrome');
 await access(chromePath, constants.X_OK).catch(()=>{throw new Error('Chrome unavailable: set SQL_TEST_CHROME to its executable path.');});
-const profile=await mkdtemp(join(tmpdir(),'pythoria-phase7-chrome-'));
+const profile=await mkdtemp(join(tmpdir(),'pythoria-phase8a-chrome-'));
 const chrome=spawn(chromePath,[
   '--headless=new','--disable-gpu','--no-first-run','--no-default-browser-check',
   '--remote-debugging-port=0',`--user-data-dir=${profile}`,'about:blank',
@@ -42,13 +42,13 @@ try {
     await call('Page.bringToFront');
     if(selector.includes('textarea')){
       const parent=selector.includes('.sql-editor')?'.sql-editor':'.editor-panel';
-      await evaluate(`(()=>{const editor=window.__phase7Monaco.editor.getEditors().find(e=>e.getDomNode()?.closest(${JSON.stringify(parent)}));if(!editor)throw new Error('No mounted Monaco editor');editor.focus();editor.setSelection(editor.getModel().getFullModelRange());return true;})()`);
+      await evaluate(`(()=>{const editor=window.__phase8aMonaco.editor.getEditors().find(e=>e.getDomNode()?.closest(${JSON.stringify(parent)}));if(!editor)throw new Error('No mounted Monaco editor');editor.focus();editor.setSelection(editor.getModel().getFullModelRange());return true;})()`);
     }else{
       await evaluate(`(()=>{const input=document.querySelector(${JSON.stringify(selector)});input.focus({preventScroll:true});input.select();return true;})()`);
     }
     await call('Input.insertText',{text});
   }
-  async function shortcut(check=false){await evaluate(`(()=>{window.__phase7Monaco.editor.getEditors().find(e=>e.getDomNode()?.closest('.sql-editor')).focus();return true;})()`);await key('Enter','Enter',13,check?12:4);}
+  async function shortcut(check=false){await evaluate(`(()=>{window.__phase8aMonaco.editor.getEditors().find(e=>e.getDomNode()?.closest('.sql-editor')).focus();return true;})()`);await key('Enter','Enter',13,check?12:4);}
   // The runner intentionally rejects a concurrent reaper operation with 409.
   // Retry only that explicit pre-execution busy response, never Failed/SQL errors.
   async function submit(check,ready){
@@ -69,8 +69,8 @@ try {
   await size(1720,1050);
   await call('Page.navigate',{url:'http://localhost:13000/?lesson=s10-select-aliases-and-expressions'});
   await until(`typeof window.require==='function' && document.querySelector('.sql-footer')?.textContent.includes('сессия активна')`);
-  await evaluate(`new Promise((resolve,reject)=>window.require(['vs/editor/editor.main'],loaded=>{window.__phase7Monaco=loaded.m||loaded;resolve(true)},reject))`);
-  const pythonFiles={'main.py':"def compare_objects(a, b):\n    return {'same_identity': a is b, 'same_value': a == b}\n",'notes.py':"PRESERVED = 'phase7-browser'\n"};
+  await evaluate(`new Promise((resolve,reject)=>window.require(['vs/editor/editor.main'],loaded=>{window.__phase8aMonaco=loaded.m||loaded;resolve(true)},reject))`);
+  const pythonFiles={'main.py':"def compare_objects(a, b):\n    return {'same_identity': a is b, 'same_value': a == b}\n",'notes.py':"PRESERVED = 'phase8a-browser'\n"};
   await api('/api/lessons/is-vs-eq/files',{files:pythonFiles},'PUT');
   const pythonLesson=await api('/api/lessons/is-vs-eq');
   const selfLesson=await api('/api/lessons/s10-self-join');
@@ -87,14 +87,26 @@ try {
     ['s10-left-join','sql.join.18','SELECT u.id,u.email FROM users u LEFT JOIN orders o ON o.user_id=u.id WHERE o.id IS NULL'],
     ['s10-right-and-full-outer-join','sql.join.25','SELECT p.id AS product_id,oi.order_id FROM order_items oi RIGHT JOIN products p ON p.id=oi.product_id ORDER BY p.id,oi.order_id'],
     ['s10-self-join','sql.join.20','SELECT u.email,m.email AS manager_email FROM users u LEFT JOIN users m ON m.id=u.manager_id ORDER BY u.id'],
+    ["s10-subqueries", "sql.subquery.27", "SELECT id,total FROM orders WHERE total > (SELECT AVG(total) FROM orders)"],
+    ["s10-correlated-subquery", "sql.subquery.31", "SELECT o.id,o.user_id FROM orders o WHERE o.created_at=(SELECT MAX(i.created_at) FROM orders i WHERE i.user_id=o.user_id) ORDER BY o.user_id"],
+    ["s10-exists-vs-in", "sql.subquery.28", "SELECT u.id,u.email FROM users u WHERE EXISTS (SELECT 1 FROM orders o WHERE o.user_id=u.id AND o.status='paid')"],
+    ["s10-cte", "sql.subquery.30", "WITH paid_totals AS (SELECT user_id,SUM(total) revenue FROM orders WHERE status='paid' GROUP BY user_id) SELECT user_id,revenue FROM paid_totals WHERE revenue>=150 ORDER BY user_id"],
+    ["s10-recursive-cte", "sql.subquery.32", "WITH RECURSIVE chain AS (SELECT id,manager_id,0 depth FROM users WHERE id=4 UNION ALL SELECT u.id,u.manager_id,c.depth+1 FROM users u JOIN chain c ON u.id=c.manager_id) SELECT id,depth FROM chain ORDER BY depth"],
+    ["s10-case", "sql.basic.06", "SELECT id, CASE status WHEN 'paid' THEN 'completed' WHEN 'cancelled' THEN 'cancelled' ELSE 'pending' END AS label FROM orders"],
+    ["s10-set-operations", "sql.set.50", "SELECT country FROM users WHERE active EXCEPT SELECT u.country FROM users u JOIN orders o ON o.user_id=u.id WHERE o.status='paid' ORDER BY country NULLS LAST"],
+    ["s10-window-functions", "sql.window.37", "SELECT id,user_id,total,LAG(total) OVER(PARTITION BY user_id ORDER BY created_at,id) AS previous_total FROM orders ORDER BY user_id,created_at,id"],
+    ["s10-row-number-rank-dense-rank", "sql.window.33", "SELECT id,user_id,ROW_NUMBER() OVER(PARTITION BY user_id ORDER BY created_at DESC,id DESC) AS row_number FROM orders ORDER BY user_id,row_number"],
+    ["s10-partition-by-and-window-ordering", "sql.window.36", "SELECT id,user_id,SUM(total) OVER(PARTITION BY user_id ORDER BY created_at,id) AS running_total FROM orders ORDER BY user_id,created_at,id"],
+    ["s10-lag-and-lead", "sql.window.38", "SELECT id,user_id,LEAD(created_at) OVER(PARTITION BY user_id ORDER BY created_at,id) AS next_created_at FROM orders ORDER BY user_id,created_at,id"],
+
   ];
-  const counts=[4,5,5,6,6,6,6,6,6,6,6,6];
+  const counts=[4,5,5,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6];
   for(let i=0;i<tasks.length;i++){
     const [slug,task,query]=tasks[i];
-    await until(`new URLSearchParams(location.search).get('lesson')===${JSON.stringify(slug)} && window.__phase7Monaco.editor.getModels().some(m=>m.uri.toString().includes(${JSON.stringify(task)})) && document.querySelector('.sql-footer')?.textContent.includes('сессия активна')`);
+    await until(`new URLSearchParams(location.search).get('lesson')===${JSON.stringify(slug)} && window.__phase8aMonaco.editor.getModels().some(m=>m.uri.toString().includes(${JSON.stringify(task)})) && document.querySelector('.sql-footer')?.textContent.includes('сессия активна')`);
     assert.equal((await api('/api/sql/lessons/'+slug)).completed,false);
     await type('.sql-editor textarea',query);
-    await until(`window.__phase7Monaco.editor.getModels().find(m=>m.uri.toString().includes(${JSON.stringify(task)})).getValue()===${JSON.stringify(query)}`);
+    await until(`window.__phase8aMonaco.editor.getModels().find(m=>m.uri.toString().includes(${JSON.stringify(task)})).getValue()===${JSON.stringify(query)}`);
     await submit(false, `document.querySelector('.sql-output table[aria-label="Результат PostgreSQL"]')!==null`);
     assert.equal((await api('/api/sql/lessons/'+slug)).completed,false);
     const draft=await evaluate(`localStorage.getItem(Object.keys(localStorage).find(k=>k.startsWith('pythoria:sql:')&&k.endsWith(${JSON.stringify(task)})))`);
@@ -117,12 +129,12 @@ try {
   await click('[role="tab"][id$="-database"]');
   await until(`document.querySelector('.sql-schema')?.textContent.includes('manager_id') && document.querySelector('.sql-relationships')?.textContent.includes('users')`);
   await click('[role="tab"][id$="-editor"]');
-  await screenshot('/tmp/pythoria-phase7-desktop.png');
+  await screenshot('/tmp/pythoria-phase8a-desktop.png');
   const oldTheme=await evaluate(`document.querySelector('.course-app').classList.contains('dark')`);
   await click('[aria-label="Сменить тему"]');
   await until(`document.querySelector('.course-app').classList.contains('dark')!==${oldTheme}`);
   await until(`document.querySelector('.monaco-editor.${oldTheme?'vs':'vs-dark'}')!==null`);
-  await screenshot('/tmp/pythoria-phase7-light.png');
+  await screenshot('/tmp/pythoria-phase8a-light.png');
   await size(390,844,true);
   await until(`document.querySelector('.course-sidebar').getBoundingClientRect().right<=0 && getComputedStyle(document.querySelector('.sql-sidebar')).display==='none'`);
   assert.equal(await evaluate(`getComputedStyle(document.querySelector('.sql-output')).display`),'none');
@@ -131,7 +143,7 @@ try {
   assert.equal(await evaluate(`document.documentElement.scrollWidth<=window.innerWidth`),true);
   const tableSpace=await evaluate(`(()=>{const viewport=document.querySelector('.sql-table-scroll').getBoundingClientRect();const table=document.querySelector('.sql-table-scroll table');const header=table.tHead.getBoundingClientRect();const row=table.tBodies[0].rows[0].getBoundingClientRect();return {bodySpace:viewport.bottom-header.bottom,rowHeight:row.height};})()`);
   assert(tableSpace.bodySpace>=2*tableSpace.rowHeight, 'Mobile results must expose at least two complete rows: '+JSON.stringify(tableSpace));
-  await screenshot('/tmp/pythoria-phase7-mobile.png');
+  await screenshot('/tmp/pythoria-phase8a-mobile.png');
   await size(1720,1050);
   await until(`document.querySelector('.course-sidebar').getBoundingClientRect().left>=-0.5`);
   async function selectLesson(title,slug){
@@ -141,22 +153,22 @@ try {
     await until(`new URLSearchParams(location.search).get('lesson')===${JSON.stringify(slug)}`);
   }
   await selectLesson(pythonLesson.title,'is-vs-eq');
-  await until(`window.__phase7Monaco.editor.getModels().some(m=>m.uri.toString().includes('is-vs-eq/main.py')) && document.querySelector('.editor-panel textarea')!==null`);
-  assert.equal(await evaluate(`window.__phase7Monaco.editor.getModels().find(m=>m.uri.toString().includes('is-vs-eq/main.py')).getValue()`),pythonFiles['main.py']);
-  const comment='# phase7 browser persistence';
+  await until(`window.__phase8aMonaco.editor.getModels().some(m=>m.uri.toString().includes('is-vs-eq/main.py')) && document.querySelector('.editor-panel textarea')!==null`);
+  assert.equal(await evaluate(`window.__phase8aMonaco.editor.getModels().find(m=>m.uri.toString().includes('is-vs-eq/main.py')).getValue()`),pythonFiles['main.py']);
+  const comment='# phase8a browser persistence';
   const editedPython=pythonFiles['main.py']+comment;
-  await evaluate(`(()=>{const editor=window.__phase7Monaco.editor.getEditors().find(e=>e.getDomNode()?.closest('.editor-panel'));const model=editor.getModel();const last=model.getLineCount();editor.focus();editor.setPosition({lineNumber:last,column:model.getLineMaxColumn(last)});return true;})()`);
+  await evaluate(`(()=>{const editor=window.__phase8aMonaco.editor.getEditors().find(e=>e.getDomNode()?.closest('.editor-panel'));const model=editor.getModel();const last=model.getLineCount();editor.focus();editor.setPosition({lineNumber:last,column:model.getLineMaxColumn(last)});return true;})()`);
   await call('Input.insertText',{text:comment});
-  await until(`window.__phase7Monaco.editor.getModels().find(m=>m.uri.toString().includes('is-vs-eq/main.py')).getValue()===${JSON.stringify(editedPython)}`);
+  await until(`window.__phase8aMonaco.editor.getModels().find(m=>m.uri.toString().includes('is-vs-eq/main.py')).getValue()===${JSON.stringify(editedPython)}`);
   await selectLesson(selfLesson.title,'s10-self-join');
-  await until(`window.__phase7Monaco.editor.getModels().some(m=>m.uri.toString().includes('sql.join.20')) && document.querySelector('.sql-footer')?.textContent.includes('сессия активна')`);
-  assert.equal(await evaluate(`window.__phase7Monaco.editor.getModels().find(m=>m.uri.toString().includes('sql.join.20')).getValue()`),tasks[11][2]);
+  await until(`window.__phase8aMonaco.editor.getModels().some(m=>m.uri.toString().includes('sql.join.20')) && document.querySelector('.sql-footer')?.textContent.includes('сессия активна')`);
+  assert.equal(await evaluate(`window.__phase8aMonaco.editor.getModels().find(m=>m.uri.toString().includes('sql.join.20')).getValue()`),tasks[11][2]);
   const savedPython=(await api('/api/lessons/is-vs-eq')).files;
   assert.equal(savedPython['main.py'],editedPython);assert.equal(savedPython['notes.py'],pythonFiles['notes.py']);
   for(const [slug] of tasks)assert.equal((await api('/api/sql/lessons/'+slug)).completed,true);
   assert.equal((await api('/api/course')).summary.xp,0);
   await call('Target.closeTarget',{targetId},null);
-  console.log(JSON.stringify({browser:'Headless Chrome',allTwelve:true,totalChecks:12,newChecks:4,actualMonacoTyping:true,theme:true,monacoShortcuts:true,desktop1720:true,mobile390:true,mobileVisibleRows:2,explorerSelfFK:true,sqlPythonRoundTrip:true,pythonFilesPreserved:true,draftRestoration:true,sqlXpZero:true}));
+  console.log(JSON.stringify({browser:'Headless Chrome',allTwentyThree:true,totalChecks:23,newChecks:11,actualMonacoTyping:true,theme:true,monacoShortcuts:true,desktop1720:true,mobile390:true,mobileVisibleRows:2,explorerSelfFK:true,sqlPythonRoundTrip:true,pythonFilesPreserved:true,draftRestoration:true,sqlXpZero:true}));
 } finally {
   ws?.close();chrome.kill('SIGTERM');
   if(chrome.pid && chrome.exitCode===null && chrome.signalCode===null)await new Promise(resolve=>chrome.once('exit',resolve));

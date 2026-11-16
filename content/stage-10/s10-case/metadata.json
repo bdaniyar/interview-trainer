@@ -6,14 +6,14 @@
   "module_title": "Этап 10 · SQL Fundamentals and Practice",
   "module_order": 10,
   "order": 115,
-  "duration": 10,
-  "estimated_minutes": 10,
+  "duration": 35,
+  "estimated_minutes": 35,
   "xp": 5,
   "topics": [
     "conditional projection",
     "grouped reporting."
   ],
-  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+  "description": "CASE вычисляет значение по условиям прямо в SQL.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",
@@ -41,6 +41,7 @@
     "interview_crash_course"
   ],
   "content_status": "complete",
-  "last_verified": "2026-08-27",
-  "generated_by": "populate_curriculum.py"
+  "last_verified": "2026-11-16",
+  "generated_by": "populate_curriculum.py",
+  "content_source": "curated"
 }

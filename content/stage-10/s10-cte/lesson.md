@@ -1,300 +1,146 @@
 # CTE
 
-> [!IMPORTANT]
-> **P1 · вероятность на интервью: high · 10 минут.** SQL/relational DB явно встречались в 15/18 — один из главных P0-разделов.
-
 ## Учебные цели
 
-После урока ты сможешь:
-
-- восстановить mental model темы **CTE**, а не только запомнить термин;
-- прочитать и изменить короткий пример для ``WITH``;
-- распознать характерную ошибку и объяснить причину;
-- дать реалистичный ответ уровня Junior и выдержать follow-up.
+После урока вы сможете объяснить механизм CTE, предсказать строки на пустых и граничных входах, написать запрос и проверить его контракт.
 
 ## Теория
 
 ### Что это
 
-CTE (common table expression) — именованный промежуточный result, объявленный через `WITH` и доступный основному statement. Он помогает разбить длинный SQL на последовательные понятные шаги.
+CTE — именованный результат запроса, действующий внутри одного SQL statement. Он позволяет записать расчёт этапами: выбрать исходные записи, агрегировать, отфильтровать готовые итоги. Это полезно для отчёта backend-сервиса, который иначе превращается в трудно читаемую вложенную конструкцию.
 
 ### Как работает
 
-Каждый CTE имеет имя и query в скобках. Следующий CTE или основной SELECT обращается к нему как к таблице. Обычный CTE живёт только во время одного statement; recursive CTE может ссылаться на себя по специальным правилам.
+WITH вводит имя перед основным SELECT. Следующий CTE может читать ранее объявленный CTE; после завершения statement имя исчезает. Это не CREATE TABLE, не временная таблица с отдельным жизненным циклом и не сохранённый кэш. Alias результата также не делает его доступным соседнему SELECT в следующем запросе.
 
-
-### Пример
-
-```sql
-WITH paid_totals AS (
-    SELECT user_id, SUM(total) AS revenue
-    FROM orders
-    WHERE status = 'paid'
-    GROUP BY user_id
-)
-SELECT user_id, revenue
-FROM paid_totals
-WHERE revenue >= 100;
-```
-
-Сначала `paid_totals` даёт одну строку на user, затем внешний query фильтрует уже рассчитанный revenue.
+Разделение запроса должно сохранять смысл: фильтр paid до SUM задаёт выручку оплаченных заказов; фильтр revenue после SUM отбирает итоговые группы. Перенос условий через агрегацию может менять результат. Несколько CTE полезны, когда имена отражают предметную область, а не являются цепочкой x1/x2/x3.
 
 ### Важный нюанс / ограничение
 
-CTE — прежде всего средство выразительности, не гарантированная оптимизация. Современный PostgreSQL может встроить не recursive CTE в plan; `MATERIALIZED`/`NOT MATERIALIZED` влияют на это. Junior достаточно читать EXPLAIN, а не обещать ускорение.
-
-### Где используется в backend
-
-CTE удобно отделяет выбор paid orders, aggregation по пользователю и финальный фильтр отчёта в одном statement.
+В PostgreSQL 17 side-effect-free нерекурсивный SELECT CTE может быть встроен в основной запрос; при одном использовании это обычное поведение. Несколько использований обычно приводят к отдельному вычислению. MATERIALIZED и NOT MATERIALIZED управляют этим выбором в допустимых случаях, но не заменяют анализ плана. Рекурсивный CTE имеет другую модель. SQL Lab не разрешает data-modifying CTE: WITH не скрывает INSERT/UPDATE/DELETE от policy.
 
 ## Модель понимания
 
-Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
-
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
+CTE даёт имя промежуточному отношению. Фильтруйте исходные строки до агрегата, итоговые группы после. Читаемость не является доказательством изменения производительности.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
-- синтаксис WITH
-- scope одного statement
-- читаемые этапы
-- нет гарантии ускорения
+В пределах одного statement после WITH, включая последующие допустимые CTE и основной запрос. Оно не создаёт постоянный объект схемы.
 
-### Полезно
-
-- multiple CTE
-- recursive CTE на уровне идеи
-- planner/materialization caveat
-
-### Можно не учить глубоко
-
-- тонкости cost model materialization без EXPLAIN конкретного запроса
+Нет. PostgreSQL может встроить нерекурсивный чистый SELECT CTE; решение зависит от свойств запроса и числа использований. MATERIALIZED/NOT MATERIALIZED требуют осмысленного анализа плана.
 
 ## Примеры кода
 
-### CTE: отдельный пример
+Все примеры ниже выполняются в PostgreSQL 17 на неизменном shop-v1 либо явно заданных синтетических VALUES. SQL NULL обозначает отсутствие значения; строка `NULL` была бы другим значением.
+
+### Пример 1
+
+Первый этап получает 70 и 90; второй сохраняет обе категории. Итоговая сортировка принадлежит внешнему запросу.
 
 ```sql
-WITH monthly AS (
-    SELECT date_trunc('month', created_at) AS month, SUM(total) AS revenue
-    FROM invoices
-    GROUP BY date_trunc('month', created_at)
-)
-SELECT month, revenue
-FROM monthly
-WHERE revenue > 1000;
+WITH prices AS (SELECT category,SUM(price) AS total FROM products GROUP BY category), chosen AS (SELECT category,total FROM prices WHERE total>=50) SELECT category,total FROM chosen ORDER BY category;
 ```
 
-CTE именует промежуточный result и отделяет aggregation от последующей фильтрации.
+Ожидаемый результат; типы: `category: text`, `total: numeric`.
+
+| `category` | `total` |
+| --- | --- |
+| books | 70.00 |
+| hardware | 90.00 |
+
+### Пример 2
+
+MATERIALIZED не меняет эти результаты, а ограничивает слияние с внешним запросом. Ускорение этим примером не доказывается.
+
+```sql
+WITH counts AS MATERIALIZED (SELECT category,COUNT(*) AS n FROM products GROUP BY category) SELECT category,n FROM counts ORDER BY category;
+```
+
+Ожидаемый результат; типы: `category: text`, `n: int8`.
+
+| `category` | `n` |
+| --- | --- |
+| books | 2 |
+| hardware | 1 |
+
+### Пример 3
+
+CTE selected виден только этому statement. В отдельном SELECT его имя уже не существует.
+
+```sql
+WITH selected AS (SELECT id FROM products WHERE price>=40) SELECT COUNT(*) AS n FROM selected;
+```
+
+Ожидаемый результат; типы: `n: int8`.
+
+| `n` |
+| --- |
+| 2 |
 
 ## Типичные ошибки
 
-### Ошибка 1
-
-Считать, что `WITH` автоматически ускоряет запрос.
-
-### Ошибка 2
-
-Спрятать неверную cardinality в цепочке CTE и не проверять результат каждого шага.
-
-### Ошибка 3
-
-Использовать CTE из одного простого SELECT, когда он только увеличивает объём кода.
+WHERE revenue>=150 до расчёта revenue не работает. COUNT(total) не заменяет сумму выручки. Условие >150 теряет точную границу. Предположение «CTE всегда materialization fence» неверно для PostgreSQL 17.
 
 ## Практика
 
-**A · Result предсказание результата.** Назови grain каждого шага monthly и итогового SELECT.
+Данные: `products` с id 100,101,102 и ценами 30,90,40 из Explorer. Разбейте отчёт по категориям на три именованных этапа: товары с ценой выше 20, сумма этих цен по категории, группы с суммой выше 60. Затем запишите эквивалентный запрос без CTE и вручную сравните строки.
 
-**B · Найди ошибку.** Найди фильтр, применённый до нужной aggregation.
-
-**C · Улучшение кода.** Разбей вложенный отчёт на два именованных CTE.
-
-**D · SQL task.** Найди users с paid revenue выше порога.
-
-## Практика SQL
-
-### CTE revenue
-
-```sql
-CREATE TABLE users (
-    id bigint PRIMARY KEY,
-    email text NOT NULL UNIQUE,
-    country text,
-    active boolean NOT NULL DEFAULT true,
-    manager_id bigint REFERENCES users(id),
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE orders (
-    id bigint PRIMARY KEY,
-    user_id bigint NOT NULL REFERENCES users(id),
-    status text NOT NULL,
-    total numeric(12, 2) NOT NULL,
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE products (
-    id bigint PRIMARY KEY,
-    name text NOT NULL,
-    category text NOT NULL,
-    price numeric(12, 2) NOT NULL
-);
-CREATE TABLE order_items (
-    order_id bigint REFERENCES orders(id),
-    product_id bigint REFERENCES products(id),
-    quantity integer NOT NULL CHECK (quantity > 0),
-    PRIMARY KEY (order_id, product_id)
-);
-```
-
-Начальные данные:
-
-```sql
-INSERT INTO users VALUES
-(1,'a@example.com','KZ',true,NULL,'2026-01-01'),
-(2,'b@example.com','KZ',true,1,'2026-01-02'),
-(3,'c@example.com',NULL,false,1,'2026-01-03'),
-(4,'d@example.com','GE',true,2,'2026-01-04');
-INSERT INTO orders VALUES
-(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),
-(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),
-(14,4,'new',80,'2026-02-05');
-INSERT INTO products VALUES
-(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);
-INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);
-```
-
-**Вопрос:** CTE paid_totals считает paid revenue по user, затем оставь revenue >= 150.
-
-Ожидаемые столбцы: user_id, revenue. Сравнение: с учётом порядка строк.
-
-Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
-
-### Цепочка менеджеров
-
-```sql
-CREATE TABLE users (
-    id bigint PRIMARY KEY,
-    email text NOT NULL UNIQUE,
-    country text,
-    active boolean NOT NULL DEFAULT true,
-    manager_id bigint REFERENCES users(id),
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE orders (
-    id bigint PRIMARY KEY,
-    user_id bigint NOT NULL REFERENCES users(id),
-    status text NOT NULL,
-    total numeric(12, 2) NOT NULL,
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE products (
-    id bigint PRIMARY KEY,
-    name text NOT NULL,
-    category text NOT NULL,
-    price numeric(12, 2) NOT NULL
-);
-CREATE TABLE order_items (
-    order_id bigint REFERENCES orders(id),
-    product_id bigint REFERENCES products(id),
-    quantity integer NOT NULL CHECK (quantity > 0),
-    PRIMARY KEY (order_id, product_id)
-);
-```
-
-Начальные данные:
-
-```sql
-INSERT INTO users VALUES
-(1,'a@example.com','KZ',true,NULL,'2026-01-01'),
-(2,'b@example.com','KZ',true,1,'2026-01-02'),
-(3,'c@example.com',NULL,false,1,'2026-01-03'),
-(4,'d@example.com','GE',true,2,'2026-01-04');
-INSERT INTO orders VALUES
-(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),
-(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),
-(14,4,'new',80,'2026-02-05');
-INSERT INTO products VALUES
-(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);
-INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);
-```
-
-**Вопрос:** Recursive CTE от user 4 вверх по manager_id, верни id и depth.
-
-Ожидаемые столбцы: id, depth. Сравнение: с учётом порядка строк.
-
-Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
+Сначала запишите ожидаемые столбцы, типы и строки вручную; затем используйте Run. Сравнивайте также пустой вход и повторные значения. Дополнительная практика не выдаёт статус основной задачи.
 
 ## Вопросы с собеседований
 
-### Основной вопрос
-
-Что такое CTE и гарантирует ли он ускорение SQL-запроса?
-
-### Дополнительный вопрос
-
-Чем CTE отличается от view?
-
-Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+1. Где существует имя CTE?
+2. CTE обязательно выполняется отдельно?
 
 ## Хорошие ответы
 
-### Короткий ответ
+<details>
+<summary>Раскрыть ответы</summary>
 
-CTE — именованный промежуточный query через WITH; он улучшает структуру, но сам по себе не гарантирует производительность.
+В пределах одного statement после WITH, включая последующие допустимые CTE и основной запрос. Оно не создаёт постоянный объект схемы.
 
-### Нормальный ответ уровня Junior
+Нет. PostgreSQL может встроить нерекурсивный чистый SELECT CTE; решение зависит от свойств запроса и числа использований. MATERIALIZED/NOT MATERIALIZED требуют осмысленного анализа плана.
 
-> CTE объявляется через `WITH name AS (...)` и доступен последующему query как временный result. Я использую его, чтобы дать имя этапу — например, сначала посчитать revenue по месяцу, затем отфильтровать итог. Это не обещание ускорения: PostgreSQL может встроить или материализовать CTE, поэтому производительность проверяют через EXPLAIN.
-
-### Углубление / дополнительный вопрос
-
-**Чем CTE отличается от view?**
-
-CTE существует только в одном statement; view — сохранённое определение query в schema и может использоваться разными statements.
+</details>
 
 ## Критерии хорошего ответа
 
-### Что обязательно упомянуть
+<details>
+<summary>Раскрыть критерии</summary>
 
-- синтаксис WITH
-- scope одного statement
-- читаемые этапы
-- нет гарантии ускорения
+CTE даёт имя промежуточному отношению. Фильтруйте исходные строки до агрегата, итоговые группы после. Читаемость не является доказательством изменения производительности. Объясните хотя бы один граничный пример из урока с точным результатом и причину типичной ошибки.
 
-### Что улучшит ответ
-
-- один короткий пример с результатом;
-- одно ограничение или характерная ошибка именно этой темы;
-- пример из backend-разработки только при естественной связи.
-
-### Частые неправильные ответы
-
-- Считать, что `WITH` автоматически ускоряет запрос.
-- пересказ одного определения без механизма или примера.
-
-### Дополнительный вопрос
-
-- Чем CTE отличается от view?
+</details>
 
 ## Задача
 
-Сделай короткую письменную практику по теме **CTE**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
+**sql.subquery.30 — CTE revenue**
+
+Посчитайте сумму total только paid-заказов каждого пользователя; оставьте revenue >= 150. Столбцы user_id,revenue, сортировка user_id по возрастанию.
+
+Исходные таблицы смотрите в Explorer. Run выполняет запрос на публичных данных, Check проверяет отдельные наборы. Нужны все требуемые строки и только указанные столбцы. Принимаются эквивалентные SELECT независимо от выбранного синтаксиса. SQL XP отключён; черновик сохраняется в браузере.
+
+<details>
+<summary>Показать решение для самопроверки</summary>
+
+```sql
+WITH paid_totals AS (SELECT user_id,SUM(total) revenue FROM orders WHERE status='paid' GROUP BY user_id) SELECT user_id,revenue FROM paid_totals WHERE revenue>=150 ORDER BY user_id;
+```
+
+Суммируйте только paid, включайте границу 150 и сортируйте по user_id.
+
+</details>
 
 ## Шпаргалка
 
-Перед собеседованием запомни:
-
-- **Что это:** CTE — именованный промежуточный query через WITH; он улучшает структуру, но сам по себе не гарантирует производительность.
-- **Механизм:** Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
-- **Ограничение:** Считать, что `WITH` автоматически ускоряет запрос.
-- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
+CTE даёт имя промежуточному отношению. Фильтруйте исходные строки до агрегата, итоговые группы после. Читаемость не является доказательством изменения производительности.
 
 ## Источники
 
-Материал написан своими словами и сверён с актуальными разделами официальной документации:
+- PostgreSQL **17**, [7.8.1 SELECT in WITH](https://www.postgresql.org/docs/17/queries-with.html#QUERIES-WITH-SELECT).
+- PostgreSQL **17**, [7.8.3 Materialization](https://www.postgresql.org/docs/17/queries-with.html#QUERIES-WITH-CTE-MATERIALIZATION).
 
-- [PostgreSQL queries](https://www.postgresql.org/docs/current/queries.html)
-- [PostgreSQL functions](https://www.postgresql.org/docs/current/functions.html)
-
-Последняя проверка версий: **2026-08-27**.
+Секции официальной документации сверены 2026-11-16. Примеры проверяются отдельными PG17 integration tests с независимо заданными именами, типами и значениями; версия sandbox закреплена проектом и не обновляется этим уроком.

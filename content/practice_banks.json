@@ -1166,6 +1166,21 @@
       "solution_sql": null,
       "grader_revision": "projection-v1",
       "tests_total": 4
+    },
+    {
+      "id": "sql.set.50",
+      "lesson_number": "10.20",
+      "category": "set",
+      "title": "Страны активных пользователей без paid-покупателей",
+      "prompt": "Верните уникальные страны активных пользователей, в которых нет ни одного пользователя с paid-заказом. NULL рассматривается как одно значение множества. Столбец country; по возрастанию, NULL в конце.",
+      "schema": "CREATE TABLE users (\n    id bigint PRIMARY KEY,\n    email text NOT NULL UNIQUE,\n    country text,\n    active boolean NOT NULL DEFAULT true,\n    manager_id bigint REFERENCES users(id),\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE orders (\n    id bigint PRIMARY KEY,\n    user_id bigint NOT NULL REFERENCES users(id),\n    status text NOT NULL,\n    total numeric(12, 2) NOT NULL,\n    created_at timestamptz NOT NULL\n);\nCREATE TABLE products (\n    id bigint PRIMARY KEY,\n    name text NOT NULL,\n    category text NOT NULL,\n    price numeric(12, 2) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id bigint REFERENCES orders(id),\n    product_id bigint REFERENCES products(id),\n    quantity integer NOT NULL CHECK (quantity > 0),\n    PRIMARY KEY (order_id, product_id)\n);",
+      "seed": "INSERT INTO users VALUES\n(1,'a@example.com','KZ',true,NULL,'2026-01-01'),\n(2,'b@example.com','KZ',true,1,'2026-01-02'),\n(3,'c@example.com',NULL,false,1,'2026-01-03'),\n(4,'d@example.com','GE',true,2,'2026-01-04');\nINSERT INTO orders VALUES\n(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),\n(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),\n(14,4,'new',80,'2026-02-05');\nINSERT INTO products VALUES\n(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);\nINSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);",
+      "expected_columns": [
+        "country"
+      ],
+      "comparison": "ordered",
+      "solution_sql": "SELECT country FROM users WHERE active EXCEPT SELECT u.country FROM users u JOIN orders o ON o.user_id=u.id WHERE o.status='paid' ORDER BY country NULLS LAST;",
+      "hidden_dataset_note": "Совпадающие страны, NULL с обеих сторон, повторные paid-заказы, пустые и непересекающиеся множества."
     }
   ],
   "testing": [

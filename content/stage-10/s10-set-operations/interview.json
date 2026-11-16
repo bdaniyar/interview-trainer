@@ -1,42 +1,32 @@
 [
   {
-    "question": "Что такое Set operations и какой механизм здесь важно понимать Junior-разработчику?",
+    "question": "Когда UNION ALL отличается от UNION?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "medium",
     "answer": [
-      "`UNION`",
-      "`UNION ALL`",
-      "`INTERSECT`",
-      "`EXCEPT`"
+      "При повторных полных строках. UNION удаляет повторы, ALL сохраняет их кратности. Выбирать нужно по контракту, а не по привычке."
     ],
-    "short_answer": "Set operations: Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.",
-    "junior_answer": "Set operations — тема, в которой я сначала фиксирую ``UNION``, затем объясняю ``UNION ALL`` на коротком примере. Ключевой механизм: Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа. Главная практическая ошибка — Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
-    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Set operations?",
-    "follow_up_answer": "Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
+    "short_answer": "При повторных полных строках.",
+    "junior_answer": "При повторных полных строках. UNION удаляет повторы, ALL сохраняет их кратности. Выбирать нужно по контракту, а не по привычке.",
+    "follow_up_question": "Почему NULL остаётся в INTERSECT?",
+    "follow_up_answer": "В правилах set operations повторные NULL рассматриваются как неразличимые значения строки. Это отличается от трёхзначного обычного сравнения через =.",
     "expected_answer": {
       "must_mention": [
-        "`UNION`",
-        "`UNION ALL`",
-        "`INTERSECT`",
-        "`EXCEPT`"
+        "При повторных полных строках. UNION удаляет повторы, ALL сохраняет их кратности. Выбирать нужно по контракту, а не по привычке."
       ],
       "good_additions": [
-        "короткий рабочий пример",
-        "ограничение или типичная ошибка"
+        "Совпадают форма и совместимые типы. Без ALL — множества, с ALL — кратности. EXCEPT направлен. Скобки задают приоритет, внешний ORDER BY задаёт вывод."
       ],
-      "common_wrong_answers": [],
-      "red_flags": [],
+      "common_wrong_answers": [
+        "UNION ALL удаляет одинаковые строки."
+      ],
+      "red_flags": [
+        "Подмена контракта результата без объяснения."
+      ],
       "follow_up_questions": [
-        "Какое ограничение или типичная ошибка относится именно к теме Set operations?"
-      ],
-      "coding_mistakes": [
-        "Не определить cardinality результата и замаскировать неверный query через DISTINCT."
-      ],
-      "assessment_notes": [
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "review_status": "pending-substantive-review"
+        "Почему NULL остаётся в INTERSECT?"
+      ]
     },
     "follow_ups": [
       "Какое ограничение или типичная ошибка относится именно к теме Set operations?"
@@ -52,35 +42,33 @@
     ]
   },
   {
-    "question": "Какое ограничение или типичная ошибка относится именно к теме Set operations?",
+    "question": "Почему NULL остаётся в INTERSECT?",
     "level": "follow_up",
     "priority": "P1",
     "interview_probability": "medium",
     "answer": [
-      "связать Set operations с коротким рабочим примером",
-      "Не определить cardinality результата и замаскировать неверный query через DISTINCT."
+      "В правилах set operations повторные NULL рассматриваются как неразличимые значения строки. Это отличается от трёхзначного обычного сравнения через =."
     ],
-    "short_answer": "Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
-    "junior_answer": "Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
-    "follow_up_question": "Что такое Set operations и какой механизм здесь важно понимать Junior-разработчику?",
-    "follow_up_answer": "Set operations — тема, в которой я сначала фиксирую ``UNION``, затем объясняю ``UNION ALL`` на коротком примере. Ключевой механизм: Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа. Главная практическая ошибка — Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
+    "short_answer": "В правилах set operations повторные NULL рассматриваются как неразличимые значения строки.",
+    "junior_answer": "В правилах set operations повторные NULL рассматриваются как неразличимые значения строки. Это отличается от трёхзначного обычного сравнения через =.",
+    "follow_up_question": "Когда UNION ALL отличается от UNION?",
+    "follow_up_answer": "При повторных полных строках. UNION удаляет повторы, ALL сохраняет их кратности. Выбирать нужно по контракту, а не по привычке.",
     "expected_answer": {
       "must_mention": [
-        "связать Set operations с коротким рабочим примером"
+        "В правилах set operations повторные NULL рассматриваются как неразличимые значения строки. Это отличается от трёхзначного обычного сравнения через =."
       ],
       "good_additions": [
-        "короткий пример именно этой темы"
+        "Совпадают форма и совместимые типы. Без ALL — множества, с ALL — кратности. EXCEPT направлен. Скобки задают приоритет, внешний ORDER BY задаёт вывод."
       ],
-      "common_wrong_answers": [],
-      "red_flags": [],
+      "common_wrong_answers": [
+        "UNION ALL удаляет одинаковые строки."
+      ],
+      "red_flags": [
+        "Подмена контракта результата без объяснения."
+      ],
       "follow_up_questions": [
-        "Что такое Set operations и какой механизм здесь важно понимать Junior-разработчику?"
-      ],
-      "coding_mistakes": [
-        "Не определить cardinality результата и замаскировать неверный query через DISTINCT."
-      ],
-      "assessment_notes": [],
-      "review_status": "pending-substantive-review"
+        "Когда UNION ALL отличается от UNION?"
+      ]
     },
     "follow_ups": [
       "Что такое Set operations и какой механизм здесь важно понимать Junior-разработчику?"

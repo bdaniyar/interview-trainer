@@ -1,215 +1,134 @@
 # `PARTITION BY` and window ordering
 
-> [!IMPORTANT]
-> **P1 · вероятность на интервью: high · 10 минут.** SQL/relational DB явно встречались в 15/18 — один из главных P0-разделов.
-
 ## Учебные цели
 
-После урока ты сможешь:
-
-- восстановить mental model темы **`PARTITION BY` and window ordering**, а не только запомнить термин;
-- прочитать и изменить короткий пример для `independent windows per group`;
-- распознать характерную ошибку и объяснить причину;
-- дать реалистичный ответ уровня Junior и выдержать follow-up.
+После урока вы сможете объяснить механизм `PARTITION BY` and window ordering, предсказать строки на пустых и граничных входах, написать запрос и проверить его контракт.
 
 ## Теория
 
 ### Что это
 
-Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.
+Для накопительной выручки важно одновременно определить, чьи заказы складываются и до какой строки. PARTITION BY отвечает на первый вопрос, оконный ORDER BY — на второй порядок, а frame задаёт включённый участок раздела.
 
 ### Как работает
 
-Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа.
+PARTITION BY user_id создаёт независимый расчёт каждого пользователя. ORDER BY created_at,id задаёт хронологию. ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW включает каждую строку от начала раздела до текущей. При наличии уникального id в оконном порядке default RANGE даёт тот же префикс, поскольку peers состоят из одной строки.
 
-**independent windows per group.** Window function считает значение по partition, не сворачивая строки как GROUP BY; порядок внутри `OVER` задаёт frame/ranking semantics.
-
-**deterministic order.** `deterministic order` меняет набор SQL rows; его смысл проверяют через grain результата, cardinality, NULL semantics и явный ordering.
-
+Если ORDER BY содержит только дату и у нескольких строк дата одинакова, default RANGE включает всю текущую peer-группу. Сумма может увеличиться сразу на несколько строк. ROWS считает физические позиции в заданном порядке; при неполном порядке связь этих позиций со строками всё ещё неоднозначна. GROUPS измеряет группы peers, RANGE — значения порядка, ROWS — позиции строк. Это разные единицы frame.
 
 ### Важный нюанс / ограничение
 
-Граница Junior: уверенно объясняй `independent windows per group` и `deterministic order` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
-
-### Где используется в backend
-
-В backend эта тема важна в том месте, где применяется `independent windows per group`; проверяй именно наблюдаемый contract, а не название инструмента.
+LAST_VALUE возвращает последнее значение frame, а не обязательно всего partition. Для последнего значения всего раздела нужен frame до UNBOUNDED FOLLOWING. LAG/LEAD берут соседние строки раздела и не превращаются в накопительный агрегат при изменении frame. Отрицательные total допустимы схемой shop-v1: накопительная сумма поэтому не обязана монотонно возрастать.
 
 ## Модель понимания
 
-Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
-
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
+Partition — чей расчёт; ORDER — последовательность; frame — участок. Укажите полный порядок и осознанные границы. SUM без ORDER — итог раздела.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
-- independent windows per group
-- deterministic order
+Default RANGE включает peers текущего значения порядка. ROWS задаёт позиции строк, поэтому при полном порядке можно получить отдельный шаг для каждой строки.
 
-### Полезно
-
-- связать `PARTITION BY` and window ordering с коротким рабочим примером
-
-### Можно не учить глубоко
-
-- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
+Он смотрит на конец frame. У default упорядоченного frame это конец текущей peer-группы, а не конец всего partition.
 
 ## Примеры кода
 
-### `PARTITION BY` and window ordering: отдельный пример
+Все примеры ниже выполняются в PostgreSQL 17 на неизменном shop-v1 либо явно заданных синтетических VALUES. SQL NULL обозначает отсутствие значения; строка `NULL` была бы другим значением.
+
+### Пример 1
+
+Для обеих строк day=1 RANGE включает сумму 30. Явный полный ROWS-порядок даёт сначала 10, затем 30.
 
 ```sql
-SELECT id, project_id, created_at,
-       LAG(created_at) OVER (
-           PARTITION BY project_id
-           ORDER BY created_at, id
-       ) AS previous_event_at
-FROM project_events;
+SELECT id,day,amount,SUM(amount) OVER(ORDER BY day) AS peer_sum,SUM(amount) OVER(ORDER BY day,id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS row_sum FROM (VALUES (1,1,10),(2,1,20),(3,2,5)) v(id,day,amount) ORDER BY day,id;
 ```
 
-PARTITION перезапускает окно для каждого project, ordering определяет предыдущую строку для LAG.
+Ожидаемый результат; типы: `id: int4`, `day: int4`, `amount: int4`, `peer_sum: int8`, `row_sum: int8`.
+
+| `id` | `day` | `amount` | `peer_sum` | `row_sum` |
+| --- | --- | --- | --- | --- |
+| 1 | 1 | 10 | 30 | 10 |
+| 2 | 1 | 20 | 30 | 30 |
+| 3 | 2 | 5 | 35 | 35 |
+
+### Пример 2
+
+Default frame заканчивается текущим товаром. Полный frame во всех строках заканчивается товаром 102, его цена 40.
+
+```sql
+SELECT id,LAST_VALUE(price) OVER(ORDER BY id) AS frame_last,LAST_VALUE(price) OVER(ORDER BY id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS partition_last FROM products ORDER BY id;
+```
+
+Ожидаемый результат; типы: `id: int8`, `frame_last: numeric`, `partition_last: numeric`.
+
+| `id` | `frame_last` | `partition_last` |
+| --- | --- | --- |
+| 100 | 30.00 | 40.00 |
+| 101 | 90.00 | 40.00 |
+| 102 | 40.00 | 40.00 |
 
 ## Типичные ошибки
 
-### Ошибка 1
-
-Не определить cardinality результата и замаскировать неверный query через DISTINCT.
+Нет PARTITION BY — суммы смешиваются между пользователями. Нет оконного ORDER BY — итог раздела повторяется вместо накопления. ORDER BY только по created_at оставляет ties. Фильтр paid исключает часть требуемых строк. Оконный порядок не гарантирует внешний порядок.
 
 ## Практика
 
-**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для `independent windows per group` до запуска.
+Данные: первый пример с amount 10,20,5; добавьте строку id=4,day=3,amount=-8. Итог последней суммы — 27. В VALUES добавьте отрицательный amount и предскажите уменьшение row_sum. Затем разделите строки по owner и посчитайте отдельные префиксы. Проверьте различие суммы всего раздела и суммы префикса на его первой строке.
 
-**B · Найди ошибку.** Найди нарушение `deterministic order` и объясни конкретное последствие.
-
-**E · Ответ на собеседовании.** Дай ответ про `PARTITION BY` and window ordering за 60 секунд: определение, механизм, пример, ограничение.
-
-## Практика SQL
-
-### Running revenue
-
-```sql
-CREATE TABLE users (
-    id bigint PRIMARY KEY,
-    email text NOT NULL UNIQUE,
-    country text,
-    active boolean NOT NULL DEFAULT true,
-    manager_id bigint REFERENCES users(id),
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE orders (
-    id bigint PRIMARY KEY,
-    user_id bigint NOT NULL REFERENCES users(id),
-    status text NOT NULL,
-    total numeric(12, 2) NOT NULL,
-    created_at timestamptz NOT NULL
-);
-CREATE TABLE products (
-    id bigint PRIMARY KEY,
-    name text NOT NULL,
-    category text NOT NULL,
-    price numeric(12, 2) NOT NULL
-);
-CREATE TABLE order_items (
-    order_id bigint REFERENCES orders(id),
-    product_id bigint REFERENCES products(id),
-    quantity integer NOT NULL CHECK (quantity > 0),
-    PRIMARY KEY (order_id, product_id)
-);
-```
-
-Начальные данные:
-
-```sql
-INSERT INTO users VALUES
-(1,'a@example.com','KZ',true,NULL,'2026-01-01'),
-(2,'b@example.com','KZ',true,1,'2026-01-02'),
-(3,'c@example.com',NULL,false,1,'2026-01-03'),
-(4,'d@example.com','GE',true,2,'2026-01-04');
-INSERT INTO orders VALUES
-(10,1,'paid',100,'2026-02-01'), (11,1,'cancelled',40,'2026-02-02'),
-(12,2,'paid',200,'2026-02-03'), (13,2,'paid',50,'2026-02-04'),
-(14,4,'new',80,'2026-02-05');
-INSERT INTO products VALUES
-(100,'Python Book','books',30), (101,'Keyboard','hardware',90), (102,'SQL Book','books',40);
-INSERT INTO order_items VALUES (10,100,2),(10,101,1),(12,101,2),(13,102,1),(14,100,1);
-```
-
-**Вопрос:** Для каждого user посчитай накопительный total по created_at/id.
-
-Ожидаемые столбцы: id, user_id, running_total. Сравнение: с учётом порядка строк.
-
-Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
+Сначала запишите ожидаемые столбцы, типы и строки вручную; затем используйте Run. Сравнивайте также пустой вход и повторные значения. Дополнительная практика не выдаёт статус основной задачи.
 
 ## Вопросы с собеседований
 
-### Основной вопрос
-
-Что такое `PARTITION BY` and window ordering и какой механизм здесь важно понимать Junior-разработчику?
-
-### Дополнительный вопрос
-
-Какое ограничение или типичная ошибка относится именно к теме `PARTITION BY` and window ordering?
-
-Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+1. Почему RANGE и ROWS дают разные префиксы при ties?
+2. Почему LAST_VALUE часто возвращает текущую цену?
 
 ## Хорошие ответы
 
-### Короткий ответ
+<details>
+<summary>Раскрыть ответы</summary>
 
-`PARTITION BY` and window ordering: Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.
+Default RANGE включает peers текущего значения порядка. ROWS задаёт позиции строк, поэтому при полном порядке можно получить отдельный шаг для каждой строки.
 
-### Нормальный ответ уровня Junior
+Он смотрит на конец frame. У default упорядоченного frame это конец текущей peer-группы, а не конец всего partition.
 
-> `PARTITION BY` and window ordering — тема, в которой я сначала фиксирую `independent windows per group`, затем объясняю `deterministic order` на коротком примере. Ключевой механизм: Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа. Главная практическая ошибка — Не определить cardinality результата и замаскировать неверный query через DISTINCT.
-
-### Углубление / дополнительный вопрос
-
-**Какое ограничение или типичная ошибка относится именно к теме `PARTITION BY` and window ordering?**
-
-Не определить cardinality результата и замаскировать неверный query через DISTINCT.
+</details>
 
 ## Критерии хорошего ответа
 
-### Что обязательно упомянуть
+<details>
+<summary>Раскрыть критерии</summary>
 
-- independent windows per group
-- deterministic order
+Partition — чей расчёт; ORDER — последовательность; frame — участок. Укажите полный порядок и осознанные границы. SUM без ORDER — итог раздела. Объясните хотя бы один граничный пример из урока с точным результатом и причину типичной ошибки.
 
-### Что улучшит ответ
-
-- один короткий пример с результатом;
-- одно ограничение или характерная ошибка именно этой темы;
-- пример из backend-разработки только при естественной связи.
-
-### Частые неправильные ответы
-
-- Не определить cardinality результата и замаскировать неверный query через DISTINCT.
-- пересказ одного определения без механизма или примера.
-
-### Дополнительный вопрос
-
-- Какое ограничение или типичная ошибка относится именно к теме `PARTITION BY` and window ordering?
+</details>
 
 ## Задача
 
-Сделай короткую письменную практику по теме **`PARTITION BY` and window ordering**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
+**sql.window.36 — Running revenue**
+
+Верните id,user_id,running_total — накопительную сумму total пользователя по created_at,id ASC. Включайте текущую строку, все статусы и все заказы; итог по user_id,created_at,id.
+
+Исходные таблицы смотрите в Explorer. Run выполняет запрос на публичных данных, Check проверяет отдельные наборы. Нужны все требуемые строки и только указанные столбцы. Принимаются эквивалентные SELECT независимо от выбранного синтаксиса. SQL XP отключён; черновик сохраняется в браузере.
+
+<details>
+<summary>Показать решение для самопроверки</summary>
+
+```sql
+SELECT id,user_id,SUM(total) OVER(PARTITION BY user_id ORDER BY created_at,id) AS running_total FROM orders ORDER BY user_id,created_at,id;
+```
+
+Проверьте границы partition/frame, хронологический порядок с id и нарастание суммы вместо общего итога.
+
+</details>
 
 ## Шпаргалка
 
-Перед собеседованием запомни:
-
-- **Что это:** `PARTITION BY` and window ordering: Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.
-- **Механизм:** Мысленно двигайся FROM/JOIN → WHERE → GROUP → HAVING → SELECT → ORDER/LIMIT.
-- **Ограничение:** Не определить cardinality результата и замаскировать неверный query через DISTINCT.
-- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
+Partition — чей расчёт; ORDER — последовательность; frame — участок. Укажите полный порядок и осознанные границы. SUM без ORDER — итог раздела.
 
 ## Источники
 
-Материал написан своими словами и сверён с актуальными разделами официальной документации:
+- PostgreSQL **17**, [4.2.8 Window Frames](https://www.postgresql.org/docs/17/sql-expressions.html#SYNTAX-WINDOW-FUNCTIONS).
+- PostgreSQL **17**, [9.22 Frame Semantics](https://www.postgresql.org/docs/17/functions-window.html).
 
-- [PostgreSQL queries](https://www.postgresql.org/docs/current/queries.html)
-- [PostgreSQL functions](https://www.postgresql.org/docs/current/functions.html)
-
-Последняя проверка версий: **2026-08-27**.
+Секции официальной документации сверены 2026-11-16. Примеры проверяются отдельными PG17 integration tests с независимо заданными именами, типами и значениями; версия sandbox закреплена проектом и не обновляется этим уроком.

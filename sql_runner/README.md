@@ -6,7 +6,9 @@ workspace; Phase 3 adds a disposable grader and Phase 4 registers WHERE/NULL
 alongside projection; Phase 5 adds ordered latest-orders and distinct-country
 tasks through the same registries; Phase 6 adds COUNT, GROUP BY and HAVING
 for eight consecutive lessons; Phase 7 adds four JOIN labs for 12 lessons
-(10.2–10.13). Application integration
+(10.2–10.13); Phase 8A extends this to 23 consecutive SELECT labs through 10.24.
+Recursive CTEs, windows and set operations already fit the restricted policy; no
+function/schema/AST capability was added. Application integration
 is documented in [SQL_WORKSPACE](../docs/SQL_WORKSPACE.md), grading in
 [SQL_GRADING](../docs/SQL_GRADING.md). SQL rewards and server drafts remain future work.
 
@@ -63,7 +65,7 @@ worker host. Do not expose this Docker-privileged API to an untrusted network.
 ## Dataset
 
 `resources/shop-v1/{schema.sql,seed.sql,manifest.json}` is the canonical revision
-copied byte-for-byte from the 38 executable tasks in `practice_banks.json`.
+shared byte-for-byte with the 39 executable tasks in `practice_banks.json`.
 Four users, five orders, three products, five order_items; constraints, precision,
 composite PK and users' self FK are preserved. Each session has its own copy.
 Both per-file and combined SHA-256 hashes are checked against a code-pinned

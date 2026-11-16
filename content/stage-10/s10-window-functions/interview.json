@@ -1,40 +1,32 @@
 [
   {
-    "question": "Что такое Window functions и как это работает?",
+    "question": "Почему окно отличается от GROUP BY?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "rows remain visible",
-      "difference from GROUP BY",
-      "window definition"
+      "Оконное вычисление добавляет значение к каждой входной строке; GROUP BY заменяет группу одной агрегатной строкой."
     ],
-    "short_answer": "Window function вычисляет значение по связанным rows, сохраняя каждую исходную row, в отличие от GROUP BY.",
-    "junior_answer": "Window function вычисляет значение по связанным rows, сохраняя каждую исходную row, в отличие от GROUP BY. `OVER` задаёт partition, order и frame. Типичные случаи — ranking, running total и сравнение с предыдущей row. Важное ограничение: Ordering внутри OVER управляет window calculation; финальный порядок результата всё равно требует отдельного ORDER BY.",
-    "follow_up_question": "Какая типичная ошибка связана с Window functions?",
-    "follow_up_answer": "Отсутствие tie-breaker в window ordering делает `row_number` недетерминированным при равных значениях.",
+    "short_answer": "Оконное вычисление добавляет значение к каждой входной строке; GROUP BY заменяет группу одной агрегатной строкой..",
+    "junior_answer": "Оконное вычисление добавляет значение к каждой входной строке; GROUP BY заменяет группу одной агрегатной строкой.",
+    "follow_up_question": "Какие два ORDER BY бывают в оконном запросе?",
+    "follow_up_answer": "Внутри OVER он задаёт логическую последовательность окна. Внешний ORDER BY задаёт порядок результата. Они могут различаться и не заменяют друг друга.",
     "expected_answer": {
       "must_mention": [
-        "rows remain visible",
-        "difference from GROUP BY",
-        "window definition"
+        "Оконное вычисление добавляет значение к каждой входной строке; GROUP BY заменяет группу одной агрегатной строкой."
       ],
       "good_additions": [
-        "короткий рабочий пример",
-        "ограничение или типичная ошибка"
+        "Сначала определите сохранённую строку, затем partition, оконный порядок, frame и итоговую сортировку. Фильтр до окна меняет вход."
       ],
-      "common_wrong_answers": [],
-      "red_flags": [],
+      "common_wrong_answers": [
+        "Оконная функция сворачивает все строки пользователя в одну."
+      ],
+      "red_flags": [
+        "Подмена контракта результата без объяснения."
+      ],
       "follow_up_questions": [
-        "Какая типичная ошибка связана с Window functions?"
-      ],
-      "coding_mistakes": [
-        "Отсутствие tie-breaker в window ordering делает `row_number` недетерминированным при равных значениях."
-      ],
-      "assessment_notes": [
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "review_status": "pending-substantive-review"
+        "Какие два ORDER BY бывают в оконном запросе?"
+      ]
     },
     "follow_ups": [
       "Какая типичная ошибка связана с Window functions?"
@@ -50,35 +42,33 @@
     ]
   },
   {
-    "question": "Какая типичная ошибка связана с Window functions?",
+    "question": "Какие два ORDER BY бывают в оконном запросе?",
     "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "один короткий пример кода с результатом",
-      "Отсутствие tie-breaker в window ordering делает `row_number` недетерминированным при равных значениях."
+      "Внутри OVER он задаёт логическую последовательность окна. Внешний ORDER BY задаёт порядок результата. Они могут различаться и не заменяют друг друга."
     ],
-    "short_answer": "Отсутствие tie-breaker в window ordering делает `row_number` недетерминированным при равных значениях.",
-    "junior_answer": "Отсутствие tie-breaker в window ordering делает `row_number` недетерминированным при равных значениях.",
-    "follow_up_question": "Что такое Window functions и как это работает?",
-    "follow_up_answer": "Window function вычисляет значение по связанным rows, сохраняя каждую исходную row, в отличие от GROUP BY. `OVER` задаёт partition, order и frame. Типичные случаи — ranking, running total и сравнение с предыдущей row. Важное ограничение: Ordering внутри OVER управляет window calculation; финальный порядок результата всё равно требует отдельного ORDER BY.",
+    "short_answer": "Внутри OVER он задаёт логическую последовательность окна.",
+    "junior_answer": "Внутри OVER он задаёт логическую последовательность окна. Внешний ORDER BY задаёт порядок результата. Они могут различаться и не заменяют друг друга.",
+    "follow_up_question": "Почему окно отличается от GROUP BY?",
+    "follow_up_answer": "Оконное вычисление добавляет значение к каждой входной строке; GROUP BY заменяет группу одной агрегатной строкой.",
     "expected_answer": {
       "must_mention": [
-        "один короткий пример кода с результатом"
+        "Внутри OVER он задаёт логическую последовательность окна. Внешний ORDER BY задаёт порядок результата. Они могут различаться и не заменяют друг друга."
       ],
       "good_additions": [
-        "короткий пример именно этой темы"
+        "Сначала определите сохранённую строку, затем partition, оконный порядок, frame и итоговую сортировку. Фильтр до окна меняет вход."
       ],
-      "common_wrong_answers": [],
-      "red_flags": [],
+      "common_wrong_answers": [
+        "Оконная функция сворачивает все строки пользователя в одну."
+      ],
+      "red_flags": [
+        "Подмена контракта результата без объяснения."
+      ],
       "follow_up_questions": [
-        "Что такое Window functions и как это работает?"
-      ],
-      "coding_mistakes": [
-        "Отсутствие tie-breaker в window ordering делает `row_number` недетерминированным при равных значениях."
-      ],
-      "assessment_notes": [],
-      "review_status": "pending-substantive-review"
+        "Почему окно отличается от GROUP BY?"
+      ]
     },
     "follow_ups": [
       "Что такое Window functions и как это работает?"

@@ -32,6 +32,17 @@ it.each([
   ['s10-left-join', 'Показать решение для самопроверки', 'WHERE o.id IS NULL'],
   ['s10-right-and-full-outer-join', 'Показать решение для самопроверки', 'RIGHT JOIN products'],
   ['s10-self-join', 'Показать решение для самопроверки', 'm.email AS manager_email'],
+  ['s10-subqueries', 'Показать решение для самопроверки', 'SELECT id,total FROM orders WHERE t'],
+  ['s10-correlated-subquery', 'Показать решение для самопроверки', 'SELECT o.id,o.user_id FROM orders o'],
+  ['s10-exists-vs-in', 'Показать решение для самопроверки', 'SELECT u.id,u.email FROM users u WH'],
+  ['s10-cte', 'Показать решение для самопроверки', 'WITH paid_totals AS (SELECT user_id'],
+  ['s10-recursive-cte', 'Показать решение для самопроверки', 'WITH RECURSIVE chain AS (SELECT id,'],
+  ['s10-case', 'Показать решение для самопроверки', "SELECT id, CASE status WHEN 'paid' "],
+  ['s10-set-operations', 'Показать решение для самопроверки', 'SELECT country FROM users WHERE act'],
+  ['s10-window-functions', 'Показать решение для самопроверки', 'SELECT id,user_id,total,LAG(total) '],
+  ['s10-row-number-rank-dense-rank', 'Показать решение для самопроверки', 'SELECT id,user_id,ROW_NUMBER() OVER'],
+  ['s10-partition-by-and-window-ordering', 'Показать решение для самопроверки', 'SELECT id,user_id,SUM(total) OVER(P'],
+  ['s10-lag-and-lead', 'Показать решение для самопроверки', 'SELECT id,user_id,LEAD(created_at) '],
 ])('keeps the graded SQL answer closed in Learn and Review: %s', (slug, summary, sql) => {
   const lesson = loadLesson(`stage-10/${slug}`);
   render(<MarkdownLesson {...props} lesson={lesson} />);

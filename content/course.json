@@ -1,6 +1,6 @@
 {
   "title": "Python Backend Interview Trainer",
-  "lessons_count": 359,
+  "lessons_count": 361,
   "modules": [
     {
       "slug": "stage-00",
@@ -4345,8 +4345,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-13",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.10.4.null-and-three-valued-logic",
@@ -4394,8 +4395,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-13",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.10.5.order-by-limit-and-offset",
@@ -4441,8 +4443,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-14",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.10.6.distinct",
@@ -4488,8 +4491,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-14",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.10.7.aggregates",
@@ -4838,8 +4842,8 @@
           "module_title": "Этап 10 · SQL Fundamentals and Practice",
           "module_order": 10,
           "order": 110,
-          "duration": 12,
-          "estimated_minutes": 12,
+          "duration": 35,
+          "estimated_minutes": 35,
           "xp": 5,
           "topics": [
             "scalar",
@@ -4847,7 +4851,7 @@
             "`IN`",
             "nested aggregation."
           ],
-          "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Подзапрос — запрос внутри другого запроса.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -4875,8 +4879,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-16",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.10.15.correlated-subquery",
@@ -4886,15 +4891,15 @@
           "module_title": "Этап 10 · SQL Fundamentals and Practice",
           "module_order": 10,
           "order": 111,
-          "duration": 10,
-          "estimated_minutes": 10,
+          "duration": 35,
+          "estimated_minutes": 35,
           "xp": 5,
           "topics": [
             "per-row evaluation mental model",
             "optimizer caveat",
             "alternatives."
           ],
-          "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Коррелированный подзапрос использует значение текущей внешней строки.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -4922,8 +4927,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-16",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.10.16.exists-vs-in",
@@ -4933,15 +4939,15 @@
           "module_title": "Этап 10 · SQL Fundamentals and Practice",
           "module_order": 10,
           "order": 112,
-          "duration": 10,
-          "estimated_minutes": 10,
+          "duration": 35,
+          "estimated_minutes": 35,
           "xp": 5,
           "topics": [
             "existence semantics",
             "NULL caveats",
             "no simplistic universal performance rule."
           ],
-          "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "EXISTS отвечает на вопрос «есть ли хотя бы одна подходящая строка?».",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -4969,8 +4975,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-16",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.10.17.cte",
@@ -4980,8 +4987,8 @@
           "module_title": "Этап 10 · SQL Fundamentals and Practice",
           "module_order": 10,
           "order": 113,
-          "duration": 10,
-          "estimated_minutes": 10,
+          "duration": 35,
+          "estimated_minutes": 35,
           "xp": 5,
           "topics": [
             "`WITH`",
@@ -4989,7 +4996,7 @@
             "multiple stages",
             "planner/version caveats."
           ],
-          "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "CTE — именованный результат запроса, действующий внутри одного SQL statement.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -5017,8 +5024,55 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-16",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
+        },
+        {
+          "id": "backend-interview.10.18.recursive-cte",
+          "slug": "s10-recursive-cte",
+          "title": "Recursive CTE",
+          "module_slug": "stage-10",
+          "module_title": "Этап 10 · SQL Fundamentals and Practice",
+          "module_order": 10,
+          "order": 114,
+          "duration": 35,
+          "estimated_minutes": 35,
+          "xp": 5,
+          "topics": [
+            "hierarchy basics",
+            "termination",
+            "not a Junior core requirement."
+          ],
+          "description": "SELF JOIN показывает только один шаг связи.",
+          "has_task": false,
+          "has_solution": false,
+          "priority": "P2",
+          "priority_note": "P2 | low",
+          "interview_probability": "low",
+          "market_frequency": "occasional",
+          "market_evidence": "SQL/relational DB явно встречались в 15/18 — один из главных P0-разделов.",
+          "priority_basis": [
+            "market",
+            "technical_interview",
+            "backend_work"
+          ],
+          "why_it_matters": "Помогает объяснить Recursive CTE и применить тему без типичной backend-ошибки.",
+          "difficulty": "junior_plus",
+          "prerequisites": [
+            "backend-interview.10.17.cte"
+          ],
+          "modes": [
+            "learn",
+            "interview"
+          ],
+          "tracks": [
+            "full"
+          ],
+          "content_status": "complete",
+          "last_verified": "2026-11-16",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.10.19.case",
@@ -5028,14 +5082,14 @@
           "module_title": "Этап 10 · SQL Fundamentals and Practice",
           "module_order": 10,
           "order": 115,
-          "duration": 10,
-          "estimated_minutes": 10,
+          "duration": 35,
+          "estimated_minutes": 35,
           "xp": 5,
           "topics": [
             "conditional projection",
             "grouped reporting."
           ],
-          "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "CASE вычисляет значение по условиям прямо в SQL.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -5063,8 +5117,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-16",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.10.20.set-operations",
@@ -5074,8 +5129,8 @@
           "module_title": "Этап 10 · SQL Fundamentals and Practice",
           "module_order": 10,
           "order": 116,
-          "duration": 10,
-          "estimated_minutes": 10,
+          "duration": 35,
+          "estimated_minutes": 35,
           "xp": 5,
           "topics": [
             "`UNION`",
@@ -5083,7 +5138,7 @@
             "`INTERSECT`",
             "`EXCEPT`."
           ],
-          "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Операции над множествами соединяют результаты вертикально.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -5111,8 +5166,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-16",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.10.21.window-functions",
@@ -5122,15 +5178,15 @@
           "module_title": "Этап 10 · SQL Fundamentals and Practice",
           "module_order": 10,
           "order": 117,
-          "duration": 10,
-          "estimated_minutes": 10,
+          "duration": 35,
+          "estimated_minutes": 35,
           "xp": 5,
           "topics": [
             "rows remain visible",
             "difference from GROUP BY",
             "window definition."
           ],
-          "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Оконная функция добавляет вычисление к каждой исходной строке.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -5158,8 +5214,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-16",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.10.22.row-number-rank-dense-rank",
@@ -5169,14 +5226,14 @@
           "module_title": "Этап 10 · SQL Fundamentals and Practice",
           "module_order": 10,
           "order": 118,
-          "duration": 10,
-          "estimated_minutes": 10,
+          "duration": 35,
+          "estimated_minutes": 35,
           "xp": 5,
           "topics": [
             "ties",
             "top-N per group."
           ],
-          "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Номер строки, место в рейтинге и номер группы одинаковых результатов — разные понятия.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -5204,8 +5261,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-16",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.10.23.partition-by-and-window-ordering",
@@ -5215,14 +5273,14 @@
           "module_title": "Этап 10 · SQL Fundamentals and Practice",
           "module_order": 10,
           "order": 119,
-          "duration": 10,
-          "estimated_minutes": 10,
+          "duration": 35,
+          "estimated_minutes": 35,
           "xp": 5,
           "topics": [
             "independent windows per group",
             "deterministic order."
           ],
-          "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Для накопительной выручки важно одновременно определить, чьи заказы складываются и до какой строки.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -5250,8 +5308,54 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-16",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
+        },
+        {
+          "id": "backend-interview.10.24.lag-and-lead",
+          "slug": "s10-lag-and-lead",
+          "title": "`LAG` and `LEAD`",
+          "module_slug": "stage-10",
+          "module_title": "Этап 10 · SQL Fundamentals and Practice",
+          "module_order": 10,
+          "order": 120,
+          "duration": 35,
+          "estimated_minutes": 35,
+          "xp": 5,
+          "topics": [
+            "previous/next event",
+            "time-series examples."
+          ],
+          "description": "LAG и LEAD связывают событие с соседним событием той же последовательности.",
+          "has_task": false,
+          "has_solution": false,
+          "priority": "P2",
+          "priority_note": "P2 | medium",
+          "interview_probability": "medium",
+          "market_frequency": "occasional",
+          "market_evidence": "SQL/relational DB явно встречались в 15/18 — один из главных P0-разделов.",
+          "priority_basis": [
+            "market",
+            "technical_interview",
+            "backend_work"
+          ],
+          "why_it_matters": "Помогает объяснить `LAG` and `LEAD` и применить тему без типичной backend-ошибки.",
+          "difficulty": "junior_plus",
+          "prerequisites": [
+            "backend-interview.10.23.partition-by-and-window-ordering"
+          ],
+          "modes": [
+            "learn",
+            "interview"
+          ],
+          "tracks": [
+            "full"
+          ],
+          "content_status": "complete",
+          "last_verified": "2026-11-16",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.10.25.data-modification",

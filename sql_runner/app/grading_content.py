@@ -61,6 +61,28 @@ REGISTRY = build_registry((
         "5230bd59e0b64827fa92aa6c283f97f808431d061f242c7d72cb279fcaaddb29"),
     Registration("sql.join.20", 1, "users-managers-v1", "users-managers-v1",
         "40fae9ee42c21d79a0eec3b148294dddf69e2fa02e13fc18490e2bebdaf2ab3e"),
+    Registration('sql.subquery.27', 1, 'above-average-v1', 'above-average-v1',
+        'ac02027baa30aff909dd56a05bd32e3697bc7551bd82f5e6f43e3ad0e732cbb3'),
+    Registration('sql.subquery.31', 1, 'latest-per-user-v1', 'latest-per-user-v1',
+        '1c999e14ae69477ffd5a91e41ec6f17655635b4849ff6400ea828c0f9d25eb31'),
+    Registration('sql.subquery.28', 1, 'paid-buyers-v1', 'paid-buyers-v1',
+        'cf3ca9b468f4e3d1fc41a0e25746ec3a42085cd6b751368ab580146c5f84d48d'),
+    Registration('sql.subquery.30', 1, 'paid-revenue-v1', 'paid-revenue-v1',
+        '9c746bffcd24bb1a00a095a8d12a5acb7d4627f5e797aa02e29a21bd0febaf74'),
+    Registration('sql.subquery.32', 1, 'manager-chain-v1', 'manager-chain-v1',
+        '2b24058adc5f74ee74d5939efcdb7da97dd9f6bfd4a32644e55c322d7afa6872'),
+    Registration('sql.basic.06', 1, 'status-label-v1', 'status-label-v1',
+        '4f921aca36a46ed0010de54bc7f147d23c1b1815210159aa15757a72182d9bfe'),
+    Registration('sql.set.50', 1, 'active-countries-except-paid-v1', 'active-countries-except-paid-v1',
+        '8f7c27505ac0f619845bd71b432256dd6002545043e943ad32d0262a5b30a912'),
+    Registration('sql.window.37', 1, 'previous-total-v1', 'previous-total-v1',
+        'c5881d79a1163909636c4d054376964fd8a5e6577638837949fc2d20a9d77505'),
+    Registration('sql.window.33', 1, 'order-row-number-v1', 'order-row-number-v1',
+        'a09e9d50d62e1f496e49efbe66d6a86fa7261cd35ae25b9e64148cb0c3235413'),
+    Registration('sql.window.36', 1, 'running-revenue-v1', 'running-revenue-v1',
+        '649ca508cb2847bfe1bcb02c8ab4ed76e308540c0382db416506fc49787ad8ff'),
+    Registration('sql.window.38', 1, 'next-order-time-v1', 'next-order-time-v1',
+        'aa23f03eedf94e102a9a445ca906c53c8e5079265a360397c28185578364fd59'),
 ))
 
 
@@ -82,6 +104,9 @@ class Task:
     numeric_compatible: bool
     reference_sql: str
     cases: tuple[Case, ...]
+    # Optional ordered groups: rows tied on these output columns form a bag.
+    # Legacy bundles omit this and retain their exact sequence/bag behavior.
+    ordered_key_columns: tuple[str, ...] = ()
 
 
 def load_task(task_id, task_revision, grader_revision):
@@ -121,9 +146,14 @@ def load_task(task_id, task_revision, grader_revision):
         cases.append(Case(case["id"], seed))
     if len({case.id for case in cases}) != len(cases):
         raise ValueError("Duplicate fixture revision")
+    keys = config.get("ordered_key_columns", [])
+    if (not isinstance(keys, list) or not all(isinstance(key, str) for key in keys)
+            or len(set(keys)) != len(keys) or not set(keys).issubset(config["expected_columns"])
+            or (keys and config["comparison"] != "ordered")):
+        raise ValueError("Invalid ordered group contract")
     return Task(config["task_id"], config["task_revision"], config["grader_revision"],
                 config["dataset_id"], config["dataset_checksum"], tuple(config["expected_columns"]), config["comparison"],
-                config["numeric_compatible"], config["reference_sql"], tuple(cases))
+                config["numeric_compatible"], config["reference_sql"], tuple(cases), tuple(keys))
 
 
 def validate_graded_bank(bank):

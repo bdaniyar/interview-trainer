@@ -1,6 +1,7 @@
 """Typed, bounded result comparison. No expected/student values in feedback."""
 from collections import Counter
 from decimal import Decimal, InvalidOperation
+from itertools import groupby
 
 INTEGER = {"int2", "int4", "int8"}
 FLOAT = {"float4", "float8"}
@@ -60,7 +61,7 @@ def complete_reference(result):
         raise ValueError("Reference query did not produce a complete result")
 
 
-def compare(expected, actual, *, comparison="unordered", numeric_compatible=False):
+def compare(expected, actual, *, comparison="unordered", numeric_compatible=False, ordered_key_columns=()):
     complete_reference(expected)
     if comparison not in {"ordered", "unordered"}:
         raise ValueError("Unknown comparison contract")
@@ -80,5 +81,15 @@ def compare(expected, actual, *, comparison="unordered", numeric_compatible=Fals
     actual_types, actual_rows = normalized(actual, numeric_compatible)
     if actual_types != expected_types:
         return "types"
-    equal = actual_rows == expected_rows if comparison == "ordered" else Counter(actual_rows) == Counter(expected_rows)
+    if ordered_key_columns:
+        names = [column["name"] for column in expected["columns"]]
+        if comparison != "ordered" or any(name not in names for name in ordered_key_columns):
+            raise ValueError("Invalid ordered group contract")
+        indexes = [names.index(name) for name in ordered_key_columns]
+        def groups(rows):
+            return [(key, Counter(items)) for key, items in
+                    groupby(rows, key=lambda row: tuple(row[index] for index in indexes))]
+        equal = groups(actual_rows) == groups(expected_rows)
+    else:
+        equal = actual_rows == expected_rows if comparison == "ordered" else Counter(actual_rows) == Counter(expected_rows)
     return "passed" if equal else "rows"
