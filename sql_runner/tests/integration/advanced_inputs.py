@@ -51,4 +51,3 @@ RECURSIVE = {'absent': ([(1, None, True, None)], []),
              (9007199254740993, None, True, 0),
              (4, None, True, 9007199254740993)],
             [])}
-
