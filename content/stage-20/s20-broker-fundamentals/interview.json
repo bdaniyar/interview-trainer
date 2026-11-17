@@ -1,0 +1,82 @@
+[
+  {
+    "level": "normal",
+    "priority": "P2",
+    "interview_probability": "medium",
+    "tags": [
+      "stage-20"
+    ],
+    "sets": [
+      "stage-20",
+      "full-junior-backend"
+    ],
+    "question": "Чем publisher confirm отличается от consumer ack?",
+    "answer": [
+      "Confirm подтверждает принятие broker публикации; consumer ack сообщает завершение delivery со стороны consumer. Ни один сам по себе не доказывает внешний business effect."
+    ],
+    "short_answer": "Confirm подтверждает принятие broker публикации; consumer ack сообщает завершение delivery со стороны consumer. Ни один сам по себе не доказывает внешний business effect.",
+    "junior_answer": "Confirm подтверждает принятие broker публикации; consumer ack сообщает завершение delivery со стороны consumer. Ни один сам по себе не доказывает внешний business effect.",
+    "follow_up_question": "Как это проверяется в проекте Durable Training Job Queue?",
+    "follow_up_answer": "Durable queue, persistent message и publisher confirm закрывают разные сбои. Наш single-node lab доказывает конкретный redelivery/ack, но не отказ всего кластера или репликацию.",
+    "follow_ups": [
+      "Как это проверяется в проекте Durable Training Job Queue?"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "Confirm подтверждает принятие broker публикации; consumer ack сообщает завершение delivery со стороны consumer. Ни один сам по себе не доказывает внешний business effect."
+      ],
+      "good_additions": [
+        "Durable queue, persistent message и publisher confirm закрывают разные сбои. Наш single-node lab доказывает конкретный redelivery/ack, но не отказ всего кластера или репликацию."
+      ],
+      "common_wrong_answers": [
+        "Наличие broker автоматически делает внешний business effect exactly-once."
+      ],
+      "red_flags": [
+        "Выдаёт process-local callback за durable выполнение."
+      ],
+      "follow_up_questions": [
+        "Как это проверяется в проекте Durable Training Job Queue?"
+      ]
+    }
+  },
+  {
+    "level": "follow_up",
+    "priority": "P2",
+    "interview_probability": "medium",
+    "tags": [
+      "stage-20"
+    ],
+    "sets": [
+      "stage-20",
+      "full-junior-backend"
+    ],
+    "question": "Почему at-least-once требует идемпотентность?",
+    "answer": [
+      "После эффекта ack может потеряться и сообщение будет доставлено снова. Receiver должен связать устойчивый message key с одним эффектом."
+    ],
+    "short_answer": "После эффекта ack может потеряться и сообщение будет доставлено снова. Receiver должен связать устойчивый message key с одним эффектом.",
+    "junior_answer": "После эффекта ack может потеряться и сообщение будет доставлено снова. Receiver должен связать устойчивый message key с одним эффектом.",
+    "follow_up_question": "Как это проверяется в проекте Durable Training Job Queue?",
+    "follow_up_answer": "Durable queue, persistent message и publisher confirm закрывают разные сбои. Наш single-node lab доказывает конкретный redelivery/ack, но не отказ всего кластера или репликацию.",
+    "follow_ups": [
+      "Как это проверяется в проекте Durable Training Job Queue?"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "После эффекта ack может потеряться и сообщение будет доставлено снова. Receiver должен связать устойчивый message key с одним эффектом."
+      ],
+      "good_additions": [
+        "Durable queue, persistent message и publisher confirm закрывают разные сбои. Наш single-node lab доказывает конкретный redelivery/ack, но не отказ всего кластера или репликацию."
+      ],
+      "common_wrong_answers": [
+        "Наличие broker автоматически делает внешний business effect exactly-once."
+      ],
+      "red_flags": [
+        "Выдаёт process-local callback за durable выполнение."
+      ],
+      "follow_up_questions": [
+        "Как это проверяется в проекте Durable Training Job Queue?"
+      ]
+    }
+  }
+]

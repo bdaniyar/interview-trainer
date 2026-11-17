@@ -1,0 +1,82 @@
+[
+  {
+    "level": "normal",
+    "priority": "P2",
+    "interview_probability": "medium",
+    "tags": [
+      "stage-20"
+    ],
+    "sets": [
+      "stage-20",
+      "full-junior-backend"
+    ],
+    "question": "Чем scheduler отличается от worker?",
+    "answer": [
+      "Scheduler создаёт работу по времени, worker выполняет её. Наличие scheduler не гарантирует отсутствие дублей или overlap."
+    ],
+    "short_answer": "Scheduler создаёт работу по времени, worker выполняет её. Наличие scheduler не гарантирует отсутствие дублей или overlap.",
+    "junior_answer": "Scheduler создаёт работу по времени, worker выполняет её. Наличие scheduler не гарантирует отсутствие дублей или overlap.",
+    "follow_up_question": "Как это проверяется в проекте Durable Training Job Queue?",
+    "follow_up_answer": "UTC integer epoch делает маленькую задачу детерминированной и не зависит от локального timezone. Это не обещание exact-time запуска: polling, нагрузка и очередь добавляют задержку.",
+    "follow_ups": [
+      "Как это проверяется в проекте Durable Training Job Queue?"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "Scheduler создаёт работу по времени, worker выполняет её. Наличие scheduler не гарантирует отсутствие дублей или overlap."
+      ],
+      "good_additions": [
+        "UTC integer epoch делает маленькую задачу детерминированной и не зависит от локального timezone. Это не обещание exact-time запуска: polling, нагрузка и очередь добавляют задержку."
+      ],
+      "common_wrong_answers": [
+        "Наличие broker автоматически делает внешний business effect exactly-once."
+      ],
+      "red_flags": [
+        "Выдаёт process-local callback за durable выполнение."
+      ],
+      "follow_up_questions": [
+        "Как это проверяется в проекте Durable Training Job Queue?"
+      ]
+    }
+  },
+  {
+    "level": "follow_up",
+    "priority": "P2",
+    "interview_probability": "medium",
+    "tags": [
+      "stage-20"
+    ],
+    "sets": [
+      "stage-20",
+      "full-junior-backend"
+    ],
+    "question": "Что решает ключ периода?",
+    "answer": [
+      "Он дедуплицирует создание job для одного расписания и bucket; параллельные разные периоды требуют отдельной политики."
+    ],
+    "short_answer": "Он дедуплицирует создание job для одного расписания и bucket; параллельные разные периоды требуют отдельной политики.",
+    "junior_answer": "Он дедуплицирует создание job для одного расписания и bucket; параллельные разные периоды требуют отдельной политики.",
+    "follow_up_question": "Как это проверяется в проекте Durable Training Job Queue?",
+    "follow_up_answer": "UTC integer epoch делает маленькую задачу детерминированной и не зависит от локального timezone. Это не обещание exact-time запуска: polling, нагрузка и очередь добавляют задержку.",
+    "follow_ups": [
+      "Как это проверяется в проекте Durable Training Job Queue?"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "Он дедуплицирует создание job для одного расписания и bucket; параллельные разные периоды требуют отдельной политики."
+      ],
+      "good_additions": [
+        "UTC integer epoch делает маленькую задачу детерминированной и не зависит от локального timezone. Это не обещание exact-time запуска: polling, нагрузка и очередь добавляют задержку."
+      ],
+      "common_wrong_answers": [
+        "Наличие broker автоматически делает внешний business effect exactly-once."
+      ],
+      "red_flags": [
+        "Выдаёт process-local callback за durable выполнение."
+      ],
+      "follow_up_questions": [
+        "Как это проверяется в проекте Durable Training Job Queue?"
+      ]
+    }
+  }
+]

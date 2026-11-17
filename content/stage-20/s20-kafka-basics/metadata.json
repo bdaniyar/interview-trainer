@@ -6,8 +6,8 @@
   "module_title": "Этап 20 · Background Work, Celery and Message Brokers",
   "module_order": 20,
   "order": 272,
-  "duration": 10,
-  "estimated_minutes": 10,
+  "duration": 40,
+  "estimated_minutes": 40,
   "xp": 5,
   "topics": [
     "log/stream",
@@ -19,7 +19,7 @@
     "retention/replay",
     "not “just a faster RabbitMQ”."
   ],
-  "description": "P2 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+  "description": "Kafka хранит append-only log в topic partitions. Consumer читает records по offset; чтение не удаляет запись немедленно. Другой consumer group может перечитать сохранённый log независимо.",
   "has_task": false,
   "has_solution": false,
   "priority": "P2",
@@ -39,12 +39,14 @@
   ],
   "modes": [
     "learn",
-    "interview"
+    "interview",
+    "practice"
   ],
   "tracks": [
     "full"
   ],
-  "content_status": "planned",
-  "last_verified": "2026-08-27",
-  "generated_by": "populate_curriculum.py"
+  "content_status": "complete",
+  "last_verified": "2026-11-17",
+  "generated_by": "populate_curriculum.py",
+  "content_source": "curated"
 }

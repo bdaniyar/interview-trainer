@@ -6,17 +6,17 @@
   "module_title": "Этап 20 · Background Work, Celery and Message Brokers",
   "module_order": 20,
   "order": 267,
-  "duration": 10,
-  "estimated_minutes": 10,
+  "duration": 40,
+  "estimated_minutes": 40,
   "xp": 5,
   "topics": [
     "scheduler/beat",
     "overlapping execution",
     "lock/idempotency."
   ],
-  "description": "P2 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
-  "has_task": false,
-  "has_solution": false,
+  "description": "Scheduler решает, когда пора создать работу; worker решает, как её выполнить. Если два scheduler одновременно увидели наступление минуты, они могут создать дубль. Отключение второго процесса не заменяет устойчивый контракт идентичности периода.",
+  "has_task": true,
+  "has_solution": true,
   "priority": "P2",
   "priority_note": "P2 | medium",
   "interview_probability": "medium",
@@ -34,12 +34,14 @@
   ],
   "modes": [
     "learn",
-    "interview"
+    "interview",
+    "practice"
   ],
   "tracks": [
     "full"
   ],
-  "content_status": "planned",
-  "last_verified": "2026-08-27",
-  "generated_by": "populate_curriculum.py"
+  "content_status": "complete",
+  "last_verified": "2026-11-17",
+  "generated_by": "populate_curriculum.py",
+  "content_source": "curated"
 }

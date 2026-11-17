@@ -6,15 +6,15 @@
   "module_title": "Этап 20 · Background Work, Celery and Message Brokers",
   "module_order": 20,
   "order": 271,
-  "duration": 10,
-  "estimated_minutes": 10,
+  "duration": 40,
+  "estimated_minutes": 40,
   "xp": 5,
   "topics": [
     "queue/exchange/routing awareness",
     "acknowledgement",
     "not an administration course."
   ],
-  "description": "P2 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+  "description": "Producer RabbitMQ публикует в exchange. Exchange маршрутизирует сообщение в queue по binding и routing key. Consumer получает delivery из queue; broker удерживает unacked message до подтверждения или потери соединения.",
   "has_task": false,
   "has_solution": false,
   "priority": "P2",
@@ -34,12 +34,14 @@
   ],
   "modes": [
     "learn",
-    "interview"
+    "interview",
+    "practice"
   ],
   "tracks": [
     "full"
   ],
-  "content_status": "planned",
-  "last_verified": "2026-08-27",
-  "generated_by": "populate_curriculum.py"
+  "content_status": "complete",
+  "last_verified": "2026-11-17",
+  "generated_by": "populate_curriculum.py",
+  "content_source": "curated"
 }

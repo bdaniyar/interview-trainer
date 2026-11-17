@@ -1,170 +1,101 @@
 # Celery model
 
-> [!IMPORTANT]
-> **P1 · вероятность на интервью: medium · 10 минут.** Background work/outbox/Celery нужны для защиты фактических project claims; broker depth ниже core.
+## Суть
+
+Celery разделяет producer, broker и worker. Producer публикует имя зарегистрированной задачи и сериализованные аргументы. Worker получает сообщение и запускает код. Result backend — отдельный механизм хранения результата, а не само задание в broker.
 
 ## Учебные цели
 
-После урока ты сможешь:
+Проследить путь зарегистрированной задачи от producer через Redis к настоящему Celery worker. Прочитать результат из отдельного backend и объяснить, на какой границе действует acknowledgement.
 
-- восстановить mental model темы **Celery model**, а не только запомнить термин;
-- прочитать и изменить короткий пример для `task`;
-- распознать характерную ошибку и объяснить причину;
-- дать реалистичный ответ уровня Junior и выдержать follow-up.
+## Зачем это нужно backend-разработчику
+
+Откройте `projects/durable_queue/queue_app/celery_demo.py`: подпишите producer, зарегистрированное имя, broker, result backend, ack и visibility timeout. Запустите broker test. В копии задачи верните неверную сумму: настоящий result assertion должен упасть. Не подключайте Celery к student Python Runner.
 
 ## Теория
 
 ### Что это
 
-Тема **Celery model** описывает отдельный контракт backend-разработки.
+Celery разделяет producer, broker и worker. Producer публикует имя зарегистрированной задачи и сериализованные аргументы. Worker получает сообщение и запускает код. Result backend — отдельный механизм хранения результата, а не само задание в broker.
 
 ### Как работает
 
-Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы сценарий ошибки.
+В нашем сравнении Redis DB0 хранит transport data, Redis DB1 — task results. Одинаковый Redis server не делает назначения одинаковыми. Worker заранее импортирует зарегистрированную task; передавать произвольный Python-код в сообщение не требуется. Используйте JSON и проверяйте payload.
 
-**task.** `task` является этапом delivery от DB commit до side effect, где возможны duplicate, retry и idempotency requirements.
+Producer publish, broker acceptance, получение worker и успешный business COMMIT — разные события. task_acks_late переносит acknowledgement ближе к завершению, но само по себе не гарантирует повтор после любого child-process loss. В Celery 5.5.3 task_reject_on_worker_lost меняет это поведение и может создать poison-message loop; нужен ограниченный протокол ошибок и идемпотентные эффекты.
 
-**broker.** `broker` является этапом delivery от DB commit до side effect, где возможны duplicate, retry и idempotency requirements.
-
-**worker.** `worker` является этапом delivery от DB commit до side effect, где возможны duplicate, retry и idempotency requirements.
-
-**result backend distinction.** `result backend distinction` является этапом delivery от DB commit до side effect, где возможны duplicate, retry и idempotency requirements.
-
-**serialization.** `serialization` является этапом delivery от DB commit до side effect, где возможны duplicate, retry и idempotency requirements.
-
-**retries.** `retries` является этапом delivery от DB commit до side effect, где возможны duplicate, retry и idempotency requirements.
-
+Concurrency и prefetch управляют числом исполняемых и заранее зарезервированных задач. worker_prefetch_multiplier=1 помогает равномернее раздавать долгие задания, но не превращает очередь в строгий глобальный FIFO завершений. Нельзя использовать result.state=PENDING как доказательство «worker ещё не начал»: результат также может отсутствовать или истечь.
 
 ### Важный нюанс / ограничение
 
-Граница Junior: уверенно объясняй `task` и `broker` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
-
-### Где используется в backend
-
-В backend эта тема важна в том месте, где применяется `task`; проверяй именно наблюдаемый contract, а не название инструмента.
+Учебная Celery task — чистая сумма квадратов без внешнего эффекта. Основной durable проект реализован на PostgreSQL явно, чтобы видеть claim/lease/fencing. Celery comparison не доказывает надёжность произвольных side effects.
 
 ## Модель понимания
 
-Между DB commit и publish есть atomicity gap; outbox переносит событие в ту же transaction.
-
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
+Отмечайте отдельно приём работы, владение ею и COMMIT эффекта. Для каждого сбоя подпишите, какие данные уже устойчивы и кто имеет право повторить операцию. Сопоставьте этот путь с конкретным тестом проекта, а не только с названием framework.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
-- task
-- broker
-- worker
-- result backend distinction
-
-### Полезно
-
-- serialization
-- retries
-
-### Можно не учить глубоко
-
-- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
+Producer и worker должны согласовать имя task и формат аргументов. Broker, result backend и business database выполняют разные роли. Concurrency ограничивает выполнение, prefetch — предварительно взятые сообщения; PENDING в result backend не является точным состоянием очереди.
 
 ## Примеры кода
 
-### Celery model: отдельный пример
-
-```python
-def example_s20_celery_model() -> tuple[str, ...]:
-    # Celery model: проверяем отдельный contract урока.
-    return ('task', 'broker', 'worker', 'result backend distinction',)
-
-assert example_s20_celery_model()
+```sh
+docker compose -f projects/durable_queue/compose.brokers.yml run --rm client
 ```
 
-Проследи delivery, duplicate, retry, idempotency и atomicity gap после DB commit.
+В отдельном network запускается настоящий Celery worker с concurrency=1. Producer вызывает comparison.sum_squares(10), result.get получает Python int 385 из DB1. В итоговом JSON celery_real_worker_and_result=true появляется только после ответа worker; импорт декоратора не считается выполнением.
+
+Полный исполняемый проект и команды проверки: `projects/durable_queue/README.md`. Docker-практика выполняется отдельно от четырёхсекундного networkless Python Runner.
 
 ## Типичные ошибки
 
-### Ошибка 1
-
-Игнорировать ограничение механизма и проверять только основной сценарий.
+Запустить producer без worker и ждать вычисления — оставить сообщение без исполнителя. Считать импорт декоратора доказательством доставки — не проверить транспорт. Включить acks_late и забыть о worker-loss, повторных эффектах и poison messages — оставить важные failure paths без контракта.
 
 ## Практика
 
-**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для `task` до запуска.
-
-**B · Найди ошибку.** Найди нарушение `broker` и объясни конкретное последствие.
-
-**E · Ответ на собеседовании.** Дай ответ про Celery model за 60 секунд: определение, механизм, пример, ограничение.
+Откройте `projects/durable_queue/queue_app/celery_demo.py`: подпишите producer, зарегистрированное имя, broker, result backend, ack и visibility timeout. Запустите broker test. В копии задачи верните неверную сумму: настоящий result assertion должен упасть. Не подключайте Celery к student Python Runner.
 
 ## Вопросы с собеседований
 
-### Основной вопрос
-
-Что такое Celery model и какой механизм здесь важно понимать Junior-разработчику?
-
-### Дополнительный вопрос
-
-Какое ограничение или типичная ошибка относится именно к теме Celery model?
-
-Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+1. Чем broker отличается от result backend?
+2. Достаточно ли acks_late для exactly-once business effect?
 
 ## Хорошие ответы
 
-### Короткий ответ
+<details>
+<summary>Раскрыть ответы</summary>
 
-Celery model: это отдельный технический контракт
+Broker доставляет сообщения worker, result backend хранит состояние/результаты task; один не подменяет другой.
 
-### Нормальный ответ уровня Junior
+Нет. Повторная доставка возможна, некоторые worker-loss пути требуют отдельной настройки, а эффект должен быть идемпотентным по собственной границе.
 
-> Celery model — тема, в которой я сначала фиксирую `task`, затем объясняю `broker` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
-
-### Углубление / дополнительный вопрос
-
-**Какое ограничение или типичная ошибка относится именно к теме Celery model?**
-
-Нужно назвать конкретный сценарий ошибки и способ его проверить.
+</details>
 
 ## Критерии хорошего ответа
 
-### Что обязательно упомянуть
+<details>
+<summary>Раскрыть критерии</summary>
 
-- task
-- broker
-- worker
-- result backend distinction
+Укажите transaction boundary, ownership, возможный повтор и наблюдаемое состояние после сбоя. Назовите конкретное ограничение этого механизма и соответствующий исполняемый тест.
 
-### Что улучшит ответ
-
-- один короткий пример с результатом;
-- одно ограничение или характерная ошибка именно этой темы;
-- пример из backend-разработки только при естественной связи.
-
-### Частые неправильные ответы
-
-- Игнорировать ограничение механизма и проверять только основной сценарий.
-- пересказ одного определения без механизма или примера.
-
-### Дополнительный вопрос
-
-- Какое ограничение или типичная ошибка относится именно к теме Celery model?
+</details>
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Celery model**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
+Откройте `projects/durable_queue/queue_app/celery_demo.py`: подпишите producer, зарегистрированное имя, broker, result backend, ack и visibility timeout. Запустите broker test. В копии задачи верните неверную сумму: настоящий result assertion должен упасть. Не подключайте Celery к student Python Runner.
+
+Внесите изменение в свою копию проекта и запустите соответствующий integration test. Критерий успеха — сохранённый invariant и ожидаемый failure при намеренно сломанной границе; текстовое объяснение автоматически не оценивается.
 
 ## Шпаргалка
 
-Перед собеседованием запомни:
-
-- **Что это:** Celery model: это отдельный технический контракт
-- **Механизм:** Между DB commit и publish есть atomicity gap; outbox переносит событие в ту же transaction.
-- **Ограничение:** Игнорировать ограничение механизма и проверять только основной сценарий.
-- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
+Task name + JSON идут в broker; worker исполняет зарегистрированный код; result backend хранит результат. Поздний ack меняет момент подтверждения, но идемпотентность эффекта остаётся ответственностью приложения. Тест ждёт реальное значение 385 от отдельного worker.
 
 ## Источники
 
-Материал написан своими словами и сверён с актуальными разделами официальной документации:
+- [Celery 5.5.3: First steps / architecture](https://docs.celeryq.dev/en/v5.5.3/getting-started/first-steps-with-celery.html).
+- [Celery 5.5.3: Tasks / acks_late and worker lost](https://docs.celeryq.dev/en/v5.5.3/userguide/tasks.html).
 
-- [Celery tasks](https://docs.celeryq.dev/en/stable/userguide/tasks.html)
-- [Kafka concepts](https://kafka.apache.org/documentation/#intro_concepts_and_terms)
-
-Последняя проверка версий: **2026-08-27**.
+Официальные секции сверены 2026-11-16. Исполнение проекта: PostgreSQL 17.11, SQLAlchemy 2.0.43, FastAPI 0.116.1; comparison Celery 5.5.3, Redis 7.4.12, RabbitMQ 4.1.8, Kafka 4.1.0. Точные pins находятся в проекте. Страница latest может меняться: проверенный код и версии указаны отдельно.

@@ -1,6 +1,6 @@
 {
   "title": "Python Backend Interview Trainer",
-  "lessons_count": 361,
+  "lessons_count": 366,
   "modules": [
     {
       "slug": "stage-00",
@@ -12234,8 +12234,8 @@
           "module_title": "Этап 20 · Background Work, Celery and Message Brokers",
           "module_order": 20,
           "order": 262,
-          "duration": 12,
-          "estimated_minutes": 12,
+          "duration": 40,
+          "estimated_minutes": 40,
           "xp": 5,
           "topics": [
             "latency",
@@ -12244,7 +12244,7 @@
             "retry",
             "transaction boundary."
           ],
-          "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Представьте POST /orders: заказ должен сохраниться до успешного ответа, а письмо можно отправить позже. Перенести работу в фон — значит изменить момент и место выполнения; это не создаёт сохранность задания автоматически.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -12272,8 +12272,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-17",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.20.2.fastapi-backgroundtasks",
@@ -12283,8 +12284,8 @@
           "module_title": "Этап 20 · Background Work, Celery and Message Brokers",
           "module_order": 20,
           "order": 263,
-          "duration": 10,
-          "estimated_minutes": 10,
+          "duration": 40,
+          "estimated_minutes": 40,
           "xp": 5,
           "topics": [
             "process-local",
@@ -12292,9 +12293,9 @@
             "small side effects",
             "crash loss."
           ],
-          "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
-          "has_task": false,
-          "has_solution": false,
+          "description": "BackgroundTasks прикрепляет небольшую работу к ответу FastAPI. Клиент получает response body, затем приложение запускает callbacks в том же процессе. Это удобно для некритичного аудита; задача не превращается в запись надёжной очереди.",
+          "has_task": true,
+          "has_solution": true,
           "priority": "P1",
           "priority_note": "P1 | high",
           "interview_probability": "high",
@@ -12320,8 +12321,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-17",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.20.3.celery-model",
@@ -12331,8 +12333,8 @@
           "module_title": "Этап 20 · Background Work, Celery and Message Brokers",
           "module_order": 20,
           "order": 264,
-          "duration": 10,
-          "estimated_minutes": 10,
+          "duration": 40,
+          "estimated_minutes": 40,
           "xp": 5,
           "topics": [
             "task",
@@ -12342,7 +12344,7 @@
             "serialization",
             "retries."
           ],
-          "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Celery разделяет producer, broker и worker. Producer публикует имя зарегистрированной задачи и сериализованные аргументы. Worker получает сообщение и запускает код. Result backend — отдельный механизм хранения результата, а не само задание в broker.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -12370,8 +12372,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-17",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.20.4.retry-and-backoff",
@@ -12381,8 +12384,8 @@
           "module_title": "Этап 20 · Background Work, Celery and Message Brokers",
           "module_order": 20,
           "order": 265,
-          "duration": 10,
-          "estimated_minutes": 10,
+          "duration": 40,
+          "estimated_minutes": 40,
           "xp": 5,
           "topics": [
             "transient vs permanent failure",
@@ -12390,9 +12393,9 @@
             "jitter",
             "retry limit."
           ],
-          "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
-          "has_task": false,
-          "has_solution": false,
+          "description": "Повтор помогает при временной ошибке: кратком разрыве соединения или перегрузке. Неверный payload или нарушенное бизнес-правило обычно требуют исправления, а не ещё тысячи одинаковых попыток.",
+          "has_task": true,
+          "has_solution": true,
           "priority": "P1",
           "priority_note": "P1 | high",
           "interview_probability": "high",
@@ -12418,8 +12421,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-17",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.20.5.idempotency",
@@ -12429,8 +12433,8 @@
           "module_title": "Этап 20 · Background Work, Celery and Message Brokers",
           "module_order": 20,
           "order": 266,
-          "duration": 12,
-          "estimated_minutes": 12,
+          "duration": 40,
+          "estimated_minutes": 40,
           "xp": 5,
           "topics": [
             "duplicate delivery",
@@ -12439,9 +12443,9 @@
             "state transition",
             "side-effect deduplication."
           ],
-          "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
-          "has_task": false,
-          "has_solution": false,
+          "description": "Идемпотентный обработчик позволяет безопасно повторить один логический запрос. Повторная доставка сообщения и повтор HTTP после timeout должны ссылаться на тот же business operation, а не создавать новую работу.",
+          "has_task": true,
+          "has_solution": true,
           "priority": "P0",
           "priority_note": "P0 | very_high",
           "interview_probability": "very_high",
@@ -12467,8 +12471,56 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-17",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
+        },
+        {
+          "id": "backend-interview.20.6.periodic-tasks",
+          "slug": "s20-periodic-tasks",
+          "title": "Periodic tasks",
+          "module_slug": "stage-20",
+          "module_title": "Этап 20 · Background Work, Celery and Message Brokers",
+          "module_order": 20,
+          "order": 267,
+          "duration": 40,
+          "estimated_minutes": 40,
+          "xp": 5,
+          "topics": [
+            "scheduler/beat",
+            "overlapping execution",
+            "lock/idempotency."
+          ],
+          "description": "Scheduler решает, когда пора создать работу; worker решает, как её выполнить. Если два scheduler одновременно увидели наступление минуты, они могут создать дубль. Отключение второго процесса не заменяет устойчивый контракт идентичности периода.",
+          "has_task": true,
+          "has_solution": true,
+          "priority": "P2",
+          "priority_note": "P2 | medium",
+          "interview_probability": "medium",
+          "market_frequency": "occasional",
+          "market_evidence": "Background work/outbox/Celery нужны для защиты фактических project claims; broker depth ниже core.",
+          "priority_basis": [
+            "market",
+            "technical_interview",
+            "backend_work"
+          ],
+          "why_it_matters": "Помогает объяснить Periodic tasks и применить тему без типичной backend-ошибки.",
+          "difficulty": "junior_plus",
+          "prerequisites": [
+            "backend-interview.20.5.idempotency"
+          ],
+          "modes": [
+            "learn",
+            "interview",
+            "practice"
+          ],
+          "tracks": [
+            "full"
+          ],
+          "content_status": "complete",
+          "last_verified": "2026-11-17",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.20.7.outbox-pattern",
@@ -12478,8 +12530,8 @@
           "module_title": "Этап 20 · Background Work, Celery and Message Brokers",
           "module_order": 20,
           "order": 268,
-          "duration": 10,
-          "estimated_minutes": 10,
+          "duration": 40,
+          "estimated_minutes": 40,
           "xp": 5,
           "topics": [
             "business row + outbox row in one DB transaction",
@@ -12489,7 +12541,7 @@
             "idempotent consumer",
             "dual-write problem."
           ],
-          "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "После COMMIT заказа нужно отправить событие. Если процесс умрёт между COMMIT и publish, событие потеряется. Если publish сделать раньше COMMIT, consumer может увидеть событие заказа, который затем откатился.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -12517,8 +12569,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-17",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.20.8.why-outbox-instead-of-direct-celery-publish",
@@ -12528,8 +12581,8 @@
           "module_title": "Этап 20 · Background Work, Celery and Message Brokers",
           "module_order": 20,
           "order": 269,
-          "duration": 10,
-          "estimated_minutes": 10,
+          "duration": 40,
+          "estimated_minutes": 40,
           "xp": 5,
           "topics": [
             "publish after commit can be lost",
@@ -12537,7 +12590,7 @@
             "outbox closes atomicity gap",
             "Celery may still be delivery/execution layer."
           ],
-          "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Celery умеет доставить и исполнить задачу, но не объединяет publish в Redis с COMMIT вашей PostgreSQL-транзакции. Outbox и Celery решают разные части пути и могут использоваться вместе.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -12565,8 +12618,206 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-17",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
+        },
+        {
+          "id": "backend-interview.20.9.broker-fundamentals",
+          "slug": "s20-broker-fundamentals",
+          "title": "Broker fundamentals",
+          "module_slug": "stage-20",
+          "module_title": "Этап 20 · Background Work, Celery and Message Brokers",
+          "module_order": 20,
+          "order": 270,
+          "duration": 40,
+          "estimated_minutes": 40,
+          "xp": 5,
+          "topics": [
+            "producer",
+            "consumer",
+            "queue",
+            "acknowledgment",
+            "redelivery",
+            "dead-letter queue."
+          ],
+          "description": "Broker принимает сообщения producer и передаёт consumer. Нужно отдельно понимать подтверждение публикации и подтверждение обработки. Между ними процесс может упасть, соединение оборваться, сообщение прийти повторно.",
+          "has_task": false,
+          "has_solution": false,
+          "priority": "P2",
+          "priority_note": "P2 | medium",
+          "interview_probability": "medium",
+          "market_frequency": "occasional",
+          "market_evidence": "Background work/outbox/Celery нужны для защиты фактических project claims; broker depth ниже core.",
+          "priority_basis": [
+            "market",
+            "technical_interview",
+            "backend_work"
+          ],
+          "why_it_matters": "Помогает объяснить Broker fundamentals и применить тему без типичной backend-ошибки.",
+          "difficulty": "junior_plus",
+          "prerequisites": [
+            "backend-interview.20.8.why-outbox-instead-of-direct-celery-publish"
+          ],
+          "modes": [
+            "learn",
+            "interview",
+            "practice"
+          ],
+          "tracks": [
+            "full"
+          ],
+          "content_status": "complete",
+          "last_verified": "2026-11-17",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
+        },
+        {
+          "id": "backend-interview.20.10.rabbitmq-basics",
+          "slug": "s20-rabbitmq-basics",
+          "title": "RabbitMQ basics",
+          "module_slug": "stage-20",
+          "module_title": "Этап 20 · Background Work, Celery and Message Brokers",
+          "module_order": 20,
+          "order": 271,
+          "duration": 40,
+          "estimated_minutes": 40,
+          "xp": 5,
+          "topics": [
+            "queue/exchange/routing awareness",
+            "acknowledgement",
+            "not an administration course."
+          ],
+          "description": "Producer RabbitMQ публикует в exchange. Exchange маршрутизирует сообщение в queue по binding и routing key. Consumer получает delivery из queue; broker удерживает unacked message до подтверждения или потери соединения.",
+          "has_task": false,
+          "has_solution": false,
+          "priority": "P2",
+          "priority_note": "P2 | low/medium",
+          "interview_probability": "medium",
+          "market_frequency": "occasional",
+          "market_evidence": "Background work/outbox/Celery нужны для защиты фактических project claims; broker depth ниже core.",
+          "priority_basis": [
+            "market",
+            "technical_interview",
+            "backend_work"
+          ],
+          "why_it_matters": "Помогает объяснить RabbitMQ basics и применить тему без типичной backend-ошибки.",
+          "difficulty": "junior_plus",
+          "prerequisites": [
+            "backend-interview.20.9.broker-fundamentals"
+          ],
+          "modes": [
+            "learn",
+            "interview",
+            "practice"
+          ],
+          "tracks": [
+            "full"
+          ],
+          "content_status": "complete",
+          "last_verified": "2026-11-17",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
+        },
+        {
+          "id": "backend-interview.20.11.kafka-basics",
+          "slug": "s20-kafka-basics",
+          "title": "Kafka basics",
+          "module_slug": "stage-20",
+          "module_title": "Этап 20 · Background Work, Celery and Message Brokers",
+          "module_order": 20,
+          "order": 272,
+          "duration": 40,
+          "estimated_minutes": 40,
+          "xp": 5,
+          "topics": [
+            "log/stream",
+            "topic",
+            "partition",
+            "offset",
+            "consumer group",
+            "ordering within partition",
+            "retention/replay",
+            "not “just a faster RabbitMQ”."
+          ],
+          "description": "Kafka хранит append-only log в topic partitions. Consumer читает records по offset; чтение не удаляет запись немедленно. Другой consumer group может перечитать сохранённый log независимо.",
+          "has_task": false,
+          "has_solution": false,
+          "priority": "P2",
+          "priority_note": "P2/P3 | low/medium",
+          "interview_probability": "medium",
+          "market_frequency": "occasional",
+          "market_evidence": "Background work/outbox/Celery нужны для защиты фактических project claims; broker depth ниже core.",
+          "priority_basis": [
+            "market",
+            "technical_interview",
+            "backend_work"
+          ],
+          "why_it_matters": "Помогает объяснить Kafka basics и применить тему без типичной backend-ошибки.",
+          "difficulty": "junior_plus",
+          "prerequisites": [
+            "backend-interview.20.10.rabbitmq-basics"
+          ],
+          "modes": [
+            "learn",
+            "interview",
+            "practice"
+          ],
+          "tracks": [
+            "full"
+          ],
+          "content_status": "complete",
+          "last_verified": "2026-11-17",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
+        },
+        {
+          "id": "backend-interview.20.12.delivery-semantics",
+          "slug": "s20-delivery-semantics",
+          "title": "Delivery semantics",
+          "module_slug": "stage-20",
+          "module_title": "Этап 20 · Background Work, Celery and Message Brokers",
+          "module_order": 20,
+          "order": 273,
+          "duration": 40,
+          "estimated_minutes": 40,
+          "xp": 5,
+          "topics": [
+            "at-most-once",
+            "at-least-once",
+            "exactly-once claims require careful scope",
+            "application idempotency."
+          ],
+          "description": "Сообщение и бизнес-эффект — разные объекты. Надёжность требует описать, кто имеет право выполнять работу, что происходит после падения и как повтор влияет на результат. Здесь собран отдельный advanced worker protocol: atomic claim, lease, heartbeat и fencing.",
+          "has_task": true,
+          "has_solution": true,
+          "priority": "P2",
+          "priority_note": "P2 | medium",
+          "interview_probability": "medium",
+          "market_frequency": "occasional",
+          "market_evidence": "Background work/outbox/Celery нужны для защиты фактических project claims; broker depth ниже core.",
+          "priority_basis": [
+            "market",
+            "technical_interview",
+            "backend_work"
+          ],
+          "why_it_matters": "Помогает объяснить Delivery semantics и применить тему без типичной backend-ошибки.",
+          "difficulty": "junior_plus",
+          "prerequisites": [
+            "backend-interview.20.11.kafka-basics"
+          ],
+          "modes": [
+            "learn",
+            "interview",
+            "practice"
+          ],
+          "tracks": [
+            "full"
+          ],
+          "content_status": "complete",
+          "last_verified": "2026-11-17",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         }
       ]
     },

@@ -6,8 +6,8 @@
   "module_title": "Этап 20 · Background Work, Celery and Message Brokers",
   "module_order": 20,
   "order": 266,
-  "duration": 12,
-  "estimated_minutes": 12,
+  "duration": 40,
+  "estimated_minutes": 40,
   "xp": 5,
   "topics": [
     "duplicate delivery",
@@ -16,9 +16,9 @@
     "state transition",
     "side-effect deduplication."
   ],
-  "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
-  "has_task": false,
-  "has_solution": false,
+  "description": "Идемпотентный обработчик позволяет безопасно повторить один логический запрос. Повторная доставка сообщения и повтор HTTP после timeout должны ссылаться на тот же business operation, а не создавать новую работу.",
+  "has_task": true,
+  "has_solution": true,
   "priority": "P0",
   "priority_note": "P0 | very_high",
   "interview_probability": "very_high",
@@ -44,6 +44,7 @@
     "interview_crash_course"
   ],
   "content_status": "complete",
-  "last_verified": "2026-08-27",
-  "generated_by": "populate_curriculum.py"
+  "last_verified": "2026-11-17",
+  "generated_by": "populate_curriculum.py",
+  "content_source": "curated"
 }

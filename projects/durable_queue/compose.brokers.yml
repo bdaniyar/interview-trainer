@@ -1,0 +1,89 @@
+name: pythoria-queue-brokers-test
+services:
+  redis:
+    mem_limit: 128m
+    cpus: 0.5
+    image: redis:7.4-alpine@sha256:7f7d30b7fdd09467bac58198a1f166dd69789d348d4fe859cccb20e0cf287fbe
+    command: ["redis-server","--requirepass","synthetic-local-only","--appendonly","no"]
+    tmpfs: ["/data:size=64m"]
+    healthcheck:
+      test: ["CMD","redis-cli","-a","synthetic-local-only","ping"]
+      interval: 2s
+      timeout: 2s
+      retries: 20
+    networks: [lab]
+  rabbit:
+    mem_limit: 512m
+    cpus: 1.0
+    image: rabbitmq:4.1-alpine@sha256:cd4009416f83d7e5895020cd71b0963f3b8a4dfc3de74bbb6fb3bfe5f81f01e0
+    environment:
+      RABBITMQ_DEFAULT_USER: learner
+      RABBITMQ_DEFAULT_PASS: synthetic-local-only
+    tmpfs: ["/var/lib/rabbitmq:size=128m,uid=100,gid=101"]
+    healthcheck:
+      test: ["CMD","rabbitmq-diagnostics","-q","ping"]
+      interval: 3s
+      timeout: 5s
+      retries: 30
+    networks: [lab]
+  kafka:
+    mem_limit: 768m
+    cpus: 1.0
+    tmpfs: ["/var/lib/kafka/data:size=256m,uid=1000,gid=1000", "/etc/kafka/secrets:size=1m,uid=1000,gid=1000", "/mnt/shared/config:size=2m,uid=1000,gid=1000"]
+    image: apache/kafka:4.1.0@sha256:bff074a5d0051dbc0bbbcd25b045bb1fe84833ec0d3c7c965d1797dd289ec88f
+    environment:
+      KAFKA_HEAP_OPTS: -Xms256m -Xmx256m
+      CLUSTER_ID: 4L6g3nShT-eMCtK--X86sw
+      KAFKA_NODE_ID: "1"
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LOG_DIRS: /var/lib/kafka/data
+      KAFKA_SHARE_COORDINATOR_STATE_TOPIC_REPLICATION_FACTOR: "1"
+      KAFKA_SHARE_COORDINATOR_STATE_TOPIC_MIN_ISR: "1"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: "1"
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: "1"
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: "1"
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: "0"
+    healthcheck:
+      test: ["CMD","bash","-ec","exec 3<>/dev/tcp/127.0.0.1/9092"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    networks: [lab]
+  celery:
+    mem_limit: 192m
+    cpus: 0.5
+    image: pythoria-durable-queue:test
+    command: ["celery","-A","queue_app.celery_demo:app","worker","--concurrency=1","--loglevel=WARNING"]
+    environment:
+      CELERY_BROKER_URL: redis://:synthetic-local-only@redis:6379/0
+      CELERY_RESULT_BACKEND: redis://:synthetic-local-only@redis:6379/1
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks: [lab]
+  client:
+    mem_limit: 192m
+    cpus: 0.5
+    image: pythoria-durable-queue:test
+    command: ["python","-m","queue_app.brokers_smoke"]
+    environment:
+      CELERY_BROKER_URL: redis://:synthetic-local-only@redis:6379/0
+      CELERY_RESULT_BACKEND: redis://:synthetic-local-only@redis:6379/1
+      REDIS_URL: redis://:synthetic-local-only@redis:6379/2
+    depends_on:
+      redis:
+        condition: service_healthy
+      rabbit:
+        condition: service_healthy
+      celery:
+        condition: service_started
+    networks: [lab]
+networks:
+  lab:
+    internal: true

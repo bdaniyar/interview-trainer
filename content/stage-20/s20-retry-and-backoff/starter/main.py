@@ -1,3 +1,2 @@
-"""Практическая заметка к уроку: Retry and backoff."""
-
-# Автоматическая coding-задача для этого урока не требуется.
+def backoff(attempt, base=1.0, cap=8.0):
+    raise NotImplementedError("Implement the lesson contract")

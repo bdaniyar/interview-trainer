@@ -82,8 +82,13 @@ def test_preserved_keys_and_early_stages():
         current = json.loads((ROOT / filename).read_text())
         expected = list(original)
         if filename in {'content/stage-10/s10-recursive-cte/metadata.json',
-                        'content/stage-10/s10-lag-and-lead/metadata.json'}:
-            # Phase 8A publishes these two stable planned identities after PG17 verification.
+                        'content/stage-10/s10-lag-and-lead/metadata.json',
+                        'content/stage-20/s20-broker-fundamentals/metadata.json',
+                        'content/stage-20/s20-delivery-semantics/metadata.json',
+                        'content/stage-20/s20-kafka-basics/metadata.json',
+                        'content/stage-20/s20-periodic-tasks/metadata.json',
+                        'content/stage-20/s20-rabbitmq-basics/metadata.json'}:
+            # Phases 8A/8C publish only these exact stable identities after executable verification.
             status = baseline['metadata_keys'].index('content_status')
             assert expected[status] == 'planned' and current['content_source'] == 'curated'
             expected[status] = 'complete'

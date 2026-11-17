@@ -6,8 +6,8 @@
   "module_title": "Этап 20 · Background Work, Celery and Message Brokers",
   "module_order": 20,
   "order": 268,
-  "duration": 10,
-  "estimated_minutes": 10,
+  "duration": 40,
+  "estimated_minutes": 40,
   "xp": 5,
   "topics": [
     "business row + outbox row in one DB transaction",
@@ -17,7 +17,7 @@
     "idempotent consumer",
     "dual-write problem."
   ],
-  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+  "description": "После COMMIT заказа нужно отправить событие. Если процесс умрёт между COMMIT и publish, событие потеряется. Если publish сделать раньше COMMIT, consumer может увидеть событие заказа, который затем откатился.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",
@@ -45,6 +45,7 @@
     "interview_crash_course"
   ],
   "content_status": "complete",
-  "last_verified": "2026-08-27",
-  "generated_by": "populate_curriculum.py"
+  "last_verified": "2026-11-17",
+  "generated_by": "populate_curriculum.py",
+  "content_source": "curated"
 }
