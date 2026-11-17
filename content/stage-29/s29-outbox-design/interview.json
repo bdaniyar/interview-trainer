@@ -1,45 +1,35 @@
 [
   {
-    "question": "Что такое Outbox design и какой механизм здесь важно понимать Junior-разработчику?",
+    "question": "Почему нельзя отмечать delivered перед HTTP?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "atomic write",
-      "worker claim",
-      "retry",
-      "idempotency"
+      "Падение после отметки до отправки потеряет событие. Отметка после отправки допускает повтор, который должен безопасно обработать receiver."
     ],
-    "short_answer": "Outbox design: это отдельный технический контракт",
-    "junior_answer": "Outbox design — тема, в которой я сначала фиксирую `atomic write`, затем объясняю `worker claim` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
-    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Outbox design?",
-    "follow_up_answer": "Нужно назвать конкретный сценарий ошибки и способ его проверить.",
+    "short_answer": "Падение после отметки до отправки потеряет событие. Отметка после отправки допускает повтор, который должен безопасно обработать receiver.",
+    "junior_answer": "Падение после отметки до отправки потеряет событие. Отметка после отправки допускает повтор, который должен безопасно обработать receiver.",
+    "follow_up_question": "Как это проверяется в booking architecture lab?",
+    "follow_up_answer": "Запустите `scripts/test_architecture_lab.sh -k timeout`. Receiver успевает COMMIT, sender получает timeout, затем повторяет прежний event_id. Проверьте одну inbox/notification строку и delivered outbox после удачного ack.",
     "expected_answer": {
       "must_mention": [
-        "atomic write",
-        "worker claim",
-        "retry",
-        "idempotency"
+        "Падение после отметки до отправки потеряет событие. Отметка после отправки допускает повтор, который должен безопасно обработать receiver."
       ],
       "good_additions": [
-        "короткий рабочий пример",
-        "ограничение или типичная ошибка"
+        "Outbox даёт durable intent и обычно at-least-once delivery. Один защищённый business effect требует receiver transaction и дедупликации на его стороне."
       ],
-      "common_wrong_answers": [],
-      "red_flags": [],
+      "common_wrong_answers": [
+        "COMMIT в booking service автоматически делает внешний notification атомарным."
+      ],
+      "red_flags": [
+        "Количество контейнеров само по себе доказывает микросервисную архитектуру."
+      ],
       "follow_up_questions": [
-        "Какое ограничение или типичная ошибка относится именно к теме Outbox design?"
-      ],
-      "coding_mistakes": [
-        "Игнорировать ограничение механизма и проверять только основной сценарий."
-      ],
-      "assessment_notes": [
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "review_status": "pending-substantive-review"
+        "Как это проверяется в booking architecture lab?"
+      ]
     },
     "follow_ups": [
-      "Какое ограничение или типичная ошибка относится именно к теме Outbox design?"
+      "Как это проверяется в booking architecture lab?"
     ],
     "tags": [
       "stage-29",
@@ -52,38 +42,36 @@
     ]
   },
   {
-    "question": "Какое ограничение или типичная ошибка относится именно к теме Outbox design?",
+    "question": "Какой предел гарантии важно назвать в этой теме?",
     "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "locking",
-      "Нужно назвать конкретный сценарий ошибки и способ его проверить."
+      "Outbox даёт durable intent и обычно at-least-once delivery. Один защищённый business effect требует receiver transaction и дедупликации на его стороне."
     ],
-    "short_answer": "Нужно назвать конкретный сценарий ошибки и способ его проверить.",
-    "junior_answer": "Нужно назвать конкретный сценарий ошибки и способ его проверить.",
-    "follow_up_question": "Что такое Outbox design и какой механизм здесь важно понимать Junior-разработчику?",
-    "follow_up_answer": "Outbox design — тема, в которой я сначала фиксирую `atomic write`, затем объясняю `worker claim` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
+    "short_answer": "Outbox даёт durable intent и обычно at-least-once delivery. Один защищённый business effect требует receiver transaction и дедупликации на его стороне.",
+    "junior_answer": "Outbox даёт durable intent и обычно at-least-once delivery. Один защищённый business effect требует receiver transaction и дедупликации на его стороне.",
+    "follow_up_question": "Как это проверяется в booking architecture lab?",
+    "follow_up_answer": "Запустите `scripts/test_architecture_lab.sh -k timeout`. Receiver успевает COMMIT, sender получает timeout, затем повторяет прежний event_id. Проверьте одну inbox/notification строку и delivered outbox после удачного ack.",
     "expected_answer": {
       "must_mention": [
-        "locking"
+        "Outbox даёт durable intent и обычно at-least-once delivery. Один защищённый business effect требует receiver transaction и дедупликации на его стороне."
       ],
       "good_additions": [
-        "короткий пример именно этой темы"
+        "Outbox даёт durable intent и обычно at-least-once delivery. Один защищённый business effect требует receiver transaction и дедупликации на его стороне."
       ],
-      "common_wrong_answers": [],
-      "red_flags": [],
+      "common_wrong_answers": [
+        "COMMIT в booking service автоматически делает внешний notification атомарным."
+      ],
+      "red_flags": [
+        "Количество контейнеров само по себе доказывает микросервисную архитектуру."
+      ],
       "follow_up_questions": [
-        "Что такое Outbox design и какой механизм здесь важно понимать Junior-разработчику?"
-      ],
-      "coding_mistakes": [
-        "Игнорировать ограничение механизма и проверять только основной сценарий."
-      ],
-      "assessment_notes": [],
-      "review_status": "pending-substantive-review"
+        "Как это проверяется в booking architecture lab?"
+      ]
     },
     "follow_ups": [
-      "Что такое Outbox design и какой механизм здесь важно понимать Junior-разработчику?"
+      "Как это проверяется в booking architecture lab?"
     ],
     "tags": [
       "stage-29",

@@ -1,189 +1,101 @@
 # Dependency injection
 
-> [!IMPORTANT]
-> **P1 · вероятность на интервью: high · 10 минут.** Architecture basics нужны для объяснения design choices без senior-level overengineering.
+## Суть
+
+Dependency Injection передаёт зависимость компоненту снаружи. BookingService получает способ записать событие, поэтому сам не решает, использовать локальный notification module или durable outbox.
 
 ## Учебные цели
 
-После урока ты сможешь:
+Передать BookingService зависимость через constructor и собрать две реализации в composition root. Сравнить реальное поведение local adapter и outbox adapter, сохранив общий узкий контракт.
 
-- восстановить mental model темы **Dependency injection**, а не только запомнить термин;
-- прочитать и изменить короткий пример для `explicit dependencies`;
-- распознать характерную ошибку и объяснить причину;
-- дать реалистичный ответ уровня Junior и выдержать follow-up.
+## Зачем это нужно backend-разработчику
+
+В composition root передайте adapter, который намеренно бросает RuntimeError после record. Проверьте rollback. Затем верните LocalNotificationAdapter/OutboxAdapter и сравните expected consistency в `scripts/test_architecture_lab.sh -k rollback`.
 
 ## Теория
 
 ### Что это
 
-Тема **Dependency injection** описывает отдельный контракт backend-разработки.
+Dependency Injection передаёт зависимость компоненту снаружи. BookingService получает способ записать событие, поэтому сам не решает, использовать локальный notification module или durable outbox.
 
 ### Как работает
 
-Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы сценарий ошибки.
+Конструктор принимает BookingEvents Protocol. Composition root в api.py создаёт LocalNotificationAdapter для MODE=monolith, иначе OutboxAdapter. Код use case вызывает record через один контракт. Для такого решения не нужен отдельный DI framework или глобальный container.
 
-**explicit dependencies.** `explicit dependencies` задаёт границу слоя и направление зависимости; хороший design оставляет seam для теста без реальной infrastructure.
+FastAPI Depends может создавать request dependencies, но не определяет автоматически правильную transaction boundary и lifetime DB session. Заводите ресурсы на понятное время, освобождайте их и не передавайте закрытую session в background callback.
 
-**substitution/testing.** `substitution/testing` задаёт границу слоя и направление зависимости; хороший design оставляет seam для теста без реальной infrastructure.
-
-**framework DI vs general principle.** `framework DI vs general principle` задаёт границу слоя и направление зависимости; хороший design оставляет seam для теста без реальной infrastructure.
-
+Service Locator скрывает обращения к глобальному реестру внутри функции; constructor injection делает требования видимыми в signature. Fake adapter полезен для маленького unit test, но корректность SQL locks/rollback доказывают отдельные real DB tests.
 
 ### Важный нюанс / ограничение
 
-Граница Junior: уверенно объясняй `explicit dependencies` и `substitution/testing` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
-
-### Где используется в backend
-
-В backend эта тема важна в том месте, где применяется `explicit dependencies`; проверяй именно наблюдаемый contract, а не название инструмента.
+DI упрощает замену dependency, но не делает её эффекты одинаковыми. Local adapter участвует в текущем COMMIT, outbox adapter оставляет внешнюю доставку на потом.
 
 ## Модель понимания
 
-Высокоуровневое правило не должно зависеть от детали storage/framework без необходимости.
-
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
+Проследите один booking от HTTP до durable state. Подпишите владельца данных и каждый COMMIT. На сетевой границе отдельно отметьте timeout, возможный повтор и наблюдаемое состояние receiver.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
-- explicit dependencies
-- substitution/testing
-- framework DI vs general principle
-
-### Полезно
-
-- связать Dependency injection с коротким рабочим примером
-
-### Можно не учить глубоко
-
-- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
+DI — способ передачи зависимости, а не обязательный framework. Protocol описывает нужную операцию; composition root выбирает concrete implementation. Lifetime подключения и транзакции должен соответствовать одной операции, а не случайному глобальному singleton.
 
 ## Примеры кода
 
-### Dependency injection: отдельный пример
+Из корня репозитория запустите конкретный исполняемый пример на настоящих PostgreSQL и HTTP:
 
-```python
-class Service:
-    def __init__(self, clock): self.clock = clock
-    def now(self): return self.clock()
-s = Service(lambda: 42)
-print(s.now())
+```sh
+scripts/test_architecture_lab.sh -k 'rollback or two_requests'
 ```
 
-Expected: `42`. Explicit dependency делает поведение заменяемым в тесте без global patch.
+Полный workflow, endpoints и сравнение двух вариантов описаны в `projects/architecture_lab/README.md`. Test project использует собственный tmpfs и не читает SQLite Pythoria. Ожидаемые состояния заданы ниже и в соответствующем pytest; число реально запущенных tests отображается в выводе.
 
 ## Типичные ошибки
 
-### Ошибка 1
-
-Игнорировать ограничение механизма и проверять только основной сценарий.
+Создать dependency внутри service — скрыть выбор реализации. Передавать целый service locator — сделать зависимости неявными. Подменить repository mock и считать доказанным PostgreSQL locking — проверить только взаимодействие объектов. Сохранить connection между запросами — смешать lifetime и ownership ресурса.
 
 ## Практика
 
-**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для `explicit dependencies` до запуска.
-
-**B · Найди ошибку.** Найди нарушение `substitution/testing` и объясни конкретное последствие.
-
-**E · Ответ на собеседовании.** Дай ответ про Dependency injection за 60 секунд: определение, механизм, пример, ограничение.
-
-## Предсказание результата кода
-
-### Dependency передана явно
-
-```python
-class Service:
-    def __init__(self, clock): self.clock = clock
-    def now(self): return self.clock()
-s = Service(lambda: 42)
-print(s.now())
-```
-
-**Вопрос:** Что выведет код и почему? Сначала ответь без запуска.
-
-<details><summary>Показать ответ</summary>
-
-Ожидаемый результат:
-
-```text
-42
-```
-
-Explicit dependency делает поведение заменяемым в тесте без global patch.
-
-Типичная ошибка мышления: `dependency-injection`.
-
-</details>
+В composition root передайте adapter, который намеренно бросает RuntimeError после record. Проверьте rollback. Затем верните LocalNotificationAdapter/OutboxAdapter и сравните expected consistency в `scripts/test_architecture_lab.sh -k rollback`.
 
 ## Вопросы с собеседований
 
-### Основной вопрос
-
-Что такое Dependency injection и какой механизм здесь важно понимать Junior-разработчику?
-
-### Дополнительный вопрос
-
-Какое ограничение или типичная ошибка относится именно к теме Dependency injection?
-
-Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+1. Нужен ли container для Dependency Injection?
+2. Какой предел гарантии важно назвать в этой теме?
 
 ## Хорошие ответы
 
-### Короткий ответ
+<details>
+<summary>Раскрыть ответы</summary>
 
-Dependency injection: это отдельный технический контракт
+Нет. Передача зависимости в конструктор уже является DI. Container лишь автоматизирует сборку и lifetime, которые всё равно нужно определить.
 
-### Нормальный ответ уровня Junior
+DI упрощает замену dependency, но не делает её эффекты одинаковыми. Local adapter участвует в текущем COMMIT, outbox adapter оставляет внешнюю доставку на потом.
 
-> Dependency injection — тема, в которой я сначала фиксирую `explicit dependencies`, затем объясняю `substitution/testing` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
-
-### Углубление / дополнительный вопрос
-
-**Какое ограничение или типичная ошибка относится именно к теме Dependency injection?**
-
-Нужно назвать конкретный сценарий ошибки и способ его проверить.
+</details>
 
 ## Критерии хорошего ответа
 
-### Что обязательно упомянуть
+<details>
+<summary>Раскрыть критерии</summary>
 
-- explicit dependencies
-- substitution/testing
-- framework DI vs general principle
+Назовите владельца данных, transaction boundary, поведение при partial failure и способ восстановления. Покажите конкретное доказательство в project test. Отличайте локальную атомарность, durable intent, доставку и внешний эффект.
 
-### Что улучшит ответ
-
-- один короткий пример с результатом;
-- одно ограничение или характерная ошибка именно этой темы;
-- пример из backend-разработки только при естественной связи.
-
-### Частые неправильные ответы
-
-- Игнорировать ограничение механизма и проверять только основной сценарий.
-- пересказ одного определения без механизма или примера.
-
-### Дополнительный вопрос
-
-- Какое ограничение или типичная ошибка относится именно к теме Dependency injection?
+</details>
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Dependency injection**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
+В composition root передайте adapter, который намеренно бросает RuntimeError после record. Проверьте rollback. Затем верните LocalNotificationAdapter/OutboxAdapter и сравните expected consistency в `scripts/test_architecture_lab.sh -k rollback`.
+
+Сохраните working code своей копии и объяснение двух transaction boundaries. Соответствующий test должен проходить на корректном варианте и обнаруживать намеренно внесённую ошибку. Это локальный project exercise; обычный Python Runner не получает Docker/сеть, а текстовый ответ автоматически не оценивается.
 
 ## Шпаргалка
 
-Перед собеседованием запомни:
-
-- **Что это:** Dependency injection: это отдельный технический контракт
-- **Механизм:** Высокоуровневое правило не должно зависеть от детали storage/framework без необходимости.
-- **Ограничение:** Игнорировать ограничение механизма и проверять только основной сценарий.
-- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
+Компонент получает то, что ему нужно; composition root решает, какую реализацию дать. Сигнатура задаёт форму вызова, документация и integration tests — его эффекты, ошибки и transaction boundary.
 
 ## Источники
 
-Материал написан своими словами и сверён с актуальными разделами официальной документации:
+- [Fowler 2004: Dependency Injection](https://martinfowler.com/articles/injection.html).
+- [FastAPI: dependencies](https://fastapi.tiangolo.com/tutorial/dependencies/).
 
-- [Python abc](https://docs.python.org/3.12/library/abc.html)
-- [FastAPI dependencies](https://fastapi.tiangolo.com/tutorial/dependencies/)
-
-Последняя проверка версий: **2026-08-27**.
+Секции первоисточников сверены 2026-11-16. Практика: PostgreSQL 17.11, SQLAlchemy 2.0.43, FastAPI 0.116.1; точные pins и ограничения находятся в project README. Название architecture pattern не выдаётся за измерение performance или production readiness.

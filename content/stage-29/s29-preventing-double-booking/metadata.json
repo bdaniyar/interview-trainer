@@ -6,13 +6,13 @@
   "module_title": "Этап 29 · Junior Backend System Design",
   "module_order": 29,
   "order": 362,
-  "duration": 12,
-  "estimated_minutes": 12,
+  "duration": 45,
+  "estimated_minutes": 45,
   "xp": 5,
   "topics": [
     "Preventing double booking"
   ],
-  "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+  "description": "Double booking появляется, когда два запроса принимают решение по одному старому состоянию. Оба могут увидеть available=1, поэтому чтение и последующая независимая запись не защищают последний ресурс.",
   "has_task": false,
   "has_solution": false,
   "priority": "P0",
@@ -40,6 +40,7 @@
     "interview_crash_course"
   ],
   "content_status": "complete",
-  "last_verified": "2026-08-27",
-  "generated_by": "populate_curriculum.py"
+  "last_verified": "2026-11-17",
+  "generated_by": "populate_curriculum.py",
+  "content_source": "curated"
 }

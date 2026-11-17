@@ -6,8 +6,8 @@
   "module_title": "Этап 27 · Architecture and Useful Patterns",
   "module_order": 27,
   "order": 335,
-  "duration": 10,
-  "estimated_minutes": 10,
+  "duration": 45,
+  "estimated_minutes": 45,
   "xp": 5,
   "topics": [
     "one deployable",
@@ -15,7 +15,7 @@
     "internal modules",
     "valid default for Junior projects."
   ],
-  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+  "description": "Монолит — приложение, которое выпускается и разворачивается как одна единица. Внутри могут быть хорошо разделённые модули; наличие одной БД или одного процесса само по себе не описывает качество архитектуры.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",
@@ -43,6 +43,7 @@
     "interview_crash_course"
   ],
   "content_status": "complete",
-  "last_verified": "2026-08-27",
-  "generated_by": "populate_curriculum.py"
+  "last_verified": "2026-11-17",
+  "generated_by": "populate_curriculum.py",
+  "content_source": "curated"
 }

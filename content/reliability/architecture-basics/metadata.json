@@ -6,8 +6,8 @@
   "module_title": "Этап 27 · Architecture and Useful Patterns",
   "module_order": 27,
   "order": 340,
-  "duration": 10,
-  "estimated_minutes": 10,
+  "duration": 45,
+  "estimated_minutes": 45,
   "xp": 5,
   "topics": [
     "API",
@@ -15,7 +15,7 @@
     "data access",
     "infrastructure."
   ],
-  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+  "description": "Layered architecture организует путь HTTP → application use case → persistence. Слои помогают локализовать знания: endpoint понимает HTTP, repository — SQL, service — порядок бизнес-операций.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",
@@ -43,6 +43,7 @@
     "interview_crash_course"
   ],
   "content_status": "complete",
-  "last_verified": "2026-08-27",
-  "generated_by": "populate_curriculum.py"
+  "last_verified": "2026-11-17",
+  "generated_by": "populate_curriculum.py",
+  "content_source": "curated"
 }
