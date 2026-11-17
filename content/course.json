@@ -1,6 +1,6 @@
 {
   "title": "Python Backend Interview Trainer",
-  "lessons_count": 366,
+  "lessons_count": 369,
   "modules": [
     {
       "slug": "stage-00",
@@ -15427,8 +15427,8 @@
           "module_title": "Этап 27 · Architecture and Useful Patterns",
           "module_order": 27,
           "order": 335,
-          "duration": 10,
-          "estimated_minutes": 10,
+          "duration": 45,
+          "estimated_minutes": 45,
           "xp": 5,
           "topics": [
             "one deployable",
@@ -15436,7 +15436,7 @@
             "internal modules",
             "valid default for Junior projects."
           ],
-          "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Монолит — приложение, которое выпускается и разворачивается как одна единица. Внутри могут быть хорошо разделённые модули; наличие одной БД или одного процесса само по себе не описывает качество архитектуры.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -15464,8 +15464,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-17",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.27.2.modular-monolith",
@@ -15475,14 +15476,14 @@
           "module_title": "Этап 27 · Architecture and Useful Patterns",
           "module_order": 27,
           "order": 336,
-          "duration": 10,
-          "estimated_minutes": 10,
+          "duration": 45,
+          "estimated_minutes": 45,
           "xp": 5,
           "topics": [
             "boundaries inside one deployable",
             "lower operational complexity."
           ],
-          "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Модульный монолит сохраняет один deployable, но разделяет бизнес-возможности явными API. Модуль бронирования не должен произвольно переписывать внутренние таблицы notification модуля.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -15510,8 +15511,56 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-17",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
+        },
+        {
+          "id": "backend-interview.27.3.microservices",
+          "slug": "s27-microservices",
+          "title": "Microservices",
+          "module_slug": "stage-27",
+          "module_title": "Этап 27 · Architecture and Useful Patterns",
+          "module_order": 27,
+          "order": 337,
+          "duration": 45,
+          "estimated_minutes": 45,
+          "xp": 5,
+          "topics": [
+            "independent deployment/data/ownership",
+            "network/failure/observability cost",
+            "not “many folders” or “many technologies”."
+          ],
+          "description": "Микросервис — самостоятельно разворачиваемая часть системы вокруг определённой бизнес-возможности, с явным контрактом и владением своими данными. Несколько контейнеров с общими внутренними таблицами ещё не дают такую независимость.",
+          "has_task": false,
+          "has_solution": false,
+          "priority": "P2",
+          "priority_note": "P2 | medium",
+          "interview_probability": "medium",
+          "market_frequency": "occasional",
+          "market_evidence": "Architecture basics нужны для объяснения design choices без senior-level overengineering.",
+          "priority_basis": [
+            "market",
+            "technical_interview",
+            "backend_work"
+          ],
+          "why_it_matters": "Помогает объяснить Microservices и применить тему без типичной backend-ошибки.",
+          "difficulty": "junior_plus",
+          "prerequisites": [
+            "backend-interview.27.2.modular-monolith"
+          ],
+          "modes": [
+            "learn",
+            "interview",
+            "practice"
+          ],
+          "tracks": [
+            "full"
+          ],
+          "content_status": "complete",
+          "last_verified": "2026-11-17",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.27.4.coupling-and-cohesion",
@@ -15521,13 +15570,13 @@
           "module_title": "Этап 27 · Architecture and Useful Patterns",
           "module_order": 27,
           "order": 338,
-          "duration": 10,
-          "estimated_minutes": 10,
+          "duration": 45,
+          "estimated_minutes": 45,
           "xp": 5,
           "topics": [
             "Coupling and cohesion"
           ],
-          "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Coupling описывает, сколько чужих деталей нужно знать для изменения компонента. Cohesion описывает, насколько его части работают на одну ответственность. Цель — не максимальное число абстракций, а понятная область изменения.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -15555,8 +15604,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-17",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.27.5.separation-of-concerns",
@@ -15566,13 +15616,13 @@
           "module_title": "Этап 27 · Architecture and Useful Patterns",
           "module_order": 27,
           "order": 339,
-          "duration": 10,
-          "estimated_minutes": 10,
+          "duration": 45,
+          "estimated_minutes": 45,
           "xp": 5,
           "topics": [
             "Separation of concerns"
           ],
-          "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Separation of concerns отделяет HTTP-формат, бизнес-правило и хранение данных. Это помогает менять транспорт, не переписывая правило «последнее место нельзя продать дважды».",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -15600,8 +15650,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-17",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.27.6.layered-architecture",
@@ -15611,8 +15662,8 @@
           "module_title": "Этап 27 · Architecture and Useful Patterns",
           "module_order": 27,
           "order": 340,
-          "duration": 10,
-          "estimated_minutes": 10,
+          "duration": 45,
+          "estimated_minutes": 45,
           "xp": 5,
           "topics": [
             "API",
@@ -15620,7 +15671,7 @@
             "data access",
             "infrastructure."
           ],
-          "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Layered architecture организует путь HTTP → application use case → persistence. Слои помогают локализовать знания: endpoint понимает HTTP, repository — SQL, service — порядок бизнес-операций.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -15648,8 +15699,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-17",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.27.7.dependency-injection",
@@ -15659,15 +15711,15 @@
           "module_title": "Этап 27 · Architecture and Useful Patterns",
           "module_order": 27,
           "order": 341,
-          "duration": 10,
-          "estimated_minutes": 10,
+          "duration": 45,
+          "estimated_minutes": 45,
           "xp": 5,
           "topics": [
             "explicit dependencies",
             "substitution/testing",
             "framework DI vs general principle."
           ],
-          "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Dependency Injection передаёт зависимость компоненту снаружи. BookingService получает способ записать событие, поэтому сам не решает, использовать локальный notification module или durable outbox.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -15695,8 +15747,102 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-17",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
+        },
+        {
+          "id": "backend-interview.27.8.repository-pattern",
+          "slug": "s27-repository-pattern",
+          "title": "Repository pattern",
+          "module_slug": "stage-27",
+          "module_title": "Этап 27 · Architecture and Useful Patterns",
+          "module_order": 27,
+          "order": 342,
+          "duration": 45,
+          "estimated_minutes": 45,
+          "xp": 5,
+          "topics": [
+            "useful abstraction",
+            "leaky abstraction",
+            "avoid needless one-method wrappers."
+          ],
+          "description": "Repository даёт application code понятные операции хранения вместо разбросанных SQL-запросов. В нашем небольшом проекте BookingRepository содержит конкретные запросы бронирования, а не универсальный CRUD для всей системы.",
+          "has_task": false,
+          "has_solution": false,
+          "priority": "P2",
+          "priority_note": "P2 | medium",
+          "interview_probability": "medium",
+          "market_frequency": "occasional",
+          "market_evidence": "Architecture basics нужны для объяснения design choices без senior-level overengineering.",
+          "priority_basis": [
+            "market",
+            "technical_interview",
+            "backend_work"
+          ],
+          "why_it_matters": "Помогает объяснить Repository pattern и применить тему без типичной backend-ошибки.",
+          "difficulty": "junior_plus",
+          "prerequisites": [
+            "backend-interview.27.7.dependency-injection"
+          ],
+          "modes": [
+            "learn",
+            "interview",
+            "practice"
+          ],
+          "tracks": [
+            "full"
+          ],
+          "content_status": "complete",
+          "last_verified": "2026-11-17",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
+        },
+        {
+          "id": "backend-interview.27.12.adapter",
+          "slug": "s27-adapter",
+          "title": "Adapter",
+          "module_slug": "stage-27",
+          "module_title": "Этап 27 · Architecture and Useful Patterns",
+          "module_order": 27,
+          "order": 346,
+          "duration": 45,
+          "estimated_minutes": 45,
+          "xp": 5,
+          "topics": [
+            "external API/storage interface."
+          ],
+          "description": "Adapter переводит внешний механизм в контракт, который нужен приложению. BookingEvents.record выражает «сохранить intent события», а реализации выбирают local module или outbox.",
+          "has_task": false,
+          "has_solution": false,
+          "priority": "P2",
+          "priority_note": "P2 | medium",
+          "interview_probability": "medium",
+          "market_frequency": "occasional",
+          "market_evidence": "Architecture basics нужны для объяснения design choices без senior-level overengineering.",
+          "priority_basis": [
+            "market",
+            "technical_interview",
+            "backend_work"
+          ],
+          "why_it_matters": "Помогает объяснить Adapter и применить тему без типичной backend-ошибки.",
+          "difficulty": "junior_plus",
+          "prerequisites": [
+            "backend-interview.27.7.dependency-injection",
+            "backend-interview.27.8.repository-pattern"
+          ],
+          "modes": [
+            "learn",
+            "interview",
+            "practice"
+          ],
+          "tracks": [
+            "full"
+          ],
+          "content_status": "complete",
+          "last_verified": "2026-11-17",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         }
       ]
     },
@@ -16100,13 +16246,13 @@
           "module_title": "Этап 29 · Junior Backend System Design",
           "module_order": 29,
           "order": 356,
-          "duration": 12,
-          "estimated_minutes": 12,
+          "duration": 45,
+          "estimated_minutes": 45,
           "xp": 5,
           "topics": [
             "Basic request path"
           ],
-          "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Путь backend-запроса проходит HTTP-вход, валидацию, use case, БД и ответ. Ошибка на каждом участке имеет разный смысл: неверный room_id, sold out и потеря DB connection не должны выглядеть одинаково.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -16134,8 +16280,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-17",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.29.2.stateless-api-and-horizontal-scaling",
@@ -16145,15 +16292,15 @@
           "module_title": "Этап 29 · Junior Backend System Design",
           "module_order": 29,
           "order": 357,
-          "duration": 10,
-          "estimated_minutes": 10,
+          "duration": 45,
+          "estimated_minutes": 45,
           "xp": 5,
           "topics": [
             "instance-local state problem",
             "shared DB/cache",
             "sticky sessions trade-off."
           ],
-          "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Stateless API не хранит единственную правду о пользователе или заказе в памяти конкретного процесса. Следующий запрос может попасть на другую replica и получить корректный ответ из устойчивого хранилища.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -16181,8 +16328,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-17",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.29.3.cache-placement",
@@ -16240,8 +16388,8 @@
           "module_title": "Этап 29 · Junior Backend System Design",
           "module_order": 29,
           "order": 359,
-          "duration": 10,
-          "estimated_minutes": 10,
+          "duration": 45,
+          "estimated_minutes": 45,
           "xp": 5,
           "topics": [
             "latency",
@@ -16249,7 +16397,7 @@
             "retries",
             "idempotency."
           ],
-          "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Фоновая работа отделяет принятие business operation от её дальнейшего исполнения. Архитектура должна назвать устойчивый intent, владельца работы, retry budget и наблюдаемое terminal state.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -16277,8 +16425,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-17",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.29.5.database-bottlenecks",
@@ -16338,8 +16487,8 @@
           "module_title": "Этап 29 · Junior Backend System Design",
           "module_order": 29,
           "order": 361,
-          "duration": 12,
-          "estimated_minutes": 12,
+          "duration": 45,
+          "estimated_minutes": 45,
           "xp": 5,
           "topics": [
             "availability check",
@@ -16350,7 +16499,7 @@
             "conflict response",
             "notification."
           ],
-          "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Booking endpoint — не только INSERT брони. Он должен атомарно проверить доступность, зарезервировать единицу, сохранить идентичность запроса и не потерять notification intent.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -16378,8 +16527,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-17",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.29.7.preventing-double-booking",
@@ -16389,13 +16539,13 @@
           "module_title": "Этап 29 · Junior Backend System Design",
           "module_order": 29,
           "order": 362,
-          "duration": 12,
-          "estimated_minutes": 12,
+          "duration": 45,
+          "estimated_minutes": 45,
           "xp": 5,
           "topics": [
             "Preventing double booking"
           ],
-          "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Double booking появляется, когда два запроса принимают решение по одному старому состоянию. Оба могут увидеть available=1, поэтому чтение и последующая независимая запись не защищают последний ресурс.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -16423,8 +16573,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-17",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.29.8.chat-websocket-design",
@@ -16533,8 +16684,8 @@
           "module_title": "Этап 29 · Junior Backend System Design",
           "module_order": 29,
           "order": 365,
-          "duration": 10,
-          "estimated_minutes": 10,
+          "duration": 45,
+          "estimated_minutes": 45,
           "xp": 5,
           "topics": [
             "atomic write",
@@ -16543,7 +16694,7 @@
             "idempotency",
             "locking."
           ],
-          "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "В system design outbox закрывает разрыв между локальным COMMIT business data и намерением сообщить об этом другому сервису. Он не объединяет две service DB в одну transaction.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -16571,8 +16722,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-17",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.29.11.scaling-sequence",
@@ -16582,13 +16734,13 @@
           "module_title": "Этап 29 · Junior Backend System Design",
           "module_order": 29,
           "order": 366,
-          "duration": 10,
-          "estimated_minutes": 10,
+          "duration": 45,
+          "estimated_minutes": 45,
           "xp": 5,
           "topics": [
             "Scaling sequence"
           ],
-          "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Масштабирование начинается с наблюдаемого bottleneck и нужного service contract. Добавить replicas полезно, когда нагрузка действительно распределяется и общий ресурс не становится следующим ограничением.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -16616,8 +16768,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-17",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         }
       ]
     },

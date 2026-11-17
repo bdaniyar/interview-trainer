@@ -6,13 +6,13 @@
   "module_title": "Этап 27 · Architecture and Useful Patterns",
   "module_order": 27,
   "order": 338,
-  "duration": 10,
-  "estimated_minutes": 10,
+  "duration": 45,
+  "estimated_minutes": 45,
   "xp": 5,
   "topics": [
     "Coupling and cohesion"
   ],
-  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+  "description": "Coupling описывает, сколько чужих деталей нужно знать для изменения компонента. Cohesion описывает, насколько его части работают на одну ответственность. Цель — не максимальное число абстракций, а понятная область изменения.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",
@@ -40,6 +40,7 @@
     "interview_crash_course"
   ],
   "content_status": "complete",
-  "last_verified": "2026-08-27",
-  "generated_by": "populate_curriculum.py"
+  "last_verified": "2026-11-17",
+  "generated_by": "populate_curriculum.py",
+  "content_source": "curated"
 }

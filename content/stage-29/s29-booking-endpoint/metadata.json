@@ -6,8 +6,8 @@
   "module_title": "Этап 29 · Junior Backend System Design",
   "module_order": 29,
   "order": 361,
-  "duration": 12,
-  "estimated_minutes": 12,
+  "duration": 45,
+  "estimated_minutes": 45,
   "xp": 5,
   "topics": [
     "availability check",
@@ -18,7 +18,7 @@
     "conflict response",
     "notification."
   ],
-  "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+  "description": "Booking endpoint — не только INSERT брони. Он должен атомарно проверить доступность, зарезервировать единицу, сохранить идентичность запроса и не потерять notification intent.",
   "has_task": false,
   "has_solution": false,
   "priority": "P0",
@@ -46,6 +46,7 @@
     "interview_crash_course"
   ],
   "content_status": "complete",
-  "last_verified": "2026-08-27",
-  "generated_by": "populate_curriculum.py"
+  "last_verified": "2026-11-17",
+  "generated_by": "populate_curriculum.py",
+  "content_source": "curated"
 }
