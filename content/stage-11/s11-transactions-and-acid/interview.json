@@ -1,42 +1,32 @@
 [
   {
-    "question": "Что такое Transactions and ACID и как это работает?",
+    "question": "Чем SAVEPOINT отличается от COMMIT?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "atomicity",
-      "consistency",
-      "isolation",
-      "durability"
+      "SAVEPOINT отмечает точку частичного отката внутри незавершённой транзакции. COMMIT фиксирует транзакцию; RELEASE SAVEPOINT его не заменяет."
     ],
-    "short_answer": "Transaction объединяет операции в одну атомарную границу; ACID означает atomicity, consistency, isolation и durability.",
-    "junior_answer": "Transaction объединяет операции в одну атомарную границу; ACID означает atomicity, consistency, isolation и durability. Commit фиксирует изменения, rollback отменяет их. Consistency обеспечивается правильным кодом и constraints, а не буквой C автоматически. Важное ограничение: Transactions держат короткими и по возможности не выполняют внутри них сетевые вызовы, пока заняты locks и connection.",
-    "follow_up_question": "Какая типичная ошибка связана с Transactions and ACID?",
-    "follow_up_answer": "Commit внутри каждого repository call способен сохранить половину use case после ошибки следующего шага.",
+    "short_answer": "SAVEPOINT отмечает точку частичного отката внутри незавершённой транзакции.",
+    "junior_answer": "SAVEPOINT отмечает точку частичного отката внутри незавершённой транзакции. COMMIT фиксирует транзакцию; RELEASE SAVEPOINT его не заменяет.",
+    "follow_up_question": "Что показывает исполняемый сценарий rollback-savepoint?",
+    "follow_up_answer": "В сценарии rollback-savepoint A внутри видит (1,0),(2,1), B до фиксации — (1,1),(2,1); после полного ROLLBACK обе строки снова равны 1. Это наблюдается через разные соединения.",
     "expected_answer": {
       "must_mention": [
-        "atomicity",
-        "consistency",
-        "isolation",
-        "durability"
+        "SAVEPOINT отмечает точку частичного отката внутри незавершённой транзакции. COMMIT фиксирует транзакцию; RELEASE SAVEPOINT его не заменяет."
       ],
       "good_additions": [
-        "короткий рабочий пример",
-        "ограничение или типичная ошибка"
+        "В сценарии rollback-savepoint A внутри видит (1,0),(2,1), B до фиксации — (1,1),(2,1); после полного ROLLBACK обе строки снова равны 1. Это наблюдается через разные соединения."
       ],
-      "common_wrong_answers": [],
-      "red_flags": [],
+      "common_wrong_answers": [
+        "Одного подключения всегда достаточно, чтобы доказать поведение конкурентных транзакций."
+      ],
+      "red_flags": [
+        "Перенос DML в существующий read-only SQL Runner."
+      ],
       "follow_up_questions": [
-        "Какая типичная ошибка связана с Transactions and ACID?"
-      ],
-      "coding_mistakes": [
-        "Commit внутри каждого repository call способен сохранить половину use case после ошибки следующего шага."
-      ],
-      "assessment_notes": [
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "review_status": "pending-substantive-review"
+        "Что показывает исполняемый сценарий rollback-savepoint?"
+      ]
     },
     "follow_ups": [
       "Какая типичная ошибка связана с Transactions and ACID?"
@@ -52,35 +42,33 @@
     ]
   },
   {
-    "question": "Какая типичная ошибка связана с Transactions and ACID?",
+    "question": "Что делать после ошибки SQL внутри BEGIN?",
     "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "transaction boundary",
-      "Commit внутри каждого repository call способен сохранить половину use case после ошибки следующего шага."
+      "Транзакция остаётся aborted. Нужен полный ROLLBACK или ROLLBACK TO заранее созданной точке; иначе следующие команды получают 25P02."
     ],
-    "short_answer": "Commit внутри каждого repository call способен сохранить половину use case после ошибки следующего шага.",
-    "junior_answer": "Commit внутри каждого repository call способен сохранить половину use case после ошибки следующего шага.",
-    "follow_up_question": "Что такое Transactions and ACID и как это работает?",
-    "follow_up_answer": "Transaction объединяет операции в одну атомарную границу; ACID означает atomicity, consistency, isolation и durability. Commit фиксирует изменения, rollback отменяет их. Consistency обеспечивается правильным кодом и constraints, а не буквой C автоматически. Важное ограничение: Transactions держат короткими и по возможности не выполняют внутри них сетевые вызовы, пока заняты locks и connection.",
+    "short_answer": "Транзакция остаётся aborted.",
+    "junior_answer": "Транзакция остаётся aborted. Нужен полный ROLLBACK или ROLLBACK TO заранее созданной точке; иначе следующие команды получают 25P02.",
+    "follow_up_question": "Что показывает исполняемый сценарий rollback-savepoint?",
+    "follow_up_answer": "В сценарии rollback-savepoint A внутри видит (1,0),(2,1), B до фиксации — (1,1),(2,1); после полного ROLLBACK обе строки снова равны 1. Это наблюдается через разные соединения.",
     "expected_answer": {
       "must_mention": [
-        "transaction boundary"
+        "Транзакция остаётся aborted. Нужен полный ROLLBACK или ROLLBACK TO заранее созданной точке; иначе следующие команды получают 25P02."
       ],
       "good_additions": [
-        "короткий пример именно этой темы"
+        "В сценарии rollback-savepoint A внутри видит (1,0),(2,1), B до фиксации — (1,1),(2,1); после полного ROLLBACK обе строки снова равны 1. Это наблюдается через разные соединения."
       ],
-      "common_wrong_answers": [],
-      "red_flags": [],
+      "common_wrong_answers": [
+        "Одного подключения всегда достаточно, чтобы доказать поведение конкурентных транзакций."
+      ],
+      "red_flags": [
+        "Перенос DML в существующий read-only SQL Runner."
+      ],
       "follow_up_questions": [
-        "Что такое Transactions and ACID и как это работает?"
-      ],
-      "coding_mistakes": [
-        "Commit внутри каждого repository call способен сохранить половину use case после ошибки следующего шага."
-      ],
-      "assessment_notes": [],
-      "review_status": "pending-substantive-review"
+        "Что показывает исполняемый сценарий rollback-savepoint?"
+      ]
     },
     "follow_ups": [
       "Что такое Transactions and ACID и как это работает?"

@@ -1,42 +1,32 @@
 [
   {
-    "question": "Что такое Isolation levels и как это работает?",
+    "question": "Что меняется между READ COMMITTED и REPEATABLE READ?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "read committed",
-      "repeatable read",
-      "serializable",
-      "anomalies at reasonable depth"
+      "В RC новое statement получает новый snapshot и может увидеть commit другого соединения. В RR повторные чтения используют транзакционный snapshot."
     ],
-    "short_answer": "Isolation levels определяют, какие эффекты concurrent transactions могут наблюдать друг у друга.",
-    "junior_answer": "Isolation levels определяют, какие эффекты concurrent transactions могут наблюдать друг у друга. PostgreSQL Read Committed использует snapshot на statement, Repeatable Read сохраняет snapshot transaction, а Serializable может отменить transaction ради последовательной семантики. Важное ограничение: Более строгая isolation не бесплатна, а serialization failure требует retry всей transaction.",
-    "follow_up_question": "Какая типичная ошибка связана с Isolation levels?",
-    "follow_up_answer": "Повышение isolation без названной anomaly увеличивает contention и может не защитить реальный invariant.",
+    "short_answer": "В RC новое statement получает новый snapshot и может увидеть commit другого соединения.",
+    "junior_answer": "В RC новое statement получает новый snapshot и может увидеть commit другого соединения. В RR повторные чтения используют транзакционный snapshot.",
+    "follow_up_question": "Что показывает исполняемый сценарий read-committed?",
+    "follow_up_answer": "Один SQL-блок ниже показывает только синтаксис одной сессии. Изоляцию доказывает controlled scenario с двумя отдельными соединениями: RC даёт 1→0, RR даёт 1→1 при текущем значении 0, SSI отклоняет опасную транзакцию.",
     "expected_answer": {
       "must_mention": [
-        "read committed",
-        "repeatable read",
-        "serializable",
-        "anomalies at reasonable depth"
+        "В RC новое statement получает новый snapshot и может увидеть commit другого соединения. В RR повторные чтения используют транзакционный snapshot."
       ],
       "good_additions": [
-        "короткий рабочий пример",
-        "ограничение или типичная ошибка"
+        "Один SQL-блок ниже показывает только синтаксис одной сессии. Изоляцию доказывает controlled scenario с двумя отдельными соединениями: RC даёт 1→0, RR даёт 1→1 при текущем значении 0, SSI отклоняет опасную транзакцию."
       ],
-      "common_wrong_answers": [],
-      "red_flags": [],
+      "common_wrong_answers": [
+        "Одного подключения всегда достаточно, чтобы доказать поведение конкурентных транзакций."
+      ],
+      "red_flags": [
+        "Перенос DML в существующий read-only SQL Runner."
+      ],
       "follow_up_questions": [
-        "Какая типичная ошибка связана с Isolation levels?"
-      ],
-      "coding_mistakes": [
-        "Повышение isolation без названной anomaly увеличивает contention и может не защитить реальный invariant."
-      ],
-      "assessment_notes": [
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "review_status": "pending-substantive-review"
+        "Что показывает исполняемый сценарий read-committed?"
+      ]
     },
     "follow_ups": [
       "Какая типичная ошибка связана с Isolation levels?"
@@ -52,35 +42,33 @@
     ]
   },
   {
-    "question": "Какая типичная ошибка связана с Isolation levels?",
+    "question": "Как обрабатывать 40001?",
     "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "PostgreSQL-specific behavior",
-      "Повышение isolation без названной anomaly увеличивает contention и может не защитить реальный invariant."
+      "Откатить и ограниченно повторить всю бизнес-транзакцию с новым snapshot. Внешние эффекты требуют отдельной идемпотентности."
     ],
-    "short_answer": "Повышение isolation без названной anomaly увеличивает contention и может не защитить реальный invariant.",
-    "junior_answer": "Повышение isolation без названной anomaly увеличивает contention и может не защитить реальный invariant.",
-    "follow_up_question": "Что такое Isolation levels и как это работает?",
-    "follow_up_answer": "Isolation levels определяют, какие эффекты concurrent transactions могут наблюдать друг у друга. PostgreSQL Read Committed использует snapshot на statement, Repeatable Read сохраняет snapshot transaction, а Serializable может отменить transaction ради последовательной семантики. Важное ограничение: Более строгая isolation не бесплатна, а serialization failure требует retry всей transaction.",
+    "short_answer": "Откатить и ограниченно повторить всю бизнес-транзакцию с новым snapshot.",
+    "junior_answer": "Откатить и ограниченно повторить всю бизнес-транзакцию с новым snapshot. Внешние эффекты требуют отдельной идемпотентности.",
+    "follow_up_question": "Что показывает исполняемый сценарий read-committed?",
+    "follow_up_answer": "Один SQL-блок ниже показывает только синтаксис одной сессии. Изоляцию доказывает controlled scenario с двумя отдельными соединениями: RC даёт 1→0, RR даёт 1→1 при текущем значении 0, SSI отклоняет опасную транзакцию.",
     "expected_answer": {
       "must_mention": [
-        "PostgreSQL-specific behavior"
+        "Откатить и ограниченно повторить всю бизнес-транзакцию с новым snapshot. Внешние эффекты требуют отдельной идемпотентности."
       ],
       "good_additions": [
-        "короткий пример именно этой темы"
+        "Один SQL-блок ниже показывает только синтаксис одной сессии. Изоляцию доказывает controlled scenario с двумя отдельными соединениями: RC даёт 1→0, RR даёт 1→1 при текущем значении 0, SSI отклоняет опасную транзакцию."
       ],
-      "common_wrong_answers": [],
-      "red_flags": [],
+      "common_wrong_answers": [
+        "Одного подключения всегда достаточно, чтобы доказать поведение конкурентных транзакций."
+      ],
+      "red_flags": [
+        "Перенос DML в существующий read-only SQL Runner."
+      ],
       "follow_up_questions": [
-        "Что такое Isolation levels и как это работает?"
-      ],
-      "coding_mistakes": [
-        "Повышение isolation без названной anomaly увеличивает contention и может не защитить реальный invariant."
-      ],
-      "assessment_notes": [],
-      "review_status": "pending-substantive-review"
+        "Что показывает исполняемый сценарий read-committed?"
+      ]
     },
     "follow_ups": [
       "Что такое Isolation levels и как это работает?"

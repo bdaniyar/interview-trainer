@@ -5365,8 +5365,8 @@
           "module_title": "Этап 10 · SQL Fundamentals and Practice",
           "module_order": 10,
           "order": 121,
-          "duration": 12,
-          "estimated_minutes": 12,
+          "duration": 35,
+          "estimated_minutes": 35,
           "xp": 5,
           "topics": [
             "INSERT",
@@ -5376,7 +5376,7 @@
             "safe WHERE",
             "upsert basics."
           ],
-          "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Изменение данных — операция над состоянием, а не только получение таблицы результата.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -5404,8 +5404,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-16",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         }
       ]
     },
@@ -5469,8 +5470,8 @@
           "module_title": "Этап 11 · Database Design and PostgreSQL",
           "module_order": 11,
           "order": 123,
-          "duration": 12,
-          "estimated_minutes": 12,
+          "duration": 35,
+          "estimated_minutes": 35,
           "xp": 5,
           "topics": [
             "NOT NULL",
@@ -5479,7 +5480,7 @@
             "FK",
             "business invariant in DB."
           ],
-          "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Ограничение — исполняемое правило целостности базы.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -5507,8 +5508,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-16",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.11.3.normalization",
@@ -5661,15 +5663,15 @@
           "module_title": "Этап 11 · Database Design and PostgreSQL",
           "module_order": 11,
           "order": 127,
-          "duration": 10,
-          "estimated_minutes": 10,
+          "duration": 35,
+          "estimated_minutes": 35,
           "xp": 5,
           "topics": [
             "leftmost prefix intuition",
             "filter/order patterns",
             "equality before range as a heuristic, not dogma."
           ],
-          "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Составной B-tree индекс упорядочивает ключи лексикографически: сначала первый столбец, при равенстве второй, затем третий.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -5697,8 +5699,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-16",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.11.7.selectivity",
@@ -5754,8 +5757,8 @@
           "module_title": "Этап 11 · Database Design and PostgreSQL",
           "module_order": 11,
           "order": 129,
-          "duration": 10,
-          "estimated_minutes": 10,
+          "duration": 35,
+          "estimated_minutes": 35,
           "xp": 5,
           "topics": [
             "estimated vs actual",
@@ -5765,7 +5768,7 @@
             "timing",
             "ANALYZE executes the query."
           ],
-          "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "EXPLAIN показывает выбранный план выполнения.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -5793,8 +5796,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-16",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.11.9.transactions-and-acid",
@@ -5804,8 +5808,8 @@
           "module_title": "Этап 11 · Database Design and PostgreSQL",
           "module_order": 11,
           "order": 130,
-          "duration": 12,
-          "estimated_minutes": 12,
+          "duration": 35,
+          "estimated_minutes": 35,
           "xp": 5,
           "topics": [
             "atomicity",
@@ -5814,7 +5818,7 @@
             "durability",
             "transaction boundary."
           ],
-          "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Транзакция объединяет несколько изменений в один результат: все они фиксируются либо все откатываются.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -5842,8 +5846,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-16",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.11.10.isolation-levels",
@@ -5853,8 +5858,8 @@
           "module_title": "Этап 11 · Database Design and PostgreSQL",
           "module_order": 11,
           "order": 131,
-          "duration": 10,
-          "estimated_minutes": 10,
+          "duration": 35,
+          "estimated_minutes": 35,
           "xp": 5,
           "topics": [
             "read committed",
@@ -5863,7 +5868,7 @@
             "anomalies at reasonable depth",
             "PostgreSQL-specific behavior."
           ],
-          "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Уровень изоляции определяет, какие изменения других транзакций может увидеть текущая работа.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -5891,8 +5896,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-16",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.11.11.mvcc-basics",
@@ -5902,8 +5908,8 @@
           "module_title": "Этап 11 · Database Design and PostgreSQL",
           "module_order": 11,
           "order": 132,
-          "duration": 10,
-          "estimated_minutes": 10,
+          "duration": 35,
+          "estimated_minutes": 35,
           "xp": 5,
           "topics": [
             "snapshots",
@@ -5911,7 +5917,7 @@
             "old row versions",
             "vacuum awareness."
           ],
-          "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "MVCC позволяет читателю видеть подходящую версию строки, пока другой запрос создаёт новую версию.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -5939,8 +5945,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-16",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.11.12.locks",
@@ -5950,8 +5957,8 @@
           "module_title": "Этап 11 · Database Design and PostgreSQL",
           "module_order": 11,
           "order": 133,
-          "duration": 10,
-          "estimated_minutes": 10,
+          "duration": 35,
+          "estimated_minutes": 35,
           "xp": 5,
           "topics": [
             "row/table locks",
@@ -5959,7 +5966,7 @@
             "short transactions",
             "lock contention."
           ],
-          "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Блокировка согласует действия, которые нельзя безопасно выполнять одновременно.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -5987,8 +5994,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-16",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.11.13.deadlocks",
@@ -5998,15 +6006,15 @@
           "module_title": "Этап 11 · Database Design and PostgreSQL",
           "module_order": 11,
           "order": 134,
-          "duration": 10,
-          "estimated_minutes": 10,
+          "duration": 35,
+          "estimated_minutes": 35,
           "xp": 5,
           "topics": [
             "circular wait",
             "consistent lock order",
             "retry aborted transaction."
           ],
-          "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Deadlock — цикл ожидания: A держит то, что нужно B, а B держит то, что нужно A.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -6034,8 +6042,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-16",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.11.14.connection-pooling",
@@ -6141,8 +6150,8 @@
           "module_title": "Этап 11 · Database Design and PostgreSQL",
           "module_order": 11,
           "order": 138,
-          "duration": 12,
-          "estimated_minutes": 12,
+          "duration": 35,
+          "estimated_minutes": 35,
           "xp": 5,
           "topics": [
             "check-then-insert race",
@@ -6152,7 +6161,7 @@
             "transaction",
             "`409 Conflict`."
           ],
-          "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Проверка «свободно ли место» и создание бронирования должны образовывать одну корректную операцию.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -6180,8 +6189,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-16",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         }
       ]
     },

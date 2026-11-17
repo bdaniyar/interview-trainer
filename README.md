@@ -303,6 +303,18 @@ SQL Lab работает в уроках 10.2 (SELECT/AS), 10.3 (WHERE), 10.4 (N
 
 Запуск: `docker compose up -d --build --wait`. Подробности: [SQL Workspace](docs/SQL_WORKSPACE.md), [реестры, grader и hidden fixtures](docs/SQL_GRADING.md), [границы SQL Runner](sql_runner/README.md). SQL выполняется в PostgreSQL, а SQLite хранит только состояние приложения. FULL JOIN с несовпадениями с обеих сторон разбирается на независимых SELECT/VALUES: FK users/orders не допускает заказа без владельца. Check урока 10.12 оценивает существующую RIGHT JOIN задачу, а FULL-сверка и ON/WHERE остаются дополнительной практикой.
 
+## Transaction Lab (Phase 8B)
+
+Урок 10.25 и PostgreSQL-темы 11.9–11.13, 11.17 используют отдельный локальный
+профиль `pg-transaction-v1`: DML Run/Check, транзакции и реальные соединения A/B
+с timeline. В текущем варианте это CLI, а не новая web-IDE; SQL нельзя запускать
+через кнопки Python Workspace. [Запуск и контракты](transaction_lab/README.md).
+
+Два упражнения проверяют возвращённые строки и состояние всех таблиц на шести
+одноразовых базах каждое. Профиль показывает RC/RR, MVCC, row locks, NOWAIT,
+SKIP LOCKED, deadlock, SERIALIZABLE и exclusion conflict. Старые SQL/Python Runner
+сохраняют прежние ограничения. CLI не начисляет XP и не пишет в SQLite Pythoria.
+
 ## Priorities and planned content
 
 - `P0` — обязательно для уверенного Junior interview;
