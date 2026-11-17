@@ -1,39 +1,35 @@
 [
   {
-    "question": "Что такое Scaling sequence и какой механизм здесь важно понимать Junior-разработчику?",
+    "question": "Когда добавление workers ухудшает систему?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "medium",
     "answer": [
-      "Scaling sequence"
+      "Когда они перегружают общую БД, connection pool или downstream, усиливают retries и конкуренцию. Нужны измерения, concurrency limits и backpressure."
     ],
-    "short_answer": "Scaling sequence: это отдельный технический контракт",
-    "junior_answer": "Scaling sequence — тема, в которой я сначала фиксирую `Scaling sequence`, затем объясняю `Scaling sequence` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
-    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Scaling sequence?",
-    "follow_up_answer": "Нужно назвать конкретный сценарий ошибки и способ его проверить.",
+    "short_answer": "Когда они перегружают общую БД, connection pool или downstream, усиливают retries и конкуренцию. Нужны измерения, concurrency limits и backpressure.",
+    "junior_answer": "Когда они перегружают общую БД, connection pool или downstream, усиливают retries и конкуренцию. Нужны измерения, concurrency limits и backpressure.",
+    "follow_up_question": "Как это проверяется в booking architecture lab?",
+    "follow_up_answer": "Запустите `scripts/test_architecture_lab.sh -k stateless`, затем разберите backlog при недоступном receiver. Предложите три метрики: oldest-ready age, retry/failed count, DB pool wait. Не используйте UUID каждого события как metric label.",
     "expected_answer": {
       "must_mention": [
-        "Scaling sequence"
+        "Когда они перегружают общую БД, connection pool или downstream, усиливают retries и конкуренцию. Нужны измерения, concurrency limits и backpressure."
       ],
       "good_additions": [
-        "короткий рабочий пример",
-        "ограничение или типичная ошибка"
+        "Нельзя обещать линейный рост capacity или точную latency без измерений. Выбирайте шаг по данным и проверяйте сохранность invariants после изменения."
       ],
-      "common_wrong_answers": [],
-      "red_flags": [],
+      "common_wrong_answers": [
+        "COMMIT в booking service автоматически делает внешний notification атомарным."
+      ],
+      "red_flags": [
+        "Количество контейнеров само по себе доказывает микросервисную архитектуру."
+      ],
       "follow_up_questions": [
-        "Какое ограничение или типичная ошибка относится именно к теме Scaling sequence?"
-      ],
-      "coding_mistakes": [
-        "Игнорировать ограничение механизма и проверять только основной сценарий."
-      ],
-      "assessment_notes": [
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "review_status": "pending-substantive-review"
+        "Как это проверяется в booking architecture lab?"
+      ]
     },
     "follow_ups": [
-      "Какое ограничение или типичная ошибка относится именно к теме Scaling sequence?"
+      "Как это проверяется в booking architecture lab?"
     ],
     "tags": [
       "stage-29",
@@ -46,38 +42,36 @@
     ]
   },
   {
-    "question": "Какое ограничение или типичная ошибка относится именно к теме Scaling sequence?",
+    "question": "Какой предел гарантии важно назвать в этой теме?",
     "level": "follow_up",
     "priority": "P1",
     "interview_probability": "medium",
     "answer": [
-      "связать Scaling sequence с коротким рабочим примером",
-      "Нужно назвать конкретный сценарий ошибки и способ его проверить."
+      "Нельзя обещать линейный рост capacity или точную latency без измерений. Выбирайте шаг по данным и проверяйте сохранность invariants после изменения."
     ],
-    "short_answer": "Нужно назвать конкретный сценарий ошибки и способ его проверить.",
-    "junior_answer": "Нужно назвать конкретный сценарий ошибки и способ его проверить.",
-    "follow_up_question": "Что такое Scaling sequence и какой механизм здесь важно понимать Junior-разработчику?",
-    "follow_up_answer": "Scaling sequence — тема, в которой я сначала фиксирую `Scaling sequence`, затем объясняю `Scaling sequence` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
+    "short_answer": "Нельзя обещать линейный рост capacity или точную latency без измерений. Выбирайте шаг по данным и проверяйте сохранность invariants после изменения.",
+    "junior_answer": "Нельзя обещать линейный рост capacity или точную latency без измерений. Выбирайте шаг по данным и проверяйте сохранность invariants после изменения.",
+    "follow_up_question": "Как это проверяется в booking architecture lab?",
+    "follow_up_answer": "Запустите `scripts/test_architecture_lab.sh -k stateless`, затем разберите backlog при недоступном receiver. Предложите три метрики: oldest-ready age, retry/failed count, DB pool wait. Не используйте UUID каждого события как metric label.",
     "expected_answer": {
       "must_mention": [
-        "связать Scaling sequence с коротким рабочим примером"
+        "Нельзя обещать линейный рост capacity или точную latency без измерений. Выбирайте шаг по данным и проверяйте сохранность invariants после изменения."
       ],
       "good_additions": [
-        "короткий пример именно этой темы"
+        "Нельзя обещать линейный рост capacity или точную latency без измерений. Выбирайте шаг по данным и проверяйте сохранность invariants после изменения."
       ],
-      "common_wrong_answers": [],
-      "red_flags": [],
+      "common_wrong_answers": [
+        "COMMIT в booking service автоматически делает внешний notification атомарным."
+      ],
+      "red_flags": [
+        "Количество контейнеров само по себе доказывает микросервисную архитектуру."
+      ],
       "follow_up_questions": [
-        "Что такое Scaling sequence и какой механизм здесь важно понимать Junior-разработчику?"
-      ],
-      "coding_mistakes": [
-        "Игнорировать ограничение механизма и проверять только основной сценарий."
-      ],
-      "assessment_notes": [],
-      "review_status": "pending-substantive-review"
+        "Как это проверяется в booking architecture lab?"
+      ]
     },
     "follow_ups": [
-      "Что такое Scaling sequence и какой механизм здесь важно понимать Junior-разработчику?"
+      "Как это проверяется в booking architecture lab?"
     ],
     "tags": [
       "stage-29",

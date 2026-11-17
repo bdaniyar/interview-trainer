@@ -1,180 +1,103 @@
 # Outbox design
 
-> [!IMPORTANT]
-> **P1 · вероятность на интервью: high · 10 минут.** Junior system design связывает HTTP, DB, cache и failure modes в практический ответ.
+## Суть
+
+В system design outbox закрывает разрыв между локальным COMMIT business data и намерением сообщить об этом другому сервису. Он не объединяет две service DB в одну transaction.
 
 ## Учебные цели
 
-После урока ты сможешь:
+Проследить booking и event intent в одной transaction, затем отдельную доставку в notification service. Проверить producer crash, потерянный ответ receiver, duplicate event и terminal failure relay.
 
-- восстановить mental model темы **Outbox design**, а не только запомнить термин;
-- прочитать и изменить короткий пример для `atomic write`;
-- распознать характерную ошибку и объяснить причину;
-- дать реалистичный ответ уровня Junior и выдержать follow-up.
+## Зачем это нужно backend-разработчику
+
+Запустите `scripts/test_architecture_lab.sh -k timeout`. Receiver успевает COMMIT, sender получает timeout, затем повторяет прежний event_id. Проверьте одну inbox/notification строку и delivered outbox после удачного ack.
 
 ## Теория
 
 ### Что это
 
-Тема **Outbox design** описывает отдельный контракт backend-разработки.
+В system design outbox закрывает разрыв между локальным COMMIT business data и намерением сообщить об этом другому сервису. Он не объединяет две service DB в одну transaction.
 
 ### Как работает
 
-Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы сценарий ошибки.
+BookingService сохраняет outbox event рядом с booking. Relay получает короткий lease, COMMIT-ит claim, отправляет event и затем подтверждает delivery guarded generation. Это позволяет producer умереть после COMMIT без потери intent.
 
-**atomic write.** `atomic write` является компонентом system design только при наличии требования, source of truth и измеримого режим отказа.
+После receiver COMMIT и до ack возможен дубль. Notification service хранит event_id+hash и notification effect в своей transaction, поэтому одинаковый повтор не создаёт второй effect, а другой payload с тем же ID конфликтует. Дедупликация должна жить достаточно долго для допустимого replay.
 
-**worker claim.** `worker claim` является компонентом system design только при наличии требования, source of truth и измеримого режим отказа.
+Backlog age показывает задержку доставки лучше одного count: маленькая очередь может содержать одну очень старую poison event. Failed state после retry budget должен быть виден оператору. Повтор failed event сохраняет её ID; новый ID превращает retry в другую операцию.
 
-**retry.** Retry подходит для transient failure, ограничивается числом попыток и backoff с jitter; permanent errors нужно возвращать сразу.
-
-**idempotency.** Идемпотентность означает, что повтор одного логического запроса не создаёт новый эффект; обычно её поддерживают ключом и ограничением уникальности.
-
-**locking.** Lock сериализует критическую секцию, но корректность требует единого порядка захвата и короткого времени удержания.
-
+Для payment события нужен provider_event_id и локальный ledger/transition с outbox. Это отдельный контракт; учебная notification не выполняет реальных платежей и не доказывает exactly-once у внешнего провайдера.
 
 ### Важный нюанс / ограничение
 
-Граница Junior: уверенно объясняй `atomic write` и `worker claim` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
-
-### Где используется в backend
-
-В backend эта тема важна в том месте, где применяется `atomic write`; проверяй именно наблюдаемый contract, а не название инструмента.
+Outbox даёт durable intent и обычно at-least-once delivery. Один защищённый business effect требует receiver transaction и дедупликации на его стороне.
 
 ## Модель понимания
 
-Сначала обеспечь корректность простого монолита; масштабируй измеренный bottleneck.
-
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
+Проследите один booking от HTTP до durable state. Подпишите владельца данных и каждый COMMIT. На сетевой границе отдельно отметьте timeout, возможный повтор и наблюдаемое состояние receiver.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
-- atomic write
-- worker claim
-- retry
-- idempotency
-
-### Полезно
-
-- locking
-
-### Можно не учить глубоко
-
-- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
+Событие имеет стабильный ID, version/schema, correlation и понятный business identity. Receiver объединяет inbox и effect своим COMMIT. Статус delivered означает подтверждённую доставку по конкретному контракту, а failed сохраняется для диагностики и безопасного операторского решения.
 
 ## Примеры кода
 
-### Outbox design: отдельный пример
+Из корня репозитория запустите конкретный исполняемый пример на настоящих PostgreSQL и HTTP:
 
-```text
-Сценарий: Commit прошёл, publish упал.
-
-Проверка:
-Same transaction outbox; retry/idempotency.
+```sh
+scripts/test_architecture_lab.sh -k 'timeout'
 ```
 
-Это отдельный architecture example для данного subtopic, а не общий пример stage.
+Полный workflow, endpoints и сравнение двух вариантов описаны в `projects/architecture_lab/README.md`. Test project использует собственный tmpfs и не читает SQLite Pythoria. Ожидаемые состояния заданы ниже и в соответствующем pytest; число реально запущенных tests отображается в выводе.
 
 ## Типичные ошибки
 
-### Ошибка 1
-
-Игнорировать ограничение механизма и проверять только основной сценарий.
+Отметить delivered до HTTP — потерять событие при crash. Создать новый event ID на каждом retry — обойти inbox. Принять прежний ID с изменённым payload — смешать разные события. Удалить inbox ради повторной отправки — разрешить второй business effect.
 
 ## Практика
 
-**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для `atomic write` до запуска.
-
-**B · Найди ошибку.** Найди нарушение `worker claim` и объясни конкретное последствие.
-
-**E · Ответ на собеседовании.** Дай ответ про Outbox design за 60 секунд: определение, механизм, пример, ограничение.
-
-## Практика: Архитектура
-
-### Outbox
-
-**Сценарий:** Commit прошёл, publish упал.
-
-<details><summary>Показать ответ</summary>
-
-**Критерии ответа:** Same transaction outbox; retry/idempotency.
-
-**Слабый ответ:** Сразу назвать инструмент без symptom, boundary и verification.
-
-</details>
+Запустите `scripts/test_architecture_lab.sh -k timeout`. Receiver успевает COMMIT, sender получает timeout, затем повторяет прежний event_id. Проверьте одну inbox/notification строку и delivered outbox после удачного ack.
 
 ## Вопросы с собеседований
 
-### Основной вопрос
-
-Что такое Outbox design и какой механизм здесь важно понимать Junior-разработчику?
-
-### Дополнительный вопрос
-
-Какое ограничение или типичная ошибка относится именно к теме Outbox design?
-
-Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+1. Почему нельзя отмечать delivered перед HTTP?
+2. Какой предел гарантии важно назвать в этой теме?
 
 ## Хорошие ответы
 
-### Короткий ответ
+<details>
+<summary>Раскрыть ответы</summary>
 
-Outbox design: это отдельный технический контракт
+Падение после отметки до отправки потеряет событие. Отметка после отправки допускает повтор, который должен безопасно обработать receiver.
 
-### Нормальный ответ уровня Junior
+Outbox даёт durable intent и обычно at-least-once delivery. Один защищённый business effect требует receiver transaction и дедупликации на его стороне.
 
-> Outbox design — тема, в которой я сначала фиксирую `atomic write`, затем объясняю `worker claim` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
-
-### Углубление / дополнительный вопрос
-
-**Какое ограничение или типичная ошибка относится именно к теме Outbox design?**
-
-Нужно назвать конкретный сценарий ошибки и способ его проверить.
+</details>
 
 ## Критерии хорошего ответа
 
-### Что обязательно упомянуть
+<details>
+<summary>Раскрыть критерии</summary>
 
-- atomic write
-- worker claim
-- retry
-- idempotency
+Назовите владельца данных, transaction boundary, поведение при partial failure и способ восстановления. Покажите конкретное доказательство в project test. Отличайте локальную атомарность, durable intent, доставку и внешний эффект.
 
-### Что улучшит ответ
-
-- один короткий пример с результатом;
-- одно ограничение или характерная ошибка именно этой темы;
-- пример из backend-разработки только при естественной связи.
-
-### Частые неправильные ответы
-
-- Игнорировать ограничение механизма и проверять только основной сценарий.
-- пересказ одного определения без механизма или примера.
-
-### Дополнительный вопрос
-
-- Какое ограничение или типичная ошибка относится именно к теме Outbox design?
+</details>
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Outbox design**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
+Запустите `scripts/test_architecture_lab.sh -k timeout`. Receiver успевает COMMIT, sender получает timeout, затем повторяет прежний event_id. Проверьте одну inbox/notification строку и delivered outbox после удачного ack.
+
+Сохраните working code своей копии и объяснение двух transaction boundaries. Соответствующий test должен проходить на корректном варианте и обнаруживать намеренно внесённую ошибку. Это локальный project exercise; обычный Python Runner не получает Docker/сеть, а текстовый ответ автоматически не оценивается.
 
 ## Шпаргалка
 
-Перед собеседованием запомни:
-
-- **Что это:** Outbox design: это отдельный технический контракт
-- **Механизм:** Сначала обеспечь корректность простого монолита; масштабируй измеренный bottleneck.
-- **Ограничение:** Игнорировать ограничение механизма и проверять только основной сценарий.
-- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
+Producer: business + outbox одним COMMIT. Relay: claim, отправка вне transaction, fenced ack. Consumer: inbox + effect одним COMMIT. Любая потеря ответа допускает повтор прежнего события. Между сервисами остаётся eventual consistency.
 
 ## Источники
 
-Материал написан своими словами и сверён с актуальными разделами официальной документации:
+- [PostgreSQL 17: transaction boundary](https://www.postgresql.org/docs/17/tutorial-transactions.html).
+- [SQLAlchemy 2.0: transactions](https://docs.sqlalchemy.org/en/20/core/connections.html).
 
-- [PostgreSQL high availability](https://www.postgresql.org/docs/current/high-availability.html)
-- [Redis architecture](https://redis.io/docs/latest/operate/oss_and_stack/management/architecture/)
-
-Последняя проверка версий: **2026-08-27**.
+Секции первоисточников сверены 2026-11-16. Практика: PostgreSQL 17.11, SQLAlchemy 2.0.43, FastAPI 0.116.1; точные pins и ограничения находятся в project README. Название architecture pattern не выдаётся за измерение performance или production readiness.

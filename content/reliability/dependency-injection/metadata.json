@@ -6,15 +6,15 @@
   "module_title": "Этап 27 · Architecture and Useful Patterns",
   "module_order": 27,
   "order": 341,
-  "duration": 10,
-  "estimated_minutes": 10,
+  "duration": 45,
+  "estimated_minutes": 45,
   "xp": 5,
   "topics": [
     "explicit dependencies",
     "substitution/testing",
     "framework DI vs general principle."
   ],
-  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+  "description": "Dependency Injection передаёт зависимость компоненту снаружи. BookingService получает способ записать событие, поэтому сам не решает, использовать локальный notification module или durable outbox.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",
@@ -42,6 +42,7 @@
     "interview_crash_course"
   ],
   "content_status": "complete",
-  "last_verified": "2026-08-27",
-  "generated_by": "populate_curriculum.py"
+  "last_verified": "2026-11-17",
+  "generated_by": "populate_curriculum.py",
+  "content_source": "curated"
 }
