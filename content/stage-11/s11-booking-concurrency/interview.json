@@ -1,42 +1,32 @@
 [
   {
-    "question": "Что такое Booking concurrency и какой механизм здесь важно понимать Junior-разработчику?",
+    "question": "Почему отдельные SELECT наличия и INSERT брони опасны?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "check-then-insert race",
-      "unique/exclusion constraint",
-      "conditional update",
-      "row/advisory locks"
+      "Два запроса могут увидеть одну последнюю единицу. Проверка, изменение остатка и бронь должны образовать согласованную атомарную операцию с ограничениями."
     ],
-    "short_answer": "Booking concurrency: Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.",
-    "junior_answer": "Booking concurrency — тема, в которой я сначала фиксирую `check-then-insert race`, затем объясняю `unique/exclusion constraint` на коротком примере. Ключевой механизм: Назови invariant и concurrent scenario, затем проверь constraint, transaction boundary и фактический query plan. Главная практическая ошибка — Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
-    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Booking concurrency?",
-    "follow_up_answer": "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
+    "short_answer": "Два запроса могут увидеть одну последнюю единицу.",
+    "junior_answer": "Два запроса могут увидеть одну последнюю единицу. Проверка, изменение остатка и бронь должны образовать согласованную атомарную операцию с ограничениями.",
+    "follow_up_question": "Что показывает исполняемый сценарий booking?",
+    "follow_up_answer": "Check требует максимум одну новую бронь при одной единице и ровно одну, когда она доступна; остаток должен уменьшиться ровно на число созданных броней. Проверяются ответы обоих запросов, все таблицы и освобождение транзакций. Хардкод ответа и UPDATE всех комнат не проходят.",
     "expected_answer": {
       "must_mention": [
-        "check-then-insert race",
-        "unique/exclusion constraint",
-        "conditional update",
-        "row/advisory locks"
+        "Два запроса могут увидеть одну последнюю единицу. Проверка, изменение остатка и бронь должны образовать согласованную атомарную операцию с ограничениями."
       ],
       "good_additions": [
-        "короткий рабочий пример",
-        "ограничение или типичная ошибка"
+        "Check требует максимум одну новую бронь при одной единице и ровно одну, когда она доступна; остаток должен уменьшиться ровно на число созданных броней. Проверяются ответы обоих запросов, все таблицы и освобождение транзакций. Хардкод ответа и UPDATE всех комнат не проходят."
       ],
-      "common_wrong_answers": [],
-      "red_flags": [],
+      "common_wrong_answers": [
+        "Одного подключения всегда достаточно, чтобы доказать поведение конкурентных транзакций."
+      ],
+      "red_flags": [
+        "Перенос DML в существующий read-only SQL Runner."
+      ],
       "follow_up_questions": [
-        "Какое ограничение или типичная ошибка относится именно к теме Booking concurrency?"
-      ],
-      "coding_mistakes": [
-        "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case."
-      ],
-      "assessment_notes": [
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "review_status": "pending-substantive-review"
+        "Что показывает исполняемый сценарий booking?"
+      ]
     },
     "follow_ups": [
       "Какое ограничение или типичная ошибка относится именно к теме Booking concurrency?"
@@ -52,37 +42,33 @@
     ]
   },
   {
-    "question": "Какое ограничение или типичная ошибка относится именно к теме Booking concurrency?",
+    "question": "Гарантирует ли транзакция PostgreSQL внешний платёж?",
     "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "transaction",
-      "`409 Conflict`",
-      "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case."
+      "Нет. COMMIT своей базы не фиксирует действие внешнего сервиса атомарно. Нужны явно спроектированные идемпотентность, доставка и компенсации."
     ],
-    "short_answer": "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
-    "junior_answer": "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
-    "follow_up_question": "Что такое Booking concurrency и какой механизм здесь важно понимать Junior-разработчику?",
-    "follow_up_answer": "Booking concurrency — тема, в которой я сначала фиксирую `check-then-insert race`, затем объясняю `unique/exclusion constraint` на коротком примере. Ключевой механизм: Назови invariant и concurrent scenario, затем проверь constraint, transaction boundary и фактический query plan. Главная практическая ошибка — Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
+    "short_answer": "Нет.",
+    "junior_answer": "Нет. COMMIT своей базы не фиксирует действие внешнего сервиса атомарно. Нужны явно спроектированные идемпотентность, доставка и компенсации.",
+    "follow_up_question": "Что показывает исполняемый сценарий booking?",
+    "follow_up_answer": "Check требует максимум одну новую бронь при одной единице и ровно одну, когда она доступна; остаток должен уменьшиться ровно на число созданных броней. Проверяются ответы обоих запросов, все таблицы и освобождение транзакций. Хардкод ответа и UPDATE всех комнат не проходят.",
     "expected_answer": {
       "must_mention": [
-        "transaction",
-        "`409 Conflict`"
+        "Нет. COMMIT своей базы не фиксирует действие внешнего сервиса атомарно. Нужны явно спроектированные идемпотентность, доставка и компенсации."
       ],
       "good_additions": [
-        "короткий пример именно этой темы"
+        "Check требует максимум одну новую бронь при одной единице и ровно одну, когда она доступна; остаток должен уменьшиться ровно на число созданных броней. Проверяются ответы обоих запросов, все таблицы и освобождение транзакций. Хардкод ответа и UPDATE всех комнат не проходят."
       ],
-      "common_wrong_answers": [],
-      "red_flags": [],
+      "common_wrong_answers": [
+        "Одного подключения всегда достаточно, чтобы доказать поведение конкурентных транзакций."
+      ],
+      "red_flags": [
+        "Перенос DML в существующий read-only SQL Runner."
+      ],
       "follow_up_questions": [
-        "Что такое Booking concurrency и какой механизм здесь важно понимать Junior-разработчику?"
-      ],
-      "coding_mistakes": [
-        "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case."
-      ],
-      "assessment_notes": [],
-      "review_status": "pending-substantive-review"
+        "Что показывает исполняемый сценарий booking?"
+      ]
     },
     "follow_ups": [
       "Что такое Booking concurrency и какой механизм здесь важно понимать Junior-разработчику?"

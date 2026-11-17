@@ -1,42 +1,32 @@
 [
   {
-    "question": "Что такое Locks и какой механизм здесь важно понимать Junior-разработчику?",
+    "question": "Чем NOWAIT отличается от SKIP LOCKED?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "row/table locks",
-      "`SELECT ... FOR UPDATE`",
-      "short transactions",
-      "lock contention"
+      "NOWAIT возвращает 55P03 при недоступной блокировке. SKIP LOCKED пропускает занятые строки и возвращает доступную часть набора."
     ],
-    "short_answer": "Locks: Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.",
-    "junior_answer": "Locks — тема, в которой я сначала фиксирую `row/table locks`, затем объясняю ``SELECT ... FOR UPDATE`` на коротком примере. Ключевой механизм: Назови invariant и concurrent scenario, затем проверь constraint, transaction boundary и фактический query plan. Главная практическая ошибка — Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
-    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Locks?",
-    "follow_up_answer": "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
+    "short_answer": "NOWAIT возвращает 55P03 при недоступной блокировке.",
+    "junior_answer": "NOWAIT возвращает 55P03 при недоступной блокировке. SKIP LOCKED пропускает занятые строки и возвращает доступную часть набора.",
+    "follow_up_question": "Что показывает исполняемый сценарий skip-locked?",
+    "follow_up_answer": "blocking-update фиксирует зависимость B→A по реальному состоянию PostgreSQL перед освобождением A. Фиксированные sleeps не определяют порядок событий. Все соединения закрываются, а sandbox удаляется после сценария.",
     "expected_answer": {
       "must_mention": [
-        "row/table locks",
-        "`SELECT ... FOR UPDATE`",
-        "short transactions",
-        "lock contention"
+        "NOWAIT возвращает 55P03 при недоступной блокировке. SKIP LOCKED пропускает занятые строки и возвращает доступную часть набора."
       ],
       "good_additions": [
-        "короткий рабочий пример",
-        "ограничение или типичная ошибка"
+        "blocking-update фиксирует зависимость B→A по реальному состоянию PostgreSQL перед освобождением A. Фиксированные sleeps не определяют порядок событий. Все соединения закрываются, а sandbox удаляется после сценария."
       ],
-      "common_wrong_answers": [],
-      "red_flags": [],
+      "common_wrong_answers": [
+        "Одного подключения всегда достаточно, чтобы доказать поведение конкурентных транзакций."
+      ],
+      "red_flags": [
+        "Перенос DML в существующий read-only SQL Runner."
+      ],
       "follow_up_questions": [
-        "Какое ограничение или типичная ошибка относится именно к теме Locks?"
-      ],
-      "coding_mistakes": [
-        "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case."
-      ],
-      "assessment_notes": [
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "review_status": "pending-substantive-review"
+        "Что показывает исполняемый сценарий skip-locked?"
+      ]
     },
     "follow_ups": [
       "Какое ограничение или типичная ошибка относится именно к теме Locks?"
@@ -52,35 +42,33 @@
     ]
   },
   {
-    "question": "Какое ограничение или типичная ошибка относится именно к теме Locks?",
+    "question": "Почему claim и запись ownership должны быть атомарны?",
     "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "связать Locks с коротким рабочим примером",
-      "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case."
+      "Если отпустить блокировку до пометки работы, другой worker снова выберет ту же строку. Выбор и изменение состояния должны фиксироваться вместе."
     ],
-    "short_answer": "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
-    "junior_answer": "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
-    "follow_up_question": "Что такое Locks и какой механизм здесь важно понимать Junior-разработчику?",
-    "follow_up_answer": "Locks — тема, в которой я сначала фиксирую `row/table locks`, затем объясняю ``SELECT ... FOR UPDATE`` на коротком примере. Ключевой механизм: Назови invariant и concurrent scenario, затем проверь constraint, transaction boundary и фактический query plan. Главная практическая ошибка — Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
+    "short_answer": "Если отпустить блокировку до пометки работы, другой worker снова выберет ту же строку.",
+    "junior_answer": "Если отпустить блокировку до пометки работы, другой worker снова выберет ту же строку. Выбор и изменение состояния должны фиксироваться вместе.",
+    "follow_up_question": "Что показывает исполняемый сценарий skip-locked?",
+    "follow_up_answer": "blocking-update фиксирует зависимость B→A по реальному состоянию PostgreSQL перед освобождением A. Фиксированные sleeps не определяют порядок событий. Все соединения закрываются, а sandbox удаляется после сценария.",
     "expected_answer": {
       "must_mention": [
-        "связать Locks с коротким рабочим примером"
+        "Если отпустить блокировку до пометки работы, другой worker снова выберет ту же строку. Выбор и изменение состояния должны фиксироваться вместе."
       ],
       "good_additions": [
-        "короткий пример именно этой темы"
+        "blocking-update фиксирует зависимость B→A по реальному состоянию PostgreSQL перед освобождением A. Фиксированные sleeps не определяют порядок событий. Все соединения закрываются, а sandbox удаляется после сценария."
       ],
-      "common_wrong_answers": [],
-      "red_flags": [],
+      "common_wrong_answers": [
+        "Одного подключения всегда достаточно, чтобы доказать поведение конкурентных транзакций."
+      ],
+      "red_flags": [
+        "Перенос DML в существующий read-only SQL Runner."
+      ],
       "follow_up_questions": [
-        "Что такое Locks и какой механизм здесь важно понимать Junior-разработчику?"
-      ],
-      "coding_mistakes": [
-        "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case."
-      ],
-      "assessment_notes": [],
-      "review_status": "pending-substantive-review"
+        "Что показывает исполняемый сценарий skip-locked?"
+      ]
     },
     "follow_ups": [
       "Что такое Locks и какой механизм здесь важно понимать Junior-разработчику?"

@@ -1,42 +1,32 @@
 [
   {
-    "question": "Что такое MVCC basics и какой механизм здесь важно понимать Junior-разработчику?",
+    "question": "Почему A видит 1, когда B уже зафиксировала 0?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "snapshots",
-      "readers/клиенты записи",
-      "old row versions",
-      "vacuum awareness"
+      "A может удерживать более ранний snapshot REPEATABLE READ. Новое observer-чтение видит 0; зафиксированное изменение не потеряно."
     ],
-    "short_answer": "MVCC basics: Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.",
-    "junior_answer": "MVCC basics — тема, в которой я сначала фиксирую `snapshots`, затем объясняю `readers/writers` на коротком примере. Ключевой механизм: Назови invariant и concurrent scenario, затем проверь constraint, transaction boundary и фактический query plan. Главная практическая ошибка — Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
-    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме MVCC basics?",
-    "follow_up_answer": "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
+    "short_answer": "A может удерживать более ранний snapshot REPEATABLE READ.",
+    "junior_answer": "A может удерживать более ранний snapshot REPEATABLE READ. Новое observer-чтение видит 0; зафиксированное изменение не потеряно.",
+    "follow_up_question": "Что показывает исполняемый сценарий mvcc?",
+    "follow_up_answer": "Ожидается first=1, second=1, current=0. В сценарии lost-update два чтения 1 выполняются до двух записей значения 2: финал 2, хотя два последовательных инкремента дали бы 3. MVCC не исправляет read/compute/write бизнес-алгоритм автоматически.",
     "expected_answer": {
       "must_mention": [
-        "snapshots",
-        "readers/клиенты записи",
-        "old row versions",
-        "vacuum awareness"
+        "A может удерживать более ранний snapshot REPEATABLE READ. Новое observer-чтение видит 0; зафиксированное изменение не потеряно."
       ],
       "good_additions": [
-        "короткий рабочий пример",
-        "ограничение или типичная ошибка"
+        "Ожидается first=1, second=1, current=0. В сценарии lost-update два чтения 1 выполняются до двух записей значения 2: финал 2, хотя два последовательных инкремента дали бы 3. MVCC не исправляет read/compute/write бизнес-алгоритм автоматически."
       ],
-      "common_wrong_answers": [],
-      "red_flags": [],
+      "common_wrong_answers": [
+        "Одного подключения всегда достаточно, чтобы доказать поведение конкурентных транзакций."
+      ],
+      "red_flags": [
+        "Перенос DML в существующий read-only SQL Runner."
+      ],
       "follow_up_questions": [
-        "Какое ограничение или типичная ошибка относится именно к теме MVCC basics?"
-      ],
-      "coding_mistakes": [
-        "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case."
-      ],
-      "assessment_notes": [
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "review_status": "pending-substantive-review"
+        "Что показывает исполняемый сценарий mvcc?"
+      ]
     },
     "follow_ups": [
       "Какое ограничение или типичная ошибка относится именно к теме MVCC basics?"
@@ -52,35 +42,33 @@
     ]
   },
   {
-    "question": "Какое ограничение или типичная ошибка относится именно к теме MVCC basics?",
+    "question": "MVCC означает отсутствие блокировок?",
     "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "связать MVCC basics с коротким рабочим примером",
-      "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case."
+      "Нет. Записи и SELECT FOR UPDATE согласуются блокировками; DDL также может конфликтовать с чтением. Длинные snapshots мешают очистке старых версий."
     ],
-    "short_answer": "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
-    "junior_answer": "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
-    "follow_up_question": "Что такое MVCC basics и какой механизм здесь важно понимать Junior-разработчику?",
-    "follow_up_answer": "MVCC basics — тема, в которой я сначала фиксирую `snapshots`, затем объясняю `readers/writers` на коротком примере. Ключевой механизм: Назови invariant и concurrent scenario, затем проверь constraint, transaction boundary и фактический query plan. Главная практическая ошибка — Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
+    "short_answer": "Нет.",
+    "junior_answer": "Нет. Записи и SELECT FOR UPDATE согласуются блокировками; DDL также может конфликтовать с чтением. Длинные snapshots мешают очистке старых версий.",
+    "follow_up_question": "Что показывает исполняемый сценарий mvcc?",
+    "follow_up_answer": "Ожидается first=1, second=1, current=0. В сценарии lost-update два чтения 1 выполняются до двух записей значения 2: финал 2, хотя два последовательных инкремента дали бы 3. MVCC не исправляет read/compute/write бизнес-алгоритм автоматически.",
     "expected_answer": {
       "must_mention": [
-        "связать MVCC basics с коротким рабочим примером"
+        "Нет. Записи и SELECT FOR UPDATE согласуются блокировками; DDL также может конфликтовать с чтением. Длинные snapshots мешают очистке старых версий."
       ],
       "good_additions": [
-        "короткий пример именно этой темы"
+        "Ожидается first=1, second=1, current=0. В сценарии lost-update два чтения 1 выполняются до двух записей значения 2: финал 2, хотя два последовательных инкремента дали бы 3. MVCC не исправляет read/compute/write бизнес-алгоритм автоматически."
       ],
-      "common_wrong_answers": [],
-      "red_flags": [],
+      "common_wrong_answers": [
+        "Одного подключения всегда достаточно, чтобы доказать поведение конкурентных транзакций."
+      ],
+      "red_flags": [
+        "Перенос DML в существующий read-only SQL Runner."
+      ],
       "follow_up_questions": [
-        "Что такое MVCC basics и какой механизм здесь важно понимать Junior-разработчику?"
-      ],
-      "coding_mistakes": [
-        "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case."
-      ],
-      "assessment_notes": [],
-      "review_status": "pending-substantive-review"
+        "Что показывает исполняемый сценарий mvcc?"
+      ]
     },
     "follow_ups": [
       "Что такое MVCC basics и какой механизм здесь важно понимать Junior-разработчику?"

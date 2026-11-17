@@ -1,42 +1,32 @@
 [
   {
-    "question": "Что такое EXPLAIN and EXPLAIN ANALYZE и как это работает?",
+    "question": "Измеряется ли cost в миллисекундах?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "estimated vs actual",
-      "scan types",
-      "rows",
-      "loops"
+      "Нет. Это условная оценка модели планировщика; фактическое время и стоимость нельзя отождествлять."
     ],
-    "short_answer": "`EXPLAIN` показывает план и estimates, а `EXPLAIN ANALYZE` действительно выполняет statement и добавляет actual rows и timing.",
-    "junior_answer": "`EXPLAIN` показывает план и estimates, а `EXPLAIN ANALYZE` действительно выполняет statement и добавляет actual rows и timing. Plan читают от дочерних nodes вверх, сравнивая estimated и actual rows, loops, scan type и buffers. Важное ограничение: ANALYZE реально выполняет изменяющий statement; такую проверку делают безопасно, например внутри transaction с rollback.",
-    "follow_up_question": "Какая типичная ошибка связана с EXPLAIN and EXPLAIN ANALYZE?",
-    "follow_up_answer": "Просмотр только общего времени скрывает ошибку оценки rows или большое число loops, которое станет дорогим на реальных данных.",
+    "short_answer": "Нет.",
+    "junior_answer": "Нет. Это условная оценка модели планировщика; фактическое время и стоимость нельзя отождествлять.",
+    "follow_up_question": "Что показывает исполняемый сценарий indexes?",
+    "follow_up_answer": "Тест проверяет реальный текстовый результат plain EXPLAIN и ожидаемые свойства запроса, а не закрепляет нестабильные cost или обязательный конкретный scan node. План может измениться от статистики и размера данных.",
     "expected_answer": {
       "must_mention": [
-        "estimated vs actual",
-        "scan types",
-        "rows",
-        "loops"
+        "Нет. Это условная оценка модели планировщика; фактическое время и стоимость нельзя отождествлять."
       ],
       "good_additions": [
-        "короткий рабочий пример",
-        "ограничение или типичная ошибка"
+        "Тест проверяет реальный текстовый результат plain EXPLAIN и ожидаемые свойства запроса, а не закрепляет нестабильные cost или обязательный конкретный scan node. План может измениться от статистики и размера данных."
       ],
-      "common_wrong_answers": [],
-      "red_flags": [],
+      "common_wrong_answers": [
+        "Одного подключения всегда достаточно, чтобы доказать поведение конкурентных транзакций."
+      ],
+      "red_flags": [
+        "Перенос DML в существующий read-only SQL Runner."
+      ],
       "follow_up_questions": [
-        "Какая типичная ошибка связана с EXPLAIN and EXPLAIN ANALYZE?"
-      ],
-      "coding_mistakes": [
-        "Просмотр только общего времени скрывает ошибку оценки rows или большое число loops, которое станет дорогим на реальных данных."
-      ],
-      "assessment_notes": [
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "review_status": "pending-substantive-review"
+        "Что показывает исполняемый сценарий indexes?"
+      ]
     },
     "follow_ups": [
       "Какая типичная ошибка связана с EXPLAIN and EXPLAIN ANALYZE?"
@@ -52,37 +42,33 @@
     ]
   },
   {
-    "question": "Какая типичная ошибка связана с EXPLAIN and EXPLAIN ANALYZE?",
+    "question": "Почему EXPLAIN ANALYZE UPDATE требует осторожности?",
     "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "timing",
-      "ANALYZE executes the query",
-      "Просмотр только общего времени скрывает ошибку оценки rows или большое число loops, которое станет дорогим на реальных данных."
+      "ANALYZE действительно выполняет запрос и его изменения. Откат не гарантирует отмену любых внешних эффектов, например вызванных функций или sequence allocations."
     ],
-    "short_answer": "Просмотр только общего времени скрывает ошибку оценки rows или большое число loops, которое станет дорогим на реальных данных.",
-    "junior_answer": "Просмотр только общего времени скрывает ошибку оценки rows или большое число loops, которое станет дорогим на реальных данных.",
-    "follow_up_question": "Что такое EXPLAIN and EXPLAIN ANALYZE и как это работает?",
-    "follow_up_answer": "`EXPLAIN` показывает план и estimates, а `EXPLAIN ANALYZE` действительно выполняет statement и добавляет actual rows и timing. Plan читают от дочерних nodes вверх, сравнивая estimated и actual rows, loops, scan type и buffers. Важное ограничение: ANALYZE реально выполняет изменяющий statement; такую проверку делают безопасно, например внутри transaction с rollback.",
+    "short_answer": "ANALYZE действительно выполняет запрос и его изменения.",
+    "junior_answer": "ANALYZE действительно выполняет запрос и его изменения. Откат не гарантирует отмену любых внешних эффектов, например вызванных функций или sequence allocations.",
+    "follow_up_question": "Что показывает исполняемый сценарий indexes?",
+    "follow_up_answer": "Тест проверяет реальный текстовый результат plain EXPLAIN и ожидаемые свойства запроса, а не закрепляет нестабильные cost или обязательный конкретный scan node. План может измениться от статистики и размера данных.",
     "expected_answer": {
       "must_mention": [
-        "timing",
-        "ANALYZE executes the query"
+        "ANALYZE действительно выполняет запрос и его изменения. Откат не гарантирует отмену любых внешних эффектов, например вызванных функций или sequence allocations."
       ],
       "good_additions": [
-        "короткий пример именно этой темы"
+        "Тест проверяет реальный текстовый результат plain EXPLAIN и ожидаемые свойства запроса, а не закрепляет нестабильные cost или обязательный конкретный scan node. План может измениться от статистики и размера данных."
       ],
-      "common_wrong_answers": [],
-      "red_flags": [],
+      "common_wrong_answers": [
+        "Одного подключения всегда достаточно, чтобы доказать поведение конкурентных транзакций."
+      ],
+      "red_flags": [
+        "Перенос DML в существующий read-only SQL Runner."
+      ],
       "follow_up_questions": [
-        "Что такое EXPLAIN and EXPLAIN ANALYZE и как это работает?"
-      ],
-      "coding_mistakes": [
-        "Просмотр только общего времени скрывает ошибку оценки rows или большое число loops, которое станет дорогим на реальных данных."
-      ],
-      "assessment_notes": [],
-      "review_status": "pending-substantive-review"
+        "Что показывает исполняемый сценарий indexes?"
+      ]
     },
     "follow_ups": [
       "Что такое EXPLAIN and EXPLAIN ANALYZE и как это работает?"

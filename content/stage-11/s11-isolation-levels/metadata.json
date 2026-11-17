@@ -6,8 +6,8 @@
   "module_title": "Этап 11 · Database Design and PostgreSQL",
   "module_order": 11,
   "order": 131,
-  "duration": 10,
-  "estimated_minutes": 10,
+  "duration": 35,
+  "estimated_minutes": 35,
   "xp": 5,
   "topics": [
     "read committed",
@@ -16,7 +16,7 @@
     "anomalies at reasonable depth",
     "PostgreSQL-specific behavior."
   ],
-  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+  "description": "Уровень изоляции определяет, какие изменения других транзакций может увидеть текущая работа.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",
@@ -44,6 +44,7 @@
     "interview_crash_course"
   ],
   "content_status": "complete",
-  "last_verified": "2026-08-27",
-  "generated_by": "populate_curriculum.py"
+  "last_verified": "2026-11-16",
+  "generated_by": "populate_curriculum.py",
+  "content_source": "curated"
 }

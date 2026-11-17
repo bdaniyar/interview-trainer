@@ -167,6 +167,17 @@ try {
   assert.equal(savedPython['main.py'],editedPython);assert.equal(savedPython['notes.py'],pythonFiles['notes.py']);
   for(const [slug] of tasks)assert.equal((await api('/api/sql/lessons/'+slug)).completed,true);
   assert.equal((await api('/api/course')).summary.xp,0);
+  for(const slug of ['s10-data-modification','s11-booking-concurrency']){
+    const lesson=await api('/api/lessons/'+slug);
+    await selectLesson(lesson.title,slug);
+    await until(`document.body.innerText.includes('transaction_lab.cli') && Array.from(document.querySelectorAll('details')).some(d=>d.querySelector('summary')?.textContent==='Показать решение для самопроверки')`);
+    const closed=()=>evaluate(`Array.from(document.querySelectorAll('details')).filter(d=>d.querySelector('summary')?.textContent==='Показать решение для самопроверки').map(d=>d.open)`);
+    assert.deepEqual(await closed(),[false]);
+    await evaluate(`Array.from(document.querySelectorAll('button')).find(b=>b.textContent.includes('Повторение')).click()`);
+    assert.deepEqual(await closed(),[false]);
+    await evaluate(`Array.from(document.querySelectorAll('button')).find(b=>b.textContent.includes('Обучение')).click()`);
+    console.log(JSON.stringify({transactionLesson:slug,localCliDocumented:true,learnReviewAnswerClosed:true}));
+  }
   await call('Target.closeTarget',{targetId},null);
   console.log(JSON.stringify({browser:'Headless Chrome',allTwentyThree:true,totalChecks:23,newChecks:11,actualMonacoTyping:true,theme:true,monacoShortcuts:true,desktop1720:true,mobile390:true,mobileVisibleRows:2,explorerSelfFK:true,sqlPythonRoundTrip:true,pythonFilesPreserved:true,draftRestoration:true,sqlXpZero:true}));
 } finally {

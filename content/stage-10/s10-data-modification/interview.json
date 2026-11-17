@@ -1,42 +1,32 @@
 [
   {
-    "question": "Что такое Data modification и какой механизм здесь важно понимать Junior-разработчику?",
+    "question": "Что возвращает RETURNING после INSERT, UPDATE и DELETE?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "INSERT",
-      "UPDATE",
-      "DELETE",
-      "`RETURNING`"
+      "INSERT возвращает вставленные значения, UPDATE — новые, DELETE — удалённые. Возвращённые строки не доказывают сохранность остальных данных."
     ],
-    "short_answer": "Data modification: Это SQL-конструкция, преобразующая набор строк; корректность начинается с grain, cardinality, NULL и явного ordering.",
-    "junior_answer": "Data modification — тема, в которой я сначала фиксирую `INSERT`, затем объясняю `UPDATE` на коротком примере. Ключевой механизм: Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа. Главная практическая ошибка — Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
-    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Data modification?",
-    "follow_up_answer": "Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
+    "short_answer": "INSERT возвращает вставленные значения, UPDATE — новые, DELETE — удалённые.",
+    "junior_answer": "INSERT возвращает вставленные значения, UPDATE — новые, DELETE — удалённые. Возвращённые строки не доказывают сохранность остальных данных.",
+    "follow_up_question": "Что показывает исполняемый сценарий dml?",
+    "follow_up_answer": "DML Check сравнивает состояние всех семи таблиц и возвращённые строки на шести наборах. UPDATE всех заказов и SELECT выдуманного ответа не проходят. BEGIN/ROLLBACK без фиксации изменения тоже не решает задачу на обычном входе.",
     "expected_answer": {
       "must_mention": [
-        "INSERT",
-        "UPDATE",
-        "DELETE",
-        "`RETURNING`"
+        "INSERT возвращает вставленные значения, UPDATE — новые, DELETE — удалённые. Возвращённые строки не доказывают сохранность остальных данных."
       ],
       "good_additions": [
-        "короткий рабочий пример",
-        "ограничение или типичная ошибка"
+        "DML Check сравнивает состояние всех семи таблиц и возвращённые строки на шести наборах. UPDATE всех заказов и SELECT выдуманного ответа не проходят. BEGIN/ROLLBACK без фиксации изменения тоже не решает задачу на обычном входе."
       ],
-      "common_wrong_answers": [],
-      "red_flags": [],
+      "common_wrong_answers": [
+        "Одного подключения всегда достаточно, чтобы доказать поведение конкурентных транзакций."
+      ],
+      "red_flags": [
+        "Перенос DML в существующий read-only SQL Runner."
+      ],
       "follow_up_questions": [
-        "Какое ограничение или типичная ошибка относится именно к теме Data modification?"
-      ],
-      "coding_mistakes": [
-        "Не определить cardinality результата и замаскировать неверный query через DISTINCT."
-      ],
-      "assessment_notes": [
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "review_status": "pending-substantive-review"
+        "Что показывает исполняемый сценарий dml?"
+      ]
     },
     "follow_ups": [
       "Какое ограничение или типичная ошибка относится именно к теме Data modification?"
@@ -52,37 +42,33 @@
     ]
   },
   {
-    "question": "Какое ограничение или типичная ошибка относится именно к теме Data modification?",
+    "question": "Какие ошибки обрабатывает ON CONFLICT?",
     "level": "follow_up",
     "priority": "P0",
     "interview_probability": "high",
     "answer": [
-      "safe WHERE",
-      "upsert basics",
-      "Не определить cardinality результата и замаскировать неверный query через DISTINCT."
+      "Он обрабатывает конфликт выбранной уникальности/арбитра. Нарушения CHECK и FK требуют отдельного исправления, а не автоматически превращаются в UPSERT."
     ],
-    "short_answer": "Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
-    "junior_answer": "Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
-    "follow_up_question": "Что такое Data modification и какой механизм здесь важно понимать Junior-разработчику?",
-    "follow_up_answer": "Data modification — тема, в которой я сначала фиксирую `INSERT`, затем объясняю `UPDATE` на коротком примере. Ключевой механизм: Мысленно выполняй FROM/JOIN → WHERE → GROUP/HAVING → SELECT → ORDER/LIMIT и считай строки после каждого этапа. Главная практическая ошибка — Не определить cardinality результата и замаскировать неверный query через DISTINCT.",
+    "short_answer": "Он обрабатывает конфликт выбранной уникальности/арбитра.",
+    "junior_answer": "Он обрабатывает конфликт выбранной уникальности/арбитра. Нарушения CHECK и FK требуют отдельного исправления, а не автоматически превращаются в UPSERT.",
+    "follow_up_question": "Что показывает исполняемый сценарий dml?",
+    "follow_up_answer": "DML Check сравнивает состояние всех семи таблиц и возвращённые строки на шести наборах. UPDATE всех заказов и SELECT выдуманного ответа не проходят. BEGIN/ROLLBACK без фиксации изменения тоже не решает задачу на обычном входе.",
     "expected_answer": {
       "must_mention": [
-        "safe WHERE",
-        "upsert basics"
+        "Он обрабатывает конфликт выбранной уникальности/арбитра. Нарушения CHECK и FK требуют отдельного исправления, а не автоматически превращаются в UPSERT."
       ],
       "good_additions": [
-        "короткий пример именно этой темы"
+        "DML Check сравнивает состояние всех семи таблиц и возвращённые строки на шести наборах. UPDATE всех заказов и SELECT выдуманного ответа не проходят. BEGIN/ROLLBACK без фиксации изменения тоже не решает задачу на обычном входе."
       ],
-      "common_wrong_answers": [],
-      "red_flags": [],
+      "common_wrong_answers": [
+        "Одного подключения всегда достаточно, чтобы доказать поведение конкурентных транзакций."
+      ],
+      "red_flags": [
+        "Перенос DML в существующий read-only SQL Runner."
+      ],
       "follow_up_questions": [
-        "Что такое Data modification и какой механизм здесь важно понимать Junior-разработчику?"
-      ],
-      "coding_mistakes": [
-        "Не определить cardinality результата и замаскировать неверный query через DISTINCT."
-      ],
-      "assessment_notes": [],
-      "review_status": "pending-substantive-review"
+        "Что показывает исполняемый сценарий dml?"
+      ]
     },
     "follow_ups": [
       "Что такое Data modification и какой механизм здесь важно понимать Junior-разработчику?"

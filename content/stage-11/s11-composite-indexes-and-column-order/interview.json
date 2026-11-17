@@ -1,40 +1,32 @@
 [
   {
-    "question": "Что такое Composite indexes and column order и какой механизм здесь важно понимать Junior-разработчику?",
+    "question": "Почему важен порядок колонок B-tree?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "very_high",
     "answer": [
-      "leftmost prefix intuition",
-      "filter/order patterns",
-      "равенство перед диапазоном — практическая эвристика, а не догма"
+      "Ключи упорядочены лексикографически; ведущие равенства и первый диапазон ограничивают участок сканирования. Другой порядок оптимизирует другие запросы."
     ],
-    "short_answer": "Composite indexes and column order: Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.",
-    "junior_answer": "Composite indexes and column order — тема, в которой я сначала фиксирую `leftmost prefix intuition`, затем объясняю `filter/order patterns` на коротком примере. Ключевой механизм: Назови invariant и concurrent scenario, затем проверь constraint, transaction boundary и фактический query plan. Главная практическая ошибка — Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
-    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Composite indexes and column order?",
-    "follow_up_answer": "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
+    "short_answer": "Ключи упорядочены лексикографически; ведущие равенства и первый диапазон ограничивают участок сканирования.",
+    "junior_answer": "Ключи упорядочены лексикографически; ведущие равенства и первый диапазон ограничивают участок сканирования. Другой порядок оптимизирует другие запросы.",
+    "follow_up_question": "Что показывает исполняемый сценарий indexes?",
+    "follow_up_answer": "Профиль не даёт CREATE INDEX студенту. Готовый индекс и plain EXPLAIN позволяют изучить механизм безопасно; урок не обещает ускорение на маленьком fixture и не содержит выдуманных benchmark.",
     "expected_answer": {
       "must_mention": [
-        "leftmost prefix intuition",
-        "filter/order patterns",
-        "равенство перед диапазоном — практическая эвристика, а не догма"
+        "Ключи упорядочены лексикографически; ведущие равенства и первый диапазон ограничивают участок сканирования. Другой порядок оптимизирует другие запросы."
       ],
       "good_additions": [
-        "короткий рабочий пример",
-        "ограничение или типичная ошибка"
+        "Профиль не даёт CREATE INDEX студенту. Готовый индекс и plain EXPLAIN позволяют изучить механизм безопасно; урок не обещает ускорение на маленьком fixture и не содержит выдуманных benchmark."
       ],
-      "common_wrong_answers": [],
-      "red_flags": [],
+      "common_wrong_answers": [
+        "Одного подключения всегда достаточно, чтобы доказать поведение конкурентных транзакций."
+      ],
+      "red_flags": [
+        "Перенос DML в существующий read-only SQL Runner."
+      ],
       "follow_up_questions": [
-        "Какое ограничение или типичная ошибка относится именно к теме Composite indexes and column order?"
-      ],
-      "coding_mistakes": [
-        "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case."
-      ],
-      "assessment_notes": [
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "review_status": "pending-substantive-review"
+        "Что показывает исполняемый сценарий indexes?"
+      ]
     },
     "follow_ups": [
       "Какое ограничение или типичная ошибка относится именно к теме Composite indexes and column order?"
@@ -50,35 +42,33 @@
     ]
   },
   {
-    "question": "Какое ограничение или типичная ошибка относится именно к теме Composite indexes and column order?",
+    "question": "Обязательно ли маленькая таблица использует индекс?",
     "level": "follow_up",
     "priority": "P1",
     "interview_probability": "very_high",
     "answer": [
-      "связать Composite indexes and column order с коротким рабочим примером",
-      "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case."
+      "Нет. Seq Scan может быть дешевле. Требуются реальная статистика, объём, запрос и план, а не искусственное обещание ускорения."
     ],
-    "short_answer": "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
-    "junior_answer": "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
-    "follow_up_question": "Что такое Composite indexes and column order и какой механизм здесь важно понимать Junior-разработчику?",
-    "follow_up_answer": "Composite indexes and column order — тема, в которой я сначала фиксирую `leftmost prefix intuition`, затем объясняю `filter/order patterns` на коротком примере. Ключевой механизм: Назови invariant и concurrent scenario, затем проверь constraint, transaction boundary и фактический query plan. Главная практическая ошибка — Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
+    "short_answer": "Нет.",
+    "junior_answer": "Нет. Seq Scan может быть дешевле. Требуются реальная статистика, объём, запрос и план, а не искусственное обещание ускорения.",
+    "follow_up_question": "Что показывает исполняемый сценарий indexes?",
+    "follow_up_answer": "Профиль не даёт CREATE INDEX студенту. Готовый индекс и plain EXPLAIN позволяют изучить механизм безопасно; урок не обещает ускорение на маленьком fixture и не содержит выдуманных benchmark.",
     "expected_answer": {
       "must_mention": [
-        "связать Composite indexes and column order с коротким рабочим примером"
+        "Нет. Seq Scan может быть дешевле. Требуются реальная статистика, объём, запрос и план, а не искусственное обещание ускорения."
       ],
       "good_additions": [
-        "короткий пример именно этой темы"
+        "Профиль не даёт CREATE INDEX студенту. Готовый индекс и plain EXPLAIN позволяют изучить механизм безопасно; урок не обещает ускорение на маленьком fixture и не содержит выдуманных benchmark."
       ],
-      "common_wrong_answers": [],
-      "red_flags": [],
+      "common_wrong_answers": [
+        "Одного подключения всегда достаточно, чтобы доказать поведение конкурентных транзакций."
+      ],
+      "red_flags": [
+        "Перенос DML в существующий read-only SQL Runner."
+      ],
       "follow_up_questions": [
-        "Что такое Composite indexes and column order и какой механизм здесь важно понимать Junior-разработчику?"
-      ],
-      "coding_mistakes": [
-        "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case."
-      ],
-      "assessment_notes": [],
-      "review_status": "pending-substantive-review"
+        "Что показывает исполняемый сценарий indexes?"
+      ]
     },
     "follow_ups": [
       "Что такое Composite indexes and column order и какой механизм здесь важно понимать Junior-разработчику?"

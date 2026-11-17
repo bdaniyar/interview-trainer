@@ -32,6 +32,8 @@ it.each([
   ['s10-left-join', 'Показать решение для самопроверки', 'WHERE o.id IS NULL'],
   ['s10-right-and-full-outer-join', 'Показать решение для самопроверки', 'RIGHT JOIN products'],
   ['s10-self-join', 'Показать решение для самопроверки', 'm.email AS manager_email'],
+  ['s10-data-modification', 'Показать решение для самопроверки', "UPDATE orders SET status='paid' WHERE id=10"],
+  ['s11-booking-concurrency', 'Показать решение для самопроверки', 'WITH claimed AS'],
   ['s10-subqueries', 'Показать решение для самопроверки', 'SELECT id,total FROM orders WHERE t'],
   ['s10-correlated-subquery', 'Показать решение для самопроверки', 'SELECT o.id,o.user_id FROM orders o'],
   ['s10-exists-vs-in', 'Показать решение для самопроверки', 'SELECT u.id,u.email FROM users u WH'],
@@ -44,7 +46,7 @@ it.each([
   ['s10-partition-by-and-window-ordering', 'Показать решение для самопроверки', 'SELECT id,user_id,SUM(total) OVER(P'],
   ['s10-lag-and-lead', 'Показать решение для самопроверки', 'SELECT id,user_id,LEAD(created_at) '],
 ])('keeps the graded SQL answer closed in Learn and Review: %s', (slug, summary, sql) => {
-  const lesson = loadLesson(`stage-10/${slug}`);
+  const lesson = loadLesson(`${slug.startsWith('s11-') ? 'stage-11' : 'stage-10'}/${slug}`);
   render(<MarkdownLesson {...props} lesson={lesson} />);
   const answer = () => screen.getByText(summary).closest('details')!;
   expect(answer().open).toBe(false);
