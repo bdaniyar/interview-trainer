@@ -35,7 +35,8 @@ def call(path, payload=None, *, method=None, status=200):
             code, body = response.status, response.read()
     except HTTPError as error:
         code, body = error.code, error.read()
-    assert code == status, (path, code, body[:800])
+    expected = (status,) if isinstance(status, int) else status
+    assert code in expected, (path, code, body[:800])
     return json.loads(body)
 
 
@@ -51,8 +52,10 @@ def check(slug, sql, request_id, status=200):
 def observe(path, generation, test):
     deadline = monotonic() + 4
     while monotonic() < deadline:
-        result = call(path + f"?generation={generation}")
-        if test(result):
+        result = call(path + f"?generation={generation}", status=(200, 409))
+        if "error" in result:
+            assert result["error"]["code"] == "busy", result
+        elif test(result):
             return result
         sleep(.03)
     raise AssertionError(result)
