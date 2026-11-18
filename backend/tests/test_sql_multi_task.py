@@ -40,7 +40,7 @@ def test_backend_and_runner_registrations_agree_and_all_lessons_project_safe_man
         assert (task.dataset_id, task.dataset_checksum, task.expected_columns, task.comparison, len(task.cases)) == (
             record["dataset_id"], record["dataset_checksum"], tuple(record["expected_columns"]), record["comparison"], record["tests_total"])
     assert client.get("/api/sql/lessons/s10-data-modification").status_code == 404
-    assert client.get("/api/lessons/s10-data-modification").json()["workspace_kind"] == "python"
+    assert client.get("/api/lessons/s10-data-modification").json()["workspace_kind"] == "transaction"
 
 
 def test_backend_registry_rejects_duplicate_tasks_and_lessons():

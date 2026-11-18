@@ -32,13 +32,13 @@ DML Check сравнивает состояние всех семи таблиц
 
 ## Примеры кода
 
-Это отдельный локальный профиль `pg-transaction-v1`, а не read-only SQL Workspace. Сохраните SQL в `query.sql` и выполните из корня репозитория после сборки transaction image:
+Запустите примеры в A или B в браузерной Transaction Lab. Для локального запуска сохраните SQL в `query.sql` и выполните команду из корня репозитория после сборки учебного образа.
 
 ```sh
 python3 -m transaction_lab.cli run --exercise dml --file query.sql
 ```
 
-Каждый Run создаёт новую синтетическую базу. `inventory` начинается со строк `(1,1),(2,1)`. В dml Run есть два orders: `(10,1,new,10.00)` и `(11,2,cancelled,99.00)` с временем 2026-01-01 UTC. Зафиксированные изменения не переходят в следующий запуск.
+В одной браузерной сессии зафиксированные изменения видны в следующих Run. Reset возвращает исходную базу. Начальные строки `inventory` — `(1,1),(2,1)`. В режиме dml в `orders` есть `(10,1,new,10.00)` и `(11,2,cancelled,99.00)` с временем 2026-01-01 UTC. Каждый запуск CLI начинает со свежей базы.
 
 ```sql
 INSERT INTO orders(id,user_id,status,total,created_at) VALUES (20,1,'new',25,'2026-01-01') RETURNING id,status;
@@ -50,7 +50,7 @@ INSERT INTO orders(id,user_id,status,total,created_at) VALUES (20,1,'new',25,'20
 | --- | --- |
 | 20 | new |
 
-Для реального конкурентного наблюдения запустите controlled scenario:
+Нажмите «Блокировка UPDATE» или выполните ту же демонстрацию локально.
 
 ```sh
 python3 -m transaction_lab.cli scenario blocking-update
@@ -70,7 +70,7 @@ python3 -m transaction_lab.cli scenario blocking-update
 
 ## Практика
 
-Откройте синтетический профиль dml: orders содержит id=10,status=new,total=10 и id=11,status=cancelled,total=99. Сохраните запрос в query.sql. Попробуйте INSERT id=20, UPDATE только id=11, DELETE только id=11 и UPSERT id=10 с новым статусом review — каждый Run начинается с новой копии. Проверьте ошибки FK для user_id=999 и UNIQUE для повторного id=10. Затем выполните graded task: переведите только заказ id=10 в paid и верните ровно id,status. Если id=10 отсутствует, ничего менять нельзя.
+Откройте синтетический профиль dml: orders содержит id=10,status=new,total=10 и id=11,status=cancelled,total=99. Введите команды в редакторе A. Попробуйте INSERT id=20, UPDATE только id=11, DELETE только id=11 и UPSERT id=10 со статусом review. Run сохраняет изменения в текущей базе, Reset возвращает исходные строки. Проверьте ошибки FK для user_id=999 и UNIQUE для повторного id=10. Затем выполните graded task: переведите только заказ id=10 в paid и верните ровно id,status. Если id=10 отсутствует, ничего менять нельзя.
 
 ## Вопросы с собеседований
 
@@ -99,16 +99,17 @@ INSERT возвращает вставленные значения, UPDATE — 
 
 ## Задача
 
-Откройте синтетический профиль dml: orders содержит id=10,status=new,total=10 и id=11,status=cancelled,total=99. Сохраните запрос в query.sql. Попробуйте INSERT id=20, UPDATE только id=11, DELETE только id=11 и UPSERT id=10 с новым статусом review — каждый Run начинается с новой копии. Проверьте ошибки FK для user_id=999 и UNIQUE для повторного id=10. Затем выполните graded task: переведите только заказ id=10 в paid и верните ровно id,status. Если id=10 отсутствует, ничего менять нельзя.
+Откройте синтетический профиль dml: orders содержит id=10,status=new,total=10 и id=11,status=cancelled,total=99. Введите команды в редакторе A. Попробуйте INSERT id=20, UPDATE только id=11, DELETE только id=11 и UPSERT id=10 со статусом review. Run сохраняет изменения в текущей базе, Reset возвращает исходные строки. Проверьте ошибки FK для user_id=999 и UNIQUE для повторного id=10. Затем выполните graded task: переведите только заказ id=10 в paid и верните ровно id,status. Если id=10 отсутствует, ничего менять нельзя.
 
-Run и Check выполняются локальным transaction CLI, а не кнопками Python Workspace:
+Откройте сессии в Transaction Lab. Напишите SQL в A и нажмите **Run A**, чтобы увидеть результат и SQLSTATE. На вкладке «Данные» можно снять итоговое состояние базы. Нажмите **Check A**, чтобы проверить возвращённые поля и итог всех таблиц на шести свежих базах. Успешный Check сохраняет выполнение после Reset и перезагрузки страницы.
 
-```sh
-python3 -m transaction_lab.cli run --exercise dml --file query.sql
+Для локальной проверки того же решения доступен CLI:
+
+```bash
 python3 -m transaction_lab.cli check --exercise dml --file query.sql
 ```
 
-У Check шесть отдельных синтетических баз. Он не начисляет XP и не записывает результат в SQLite; JSON-отчёт можно сохранить локально. Основной read-only SQL Lab остаётся неизменным. SQL не отправляется в Python Runner.
+CLI выводит JSON-отчёт. Веб-версия сохраняет итог Check в прогрессе SQL без начисления XP.
 
 <details>
 <summary>Показать решение для самопроверки</summary>

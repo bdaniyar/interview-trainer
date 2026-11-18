@@ -4,6 +4,7 @@ import { constants } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import assert from 'node:assert/strict';
+import { transactionWalkthrough } from './smoke_transaction_browser.mjs';
 // Run only against docker-compose.sql-workspace-test.yml with a fresh tmpfs DB.
 const chromePath=process.env.SQL_TEST_CHROME || (process.platform==='darwin'
   ? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' : '/usr/bin/google-chrome');
@@ -121,6 +122,16 @@ try {
     ["s10-lag-and-lead", "sql.window.38", "SELECT id,user_id,LEAD(created_at) OVER(PARTITION BY user_id ORDER BY created_at,id) AS next_created_at FROM orders ORDER BY user_id,created_at,id"],
 
   ];
+  async function selectLesson(title,slug){
+    await type('.lesson-search input',title);
+    await until(`Array.from(document.querySelectorAll('button.lesson')).some(b=>b.textContent.includes(${JSON.stringify(title)}))`);
+    await evaluate(`Array.from(document.querySelectorAll('button.lesson')).find(b=>b.textContent.includes(${JSON.stringify(title)})).click()`);
+    await until(`new URLSearchParams(location.search).get('lesson')===${JSON.stringify(slug)}`);
+  }
+  if(process.argv.includes('--transactions-only')){
+    await transactionWalkthrough({api,evaluate,until,selectLesson,call,size,screenshot});
+    await call('Target.closeTarget',{targetId},null);
+  } else {
   const counts=[4,5,5,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6];
   for(let i=0;i<tasks.length;i++){
     const [slug,task,query]=tasks[i];
@@ -167,12 +178,6 @@ try {
   await screenshot('/tmp/pythoria-phase8a-mobile.png');
   await size(1720,1050);
   await until(`document.querySelector('.course-sidebar').getBoundingClientRect().left>=-0.5`);
-  async function selectLesson(title,slug){
-    await type('.lesson-search input',title);
-    await until(`Array.from(document.querySelectorAll('button.lesson')).some(b=>b.textContent.includes(${JSON.stringify(title)}))`);
-    await evaluate(`Array.from(document.querySelectorAll('button.lesson')).find(b=>b.textContent.includes(${JSON.stringify(title)})).click()`);
-    await until(`new URLSearchParams(location.search).get('lesson')===${JSON.stringify(slug)}`);
-  }
   await selectLesson(pythonLesson.title,'is-vs-eq');
   await until(`window.__phase8aMonaco.editor.getModels().some(m=>m.uri.toString().includes('is-vs-eq/main.py')) && document.querySelector('.editor-panel textarea')!==null`);
   assert.equal(await evaluate(`window.__phase8aMonaco.editor.getModels().find(m=>m.uri.toString().includes('is-vs-eq/main.py')).getValue()`),pythonFiles['main.py']);
@@ -263,8 +268,10 @@ try {
     console.log(JSON.stringify({architectureLesson:slug,projectPracticeDocumented:true,learnReviewAnswersClosed:true}));
   }
   assert.equal((await api('/api/course')).summary.xp,workerXpBefore+100);
+  await transactionWalkthrough({api,evaluate,until,selectLesson,call,size,screenshot});
   await call('Target.closeTarget',{targetId},null);
   console.log(JSON.stringify({browser:'Headless Chrome',allTwentyThree:true,totalChecks:23,newChecks:11,actualMonacoTyping:true,theme:true,monacoShortcuts:true,desktop1720:true,mobile390:true,mobileVisibleRows:2,explorerSelfFK:true,sqlPythonRoundTrip:true,pythonFilesPreserved:true,draftRestoration:true,sqlXpZero:true}));
+  }
 } finally {
   ws?.close();chrome.kill('SIGTERM');
   if(chrome.pid && chrome.exitCode===null && chrome.signalCode===null)await new Promise(resolve=>chrome.once('exit',resolve));

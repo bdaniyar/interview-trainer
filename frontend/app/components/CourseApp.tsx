@@ -26,6 +26,7 @@ import { CodeWorkspace } from './CodeWorkspace';
 import { InterviewModal } from './InterviewModal';
 import { MarkdownLesson } from './MarkdownLesson';
 import { SqlWorkspace } from './SqlWorkspace';
+import { TransactionWorkspace } from './TransactionWorkspace';
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 
@@ -109,7 +110,7 @@ export function CourseApp() {
 
   const saveFiles = useCallback(async () => {
     const loaded = loadedLessonRef.current;
-    if (!loaded || loaded.workspace_kind === 'sql') return;
+    if (!loaded || loaded.workspace_kind === 'sql' || loaded.workspace_kind === 'transaction') return;
     await api.saveFiles(loaded.slug, filesRef.current);
   }, []);
 
@@ -280,7 +281,8 @@ export function CourseApp() {
             aria-orientation="vertical"
             onPointerDown={startWorkspaceResize}
           />
-          {!loadingLesson && lesson?.workspace_kind === 'sql' ? <SqlWorkspace key={lesson.slug} lessonSlug={lesson.slug} theme={theme} /> : !loadingLesson && lesson ? (
+          {!loadingLesson && lesson?.workspace_kind === 'transaction' ?
+            <TransactionWorkspace key={lesson.slug} lessonSlug={lesson.slug} theme={theme} /> : !loadingLesson && lesson?.workspace_kind === 'sql' ? <SqlWorkspace key={lesson.slug} lessonSlug={lesson.slug} theme={theme} /> : !loadingLesson && lesson ? (
             <CodeWorkspace
               key={lesson.slug}
               lessonSlug={lesson.slug}
