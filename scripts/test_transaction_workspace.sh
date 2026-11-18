@@ -22,7 +22,7 @@ services:
 volumes:
   transaction_test_data:
 YAML
-docker compose build sandbox sql-sandbox sql-runner tx-sandbox tx-runner
+docker compose build sandbox sql-sandbox sql-runner tx-sandbox index-sandbox tx-runner
 "${compose[@]}" up -d --build --wait
 python3 scripts/smoke_transaction_workspace.py --save-replays "$scratch/replays.json"
 "${compose[@]}" restart backend

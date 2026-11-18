@@ -28,7 +28,7 @@ CLI выводит JSON. Web и CLI Check не начисляют XP.
 
 ```sh
 docker compose build sql-sandbox
-docker build -t pythoria-transaction-sandbox:phase8b -f transaction_lab/Dockerfile .
+docker build -t pythoria-transaction-sandbox:phase9c -f transaction_lab/Dockerfile .
 python3 -m transaction_lab.cli scenario read-committed
 python3 -m transaction_lab.cli scenario repeatable-read
 python3 -m transaction_lab.cli scenario blocking-update

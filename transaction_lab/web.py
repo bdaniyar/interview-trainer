@@ -15,6 +15,9 @@ from starlette.concurrency import run_in_threadpool
 from sql_runner.app.config import Settings
 from sql_runner.app.docker_backend import SandboxUnavailable
 from sql_runner.app.policy import PolicyError
+from index_lab.control import IndexBackend, IMAGE as INDEX_IMAGE, job as index_job
+from index_lab.workloads import TASKS as INDEX_TASKS
+from transaction_lab.advanced_increment import check as increment_check
 from transaction_lab.control import IMAGE, SCENARIOS, TransactionBackend, attempt, check
 from transaction_lab.version import fingerprint
 from transaction_lab.wire import ResidentWire
@@ -28,7 +31,7 @@ class Input(BaseModel):
 
 class Scope(Input):
     slug: str = Field(pattern=r"^[a-z0-9-]{1,100}$")
-    kind: Literal["dml", "booking", "practice"]
+    kind: Literal["dml", "booking", "increment", "practice"]
 
 
 class Command(Scope):
@@ -41,7 +44,12 @@ class Command(Scope):
 
 
 class Grading(Input):
-    kind: Literal["dml", "booking"]
+    kind: Literal["dml", "booking", "increment"]
+    sql: str = Field(min_length=1, max_length=32768)
+
+
+class IndexSubmission(Input):
+    task_id: str = Field(max_length=80)
     sql: str = Field(min_length=1, max_length=32768)
 
 
@@ -73,6 +81,7 @@ class Coordinator:
         self.mutations = Lock()
         self.grades = Lock()
         self.grade_namespace = f"{namespace}-grade"
+        self.index_namespace = f"{namespace}-index"
 
     @contextmanager
     def admitted(self, gate):
@@ -109,7 +118,7 @@ class Coordinator:
                 "profile": "pg-transaction-v1", "fingerprint": fingerprint()
             }:
                 raise SandboxUnavailable("Transaction image mismatch")
-            if scope.kind != "practice":
+            if scope.kind in ("dml", "booking"):
                 backend.install_case(handle, scope.kind, "public")
             wire = ResidentWire(backend.client, handle)
         except Exception:
@@ -179,15 +188,27 @@ class Coordinator:
         with self.sessions:
             self.get_backend()
         with self.grades:
-            orphan_backend = TransactionBackend(Settings(image=IMAGE, namespace=self.grade_namespace))
-            try:
-                orphan_backend.reap(set())
-            finally:
-                orphan_backend.close()
+            for backend_type, image, namespace in (
+                (TransactionBackend, IMAGE, self.grade_namespace),
+                (IndexBackend, INDEX_IMAGE, self.index_namespace),
+            ):
+                orphan_backend = backend_type(Settings(image=image, namespace=namespace))
+                try:
+                    orphan_backend.reap(set())
+                finally:
+                    orphan_backend.close()
 
     def grade(self, payload):
         with self.admitted(self.grades):
+            if payload.kind == "increment":
+                return increment_check(payload.sql, self.grade_namespace)
             return check(payload.kind, payload.sql, namespace=self.grade_namespace)
+
+    def index(self, payload, grade):
+        if payload.task_id not in INDEX_TASKS:
+            raise HTTPException(404, "unknown_task")
+        with self.admitted(self.grades):
+            return index_job(payload.task_id, payload.sql, self.index_namespace, grade=grade)
 
     def scenario(self, name):
         if name not in SCENARIOS:
@@ -284,3 +305,13 @@ def grade(payload: Grading):
 @app.post("/scenario")
 def scenario(payload: Scenario):
     return safe(app.state.tx.scenario, payload.name)
+
+
+@app.post("/index/run")
+def index_run(payload: IndexSubmission):
+    return safe(app.state.tx.index, payload, False)
+
+
+@app.post("/index/check")
+def index_check(payload: IndexSubmission):
+    return safe(app.state.tx.index, payload, True)

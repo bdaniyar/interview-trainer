@@ -15,7 +15,7 @@ from transaction_lab.fixtures import DML_CASES, BOOK_CASES
 from transaction_lab.policy import validate_script
 from transaction_lab.version import fingerprint
 
-IMAGE = "pythoria-transaction-sandbox:phase8b"
+IMAGE = "pythoria-transaction-sandbox:phase9c"
 SCENARIOS = {
     "read-committed",
     "repeatable-read",

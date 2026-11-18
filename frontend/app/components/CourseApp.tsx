@@ -26,6 +26,7 @@ import { CodeWorkspace } from './CodeWorkspace';
 import { InterviewModal } from './InterviewModal';
 import { MarkdownLesson } from './MarkdownLesson';
 import { SqlWorkspace } from './SqlWorkspace';
+import { IndexWorkspace } from './IndexWorkspace';
 import { TransactionWorkspace } from './TransactionWorkspace';
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
@@ -281,7 +282,18 @@ export function CourseApp() {
             aria-orientation="vertical"
             onPointerDown={startWorkspaceResize}
           />
-          {!loadingLesson && lesson?.workspace_kind === 'postgres_examples' ?
+          {!loadingLesson && lesson?.workspace_kind === 'project' ?
+            <section className="workspace-pane tx-workspace pool-practice">
+              <header className="workspace-toolbar tx-toolbar"><strong>Практика FastAPI и PostgreSQL</strong></header>
+              <div className="tx-scroll">
+                <p>Откройте <code>projects/pool_lab</code> в репозитории.</p>
+                <p>Исправьте утечку сессии в копии <code>starter.py</code>.
+                  Запустите проверку с двумя HTTP-запросами и пулом на одно соединение.</p>
+                <pre>./check.sh answer.py</pre>
+                <p>Команда использует локальный Docker. Результат появится в терминале.</p>
+              </div>
+            </section> : !loadingLesson && lesson?.workspace_kind === 'index' ?
+            <IndexWorkspace key={lesson.slug} lessonSlug={lesson.slug} theme={theme} /> : !loadingLesson && lesson?.workspace_kind === 'postgres_examples' ?
             <section className="workspace-pane tx-workspace postgres-examples">
               <header className="workspace-toolbar tx-toolbar"><strong>Примеры PostgreSQL</strong></header>
               <div className="tx-scroll">

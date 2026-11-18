@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 cd "$(dirname "$0")/.."
-docker compose build sandbox sql-sandbox sql-runner tx-sandbox tx-runner
+docker compose build sandbox sql-sandbox sql-runner tx-sandbox index-sandbox tx-runner
 cleanup() {
   local smoke_exit_code=$?
   if (( smoke_exit_code != 0 )); then
