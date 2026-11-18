@@ -10,7 +10,7 @@ def fingerprint():
     return sha256(
         b"\0".join(
             name.encode() + b"\0" + (root / name).read_bytes()
-            for name in ["bootstrap.py", "execute.py", "policy.py", "fixtures.py"]
+            for name in ["bootstrap.py", "execute.py", "policy.py", "fixtures.py", "resident.py"]
         )
     ).hexdigest()
 

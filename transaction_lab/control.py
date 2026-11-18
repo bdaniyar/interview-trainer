@@ -10,7 +10,7 @@ from uuid import uuid4
 
 from sql_runner.app.config import Settings, PYTHON
 from sql_runner.app.comparator import compare
-from sql_runner.app.docker_backend import DockerBackend, SandboxUnavailable
+from sql_runner.app.docker_backend import DockerBackend, QueryDeadline, SandboxUnavailable
 from transaction_lab.fixtures import DML_CASES, BOOK_CASES
 from transaction_lab.policy import validate_script
 from transaction_lab.version import fingerprint
@@ -96,7 +96,12 @@ class TransactionBackend(DockerBackend):
                 raise SandboxUnavailable("Transaction execution failed")
             return json.loads(stdout)
 
-        return self._bounded(work, handle)
+        try:
+            return self._bounded(work, handle)
+        except QueryDeadline:
+            raise
+        except SandboxUnavailable as exc:
+            raise SandboxUnavailable(f"Transaction executor failed during {module}") from exc
 
 
 @contextmanager
@@ -235,14 +240,14 @@ def valid_booking(result):
     )
 
 
-def check(kind, source):
+def check(kind, source, *, namespace=None):
     if kind not in {"dml", "booking"}:
         raise ValueError("Unknown exercise")
     validate_script(source)  # Fail before provisioning on policy errors.
     cases = DML_CASES if kind == "dml" else BOOK_CASES
     count = 0
     for case in cases:
-        with attempt() as (backend, handle):
+        with attempt(namespace) as (backend, handle):
             backend.install_case(handle, kind, case)
             result = backend.execute(
                 handle, "script" if kind == "dml" else "booking", {"sql": source}

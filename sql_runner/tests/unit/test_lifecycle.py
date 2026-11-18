@@ -1,11 +1,13 @@
 from concurrent.futures import ThreadPoolExecutor
 from threading import Event
+from unittest.mock import Mock
 
+from docker.errors import APIError, NotFound
 from fastapi.testclient import TestClient
 import pytest
 
 from sql_runner.app.config import Settings
-from sql_runner.app.docker_backend import QueryDeadline, SandboxUnavailable
+from sql_runner.app.docker_backend import DockerBackend, QueryDeadline, SandboxUnavailable
 from sql_runner.app.executor import empty_result
 from sql_runner.app.lifecycle import Manager, SessionError
 from sql_runner.app.main import create_app
@@ -72,6 +74,23 @@ def assert_error(code, call):
     with pytest.raises(SessionError) as error:
         call()
     assert error.value.code == code
+
+
+def test_docker_removal_waits_for_auto_remove_after_a_crash(monkeypatch):
+    handle = Mock()
+    conflict = APIError("Conflict", response=Mock(status_code=409),
+                        explanation="removal of container is already in progress")
+    handle.remove.side_effect = conflict
+    client = Mock()
+    client.containers.get.side_effect = [handle, handle, NotFound("removed")]
+    backend = DockerBackend(Settings(), client=client)
+    monkeypatch.setattr("sql_runner.app.docker_backend.sleep", lambda _: None)
+    try:
+        backend.remove("disposable")
+        handle.remove.assert_called_once_with(force=True, v=True)
+        assert client.containers.get.call_count == 3
+    finally:
+        backend.close()
 
 
 def test_reset_replaces_sandbox_rotates_handles_and_checks_generation(manager):

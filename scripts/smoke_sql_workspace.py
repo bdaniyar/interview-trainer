@@ -363,7 +363,7 @@ def main():
         hardcoded = check(f"SELECT user_id,email FROM (VALUES {literals}) AS v(user_id,email)")
         assert not hardcoded["passed"] and hardcoded["tests_passed"] == 1
         cast_error = check("SELECT id AS user_id,email::bigint AS email FROM users")
-        assert not cast_error["passed"] and cast_error["feedback"][0]["sqlstate"] == "22P02"
+        assert not cast_error["passed"] and cast_error["feedback"][0]["sqlstate"] == "22P02", cast_error
         assert call(f"/api/sql/lessons/{SLUG}")["completed"]
         assert call(path + f"/catalog?generation={generation}") == catalog
         assert run("SELECT id,email FROM users ORDER BY id")["rows"] == result["rows"]
