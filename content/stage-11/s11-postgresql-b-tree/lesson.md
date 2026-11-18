@@ -1,195 +1,140 @@
 # PostgreSQL B-tree
 
-> [!IMPORTANT]
-> **P1 · вероятность на интервью: high · 10 минут.** PostgreSQL явно встречался в 13/18; indexes/transactions/concurrency критичны для backend.
-
 ## Учебные цели
 
-После урока ты сможешь:
-
-- восстановить mental model темы **PostgreSQL B-tree**, а не только запомнить термин;
-- прочитать и изменить короткий пример для `equality/range/order`;
-- распознать характерную ошибку и объяснить причину;
-- дать реалистичный ответ уровня Junior и выдержать follow-up.
+Предсказать, какие равенства, диапазоны и сортировки поддерживает B-tree.
+Различить чтение ключей из индекса и проверку видимости строк в heap.
 
 ## Теория
 
 ### Что это
 
-Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.
+B-tree — многоуровневое дерево упорядоченных ключей с быстрым переходом к началу диапазона.
 
 ### Как работает
 
-Назови invariant и concurrent scenario, затем проверь constraint, transaction boundary и фактический query plan.
+B-tree хранит ключи в порядке. Внутренние страницы направляют поиск в
+подходящую ветвь. Листовые страницы содержат записи индекса, связанные
+с версиями строк таблицы. Для равенства PostgreSQL находит начало области
+ключей, для диапазона — начало и конец прохода. Порядок позволяет читать
+в обе стороны. Для выбора нескольких последних записей PostgreSQL иногда
+может закончить чтение сразу после LIMIT.
 
-**equality/range/order.** `equality/range/order` влияет на database invariant, concurrent transactions или access path; правильность подтверждают constraint и фактический query plan.
+Составной ключ сортируется лексикографически. В `(hotel_id, arrival, id)`
+сначала сравнивается hotel_id. Для одного hotel_id идёт упорядоченная группа
+arrival, затем id разрешает одинаковые даты. PostgreSQL 17 получает хороший
+узкий диапазон при равенстве ведущего ключа и ограничении следующего.
+Без ведущего hotel_id индексу может потребоваться больше работы. Направление
+всех ключей можно развернуть обратным проходом. Для смешанных направлений
+может потребоваться явный порядок в индексе.
 
-**common default.** `common default` влияет на database invariant, concurrent transactions или access path; правильность подтверждают constraint и фактический query plan.
-
-**no deep page internals required.** `no deep page internals required` влияет на database invariant, concurrent transactions или access path; правильность подтверждают constraint и фактический query plan.
-
+Обычный Index Scan читает ключ, затем heap. Index Only Scan возможен,
+когда все нужные значения имеются в индексе. В PostgreSQL видимость версии
+проверяется по MVCC. Если visibility map отмечает страницу как all-visible,
+heap можно пропустить. Иначе Index Only Scan всё равно проверяет heap.
+`INCLUDE` может положить поля для выдачи, не сделав их ключами поиска.
+Это добавляет размер и работу записи. Проверяйте Heap Fetches в реальном плане.
 
 ### Важный нюанс / ограничение
 
-Граница Junior: уверенно объясняй `equality/range/order` и `common default` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
-
-### Где используется в backend
-
-В backend эта тема важна в том месте, где применяется `equality/range/order`; проверяй именно наблюдаемый contract, а не название инструмента.
+На свежих страницах видимость строк может ещё требовать чтения heap. Даже широкий покрывающий индекс не гарантирует Index Only Scan.
 
 ## Модель понимания
 
-Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
-
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
+Порядок ключей напоминает сортировку по отелю, затем дате и номеру брони. Строки отеля 8 образуют соседний отрезок, а разные отели перемежаются при сортировке только по дате.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
-- equality/range/order
-- common default
-- no deep page internals required
-
-### Полезно
-
-- связать PostgreSQL B-tree с коротким рабочим примером
-
-### Можно не учить глубоко
-
-- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
+Укажите порядок ключей и область равенств и диапазонов. Сверьте Heap Fetches, если план читает только индекс.
 
 ## Примеры кода
 
-### PostgreSQL B-tree: отдельный пример
+Практика проверяется командой `scripts/test_stage11_examples.sh` на синтетической PostgreSQL 17.11. Запускайте изменения в отдельной учебной базе.
 
 ```sql
--- 11.5 · PostgreSQL B-tree
--- Focus: equality/range/order, common default, no deep page internals required
-SELECT 's11_postgresql_b_tree' AS example_key;
+CREATE TABLE stays (
+    id integer PRIMARY KEY,
+    hotel_id integer NOT NULL,
+    arrival date NOT NULL,
+    room integer NOT NULL
+);
+INSERT INTO stays VALUES
+    (1, 8, DATE '2026-11-05', 104),
+    (2, 8, DATE '2026-11-08', 105),
+    (3, 8, DATE '2026-11-08', 203),
+    (4, 9, DATE '2026-11-08', 301);
+CREATE INDEX stays_lookup ON stays (hotel_id, arrival, id) INCLUDE (room);
+EXPLAIN SELECT id, arrival, room FROM stays
+WHERE hotel_id = 8 AND arrival >= DATE '2026-11-06'
+ORDER BY arrival, id LIMIT 2;
+SELECT id, arrival, room FROM stays
+WHERE hotel_id = 8 AND arrival >= DATE '2026-11-06'
+ORDER BY arrival, id LIMIT 2;
 ```
 
-Проверь invariant, конкурентный сценарий и фактический query plan вместо догадки.
+Две строки `(2, 2026-11-08, 105)` и `(3, 2026-11-08, 203)`.
+Типы integer, date, integer. Нужные поля есть в индексе, но PostgreSQL
+может выбрать Seq Scan из-за четырёх строк, а не Index Only Scan.
 
 ## Типичные ошибки
 
-### Ошибка 1
-
-Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
+Пытаться ускорить B-tree произвольное содержимое JSONB. Считать порядок
+выдачи гарантированным без ORDER BY. Принимать Index Only Scan за отсутствие
+чтения heap, не проверив Heap Fetches. Добавлять весь ответ API в INCLUDE
+без оценки размера, изменений и повторяющихся данных.
 
 ## Практика
 
-**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для `equality/range/order` до запуска.
-
-**B · Найди ошибку.** Найди нарушение `common default` и объясни конкретное последствие.
-
-**E · Ответ на собеседовании.** Дай ответ про PostgreSQL B-tree за 60 секунд: определение, механизм, пример, ограничение.
-
-## Практика SQL
-
-### Partial index
-
-```sql
-CREATE TABLE rooms (
-    id bigint PRIMARY KEY,
-    hotel_id bigint NOT NULL,
-    number text NOT NULL,
-    UNIQUE (hotel_id, number)
-);
-CREATE TABLE bookings (
-    id bigint PRIMARY KEY,
-    room_id bigint NOT NULL REFERENCES rooms(id),
-    starts_at timestamptz NOT NULL,
-    ends_at timestamptz NOT NULL,
-    status text NOT NULL,
-    CHECK (ends_at > starts_at)
-);
-```
-
-Начальные данные:
-
-```sql
-INSERT INTO rooms VALUES (1,10,'101'),(2,10,'102');
-INSERT INTO bookings VALUES
-(1,1,'2026-09-01','2026-09-05','confirmed'),
-(2,1,'2026-09-10','2026-09-12','cancelled');
-```
-
-**Вопрос:** Большинство orders имеют status='archived', а dashboard читает только status='new'. Как оценить partial index?
-
-Ожидаемые столбцы: критерии рассуждения. Сравнение: по критериям рассуждения.
-
-Среда выполнения SQL пока не подключена: выполни запрос в локальном PostgreSQL и сверь результат с критериями.
+В своей базе добавьте 10 000 строк и 30 отелей. Выполните
+ANALYZE. Сравните запрос по одному hotel_id с запросом по дате для всех отелей.
+Сравните план с ORDER BY arrival, id и с ORDER BY arrival, id DESC.
+Укажите, какой порядок даёт составной индекс и какую часть плана меняет
+каждый запрос. Проверьте результаты отдельно от узлов плана.
 
 ## Вопросы с собеседований
 
-### Основной вопрос
-
-Что такое PostgreSQL B-tree и какой механизм здесь важно понимать Junior-разработчику?
-
-### Дополнительный вопрос
-
-Какое ограничение или типичная ошибка относится именно к теме PostgreSQL B-tree?
-
-Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+1. Что даёт порядок B-tree кроме равенства?
+2. Почему покрывающий индекс иногда всё равно читает таблицу?
 
 ## Хорошие ответы
 
-### Короткий ответ
+<details>
+<summary>Раскрыть ответы</summary>
 
-PostgreSQL B-tree: Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.
+Порядок даёт интервальный поиск, обратный проход, совместимый ORDER BY и
+возможность остановиться после LIMIT. Условие ведущего ключа определяет
+небольшую область составного индекса.
 
-### Нормальный ответ уровня Junior
+В видимости есть данные heap. All-visible в visibility map позволяет не
+идти в heap для такой страницы. Иначе для версии строки нужна проверка.
 
-> PostgreSQL B-tree — тема, в которой я сначала фиксирую `equality/range/order`, затем объясняю `common default` на коротком примере. Ключевой механизм: Назови invariant и concurrent scenario, затем проверь constraint, transaction boundary и фактический query plan. Главная практическая ошибка — Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
-
-### Углубление / дополнительный вопрос
-
-**Какое ограничение или типичная ошибка относится именно к теме PostgreSQL B-tree?**
-
-Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
+</details>
 
 ## Критерии хорошего ответа
 
-### Что обязательно упомянуть
+<details>
+<summary>Раскрыть критерии</summary>
 
-- equality/range/order
-- common default
-- no deep page internals required
+Назовите ведущий ключ, направление прохода и столбцы покрытия. Разделите наличие значения и проверку видимости.
 
-### Что улучшит ответ
-
-- один короткий пример с результатом;
-- одно ограничение или характерная ошибка именно этой темы;
-- пример из backend-разработки только при естественной связи.
-
-### Частые неправильные ответы
-
-- Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
-- пересказ одного определения без механизма или примера.
-
-### Дополнительный вопрос
-
-- Какое ограничение или типичная ошибка относится именно к теме PostgreSQL B-tree?
+</details>
 
 ## Задача
 
-Сделай короткую письменную практику по теме **PostgreSQL B-tree**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
+Уберите room из INCLUDE и сравните планы одного SELECT с room и другого без room. Проверьте оба результата и запишите, какие поля остаются доступны в индексе.
 
 ## Шпаргалка
 
-Перед собеседованием запомни:
-
-- **Что это:** PostgreSQL B-tree: Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.
-- **Механизм:** Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
-- **Ограничение:** Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
-- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
+Проверяйте ведущий ключ, диапазон и ORDER BY с tie breaker. Покрытие ответа
+нужно для Index Only Scan, но отсутствие Heap Fetches зависит от видимости.
+Размер таблицы, распределение и стоимость меняют план.
 
 ## Источники
 
-Материал написан своими словами и сверён с актуальными разделами официальной документации:
+- [PostgreSQL 17 §11.2.1, B-tree](https://www.postgresql.org/docs/17/indexes-types.html#INDEXES-TYPES-BTREE).
+- [PostgreSQL 17 §11.3, Multicolumn indexes](https://www.postgresql.org/docs/17/indexes-multicolumn.html).
+- [PostgreSQL 17 §11.9, Index-only scans](https://www.postgresql.org/docs/17/indexes-index-only-scans.html).
 
-- [PostgreSQL indexes](https://www.postgresql.org/docs/current/indexes.html)
-- [Concurrency control](https://www.postgresql.org/docs/current/mvcc.html)
-
-Последняя проверка версий: **2026-08-27**.
+Секции сверены 18 ноября 2026 года. Проверенные версии стенда указаны в документации Phase 9B.

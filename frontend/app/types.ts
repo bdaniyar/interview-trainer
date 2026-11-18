@@ -41,7 +41,7 @@ export interface CourseData {
 }
 
 export interface LessonData extends Omit<LessonSummary, 'status' | 'theory_completed' | 'task_completed'> {
-  workspace_kind?: 'python' | 'sql' | 'transaction';
+  workspace_kind?: 'python' | 'sql' | 'transaction' | 'postgres_examples';
   markdown: string;
   files: Record<string, string>;
   interview: InterviewQuestion[];

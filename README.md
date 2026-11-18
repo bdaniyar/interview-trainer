@@ -5,7 +5,7 @@ Pythoria — локальная платформа подготовки к со�
 ## Что уже работает
 
 - полная taxonomy из 406 стабильных lesson IDs в 33 stages;
-- 369 опубликованных уроков; неподготовленные темы остаются `planned` и не открывают пустые страницы;
+- 370 опубликованных уроков; неподготовленные темы остаются `planned` и не открывают пустые страницы;
 - 68 рабочих Python/FastAPI/Pydantic/SQLAlchemy/Alembic задачи со starter code, solutions и hidden pytest tests;
 - 40 Python code-prediction snippets, 12 asyncio-задач, 50 PostgreSQL practice records (23 задачи подключены к SQL Lab), 59 debugging и 20 architecture scenarios;
 - 20 interview sets, включая 25-вопросный Full Junior Interview, Crash Course и Resume Defense;
@@ -315,6 +315,13 @@ Check в 10.25 и 11.17 использует по шесть одноразов�
 в браузере. Контракты и локальные команды приведены в
 [документации Transaction Lab](transaction_lab/README.md).
 
+## PostgreSQL Stage 11
+
+Все 17 уроков опубликованы. В темах о ключах, нормализации, B-tree,
+селективности, пуле, пагинации и JSONB есть выполняемые примеры с ожидаемыми
+результатами. Запуск проверки и покрытие перечислены в
+[отчёте по Stage 11](docs/PHASE9B_VERIFICATION.md).
+
 ## Workers and durable jobs (Phase 8C)
 
 Все 12 уроков Stage 20 переработаны: BackgroundTasks, Celery, Redis/RabbitMQ/Kafka,
@@ -416,4 +423,4 @@ End-to-end smoke-test для уже запущенного стека:
 python scripts/smoke_test.py
 ```
 
-Smoke-test проверяет frontend response, backend/runner health, 369 published lessons, 20 interview sets, сохранение файлов, stdout, SyntaxError, failed/passed hidden tests, terminal и persistent progress.
+Smoke-test проверяет frontend response, backend/runner health, 370 published lessons, 20 interview sets, сохранение файлов, stdout, SyntaxError, failed/passed hidden tests, terminal и persistent progress.

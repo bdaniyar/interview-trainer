@@ -1,45 +1,31 @@
 [
   {
-    "question": "Что такое Connection pooling и какой механизм здесь важно понимать Junior-разработчику?",
+    "question": "Сколько соединений может занять приложение при четырёх процессах и настройке 5 + 2?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "соединения дороги и ограничены",
-      "pool size",
-      "async pool",
-      "leaking sessions/connections"
+      "До 28 для четырёх независимых engines с таким лимитом, плюс потребители за пределами этих engines. Пул каждого процесса имеет собственный бюджет."
     ],
-    "short_answer": "Connection pooling: Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.",
-    "junior_answer": "Connection pooling — тема, в которой я сначала фиксирую `connections are expensive/limited`, затем объясняю `pool size` на коротком примере. Ключевой механизм: Назови invariant и concurrent scenario, затем проверь constraint, transaction boundary и фактический query plan. Главная практическая ошибка — Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
-    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Connection pooling?",
-    "follow_up_answer": "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
+    "short_answer": "До 28 для четырёх независимых engines с таким лимитом, плюс потребители за пределами этих engines. Пул каждого процесса имеет собственный бюджет.",
+    "junior_answer": "До 28 для четырёх независимых engines с таким лимитом, плюс потребители за пределами этих engines. Пул каждого процесса имеет собственный бюджет.",
+    "follow_up_question": "Что случится с соединением при ошибке внутри session.begin()?",
+    "follow_up_answer": "Контекст откатит транзакцию, а закрытие сессии освободит соединение.",
     "expected_answer": {
       "must_mention": [
-        "соединения дороги и ограничены",
-        "pool size",
-        "async pool",
-        "leaking sessions/connections"
+        "До 28 для четырёх независимых engines с таким лимитом, плюс потребители за пределами этих engines. Пул каждого процесса имеет собственный бюджет."
       ],
       "good_additions": [
-        "короткий рабочий пример",
-        "ограничение или типичная ошибка"
+        "Контекст откатит транзакцию, а закрытие сессии освободит соединение."
       ],
       "common_wrong_answers": [],
       "red_flags": [],
       "follow_up_questions": [
-        "Какое ограничение или типичная ошибка относится именно к теме Connection pooling?"
-      ],
-      "coding_mistakes": [
-        "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case."
-      ],
-      "assessment_notes": [
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "review_status": "pending-substantive-review"
+        "Что случится с соединением при ошибке внутри session.begin()?"
+      ]
     },
     "follow_ups": [
-      "Какое ограничение или типичная ошибка относится именно к теме Connection pooling?"
+      "Что случится с соединением при ошибке внутри session.begin()?"
     ],
     "tags": [
       "stage-11",
@@ -52,38 +38,32 @@
     ]
   },
   {
-    "question": "Какое ограничение или типичная ошибка относится именно к теме Connection pooling?",
+    "question": "Как отличить ошибку checkout от блокировки строки?",
     "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "связать Connection pooling с коротким рабочим примером",
-      "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case."
+      "При checkout соединение ещё не получено. При блокировке запрос уже в PostgreSQL и виден в статистике ожиданий. Проверяйте pool wait time, состояние соединений и server wait events отдельно."
     ],
-    "short_answer": "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
-    "junior_answer": "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
-    "follow_up_question": "Что такое Connection pooling и какой механизм здесь важно понимать Junior-разработчику?",
-    "follow_up_answer": "Connection pooling — тема, в которой я сначала фиксирую `connections are expensive/limited`, затем объясняю `pool size` на коротком примере. Ключевой механизм: Назови invariant и concurrent scenario, затем проверь constraint, transaction boundary и фактический query plan. Главная практическая ошибка — Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
+    "short_answer": "При checkout соединение ещё не получено. При блокировке запрос уже в PostgreSQL и виден в статистике ожиданий. Проверяйте pool wait time, состояние соединений и server wait events отдельно.",
+    "junior_answer": "При checkout соединение ещё не получено. При блокировке запрос уже в PostgreSQL и виден в статистике ожиданий. Проверяйте pool wait time, состояние соединений и server wait events отдельно.",
+    "follow_up_question": "Что случится с соединением при ошибке внутри session.begin()?",
+    "follow_up_answer": "Контекст откатит транзакцию, а закрытие сессии освободит соединение.",
     "expected_answer": {
       "must_mention": [
-        "связать Connection pooling с коротким рабочим примером"
+        "При checkout соединение ещё не получено. При блокировке запрос уже в PostgreSQL и виден в статистике ожиданий. Проверяйте pool wait time, состояние соединений и server wait events отдельно."
       ],
       "good_additions": [
-        "короткий пример именно этой темы"
+        "Контекст откатит транзакцию, а закрытие сессии освободит соединение."
       ],
       "common_wrong_answers": [],
       "red_flags": [],
       "follow_up_questions": [
-        "Что такое Connection pooling и какой механизм здесь важно понимать Junior-разработчику?"
-      ],
-      "coding_mistakes": [
-        "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case."
-      ],
-      "assessment_notes": [],
-      "review_status": "pending-substantive-review"
+        "Что случится с соединением при ошибке внутри session.begin()?"
+      ]
     },
     "follow_ups": [
-      "Что такое Connection pooling и какой механизм здесь важно понимать Junior-разработчику?"
+      "Что случится с соединением при ошибке внутри session.begin()?"
     ],
     "tags": [
       "stage-11",

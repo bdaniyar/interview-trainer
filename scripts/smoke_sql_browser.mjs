@@ -5,7 +5,15 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import assert from 'node:assert/strict';
 import { transactionWalkthrough } from './smoke_transaction_browser.mjs';
-// Run only against docker-compose.sql-workspace-test.yml with a fresh tmpfs DB.
+// Run against a disposable workspace only.
+function testOrigin(value) {
+  const url = new URL(value);
+  assert.equal(url.protocol, 'http:');
+  assert.ok(['localhost', '127.0.0.1'].includes(url.hostname) && url.port && !['3000', '8080', '3001', '8081'].includes(url.port));
+  return url.origin;
+}
+const frontendOrigin = testOrigin(process.env.SQL_TEST_FRONTEND_ORIGIN ?? 'http://localhost:13000');
+const apiOrigin = testOrigin(process.env.SQL_TEST_API_ORIGIN ?? 'http://localhost:18080');
 const chromePath=process.env.SQL_TEST_CHROME || (process.platform==='darwin'
   ? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' : '/usr/bin/google-chrome');
 await access(chromePath, constants.X_OK).catch(()=>{throw new Error('Chrome unavailable: set SQL_TEST_CHROME to its executable path.');});
@@ -34,7 +42,7 @@ try {
   await call('Page.bringToFront');
   await call('Emulation.setFocusEmulationEnabled',{enabled:true});
   await call('Network.enable');
-  await call('Network.setBlockedURLs',{urls:['http://localhost:8080/*','http://127.0.0.1:8080/*','http://localhost:3000/*','http://127.0.0.1:3000/*']});
+  await call('Network.setBlockedURLs',{urls:['http://localhost:8080/*','http://127.0.0.1:8080/*','http://localhost:3000/*','http://127.0.0.1:3000/*','http://localhost:3001/*','http://127.0.0.1:3001/*','http://localhost:8081/*','http://127.0.0.1:8081/*']});
   async function evaluate(expression){const r=await call('Runtime.evaluate',{expression,awaitPromise:true,returnByValue:true});if(r.exceptionDetails)throw new Error(JSON.stringify(r.exceptionDetails));return r.result.value;}
   async function until(expression,timeout=60000){const end=Date.now()+timeout;do{try{if(await evaluate(expression))return;}catch(e){if(!/context|Cannot find/i.test(e.message))throw e;}await new Promise(r=>setTimeout(r,150));}while(Date.now()<end);throw new Error('Timed out: '+expression+'\n'+await evaluate('document.body.innerText.slice(-1800)'));}
   async function click(selector){await evaluate(`document.querySelector(${JSON.stringify(selector)}).click()`);}
@@ -87,9 +95,33 @@ try {
   }
   async function size(width,height,mobile=false){await call('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile});}
   async function screenshot(path){const shot=await call('Page.captureScreenshot',{format:'png',captureBeyondViewport:false});await writeFile(path,Buffer.from(shot.data,'base64'));}
-  async function api(path,data,method){return evaluate(`fetch('http://localhost:18080'+${JSON.stringify(path)},{method:${JSON.stringify(method|| (data?'POST':'GET'))},headers:{'Content-Type':'application/json'},${data?'body:'+JSON.stringify(JSON.stringify(data))+',':''}}).then(async r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.status===204?null:r.json()})`);}
+  async function api(path,data,method){return evaluate(`fetch(${JSON.stringify(apiOrigin)}+${JSON.stringify(path)},{method:${JSON.stringify(method|| (data?'POST':'GET'))},headers:{'Content-Type':'application/json'},${data?'body:'+JSON.stringify(JSON.stringify(data))+',':''}}).then(async r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.status===204?null:r.json()})`);}
+  async function stage11Walkthrough() {
+    await until(`document.querySelector('.lesson-title-row h1')?.textContent==='JSONB' && document.body.innerText.includes('jsonb_set')`);
+    await until(`document.querySelector('.postgres-examples')?.innerText.includes('scripts/test_stage11_examples.sh')`);
+    assert.equal(await evaluate(`document.querySelector('.workspace-pane .check-button')===null`), true);
+    const hiddenJsonb = () => evaluate(`Array.from(document.querySelectorAll('details')).filter(d=>['Раскрыть ответы','Раскрыть критерии'].includes(d.querySelector('summary')?.textContent)).map(d=>d.open)`);
+    assert.deepEqual(await hiddenJsonb(), [false,false]);
+    await evaluate(`Array.from(document.querySelectorAll('.lesson-mode-switch button')).find(b=>b.textContent.includes('Повторение')).click()`);
+    assert.deepEqual(await hiddenJsonb(), [false,false]);
+    await evaluate(`Array.from(document.querySelectorAll('.lesson-mode-switch button')).find(b=>b.textContent.includes('Обучение')).click()`);
+    await evaluate(`document.querySelector('.lesson-reader').scrollTop=0`);
+    await screenshot('/tmp/pythoria-phase9b-jsonb-desktop.png');
+    await size(390,844,true);
+    await until(`document.querySelector('.course-sidebar').getBoundingClientRect().right<=0`);
+    assert.equal(await evaluate(`document.documentElement.scrollWidth<=window.innerWidth`),true);
+    await screenshot('/tmp/pythoria-phase9b-jsonb-mobile.png');
+    await size(1720,1050);
+    await until(`document.querySelector('.course-sidebar').getBoundingClientRect().left>=-0.5`);
+    console.log(JSON.stringify({stage11Jsonb:true,learnReviewAnswersClosed:true,mobile390:true}));
+  }
   await size(1720,1050);
-  await call('Page.navigate',{url:'http://localhost:13000/?lesson=s10-select-aliases-and-expressions'});
+  if (process.argv.includes('--stage11-only')) {
+    await call('Page.navigate', {url: frontendOrigin + '/?lesson=s11-jsonb'});
+    await stage11Walkthrough();
+    await call('Target.closeTarget', {targetId}, null);
+  } else {
+  await call('Page.navigate',{url:frontendOrigin + '/?lesson=s10-select-aliases-and-expressions'});
   await until(`typeof window.require==='function' && document.querySelector('.sql-footer')?.textContent.includes('сессия активна')`);
   await evaluate(`new Promise((resolve,reject)=>window.require(['vs/editor/editor.main'],loaded=>{window.__phase8aMonaco=loaded.m||loaded;resolve(true)},reject))`);
   const pythonFiles={'main.py':"def compare_objects(a, b):\n    return {'same_identity': a is b, 'same_value': a == b}\n",'notes.py':"PRESERVED = 'phase8a-browser'\n"};
@@ -269,8 +301,11 @@ try {
   }
   assert.equal((await api('/api/course')).summary.xp,workerXpBefore+100);
   await transactionWalkthrough({api,evaluate,until,selectLesson,call,size,screenshot});
+  await selectLesson((await api('/api/lessons/s11-jsonb')).title, 's11-jsonb');
+  await stage11Walkthrough();
   await call('Target.closeTarget',{targetId},null);
   console.log(JSON.stringify({browser:'Headless Chrome',allTwentyThree:true,totalChecks:23,newChecks:11,actualMonacoTyping:true,theme:true,monacoShortcuts:true,desktop1720:true,mobile390:true,mobileVisibleRows:2,explorerSelfFK:true,sqlPythonRoundTrip:true,pythonFilesPreserved:true,draftRestoration:true,sqlXpZero:true}));
+  }
   }
 } finally {
   ws?.close();chrome.kill('SIGTERM');

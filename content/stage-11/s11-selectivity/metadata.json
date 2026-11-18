@@ -6,14 +6,14 @@
   "module_title": "Этап 11 · Database Design and PostgreSQL",
   "module_order": 11,
   "order": 128,
-  "duration": 10,
-  "estimated_minutes": 10,
+  "duration": 40,
+  "estimated_minutes": 40,
   "xp": 5,
   "topics": [
     "low-cardinality fields",
     "why planner may prefer sequential scan."
   ],
-  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+  "description": "Сравните оценку PostgreSQL и фактическое число строк на распределении с сильным перекосом.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",
@@ -41,6 +41,7 @@
     "interview_crash_course"
   ],
   "content_status": "complete",
-  "last_verified": "2026-08-27",
-  "generated_by": "populate_curriculum.py"
+  "last_verified": "2026-11-18",
+  "generated_by": "populate_curriculum.py",
+  "content_source": "curated"
 }

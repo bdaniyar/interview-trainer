@@ -142,9 +142,14 @@ def get_lesson(slug: str, db: Session = Depends(get_db)):
     files = saved_files(db, slug) or content_repo.starter_files(slug)
     progress = get_progress(db, slug)
     db.commit()
+    kind = workspace_kind(lesson)
+    if slug in TRANSACTION_LESSONS:
+        kind = "transaction"
+    elif lesson["module_slug"] == "stage-11":
+        kind = "postgres_examples"
     return {
         **lesson,
-        "workspace_kind": "transaction" if slug in TRANSACTION_LESSONS else workspace_kind(lesson),
+        "workspace_kind": kind,
         "files": files,
         "progress": {
             "status": progress.status,
