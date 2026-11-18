@@ -87,8 +87,9 @@ def test_preserved_keys_and_early_stages():
                         'content/stage-20/s20-delivery-semantics/metadata.json',
                         'content/stage-20/s20-kafka-basics/metadata.json',
                         'content/stage-20/s20-periodic-tasks/metadata.json',
-                        'content/stage-20/s20-rabbitmq-basics/metadata.json'}:
-            # Phases 8A/8C publish only these exact stable identities after executable verification.
+                        'content/stage-20/s20-rabbitmq-basics/metadata.json',
+                        'content/stage-11/s11-jsonb/metadata.json'}:
+            # Phases 8A/8C/9B publish only these exact stable identities after executable verification.
             status = baseline['metadata_keys'].index('content_status')
             assert expected[status] == 'planned' and current['content_source'] == 'curated'
             expected[status] = 'complete'

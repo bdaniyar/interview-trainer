@@ -70,6 +70,8 @@ python3 -m transaction_lab.cli scenario read-committed
 
 ## Практика
 
+Откройте Transaction Lab справа. Сравните «Read Committed», «Repeatable Read» и «Serializable». Отметьте момент появления нового снимка или SQLSTATE.
+
 Сравните отдельные сценарии read-committed, repeatable-read и serializable на исходных остатках 1,1. В первых двух A читает id=1, B меняет его на 0 и фиксирует, затем A читает снова. Предскажите обе пары наблюдений до запуска. В serializable обе сессии сначала читают SUM, затем уменьшают разные строки: одна должна получить 40001.
 
 ## Вопросы с собеседований

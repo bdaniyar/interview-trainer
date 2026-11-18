@@ -4821,7 +4821,7 @@
             "referential integrity",
             "delete/update actions."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-18",
           "implementation_slug": "s11-primary-and-foreign-keys"
         },
         {
@@ -4900,7 +4900,7 @@
             "1NF/2NF/3NF at practical Junior depth",
             "deliberate denormalization only with reason."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-18",
           "implementation_slug": "s11-normalization"
         },
         {
@@ -4939,7 +4939,7 @@
             "storage/write cost",
             "index is not magic."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-18",
           "implementation_slug": "s11-index-mental-model"
         },
         {
@@ -4977,7 +4977,7 @@
             "common default",
             "no deep page internals required."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-18",
           "implementation_slug": "s11-postgresql-b-tree"
         },
         {
@@ -5052,7 +5052,7 @@
             "low-cardinality fields",
             "why planner may prefer sequential scan."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-18",
           "implementation_slug": "s11-selectivity"
         },
         {
@@ -5328,7 +5328,7 @@
             "async pool",
             "leaking sessions/connections."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-18",
           "implementation_slug": "s11-connection-pooling"
         },
         {
@@ -5367,7 +5367,7 @@
             "cursor/keyset pagination",
             "stable ordering."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-18",
           "implementation_slug": "s11-pagination"
         },
         {
@@ -5386,16 +5386,18 @@
             "backend_work"
           ],
           "prerequisites": [
-            "backend-interview.11.15.pagination"
+            "backend-interview.11.1.primary-and-foreign-keys",
+            "backend-interview.11.4.index-mental-model"
           ],
           "modes": [
             "learn",
-            "interview"
+            "interview",
+            "practice"
           ],
           "tracks": [
             "full"
           ],
-          "content_status": "planned",
+          "content_status": "complete",
           "estimated_minutes": 10,
           "difficulty": "junior_plus",
           "outline": [
@@ -5403,7 +5405,7 @@
             "indexing basics",
             "not a replacement for relational modeling."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-18",
           "implementation_slug": "s11-jsonb"
         },
         {

@@ -1,6 +1,6 @@
 {
   "title": "Python Backend Interview Trainer",
-  "lessons_count": 366,
+  "lessons_count": 367,
   "modules": [
     {
       "slug": "stage-00",
@@ -5423,15 +5423,15 @@
           "module_title": "Этап 11 · Database Design and PostgreSQL",
           "module_order": 11,
           "order": 122,
-          "duration": 12,
-          "estimated_minutes": 12,
+          "duration": 40,
+          "estimated_minutes": 40,
           "xp": 5,
           "topics": [
             "entity identity",
             "referential integrity",
             "delete/update actions."
           ],
-          "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Ключи связывают строки и защищают модель заказа даже при одновременных запросах.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -5459,8 +5459,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-18",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.11.2.constraints",
@@ -5520,8 +5521,8 @@
           "module_title": "Этап 11 · Database Design and PostgreSQL",
           "module_order": 11,
           "order": 124,
-          "duration": 12,
-          "estimated_minutes": 12,
+          "duration": 40,
+          "estimated_minutes": 40,
           "xp": 5,
           "topics": [
             "duplication",
@@ -5529,7 +5530,7 @@
             "1NF/2NF/3NF at practical Junior depth",
             "deliberate denormalization only with reason."
           ],
-          "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Разделите каталог, заказы, покупателей и позиции по фактам, которые они хранят.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -5557,8 +5558,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-18",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.11.4.index-mental-model",
@@ -5568,8 +5570,8 @@
           "module_title": "Этап 11 · Database Design and PostgreSQL",
           "module_order": 11,
           "order": 125,
-          "duration": 12,
-          "estimated_minutes": 12,
+          "duration": 40,
+          "estimated_minutes": 40,
           "xp": 5,
           "topics": [
             "auxiliary data structure",
@@ -5577,7 +5579,7 @@
             "storage/write cost",
             "index is not magic."
           ],
-          "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Сравните варианты чтения заказов клиента и оцените, сколько стоит индекс при записи.",
           "has_task": false,
           "has_solution": false,
           "priority": "P0",
@@ -5605,8 +5607,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-18",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.11.5.postgresql-b-tree",
@@ -5616,15 +5619,15 @@
           "module_title": "Этап 11 · Database Design and PostgreSQL",
           "module_order": 11,
           "order": 126,
-          "duration": 10,
-          "estimated_minutes": 10,
+          "duration": 40,
+          "estimated_minutes": 40,
           "xp": 5,
           "topics": [
             "equality/range/order",
             "common default",
             "no deep page internals required."
           ],
-          "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Разберите порядок B-tree, границы поиска, покрытие запроса и проверку видимости строк.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -5652,8 +5655,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-18",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.11.6.composite-indexes-and-column-order",
@@ -5711,14 +5715,14 @@
           "module_title": "Этап 11 · Database Design and PostgreSQL",
           "module_order": 11,
           "order": 128,
-          "duration": 10,
-          "estimated_minutes": 10,
+          "duration": 40,
+          "estimated_minutes": 40,
           "xp": 5,
           "topics": [
             "low-cardinality fields",
             "why planner may prefer sequential scan."
           ],
-          "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Сравните оценку PostgreSQL и фактическое число строк на распределении с сильным перекосом.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -5746,8 +5750,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-18",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.11.8.explain-and-explain-analyze",
@@ -6054,8 +6059,8 @@
           "module_title": "Этап 11 · Database Design and PostgreSQL",
           "module_order": 11,
           "order": 135,
-          "duration": 10,
-          "estimated_minutes": 10,
+          "duration": 40,
+          "estimated_minutes": 40,
           "xp": 5,
           "topics": [
             "connections are expensive/limited",
@@ -6063,7 +6068,7 @@
             "async pool",
             "leaking sessions/connections."
           ],
-          "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Управляйте временем жизни AsyncSession и считайте бюджет подключений всех процессов.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -6091,8 +6096,9 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-18",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.11.15.pagination",
@@ -6102,8 +6108,8 @@
           "module_title": "Этап 11 · Database Design and PostgreSQL",
           "module_order": 11,
           "order": 136,
-          "duration": 10,
-          "estimated_minutes": 10,
+          "duration": 40,
+          "estimated_minutes": 40,
           "xp": 5,
           "topics": [
             "OFFSET/LIMIT",
@@ -6111,7 +6117,7 @@
             "cursor/keyset pagination",
             "stable ordering."
           ],
-          "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+          "description": "Постройте курсор из двух полей и проверьте вторую страницу после конкурентной вставки.",
           "has_task": false,
           "has_solution": false,
           "priority": "P1",
@@ -6139,8 +6145,57 @@
             "interview_crash_course"
           ],
           "content_status": "complete",
-          "last_verified": "2026-08-27",
-          "generated_by": "populate_curriculum.py"
+          "last_verified": "2026-11-18",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
+        },
+        {
+          "id": "backend-interview.11.16.jsonb",
+          "slug": "s11-jsonb",
+          "title": "JSONB",
+          "module_slug": "stage-11",
+          "module_title": "Этап 11 · Database Design and PostgreSQL",
+          "module_order": 11,
+          "order": 137,
+          "duration": 40,
+          "estimated_minutes": 40,
+          "xp": 5,
+          "topics": [
+            "flexible data",
+            "indexing basics",
+            "not a replacement for relational modeling."
+          ],
+          "description": "Храните гибкие атрибуты в JSONB, проверяйте типы и выбирайте индекс под конкретный оператор.",
+          "has_task": false,
+          "has_solution": false,
+          "priority": "P2",
+          "priority_note": "P2 | medium",
+          "interview_probability": "medium",
+          "market_frequency": "occasional",
+          "market_evidence": "PostgreSQL явно встречался в 13/18; indexes/transactions/concurrency критичны для backend.",
+          "priority_basis": [
+            "market",
+            "technical_interview",
+            "backend_work"
+          ],
+          "why_it_matters": "Помогает объяснить JSONB и применить тему без типичной backend-ошибки.",
+          "difficulty": "junior_plus",
+          "prerequisites": [
+            "backend-interview.11.1.primary-and-foreign-keys",
+            "backend-interview.11.4.index-mental-model"
+          ],
+          "modes": [
+            "learn",
+            "interview",
+            "practice"
+          ],
+          "tracks": [
+            "full"
+          ],
+          "content_status": "complete",
+          "last_verified": "2026-11-18",
+          "generated_by": "populate_curriculum.py",
+          "content_source": "curated"
         },
         {
           "id": "backend-interview.11.17.booking-concurrency",

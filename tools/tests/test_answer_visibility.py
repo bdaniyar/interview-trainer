@@ -84,7 +84,7 @@ print("42")
 
 def test_no_known_answer_leaks_in_any_published_stage_8_onward_lesson():
     records = audit(ROOT / 'content')
-    assert len(records) == 302
+    assert len(records) == 303
     leaks = [(r['slug'], i) for r in records for i in r['issues'] if i['code'].startswith('answer-')]
     assert leaks == []
 

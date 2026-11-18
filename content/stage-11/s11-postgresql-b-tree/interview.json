@@ -1,43 +1,31 @@
 [
   {
-    "question": "Что такое PostgreSQL B-tree и какой механизм здесь важно понимать Junior-разработчику?",
+    "question": "Что даёт порядок B-tree кроме равенства?",
     "level": "normal",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "equality/range/order",
-      "common default",
-      "no deep page internals required"
+      "Порядок даёт интервальный поиск, обратный проход, совместимый ORDER BY и возможность остановиться после LIMIT. Условие ведущего ключа определяет небольшую область составного индекса."
     ],
-    "short_answer": "PostgreSQL B-tree: Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.",
-    "junior_answer": "PostgreSQL B-tree — тема, в которой я сначала фиксирую `equality/range/order`, затем объясняю `common default` на коротком примере. Ключевой механизм: Назови invariant и concurrent scenario, затем проверь constraint, transaction boundary и фактический query plan. Главная практическая ошибка — Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
-    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме PostgreSQL B-tree?",
-    "follow_up_answer": "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
+    "short_answer": "Порядок даёт интервальный поиск, обратный проход, совместимый ORDER BY и возможность остановиться после LIMIT. Условие ведущего ключа определяет небольшую область составного индекса.",
+    "junior_answer": "Порядок даёт интервальный поиск, обратный проход, совместимый ORDER BY и возможность остановиться после LIMIT. Условие ведущего ключа определяет небольшую область составного индекса.",
+    "follow_up_question": "Что означает Heap Fetches в Index Only Scan?",
+    "follow_up_answer": "Это обращения для проверки видимости при отсутствии all-visible отметки.",
     "expected_answer": {
       "must_mention": [
-        "equality/range/order",
-        "common default",
-        "no deep page internals required"
+        "Порядок даёт интервальный поиск, обратный проход, совместимый ORDER BY и возможность остановиться после LIMIT. Условие ведущего ключа определяет небольшую область составного индекса."
       ],
       "good_additions": [
-        "короткий рабочий пример",
-        "ограничение или типичная ошибка"
+        "Это обращения для проверки видимости при отсутствии all-visible отметки."
       ],
       "common_wrong_answers": [],
       "red_flags": [],
       "follow_up_questions": [
-        "Какое ограничение или типичная ошибка относится именно к теме PostgreSQL B-tree?"
-      ],
-      "coding_mistakes": [
-        "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case."
-      ],
-      "assessment_notes": [
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "review_status": "pending-substantive-review"
+        "Что означает Heap Fetches в Index Only Scan?"
+      ]
     },
     "follow_ups": [
-      "Какое ограничение или типичная ошибка относится именно к теме PostgreSQL B-tree?"
+      "Что означает Heap Fetches в Index Only Scan?"
     ],
     "tags": [
       "stage-11",
@@ -50,38 +38,32 @@
     ]
   },
   {
-    "question": "Какое ограничение или типичная ошибка относится именно к теме PostgreSQL B-tree?",
+    "question": "Почему покрывающий индекс иногда всё равно читает таблицу?",
     "level": "follow_up",
     "priority": "P1",
     "interview_probability": "high",
     "answer": [
-      "связать PostgreSQL B-tree с коротким рабочим примером",
-      "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case."
+      "В видимости есть данные heap. All-visible в visibility map позволяет не идти в heap для такой страницы. Иначе для версии строки нужна проверка."
     ],
-    "short_answer": "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
-    "junior_answer": "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
-    "follow_up_question": "Что такое PostgreSQL B-tree и какой механизм здесь важно понимать Junior-разработчику?",
-    "follow_up_answer": "PostgreSQL B-tree — тема, в которой я сначала фиксирую `equality/range/order`, затем объясняю `common default` на коротком примере. Ключевой механизм: Назови invariant и concurrent scenario, затем проверь constraint, transaction boundary и фактический query plan. Главная практическая ошибка — Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
+    "short_answer": "В видимости есть данные heap. All-visible в visibility map позволяет не идти в heap для такой страницы. Иначе для версии строки нужна проверка.",
+    "junior_answer": "В видимости есть данные heap. All-visible в visibility map позволяет не идти в heap для такой страницы. Иначе для версии строки нужна проверка.",
+    "follow_up_question": "Что означает Heap Fetches в Index Only Scan?",
+    "follow_up_answer": "Это обращения для проверки видимости при отсутствии all-visible отметки.",
     "expected_answer": {
       "must_mention": [
-        "связать PostgreSQL B-tree с коротким рабочим примером"
+        "В видимости есть данные heap. All-visible в visibility map позволяет не идти в heap для такой страницы. Иначе для версии строки нужна проверка."
       ],
       "good_additions": [
-        "короткий пример именно этой темы"
+        "Это обращения для проверки видимости при отсутствии all-visible отметки."
       ],
       "common_wrong_answers": [],
       "red_flags": [],
       "follow_up_questions": [
-        "Что такое PostgreSQL B-tree и какой механизм здесь важно понимать Junior-разработчику?"
-      ],
-      "coding_mistakes": [
-        "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case."
-      ],
-      "assessment_notes": [],
-      "review_status": "pending-substantive-review"
+        "Что означает Heap Fetches в Index Only Scan?"
+      ]
     },
     "follow_ups": [
-      "Что такое PostgreSQL B-tree и какой механизм здесь важно понимать Junior-разработчику?"
+      "Что означает Heap Fetches в Index Only Scan?"
     ],
     "tags": [
       "stage-11",
