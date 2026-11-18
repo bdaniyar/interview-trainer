@@ -4,6 +4,7 @@ import { constants } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import assert from 'node:assert/strict';
+import { indexWalkthrough } from './smoke_index_browser.mjs';
 import { transactionWalkthrough } from './smoke_transaction_browser.mjs';
 // Run against a disposable workspace only.
 function testOrigin(value) {
@@ -160,7 +161,10 @@ try {
     await evaluate(`Array.from(document.querySelectorAll('button.lesson')).find(b=>b.textContent.includes(${JSON.stringify(title)})).click()`);
     await until(`new URLSearchParams(location.search).get('lesson')===${JSON.stringify(slug)}`);
   }
-  if(process.argv.includes('--transactions-only')){
+  if (process.argv.includes('--index-only')) {
+    await indexWalkthrough({api,evaluate,until,selectLesson,call,size,screenshot});
+    await call('Target.closeTarget',{targetId},null);
+  } else if(process.argv.includes('--transactions-only')){
     await transactionWalkthrough({api,evaluate,until,selectLesson,call,size,screenshot});
     await call('Target.closeTarget',{targetId},null);
   } else {
@@ -303,6 +307,7 @@ try {
   await transactionWalkthrough({api,evaluate,until,selectLesson,call,size,screenshot});
   await selectLesson((await api('/api/lessons/s11-jsonb')).title, 's11-jsonb');
   await stage11Walkthrough();
+  await indexWalkthrough({api,evaluate,until,selectLesson,call,size,screenshot});
   await call('Target.closeTarget',{targetId},null);
   console.log(JSON.stringify({browser:'Headless Chrome',allTwentyThree:true,totalChecks:23,newChecks:11,actualMonacoTyping:true,theme:true,monacoShortcuts:true,desktop1720:true,mobile390:true,mobileVisibleRows:2,explorerSelfFK:true,sqlPythonRoundTrip:true,pythonFilesPreserved:true,draftRestoration:true,sqlXpZero:true}));
   }

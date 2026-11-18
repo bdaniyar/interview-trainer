@@ -15,7 +15,7 @@ class SQLBodyLimit:
         self.app = app
 
     async def __call__(self, scope, receive, send):
-        if scope["type"] != "http" or not scope["path"].startswith(("/api/sql/", "/api/transactions/")):
+        if scope["type"] != "http" or not scope["path"].startswith(("/api/sql/", "/api/transactions/", "/api/index-lab/")):
             return await self.app(scope, receive, send)
         parts, size = [], 0
         while True:
