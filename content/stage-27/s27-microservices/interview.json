@@ -1,0 +1,80 @@
+[
+  {
+    "level": "normal",
+    "priority": "P2",
+    "tags": [
+      "stage-27"
+    ],
+    "sets": [
+      "stage-27",
+      "full-junior-backend"
+    ],
+    "question": "Что отличает микросервис от отдельной папки или контейнера?",
+    "answer": [
+      "Самостоятельный deployable вокруг business capability, явный внешний контракт и собственное владение данными. Это сопровождается сетевыми отказами, независимыми транзакциями и operational responsibility."
+    ],
+    "short_answer": "Самостоятельный deployable вокруг business capability, явный внешний контракт и собственное владение данными. Это сопровождается сетевыми отказами, независимыми транзакциями и operational responsibility.",
+    "junior_answer": "Самостоятельный deployable вокруг business capability, явный внешний контракт и собственное владение данными. Это сопровождается сетевыми отказами, независимыми транзакциями и operational responsibility.",
+    "follow_up_question": "Как это проверяется в booking architecture lab?",
+    "follow_up_answer": "Запустите `scripts/test_architecture_lab.sh`. Найдите actual failures: unavailable service, timeout-after-COMMIT, duplicate event, producer crash, consumer restart и stale read. Для каждого выпишите состояния обеих БД и event_id. Объясните, почему COMMIT booking не откатывается из-за поздней notification ошибки.",
+    "follow_ups": [
+      "Как это проверяется в booking architecture lab?"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "Самостоятельный deployable вокруг business capability, явный внешний контракт и собственное владение данными. Это сопровождается сетевыми отказами, независимыми транзакциями и operational responsibility."
+      ],
+      "good_additions": [
+        "Микросервисы добавляют независимые releases и ownership, но увеличивают operational cost, сетевые ошибки и сложность тестов. Для этого небольшого workflow modular monolith — разумная исходная версия; выделение сервиса требует конкретной причины."
+      ],
+      "common_wrong_answers": [
+        "COMMIT в booking service автоматически делает внешний notification атомарным."
+      ],
+      "red_flags": [
+        "Количество контейнеров само по себе доказывает микросервисную архитектуру."
+      ],
+      "follow_up_questions": [
+        "Как это проверяется в booking architecture lab?"
+      ]
+    }
+  },
+  {
+    "level": "follow_up",
+    "priority": "P2",
+    "tags": [
+      "stage-27"
+    ],
+    "sets": [
+      "stage-27",
+      "full-junior-backend"
+    ],
+    "question": "Какой предел гарантии важно назвать в этой теме?",
+    "answer": [
+      "Микросервисы добавляют независимые releases и ownership, но увеличивают operational cost, сетевые ошибки и сложность тестов. Для этого небольшого workflow modular monolith — разумная исходная версия; выделение сервиса требует конкретной причины."
+    ],
+    "short_answer": "Микросервисы добавляют независимые releases и ownership, но увеличивают operational cost, сетевые ошибки и сложность тестов. Для этого небольшого workflow modular monolith — разумная исходная версия; выделение сервиса требует конкретной причины.",
+    "junior_answer": "Микросервисы добавляют независимые releases и ownership, но увеличивают operational cost, сетевые ошибки и сложность тестов. Для этого небольшого workflow modular monolith — разумная исходная версия; выделение сервиса требует конкретной причины.",
+    "follow_up_question": "Как это проверяется в booking architecture lab?",
+    "follow_up_answer": "Запустите `scripts/test_architecture_lab.sh`. Найдите actual failures: unavailable service, timeout-after-COMMIT, duplicate event, producer crash, consumer restart и stale read. Для каждого выпишите состояния обеих БД и event_id. Объясните, почему COMMIT booking не откатывается из-за поздней notification ошибки.",
+    "follow_ups": [
+      "Как это проверяется в booking architecture lab?"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "Микросервисы добавляют независимые releases и ownership, но увеличивают operational cost, сетевые ошибки и сложность тестов. Для этого небольшого workflow modular monolith — разумная исходная версия; выделение сервиса требует конкретной причины."
+      ],
+      "good_additions": [
+        "Микросервисы добавляют независимые releases и ownership, но увеличивают operational cost, сетевые ошибки и сложность тестов. Для этого небольшого workflow modular monolith — разумная исходная версия; выделение сервиса требует конкретной причины."
+      ],
+      "common_wrong_answers": [
+        "COMMIT в booking service автоматически делает внешний notification атомарным."
+      ],
+      "red_flags": [
+        "Количество контейнеров само по себе доказывает микросервисную архитектуру."
+      ],
+      "follow_up_questions": [
+        "Как это проверяется в booking architecture lab?"
+      ]
+    }
+  }
+]

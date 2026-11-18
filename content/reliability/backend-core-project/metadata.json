@@ -6,13 +6,13 @@
   "module_title": "Этап 29 · Junior Backend System Design",
   "module_order": 29,
   "order": 356,
-  "duration": 12,
-  "estimated_minutes": 12,
+  "duration": 45,
+  "estimated_minutes": 45,
   "xp": 5,
   "topics": [
     "Basic request path"
   ],
-  "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+  "description": "Путь backend-запроса проходит HTTP-вход, валидацию, use case, БД и ответ. Ошибка на каждом участке имеет разный смысл: неверный room_id, sold out и потеря DB connection не должны выглядеть одинаково.",
   "has_task": false,
   "has_solution": false,
   "priority": "P0",
@@ -40,6 +40,7 @@
     "interview_crash_course"
   ],
   "content_status": "complete",
-  "last_verified": "2026-08-27",
-  "generated_by": "populate_curriculum.py"
+  "last_verified": "2026-11-17",
+  "generated_by": "populate_curriculum.py",
+  "content_source": "curated"
 }
