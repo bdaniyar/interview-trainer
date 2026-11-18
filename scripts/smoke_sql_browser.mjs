@@ -1,5 +1,5 @@
 import { spawn } from 'node:child_process';
-import { access, mkdtemp, rm, writeFile } from 'node:fs/promises';
+import { access, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { constants } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -37,7 +37,7 @@ try {
   async function evaluate(expression){const r=await call('Runtime.evaluate',{expression,awaitPromise:true,returnByValue:true});if(r.exceptionDetails)throw new Error(JSON.stringify(r.exceptionDetails));return r.result.value;}
   async function until(expression,timeout=60000){const end=Date.now()+timeout;do{try{if(await evaluate(expression))return;}catch(e){if(!/context|Cannot find/i.test(e.message))throw e;}await new Promise(r=>setTimeout(r,150));}while(Date.now()<end);throw new Error('Timed out: '+expression+'\n'+await evaluate('document.body.innerText.slice(-1800)'));}
   async function click(selector){await evaluate(`document.querySelector(${JSON.stringify(selector)}).click()`);}
-  async function key(key,code,keyCode,modifiers=0){await call('Input.dispatchKeyEvent',{type:'keyDown',key,code,windowsVirtualKeyCode:keyCode,modifiers});await call('Input.dispatchKeyEvent',{type:'keyUp',key,code,windowsVirtualKeyCode:keyCode,modifiers:0});}
+  async function key(key,code,keyCode,modifiers=0){const text=key==='Enter'&&modifiers===0?{text:'\r',unmodifiedText:'\r'}:{};await call('Input.dispatchKeyEvent',{type:'keyDown',key,code,windowsVirtualKeyCode:keyCode,modifiers,...text});await call('Input.dispatchKeyEvent',{type:'keyUp',key,code,windowsVirtualKeyCode:keyCode,modifiers:0});}
   async function type(selector,text){
     await call('Page.bringToFront');
     if(selector.includes('textarea')){
@@ -47,6 +47,27 @@ try {
       await evaluate(`(()=>{const input=document.querySelector(${JSON.stringify(selector)});input.focus({preventScroll:true});input.select();return true;})()`);
     }
     await call('Input.insertText',{text});
+  }
+  async function typePython(source){
+    // CDP's multiline insertText is interpreted as typing by Monaco and can
+    // reindent subsequent lines. Enter one line at a time with native events;
+    // select only the indentation produced by Enter before typing that line.
+    const editor=`window.__phase8aMonaco.editor.getEditors().find(e=>e.getDomNode()?.closest('.editor-panel'))`;
+    const configure=`e.updateOptions({autoIndent:'none',autoClosingBrackets:'never',autoClosingQuotes:'never',autoClosingComments:'never',formatOnType:false,formatOnPaste:false});`;
+    await call('Page.bringToFront');
+    await evaluate(`(()=>{const e=${editor};e.focus();e.setSelection(e.getModel().getFullModelRange());${configure}return true;})()`);
+    await key('Backspace','Backspace',8);
+    await until(`(${editor}).getModel().getValue()===''`);
+    const lines=source.split('\n');
+    for(let index=0;index<lines.length;index++){
+      await evaluate(`(()=>{const e=${editor};e.focus();${configure}return true;})()`);
+      if(index)await key('Enter','Enter',13);
+      const indentationLength=await evaluate(`(()=>{const e=${editor},p=e.getPosition(),line=e.getModel().getLineContent(p.lineNumber);if(line.trim())throw new Error('Unexpected content before native line ${index}: '+JSON.stringify({position:p,line,value:e.getModel().getValue()}));e.setSelection({startLineNumber:p.lineNumber,startColumn:1,endLineNumber:p.lineNumber,endColumn:line.length+1});${configure}return line.length;})()`);
+      if(lines[index])await call('Input.insertText',{text:lines[index]});
+      else if(indentationLength)await key('Backspace','Backspace',8);
+      const prefix=lines.slice(0,index+1).join('\n');
+      await until(`(${editor}).getModel().getValue()===${JSON.stringify(prefix)}`);
+    }
   }
   async function shortcut(check=false){await evaluate(`(()=>{window.__phase8aMonaco.editor.getEditors().find(e=>e.getDomNode()?.closest('.sql-editor')).focus();return true;})()`);await key('Enter','Enter',13,check?12:4);}
   // The runner intentionally rejects a concurrent reaper operation with 409.
@@ -178,6 +199,44 @@ try {
     await evaluate(`Array.from(document.querySelectorAll('button')).find(b=>b.textContent.includes('Обучение')).click()`);
     console.log(JSON.stringify({transactionLesson:slug,localCliDocumented:true,learnReviewAnswerClosed:true}));
   }
+  const workerTasks=[['s20-fastapi-backgroundtasks',7],['s20-retry-and-backoff',17],['s20-idempotency',10],['s20-periodic-tasks',14],['s20-delivery-semantics',14]];
+  const workerXpBefore=(await api('/api/course')).summary.xp;
+  for(const [slug,count] of workerTasks){
+    const lesson=await api('/api/lessons/'+slug);
+    const reference=await readFile(new URL('../content/stage-20/'+slug+'/solution/main.py',import.meta.url),'utf8');
+    const source=reference+"\nif __name__ == '__main__':\n    print('worker-browser-loaded')\n";
+    const notes='# independent '+slug+' file\n';
+    await api('/api/lessons/'+slug+'/files',{files:{'main.py':lesson.files['main.py'],'notes.py':notes}},'PUT');
+    await selectLesson(lesson.title,slug);
+    await until(`document.querySelector('.workspace-label')?.textContent.includes(${JSON.stringify(slug)}) && document.querySelector('.editor-panel textarea')!==null && !document.querySelector('.workspace-pane .check-button')?.disabled`);
+    await evaluate(`Array.from(document.querySelectorAll('.editor-tabs button')).find(b=>b.textContent.includes('main.py')).click()`);
+    await until(`window.__phase8aMonaco.editor.getEditors().some(e=>e.getDomNode()?.closest('.editor-panel')&&e.getModel()?.uri.toString().includes(${JSON.stringify(slug+'/main.py')}))`);
+    // Source enters only through native keyboard/text events, never setValue.
+    await typePython(source);
+    await until(`window.__phase8aMonaco.editor.getModels().find(m=>m.uri.toString().includes(${JSON.stringify(slug+'/main.py')})).getValue()===${JSON.stringify(source)}`);
+    await click('.workspace-pane .run-button');
+    await until(`document.querySelector('.terminal-result-summary')?.textContent.includes('exit 0') && !document.querySelector('.workspace-pane .run-button').disabled`);
+    await click('.workspace-pane .check-button');
+    await until(`document.querySelector('.terminal-result-summary .passed')?.textContent.includes('${count} / ${count}') && !document.querySelector('.workspace-pane .check-button').disabled`);
+    const saved=await api('/api/lessons/'+slug);
+    assert.equal(saved.files['main.py'],source);assert.equal(saved.files['notes.py'],notes);assert.equal(saved.progress.task_completed,true);
+    console.log(JSON.stringify({workerLesson:slug,actualMonacoTyping:true,run:true,check:count,twoFilesPreserved:true}));
+  }
+  assert.equal((await api('/api/course')).summary.xp,workerXpBefore+100);
+  await selectLesson(selfLesson.title,'s10-self-join');
+  await until(`document.querySelector('.sql-footer')?.textContent.includes('сессия активна')`);
+  assert.equal(await evaluate(`window.__phase8aMonaco.editor.getModels().find(m=>m.uri.toString().includes('sql.join.20')).getValue()`),tasks[11][2]);
+  await submit(true,`document.querySelector('.sql-check-feedback.passed')?.textContent.includes('6 / 6')`);
+  assert.equal((await api('/api/course')).summary.xp,workerXpBefore+100);
+  const lastWorker=await api('/api/lessons/s20-delivery-semantics');
+  await selectLesson(lastWorker.title,'s20-delivery-semantics');
+  await until(`document.querySelector('.workspace-label')?.textContent.includes('s20-delivery-semantics') && document.querySelector('.editor-panel textarea')!==null`);
+  assert.equal(await evaluate(`window.__phase8aMonaco.editor.getModels().find(m=>m.uri.toString().includes('s20-delivery-semantics/main.py')).getValue()`),lastWorker.files['main.py']);
+  await screenshot('/tmp/pythoria-phase8c-worker-desktop.png');
+  await size(390,844,true);
+  await until(`document.querySelector('.course-sidebar').getBoundingClientRect().right<=0`);
+  assert.equal(await evaluate(`document.documentElement.scrollWidth<=window.innerWidth`),true);
+  await screenshot('/tmp/pythoria-phase8c-worker-mobile.png');
   await call('Target.closeTarget',{targetId},null);
   console.log(JSON.stringify({browser:'Headless Chrome',allTwentyThree:true,totalChecks:23,newChecks:11,actualMonacoTyping:true,theme:true,monacoShortcuts:true,desktop1720:true,mobile390:true,mobileVisibleRows:2,explorerSelfFK:true,sqlPythonRoundTrip:true,pythonFilesPreserved:true,draftRestoration:true,sqlXpZero:true}));
 } finally {

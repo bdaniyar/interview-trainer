@@ -28,7 +28,7 @@ def main() -> None:
         assert response.status == 200
 
     course = request("/api/course")[1]
-    assert course["summary"]["total"] == 361
+    assert course["summary"]["total"] == 366
     assert len(course["modules"]) >= 30
     interview = request("/api/interview")[1]
     assert len(interview["questions"]) == 25 and len(interview["sets"]) == 20

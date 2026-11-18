@@ -10320,7 +10320,7 @@
             "retry",
             "transaction boundary."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-17",
           "implementation_slug": "s20-in-request-vs-background-work"
         },
         {
@@ -10359,7 +10359,7 @@
             "small side effects",
             "crash loss."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-17",
           "implementation_slug": "s20-fastapi-backgroundtasks"
         },
         {
@@ -10400,7 +10400,7 @@
             "serialization",
             "retries."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-17",
           "implementation_slug": "s20-celery-model"
         },
         {
@@ -10439,7 +10439,7 @@
             "jitter",
             "retry limit."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-17",
           "implementation_slug": "s20-retry-and-backoff"
         },
         {
@@ -10479,7 +10479,7 @@
             "state transition",
             "side-effect deduplication."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-17",
           "implementation_slug": "s20-idempotency"
         },
         {
@@ -10502,12 +10502,13 @@
           ],
           "modes": [
             "learn",
-            "interview"
+            "interview",
+            "practice"
           ],
           "tracks": [
             "full"
           ],
-          "content_status": "planned",
+          "content_status": "complete",
           "estimated_minutes": 10,
           "difficulty": "junior_plus",
           "outline": [
@@ -10515,7 +10516,7 @@
             "overlapping execution",
             "lock/idempotency."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-17",
           "implementation_slug": "s20-periodic-tasks"
         },
         {
@@ -10556,7 +10557,7 @@
             "idempotent consumer",
             "dual-write problem."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-17",
           "implementation_slug": "s20-outbox-pattern"
         },
         {
@@ -10595,7 +10596,7 @@
             "outbox closes atomicity gap",
             "Celery may still be delivery/execution layer."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-17",
           "implementation_slug": "s20-why-outbox-instead-of-direct-celery-publish"
         },
         {
@@ -10618,12 +10619,13 @@
           ],
           "modes": [
             "learn",
-            "interview"
+            "interview",
+            "practice"
           ],
           "tracks": [
             "full"
           ],
-          "content_status": "planned",
+          "content_status": "complete",
           "estimated_minutes": 10,
           "difficulty": "junior_plus",
           "outline": [
@@ -10634,7 +10636,7 @@
             "redelivery",
             "dead-letter queue."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-17",
           "implementation_slug": "s20-broker-fundamentals"
         },
         {
@@ -10657,12 +10659,13 @@
           ],
           "modes": [
             "learn",
-            "interview"
+            "interview",
+            "practice"
           ],
           "tracks": [
             "full"
           ],
-          "content_status": "planned",
+          "content_status": "complete",
           "estimated_minutes": 10,
           "difficulty": "junior_plus",
           "outline": [
@@ -10670,7 +10673,7 @@
             "acknowledgement",
             "not an administration course."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-17",
           "implementation_slug": "s20-rabbitmq-basics"
         },
         {
@@ -10693,12 +10696,13 @@
           ],
           "modes": [
             "learn",
-            "interview"
+            "interview",
+            "practice"
           ],
           "tracks": [
             "full"
           ],
-          "content_status": "planned",
+          "content_status": "complete",
           "estimated_minutes": 10,
           "difficulty": "junior_plus",
           "outline": [
@@ -10711,7 +10715,7 @@
             "retention/replay",
             "not “just a faster RabbitMQ”."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-17",
           "implementation_slug": "s20-kafka-basics"
         },
         {
@@ -10734,12 +10738,13 @@
           ],
           "modes": [
             "learn",
-            "interview"
+            "interview",
+            "practice"
           ],
           "tracks": [
             "full"
           ],
-          "content_status": "planned",
+          "content_status": "complete",
           "estimated_minutes": 10,
           "difficulty": "junior_plus",
           "outline": [
@@ -10748,7 +10753,7 @@
             "exactly-once claims require careful scope",
             "application idempotency."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-17",
           "implementation_slug": "s20-delivery-semantics"
         }
       ]

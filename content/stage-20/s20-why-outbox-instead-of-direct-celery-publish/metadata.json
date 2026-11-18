@@ -6,8 +6,8 @@
   "module_title": "Этап 20 · Background Work, Celery and Message Brokers",
   "module_order": 20,
   "order": 269,
-  "duration": 10,
-  "estimated_minutes": 10,
+  "duration": 40,
+  "estimated_minutes": 40,
   "xp": 5,
   "topics": [
     "publish after commit can be lost",
@@ -15,7 +15,7 @@
     "outbox closes atomicity gap",
     "Celery may still be delivery/execution layer."
   ],
-  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+  "description": "Celery умеет доставить и исполнить задачу, но не объединяет publish в Redis с COMMIT вашей PostgreSQL-транзакции. Outbox и Celery решают разные части пути и могут использоваться вместе.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",
@@ -43,6 +43,7 @@
     "interview_crash_course"
   ],
   "content_status": "complete",
-  "last_verified": "2026-08-27",
-  "generated_by": "populate_curriculum.py"
+  "last_verified": "2026-11-17",
+  "generated_by": "populate_curriculum.py",
+  "content_source": "curated"
 }

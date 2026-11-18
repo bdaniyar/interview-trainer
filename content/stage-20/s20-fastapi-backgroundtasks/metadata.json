@@ -6,8 +6,8 @@
   "module_title": "Этап 20 · Background Work, Celery and Message Brokers",
   "module_order": 20,
   "order": 263,
-  "duration": 10,
-  "estimated_minutes": 10,
+  "duration": 40,
+  "estimated_minutes": 40,
   "xp": 5,
   "topics": [
     "process-local",
@@ -15,9 +15,9 @@
     "small side effects",
     "crash loss."
   ],
-  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
-  "has_task": false,
-  "has_solution": false,
+  "description": "BackgroundTasks прикрепляет небольшую работу к ответу FastAPI. Клиент получает response body, затем приложение запускает callbacks в том же процессе. Это удобно для некритичного аудита; задача не превращается в запись надёжной очереди.",
+  "has_task": true,
+  "has_solution": true,
   "priority": "P1",
   "priority_note": "P1 | high",
   "interview_probability": "high",
@@ -43,6 +43,7 @@
     "interview_crash_course"
   ],
   "content_status": "complete",
-  "last_verified": "2026-08-27",
-  "generated_by": "populate_curriculum.py"
+  "last_verified": "2026-11-17",
+  "generated_by": "populate_curriculum.py",
+  "content_source": "curated"
 }

@@ -1,0 +1,82 @@
+[
+  {
+    "level": "normal",
+    "priority": "P2",
+    "interview_probability": "medium",
+    "tags": [
+      "stage-20"
+    ],
+    "sets": [
+      "stage-20",
+      "full-junior-backend"
+    ],
+    "question": "Что произойдёт с unacked delivery после потери connection?",
+    "answer": [
+      "Broker делает её доступной для повторной доставки; consumer должен быть готов к дублю бизнес-операции."
+    ],
+    "short_answer": "Broker делает её доступной для повторной доставки; consumer должен быть готов к дублю бизнес-операции.",
+    "junior_answer": "Broker делает её доступной для повторной доставки; consumer должен быть готов к дублю бизнес-операции.",
+    "follow_up_question": "Как это проверяется в проекте Durable Training Job Queue?",
+    "follow_up_answer": "Publisher confirm не равен consumer success. Consumer ack до business COMMIT даёт окно потери; ack после него даёт окно дубля. Сохранность очереди не отменяет idempotent consumer.",
+    "follow_ups": [
+      "Как это проверяется в проекте Durable Training Job Queue?"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "Broker делает её доступной для повторной доставки; consumer должен быть готов к дублю бизнес-операции."
+      ],
+      "good_additions": [
+        "Publisher confirm не равен consumer success. Consumer ack до business COMMIT даёт окно потери; ack после него даёт окно дубля. Сохранность очереди не отменяет idempotent consumer."
+      ],
+      "common_wrong_answers": [
+        "Наличие broker автоматически делает внешний business effect exactly-once."
+      ],
+      "red_flags": [
+        "Выдаёт process-local callback за durable выполнение."
+      ],
+      "follow_up_questions": [
+        "Как это проверяется в проекте Durable Training Job Queue?"
+      ]
+    }
+  },
+  {
+    "level": "follow_up",
+    "priority": "P2",
+    "interview_probability": "medium",
+    "tags": [
+      "stage-20"
+    ],
+    "sets": [
+      "stage-20",
+      "full-junior-backend"
+    ],
+    "question": "Куда ведёт nack(requeue=False)?",
+    "answer": [
+      "В настроенный dead-letter exchange/queue, либо к удалению, если DLX отсутствует. Это не автоматическое исправление poison message."
+    ],
+    "short_answer": "В настроенный dead-letter exchange/queue, либо к удалению, если DLX отсутствует. Это не автоматическое исправление poison message.",
+    "junior_answer": "В настроенный dead-letter exchange/queue, либо к удалению, если DLX отсутствует. Это не автоматическое исправление poison message.",
+    "follow_up_question": "Как это проверяется в проекте Durable Training Job Queue?",
+    "follow_up_answer": "Publisher confirm не равен consumer success. Consumer ack до business COMMIT даёт окно потери; ack после него даёт окно дубля. Сохранность очереди не отменяет idempotent consumer.",
+    "follow_ups": [
+      "Как это проверяется в проекте Durable Training Job Queue?"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "В настроенный dead-letter exchange/queue, либо к удалению, если DLX отсутствует. Это не автоматическое исправление poison message."
+      ],
+      "good_additions": [
+        "Publisher confirm не равен consumer success. Consumer ack до business COMMIT даёт окно потери; ack после него даёт окно дубля. Сохранность очереди не отменяет idempotent consumer."
+      ],
+      "common_wrong_answers": [
+        "Наличие broker автоматически делает внешний business effect exactly-once."
+      ],
+      "red_flags": [
+        "Выдаёт process-local callback за durable выполнение."
+      ],
+      "follow_up_questions": [
+        "Как это проверяется в проекте Durable Training Job Queue?"
+      ]
+    }
+  }
+]

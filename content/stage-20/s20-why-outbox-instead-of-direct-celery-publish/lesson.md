@@ -1,165 +1,102 @@
 # Why outbox instead of direct Celery publish
 
-> [!IMPORTANT]
-> **P1 · вероятность на интервью: high · 10 минут.** Background work/outbox/Celery нужны для защиты фактических project claims; broker depth ниже core.
+## Суть
+
+Celery умеет доставить и исполнить задачу, но не объединяет publish в Redis с COMMIT вашей PostgreSQL-транзакции. Outbox и Celery решают разные части пути и могут использоваться вместе.
 
 ## Учебные цели
 
-После урока ты сможешь:
+Разобрать обе очередности dual write: publish до COMMIT и после него. Объяснить оставшееся окно у after-commit callback и совместить durable outbox с существующим broker.
 
-- восстановить mental model темы **Why outbox instead of direct Celery publish**, а не только запомнить термин;
-- прочитать и изменить короткий пример для `publish after commit can be lost`;
-- распознать характерную ошибку и объяснить причину;
-- дать реалистичный ответ уровня Junior и выдержать follow-up.
+## Зачем это нужно backend-разработчику
+
+Возьмите `deliver_once` из queue_app/outbox.py. Найдите три разные транзакции: producer, receiver, ack. Уберите receiver dedup в своей копии и повторите timeout-after-commit test: два эффекта покажут, почему одной Celery retry недостаточно.
 
 ## Теория
 
 ### Что это
 
-Тема **Why outbox instead of direct Celery publish** описывает отдельный контракт backend-разработки.
+Celery умеет доставить и исполнить задачу, но не объединяет publish в Redis с COMMIT вашей PostgreSQL-транзакции. Outbox и Celery решают разные части пути и могут использоваться вместе.
 
 ### Как работает
 
-Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы сценарий ошибки.
+Publish before COMMIT допускает consumer, который не находит ещё не зафиксированный заказ, либо видит событие откатившейся операции. Publish after COMMIT оставляет окно потери при падении producer. Даже успешный producer confirm сообщает о принятии broker, а не об атомарности с business DB.
 
-**publish after commit can be lost.** `publish after commit can be lost` является этапом delivery от DB commit до side effect, где возможны duplicate, retry и idempotency requirements.
+Правильная локальная граница — order/job + outbox в PostgreSQL. Relay может публиковать outbox event в Celery; task получает устойчивый event_id, consumer дедуплицирует эффект. Потеря ack после исполнения даёт повтор. В нашем проекте relay использует HTTP, чтобы явно увидеть этот же dual-write gap без магии framework.
 
-**публикация до фиксации может увидеть состояние, которое затем будет отменено.** `publish before commit can observe rolled-back state` является этапом delivery от DB commit до side effect, где возможны duplicate, retry и idempotency requirements.
-
-**outbox closes atomicity gap.** `outbox closes atomicity gap` является этапом delivery от DB commit до side effect, где возможны duplicate, retry и idempotency requirements.
-
-**Celery всё ещё может быть слоем доставки и выполнения.** `Celery may still be delivery/execution layer` является этапом delivery от DB commit до side effect, где возможны duplicate, retry и idempotency requirements.
-
+Транзакционный on_commit callback решает раннюю публикацию, но callback в памяти всё ещё может потеряться после DB COMMIT. Устойчивость требует durable intent, а не только правильного порядка двух вызовов. Обсуждайте доступность и ручное восстановление failed events.
 
 ### Важный нюанс / ограничение
 
-Граница Junior: уверенно объясняй `publish after commit can be lost` и `publish before commit can observe rolled-back state` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
-
-### Где используется в backend
-
-В backend эта тема важна в том месте, где применяется `publish after commit can be lost`; проверяй именно наблюдаемый contract, а не название инструмента.
+Outbox не требует заменить Celery своей очередью. Можно использовать Celery как delivery/execution layer, сохраняя DB intent и consumer idempotency. Нельзя заявлять distributed atomicity по одному факту наличия broker.
 
 ## Модель понимания
 
-Между DB commit и publish есть atomicity gap; outbox переносит событие в ту же transaction.
-
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
+Отмечайте отдельно приём работы, владение ею и COMMIT эффекта. Для каждого сбоя подпишите, какие данные уже устойчивы и кто имеет право повторить операцию. Сопоставьте этот путь с конкретным тестом проекта, а не только с названием framework.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
-- publish after commit can be lost
-- публикация до фиксации может увидеть состояние, которое затем будет отменено
-- outbox closes atomicity gap
-- Celery всё ещё может быть слоем доставки и выполнения
-
-### Полезно
-
-- связать Why outbox instead of direct Celery publish с коротким рабочим примером
-
-### Можно не учить глубоко
-
-- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
+Ошибка публикации после успешного business COMMIT требует сохраняемого намерения, доступного другому процессу. Broker confirm полезен на транспортной границе, но не восстанавливает событие, которое producer вообще не успел отправить.
 
 ## Примеры кода
 
-### Why outbox instead of direct Celery publish: отдельный пример
-
 ```python
-def example_s20_why_outbox_instead_of_direct_celery_publish() -> tuple[str, ...]:
-    # Why outbox instead of direct Celery publish: проверяем отдельный contract урока.
-    return ('publish after commit can be lost', 'publish before commit can observe rolled-back state', 'outbox closes atomicity gap', 'Celery may still be delivery/execution layer',)
-
-assert example_s20_why_outbox_instead_of_direct_celery_publish()
+stages = ["business+outbox COMMIT", "relay send", "receiver COMMIT", "relay ack"]
+assert stages.index("receiver COMMIT") < stages.index("relay ack")
 ```
 
-Проследи delivery, duplicate, retry, idempotency и atomicity gap после DB commit.
+Это модель порядка str-меток, не concurrency proof. Настоящее доказательство даёт project test: receiver успел COMMIT, client получил timeout, повтор с тем же event_id не создаёт второй effect.
+
+Полный исполняемый проект и команды проверки: `projects/durable_queue/README.md`. Docker-практика выполняется отдельно от четырёхсекундного networkless Python Runner.
 
 ## Типичные ошибки
 
-### Ошибка 1
-
-Игнорировать ограничение механизма и проверять только основной сценарий.
+Publish перед COMMIT может породить событие о несуществующем заказе после rollback. Publish после COMMIT может не произойти при crash. Retry всего endpoint с новым ключом способен повторить сам заказ. After-commit hook меняет порядок, но не сохраняет неисполненный callback для другого процесса.
 
 ## Практика
 
-**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для `publish after commit can be lost` до запуска.
-
-**B · Найди ошибку.** Найди нарушение `publish before commit can observe rolled-back state` и объясни конкретное последствие.
-
-**E · Ответ на собеседовании.** Дай ответ про Why outbox instead of direct Celery publish за 60 секунд: определение, механизм, пример, ограничение.
+Возьмите `deliver_once` из queue_app/outbox.py. Найдите три разные транзакции: producer, receiver, ack. Уберите receiver dedup в своей копии и повторите timeout-after-commit test: два эффекта покажут, почему одной Celery retry недостаточно.
 
 ## Вопросы с собеседований
 
-### Основной вопрос
-
-Что такое Why outbox instead of direct Celery publish и какой механизм здесь важно понимать Junior-разработчику?
-
-### Дополнительный вопрос
-
-Какое ограничение или типичная ошибка относится именно к теме Why outbox instead of direct Celery publish?
-
-Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+1. Решает ли on_commit callback потерю publish?
+2. Можно ли сочетать outbox и Celery?
 
 ## Хорошие ответы
 
-### Короткий ответ
+<details>
+<summary>Раскрыть ответы</summary>
 
-Why outbox instead of direct Celery publish: это отдельный технический контракт
+Он не публикует до COMMIT, но process crash после COMMIT до callback всё ещё теряет событие. Durable outbox сохраняет intent.
 
-### Нормальный ответ уровня Junior
+Да. Outbox хранит локальный durable intent, relay публикует Celery task, consumer защищает business effect от повторов.
 
-> Why outbox instead of direct Celery publish — тема, в которой я сначала фиксирую `publish after commit can be lost`, затем объясняю `publish before commit can observe rolled-back state` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
-
-### Углубление / дополнительный вопрос
-
-**Какое ограничение или типичная ошибка относится именно к теме Why outbox instead of direct Celery publish?**
-
-Нужно назвать конкретный сценарий ошибки и способ его проверить.
+</details>
 
 ## Критерии хорошего ответа
 
-### Что обязательно упомянуть
+<details>
+<summary>Раскрыть критерии</summary>
 
-- publish after commit can be lost
-- публикация до фиксации может увидеть состояние, которое затем будет отменено
-- outbox closes atomicity gap
-- Celery всё ещё может быть слоем доставки и выполнения
+Укажите transaction boundary, ownership, возможный повтор и наблюдаемое состояние после сбоя. Назовите конкретное ограничение этого механизма и соответствующий исполняемый тест.
 
-### Что улучшит ответ
-
-- один короткий пример с результатом;
-- одно ограничение или характерная ошибка именно этой темы;
-- пример из backend-разработки только при естественной связи.
-
-### Частые неправильные ответы
-
-- Игнорировать ограничение механизма и проверять только основной сценарий.
-- пересказ одного определения без механизма или примера.
-
-### Дополнительный вопрос
-
-- Какое ограничение или типичная ошибка относится именно к теме Why outbox instead of direct Celery publish?
+</details>
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Why outbox instead of direct Celery publish**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
+Возьмите `deliver_once` из queue_app/outbox.py. Найдите три разные транзакции: producer, receiver, ack. Уберите receiver dedup в своей копии и повторите timeout-after-commit test: два эффекта покажут, почему одной Celery retry недостаточно.
+
+Внесите изменение в свою копию проекта и запустите соответствующий integration test. Критерий успеха — сохранённый invariant и ожидаемый failure при намеренно сломанной границе; текстовое объяснение автоматически не оценивается.
 
 ## Шпаргалка
 
-Перед собеседованием запомни:
-
-- **Что это:** Why outbox instead of direct Celery publish: это отдельный технический контракт
-- **Механизм:** Между DB commit и publish есть atomicity gap; outbox переносит событие в ту же transaction.
-- **Ограничение:** Игнорировать ограничение механизма и проверять только основной сценарий.
-- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
+Dual write имеет два независимых результата. Outbox переносит атомарную часть в одну БД: business state + intent. Relay может публиковать через Celery; consumer по-прежнему обязан безопасно принимать повтор. Подтверждение broker не является общей DB/broker транзакцией.
 
 ## Источники
 
-Материал написан своими словами и сверён с актуальными разделами официальной документации:
+- [Celery 5.5.3: tasks / database transactions](https://docs.celeryq.dev/en/v5.5.3/userguide/tasks.html).
+- [PostgreSQL 17: transaction tutorial](https://www.postgresql.org/docs/17/tutorial-transactions.html).
 
-- [Celery tasks](https://docs.celeryq.dev/en/stable/userguide/tasks.html)
-- [Kafka concepts](https://kafka.apache.org/documentation/#intro_concepts_and_terms)
-
-Последняя проверка версий: **2026-08-27**.
+Официальные секции сверены 2026-11-16. Исполнение проекта: PostgreSQL 17.11, SQLAlchemy 2.0.43, FastAPI 0.116.1; comparison Celery 5.5.3, Redis 7.4.12, RabbitMQ 4.1.8, Kafka 4.1.0. Точные pins находятся в проекте. Страница latest может меняться: проверенный код и версии указаны отдельно.

@@ -5,8 +5,8 @@ Pythoria — локальная платформа подготовки к со�
 ## Что уже работает
 
 - полная taxonomy из 406 стабильных lesson IDs в 33 stages;
-- 361 опубликованный урок; неподготовленные темы остаются `planned` и не открывают пустые страницы;
-- 63 рабочие Python/FastAPI/Pydantic/SQLAlchemy/Alembic задачи со starter code, solutions и hidden pytest tests;
+- 366 опубликованных уроков; неподготовленные темы остаются `planned` и не открывают пустые страницы;
+- 68 рабочих Python/FastAPI/Pydantic/SQLAlchemy/Alembic задачи со starter code, solutions и hidden pytest tests;
 - 40 Python code-prediction snippets, 12 asyncio-задач, 50 PostgreSQL practice records (23 задачи подключены к SQL Lab), 59 debugging и 20 architecture scenarios;
 - 20 interview sets, включая 25-вопросный Full Junior Interview, Crash Course и Resume Defense;
 - Markdown с заголовками, списками, GFM-таблицами, цитатами/callouts, inline code и подсвеченными Python-блоками;
@@ -315,6 +315,21 @@ SQL Lab работает в уроках 10.2 (SELECT/AS), 10.3 (WHERE), 10.4 (N
 SKIP LOCKED, deadlock, SERIALIZABLE и exclusion conflict. Старые SQL/Python Runner
 сохраняют прежние ограничения. CLI не начисляет XP и не пишет в SQLite Pythoria.
 
+## Workers and durable jobs (Phase 8C)
+
+Все 12 уроков Stage 20 переработаны: BackgroundTasks, Celery, Redis/RabbitMQ/Kafka,
+retry, idempotency, periodic jobs, outbox и отдельный раздел о lease/heartbeat/fencing.
+Пять новых задач работают в обычном четырёхсекундном Python Run/Check.
+
+[Durable Training Job Queue](projects/durable_queue/README.md) — отдельный локальный
+FastAPI/PostgreSQL/SQLAlchemy проект с несколькими worker processes, atomic claim,
+восстановлением после crash и защитой от stale owner. Реальные project/broker tests:
+`scripts/test_durable_queue.sh`, `scripts/test_queue_brokers.sh`.
+Проверка persistent-volume restart: `python3 projects/durable_queue/check_restart.py`.
+Проверенные сценарии и ограничения: [Phase 8C verification](docs/PHASE8C_VERIFICATION.md).
+Эти Docker-среды не подключаются к SQLite Pythoria; Python Runner сохраняет прежние
+ограничения сети, памяти и времени.
+
 ## Priorities and planned content
 
 - `P0` — обязательно для уверенного Junior interview;
@@ -385,4 +400,4 @@ End-to-end smoke-test для уже запущенного стека:
 python scripts/smoke_test.py
 ```
 
-Smoke-test проверяет frontend response, backend/runner health, 361 published lessons, 20 interview sets, сохранение файлов, stdout, SyntaxError, failed/passed hidden tests, terminal и persistent progress.
+Smoke-test проверяет frontend response, backend/runner health, 366 published lessons, 20 interview sets, сохранение файлов, stdout, SyntaxError, failed/passed hidden tests, terminal и persistent progress.

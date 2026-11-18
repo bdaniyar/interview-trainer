@@ -1,0 +1,82 @@
+[
+  {
+    "level": "normal",
+    "priority": "P2",
+    "interview_probability": "medium",
+    "tags": [
+      "stage-20"
+    ],
+    "sets": [
+      "stage-20",
+      "full-junior-backend"
+    ],
+    "question": "Почему одного lease_until недостаточно для stale protection?",
+    "answer": [
+      "После истечения lease появляется новый owner; старый процесс может вернуться. Generation и guarded UPDATE отличают эпохи владения и отклоняют stale finish."
+    ],
+    "short_answer": "После истечения lease появляется новый owner; старый процесс может вернуться. Generation и guarded UPDATE отличают эпохи владения и отклоняют stale finish.",
+    "junior_answer": "После истечения lease появляется новый owner; старый процесс может вернуться. Generation и guarded UPDATE отличают эпохи владения и отклоняют stale finish.",
+    "follow_up_question": "Как это проверяется в проекте Durable Training Job Queue?",
+    "follow_up_answer": "At-least-once execution допускает несколько вычислений, но один защищённый локальный effect. Exactly-once нужно всегда уточнять по границе: наша транзакция не охватывает arbitrary external service.",
+    "follow_ups": [
+      "Как это проверяется в проекте Durable Training Job Queue?"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "После истечения lease появляется новый owner; старый процесс может вернуться. Generation и guarded UPDATE отличают эпохи владения и отклоняют stale finish."
+      ],
+      "good_additions": [
+        "At-least-once execution допускает несколько вычислений, но один защищённый локальный effect. Exactly-once нужно всегда уточнять по границе: наша транзакция не охватывает arbitrary external service."
+      ],
+      "common_wrong_answers": [
+        "Наличие broker автоматически делает внешний business effect exactly-once."
+      ],
+      "red_flags": [
+        "Выдаёт process-local callback за durable выполнение."
+      ],
+      "follow_up_questions": [
+        "Как это проверяется в проекте Durable Training Job Queue?"
+      ]
+    }
+  },
+  {
+    "level": "follow_up",
+    "priority": "P2",
+    "interview_probability": "medium",
+    "tags": [
+      "stage-20"
+    ],
+    "sets": [
+      "stage-20",
+      "full-junior-backend"
+    ],
+    "question": "Может ли lease предотвратить любой внешний дубль?",
+    "answer": [
+      "Нет. Он защищает только ресурсы, проверяющие ownership/fencing. Внешний сервис должен поддерживать свой idempotency/fencing contract."
+    ],
+    "short_answer": "Нет. Он защищает только ресурсы, проверяющие ownership/fencing. Внешний сервис должен поддерживать свой idempotency/fencing contract.",
+    "junior_answer": "Нет. Он защищает только ресурсы, проверяющие ownership/fencing. Внешний сервис должен поддерживать свой idempotency/fencing contract.",
+    "follow_up_question": "Как это проверяется в проекте Durable Training Job Queue?",
+    "follow_up_answer": "At-least-once execution допускает несколько вычислений, но один защищённый локальный effect. Exactly-once нужно всегда уточнять по границе: наша транзакция не охватывает arbitrary external service.",
+    "follow_ups": [
+      "Как это проверяется в проекте Durable Training Job Queue?"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "Нет. Он защищает только ресурсы, проверяющие ownership/fencing. Внешний сервис должен поддерживать свой idempotency/fencing contract."
+      ],
+      "good_additions": [
+        "At-least-once execution допускает несколько вычислений, но один защищённый локальный effect. Exactly-once нужно всегда уточнять по границе: наша транзакция не охватывает arbitrary external service."
+      ],
+      "common_wrong_answers": [
+        "Наличие broker автоматически делает внешний business effect exactly-once."
+      ],
+      "red_flags": [
+        "Выдаёт process-local callback за durable выполнение."
+      ],
+      "follow_up_questions": [
+        "Как это проверяется в проекте Durable Training Job Queue?"
+      ]
+    }
+  }
+]

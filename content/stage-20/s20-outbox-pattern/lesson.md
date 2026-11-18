@@ -1,170 +1,101 @@
 # Outbox pattern
 
-> [!IMPORTANT]
-> **P1 · вероятность на интервью: high · 10 минут.** Background work/outbox/Celery нужны для защиты фактических project claims; broker depth ниже core.
+## Суть
+
+После COMMIT заказа нужно отправить событие. Если процесс умрёт между COMMIT и publish, событие потеряется. Если publish сделать раньше COMMIT, consumer может увидеть событие заказа, который затем откатился.
 
 ## Учебные цели
 
-После урока ты сможешь:
+Сохранить бизнес-изменение вместе с намерением отправить событие. Проследить relay после падения producer и повтор после неизвестного HTTP-результата, не обещая общей транзакции двух систем.
 
-- восстановить mental model темы **Outbox pattern**, а не только запомнить термин;
-- прочитать и изменить короткий пример для `business row + outbox row in one DB transaction`;
-- распознать характерную ошибку и объяснить причину;
-- дать реалистичный ответ уровня Junior и выдержать follow-up.
+## Зачем это нужно backend-разработчику
+
+Для события `event-42` нарисуйте три точки падения: до COMMIT, после COMMIT до send, после receiver COMMIT до ack. Для каждой назовите состояние job/outbox/receiver. Запустите реальные outbox tests, затем в копии перенесите INSERT outbox за границу транзакции: rollback test должен обнаружить разрыв.
 
 ## Теория
 
 ### Что это
 
-Тема **Outbox pattern** описывает отдельный контракт backend-разработки.
+После COMMIT заказа нужно отправить событие. Если процесс умрёт между COMMIT и publish, событие потеряется. Если publish сделать раньше COMMIT, consumer может увидеть событие заказа, который затем откатился.
 
 ### Как работает
 
-Разложи механизм на вход, изменение состояния, наблюдаемый результат и специфичный для темы сценарий ошибки.
+Outbox помещает business row и event row в одну локальную DB-транзакцию. После COMMIT отдельный relay выбирает недоставленные события, отправляет и отмечает результат. Если producer падает, строки остаются; если транзакция откатывается, не остаётся ни job, ни события.
 
-**бизнес-запись и запись outbox в одной транзакции БД.** Transaction задаёт атомарную границу: либо все связанные изменения становятся видимыми, либо выполняется rollback.
+Отметить delivered и отправить HTTP атомарно обычной PostgreSQL-транзакцией нельзя. Relay может получить успешный response и умереть до ack: следующий relay отправит дубль. Поэтому event_id стабилен, а receiver хранит inbox/dedup ledger вместе со своим business effect. В проекте claim_event и ack_event fenced generation защищают от старого relay.
 
-**worker.** `worker` является этапом delivery от DB commit до side effect, где возможны duplicate, retry и idempotency requirements.
-
-**at-least-once.** `at-least-once` является этапом delivery от DB commit до side effect, где возможны duplicate, retry и idempotency requirements.
-
-**retry.** Retry подходит для transient failure, ограничивается числом попыток и backoff с jitter; permanent errors нужно возвращать сразу.
-
-**idempotent consumer.** Идемпотентность означает, что повтор одного логического запроса не создаёт новый эффект; обычно её поддерживают ключом и ограничением уникальности.
-
-**dual-write problem.** `dual-write problem` является этапом delivery от DB commit до side effect, где возможны duplicate, retry и idempotency requirements.
-
+Не удерживайте DB transaction через remote call: это долго держит locks и соединения, но не устраняет неизвестный исход HTTP. Сначала короткий claim COMMIT, затем send, затем короткий guarded ack. Outbox требует наблюдения за backlog, age, retry и poison events.
 
 ### Важный нюанс / ограничение
 
-Граница Junior: уверенно объясняй `business row + outbox row in one DB transaction` и `worker` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
-
-### Где используется в backend
-
-В backend эта тема важна в том месте, где применяется `business row + outbox row in one DB transaction`; проверяй именно наблюдаемый contract, а не название инструмента.
+Outbox обеспечивает атомарность записи intent с локальным бизнес-состоянием. Доставка обычно at-least-once, внешний эффект требует собственного idempotency contract. Удаление outbox до подтверждения может потерять событие.
 
 ## Модель понимания
 
-Между DB commit и publish есть atomicity gap; outbox переносит событие в ту же transaction.
-
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
+Отмечайте отдельно приём работы, владение ею и COMMIT эффекта. Для каждого сбоя подпишите, какие данные уже устойчивы и кто имеет право повторить операцию. Сопоставьте этот путь с конкретным тестом проекта, а не только с названием framework.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
-- бизнес-запись и запись outbox в одной транзакции БД
-- worker
-- at-least-once
-- retry
-
-### Полезно
-
-- idempotent consumer
-- dual-write problem
-
-### Можно не учить глубоко
-
-- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
+Relay берёт durable intent, освобождает транзакцию перед сетью и подтверждает доставку отдельно. Event ID сохраняется между повторами. Lease/generation защищают состояние relay, а inbox/unique business key — состояние receiver; это разные guards.
 
 ## Примеры кода
 
-### Outbox pattern: отдельный пример
-
-```python
-def example_s20_outbox_pattern() -> tuple[str, ...]:
-    # Outbox pattern: проверяем отдельный contract урока.
-    return ('business row + outbox row in one DB transaction', 'worker', 'at-least-once', 'retry',)
-
-assert example_s20_outbox_pattern()
+```sh
+docker compose -f projects/durable_queue/compose.test.yml run --rm tests pytest -q -p no:cacheprovider tests -k outbox
 ```
 
-Проследи delivery, duplicate, retry, idempotency и atomicity gap после DB commit.
+Сначала соберите test image и поднимите зависимости через scripts/test_durable_queue.sh. Тесты внедряют сбой между INSERT job и outbox и после их COMMIT. Ожидание: rollback оставляет 0 jobs/0 events; committed job остаётся с доступным событием для другого relay.
+
+Полный исполняемый проект и команды проверки: `projects/durable_queue/README.md`. Docker-практика выполняется отдельно от четырёхсекундного networkless Python Runner.
 
 ## Типичные ошибки
 
-### Ошибка 1
-
-Игнорировать ограничение механизма и проверять только основной сценарий.
+Создать outbox после отдельного COMMIT заказа — снова открыть окно потери. Удалить intent до отправки — потерять его при crash. Создать новый event ID на retry — обойти inbox. Держать row lock во время HTTP — связать доступность БД с медленным downstream.
 
 ## Практика
 
-**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для `business row + outbox row in one DB transaction` до запуска.
-
-**B · Найди ошибку.** Найди нарушение `worker` и объясни конкретное последствие.
-
-**E · Ответ на собеседовании.** Дай ответ про Outbox pattern за 60 секунд: определение, механизм, пример, ограничение.
+Для события `event-42` нарисуйте три точки падения: до COMMIT, после COMMIT до send, после receiver COMMIT до ack. Для каждой назовите состояние job/outbox/receiver. Запустите реальные outbox tests, затем в копии перенесите INSERT outbox за границу транзакции: rollback test должен обнаружить разрыв.
 
 ## Вопросы с собеседований
 
-### Основной вопрос
-
-Что такое Outbox pattern и какой механизм здесь важно понимать Junior-разработчику?
-
-### Дополнительный вопрос
-
-Какое ограничение или типичная ошибка относится именно к теме Outbox pattern?
-
-Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+1. Что атомарно гарантирует outbox?
+2. Почему receiver всё равно должен дедуплицировать?
 
 ## Хорошие ответы
 
-### Короткий ответ
+<details>
+<summary>Раскрыть ответы</summary>
 
-Outbox pattern: это отдельный технический контракт
+Business row и event intent фиксируются вместе в одной БД. Сам remote publish в эту транзакцию не входит.
 
-### Нормальный ответ уровня Junior
+Relay может умереть после remote success до локального ack. Повтор того же event_id должен дать один business effect.
 
-> Outbox pattern — тема, в которой я сначала фиксирую `business row + outbox row in one DB transaction`, затем объясняю `worker` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма
-
-### Углубление / дополнительный вопрос
-
-**Какое ограничение или типичная ошибка относится именно к теме Outbox pattern?**
-
-Нужно назвать конкретный сценарий ошибки и способ его проверить.
+</details>
 
 ## Критерии хорошего ответа
 
-### Что обязательно упомянуть
+<details>
+<summary>Раскрыть критерии</summary>
 
-- бизнес-запись и запись outbox в одной транзакции БД
-- worker
-- at-least-once
-- retry
+Укажите transaction boundary, ownership, возможный повтор и наблюдаемое состояние после сбоя. Назовите конкретное ограничение этого механизма и соответствующий исполняемый тест.
 
-### Что улучшит ответ
-
-- один короткий пример с результатом;
-- одно ограничение или характерная ошибка именно этой темы;
-- пример из backend-разработки только при естественной связи.
-
-### Частые неправильные ответы
-
-- Игнорировать ограничение механизма и проверять только основной сценарий.
-- пересказ одного определения без механизма или примера.
-
-### Дополнительный вопрос
-
-- Какое ограничение или типичная ошибка относится именно к теме Outbox pattern?
+</details>
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Outbox pattern**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
+Для события `event-42` нарисуйте три точки падения: до COMMIT, после COMMIT до send, после receiver COMMIT до ack. Для каждой назовите состояние job/outbox/receiver. Запустите реальные outbox tests, затем в копии перенесите INSERT outbox за границу транзакции: rollback test должен обнаружить разрыв.
+
+Внесите изменение в свою копию проекта и запустите соответствующий integration test. Критерий успеха — сохранённый invariant и ожидаемый failure при намеренно сломанной границе; текстовое объяснение автоматически не оценивается.
 
 ## Шпаргалка
 
-Перед собеседованием запомни:
-
-- **Что это:** Outbox pattern: это отдельный технический контракт
-- **Механизм:** Между DB commit и publish есть atomicity gap; outbox переносит событие в ту же transaction.
-- **Ограничение:** Игнорировать ограничение механизма и проверять только основной сценарий.
-- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
+Business row + intent — один COMMIT. Claim intent, HTTP и ack — отдельные шаги. Crash между ними может вызвать повтор, поэтому event ID стабилен и receiver дедуплицирует эффект. Следите за возрастом pending intent и terminal failures, а не только за числом отправок.
 
 ## Источники
 
-Материал написан своими словами и сверён с актуальными разделами официальной документации:
+- [PostgreSQL 17: transactions](https://www.postgresql.org/docs/17/tutorial-transactions.html).
+- [SQLAlchemy 2.0: Engine.begin](https://docs.sqlalchemy.org/en/20/core/connections.html#connect-and-begin-once-from-the-engine).
 
-- [Celery tasks](https://docs.celeryq.dev/en/stable/userguide/tasks.html)
-- [Kafka concepts](https://kafka.apache.org/documentation/#intro_concepts_and_terms)
-
-Последняя проверка версий: **2026-08-27**.
+Официальные секции сверены 2026-11-16. Исполнение проекта: PostgreSQL 17.11, SQLAlchemy 2.0.43, FastAPI 0.116.1; comparison Celery 5.5.3, Redis 7.4.12, RabbitMQ 4.1.8, Kafka 4.1.0. Точные pins находятся в проекте. Страница latest может меняться: проверенный код и версии указаны отдельно.

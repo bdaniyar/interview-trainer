@@ -6,8 +6,8 @@
   "module_title": "Этап 20 · Background Work, Celery and Message Brokers",
   "module_order": 20,
   "order": 262,
-  "duration": 12,
-  "estimated_minutes": 12,
+  "duration": 40,
+  "estimated_minutes": 40,
   "xp": 5,
   "topics": [
     "latency",
@@ -16,7 +16,7 @@
     "retry",
     "transaction boundary."
   ],
-  "description": "P0 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+  "description": "Представьте POST /orders: заказ должен сохраниться до успешного ответа, а письмо можно отправить позже. Перенести работу в фон — значит изменить момент и место выполнения; это не создаёт сохранность задания автоматически.",
   "has_task": false,
   "has_solution": false,
   "priority": "P0",
@@ -44,6 +44,7 @@
     "interview_crash_course"
   ],
   "content_status": "complete",
-  "last_verified": "2026-08-27",
-  "generated_by": "populate_curriculum.py"
+  "last_verified": "2026-11-17",
+  "generated_by": "populate_curriculum.py",
+  "content_source": "curated"
 }

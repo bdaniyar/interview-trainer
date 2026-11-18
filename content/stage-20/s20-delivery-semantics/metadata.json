@@ -6,8 +6,8 @@
   "module_title": "Этап 20 · Background Work, Celery and Message Brokers",
   "module_order": 20,
   "order": 273,
-  "duration": 10,
-  "estimated_minutes": 10,
+  "duration": 40,
+  "estimated_minutes": 40,
   "xp": 5,
   "topics": [
     "at-most-once",
@@ -15,9 +15,9 @@
     "exactly-once claims require careful scope",
     "application idempotency."
   ],
-  "description": "P2 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
-  "has_task": false,
-  "has_solution": false,
+  "description": "Сообщение и бизнес-эффект — разные объекты. Надёжность требует описать, кто имеет право выполнять работу, что происходит после падения и как повтор влияет на результат. Здесь собран отдельный advanced worker protocol: atomic claim, lease, heartbeat и fencing.",
+  "has_task": true,
+  "has_solution": true,
   "priority": "P2",
   "priority_note": "P2 | medium",
   "interview_probability": "medium",
@@ -35,12 +35,14 @@
   ],
   "modes": [
     "learn",
-    "interview"
+    "interview",
+    "practice"
   ],
   "tracks": [
     "full"
   ],
-  "content_status": "planned",
-  "last_verified": "2026-08-27",
-  "generated_by": "populate_curriculum.py"
+  "content_status": "complete",
+  "last_verified": "2026-11-17",
+  "generated_by": "populate_curriculum.py",
+  "content_source": "curated"
 }

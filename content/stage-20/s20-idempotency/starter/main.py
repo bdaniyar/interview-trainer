@@ -1,3 +1,2 @@
-"""Практическая заметка к уроку: Idempotency."""
-
-# Автоматическая coding-задача для этого урока не требуется.
+def fingerprint_request(payload):
+    raise NotImplementedError("Implement the lesson contract")

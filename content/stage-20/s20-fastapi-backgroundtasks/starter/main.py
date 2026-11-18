@@ -1,3 +1,2 @@
-"""Практическая заметка к уроку: FastAPI BackgroundTasks."""
-
-# Автоматическая coding-задача для этого урока не требуется.
+def make_app(sink):
+    raise NotImplementedError("Implement the lesson contract")

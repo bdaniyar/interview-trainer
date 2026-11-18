@@ -1,0 +1,82 @@
+[
+  {
+    "level": "normal",
+    "priority": "P2",
+    "interview_probability": "medium",
+    "tags": [
+      "stage-20"
+    ],
+    "sets": [
+      "stage-20",
+      "full-junior-backend"
+    ],
+    "question": "Чем consumer group отличается от отдельной очереди для каждого читателя?",
+    "answer": [
+      "Group распределяет partition ownership и offsets; другая group может независимо читать тот же retained log."
+    ],
+    "short_answer": "Group распределяет partition ownership и offsets; другая group может независимо читать тот же retained log.",
+    "junior_answer": "Group распределяет partition ownership и offsets; другая group может независимо читать тот же retained log.",
+    "follow_up_question": "Как это проверяется в проекте Durable Training Job Queue?",
+    "follow_up_answer": "Лаборатория использует одну partition и два consumer groups: она доказывает retained replay и порядок этих двух records. Она не тестирует replicated cluster, rebalance или Kafka exactly-once transactions.",
+    "follow_ups": [
+      "Как это проверяется в проекте Durable Training Job Queue?"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "Group распределяет partition ownership и offsets; другая group может независимо читать тот же retained log."
+      ],
+      "good_additions": [
+        "Лаборатория использует одну partition и два consumer groups: она доказывает retained replay и порядок этих двух records. Она не тестирует replicated cluster, rebalance или Kafka exactly-once transactions."
+      ],
+      "common_wrong_answers": [
+        "Наличие broker автоматически делает внешний business effect exactly-once."
+      ],
+      "red_flags": [
+        "Выдаёт process-local callback за durable выполнение."
+      ],
+      "follow_up_questions": [
+        "Как это проверяется в проекте Durable Training Job Queue?"
+      ]
+    }
+  },
+  {
+    "level": "follow_up",
+    "priority": "P2",
+    "interview_probability": "medium",
+    "tags": [
+      "stage-20"
+    ],
+    "sets": [
+      "stage-20",
+      "full-junior-backend"
+    ],
+    "question": "Делает ли offset commit внешний SQL effect атомарным?",
+    "answer": [
+      "Нет. Нужно определить границу consumer business transaction и дедупликацию; Kafka offset не является частью обычной PostgreSQL-транзакции."
+    ],
+    "short_answer": "Нет. Нужно определить границу consumer business transaction и дедупликацию; Kafka offset не является частью обычной PostgreSQL-транзакции.",
+    "junior_answer": "Нет. Нужно определить границу consumer business transaction и дедупликацию; Kafka offset не является частью обычной PostgreSQL-транзакции.",
+    "follow_up_question": "Как это проверяется в проекте Durable Training Job Queue?",
+    "follow_up_answer": "Лаборатория использует одну partition и два consumer groups: она доказывает retained replay и порядок этих двух records. Она не тестирует replicated cluster, rebalance или Kafka exactly-once transactions.",
+    "follow_ups": [
+      "Как это проверяется в проекте Durable Training Job Queue?"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "Нет. Нужно определить границу consumer business transaction и дедупликацию; Kafka offset не является частью обычной PostgreSQL-транзакции."
+      ],
+      "good_additions": [
+        "Лаборатория использует одну partition и два consumer groups: она доказывает retained replay и порядок этих двух records. Она не тестирует replicated cluster, rebalance или Kafka exactly-once transactions."
+      ],
+      "common_wrong_answers": [
+        "Наличие broker автоматически делает внешний business effect exactly-once."
+      ],
+      "red_flags": [
+        "Выдаёт process-local callback за durable выполнение."
+      ],
+      "follow_up_questions": [
+        "Как это проверяется в проекте Durable Training Job Queue?"
+      ]
+    }
+  }
+]
