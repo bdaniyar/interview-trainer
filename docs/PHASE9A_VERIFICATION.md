@@ -34,17 +34,17 @@ removes abandoned sessions. A/B drafts live in separate browser keys.
 
 - 289 default pytest tests passed. 83 frontend tests, ESLint, TypeScript,
   build and content validation passed.
-- The complete Transaction Lab Docker suite passed 51 tests, including
-  the previous 44 and seven web coordinator cases. Tests exercise an
+- The complete Transaction Lab Docker suite passed 52 tests, including
+  the previous 44 and eight web coordinator cases. Tests exercise an
   actual blocked query, COMMIT and ROLLBACK release, NOWAIT, SQL cancellation,
   independent session state, generation reset, expiry, container crash,
   a paused container deadline and startup reaping.
-- A separate real test verified that the PostgreSQL idle transaction deadline
-  rolls back the holder, marks that connection disconnected and allows the
-  next Run to reconnect. The complete 52-test rerun is in progress.
+- The PostgreSQL idle transaction deadline rolls back the holder, marks that
+  connection disconnected and allows the next Run to reconnect.
 - The disposable HTTP test passed both Check contracts at 6/6 and proved
   replay, changed-body conflict, preserved completion after failed Check,
-  preserved existing files and XP, and replay after backend restart.
+  preserved existing files and XP, completion after Reset, and replay
+  after backend restart.
   It also closes the client socket after submitting a waiting Run. The
   server observes the operation and releases it using the other connection.
 - A focused Chrome run passed native A/B Monaco input, blocking and release,
@@ -55,8 +55,12 @@ removes abandoned sessions. A/B drafts live in separate browser keys.
   JOIN catalog and crash-cleanup checks passed a targeted repeat. The
   complete post-fix run is in progress.
 - The first combined HTTP regression stopped at the old projection task's
-  invalid-cast assertion. The next run records the response on failure.
-  The complete Chrome walkthrough is in progress.
+  invalid-cast assertion. The complete Chrome walkthrough reached seven
+  SELECT tasks before the runner became unavailable. These shared
+  regressions need a serial repeat.
+- The primary Compose project rebuilt and verified both transaction
+  manifests and all 23 pinned SELECT bundles. The SQLite logical digest
+  matched before and after.
 
 Verification found and corrected a Docker auto-remove race in the shared
 Docker coordinator, a product race
