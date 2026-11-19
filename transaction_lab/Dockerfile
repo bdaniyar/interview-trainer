@@ -1,4 +1,5 @@
-FROM pythoria-sql-sandbox:phase1
+ARG TX_BASE=pythoria-sql-sandbox:phase1
+FROM ${TX_BASE}
 USER root
 COPY transaction_lab /opt/runner/transaction_lab
 USER postgres

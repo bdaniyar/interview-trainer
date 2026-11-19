@@ -6,7 +6,7 @@ from threading import Lock
 from time import monotonic, sleep
 
 import docker
-from docker.errors import NotFound
+from docker.errors import APIError, NotFound
 
 from .config import LABEL, PYTHON, RESULT_BYTES, Settings
 from .schemas import Result
@@ -88,7 +88,19 @@ class DockerBackend:
             # Handles originate only from create/list, never from HTTP payloads.
             self.client.containers.get(handle).remove(force=True, v=True)
         except NotFound:
-            pass
+            return
+        except APIError as error:
+            if error.status_code != 409 or "already in progress" not in str(error.explanation):
+                raise
+            # Docker auto-removal can race with explicit cleanup after a crash.
+            deadline = monotonic() + 2
+            while monotonic() < deadline:
+                try:
+                    self.client.containers.get(handle)
+                except NotFound:
+                    return
+                sleep(0.05)
+            raise SandboxUnavailable("SQL sandbox cleanup did not finish") from None
 
     def execute(self, handle, operation, payload):
         def work():

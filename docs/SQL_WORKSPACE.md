@@ -256,15 +256,15 @@ input, Run/Check, closed answers, themes, desktop/mobile results and SQL/Python
 file ownership. The HTTP smoke likewise covers all 23, including SQL outage and
 real Python Run/Check. The user data volume is excluded from both stacks.
 
-Lesson 10.25 remains outside this read-only workspace: writable transactions need
-the separate Phase 8B execution profile. No DML permission was added here.
+## Web Transaction Lab
 
-## Separate transaction profile (Phase 8B)
+Lessons 10.25 and 11.17 use the dedicated
+[Transaction Lab](../transaction_lab/README.md). Two independent connections
+share one disposable PostgreSQL database during a live session. The
+timeline shows typed results, SQLSTATE and lock waiting reported by
+PostgreSQL. Check uses six fresh databases per assignment. It records
+attempts and task completion with UUID replay in the existing SQL tables.
 
-[Transaction Lab](../transaction_lab/README.md) implements bounded writable SQL
-and controlled real A/B timelines for 10.25 and Stage 11. It is a local CLI with
-its own image, policy, roles and disposable databases. It does not turn this
-workspace writable and is not passed to Python `/files` or Python Run/Check.
-The CLI has two state-and-result graded tasks; its completion reports remain
-local JSON, with no SQL XP or SQLite migration. A two-session web editor remains
-an explicit later extension, not a claimed part of this delivery.
+The same workspace exposes the controlled exercises for Stage 11. CLI
+commands remain available and emit local JSON. The SELECT workspace keeps
+its read-only profile and immutable bundles.

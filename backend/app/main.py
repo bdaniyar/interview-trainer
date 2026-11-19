@@ -22,6 +22,7 @@ from .sql_routes import SQLBodyLimit, router as sql_router
 from .sql_runner_client import SqlServiceError
 from .sql_sessions import SQLSessions
 from .sql_check import SQLChecks
+from .transaction_routes import TransactionService, LESSONS as TRANSACTION_LESSONS, router as transaction_router
 
 
 def get_state(db: Session) -> UserState:
@@ -68,10 +69,12 @@ async def lifespan(application: FastAPI):
         db.commit()
     application.state.sql_sessions = SQLSessions()
     application.state.sql_checks = SQLChecks()
+    application.state.transaction_lab = TransactionService(application.state.sql_checks.lock)
     application.state.sql_sessions.start()
     try:
         yield
     finally:
+        await application.state.transaction_lab.client.aclose()
         await application.state.sql_sessions.shutdown()
 
 
@@ -85,6 +88,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 app.include_router(sql_router)
+app.include_router(transaction_router)
 
 
 @app.exception_handler(SqlServiceError)
@@ -94,7 +98,7 @@ async def sql_error(request, exc):
 
 @app.exception_handler(RequestValidationError)
 async def validation_error(request, exc):
-    if request.url.path.startswith("/api/sql/"):
+    if request.url.path.startswith(("/api/sql/", "/api/transactions/")):
         return JSONResponse({"error": {"code": "invalid_request", "message": "Некорректные параметры SQL-запроса."}}, status_code=422)
     return await request_validation_exception_handler(request, exc)
 
@@ -140,7 +144,7 @@ def get_lesson(slug: str, db: Session = Depends(get_db)):
     db.commit()
     return {
         **lesson,
-        "workspace_kind": workspace_kind(lesson),
+        "workspace_kind": "transaction" if slug in TRANSACTION_LESSONS else workspace_kind(lesson),
         "files": files,
         "progress": {
             "status": progress.status,

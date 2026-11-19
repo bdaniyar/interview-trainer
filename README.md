@@ -303,17 +303,17 @@ SQL Lab работает в уроках 10.2 (SELECT/AS), 10.3 (WHERE), 10.4 (N
 
 Запуск: `docker compose up -d --build --wait`. Подробности: [SQL Workspace](docs/SQL_WORKSPACE.md), [реестры, grader и hidden fixtures](docs/SQL_GRADING.md), [границы SQL Runner](sql_runner/README.md). SQL выполняется в PostgreSQL, а SQLite хранит только состояние приложения. FULL JOIN с несовпадениями с обеих сторон разбирается на независимых SELECT/VALUES: FK users/orders не допускает заказа без владельца. Check урока 10.12 оценивает существующую RIGHT JOIN задачу, а FULL-сверка и ON/WHERE остаются дополнительной практикой.
 
-## Transaction Lab (Phase 8B)
+## Transaction Lab
 
-Урок 10.25 и PostgreSQL-темы 11.9–11.13, 11.17 используют отдельный локальный
-профиль `pg-transaction-v1`: DML Run/Check, транзакции и реальные соединения A/B
-с timeline. В текущем варианте это CLI, а не новая web-IDE; SQL нельзя запускать
-через кнопки Python Workspace. [Запуск и контракты](transaction_lab/README.md).
+Откройте 10.25 или тему транзакций Stage 11. В Transaction Lab есть два
+редактора Monaco с отдельными соединениями PostgreSQL. Вы можете удержать
+блокировку в A, запустить B и отпустить блокировку через COMMIT или ROLLBACK.
+Timeline показывает наблюдения PostgreSQL, результаты и SQLSTATE.
 
-Два упражнения проверяют возвращённые строки и состояние всех таблиц на шести
-одноразовых базах каждое. Профиль показывает RC/RR, MVCC, row locks, NOWAIT,
-SKIP LOCKED, deadlock, SERIALIZABLE и exclusion conflict. Старые SQL/Python Runner
-сохраняют прежние ограничения. CLI не начисляет XP и не пишет в SQLite Pythoria.
+Check в 10.25 и 11.17 использует по шесть одноразовых баз. Выполнение
+сохраняется в Pythoria, SQL XP отключён. Черновики A и B сохраняются
+в браузере. Контракты и локальные команды приведены в
+[документации Transaction Lab](transaction_lab/README.md).
 
 ## Workers and durable jobs (Phase 8C)
 

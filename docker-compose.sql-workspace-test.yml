@@ -13,6 +13,17 @@ services:
       interval: 2s
       timeout: 3s
       retries: 15
+  tx-runner:
+    image: pythoria-tx-runner:local
+    environment:
+      TX_RUNNER_NAMESPACE: pythoria-tx-workspace-test
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8003/health', timeout=2)"]
+      interval: 2s
+      timeout: 3s
+      retries: 15
   runner:
     image: pythoria-sql-python-runner:test
     build: ./runner
@@ -30,6 +41,7 @@ services:
       CONTENT_ROOT: /content
       RUNNER_URL: http://runner:8001
       SQL_RUNNER_URL: http://sql-runner:8002
+      TX_RUNNER_URL: http://tx-runner:8003
       FRONTEND_ORIGINS: http://localhost:13000,http://127.0.0.1:13000
     volumes:
       - ./content:/content:ro
@@ -42,6 +54,8 @@ services:
         condition: service_healthy
       runner:
         condition: service_started
+      tx-runner:
+        condition: service_healthy
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health',timeout=2)"]
       interval: 2s

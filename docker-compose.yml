@@ -35,6 +35,40 @@ services:
       retries: 3
     restart: unless-stopped
 
+  tx-sandbox:
+    image: pythoria-transaction-sandbox:phase8b
+    build:
+      context: .
+      dockerfile: transaction_lab/Dockerfile
+      args:
+        TX_BASE: tx-base
+      additional_contexts:
+        tx-base: service:sql-sandbox
+    entrypoint: ["/opt/sql-venv/bin/python", "--version"]
+    network_mode: none
+    read_only: true
+    tmpfs:
+      - /var/lib/postgresql/data:size=1m
+
+  tx-runner:
+    image: pythoria-tx-runner:local
+    build:
+      context: .
+      dockerfile: transaction_lab/controller.Dockerfile
+    environment:
+      TX_RUNNER_NAMESPACE: pythoria-tx-local
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      tx-sandbox:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8003/health', timeout=2)"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+
   sandbox:
     image: pythoria-sandbox:local
     build:
@@ -69,6 +103,7 @@ services:
       CONTENT_ROOT: /content
       RUNNER_URL: http://runner:8001
       SQL_RUNNER_URL: http://sql-runner:8002
+      TX_RUNNER_URL: http://tx-runner:8003
     volumes:
       - pythoria_data:/data
       - ./content:/content:ro
@@ -77,6 +112,7 @@ services:
     depends_on:
       - runner
       - sql-runner
+      - tx-runner
     restart: unless-stopped
 
   frontend:

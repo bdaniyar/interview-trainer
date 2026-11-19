@@ -2,7 +2,7 @@ import { sqlPosition } from '../sqlDraft';
 import type { SqlResult } from '../sqlTypes';
 
 export function SqlResultsTable({ result, query = '', onPosition }: {
-  result: SqlResult | null; query?: string; onPosition?: (position: number) => void;
+  result: Pick<SqlResult, 'columns' | 'rows' | 'rows_returned' | 'has_more' | 'truncated' | 'duration_ms' | 'error'> | null; query?: string; onPosition?: (position: number) => void;
 }) {
   if (!result) return <p className="sql-empty">Выполните запрос, чтобы увидеть результат PostgreSQL.</p>;
   if (result.error) {
