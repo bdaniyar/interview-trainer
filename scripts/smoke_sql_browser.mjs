@@ -45,7 +45,7 @@ try {
   await call('Network.enable');
   await call('Network.setBlockedURLs',{urls:['http://localhost:8080/*','http://127.0.0.1:8080/*','http://localhost:3000/*','http://127.0.0.1:3000/*','http://localhost:3001/*','http://127.0.0.1:3001/*','http://localhost:8081/*','http://127.0.0.1:8081/*']});
   async function evaluate(expression){const r=await call('Runtime.evaluate',{expression,awaitPromise:true,returnByValue:true});if(r.exceptionDetails)throw new Error(JSON.stringify(r.exceptionDetails));return r.result.value;}
-  async function until(expression,timeout=60000){const end=Date.now()+timeout;do{try{if(await evaluate(expression))return;}catch(e){if(!/context|Cannot find/i.test(e.message))throw e;}await new Promise(r=>setTimeout(r,150));}while(Date.now()<end);throw new Error('Timed out: '+expression+'\n'+await evaluate('document.body.innerText.slice(-1800)'));}
+  async function until(expression,timeout=60000){const end=Date.now()+timeout;do{try{if(await evaluate(`Boolean((${expression}))`))return;}catch(e){if(!/context|Cannot find/i.test(e.message))throw e;}await new Promise(r=>setTimeout(r,150));}while(Date.now()<end);throw new Error('Timed out: '+expression+'\n'+await evaluate('document.body.innerText.slice(-1800)'));}
   async function click(selector){await evaluate(`document.querySelector(${JSON.stringify(selector)}).click()`);}
   async function key(key,code,keyCode,modifiers=0){const text=key==='Enter'&&modifiers===0?{text:'\r',unmodifiedText:'\r'}:{};await call('Input.dispatchKeyEvent',{type:'keyDown',key,code,windowsVirtualKeyCode:keyCode,modifiers,...text});await call('Input.dispatchKeyEvent',{type:'keyUp',key,code,windowsVirtualKeyCode:keyCode,modifiers:0});}
   async function type(selector,text){

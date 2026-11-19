@@ -62,4 +62,13 @@ remains disabled.
 - The pool reference passed the real Uvicorn and PostgreSQL check. The
   starter failed at the expected assertion about a checked-out
   connection after the first response.
-- The full transaction, HTTP and browser regressions are in progress.
+- The full transaction lab suite passed all 55 tests.
+- The disposable HTTP test verified all six manifests, real typed rows and
+  repeat plans, the date-boundary adversary, a concurrent stock Check,
+  UUID replay and progress after a backend restart. It also verified
+  unchanged XP and Python files.
+- Chrome verified the index lab at 1720 px and 390 px. It displayed 30
+  real rows, an Index Only Scan and buffers, and verified both accepted
+  and rejected Check, reload, drafts, Reset, Learn/Review, theme and
+  navigation to the pool project.
+- Shared SELECT, Python and browser regression runs use the complete final stack.
