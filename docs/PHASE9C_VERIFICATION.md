@@ -71,4 +71,23 @@ remains disabled.
   real rows, an Index Only Scan and buffers, and verified both accepted
   and rejected Check, reload, drafts, Reset, Learn/Review, theme and
   navigation to the pool project.
-- Shared SELECT, Python and browser regression runs use the complete final stack.
+- The primary Compose project rebuilt and verified all 370 published
+  lessons, 23 original SELECT manifests, two original transaction manifests,
+  six index manifests and the new stock manifest. The named SQLite volume's
+  logical digest matched before and after. The original frontend and API ports
+  were available for the final deployment.
+
+## Shared compatibility
+
+The shared final compatibility runs used the integrated Phase 9 stack.
+The SELECT runner, Python runner and registered grader bundles are identical
+across the three PRs. The serial SELECT Docker suite passed all 216 tests.
+Real HTTP covered all 23 previous SELECT exercises, preserved task progress
+after failed Check and Reset, and verified Python Run and Check during a SELECT
+runner outage. Five worker exercises passed 62 reference checks. The full
+Chrome walkthrough passed all 23 SELECT exercises, the Python and architecture
+lessons, Transaction Lab, JSONB and the Index Lab at desktop and mobile widths.
+
+The first focused index browser run exposed a CDP serialization error
+in the test's DOM predicate. The polling helper now returns a boolean.
+The complete focused and combined Chrome repeats passed.
