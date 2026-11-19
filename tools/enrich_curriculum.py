@@ -93,6 +93,10 @@ def main() -> None:
             if record:
                 path, metadata = record
                 if preserve_bundle(path.parent):
+                    if metadata.get("content_source") == "curated":
+                        # Reviewed dependencies may deliberately skip an unready topic.
+                        # Keep the taxonomy aligned with the authored bundle.
+                        lesson["prerequisites"] = metadata.get("prerequisites", lesson["prerequisites"])
                     continue
                 metadata["interview_probability"] = lesson["interview_probability"]
                 metadata["market_evidence"] = lesson["market_evidence"]
