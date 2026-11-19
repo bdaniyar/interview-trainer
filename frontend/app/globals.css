@@ -366,3 +366,21 @@ button:disabled { cursor: not-allowed; opacity: .48; }
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
+
+.index-workspace .tx-scroll { min-width: 0; }
+.index-workspace pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  color: var(--text);
+  padding: 10px;
+  background: var(--panel-2);
+  border-radius: 6px;
+}
+.index-workspace .index-plan {
+  padding-left: 14px;
+  overflow-wrap: anywhere;
+}
+.index-workspace .index-plan ul {
+  padding-left: clamp(8px, 2vw, 20px);
+}
+.index-workspace .index-plan code { display: block; font-size: 0.85em; }

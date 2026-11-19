@@ -18,6 +18,7 @@ from .models import Attempt, CodeFile, InterviewProgress, LessonProgress, UserSt
 from .runner_client import execute_in_runner
 from .schemas import FilesPayload, InterviewAnswerPayload, PreferencesPayload, RunPayload, TerminalPayload, TheoryPayload
 from .sql_content import workspace_kind
+from .index_routes import SPECS as INDEX_LESSONS, router as index_router
 from .sql_routes import SQLBodyLimit, router as sql_router
 from .sql_runner_client import SqlServiceError
 from .sql_sessions import SQLSessions
@@ -89,6 +90,7 @@ app.add_middleware(
 )
 app.include_router(sql_router)
 app.include_router(transaction_router)
+app.include_router(index_router)
 
 
 @app.exception_handler(SqlServiceError)
@@ -98,7 +100,7 @@ async def sql_error(request, exc):
 
 @app.exception_handler(RequestValidationError)
 async def validation_error(request, exc):
-    if request.url.path.startswith(("/api/sql/", "/api/transactions/")):
+    if request.url.path.startswith(("/api/sql/", "/api/transactions/", "/api/index-lab/")):
         return JSONResponse({"error": {"code": "invalid_request", "message": "Некорректные параметры SQL-запроса."}}, status_code=422)
     return await request_validation_exception_handler(request, exc)
 
@@ -147,6 +149,10 @@ def get_lesson(slug: str, db: Session = Depends(get_db)):
         kind = "transaction"
     elif lesson["module_slug"] == "stage-11":
         kind = "postgres_examples"
+    if slug in INDEX_LESSONS:
+        kind = "index"
+    if slug == "s11-connection-pooling":
+        kind = "project"
     return {
         **lesson,
         "workspace_kind": kind,

@@ -20,6 +20,8 @@ from .sql_schemas import PublicFeedback, RequestModel, SqlCheck, SqlCheckResult,
 router = APIRouter(prefix="/api/transactions", tags=["Transaction Lab"])
 
 TASKS = {
+    "s11-mvcc-basics": ("increment", "pg.tx.11.11.stock-increment-v1",
+        "-- Верните id и остаток после увеличения на 1.\nSELECT id, available FROM inventory WHERE id=1;"),
     "s10-data-modification": ("dml", "pg.write.10.25.status-v1",
         "-- Измените только заказ id=10 и верните id,status.\nSELECT id,status FROM orders WHERE id=10;"),
     "s11-booking-concurrency": ("booking", "pg.tx.11.17.booking-v1",
@@ -103,6 +105,9 @@ class TransactionService:
         if response.is_success and isinstance(result, dict):
             return result
         code = result.get("detail") if isinstance(result, dict) else None
+        if path.startswith("/index/") and code == "policy":
+            raise SqlServiceError(422, "policy",
+                "Проверьте синтаксис упражнения. Здесь доступны только указанные определения индексов и SELECT с EXPLAIN для задач на планы.")
         if isinstance(code, str) and code in MESSAGES:
             raise SqlServiceError(response.status_code, code, MESSAGES[code])
         raise SqlServiceError(503, "runner_unavailable", MESSAGES["runner_unavailable"])
@@ -114,6 +119,10 @@ class TransactionService:
         kind = spec[0]
         task = dict(id=task_id, lesson_id=lesson["id"], revision=1,
                     grader_revision=GRADER, dataset_checksum=TASK_CHECKSUMS[kind])
+        return await self.grade_task(task, payload, "/grade", {"kind": kind, "sql": payload.sql},
+            failed_message="Проверьте возвращённые строки, итог всех таблиц и границы транзакции.")
+
+    async def grade_task(self, task, payload, endpoint, private_payload, *, failed_message):
         digest = sha256(payload.sql.encode()).hexdigest()
         with SessionLocal() as db:
             previous = replay(db, payload.request_id, task, digest)
@@ -126,18 +135,18 @@ class TransactionService:
                 previous = replay(db, payload.request_id, task, digest)
             if previous:
                 return previous
-            grade = await self.call("/grade", {"kind": kind, "sql": payload.sql}, timeout=125)
+            grade = await self.call(endpoint, private_payload, timeout=125)
             count = grade.get("tests_passed")
             if (grade.get("task_id"), grade.get("revision"), grade.get("tests_total")) != (
-                    task_id, 1, 6) or type(count) is not int or not 0 <= count <= 6 or (
+                    task["id"], task["revision"], 6) or type(count) is not int or not 0 <= count <= 6 or (
                     grade.get("passed") is not (count == 6)):
                 raise SqlServiceError(503, "runner_unavailable", MESSAGES["runner_unavailable"])
-            result = SqlCheckResult(request_id=payload.request_id, task_id=task_id,
-                task_revision=1, grader_revision=GRADER, passed=count == 6, tests_passed=count,
+            result = SqlCheckResult(request_id=payload.request_id, task_id=task["id"],
+                task_revision=task["revision"], grader_revision=task["grader_revision"], passed=count == 6, tests_passed=count,
                 tests_total=6, completed=False, feedback=[PublicFeedback(
                     code="passed" if count == 6 else "rows",
                     message="Все проверки пройдены." if count == 6 else
-                    "Проверьте возвращённые строки, итог всех таблиц и границы транзакции.")])
+                    failed_message)])
             with SessionLocal() as db:
                 try:
                     return record(db, task, digest, result)
@@ -152,6 +161,7 @@ class TransactionService:
 # SHA-256 of the immutable Phase 8B fixture source. The image additionally
 # verifies bootstrap / policy / executor compatibility before running any SQL.
 TASK_CHECKSUMS = dict.fromkeys(("dml", "booking"), "69d3b0be8a1a25b7e3290aa5312293edb2bdeefed92c460810ffb1d114bacd8c")
+TASK_CHECKSUMS["increment"] = "e2b9c5e11a2f6ec3e5758b32f569589b2ed7d8f5f00ba7a4968c797b766e3b24"
 
 
 def service(request: Request):

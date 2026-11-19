@@ -36,7 +36,7 @@ services:
     restart: unless-stopped
 
   tx-sandbox:
-    image: pythoria-transaction-sandbox:phase8b
+    image: pythoria-transaction-sandbox:phase9c
     build:
       context: .
       dockerfile: transaction_lab/Dockerfile
@@ -44,6 +44,21 @@ services:
         TX_BASE: tx-base
       additional_contexts:
         tx-base: service:sql-sandbox
+    entrypoint: ["/opt/sql-venv/bin/python", "--version"]
+    network_mode: none
+    read_only: true
+    tmpfs:
+      - /var/lib/postgresql/data:size=1m
+
+  index-sandbox:
+    image: pythoria-index-sandbox:phase9c
+    build:
+      context: .
+      dockerfile: index_lab/Dockerfile
+      args:
+        INDEX_BASE: index-base
+      additional_contexts:
+        index-base: service:sql-sandbox
     entrypoint: ["/opt/sql-venv/bin/python", "--version"]
     network_mode: none
     read_only: true
@@ -61,6 +76,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
       tx-sandbox:
+        condition: service_completed_successfully
+      index-sandbox:
         condition: service_completed_successfully
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8003/health', timeout=2)"]

@@ -7,4 +7,5 @@ COPY sql_runner/__init__.py ./sql_runner/__init__.py
 COPY sql_runner/app ./sql_runner/app
 COPY sql_runner/resources ./sql_runner/resources
 COPY transaction_lab ./transaction_lab
+COPY index_lab ./index_lab
 CMD ["uvicorn", "transaction_lab.web:app", "--host", "0.0.0.0", "--port", "8003", "--workers", "1"]

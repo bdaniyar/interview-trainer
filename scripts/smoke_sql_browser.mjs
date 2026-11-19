@@ -4,6 +4,7 @@ import { constants } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import assert from 'node:assert/strict';
+import { indexWalkthrough } from './smoke_index_browser.mjs';
 import { transactionWalkthrough } from './smoke_transaction_browser.mjs';
 // Run against a disposable workspace only.
 function testOrigin(value) {
@@ -44,7 +45,7 @@ try {
   await call('Network.enable');
   await call('Network.setBlockedURLs',{urls:['http://localhost:8080/*','http://127.0.0.1:8080/*','http://localhost:3000/*','http://127.0.0.1:3000/*','http://localhost:3001/*','http://127.0.0.1:3001/*','http://localhost:8081/*','http://127.0.0.1:8081/*']});
   async function evaluate(expression){const r=await call('Runtime.evaluate',{expression,awaitPromise:true,returnByValue:true});if(r.exceptionDetails)throw new Error(JSON.stringify(r.exceptionDetails));return r.result.value;}
-  async function until(expression,timeout=60000){const end=Date.now()+timeout;do{try{if(await evaluate(expression))return;}catch(e){if(!/context|Cannot find/i.test(e.message))throw e;}await new Promise(r=>setTimeout(r,150));}while(Date.now()<end);throw new Error('Timed out: '+expression+'\n'+await evaluate('document.body.innerText.slice(-1800)'));}
+  async function until(expression,timeout=60000){const end=Date.now()+timeout;do{try{if(await evaluate(`Boolean((${expression}))`))return;}catch(e){if(!/context|Cannot find/i.test(e.message))throw e;}await new Promise(r=>setTimeout(r,150));}while(Date.now()<end);throw new Error('Timed out: '+expression+'\n'+await evaluate('document.body.innerText.slice(-1800)'));}
   async function click(selector){await evaluate(`document.querySelector(${JSON.stringify(selector)}).click()`);}
   async function key(key,code,keyCode,modifiers=0){const text=key==='Enter'&&modifiers===0?{text:'\r',unmodifiedText:'\r'}:{};await call('Input.dispatchKeyEvent',{type:'keyDown',key,code,windowsVirtualKeyCode:keyCode,modifiers,...text});await call('Input.dispatchKeyEvent',{type:'keyUp',key,code,windowsVirtualKeyCode:keyCode,modifiers:0});}
   async function type(selector,text){
@@ -62,7 +63,12 @@ try {
     // reindent subsequent lines. Enter one line at a time with native events;
     // select only the indentation produced by Enter before typing that line.
     const editor=`window.__phase8aMonaco.editor.getEditors().find(e=>e.getDomNode()?.closest('.editor-panel'))`;
-    const configure=`e.updateOptions({autoIndent:'none',autoClosingBrackets:'never',autoClosingQuotes:'never',autoClosingComments:'never',formatOnType:false,formatOnPaste:false});`;
+    // Enter must insert a newline even when a completion is available.
+    const configure=`e.updateOptions({
+      autoIndent:'none', autoClosingBrackets:'never', autoClosingQuotes:'never',
+      autoClosingComments:'never', formatOnType:false, formatOnPaste:false,
+      acceptSuggestionOnEnter:'off', quickSuggestions:false, suggestOnTriggerCharacters:false,
+    });`;
     await call('Page.bringToFront');
     await evaluate(`(()=>{const e=${editor};e.focus();e.setSelection(e.getModel().getFullModelRange());${configure}return true;})()`);
     await key('Backspace','Backspace',8);
@@ -160,7 +166,10 @@ try {
     await evaluate(`Array.from(document.querySelectorAll('button.lesson')).find(b=>b.textContent.includes(${JSON.stringify(title)})).click()`);
     await until(`new URLSearchParams(location.search).get('lesson')===${JSON.stringify(slug)}`);
   }
-  if(process.argv.includes('--transactions-only')){
+  if (process.argv.includes('--index-only')) {
+    await indexWalkthrough({api,evaluate,until,selectLesson,call,size,screenshot});
+    await call('Target.closeTarget',{targetId},null);
+  } else if(process.argv.includes('--transactions-only')){
     await transactionWalkthrough({api,evaluate,until,selectLesson,call,size,screenshot});
     await call('Target.closeTarget',{targetId},null);
   } else {
@@ -303,6 +312,7 @@ try {
   await transactionWalkthrough({api,evaluate,until,selectLesson,call,size,screenshot});
   await selectLesson((await api('/api/lessons/s11-jsonb')).title, 's11-jsonb');
   await stage11Walkthrough();
+  await indexWalkthrough({api,evaluate,until,selectLesson,call,size,screenshot});
   await call('Target.closeTarget',{targetId},null);
   console.log(JSON.stringify({browser:'Headless Chrome',allTwentyThree:true,totalChecks:23,newChecks:11,actualMonacoTyping:true,theme:true,monacoShortcuts:true,desktop1720:true,mobile390:true,mobileVisibleRows:2,explorerSelfFK:true,sqlPythonRoundTrip:true,pythonFilesPreserved:true,draftRestoration:true,sqlXpZero:true}));
   }
