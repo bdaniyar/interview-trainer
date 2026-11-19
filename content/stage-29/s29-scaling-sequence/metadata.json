@@ -6,13 +6,13 @@
   "module_title": "Этап 29 · Junior Backend System Design",
   "module_order": 29,
   "order": 366,
-  "duration": 10,
-  "estimated_minutes": 10,
+  "duration": 45,
+  "estimated_minutes": 45,
   "xp": 5,
   "topics": [
     "Scaling sequence"
   ],
-  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+  "description": "Масштабирование начинается с наблюдаемого bottleneck и нужного service contract. Добавить replicas полезно, когда нагрузка действительно распределяется и общий ресурс не становится следующим ограничением.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",
@@ -40,6 +40,7 @@
     "interview_crash_course"
   ],
   "content_status": "complete",
-  "last_verified": "2026-08-27",
-  "generated_by": "populate_curriculum.py"
+  "last_verified": "2026-11-17",
+  "generated_by": "populate_curriculum.py",
+  "content_source": "curated"
 }

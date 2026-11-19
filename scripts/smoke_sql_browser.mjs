@@ -280,6 +280,30 @@ try {
   await screenshot('/tmp/pythoria-phase8c-worker-mobile.png');
   await size(1720,1050);
   await until(`document.querySelector('.course-sidebar').getBoundingClientRect().left>=-0.5`);
+  for(const slug of ['s27-microservices','s27-repository-pattern','s27-adapter']){
+    const lesson=await api('/api/lessons/'+slug);
+    await selectLesson(lesson.title,slug);
+    await until(`document.body.innerText.includes('architecture_lab') && Array.from(document.querySelectorAll('details')).some(d=>d.querySelector('summary')?.textContent==='Раскрыть ответы')`);
+    const closed=()=>evaluate(`Array.from(document.querySelectorAll('details')).filter(d=>['Раскрыть ответы','Раскрыть критерии'].includes(d.querySelector('summary')?.textContent)).map(d=>d.open)`);
+    assert.deepEqual(await closed(),[false,false]);
+    await evaluate(`Array.from(document.querySelectorAll('button')).find(b=>b.textContent.includes('Повторение')).click()`);
+    assert.deepEqual(await closed(),[false,false]);
+    await evaluate(`Array.from(document.querySelectorAll('button')).find(b=>b.textContent.includes('Обучение')).click()`);
+    if(slug==='s27-microservices'){
+      await evaluate(`document.querySelector('.lesson-reader').scrollTop=0`);
+      await until(`document.querySelector('.lesson-reader').scrollTop===0`);
+      await screenshot('/tmp/pythoria-phase8d-microservices-desktop.png');
+      await size(390,844,true);
+      await until(`document.querySelector('.course-sidebar').getBoundingClientRect().right<=0`);
+      assert.equal(await evaluate(`document.documentElement.scrollWidth<=window.innerWidth`),true);
+      assert.equal(await evaluate(`getComputedStyle(document.querySelector('.lesson-pane')).display!=='none' && document.querySelector('.lesson-pane').getBoundingClientRect().width>300`),true);
+      await screenshot('/tmp/pythoria-phase8d-microservices-mobile.png');
+      await size(1720,1050);
+      await until(`document.querySelector('.course-sidebar').getBoundingClientRect().left>=-0.5`);
+    }
+    console.log(JSON.stringify({architectureLesson:slug,projectPracticeDocumented:true,learnReviewAnswersClosed:true}));
+  }
+  assert.equal((await api('/api/course')).summary.xp,workerXpBefore+100);
   await transactionWalkthrough({api,evaluate,until,selectLesson,call,size,screenshot});
   await selectLesson((await api('/api/lessons/s11-jsonb')).title, 's11-jsonb');
   await stage11Walkthrough();

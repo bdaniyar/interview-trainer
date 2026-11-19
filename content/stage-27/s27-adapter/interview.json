@@ -1,0 +1,80 @@
+[
+  {
+    "level": "normal",
+    "priority": "P2",
+    "tags": [
+      "stage-27"
+    ],
+    "sets": [
+      "stage-27",
+      "full-junior-backend"
+    ],
+    "question": "Что adapter не должен скрывать от application contract?",
+    "answer": [
+      "Transaction boundary, возможный timeout/unknown outcome и смысл успеха. Нельзя выдавать запись outbox за завершённый внешний business effect."
+    ],
+    "short_answer": "Transaction boundary, возможный timeout/unknown outcome и смысл успеха. Нельзя выдавать запись outbox за завершённый внешний business effect.",
+    "junior_answer": "Transaction boundary, возможный timeout/unknown outcome и смысл успеха. Нельзя выдавать запись outbox за завершённый внешний business effect.",
+    "follow_up_question": "Как это проверяется в booking architecture lab?",
+    "follow_up_answer": "Добавьте adapter в своей копии и сохраните rollback contract `record` при исключении. Для HTTP варианта запустите `scripts/test_architecture_lab.sh -k timeout`; покажите, какой компонент хранит stable event_id и где находится receiver dedup.",
+    "follow_ups": [
+      "Как это проверяется в booking architecture lab?"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "Transaction boundary, возможный timeout/unknown outcome и смысл успеха. Нельзя выдавать запись outbox за завершённый внешний business effect."
+      ],
+      "good_additions": [
+        "Одинаковый interface не делает local COMMIT и remote side effect эквивалентными. Название метода и документация должны описывать intent, а tests — фактическую boundary."
+      ],
+      "common_wrong_answers": [
+        "COMMIT в booking service автоматически делает внешний notification атомарным."
+      ],
+      "red_flags": [
+        "Количество контейнеров само по себе доказывает микросервисную архитектуру."
+      ],
+      "follow_up_questions": [
+        "Как это проверяется в booking architecture lab?"
+      ]
+    }
+  },
+  {
+    "level": "follow_up",
+    "priority": "P2",
+    "tags": [
+      "stage-27"
+    ],
+    "sets": [
+      "stage-27",
+      "full-junior-backend"
+    ],
+    "question": "Какой предел гарантии важно назвать в этой теме?",
+    "answer": [
+      "Одинаковый interface не делает local COMMIT и remote side effect эквивалентными. Название метода и документация должны описывать intent, а tests — фактическую boundary."
+    ],
+    "short_answer": "Одинаковый interface не делает local COMMIT и remote side effect эквивалентными. Название метода и документация должны описывать intent, а tests — фактическую boundary.",
+    "junior_answer": "Одинаковый interface не делает local COMMIT и remote side effect эквивалентными. Название метода и документация должны описывать intent, а tests — фактическую boundary.",
+    "follow_up_question": "Как это проверяется в booking architecture lab?",
+    "follow_up_answer": "Добавьте adapter в своей копии и сохраните rollback contract `record` при исключении. Для HTTP варианта запустите `scripts/test_architecture_lab.sh -k timeout`; покажите, какой компонент хранит stable event_id и где находится receiver dedup.",
+    "follow_ups": [
+      "Как это проверяется в booking architecture lab?"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "Одинаковый interface не делает local COMMIT и remote side effect эквивалентными. Название метода и документация должны описывать intent, а tests — фактическую boundary."
+      ],
+      "good_additions": [
+        "Одинаковый interface не делает local COMMIT и remote side effect эквивалентными. Название метода и документация должны описывать intent, а tests — фактическую boundary."
+      ],
+      "common_wrong_answers": [
+        "COMMIT в booking service автоматически делает внешний notification атомарным."
+      ],
+      "red_flags": [
+        "Количество контейнеров само по себе доказывает микросервисную архитектуру."
+      ],
+      "follow_up_questions": [
+        "Как это проверяется в booking architecture lab?"
+      ]
+    }
+  }
+]
