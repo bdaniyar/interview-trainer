@@ -1,0 +1,61 @@
+name: pythoria-architecture-test
+x-runtime: &runtime
+  image: pythoria-architecture:test
+  read_only: true
+  tmpfs: ["/tmp:size=16m"]
+  cap_drop: [ALL]
+  security_opt: ["no-new-privileges:true"]
+  networks: [lab]
+  depends_on:
+    db:
+      condition: service_healthy
+services:
+  db:
+    image: postgres:17@sha256:748a18a54d3842d43bc156f0840d78029b8d349e0feca98c12b9c4ce3404a6b3
+    environment:
+      POSTGRES_PASSWORD: synthetic-bootstrap-only
+    volumes:
+      - ./bootstrap.sql:/docker-entrypoint-initdb.d/01-bootstrap.sql:ro
+      - ./orders.sql:/init/orders.sql:ro
+      - ./notifications.sql:/init/notifications.sql:ro
+    tmpfs: ["/var/lib/postgresql/data:size=256m"]
+    healthcheck:
+      test: ["CMD-SHELL","pg_isready -h 127.0.0.1 -U postgres -d arch_mono"]
+      interval: 2s
+      timeout: 2s
+      retries: 20
+    networks: [lab]
+  orders:
+    <<: *runtime
+    build: .
+    environment:
+      ORDERS_DATABASE_URL: postgresql+psycopg://ordersapp:synthetic-orders-only@db/arch_orders
+  notifications:
+    <<: *runtime
+    command: ["uvicorn","architecture.api:notifications_app","--factory","--host","0.0.0.0","--port","8000"]
+    environment:
+      NOTIFICATIONS_DATABASE_URL: postgresql+psycopg://notifyapp:synthetic-notify-only@db/arch_notify
+  monolith:
+    <<: *runtime
+    environment:
+      MODE: monolith
+      ORDERS_DATABASE_URL: postgresql+psycopg://monoapp:synthetic-mono-only@db/arch_mono
+  tests:
+    <<: *runtime
+    command: ["pytest","-q","-p","no:cacheprovider","tests"]
+    environment:
+      ARCH_PROJECT_TEST: "1"
+      ADMIN_DATABASE_URL: postgresql+psycopg://postgres:synthetic-bootstrap-only@db/postgres
+      ORDERS_DATABASE_URL: postgresql+psycopg://ordersapp:synthetic-orders-only@db/arch_orders
+      NOTIFICATIONS_DATABASE_URL: postgresql+psycopg://notifyapp:synthetic-notify-only@db/arch_notify
+      MONO_DATABASE_URL: postgresql+psycopg://monoapp:synthetic-mono-only@db/arch_mono
+    depends_on:
+      orders:
+        condition: service_started
+      notifications:
+        condition: service_started
+      monolith:
+        condition: service_started
+networks:
+  lab:
+    internal: true

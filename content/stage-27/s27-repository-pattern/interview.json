@@ -1,0 +1,80 @@
+[
+  {
+    "level": "normal",
+    "priority": "P2",
+    "tags": [
+      "stage-27"
+    ],
+    "sets": [
+      "stage-27",
+      "full-junior-backend"
+    ],
+    "question": "Почему repository method не должен всегда сам делать COMMIT?",
+    "answer": [
+      "Несколько операций могут входить в один use case. Общая transaction boundary должна сохранить возможность отката reserve, booking и intent вместе."
+    ],
+    "short_answer": "Несколько операций могут входить в один use case. Общая transaction boundary должна сохранить возможность отката reserve, booking и intent вместе.",
+    "junior_answer": "Несколько операций могут входить в один use case. Общая transaction boundary должна сохранить возможность отката reserve, booking и intent вместе.",
+    "follow_up_question": "Как это проверяется в booking architecture lab?",
+    "follow_up_answer": "Найдите reserve_one в `architecture/orders.py`. В своей копии замените conditional UPDATE на read/compute/write и добавьте синхронизацию двух чтений: double-booking test должен обнаружить проблему. Верните атомарную запись и запустите оба варианта workflow.",
+    "follow_ups": [
+      "Как это проверяется в booking architecture lab?"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "Несколько операций могут входить в один use case. Общая transaction boundary должна сохранить возможность отката reserve, booking и intent вместе."
+      ],
+      "good_additions": [
+        "Абстракция хранения не отменяет знание нужного concurrency contract. Fake in-memory repository не способен доказать поведение PostgreSQL при concurrent UPDATE."
+      ],
+      "common_wrong_answers": [
+        "COMMIT в booking service автоматически делает внешний notification атомарным."
+      ],
+      "red_flags": [
+        "Количество контейнеров само по себе доказывает микросервисную архитектуру."
+      ],
+      "follow_up_questions": [
+        "Как это проверяется в booking architecture lab?"
+      ]
+    }
+  },
+  {
+    "level": "follow_up",
+    "priority": "P2",
+    "tags": [
+      "stage-27"
+    ],
+    "sets": [
+      "stage-27",
+      "full-junior-backend"
+    ],
+    "question": "Какой предел гарантии важно назвать в этой теме?",
+    "answer": [
+      "Абстракция хранения не отменяет знание нужного concurrency contract. Fake in-memory repository не способен доказать поведение PostgreSQL при concurrent UPDATE."
+    ],
+    "short_answer": "Абстракция хранения не отменяет знание нужного concurrency contract. Fake in-memory repository не способен доказать поведение PostgreSQL при concurrent UPDATE.",
+    "junior_answer": "Абстракция хранения не отменяет знание нужного concurrency contract. Fake in-memory repository не способен доказать поведение PostgreSQL при concurrent UPDATE.",
+    "follow_up_question": "Как это проверяется в booking architecture lab?",
+    "follow_up_answer": "Найдите reserve_one в `architecture/orders.py`. В своей копии замените conditional UPDATE на read/compute/write и добавьте синхронизацию двух чтений: double-booking test должен обнаружить проблему. Верните атомарную запись и запустите оба варианта workflow.",
+    "follow_ups": [
+      "Как это проверяется в booking architecture lab?"
+    ],
+    "expected_answer": {
+      "must_mention": [
+        "Абстракция хранения не отменяет знание нужного concurrency contract. Fake in-memory repository не способен доказать поведение PostgreSQL при concurrent UPDATE."
+      ],
+      "good_additions": [
+        "Абстракция хранения не отменяет знание нужного concurrency contract. Fake in-memory repository не способен доказать поведение PostgreSQL при concurrent UPDATE."
+      ],
+      "common_wrong_answers": [
+        "COMMIT в booking service автоматически делает внешний notification атомарным."
+      ],
+      "red_flags": [
+        "Количество контейнеров само по себе доказывает микросервисную архитектуру."
+      ],
+      "follow_up_questions": [
+        "Как это проверяется в booking architecture lab?"
+      ]
+    }
+  }
+]

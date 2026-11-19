@@ -5,7 +5,7 @@ Pythoria — локальная платформа подготовки к со�
 ## Что уже работает
 
 - полная taxonomy из 406 стабильных lesson IDs в 33 stages;
-- 367 опубликованных уроков; неподготовленные темы остаются `planned` и не открывают пустые страницы;
+- 370 опубликованных уроков; неподготовленные темы остаются `planned` и не открывают пустые страницы;
 - 68 рабочих Python/FastAPI/Pydantic/SQLAlchemy/Alembic задачи со starter code, solutions и hidden pytest tests;
 - 40 Python code-prediction snippets, 12 asyncio-задач, 50 PostgreSQL practice records (23 задачи подключены к SQL Lab), 59 debugging и 20 architecture scenarios;
 - 20 interview sets, включая 25-вопросный Full Junior Interview, Crash Course и Resume Defense;
@@ -337,6 +337,22 @@ FastAPI/PostgreSQL/SQLAlchemy проект с несколькими worker proc
 Эти Docker-среды не подключаются к SQLite Pythoria; Python Runner сохраняет прежние
 ограничения сети, памяти и времени.
 
+## Architecture and service boundaries (Phase 8D)
+
+16 конспектов Stage 27/29 разбирают monolith/modular monolith, microservices,
+layered architecture, DI, Repository/Adapter, stateless scaling, booking и outbox.
+Опубликованы подготовленные Microservices, Repository и Adapter; остальные
+неподготовленные темы сохраняют прежний статус.
+
+[Booking architecture lab](projects/architecture_lab/README.md) реализует один
+workflow в двух вариантах: modular monolith и два bounded services. У сервисов
+разные БД/роли, явный HTTP-контракт и outbox/inbox; в монолите booking и notification
+делят одну транзакцию. Сравнение проверяется реальными timeout, duplicate, crash,
+restart и concurrent booking тестами: `scripts/test_architecture_lab.sh`.
+Проверка независимого deployment и сохранности данных:
+`python3 projects/architecture_lab/check_deployment.py`.
+Границы учебного стенда и результаты: [Phase 8D verification](docs/PHASE8D_VERIFICATION.md).
+
 ## Priorities and planned content
 
 - `P0` — обязательно для уверенного Junior interview;
@@ -407,4 +423,4 @@ End-to-end smoke-test для уже запущенного стека:
 python scripts/smoke_test.py
 ```
 
-Smoke-test проверяет frontend response, backend/runner health, 367 published lessons, 20 interview sets, сохранение файлов, stdout, SyntaxError, failed/passed hidden tests, terminal и persistent progress.
+Smoke-test проверяет frontend response, backend/runner health, 370 published lessons, 20 interview sets, сохранение файлов, stdout, SyntaxError, failed/passed hidden tests, terminal и persistent progress.

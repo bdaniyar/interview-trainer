@@ -6,15 +6,15 @@
   "module_title": "Этап 27 · Architecture and Useful Patterns",
   "module_order": 27,
   "order": 337,
-  "duration": 10,
-  "estimated_minutes": 10,
+  "duration": 45,
+  "estimated_minutes": 45,
   "xp": 5,
   "topics": [
     "independent deployment/data/ownership",
     "network/failure/observability cost",
     "not “many folders” or “many technologies”."
   ],
-  "description": "P2 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+  "description": "Микросервис — самостоятельно разворачиваемая часть системы вокруг определённой бизнес-возможности, с явным контрактом и владением своими данными. Несколько контейнеров с общими внутренними таблицами ещё не дают такую независимость.",
   "has_task": false,
   "has_solution": false,
   "priority": "P2",
@@ -34,12 +34,14 @@
   ],
   "modes": [
     "learn",
-    "interview"
+    "interview",
+    "practice"
   ],
   "tracks": [
     "full"
   ],
-  "content_status": "planned",
-  "last_verified": "2026-08-27",
-  "generated_by": "populate_curriculum.py"
+  "content_status": "complete",
+  "last_verified": "2026-11-17",
+  "generated_by": "populate_curriculum.py",
+  "content_source": "curated"
 }

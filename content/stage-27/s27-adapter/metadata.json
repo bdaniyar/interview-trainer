@@ -6,13 +6,13 @@
   "module_title": "Этап 27 · Architecture and Useful Patterns",
   "module_order": 27,
   "order": 346,
-  "duration": 10,
-  "estimated_minutes": 10,
+  "duration": 45,
+  "estimated_minutes": 45,
   "xp": 5,
   "topics": [
     "external API/storage interface."
   ],
-  "description": "P2 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+  "description": "Adapter переводит внешний механизм в контракт, который нужен приложению. BookingEvents.record выражает «сохранить intent события», а реализации выбирают local module или outbox.",
   "has_task": false,
   "has_solution": false,
   "priority": "P2",
@@ -28,16 +28,19 @@
   "why_it_matters": "Помогает объяснить Adapter и применить тему без типичной backend-ошибки.",
   "difficulty": "junior_plus",
   "prerequisites": [
-    "backend-interview.27.11.factory"
+    "backend-interview.27.7.dependency-injection",
+    "backend-interview.27.8.repository-pattern"
   ],
   "modes": [
     "learn",
-    "interview"
+    "interview",
+    "practice"
   ],
   "tracks": [
     "full"
   ],
-  "content_status": "planned",
-  "last_verified": "2026-08-27",
-  "generated_by": "populate_curriculum.py"
+  "content_status": "complete",
+  "last_verified": "2026-11-17",
+  "generated_by": "populate_curriculum.py",
+  "content_source": "curated"
 }
