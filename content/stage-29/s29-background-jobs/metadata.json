@@ -6,8 +6,8 @@
   "module_title": "Этап 29 · Junior Backend System Design",
   "module_order": 29,
   "order": 359,
-  "duration": 10,
-  "estimated_minutes": 10,
+  "duration": 45,
+  "estimated_minutes": 45,
   "xp": 5,
   "topics": [
     "latency",
@@ -15,7 +15,7 @@
     "retries",
     "idempotency."
   ],
-  "description": "P1 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+  "description": "Фоновая работа отделяет принятие business operation от её дальнейшего исполнения. Архитектура должна назвать устойчивый intent, владельца работы, retry budget и наблюдаемое terminal state.",
   "has_task": false,
   "has_solution": false,
   "priority": "P1",
@@ -43,6 +43,7 @@
     "interview_crash_course"
   ],
   "content_status": "complete",
-  "last_verified": "2026-08-27",
-  "generated_by": "populate_curriculum.py"
+  "last_verified": "2026-11-17",
+  "generated_by": "populate_curriculum.py",
+  "content_source": "curated"
 }
