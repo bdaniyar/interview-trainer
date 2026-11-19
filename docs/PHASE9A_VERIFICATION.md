@@ -4,7 +4,8 @@ The baseline is `37d184f2bc06ef4b448e33f5f9a25148f6ea466c` on
 `feat/durable-workers-phase8c`. PR #13 reached main at
 `082aff9081313a2af0a847481901abc8228b1736`. PR #14 was merged into its
 original feature base, where its architecture lessons and project are present.
-The Phase 9A review targets that branch and contains only the Transaction Lab work.
+Phase 9A now targets main independently. The architecture restoration has
+its own review, and the integrated verification tree includes both phases.
 
 ## Transaction Lab
 
