@@ -46,3 +46,18 @@ The FastAPI lesson uses FastAPI 0.116.1 and SQLAlchemy 2.0.43. Links in the
 notes include the reference sections for PostgreSQL 17, SQLAlchemy 2.x,
 FastAPI and PgBouncer. Review date is 18 November 2026. Example checks use
 disposable synthetic data and do not mount the application data volume.
+
+## Shared compatibility
+
+The shared final compatibility runs used the integrated Phase 9 stack.
+The SELECT runner, Python runner and registered grader bundles are identical
+across the three PRs. The serial SELECT Docker suite passed all 216 tests.
+Real HTTP covered all 23 previous SELECT exercises, preserved task progress
+after failed Check and Reset, and verified Python Run and Check during a SELECT
+runner outage. Five worker exercises passed 62 reference checks. The full
+Chrome walkthrough passed all 23 SELECT exercises, the Python and architecture
+lessons, Transaction Lab, JSONB and the Index Lab at desktop and mobile widths.
+
+The existing Transaction Lab code matches Phase 9A. The verified
+lesson examples and the JSONB Chrome run were also executed directly
+on the Phase 9B sources.

@@ -51,13 +51,6 @@ removes abandoned sessions. A/B drafts live in separate browser keys.
   Serializable 40001, valid and invalid checks, Learn/Review, draft and
   completion restoration, theme, desktop/mobile and SQL/Python navigation.
   Desktop and 390 px captures were inspected.
-- The first full SELECT regression recorded 214 passes out of 216. The
-  JOIN catalog and crash-cleanup checks passed a targeted repeat. The
-  complete post-fix run is in progress.
-- The first combined HTTP regression stopped at the old projection task's
-  invalid-cast assertion. The complete Chrome walkthrough reached seven
-  SELECT tasks before the runner became unavailable. These shared
-  regressions need a serial repeat.
 - The primary Compose project rebuilt and verified both transaction
   manifests and all 23 pinned SELECT bundles. The SQLite logical digest
   matched before and after.
@@ -73,3 +66,22 @@ The legacy timeout exception remains distinct.
 The 60-second container lifetime, 5-second idle transaction limit and
 1.5-second lock wait limit carry over from the CLI. Use prepared commands
 for live races or run one of the twelve deterministic demonstrations.
+
+## Shared compatibility
+
+The shared final compatibility runs used the integrated Phase 9 stack.
+The SELECT runner, Python runner and registered grader bundles are identical
+across the three PRs. The serial SELECT Docker suite passed all 216 tests.
+Real HTTP covered all 23 previous SELECT exercises, preserved task progress
+after failed Check and Reset, and verified Python Run and Check during a SELECT
+runner outage. Five worker exercises passed 62 reference checks. The full
+Chrome walkthrough passed all 23 SELECT exercises, the Python and architecture
+lessons, Transaction Lab, JSONB and the Index Lab at desktop and mobile widths.
+
+The initial SELECT run passed 214 of 216 tests. The JOIN catalog and
+crash-cleanup checks passed a targeted repeat. The full serial suite
+then passed both checks, including the shared Docker removal fix. An
+earlier HTTP run stopped at the invalid-cast assertion, and a Chrome
+run stopped when the SELECT runner became unavailable. Both passed
+the final serial repeat. A concurrent SELECT retry was interrupted
+after another runner error and is excluded from the final count.
