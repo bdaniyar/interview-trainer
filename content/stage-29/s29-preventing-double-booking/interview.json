@@ -1,39 +1,35 @@
 [
   {
-    "question": "Что такое Preventing double booking и какой механизм здесь важно понимать Junior-разработчику?",
+    "question": "Когда SERIALIZABLE требует повтор всей транзакции?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "Preventing double booking"
+      "При serialization failure 40001 решение на прежнем snapshot больше нельзя считать корректным. Нужно заново выполнить весь use case с ограниченным retry и тем же idempotency key."
     ],
-    "short_answer": "Preventing double booking: это отдельный технический контракт",
-    "junior_answer": "Preventing double booking — тема, в которой я сначала фиксирую `Preventing double booking`, затем объясняю `Preventing double booking` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
-    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Preventing double booking?",
-    "follow_up_answer": "Нужно назвать конкретный сценарий ошибки и способ его проверить.",
+    "short_answer": "При serialization failure 40001 решение на прежнем snapshot больше нельзя считать корректным. Нужно заново выполнить весь use case с ограниченным retry и тем же idempotency key.",
+    "junior_answer": "При serialization failure 40001 решение на прежнем snapshot больше нельзя считать корректным. Нужно заново выполнить весь use case с ограниченным retry и тем же idempotency key.",
+    "follow_up_question": "Как это проверяется в booking architecture lab?",
+    "follow_up_answer": "Прочитайте Barrier в `test_actual_http_two_requests_do_not_double_book_and_replay_is_stable`. Измените свой вариант алгоритма на unsafe read/compute/write и сделайте barrier после двух чтений; воспроизведите нарушение. Верните atomic UPDATE и один invariant.",
     "expected_answer": {
       "must_mention": [
-        "Preventing double booking"
+        "При serialization failure 40001 решение на прежнем snapshot больше нельзя считать корректным. Нужно заново выполнить весь use case с ограниченным retry и тем же idempotency key."
       ],
       "good_additions": [
-        "короткий рабочий пример",
-        "ограничение или типичная ошибка"
+        "Тест должен использовать независимые соединения и синхронизированный старт, а не два последовательных вызова или ненадёжную задержку."
       ],
-      "common_wrong_answers": [],
-      "red_flags": [],
+      "common_wrong_answers": [
+        "COMMIT в booking service автоматически делает внешний notification атомарным."
+      ],
+      "red_flags": [
+        "Количество контейнеров само по себе доказывает микросервисную архитектуру."
+      ],
       "follow_up_questions": [
-        "Какое ограничение или типичная ошибка относится именно к теме Preventing double booking?"
-      ],
-      "coding_mistakes": [
-        "Игнорировать ограничение механизма и проверять только основной сценарий."
-      ],
-      "assessment_notes": [
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "review_status": "pending-substantive-review"
+        "Как это проверяется в booking architecture lab?"
+      ]
     },
     "follow_ups": [
-      "Какое ограничение или типичная ошибка относится именно к теме Preventing double booking?"
+      "Как это проверяется в booking architecture lab?"
     ],
     "tags": [
       "stage-29",
@@ -46,38 +42,36 @@
     ]
   },
   {
-    "question": "Какое ограничение или типичная ошибка относится именно к теме Preventing double booking?",
+    "question": "Какой предел гарантии важно назвать в этой теме?",
     "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "связать Preventing double booking с коротким рабочим примером",
-      "Нужно назвать конкретный сценарий ошибки и способ его проверить."
+      "Тест должен использовать независимые соединения и синхронизированный старт, а не два последовательных вызова или ненадёжную задержку."
     ],
-    "short_answer": "Нужно назвать конкретный сценарий ошибки и способ его проверить.",
-    "junior_answer": "Нужно назвать конкретный сценарий ошибки и способ его проверить.",
-    "follow_up_question": "Что такое Preventing double booking и какой механизм здесь важно понимать Junior-разработчику?",
-    "follow_up_answer": "Preventing double booking — тема, в которой я сначала фиксирую `Preventing double booking`, затем объясняю `Preventing double booking` на коротком примере. Ключевой механизм: вход преобразуется в наблюдаемый результат по явному контракту Главная практическая ошибка — игнорировать ограничение механизма",
+    "short_answer": "Тест должен использовать независимые соединения и синхронизированный старт, а не два последовательных вызова или ненадёжную задержку.",
+    "junior_answer": "Тест должен использовать независимые соединения и синхронизированный старт, а не два последовательных вызова или ненадёжную задержку.",
+    "follow_up_question": "Как это проверяется в booking architecture lab?",
+    "follow_up_answer": "Прочитайте Barrier в `test_actual_http_two_requests_do_not_double_book_and_replay_is_stable`. Измените свой вариант алгоритма на unsafe read/compute/write и сделайте barrier после двух чтений; воспроизведите нарушение. Верните atomic UPDATE и один invariant.",
     "expected_answer": {
       "must_mention": [
-        "связать Preventing double booking с коротким рабочим примером"
+        "Тест должен использовать независимые соединения и синхронизированный старт, а не два последовательных вызова или ненадёжную задержку."
       ],
       "good_additions": [
-        "короткий пример именно этой темы"
+        "Тест должен использовать независимые соединения и синхронизированный старт, а не два последовательных вызова или ненадёжную задержку."
       ],
-      "common_wrong_answers": [],
-      "red_flags": [],
+      "common_wrong_answers": [
+        "COMMIT в booking service автоматически делает внешний notification атомарным."
+      ],
+      "red_flags": [
+        "Количество контейнеров само по себе доказывает микросервисную архитектуру."
+      ],
       "follow_up_questions": [
-        "Что такое Preventing double booking и какой механизм здесь важно понимать Junior-разработчику?"
-      ],
-      "coding_mistakes": [
-        "Игнорировать ограничение механизма и проверять только основной сценарий."
-      ],
-      "assessment_notes": [],
-      "review_status": "pending-substantive-review"
+        "Как это проверяется в booking architecture lab?"
+      ]
     },
     "follow_ups": [
-      "Что такое Preventing double booking и какой механизм здесь важно понимать Junior-разработчику?"
+      "Как это проверяется в booking architecture lab?"
     ],
     "tags": [
       "stage-29",

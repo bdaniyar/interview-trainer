@@ -13132,7 +13132,7 @@
             "internal modules",
             "valid default for Junior projects."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-17",
           "implementation_slug": "s27-monolith"
         },
         {
@@ -13169,7 +13169,7 @@
             "boundaries inside one deployable",
             "lower operational complexity."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-17",
           "implementation_slug": "s27-modular-monolith"
         },
         {
@@ -13192,12 +13192,13 @@
           ],
           "modes": [
             "learn",
-            "interview"
+            "interview",
+            "practice"
           ],
           "tracks": [
             "full"
           ],
-          "content_status": "planned",
+          "content_status": "complete",
           "estimated_minutes": 10,
           "difficulty": "junior_plus",
           "outline": [
@@ -13205,7 +13206,7 @@
             "network/failure/observability cost",
             "not “many folders” or “many technologies”."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-17",
           "implementation_slug": "s27-microservices"
         },
         {
@@ -13239,7 +13240,7 @@
           "estimated_minutes": 10,
           "difficulty": "junior",
           "outline": [],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-17",
           "implementation_slug": "s27-coupling-and-cohesion"
         },
         {
@@ -13273,7 +13274,7 @@
           "estimated_minutes": 10,
           "difficulty": "junior",
           "outline": [],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-17",
           "implementation_slug": "package-design"
         },
         {
@@ -13312,7 +13313,7 @@
             "data access",
             "infrastructure."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-17",
           "implementation_slug": "architecture-basics"
         },
         {
@@ -13350,7 +13351,7 @@
             "substitution/testing",
             "framework DI vs general principle."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-17",
           "implementation_slug": "dependency-injection"
         },
         {
@@ -13373,12 +13374,13 @@
           ],
           "modes": [
             "learn",
-            "interview"
+            "interview",
+            "practice"
           ],
           "tracks": [
             "full"
           ],
-          "content_status": "planned",
+          "content_status": "complete",
           "estimated_minutes": 10,
           "difficulty": "junior_plus",
           "outline": [
@@ -13386,7 +13388,7 @@
             "leaky abstraction",
             "avoid needless one-method wrappers."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-17",
           "implementation_slug": "s27-repository-pattern"
         },
         {
@@ -13509,22 +13511,24 @@
             "backend_work"
           ],
           "prerequisites": [
-            "backend-interview.27.11.factory"
+            "backend-interview.27.7.dependency-injection",
+            "backend-interview.27.8.repository-pattern"
           ],
           "modes": [
             "learn",
-            "interview"
+            "interview",
+            "practice"
           ],
           "tracks": [
             "full"
           ],
-          "content_status": "planned",
+          "content_status": "complete",
           "estimated_minutes": 10,
           "difficulty": "junior_plus",
           "outline": [
             "external API/storage interface."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-17",
           "implementation_slug": "s27-adapter"
         },
         {
@@ -13916,7 +13920,7 @@
           "estimated_minutes": 12,
           "difficulty": "junior",
           "outline": [],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-17",
           "implementation_slug": "backend-core-project"
         },
         {
@@ -13954,7 +13958,7 @@
             "shared DB/cache",
             "sticky sessions trade-off."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-17",
           "implementation_slug": "s29-stateless-api-and-horizontal-scaling"
         },
         {
@@ -14032,7 +14036,7 @@
             "retries",
             "idempotency."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-17",
           "implementation_slug": "s29-background-jobs"
         },
         {
@@ -14115,7 +14119,7 @@
             "conflict response",
             "notification."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-17",
           "implementation_slug": "s29-booking-endpoint"
         },
         {
@@ -14149,7 +14153,7 @@
           "estimated_minutes": 12,
           "difficulty": "junior",
           "outline": [],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-17",
           "implementation_slug": "s29-preventing-double-booking"
         },
         {
@@ -14270,7 +14274,7 @@
             "idempotency",
             "locking."
           ],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-17",
           "implementation_slug": "s29-outbox-design"
         },
         {
@@ -14304,7 +14308,7 @@
           "estimated_minutes": 10,
           "difficulty": "junior",
           "outline": [],
-          "last_verified": "2026-08-27",
+          "last_verified": "2026-11-17",
           "implementation_slug": "s29-scaling-sequence"
         }
       ]
