@@ -63,7 +63,12 @@ try {
     // reindent subsequent lines. Enter one line at a time with native events;
     // select only the indentation produced by Enter before typing that line.
     const editor=`window.__phase8aMonaco.editor.getEditors().find(e=>e.getDomNode()?.closest('.editor-panel'))`;
-    const configure=`e.updateOptions({autoIndent:'none',autoClosingBrackets:'never',autoClosingQuotes:'never',autoClosingComments:'never',formatOnType:false,formatOnPaste:false});`;
+    // Enter must insert a newline even when a completion is available.
+    const configure=`e.updateOptions({
+      autoIndent:'none', autoClosingBrackets:'never', autoClosingQuotes:'never',
+      autoClosingComments:'never', formatOnType:false, formatOnPaste:false,
+      acceptSuggestionOnEnter:'off', quickSuggestions:false, suggestOnTriggerCharacters:false,
+    });`;
     await call('Page.bringToFront');
     await evaluate(`(()=>{const e=${editor};e.focus();e.setSelection(e.getModel().getFullModelRange());${configure}return true;})()`);
     await key('Backspace','Backspace',8);
