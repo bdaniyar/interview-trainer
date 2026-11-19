@@ -1,163 +1,177 @@
 # Connection pooling
 
-> [!IMPORTANT]
-> **P1 · вероятность на интервью: high · 10 минут.** PostgreSQL явно встречался в 13/18; indexes/transactions/concurrency критичны для backend.
-
 ## Учебные цели
 
-После урока ты сможешь:
-
-- восстановить mental model темы **Connection pooling**, а не только запомнить термин;
-- прочитать и изменить короткий пример для `connections are expensive/limited`;
-- распознать характерную ошибку и объяснить причину;
-- дать реалистичный ответ уровня Junior и выдержать follow-up.
+Рассчитать лимит подключений для приложения с несколькими процессами.
+Открывать отдельную AsyncSession на запрос, завершать транзакцию на всех
+ветках и отличать исчерпание пула от ожидания PostgreSQL.
 
 ## Теория
 
 ### Что это
 
-Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.
+Пул держит ограниченный набор соединений и выдаёт одно из них на время работы с БД.
 
 ### Как работает
 
-Назови invariant и concurrent scenario, затем проверь constraint, transaction boundary и фактический query plan.
+Установка соединения с PostgreSQL требует времени. Сервер хранит состояние
+соединения и выделяет ему ресурсы. Пул позволяет переиспользовать уже открытые
+соединения. Checkout выдаёт одно из них запросу, check-in возвращает его.
+Закрытие SQLAlchemy Session или Connection обычно возвращает соединение в
+пул, хотя само сетевое подключение может остаться открытым.
 
-**соединения дороги и ограничены.** `connections are expensive/limited` влияет на database invariant, concurrent transactions или access path; правильность подтверждают constraint и фактический query plan.
+В QueuePool `pool_size` задаёт число постоянно сохраняемых соединений,
+`max_overflow` — сколько дополнительных можно открыть при нагрузке.
+`pool_timeout` ограничивает ожидание выдачи после исчерпания доступных мест.
+Overflow закрывается при возврате, если пул уже заполнен. AsyncEngine с
+совместимым сетевым драйвером обычно использует AsyncAdaptedQueuePool.
+При настройке 5 + 2 и четырёх Uvicorn workers верхняя оценка для одного
+такого engine на процесс — 28 соединений. Добавьте фоновые jobs, миграции,
+другие реплики и место для администрирования.
 
-**pool size.** `pool size` влияет на database invariant, concurrent transactions или access path; правильность подтверждают constraint и фактический query plan.
-
-**async pool.** `async pool` влияет на database invariant, concurrent transactions или access path; правильность подтверждают constraint и фактический query plan.
-
-**leaking sessions/connections.** Session владеет identity map и transaction state; после ошибки flush требуется rollback до дальнейшей работы.
-
+AsyncSession — изменяемый объект, связанный с состоянием транзакции.
+В параллельных asyncio-задачах каждому use case нужна своя сессия. FastAPI
+dependency с yield может передать сессию запросу и закрыть её в cleanup.
+Выберите границу транзакции в use case. Долгий HTTP внутри открытой
+транзакции удерживает соединение, иногда и locks. Непрочитанный стрим,
+которому нужна БД, тоже продлевает checkout.
 
 ### Важный нюанс / ограничение
 
-Граница Junior: уверенно объясняй `connections are expensive/limited` и `pool size` на одном проверяемом примере; редкие внутренние детали сначала ищи в официальной документации.
-
-### Где используется в backend
-
-В backend эта тема важна в том месте, где применяется `connections are expensive/limited`; проверяй именно наблюдаемый contract, а не название инструмента.
+Несколько workers создают независимые engines. Максимум соединений складывается вместе с фоновыми процессами и репликами.
 
 ## Модель понимания
 
-Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
-
-Используй эту модель как короткую опору, затем проверяй её конкретным примером из теории.
+Разложите запрос на очередь за checkout, работу PostgreSQL и check-in. Если ждёт checkout, запрос ещё не появился в очереди блокировок PostgreSQL.
 
 ## Что нужно знать на Junior
 
 ### Обязательно
 
-- соединения дороги и ограничены
-- pool size
-- async pool
-- leaking sessions/connections
-
-### Полезно
-
-- связать Connection pooling с коротким рабочим примером
-
-### Можно не учить глубоко
-
-- implementation internals, не влияющие на Junior-код и типичный interview дополнительный вопрос
+Один engine на процесс, отдельная AsyncSession на запрос или задачу. Закрывайте её и заканчивайте транзакцию на успешном и ошибочном путях.
 
 ## Примеры кода
 
-### Connection pooling: отдельный пример
+Практика проверяется командой `scripts/test_stage11_examples.sh` на синтетической PostgreSQL 17.11. Запускайте изменения в отдельной учебной базе.
 
-```sql
--- 11.14 · Connection pooling
--- Focus: connections are expensive/limited, pool size, async pool, leaking sessions/connections
-SELECT 's11_connection_pooling' AS example_key;
+В учебном проекте передайте DSN отдельной PostgreSQL-базы при создании app.
+Пример читает 42 как integer. Commit для этого чтения не требуется. Контекст
+закроет сессию и откатит её незавершённую транзакцию даже при исключении.
+
+```python
+from contextlib import asynccontextmanager
+
+from fastapi import Depends, FastAPI
+from sqlalchemy import text
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
+
+
+def make_app(dsn: str) -> FastAPI:
+    engine = create_async_engine(
+        dsn, pool_size=1, max_overflow=0, pool_timeout=0.5, pool_pre_ping=True
+    )
+    sessions = async_sessionmaker(engine, expire_on_commit=False)
+
+    @asynccontextmanager
+    async def lifespan(app: FastAPI):
+        try:
+            yield
+        finally:
+            await engine.dispose()
+
+    app = FastAPI(lifespan=lifespan)
+
+    async def db():
+        async with sessions() as session:
+            yield session
+
+    @app.get("/value")
+    async def read_value(session: AsyncSession = Depends(db)):
+        value = await session.scalar(text("SELECT CAST(42 AS integer)"))
+        return {"value": value}
+
+    return app
 ```
 
-Проверь invariant, конкурентный сценарий и фактический query plan вместо догадки.
+`GET /value` возвращает `{"value": 42}`. Повторный запрос работает с тем же
+лимитом после возврата первого соединения. В обработчике записи используйте
+`async with session.begin():`: выход без ошибки фиксирует изменения, исключение
+приводит к rollback до возврата соединения.
+
+### PgBouncer и диагностика
+
+PgBouncer размещает пул между приложением и PostgreSQL. В session pooling
+серверное соединение закреплено за клиентским на весь клиентский сеанс.
+В transaction pooling серверное соединение закреплено на время транзакции.
+Состояние, которое должно пережить транзакцию, в этом режиме требует проверки
+совместимости. Примеры — сессионные SET, временные таблицы и prepared statements.
+Проверяйте матрицу PgBouncer для нужной функции и конфигурации драйвера.
+
+Измеряйте время checkout, число checked out и возраст открытой транзакции.
+В PostgreSQL `pg_stat_activity` показывает `state`, `xact_start`, тип и событие
+ожидания. Различайте очередь приложения за свободным соединением, серверное
+ожидание lock и длительное выполнение запроса. Контроль размера пула не
+исправляет утечку соединения.
 
 ## Типичные ошибки
 
-### Ошибка 1
-
-Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
+Создавать engine на каждый запрос. Передавать одну AsyncSession в
+`asyncio.gather`. Компенсировать утечку большим overflow. Держать
+сессию после ошибки без rollback и сразу выполнять второй запрос.
+Рассчитывать лимит только для одного процесса, когда запущено несколько.
 
 ## Практика
 
-**A · Предсказание результата/reasoning.** Предскажи результат минимального примера для `connections are expensive/limited` до запуска.
-
-**B · Найди ошибку.** Найди нарушение `pool size` и объясни конкретное последствие.
-
-**E · Ответ на собеседовании.** Дай ответ про Connection pooling за 60 секунд: определение, механизм, пример, ограничение.
+В отдельной копии проекта при `pool_size=1, max_overflow=0` удержите одно
+соединение контролируемым событием. Второй запрос должен получить
+`sqlalchemy.exc.TimeoutError` до освобождения места. Завершите первую
+транзакцию и подтвердите, что следующий запрос возвращает 42. Повторите
+с исключением внутри первого use case и проверьте, что место снова доступно.
+Измерьте число checkout/check-in, не увеличивая лимит пула.
 
 ## Вопросы с собеседований
 
-### Основной вопрос
-
-Что такое Connection pooling и какой механизм здесь важно понимать Junior-разработчику?
-
-### Дополнительный вопрос
-
-Какое ограничение или типичная ошибка относится именно к теме Connection pooling?
-
-Сначала ответь вслух или запиши 3–5 предложений. Готовый ответ находится в следующем раскрывающемся разделе.
+1. Сколько соединений может занять приложение при четырёх процессах и настройке 5 + 2?
+2. Как отличить ошибку checkout от блокировки строки?
 
 ## Хорошие ответы
 
-### Короткий ответ
+<details>
+<summary>Раскрыть ответы</summary>
 
-Connection pooling: Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.
+До 28 для четырёх независимых engines с таким лимитом, плюс потребители
+за пределами этих engines. Пул каждого процесса имеет собственный бюджет.
 
-### Нормальный ответ уровня Junior
+При checkout соединение ещё не получено. При блокировке запрос уже
+в PostgreSQL и виден в статистике ожиданий. Проверяйте pool wait time,
+состояние соединений и server wait events отдельно.
 
-> Connection pooling — тема, в которой я сначала фиксирую `connections are expensive/limited`, затем объясняю `pool size` на коротком примере. Ключевой механизм: Назови invariant и concurrent scenario, затем проверь constraint, transaction boundary и фактический query plan. Главная практическая ошибка — Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
-
-### Углубление / дополнительный вопрос
-
-**Какое ограничение или типичная ошибка относится именно к теме Connection pooling?**
-
-Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
+</details>
 
 ## Критерии хорошего ответа
 
-### Что обязательно упомянуть
+<details>
+<summary>Раскрыть критерии</summary>
 
-- соединения дороги и ограничены
-- pool size
-- async pool
-- leaking sessions/connections
+Покажите верхний предел подключений, место checkout и путь rollback. Объясните, что наблюдает приложение, а что видно в pg_stat_activity.
 
-### Что улучшит ответ
-
-- один короткий пример с результатом;
-- одно ограничение или характерная ошибка именно этой темы;
-- пример из backend-разработки только при естественной связи.
-
-### Частые неправильные ответы
-
-- Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
-- пересказ одного определения без механизма или примера.
-
-### Дополнительный вопрос
-
-- Какое ограничение или типичная ошибка относится именно к теме Connection pooling?
+</details>
 
 ## Задача
 
-Сделай короткую письменную практику по теме **Connection pooling**: реши один пункт из раздела «Практика», затем сравни своё объяснение с хорошим ответом уровня Junior. Для этого урока автоматические скрытые тесты не требуются.
+В учебном приложении добавьте маршрут диагностики checked-out connections в тестовой сборке. Проверьте переходы 0 → 1 → 0 при выполнении запроса и при исключении. Не публикуйте внутреннюю диагностическую статистику в обычном API.
 
 ## Шпаргалка
 
-Перед собеседованием запомни:
-
-- **Что это:** Connection pooling: Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.
-- **Механизм:** Constraint защищает истину, transaction объединяет изменения, index ускоряет конкретный access path.
-- **Ограничение:** Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.
-- **Глубина для Junior:** знать обязательные пункты выше; внутренние детали реализации можно уточнить по документации.
+Engine на процесс, AsyncSession на use case, транзакция короткая.
+Считайте лимит по всем репликам. При timeout сначала выясните,
+где ждёт запрос, и проверьте возврат соединения на ошибочном пути.
 
 ## Источники
 
-Материал написан своими словами и сверён с актуальными разделами официальной документации:
+- [SQLAlchemy 2.0, Connection Pooling](https://docs.sqlalchemy.org/en/20/core/pooling.html).
+- [SQLAlchemy 2.0, AsyncSession with concurrent tasks](https://docs.sqlalchemy.org/en/20/orm/extensions/asyncio.html#using-asyncsession-with-concurrent-tasks).
+- [FastAPI, Dependencies with yield](https://fastapi.tiangolo.com/tutorial/dependencies/dependencies-with-yield/).
+- [PgBouncer, feature map for pooling modes](https://www.pgbouncer.org/features.html).
 
-- [PostgreSQL indexes](https://www.postgresql.org/docs/current/indexes.html)
-- [Concurrency control](https://www.postgresql.org/docs/current/mvcc.html)
-
-Последняя проверка версий: **2026-08-27**.
+Секции сверены 18 ноября 2026 года. Проверенные версии стенда указаны в документации Phase 9B.

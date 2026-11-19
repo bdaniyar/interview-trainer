@@ -6,15 +6,15 @@
   "module_title": "Этап 11 · Database Design and PostgreSQL",
   "module_order": 11,
   "order": 137,
-  "duration": 10,
-  "estimated_minutes": 10,
+  "duration": 40,
+  "estimated_minutes": 40,
   "xp": 5,
   "topics": [
     "flexible data",
     "indexing basics",
     "not a replacement for relational modeling."
   ],
-  "description": "P2 · Обучение: теория, примеры, ошибки, практика и готовый ответ для собеседования уровня Junior.",
+  "description": "Храните гибкие атрибуты в JSONB, проверяйте типы и выбирайте индекс под конкретный оператор.",
   "has_task": false,
   "has_solution": false,
   "priority": "P2",
@@ -30,16 +30,19 @@
   "why_it_matters": "Помогает объяснить JSONB и применить тему без типичной backend-ошибки.",
   "difficulty": "junior_plus",
   "prerequisites": [
-    "backend-interview.11.15.pagination"
+    "backend-interview.11.1.primary-and-foreign-keys",
+    "backend-interview.11.4.index-mental-model"
   ],
   "modes": [
     "learn",
-    "interview"
+    "interview",
+    "practice"
   ],
   "tracks": [
     "full"
   ],
-  "content_status": "planned",
-  "last_verified": "2026-08-27",
-  "generated_by": "populate_curriculum.py"
+  "content_status": "complete",
+  "last_verified": "2026-11-18",
+  "generated_by": "populate_curriculum.py",
+  "content_source": "curated"
 }

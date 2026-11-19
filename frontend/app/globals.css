@@ -355,3 +355,14 @@ button:disabled { cursor: not-allowed; opacity: .48; }
   .tx-workspace:not([data-tab=timeline]) .tx-events,
   .tx-workspace:not([data-tab=schema]) .tx-data { display: none; }
 }
+
+.postgres-examples-command {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--panel-2);
+  font: 12px/1.6 var(--font-code);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}

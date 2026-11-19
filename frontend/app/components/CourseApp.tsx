@@ -110,7 +110,7 @@ export function CourseApp() {
 
   const saveFiles = useCallback(async () => {
     const loaded = loadedLessonRef.current;
-    if (!loaded || loaded.workspace_kind === 'sql' || loaded.workspace_kind === 'transaction') return;
+    if (!loaded || (loaded.workspace_kind && loaded.workspace_kind !== 'python')) return;
     await api.saveFiles(loaded.slug, filesRef.current);
   }, []);
 
@@ -281,7 +281,15 @@ export function CourseApp() {
             aria-orientation="vertical"
             onPointerDown={startWorkspaceResize}
           />
-          {!loadingLesson && lesson?.workspace_kind === 'transaction' ?
+          {!loadingLesson && lesson?.workspace_kind === 'postgres_examples' ?
+            <section className="workspace-pane tx-workspace postgres-examples">
+              <header className="workspace-toolbar tx-toolbar"><strong>Примеры PostgreSQL</strong></header>
+              <div className="tx-scroll">
+                <p className="tx-notice">В разделе «Примеры кода» есть запросы и ожидаемые результаты.</p>
+                <p className="tx-notice">Запустите проверку из корня репозитория. Скрипт сверит результаты на учебной базе Docker.</p>
+                <pre className="postgres-examples-command"><code>scripts/test_stage11_examples.sh</code></pre>
+              </div>
+            </section> : !loadingLesson && lesson?.workspace_kind === 'transaction' ?
             <TransactionWorkspace key={lesson.slug} lessonSlug={lesson.slug} theme={theme} /> : !loadingLesson && lesson?.workspace_kind === 'sql' ? <SqlWorkspace key={lesson.slug} lessonSlug={lesson.slug} theme={theme} /> : !loadingLesson && lesson ? (
             <CodeWorkspace
               key={lesson.slug}

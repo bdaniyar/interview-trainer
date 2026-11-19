@@ -1,43 +1,31 @@
 [
   {
-    "question": "Что такое Primary and foreign keys и какой механизм здесь важно понимать Junior-разработчику?",
+    "question": "Чем отличаются PK, UNIQUE и обязательный FK?",
     "level": "normal",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "entity identity",
-      "referential целостность",
-      "delete/update actions"
+      "PK идентифицирует строку уникальным непустым ключом. UNIQUE задаёт альтернативную уникальность и может допускать NULL. FK связывает значения с родительским ключом, а обязательность задаёт NOT NULL."
     ],
-    "short_answer": "Primary and foreign keys: Это механизм PostgreSQL, который защищает данные или выбирает access path при конкурентной работе.",
-    "junior_answer": "Primary and foreign keys — тема, в которой я сначала фиксирую `entity identity`, затем объясняю `referential integrity` на коротком примере. Ключевой механизм: Назови invariant и concurrent scenario, затем проверь constraint, transaction boundary и фактический query plan. Главная практическая ошибка — Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
-    "follow_up_question": "Какое ограничение или типичная ошибка относится именно к теме Primary and foreign keys?",
-    "follow_up_answer": "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
+    "short_answer": "PK идентифицирует строку уникальным непустым ключом. UNIQUE задаёт альтернативную уникальность и может допускать NULL. FK связывает значения с родительским ключом, а обязательность задаёт NOT NULL.",
+    "junior_answer": "PK идентифицирует строку уникальным непустым ключом. UNIQUE задаёт альтернативную уникальность и может допускать NULL. FK связывает значения с родительским ключом, а обязательность задаёт NOT NULL.",
+    "follow_up_question": "Что изменится при MATCH FULL?",
+    "follow_up_answer": "Составная ссылка допускает либо пару заполненных значений, либо все NULL.",
     "expected_answer": {
       "must_mention": [
-        "entity identity",
-        "referential целостность",
-        "delete/update actions"
+        "PK идентифицирует строку уникальным непустым ключом. UNIQUE задаёт альтернативную уникальность и может допускать NULL. FK связывает значения с родительским ключом, а обязательность задаёт NOT NULL."
       ],
       "good_additions": [
-        "короткий рабочий пример",
-        "ограничение или типичная ошибка"
+        "Составная ссылка допускает либо пару заполненных значений, либо все NULL."
       ],
       "common_wrong_answers": [],
       "red_flags": [],
       "follow_up_questions": [
-        "Какое ограничение или типичная ошибка относится именно к теме Primary and foreign keys?"
-      ],
-      "coding_mistakes": [
-        "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case."
-      ],
-      "assessment_notes": [
-        "Ответ без механизма, примера и ограничения"
-      ],
-      "review_status": "pending-substantive-review"
+        "Что изменится при MATCH FULL?"
+      ]
     },
     "follow_ups": [
-      "Какое ограничение или типичная ошибка относится именно к теме Primary and foreign keys?"
+      "Что изменится при MATCH FULL?"
     ],
     "tags": [
       "stage-11",
@@ -50,38 +38,32 @@
     ]
   },
   {
-    "question": "Какое ограничение или типичная ошибка относится именно к теме Primary and foreign keys?",
+    "question": "Почему индекс внешнего ключа на дочерней стороне нужно обдумывать отдельно?",
     "level": "follow_up",
     "priority": "P0",
     "interview_probability": "very_high",
     "answer": [
-      "связать Primary and foreign keys с коротким рабочим примером",
-      "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case."
+      "Родительский уникальный индекс проверяет существование и уникальность родителя. Дочерний индекс нужен для отдельных запросов и поиска детей при изменении родителя. PostgreSQL не выбирает его автоматически за автора схемы."
     ],
-    "short_answer": "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
-    "junior_answer": "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
-    "follow_up_question": "Что такое Primary and foreign keys и какой механизм здесь важно понимать Junior-разработчику?",
-    "follow_up_answer": "Primary and foreign keys — тема, в которой я сначала фиксирую `entity identity`, затем объясняю `referential integrity` на коротком примере. Ключевой механизм: Назови invariant и concurrent scenario, затем проверь constraint, transaction boundary и фактический query plan. Главная практическая ошибка — Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case.",
+    "short_answer": "Родительский уникальный индекс проверяет существование и уникальность родителя. Дочерний индекс нужен для отдельных запросов и поиска детей при изменении родителя. PostgreSQL не выбирает его автоматически за автора схемы.",
+    "junior_answer": "Родительский уникальный индекс проверяет существование и уникальность родителя. Дочерний индекс нужен для отдельных запросов и поиска детей при изменении родителя. PostgreSQL не выбирает его автоматически за автора схемы.",
+    "follow_up_question": "Что изменится при MATCH FULL?",
+    "follow_up_answer": "Составная ссылка допускает либо пару заполненных значений, либо все NULL.",
     "expected_answer": {
       "must_mention": [
-        "связать Primary and foreign keys с коротким рабочим примером"
+        "Родительский уникальный индекс проверяет существование и уникальность родителя. Дочерний индекс нужен для отдельных запросов и поиска детей при изменении родителя. PostgreSQL не выбирает его автоматически за автора схемы."
       ],
       "good_additions": [
-        "короткий пример именно этой темы"
+        "Составная ссылка допускает либо пару заполненных значений, либо все NULL."
       ],
       "common_wrong_answers": [],
       "red_flags": [],
       "follow_up_questions": [
-        "Что такое Primary and foreign keys и какой механизм здесь важно понимать Junior-разработчику?"
-      ],
-      "coding_mistakes": [
-        "Добавить index/lock без конкретного query или invariant и не проверить план/конкурентный case."
-      ],
-      "assessment_notes": [],
-      "review_status": "pending-substantive-review"
+        "Что изменится при MATCH FULL?"
+      ]
     },
     "follow_ups": [
-      "Что такое Primary and foreign keys и какой механизм здесь важно понимать Junior-разработчику?"
+      "Что изменится при MATCH FULL?"
     ],
     "tags": [
       "stage-11",
