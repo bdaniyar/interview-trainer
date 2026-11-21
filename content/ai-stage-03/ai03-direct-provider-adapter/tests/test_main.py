@@ -49,5 +49,8 @@ def test_wire_error_is_redacted_and_not_retried():
 
 
 def test_unexpected_error_is_propagated():
-    with pytest.raises(RuntimeError):
-        asyncio.run(generate(Scripted(RuntimeError("unexpected")), "x"))
+    error = RuntimeError("unexpected")
+    client = Scripted(error)
+    with pytest.raises(RuntimeError) as failure:
+        asyncio.run(generate(client, "x"))
+    assert failure.value is error and len(client.calls) == 1

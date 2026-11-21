@@ -9,8 +9,7 @@ from httpx import ASGITransport, AsyncClient
 
 from chat_fixture import create_app
 from chat_types import Generation, ProviderUnavailable
-from stream_fixture import normalize_events
-from stream_types import WireEvent
+from stream_fixture import open_feed
 
 
 CASES = ("success", "empty", "refusal", "incomplete", "unavailable", "timeout",
@@ -45,15 +44,14 @@ class Probe:
             async def source():
                 nonlocal closed
                 try:
-                    yield WireEvent("text_delta", self.first)
+                    yield self.first
                     raise AssertionError("unexpected pull")
                 finally:
                     closed = True
 
-            stream = normalize_events(source())
-            event = await anext(stream)
-            await stream.aclose()
-            return Observation(deltas=(event.text,), cleaned=closed, expected_text=self.first)
+            async with open_feed(source()) as stream:
+                delta = await anext(stream)
+            return Observation(deltas=(delta,), cleaned=closed, expected_text=self.first)
 
         entered, ended = asyncio.Event(), asyncio.Event()
         calls = []
@@ -82,7 +80,7 @@ class Probe:
         app = create_app(Scripted(), timeout=0 if case == "timeout" else 0.5)
         async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
             async def request(value):
-                return await client.post("/chat", json={"question": value})
+                return await client.post("/probe/message", json={"text": value})
 
             if case == "isolation":
                 first, second = await asyncio.gather(request(self.first), request(self.second))

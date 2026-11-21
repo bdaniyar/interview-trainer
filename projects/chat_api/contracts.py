@@ -43,8 +43,10 @@ class ProviderUnavailable(Exception):
 class ProviderBusy(ProviderUnavailable):
     """A documented rejection before any generation began."""
 
-    def __init__(self, retry_after: float = 0):
+    def __init__(self, status: Literal[429, 503], retry_after: float = 0):
+        self.status = status
         self.retry_after = retry_after
+        super().__init__(f"Provider temporarily rejected the request (HTTP {status})")
 
 
 class Provider(Protocol):

@@ -45,7 +45,7 @@ async def generate(provider, question, timeout, pause):
         try:
             return await provider.generate(question)
         except ProviderBusy as exc:
-            if not isfinite(exc.retry_after) or exc.retry_after < 0:
+            if exc.status not in (429, 503) or not isfinite(exc.retry_after) or exc.retry_after < 0:
                 raise ProviderUnavailable() from None
             delay = max(0.05, exc.retry_after)
             if loop.time() + delay >= end:

@@ -1,53 +1,41 @@
+"""Alternate synthetic service behind the contract-testing harness."""
 import asyncio
-from typing import Literal
 from uuid import uuid4
 
-from fastapi import Depends, FastAPI
-from fastapi.exceptions import RequestValidationError
+from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel, ConfigDict, Field
 
 from chat_types import ProviderUnavailable
 
 
-class Question(BaseModel):
-    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
-    question: str = Field(min_length=1, max_length=500)
-
-
-class Reply(BaseModel):
-    request_id: str
-    status: Literal["completed", "empty", "refusal", "incomplete", "unavailable", "timeout"]
-    text: str | None = None
-    usage: int | None = Field(default=None, ge=0, strict=True)
-
-
-def create_app(provider, *, timeout=0.5, id_factory=uuid4):
+def create_app(provider, timeout):
     app = FastAPI()
 
-    def get_provider():
-        return provider
+    def response(http, state, answer=None):
+        return JSONResponse(
+            {"status": state, "text": answer, "request_id": uuid4().hex},
+            status_code=http,
+        )
 
-    @app.exception_handler(RequestValidationError)
-    async def invalid(request, exc):
-        return JSONResponse({"status": "invalid_request"}, status_code=422)
-
-    @app.post("/chat", response_model=Reply,
-              responses={502: {"model": Reply}, 503: {"model": Reply}, 504: {"model": Reply}})
-    async def chat(query: Question, client=Depends(get_provider)):
-        request_id = str(id_factory())
+    @app.post("/probe/message")
+    async def send(request: Request):
+        data = await request.json()
+        message = data.get("text")
+        if not isinstance(message, str) or not message.strip():
+            return response(422, "invalid_request")
+        if len(message) > 200:
+            return response(422, "invalid_request")
         try:
             async with asyncio.timeout(timeout):
-                answer = await client.generate(query.question)
-        except ProviderUnavailable:
-            return JSONResponse(Reply(request_id=request_id, status="unavailable").model_dump(), status_code=503)
+                outcome = await provider.generate(message.strip())
         except TimeoutError:
-            return JSONResponse(Reply(request_id=request_id, status="timeout").model_dump(), status_code=504)
-        if answer.status == "completed":
-            if answer.text and answer.text.strip():
-                return Reply(request_id=request_id, status="completed", text=answer.text, usage=answer.usage)
-            return JSONResponse(
-                Reply(request_id=request_id, status="empty", usage=answer.usage).model_dump(), status_code=502)
-        return Reply(request_id=request_id, status=answer.status, usage=answer.usage)
+            return response(504, "timeout")
+        except ProviderUnavailable:
+            return response(503, "unavailable")
+        if outcome.status == "completed":
+            if outcome.text:
+                return response(200, "completed", outcome.text)
+            return response(502, "empty")
+        return response(200, outcome.status)
 
     return app

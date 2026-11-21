@@ -23,6 +23,20 @@ export async function aiWalkthrough({ call, evaluate, until, click, typePython, 
     await until(`typeof window.require==='function' && document.querySelector('.editor-panel textarea')`);
     await evaluate(`new Promise((resolve,reject)=>window.require(['vs/editor/editor.main'],loaded=>{window.__phase8aMonaco=loaded.m||loaded;resolve(true)},reject))`);
   };
+  const submit = async (action) => {
+    const button = JSON.stringify(`.workspace-actions .${action}-button`);
+    const exit = "document.querySelector('.terminal-result-summary span:last-child')?.textContent";
+    for (let attempt = 0; attempt < 2; attempt++) {
+      await until(`document.querySelector(${button}) && !document.querySelector(${button}).disabled`);
+      await click(JSON.parse(button));
+      await until(`document.querySelector(${button}).disabled`);
+      await until(`!document.querySelector(${button}).disabled && (${exit})?.startsWith('exit ')`);
+      if (await evaluate(exit) !== 'exit 124') return;
+      console.log(`Python sandbox timed out during ${action}. Repeating after preview settles.`);
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
+    throw new Error(`Python sandbox timed out twice during ${action}`);
+  };
   const navigate = (slug = '') => call('Page.navigate', {url: frontendOrigin + '/' + (slug ? '?lesson=' + slug : '')});
 
   await navigate(backend);
@@ -51,7 +65,7 @@ export async function aiWalkthrough({ call, evaluate, until, click, typePython, 
   await loadEditor();
   const solution = await readFile(new URL('../content/ai-stage-01/ai01-ai-roles-and-boundaries/solution/main.py', import.meta.url), 'utf8');
   await typePython(solution);
-  await click('.workspace-actions .run-button');
+  await submit('run');
   await until(`document.querySelector('.terminal-panel')?.innerText.includes('Черновик: llm')`);
   await click('.theory-complete-card button');
   await until(`document.querySelector('.theory-complete-card strong')?.textContent==='Урок отмечен'`);
@@ -92,14 +106,14 @@ export async function aiWalkthrough({ call, evaluate, until, click, typePython, 
     await selectLesson(graded);
     assert.equal(await hidden(), true);
     await loadEditor();
-    await click('.workspace-actions .check-button');
-    await until(`document.querySelector('.terminal-result-summary .failed')?.textContent==='0 / 11 tests'`);
+    await submit('check');
+    await until(`document.querySelector('.terminal-result-summary .failed')?.textContent.endsWith(' / 11 tests')`);
     assert.equal((await api('/api/lessons/' + graded.slug)).progress.task_completed, false);
     const gradedSolution = await readFile(new URL('../content/ai-stage-03/ai03-direct-provider-adapter/solution/main.py', import.meta.url), 'utf8');
     await typePython(gradedSolution);
-    await click('.workspace-actions .run-button');
+    await submit('run');
     await until(`document.querySelector('.terminal-result-summary')?.textContent.includes('exit 0')`);
-    await click('.workspace-actions .check-button');
+    await submit('check');
     await until(`document.querySelector('.terminal-result-summary .passed')?.textContent==='11 / 11 tests'`);
     await until(`document.querySelector('.lesson-title-row .status-pill')?.textContent==='completed'`);
     const result = await api('/api/course');

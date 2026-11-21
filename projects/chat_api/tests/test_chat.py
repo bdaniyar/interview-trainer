@@ -88,10 +88,7 @@ def test_one_retry_for_explicit_pre_generation_rejection(status_style, make):
     async def pause(delay):
         delays.append(delay)
 
-    class Rejected(ProviderBusy):
-        pass
-
-    issue = Rejected(0.1 if status_style == 429 else 0.2)
+    issue = ProviderBusy(status_style, 0.1 if status_style == 429 else 0.2)
     configured, provider = make(issue, Generation("completed", "second"), pause=pause)
     with TestClient(configured) as client:
         response = client.post("/chat", json={"question": "retry"})
@@ -99,8 +96,15 @@ def test_one_retry_for_explicit_pre_generation_rejection(status_style, make):
     assert delays == [issue.retry_after] and provider.questions == ["retry", "retry"]
 
 
+def test_unexpected_http_code_is_not_retried(make):
+    configured, provider = make(ProviderBusy(401), Generation("completed", "unexpected"))
+    with TestClient(configured) as client:
+        assert client.post("/chat", json={"question": "?"}).status_code == 503
+    assert provider.questions == ["?"]
+
+
 def test_retry_after_cannot_extend_deadline(make):
-    configured, provider = make(ProviderBusy(5), Generation("completed", "late"), timeout=0.3)
+    configured, provider = make(ProviderBusy(429, 5), Generation("completed", "late"), timeout=0.3)
     with TestClient(configured) as client:
         assert client.post("/chat", json={"question": "?"}).status_code == 503
     assert provider.questions == ["?"]

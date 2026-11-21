@@ -19,6 +19,17 @@ def test_healthy_contract_with_independently_selected_prompts():
     assert set(seen) == set(CASES)
 
 
+@pytest.fixture(scope="module")
+def observations():
+    # Capture real ASGI observations once. Each mutant changes exactly one property.
+    baseline = Probe("отложенный вызов", "инструкция к тесту")
+
+    async def capture():
+        return {case: await baseline(case) for case in CASES}
+
+    return asyncio.run(capture())
+
+
 @pytest.mark.parametrize(("bad_case", "corruption"), [
     ("success", lambda o: replace(o, body={**o.body, "text": "same for everyone"})),
     ("empty", lambda o: replace(o, http=200)),
@@ -34,11 +45,9 @@ def test_healthy_contract_with_independently_selected_prompts():
     ("offline", lambda o: replace(o, secret_seen=True)),
 ], ids=["constant", "empty-code", "refusal-text", "incomplete-outcome", "upstream", "timeout-cleanup",
         "cancellation", "validation-order", "request-id", "stream-cleanup", "network", "secret"])
-def test_test_suite_catches_each_defect(bad_case, corruption):
-    baseline = Probe("отложенный вызов", "инструкция к тесту")
-
+def test_test_suite_catches_each_defect(bad_case, corruption, observations):
     async def inject(case):
-        actual = await baseline(case)
+        actual = observations[case]
         return corruption(actual) if case == bad_case else actual
 
     with pytest.raises(AssertionError):
