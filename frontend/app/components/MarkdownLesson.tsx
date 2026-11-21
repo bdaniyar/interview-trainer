@@ -74,6 +74,20 @@ export function MarkdownLesson({ lesson, theme, position, total, onCompleteTheor
     setMode(next);
   };
 
+  const aiLesson = lesson.tracks?.includes('ai-engineering');
+  const guided = aiLesson && !lesson.has_task;
+  const notes = aiLesson ? parsed.sections.find((section) => section.title === 'Шпаргалка') : undefined;
+  const downloadNotes = () => {
+    if (!notes) return;
+    const sources = parsed.sections.find((section) => section.title === 'Источники');
+    const file = new Blob([`# ${lesson.title}\n\n${notes.body}\n\n## Источники\n\n${sources?.body ?? ''}`], { type: 'text/markdown;charset=utf-8' });
+    const url = URL.createObjectURL(file);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${lesson.slug}.md`;
+    link.click();
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+  };
   const visibleSections = mode === 'learn'
     ? parsed.sections
     : parsed.sections.filter((section) => REVIEW_SECTION.test(section.title));
@@ -81,7 +95,7 @@ export function MarkdownLesson({ lesson, theme, position, total, onCompleteTheor
   return (
     <article className="lesson-reader">
       <div className="reader-inner">
-        <p className="lesson-kicker">JUNIOR BACKEND · {mode === 'learn' ? 'РЕЖИМ ОБУЧЕНИЯ' : 'РЕЖИМ ПОВТОРЕНИЯ'}</p>
+        <p className="lesson-kicker">{aiLesson ? 'AI ENGINEERING' : 'JUNIOR BACKEND'} · {mode === 'learn' ? 'РЕЖИМ ОБУЧЕНИЯ' : 'РЕЖИМ ПОВТОРЕНИЯ'}</p>
         <div className="lesson-title-row">
           <div>
             <h1>{lesson.title}</h1>
@@ -121,6 +135,7 @@ export function MarkdownLesson({ lesson, theme, position, total, onCompleteTheor
           ) : (
             <section className="lesson-section" key={section.title} data-section={section.title.toLowerCase()}>
               <h2>{section.title}</h2>
+              {section === notes ? <button className="secondary-button" onClick={downloadNotes}>Скачать Markdown</button> : null}
               <MarkdownContent source={section.body} theme={theme} />
             </section>
           ))}
@@ -128,8 +143,8 @@ export function MarkdownLesson({ lesson, theme, position, total, onCompleteTheor
 
         <div className="theory-complete-card">
           <div>
-            <strong>{lesson.progress.theory_completed ? 'Теория пройдена' : 'Закончил режим обучения?'}</strong>
-            <p>{lesson.progress.theory_completed ? 'XP уже начислен. Переходи к практике.' : 'Отметь теорию и получи +5 XP.'}</p>
+            <strong>{guided ? (lesson.progress.theory_completed ? 'Урок отмечен' : 'Закончил урок и самопроверку?') : (lesson.progress.theory_completed ? 'Теория пройдена' : 'Закончил режим обучения?')}</strong>
+            <p>{guided ? 'Самостоятельная отметка · +5 XP за теорию' : (lesson.progress.theory_completed ? 'XP уже начислен. Переходи к практике.' : 'Отметь теорию и получи +5 XP.')}</p>
           </div>
           <button className="secondary-button" disabled={lesson.progress.theory_completed} onClick={onCompleteTheory}>
             <Check size={15} /> {lesson.progress.theory_completed ? 'Готово' : 'Отметить'}

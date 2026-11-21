@@ -10,6 +10,9 @@ from fastapi import HTTPException
 CONTENT_ROOT = Path(os.getenv("CONTENT_ROOT", Path(__file__).resolve().parents[2] / "content"))
 
 
+AI_TRACK = "ai-engineering"
+
+
 class ContentRepository:
     def __init__(self, root: Path = CONTENT_ROOT):
         self.root = root
@@ -26,9 +29,27 @@ class ContentRepository:
                 raise RuntimeError(f"Invalid lesson metadata: {path}") from exc
         return sorted(records, key=lambda item: item[0]["order"])
 
-    def modules(self) -> list[dict]:
+    def ai_roadmap(self) -> list[dict]:
+        path = self.root / "ai_curriculum.json"
+        if not path.exists():
+            return []
+        stages = json.loads(path.read_text(encoding="utf-8"))["stages"]
+        return [
+            {
+                "slug": stage["slug"],
+                "title": stage["title"],
+                "planned": stage["lesson_count"] - sum(
+                    lesson["status"] == "published" for lesson in stage["lessons"]
+                ),
+            }
+            for stage in stages
+        ]
+
+    def modules(self, *, track: str = "backend") -> list[dict]:
         modules: dict[str, dict] = {}
         for meta, _ in self._records(published_only=True):
+            if (AI_TRACK in meta.get("tracks", [])) != (track == AI_TRACK):
+                continue
             module = modules.setdefault(
                 meta["module_slug"],
                 {
@@ -95,6 +116,8 @@ class ContentRepository:
     def interview_questions(self, set_slug: str | None = None) -> list[dict]:
         questions = []
         for metadata, directory in self._records(published_only=True):
+            if AI_TRACK in metadata.get("tracks", []):
+                continue
             path = directory / "interview.json"
             if not path.exists():
                 continue

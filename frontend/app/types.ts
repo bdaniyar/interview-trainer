@@ -2,6 +2,8 @@ export type LessonStatus = 'not_started' | 'in_progress' | 'completed';
 
 export interface LessonSummary {
   slug: string;
+  tracks?: string[];
+  number?: string;
   title: string;
   module_slug: string;
   module_title: string;
@@ -27,16 +29,26 @@ export interface CourseModule {
   lessons: LessonSummary[];
 }
 
+export interface TrackSummary {
+  total: number;
+  completed: number;
+  percent: number;
+}
+
+export type CourseTrack = 'backend' | 'ai-engineering';
+
 export interface CourseData {
   title: string;
   modules: CourseModule[];
-  summary: {
-    total: number;
-    completed: number;
-    percent: number;
+  summary: TrackSummary & {
     xp: number;
     last_opened_lesson: string;
     theme: 'dark' | 'light';
+  };
+  ai?: {
+    modules: CourseModule[];
+    summary: TrackSummary;
+    roadmap: { slug: string; title: string; planned: number }[];
   };
 }
 

@@ -13,8 +13,10 @@ import tempfile
 from collections import Counter
 
 try:
+    from .ai_content import validate_ai
     from .content_quality import audit, write_audit
 except ImportError:  # direct script execution
+    from ai_content import validate_ai
     from content_quality import audit, write_audit
 from pathlib import Path
 
@@ -171,6 +173,10 @@ def validate(run_solutions: bool, strict_quality: bool = False) -> None:
     metadata_paths = sorted(CONTENT.glob("*/*/metadata.json"))
     published = 0
     tasks: list[Path] = []
+    ai_bundles: list[tuple[dict, Path]] = []
+    ai_examples: list[tuple[str, str]] = []
+    published_orders: dict[int, str] = {}
+    ai_orders: dict[int, str] = {}
     seen_slugs: set[str] = set()
     seen_ids: set[str] = set()
     seen_example_sources: dict[str, str] = {}
@@ -181,7 +187,21 @@ def validate(run_solutions: bool, strict_quality: bool = False) -> None:
         except json.JSONDecodeError as exc:
             fail(errors, f"invalid JSON {metadata_path}: {exc}")
             continue
-        missing = REQUIRED_METADATA - metadata.keys() if metadata.get("generated_by") else set()
+        is_ai = (
+            str(metadata.get("id", "")).startswith("ai-engineering.")
+            or "ai-engineering" in metadata.get("tracks", [])
+            or directory.parent.name.startswith("ai-stage-")
+        )
+        if is_ai:
+            ai_bundles.append((metadata, directory))
+            order = metadata.get("order")
+            if not isinstance(order, int) or order < 1000 or order in ai_orders:
+                fail(errors, f"{directory.name}: invalid or duplicate AI order {order}")
+            else:
+                ai_orders[order] = directory.name
+        else:
+            published_orders[metadata.get("order")] = directory.name
+        missing = REQUIRED_METADATA - metadata.keys() if is_ai or metadata.get("generated_by") else set()
         if missing:
             fail(errors, f"{metadata_path}: missing {sorted(missing)}")
         slug = metadata.get("slug")
@@ -209,10 +229,13 @@ def validate(run_solutions: bool, strict_quality: bool = False) -> None:
                 fail(errors, f"generic boilerplate in published lesson {slug}: {marker}")
         for line_number, line in english_only_prose(markdown):
             fail(errors, f"{slug}: английский учебный текст в строке {line_number}: {line}")
-        if metadata.get("generated_by"):
+        if is_ai or metadata.get("generated_by"):
             for heading in REQUIRED_HEADINGS:
                 if heading not in markdown:
                     fail(errors, f"{slug}: missing heading {heading}")
+        if is_ai and "### Краткий конспект" not in markdown:
+            fail(errors, f"{slug}: no reusable revision notes")
+        if metadata.get("generated_by"):
             for subheading in ("### Что это", "### Как работает", "### Важный нюанс / ограничение", "### Обязательно"):
                 if subheading not in markdown:
                     fail(errors, f"{slug}: missing educational block {subheading}")
@@ -231,6 +254,8 @@ def validate(run_solutions: bool, strict_quality: bool = False) -> None:
                 normalized_blocks = []
                 for language, source in blocks:
                     if language.strip().lower() in {"python", "py"}:
+                        if is_ai:
+                            ai_examples.append((slug, source))
                         try:
                             compile(source, f"<{slug}:Примеры кода>", "exec")
                         except SyntaxError as exc:
@@ -262,6 +287,9 @@ def validate(run_solutions: bool, strict_quality: bool = False) -> None:
                 if not expected.exists():
                     fail(errors, f"task {slug} missing {expected.relative_to(directory)}")
 
+    errors.extend(validate_ai(CONTENT, ai_bundles, taxonomy))
+    for order in ai_orders.keys() & published_orders.keys():
+        fail(errors, f"{ai_orders[order]}: AI order overlaps {published_orders[order]}")
     if published < 350:
         fail(errors, f"expected at least 350 complete P0/P1 lessons, got {published}")
     if len(tasks) < 60:
@@ -286,7 +314,16 @@ def validate(run_solutions: bool, strict_quality: bool = False) -> None:
         print(f"Quality audit: {pending} Stage 8+ legacy lessons await review; use --audit-dir for all findings or --strict-quality to fail on debt")
 
     if run_solutions and not errors:
-        for directory in tasks:
+        for slug, source in ai_examples:
+            with tempfile.TemporaryDirectory(prefix="pythoria-ai-example-") as workspace:
+                result = subprocess.run(
+                    [sys.executable, "-I", "-c", source], cwd=workspace,
+                    env={"PATH": os.environ.get("PATH", "")}, capture_output=True, text=True, timeout=10,
+                )
+                if result.returncode:
+                    fail(errors, f"{slug}: runnable example failed: {result.stderr}")
+        guided = [directory for metadata, directory in ai_bundles if not metadata.get("has_task")]
+        for directory in tasks + guided:
             with tempfile.TemporaryDirectory(prefix="pythoria-content-") as temporary:
                 workspace = Path(temporary)
                 for source in (directory / "solution").rglob("*"):
@@ -318,6 +355,8 @@ def validate(run_solutions: bool, strict_quality: bool = False) -> None:
         for error in errors:
             print(f"- {error}", file=sys.stderr)
         raise SystemExit(1)
+    if ai_bundles:
+        print(f"AI R0: {len(ai_bundles)} published lessons, {sum(meta['has_task'] for meta, _ in ai_bundles)} graded labs")
     print(f"Content validation passed: {len(taxonomy)} taxonomy records, {published} published lessons, {len(tasks)} executable tasks")
 
 

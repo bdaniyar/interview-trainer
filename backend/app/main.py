@@ -12,7 +12,7 @@ from fastapi.exception_handlers import request_validation_exception_handler
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from .content import content_repo
+from .content import AI_TRACK, content_repo
 from .database import Base, SessionLocal, engine, get_db
 from .models import Attempt, CodeFile, InterviewProgress, LessonProgress, UserState
 from .runner_client import execute_in_runner
@@ -110,30 +110,38 @@ def health():
     return {"status": "ok", "service": "backend"}
 
 
-@app.get("/api/course")
-def get_course(db: Session = Depends(get_db)):
-    modules = content_repo.modules()
-    progress_rows = {row.lesson_slug: row for row in db.scalars(select(LessonProgress)).all()}
-    completed = 0
+def course_summary(modules: list[dict], progress_rows: dict[str, LessonProgress]) -> dict:
+    total = completed = 0
     for module in modules:
         for lesson in module["lessons"]:
             progress = progress_rows.get(lesson["slug"])
             lesson["status"] = progress.status if progress else "not_started"
             lesson["theory_completed"] = progress.theory_completed if progress else False
             lesson["task_completed"] = progress.task_completed if progress else False
-            completed += int(bool(progress and progress.status == "completed"))
+            total += 1
+            completed += int(lesson["status"] == "completed")
+    return {"total": total, "completed": completed, "percent": round(completed / total * 100) if total else 0}
+
+
+@app.get("/api/course")
+def get_course(db: Session = Depends(get_db)):
+    modules = content_repo.modules()
+    ai_modules = content_repo.modules(track=AI_TRACK)
+    progress_rows = {row.lesson_slug: row for row in db.scalars(select(LessonProgress)).all()}
     state = get_state(db)
-    total = sum(len(module["lessons"]) for module in modules)
     return {
         "title": "Python Backend Interview Trainer",
         "modules": modules,
         "summary": {
-            "total": total,
-            "completed": completed,
-            "percent": round(completed / total * 100) if total else 0,
+            **course_summary(modules, progress_rows),
             "xp": state.xp,
             "last_opened_lesson": state.last_opened_lesson or modules[0]["lessons"][0]["slug"],
             "theme": state.theme,
+        },
+        "ai": {
+            "modules": ai_modules,
+            "summary": course_summary(ai_modules, progress_rows),
+            "roadmap": content_repo.ai_roadmap(),
         },
     }
 
@@ -167,12 +175,12 @@ def get_lesson(slug: str, db: Session = Depends(get_db)):
 
 @app.post("/api/lessons/{slug}/open")
 def open_lesson(slug: str, db: Session = Depends(get_db)):
-    content_repo.lesson(slug)
+    metadata, _ = content_repo.lesson_dir(slug)
     progress = get_progress(db, slug)
     if progress.status == "not_started":
         progress.status = "in_progress"
-    state = get_state(db)
-    state.last_opened_lesson = slug
+    if AI_TRACK not in metadata.get("tracks", []):
+        get_state(db).last_opened_lesson = slug
     db.commit()
     return {"status": progress.status}
 
@@ -277,13 +285,15 @@ async def terminal(payload: TerminalPayload, db: Session = Depends(get_db)):
 
 @app.post("/api/progress/{slug}/theory")
 def complete_theory(slug: str, payload: TheoryPayload, db: Session = Depends(get_db)):
-    content_repo.lesson(slug)
+    metadata, _ = content_repo.lesson_dir(slug)
     progress = get_progress(db, slug)
     state = get_state(db)
     xp_awarded = 0
     if payload.completed and not progress.theory_completed:
         progress.theory_completed = True
-        if progress.status == "not_started":
+        if AI_TRACK in metadata.get("tracks", []) and not metadata["has_task"]:
+            progress.status = "completed"
+        elif progress.status == "not_started":
             progress.status = "in_progress"
         state.xp += 5
         xp_awarded = 5

@@ -4,6 +4,7 @@ import { constants } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import assert from 'node:assert/strict';
+import { aiWalkthrough } from './smoke_ai_browser.mjs';
 import { indexWalkthrough } from './smoke_index_browser.mjs';
 import { transactionWalkthrough } from './smoke_transaction_browser.mjs';
 // Run against a disposable workspace only.
@@ -122,7 +123,10 @@ try {
     console.log(JSON.stringify({stage11Jsonb:true,learnReviewAnswersClosed:true,mobile390:true}));
   }
   await size(1720,1050);
-  if (process.argv.includes('--stage11-only')) {
+  if (process.argv.includes('--ai-only')) {
+    await aiWalkthrough({ call, evaluate, until, click, typePython, type, api, size, frontendOrigin });
+    await call('Target.closeTarget', {targetId}, null);
+  } else if (process.argv.includes('--stage11-only')) {
     await call('Page.navigate', {url: frontendOrigin + '/?lesson=s11-jsonb'});
     await stage11Walkthrough();
     await call('Target.closeTarget', {targetId}, null);
