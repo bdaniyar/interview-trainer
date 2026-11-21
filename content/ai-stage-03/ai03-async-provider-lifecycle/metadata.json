@@ -1,0 +1,78 @@
+{
+  "id": "ai-engineering.03.03.async-provider-lifecycle",
+  "slug": "ai03-async-provider-lifecycle",
+  "number": "AI3.3",
+  "title": "Жизненный цикл async-клиента и отмена",
+  "prerequisites": [
+    "ai-engineering.01.01.backend-diagnostic",
+    "ai-engineering.03.01.direct-provider-adapter"
+  ],
+  "practice": "graded",
+  "module_slug": "ai-stage-03",
+  "module_title": "Прямой LLM API",
+  "module_order": 103,
+  "order": 1303,
+  "description": "Переиспользуй асинхронный клиент, ограничь время запроса и освобождай ресурсы при отмене.",
+  "duration": 150,
+  "xp": 25,
+  "topics": [
+    "Async client lifespan",
+    "Timeout и cancellation",
+    "Граница транзакции"
+  ],
+  "has_task": true,
+  "has_solution": true,
+  "tracks": [
+    "ai-engineering"
+  ],
+  "modes": [
+    "learn",
+    "practice",
+    "interview"
+  ],
+  "priority": "P1",
+  "interview_probability": "high",
+  "market_frequency": "not_assessed",
+  "market_evidence": "Приоритет задан ролью урока в проекте P1.",
+  "content_status": "complete",
+  "content_source": "curated",
+  "editorial_status": "published",
+  "quality_revision": 1,
+  "last_verified": "2026-11-21",
+  "reviewed_on": "2026-11-21",
+  "sources": [
+    {
+      "source_id": "Python-async",
+      "url": "https://docs.python.org/3/library/asyncio-task.html",
+      "section": "Python, Task cancellation and Timeouts",
+      "applicability": "Python 3.12 asyncio.timeout; ожидание и отмена",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-21"
+    },
+    {
+      "source_id": "FastAPI-lifecycle",
+      "url": "https://fastapi.tiangolo.com/advanced/events/",
+      "section": "FastAPI Advanced, Lifespan Events",
+      "applicability": "FastAPI 0.116.1, async lifespan",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-21"
+    },
+    {
+      "source_id": "B1",
+      "url": "https://docs.sqlalchemy.org/en/20/orm/extensions/asyncio.html#using-asyncsession-with-concurrent-tasks",
+      "section": "SQLAlchemy asyncio, concurrent tasks",
+      "applicability": "SQLAlchemy 2.0, sessions не разделяют конкурентные запросы",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-21"
+    },
+    {
+      "source_id": "HTTPX-timeouts",
+      "url": "https://www.python-httpx.org/advanced/timeouts/",
+      "section": "HTTPX, Fine tuning timeouts",
+      "applicability": "Connect, read, write и pool delays; общий budget задаёт приложение",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-21"
+    }
+  ],
+  "task_id": "ai-engineering.03.03.async-provider-lifecycle.practice"
+}

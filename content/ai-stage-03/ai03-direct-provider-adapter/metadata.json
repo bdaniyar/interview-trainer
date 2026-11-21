@@ -1,0 +1,76 @@
+{
+  "id": "ai-engineering.03.01.direct-provider-adapter",
+  "slug": "ai03-direct-provider-adapter",
+  "number": "AI3.1",
+  "title": "Прямой адаптер провайдера",
+  "prerequisites": [
+    "ai-engineering.01.01.backend-diagnostic",
+    "ai-engineering.01.02.ai-roles-and-boundaries",
+    "ai-engineering.01.03.ai-backend-architecture",
+    "ai-engineering.02.01.data-and-model-lifecycle",
+    "ai-engineering.02.05.tokens-and-tokenization",
+    "ai-engineering.02.08.context-window-and-token-budget",
+    "ai-engineering.02.10.sampling-and-limitations"
+  ],
+  "practice": "graded",
+  "module_slug": "ai-stage-03",
+  "module_title": "Прямой LLM API",
+  "module_order": 103,
+  "order": 1301,
+  "description": "Переведи provider-shaped ответ Responses в независимый тип приложения и проверь границу на ошибках.",
+  "duration": 120,
+  "xp": 25,
+  "topics": [
+    "Responses API",
+    "Async SDK",
+    "Output items",
+    "GenerationResult"
+  ],
+  "has_task": true,
+  "has_solution": true,
+  "tracks": [
+    "ai-engineering"
+  ],
+  "modes": [
+    "learn",
+    "practice",
+    "interview"
+  ],
+  "priority": "P1",
+  "interview_probability": "high",
+  "market_frequency": "not_assessed",
+  "market_evidence": "Приоритет задан ролью урока в проекте P1.",
+  "content_status": "complete",
+  "content_source": "curated",
+  "editorial_status": "published",
+  "quality_revision": 1,
+  "last_verified": "2026-11-21",
+  "reviewed_on": "2026-11-21",
+  "sources": [
+    {
+      "source_id": "A1",
+      "url": "https://developers.openai.com/api/docs/guides/text",
+      "section": "OpenAI Responses API, output and output_text",
+      "applicability": "Документированная структура Responses, включая несколько output items",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-21"
+    },
+    {
+      "source_id": "A6",
+      "url": "https://developers.openai.com/api/docs/libraries",
+      "section": "OpenAI Libraries, Python SDK",
+      "applicability": "Python SDK 3.57.0, проверка mock transport в отдельном окружении Python 3.12",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-21"
+    },
+    {
+      "source_id": "A7",
+      "url": "https://developers.openai.com/api/docs/guides/error-codes",
+      "section": "OpenAI API, Python errors",
+      "applicability": "Моделирование обработанных исходов, без обращения к live API",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-21"
+    }
+  ],
+  "task_id": "ai-engineering.03.01.direct-provider-adapter.practice"
+}

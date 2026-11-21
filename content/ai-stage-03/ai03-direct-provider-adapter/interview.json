@@ -1,0 +1,44 @@
+[
+  {
+    "question": "Почему output[0] может не содержать пользовательский текст?",
+    "answer": [
+      "Output — список элементов разных типов.",
+      "Длина и порядок зависят от ответа. В Responses ищи message и вложенные output_text. Reasoning или tool item нельзя подставлять как ответ."
+    ],
+    "short_answer": "Output — список элементов разных типов.",
+    "junior_answer": "Длина и порядок зависят от ответа. В Responses ищи message и вложенные output_text. Reasoning или tool item нельзя подставлять как ответ.",
+    "follow_up_question": "Что делает output_text SDK?",
+    "follow_up_answer": "Это удобный агрегатор текстовых частей. Для статусов, отказа и usage прочитай отдельные поля.",
+    "priority": "P1",
+    "expected_answer": {
+      "must_mention": [
+        "output item type",
+        "optional usage"
+      ],
+      "follow_up_questions": [
+        "Что делает output_text SDK?"
+      ]
+    }
+  },
+  {
+    "question": "Где ловить provider-специфичные ошибки?",
+    "answer": [
+      "В адаптере, который знает SDK.",
+      "Адаптер преобразует ожидаемые исключения в типизированный исход и сохраняет ограничения, например неизвестный usage. Он не раскрывает raw provider error в ответе."
+    ],
+    "short_answer": "В адаптере, который знает SDK.",
+    "junior_answer": "Адаптер преобразует ожидаемые исключения в типизированный исход и сохраняет ограничения, например неизвестный usage. Он не раскрывает raw provider error в ответе.",
+    "follow_up_question": "Почему async в FastAPI?",
+    "follow_up_answer": "Неблокирующее ожидание освобождает event loop для других задач. Клиент и его cleanup должны соответствовать async lifecycle.",
+    "priority": "P1",
+    "expected_answer": {
+      "must_mention": [
+        "граница SDK",
+        "неблокирующее ожидание"
+      ],
+      "follow_up_questions": [
+        "Почему async в FastAPI?"
+      ]
+    }
+  }
+]
