@@ -15,7 +15,7 @@
           "slug": "ai01-backend-diagnostic",
           "number": "AI1.1",
           "title": "Диагностика backend-основ",
-          "status": "planned",
+          "status": "published",
           "prerequisites": [],
           "practice": "diagnostic",
           "minutes": 90
@@ -35,7 +35,7 @@
           "slug": "ai01-ai-backend-architecture",
           "number": "AI1.3",
           "title": "Архитектура AI-приложения",
-          "status": "planned",
+          "status": "published",
           "prerequisites": [
             "ai-engineering.01.01.backend-diagnostic",
             "ai-engineering.01.02.ai-roles-and-boundaries"
