@@ -38,6 +38,19 @@ def files(directory):
             for path in directory.rglob("*") if path.is_file() and path.suffix == ".py"}
 
 
+# Deliberate behavior changes with varied inputs. Each must fail the real grader.
+NEGATIVE_CONTROLS = {
+    "AI3.1": ('    try:\n        response =', '    return GenerationResult("completed", "fixed")\n    try:\n        response ='),
+    "AI3.2": ('return Request(POLICY, items, ALLOWED_TOOLS)', 'return Request(external_note or POLICY, items, ALLOWED_TOOLS)'),
+    "AI3.3": ('await client.aclose()', 'pass'),
+    "AI3.4": ('{429, 503}', '{401, 429, 503}'),
+    "AI3.5": ('await source.aclose()', 'pass'),
+    "AI3.6": ('total <= budget', 'total < budget'),
+    "AI3.7": ('status=answer.status, usage=answer.usage)', 'status=answer.status, text=answer.text, usage=answer.usage)'),
+    "AI3.8": ('    assert offline.socket_calls == 0 and not offline.secret_seen\n', ''),
+}
+
+
 def main():
     catalog = call("/api/course")
     backend = call("/api/lessons/is-vs-eq")
@@ -61,6 +74,13 @@ def main():
         if graded:
             assert not failed["passed"] and not failed["timed_out"], failed
             assert failed["xp_awarded"] == 0 and failed["tests_total"] > 0, failed
+        if graded:
+            original, flawed = NEGATIVE_CONTROLS[item["number"]]
+            assert reference["main.py"].count(original) == 1
+            mutant = reference["main.py"].replace(original, flawed)
+            negative = call("/api/check", {**request, "files": {**reference, "main.py": mutant}})
+            assert not negative["passed"] and not negative["timed_out"] and negative["xp_awarded"] == 0, negative
+            assert negative["tests_total"] == failed["tests_total"] > 0
         payload = {**request, "files": {**reference, "notes.py": "# Learner draft"}}
         output = call("/api/run", payload)
         assert output["exit_code"] == 0 and not output["timed_out"], output
@@ -74,6 +94,16 @@ def main():
         assert call(path)["files"] == payload["files"]
         print(json.dumps({"lesson": item["number"], "run": True, "saved": True,
                           "check_cases": complete["tests_total"] if graded else None}), flush=True)
+    guard = call("/api/run", {
+        "lesson_slug": published[0][1]["slug"],
+        "files": {"main.py": "from pathlib import Path\nassert {p.name for p in Path('/sys/class/net').iterdir()} == {'lo'}\nassert not Path('/var/run/docker.sock').exists()\nassert not Path('/data/pythoria.db').exists()\nprint('offline boundary confirmed')"},
+    })
+    assert guard["exit_code"] == 0 and "offline boundary confirmed" in guard["stdout"], guard
+    # Restore the preview exercise program after the isolation probe.
+    stage, first = published[0]
+    call("/api/lessons/" + first["slug"] + "/files", {
+        "files": {**files(ROOT / "content" / stage / first["slug"] / "solution"), "notes.py": "# Learner draft"},
+    }, method="PUT")
     restored = call("/api/lessons/is-vs-eq")
     assert restored["files"] == backend["files"] and restored["progress"] == backend["progress"]
     assert call("/api/sql/lessons/s10-select-aliases-and-expressions")["completed"] == sql["completed"]

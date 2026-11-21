@@ -11,3 +11,5 @@ uv pip sync --python /tmp/pythoria-sdk-check/bin/python --require-hashes tools/a
 Первичная установка требует доступных пакетов или локального кэша. Тесты используют in-process MockTransport и блокируют подключение через обычные сокеты. Проверяются запрос POST /v1/responses, несколько элементов в выходе, aggregate output_text, usage, неполный ответ, 401, 429 и timeout. `max_retries=0` оставляет один вызов. Модель и ключ в тесте вымышленные.
 
 Основной пример находится в `example.py`; жизненным циклом клиента управляет вызывающий код. Урок использует SDK-shaped fake, совместимый с networkless Runner. Совместимость с живой моделью и её качество этими тестами не измеряются.
+
+Проверка AI3.5 дополнительно подаёт SSE-кадры через MockTransport. Она проверяет тип события, Unicode delta, final response и закрытие HTTPX2 stream.

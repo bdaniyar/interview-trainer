@@ -3,6 +3,7 @@
   "title": "AI Engineering",
   "lesson_count": 72,
   "release": "R0",
+  "release_status": "complete",
   "release_lesson_count": 15,
   "stages": [
     {
@@ -166,7 +167,7 @@
           "slug": "ai03-streaming-events",
           "number": "AI3.5",
           "title": "Streaming и события потока",
-          "status": "planned",
+          "status": "published",
           "prerequisites": [
             "ai-engineering.03.02.messages-and-instructions",
             "ai-engineering.03.03.async-provider-lifecycle"
@@ -179,7 +180,7 @@
           "slug": "ai03-usage-and-cost-budget",
           "number": "AI3.6",
           "title": "Usage, цена и бюджет",
-          "status": "planned",
+          "status": "published",
           "prerequisites": [
             "ai-engineering.02.08.context-window-and-token-budget",
             "ai-engineering.03.01.direct-provider-adapter"
@@ -192,7 +193,7 @@
           "slug": "ai03-fastapi-chat-service",
           "number": "AI3.7",
           "title": "Chat API на FastAPI",
-          "status": "planned",
+          "status": "published",
           "prerequisites": [
             "ai-engineering.03.02.messages-and-instructions",
             "ai-engineering.03.03.async-provider-lifecycle",
@@ -208,7 +209,7 @@
           "slug": "ai03-chat-contract-tests",
           "number": "AI3.8",
           "title": "Контрактные тесты Chat API",
-          "status": "planned",
+          "status": "published",
           "prerequisites": [
             "ai-engineering.03.07.fastapi-chat-service"
           ],

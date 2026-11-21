@@ -9,3 +9,7 @@ async def get_response(client: AsyncOpenAI, model: str, question: str):
         input=[{"role": "user", "content": [{"type": "input_text", "text": question}]}],
         store=False,
     )
+
+
+async def open_stream(client: AsyncOpenAI, model: str, question: str):
+    return await client.responses.create(model=model, input=question, store=False, stream=True)

@@ -1,0 +1,61 @@
+{
+  "id": "ai-engineering.03.08.chat-contract-tests",
+  "slug": "ai03-chat-contract-tests",
+  "number": "AI3.8",
+  "title": "Контрактные тесты Chat API",
+  "prerequisites": [
+    "ai-engineering.03.07.fastapi-chat-service"
+  ],
+  "practice": "graded",
+  "module_slug": "ai-stage-03",
+  "module_title": "Прямой LLM API",
+  "module_order": 103,
+  "order": 1308,
+  "description": "Напиши независимые проверки Chat API и убедись, что они выявляют сломанные контракты.",
+  "duration": 180,
+  "xp": 25,
+  "topics": [
+    "Contract tests",
+    "Negative controls",
+    "Офлайн-проверка и handoff"
+  ],
+  "has_task": true,
+  "has_solution": true,
+  "tracks": [
+    "ai-engineering"
+  ],
+  "modes": [
+    "learn",
+    "practice",
+    "interview"
+  ],
+  "priority": "P1",
+  "interview_probability": "high",
+  "market_frequency": "not_assessed",
+  "market_evidence": "Приоритет задан ролью урока в проекте P1.",
+  "content_status": "complete",
+  "content_source": "curated",
+  "editorial_status": "published",
+  "quality_revision": 1,
+  "last_verified": "2026-11-21",
+  "reviewed_on": "2026-11-21",
+  "sources": [
+    {
+      "source_id": "A5",
+      "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+      "section": "OpenAI, evaluation best practices",
+      "applicability": "Принципы task-specific кейсов; hosted платформа не используется",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-21"
+    },
+    {
+      "source_id": "FastAPI-test",
+      "url": "https://fastapi.tiangolo.com/advanced/testing-dependencies/",
+      "section": "FastAPI, testing dependencies with overrides",
+      "applicability": "FastAPI 0.116.1; офлайн подмена клиента",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-21"
+    }
+  ],
+  "task_id": "ai-engineering.03.08.chat-contract-tests.practice"
+}

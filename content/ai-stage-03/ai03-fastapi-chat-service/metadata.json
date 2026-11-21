@@ -1,0 +1,74 @@
+{
+  "id": "ai-engineering.03.07.fastapi-chat-service",
+  "slug": "ai03-fastapi-chat-service",
+  "number": "AI3.7",
+  "title": "Chat API на FastAPI",
+  "prerequisites": [
+    "ai-engineering.03.02.messages-and-instructions",
+    "ai-engineering.03.03.async-provider-lifecycle",
+    "ai-engineering.03.04.retries-and-rate-limits",
+    "ai-engineering.03.05.streaming-events",
+    "ai-engineering.03.06.usage-and-cost-budget"
+  ],
+  "practice": "graded",
+  "module_slug": "ai-stage-03",
+  "module_title": "Прямой LLM API",
+  "module_order": 103,
+  "order": 1307,
+  "description": "Собери POST /chat с Pydantic, подменой провайдера, статусами и изоляцией запросов.",
+  "duration": 180,
+  "xp": 25,
+  "topics": [
+    "FastAPI service",
+    "Request ID",
+    "Error contract",
+    "Safe usage"
+  ],
+  "has_task": true,
+  "has_solution": true,
+  "tracks": [
+    "ai-engineering"
+  ],
+  "modes": [
+    "learn",
+    "practice",
+    "interview"
+  ],
+  "priority": "P1",
+  "interview_probability": "high",
+  "market_frequency": "not_assessed",
+  "market_evidence": "Приоритет задан ролью урока в проекте P1.",
+  "content_status": "complete",
+  "content_source": "curated",
+  "editorial_status": "published",
+  "quality_revision": 1,
+  "last_verified": "2026-11-21",
+  "reviewed_on": "2026-11-21",
+  "sources": [
+    {
+      "source_id": "FastAPI",
+      "url": "https://fastapi.tiangolo.com/tutorial/response-model/",
+      "section": "FastAPI, response model and output filtering",
+      "applicability": "FastAPI 0.116.1 в Runner",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-21"
+    },
+    {
+      "source_id": "Pydantic",
+      "url": "https://docs.pydantic.dev/latest/concepts/fields/",
+      "section": "Pydantic, field constraints",
+      "applicability": "Контракты проверены на Pydantic 2.11.7",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-21"
+    },
+    {
+      "source_id": "A1",
+      "url": "https://developers.openai.com/api/docs/guides/text",
+      "section": "OpenAI Responses API, request and output",
+      "applicability": "Status ответа модели отдельно от транспорта",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-21"
+    }
+  ],
+  "task_id": "ai-engineering.03.07.fastapi-chat-service.practice"
+}
