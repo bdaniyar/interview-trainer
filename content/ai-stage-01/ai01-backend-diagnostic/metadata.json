@@ -1,0 +1,58 @@
+{
+  "id": "ai-engineering.01.01.backend-diagnostic",
+  "slug": "ai01-backend-diagnostic",
+  "number": "AI1.1",
+  "title": "Диагностика backend-основ",
+  "prerequisites": [],
+  "practice": "diagnostic",
+  "module_slug": "ai-stage-01",
+  "module_title": "Профессия, границы AI и диагностика",
+  "module_order": 101,
+  "order": 1101,
+  "description": "Проверь себя на endpoint с владельцем беседы, async-провайдером и таймаутом.",
+  "duration": 90,
+  "xp": 5,
+  "topics": [
+    "FastAPI",
+    "DTO и доступ",
+    "Отмена и освобождение ресурсов"
+  ],
+  "has_task": false,
+  "has_solution": true,
+  "tracks": [
+    "ai-engineering"
+  ],
+  "modes": [
+    "learn",
+    "practice",
+    "interview"
+  ],
+  "priority": "P1",
+  "interview_probability": "high",
+  "market_frequency": "not_assessed",
+  "market_evidence": "Приоритет задан ролью урока в проекте P1.",
+  "content_status": "complete",
+  "content_source": "curated",
+  "editorial_status": "published",
+  "quality_revision": 1,
+  "last_verified": "2026-11-21",
+  "reviewed_on": "2026-11-21",
+  "sources": [
+    {
+      "source_id": "FastAPI-test",
+      "url": "https://fastapi.tiangolo.com/advanced/testing-dependencies/",
+      "section": "Testing Dependencies with Overrides",
+      "applicability": "FastAPI 0.116.1 в Python Runner; scoped test overrides",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-21"
+    },
+    {
+      "source_id": "Python-async",
+      "url": "https://docs.python.org/3/library/asyncio-task.html",
+      "section": "Task cancellation; Timeouts",
+      "applicability": "Python 3.12: asyncio.timeout и CancelledError",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-21"
+    }
+  ]
+}
