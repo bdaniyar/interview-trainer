@@ -1,0 +1,60 @@
+{
+  "id": "ai-engineering.02.08.context-window-and-token-budget",
+  "slug": "ai02-context-window-budget",
+  "number": "AI2.8",
+  "title": "Контекстное окно и бюджет токенов",
+  "prerequisites": [
+    "ai-engineering.02.05.tokens-and-tokenization"
+  ],
+  "practice": "guided",
+  "module_slug": "ai-stage-02",
+  "module_title": "ML, нейросети и LLM с нуля",
+  "module_order": 102,
+  "order": 1208,
+  "description": "Собери вход запроса с обязательными блоками, резервом вывода и историей своей беседы.",
+  "duration": 120,
+  "xp": 5,
+  "topics": [
+    "Контекстное окно",
+    "Резерв вывода",
+    "Атомарные блоки истории"
+  ],
+  "has_task": false,
+  "has_solution": true,
+  "tracks": [
+    "ai-engineering"
+  ],
+  "modes": [
+    "learn",
+    "practice",
+    "interview"
+  ],
+  "priority": "P1",
+  "interview_probability": "high",
+  "market_frequency": "not_assessed",
+  "market_evidence": "Приоритет задан ролью урока в проекте P1.",
+  "content_status": "complete",
+  "content_source": "curated",
+  "editorial_status": "published",
+  "quality_revision": 1,
+  "last_verified": "2026-11-21",
+  "reviewed_on": "2026-11-21",
+  "sources": [
+    {
+      "source_id": "A1",
+      "url": "https://developers.openai.com/api/docs/guides/text",
+      "section": "OpenAI Responses API, input/instructions",
+      "applicability": "Документированный формат; учебные лимиты синтетические",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-21"
+    },
+    {
+      "source_id": "F6",
+      "url": "https://developers.google.com/machine-learning/crash-course/llm",
+      "section": "Google ML Crash Course, Introduction to LLMs",
+      "applicability": "Идея длинного контекста; полезность каждого фрагмента не гарантируется",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-21"
+    }
+  ]
+}

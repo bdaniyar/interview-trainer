@@ -1,0 +1,52 @@
+{
+  "id": "ai-engineering.02.05.tokens-and-tokenization",
+  "slug": "ai02-tokens-and-tokenization",
+  "number": "AI2.5",
+  "title": "Токены и токенизация",
+  "prerequisites": [
+    "ai-engineering.02.01.data-and-model-lifecycle"
+  ],
+  "practice": "guided",
+  "module_slug": "ai-stage-02",
+  "module_title": "ML, нейросети и LLM с нуля",
+  "module_order": 102,
+  "order": 1205,
+  "description": "Пройди путь от Unicode-строки до ID, сравни два словаря и посчитай локальный бюджет.",
+  "duration": 120,
+  "xp": 5,
+  "topics": [
+    "Токены и token IDs",
+    "Vocabulary",
+    "Encode/decode"
+  ],
+  "has_task": false,
+  "has_solution": true,
+  "tracks": [
+    "ai-engineering"
+  ],
+  "modes": [
+    "learn",
+    "practice",
+    "interview"
+  ],
+  "priority": "P1",
+  "interview_probability": "high",
+  "market_frequency": "not_assessed",
+  "market_evidence": "Приоритет задан ролью урока в проекте P1.",
+  "content_status": "complete",
+  "content_source": "curated",
+  "editorial_status": "published",
+  "quality_revision": 1,
+  "last_verified": "2026-11-21",
+  "reviewed_on": "2026-11-21",
+  "sources": [
+    {
+      "source_id": "F4",
+      "url": "https://huggingface.co/learn/llm-course/chapter2/4",
+      "section": "Hugging Face LLM Course, Tokenizers",
+      "applicability": "Токены, словари и восстановление текста. Учебные версии A и B не совместимы с API моделей",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-21"
+    }
+  ]
+}

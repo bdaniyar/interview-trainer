@@ -1,0 +1,70 @@
+{
+  "id": "ai-engineering.02.10.sampling-and-limitations",
+  "slug": "ai02-sampling-and-limitations",
+  "number": "AI2.10",
+  "title": "Sampling и ограничения LLM",
+  "prerequisites": [
+    "ai-engineering.02.05.tokens-and-tokenization",
+    "ai-engineering.02.08.context-window-and-token-budget"
+  ],
+  "practice": "guided",
+  "module_slug": "ai-stage-02",
+  "module_title": "ML, нейросети и LLM с нуля",
+  "module_order": 102,
+  "order": 1210,
+  "description": "Посчитай вероятности и проверь, где заканчиваются гарантии у сгенерированного текста.",
+  "duration": 120,
+  "xp": 5,
+  "topics": [
+    "Вероятности токенов",
+    "Temperature",
+    "Top-p",
+    "Калибровка"
+  ],
+  "has_task": false,
+  "has_solution": true,
+  "tracks": [
+    "ai-engineering"
+  ],
+  "modes": [
+    "learn",
+    "practice",
+    "interview"
+  ],
+  "priority": "P1",
+  "interview_probability": "high",
+  "market_frequency": "not_assessed",
+  "market_evidence": "Приоритет задан ролью урока в проекте P1.",
+  "content_status": "complete",
+  "content_source": "curated",
+  "editorial_status": "published",
+  "quality_revision": 1,
+  "last_verified": "2026-11-21",
+  "reviewed_on": "2026-11-21",
+  "sources": [
+    {
+      "source_id": "F6",
+      "url": "https://developers.google.com/machine-learning/crash-course/llm",
+      "section": "Google ML Crash Course, Introduction to LLMs",
+      "applicability": "Генерация последовательности и ограничения",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-21"
+    },
+    {
+      "source_id": "nucleus",
+      "url": "https://arxiv.org/abs/1904.09751",
+      "section": "Holtzman et al., The Curious Case of Neural Text Degeneration v2",
+      "applicability": "Определение nucleus sampling. Учебный RNG независим от API",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-21"
+    },
+    {
+      "source_id": "A1",
+      "url": "https://developers.openai.com/api/docs/guides/text",
+      "section": "OpenAI Responses, output and model behavior",
+      "applicability": "Отдельные статусы и границы сервисной совместимости",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-21"
+    }
+  ]
+}
