@@ -224,16 +224,33 @@ async def check_code(payload: RunPayload, db: Session = Depends(get_db)):
     tests = content_repo.hidden_tests(payload.lesson_slug)
     if not tests:
         raise HTTPException(status_code=409, detail="Hidden tests пока не добавлены")
+    ai_task = AI_TRACK in lesson.get("tracks", [])
     persist_files(db, payload.lesson_slug, payload.files)
     result = await execute_in_runner(
         {
             "mode": "check",
             "files": payload.files,
             "tests": tests,
-            "command": ["pytest", "-v", "--tb=short", "-p", "no:cacheprovider", "tests"],
+            "command": ["pytest", "-v", "--tb=no" if ai_task else "--tb=short", "-p", "no:cacheprovider", "tests"],
         }
     )
     passed = result["exit_code"] == 0 and result.get("tests_total", 0) > 0
+    if ai_task:
+        passed = passed and result["tests_passed"] == result["tests_total"]
+        if result["timed_out"]:
+            feedback = "Проверка превысила лимит времени."
+        elif passed:
+            feedback = "Все сценарии контракта пройдены."
+        else:
+            feedback = "Контракт проверки не выполнен. Сверь сигнатуру, открытые примеры и граничные случаи в условии."
+        result.update(
+            stdout=feedback + "\n",
+            stderr="",
+            tests=[
+                {**item, "name": f"Сценарий {index}"}
+                for index, item in enumerate(result.get("tests", []), 1)
+            ],
+        )
     progress = get_progress(db, payload.lesson_slug)
     state = get_state(db)
     xp_awarded = 0

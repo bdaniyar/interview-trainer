@@ -126,3 +126,34 @@ def test_ai_catalog_and_guided_completion_preserve_backend_progress(client):
     assert after["ai"]["summary"]["completed"] == 1
     assert after["ai"]["summary"]["percent"] == round(100 / after["ai"]["summary"]["total"])
     assert client.get(f"/api/lessons/{backend_slug}").json()["files"] == files
+
+
+def test_ai_check_feedback_hides_cases_and_completes_only_requested_lesson(client, monkeypatch):
+    slug = "ai03-direct-provider-adapter"
+    private = "private test source and fixture values"
+    skipped = True
+
+    async def runner(payload):
+        assert "--tb=no" in payload["command"] and "tests/test_main.py" in payload["tests"]
+        return {
+            "stdout": private, "stderr": private, "exit_code": 0, "duration_ms": 10, "timed_out": False,
+            "tests_total": 2, "tests_passed": 1 if skipped else 2,
+            "tests": [
+                {"name": "case_a[private]", "status": "passed", "passed": True},
+                {"name": "case_b[private]", "status": "skipped" if skipped else "passed", "passed": not skipped},
+            ],
+        }
+
+    monkeypatch.setattr(main_module, "execute_in_runner", runner)
+    payload = {"lesson_slug": slug, "files": {"main.py": "print('saved')"}}
+    rejected = client.post("/api/check", json=payload).json()
+    assert not rejected["passed"] and rejected["xp_awarded"] == 0
+    assert "private" not in str(rejected)
+    skipped = False
+    accepted = client.post("/api/check", json=payload).json()
+    assert accepted["passed"] and accepted["xp_awarded"] == 20
+    assert client.post("/api/check", json=payload).json()["xp_awarded"] == 0
+    assert client.get(f"/api/lessons/{slug}").json()["progress"]["task_completed"]
+    assert not client.get("/api/lessons/ai03-messages-and-instructions").json()["progress"]["task_completed"]
+    course = client.get("/api/course").json()
+    assert course["ai"]["summary"]["completed"] == 1 and course["summary"]["completed"] == 0

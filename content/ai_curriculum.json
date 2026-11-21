@@ -111,7 +111,7 @@
           "slug": "ai03-direct-provider-adapter",
           "number": "AI3.1",
           "title": "Прямой адаптер провайдера",
-          "status": "planned",
+          "status": "published",
           "prerequisites": [
             "ai-engineering.01.01.backend-diagnostic",
             "ai-engineering.01.02.ai-roles-and-boundaries",
@@ -129,7 +129,7 @@
           "slug": "ai03-messages-and-instructions",
           "number": "AI3.2",
           "title": "Сообщения, инструкции и внешние данные",
-          "status": "planned",
+          "status": "published",
           "prerequisites": [
             "ai-engineering.03.01.direct-provider-adapter"
           ],
@@ -141,7 +141,7 @@
           "slug": "ai03-async-provider-lifecycle",
           "number": "AI3.3",
           "title": "Жизненный цикл async-клиента и отмена",
-          "status": "planned",
+          "status": "published",
           "prerequisites": [
             "ai-engineering.01.01.backend-diagnostic",
             "ai-engineering.03.01.direct-provider-adapter"
@@ -154,7 +154,7 @@
           "slug": "ai03-retries-and-rate-limits",
           "number": "AI3.4",
           "title": "Повторы и лимиты запросов",
-          "status": "planned",
+          "status": "published",
           "prerequisites": [
             "ai-engineering.03.03.async-provider-lifecycle"
           ],
