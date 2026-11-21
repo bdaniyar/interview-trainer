@@ -28,6 +28,8 @@ def validate_ai(content: Path, bundles: list[tuple[dict, Path]], taxonomy: list[
         errors.append("AI roadmap total must be 72")
     if manifest["release_lesson_count"] != len(records) or len(records) != 15:
         errors.append("AI R0 requires exactly 15 scheduled lessons")
+    if manifest.get("release_status") == "complete" and any(item["status"] != "published" for _, item in records):
+        errors.append("Complete AI R0 must publish every scheduled lesson")
     if sum(item["practice"] == "graded" for _, item in records) != 8:
         errors.append("AI R0 requires exactly eight graded assignments")
     for field in ("id", "slug", "number"):

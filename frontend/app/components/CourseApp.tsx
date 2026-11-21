@@ -30,6 +30,7 @@ import { SqlWorkspace } from './SqlWorkspace';
 import { IndexWorkspace } from './IndexWorkspace';
 import { TransactionWorkspace } from './TransactionWorkspace';
 
+const lessonPreference = (track: CourseTrack) => `pythoria-${track}-lesson`;
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 
 function storedNumber(key: string, fallback: number, min: number, max: number) {
@@ -77,7 +78,7 @@ export function CourseApp() {
     const querySlug = new URLSearchParams(window.location.search).get('lesson');
     const preferred = localStorage.getItem('pythoria-track') === 'ai-engineering' ? 'ai-engineering' : 'backend';
     const slug = querySlug && trackForLesson(data, querySlug) ? querySlug
-      : resumeTrack(data, preferred, localStorage.getItem('pythoria-ai-lesson')) || resumeTrack(data, 'backend', null);
+      : resumeTrack(data, preferred, localStorage.getItem(lessonPreference('ai-engineering'))) || resumeTrack(data, 'backend', null);
     setActiveSlug((current) => current || slug);
   }, []);
 
@@ -100,7 +101,7 @@ export function CourseApp() {
         setExpandedModules((current) => new Set(current).add(data.module_slug));
         const nextTrack = data.tracks?.includes('ai-engineering') ? 'ai-engineering' : 'backend';
         localStorage.setItem('pythoria-track', nextTrack);
-        localStorage.setItem(`pythoria-${nextTrack}-lesson`, data.slug);
+        localStorage.setItem(lessonPreference(nextTrack), data.slug);
         setFiles(data.files);
         setLoadingLesson(false);
         window.history.replaceState({}, '', `?lesson=${activeSlug}`);
@@ -142,7 +143,7 @@ export function CourseApp() {
 
   const selectTrack = (next: CourseTrack) => {
     if (!course || track === next) return;
-    const remembered = localStorage.getItem(`pythoria-${next}-lesson`);
+    const remembered = localStorage.getItem(lessonPreference(next));
     const slug = remembered && trackForLesson(course, remembered) === next
       ? remembered : resumeTrack(course, next, null);
     setSearch('');

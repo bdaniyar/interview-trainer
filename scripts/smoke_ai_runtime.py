@@ -2,6 +2,7 @@
 
 import json
 import os
+import time
 from pathlib import Path
 from urllib.error import HTTPError
 from urllib.parse import urlsplit
@@ -33,9 +34,31 @@ def call(path, data=None, method=None, status=200):
         raise AssertionError((path, error.code, error.read())) from None
 
 
+def execute(path, payload):
+    result = call(path, payload)
+    if result["timed_out"]:
+        print(f"Preview sandbox timed out for {payload['lesson_slug']} {path}; retrying once", flush=True)
+        time.sleep(1)
+        result = call(path, payload)
+    return result
+
+
 def files(directory):
     return {str(path.relative_to(directory)): path.read_text()
             for path in directory.rglob("*") if path.is_file() and path.suffix == ".py"}
+
+
+# Deliberate behavior changes with varied inputs. Each must fail the real grader.
+NEGATIVE_CONTROLS = {
+    "AI3.1": ('    try:\n        response =', '    return GenerationResult("completed", "fixed")\n    try:\n        response ='),
+    "AI3.2": ('return Request(POLICY, items, ALLOWED_TOOLS)', 'return Request(external_note or POLICY, items, ALLOWED_TOOLS)'),
+    "AI3.3": ('await client.aclose()', 'pass'),
+    "AI3.4": ('{429, 503}', '{401, 429, 503}'),
+    "AI3.5": ('await source.aclose()', 'pass'),
+    "AI3.6": ('total <= budget', 'total < budget'),
+    "AI3.7": ('status=answer.status, usage=answer.usage)', 'status=answer.status, text=answer.text, usage=answer.usage)'),
+    "AI3.8": ('    assert offline.socket_calls == 0 and not offline.secret_seen\n', ''),
+}
 
 
 def main():
@@ -57,23 +80,64 @@ def main():
         assert lesson["workspace_kind"] == "python"
         request = {"lesson_slug": slug, "files": starter}
         graded = item["practice"] == "graded"
-        failed = call("/api/check", request, status=200 if graded else 409)
+        failed = execute("/api/check", request) if graded else call("/api/check", request, status=409)
         if graded:
             assert not failed["passed"] and not failed["timed_out"], failed
             assert failed["xp_awarded"] == 0 and failed["tests_total"] > 0, failed
+        if graded:
+            original, flawed = NEGATIVE_CONTROLS[item["number"]]
+            assert reference["main.py"].count(original) == 1
+            mutant = reference["main.py"].replace(original, flawed)
+            negative = execute("/api/check", {**request, "files": {**reference, "main.py": mutant}})
+            assert not negative["passed"] and not negative["timed_out"] and negative["xp_awarded"] == 0, negative
+            assert negative["tests_total"] == failed["tests_total"] > 0
         payload = {**request, "files": {**reference, "notes.py": "# Learner draft"}}
-        output = call("/api/run", payload)
+        output = execute("/api/run", payload)
         assert output["exit_code"] == 0 and not output["timed_out"], output
         if graded:
-            complete = call("/api/check", payload)
+            complete = execute("/api/check", payload)
             assert complete["passed"] and complete["tests_passed"] == complete["tests_total"] > 0, complete
             assert complete["xp_awarded"] == (0 if lesson["progress"]["task_completed"] else 20)
-            assert call("/api/check", payload)["xp_awarded"] == 0
+            repeat = execute("/api/check", payload)
+            assert repeat["passed"] and repeat["xp_awarded"] == 0, repeat
             progress = call(path)["progress"]
             assert progress["task_completed"] and progress["status"] == "completed"
         assert call(path)["files"] == payload["files"]
         print(json.dumps({"lesson": item["number"], "run": True, "saved": True,
                           "check_cases": complete["tests_total"] if graded else None}), flush=True)
+    # Some Linux kernels expose inert tunnel devices in an isolated namespace.
+    # Ask for a route to documentation-only addresses without sending any data.
+    probe = """
+import errno
+from pathlib import Path
+import socket
+
+for family, destination in (
+    (socket.AF_INET, ("192.0.2.1", 9)),
+    (socket.AF_INET6, ("2001:db8::1", 9)),
+):
+    try:
+        with socket.socket(family, socket.SOCK_DGRAM) as sock:
+            sock.connect(destination)
+    except OSError as error:
+        assert error.errno in {errno.ENETUNREACH, errno.EAFNOSUPPORT}, error
+    else:
+        raise AssertionError("Sandbox has an external route")
+
+assert not Path("/var/run/docker.sock").exists()
+assert not Path("/data/pythoria.db").exists()
+print("offline boundary confirmed")
+"""
+    guard = execute("/api/run", {
+        "lesson_slug": published[0][1]["slug"],
+        "files": {"main.py": probe},
+    })
+    assert guard["exit_code"] == 0 and "offline boundary confirmed" in guard["stdout"], guard
+    # Restore the preview exercise program after the isolation probe.
+    stage, first = published[0]
+    call("/api/lessons/" + first["slug"] + "/files", {
+        "files": {**files(ROOT / "content" / stage / first["slug"] / "solution"), "notes.py": "# Learner draft"},
+    }, method="PUT")
     restored = call("/api/lessons/is-vs-eq")
     assert restored["files"] == backend["files"] and restored["progress"] == backend["progress"]
     assert call("/api/sql/lessons/s10-select-aliases-and-expressions")["completed"] == sql["completed"]

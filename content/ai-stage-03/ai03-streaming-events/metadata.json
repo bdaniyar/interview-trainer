@@ -1,0 +1,62 @@
+{
+  "id": "ai-engineering.03.05.streaming-events",
+  "slug": "ai03-streaming-events",
+  "number": "AI3.5",
+  "title": "Streaming и события потока",
+  "prerequisites": [
+    "ai-engineering.03.02.messages-and-instructions",
+    "ai-engineering.03.03.async-provider-lifecycle"
+  ],
+  "practice": "graded",
+  "module_slug": "ai-stage-03",
+  "module_title": "Прямой LLM API",
+  "module_order": 103,
+  "order": 1305,
+  "description": "Преобразуй событийный поток в стабильный протокол и освободи upstream при обрыве.",
+  "duration": 150,
+  "xp": 25,
+  "topics": [
+    "SSE и typed events",
+    "Terminal outcome",
+    "Disconnect и backpressure"
+  ],
+  "has_task": true,
+  "has_solution": true,
+  "tracks": [
+    "ai-engineering"
+  ],
+  "modes": [
+    "learn",
+    "practice",
+    "interview"
+  ],
+  "priority": "P1",
+  "interview_probability": "high",
+  "market_frequency": "not_assessed",
+  "market_evidence": "Приоритет задан ролью урока в проекте P1.",
+  "content_status": "complete",
+  "content_source": "curated",
+  "editorial_status": "published",
+  "quality_revision": 1,
+  "last_verified": "2026-11-21",
+  "reviewed_on": "2026-11-21",
+  "sources": [
+    {
+      "source_id": "A4",
+      "url": "https://developers.openai.com/api/docs/guides/streaming-responses",
+      "section": "OpenAI streaming with Responses events",
+      "applicability": "Проверенная форма Python SDK 3.57.0; семантика SSE проверена через mock transport",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-21"
+    },
+    {
+      "source_id": "Python-generator",
+      "url": "https://docs.python.org/3/library/contextlib.html#contextlib.aclosing",
+      "section": "Python, async generator closing",
+      "applicability": "Python 3.12; cleanup для ранней остановки итерации",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-21"
+    }
+  ],
+  "task_id": "ai-engineering.03.05.streaming-events.practice"
+}

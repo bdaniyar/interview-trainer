@@ -4,6 +4,13 @@ import { readFile } from 'node:fs/promises';
 export async function aiWalkthrough({ call, evaluate, until, click, typePython, type, api, size, frontendOrigin }) {
   const backend = 'is-vs-eq';
   const concept = 'ai01-ai-roles-and-boundaries';
+  const selectLesson = async (item) => {
+    await type('.lesson-search input', item.title);
+    const button = `Array.from(document.querySelectorAll('.course-sidebar button.lesson')).find(b=>b.textContent.includes(${JSON.stringify(item.title)}))`;
+    await until(button);
+    await evaluate(`(${button}).click()`);
+    await waitLesson(item.slug);
+  };
   const waitLesson = (slug) => until(`new URLSearchParams(location.search).get('lesson')===${JSON.stringify(slug)} && document.querySelector('.lesson-title-row h1')`);
   const currentTrack = () => evaluate(`document.querySelector('[aria-label="Учебный трек"]').value`);
   const changeTrack = (value) => evaluate(`(() => {
@@ -16,6 +23,20 @@ export async function aiWalkthrough({ call, evaluate, until, click, typePython, 
     await until(`typeof window.require==='function' && document.querySelector('.editor-panel textarea')`);
     await evaluate(`new Promise((resolve,reject)=>window.require(['vs/editor/editor.main'],loaded=>{window.__phase8aMonaco=loaded.m||loaded;resolve(true)},reject))`);
   };
+  const submit = async (action) => {
+    const button = JSON.stringify(`.workspace-actions .${action}-button`);
+    const exit = "document.querySelector('.terminal-result-summary span:last-child')?.textContent";
+    for (let attempt = 0; attempt < 2; attempt++) {
+      await until(`document.querySelector(${button}) && !document.querySelector(${button}).disabled`);
+      await click(JSON.parse(button));
+      await until(`document.querySelector(${button}).disabled`);
+      await until(`!document.querySelector(${button}).disabled && (${exit})?.startsWith('exit ')`);
+      if (await evaluate(exit) !== 'exit 124') return;
+      console.log(`Python sandbox timed out during ${action}. Repeating after preview settles.`);
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
+    throw new Error(`Python sandbox timed out twice during ${action}`);
+  };
   const navigate = (slug = '') => call('Page.navigate', {url: frontendOrigin + '/' + (slug ? '?lesson=' + slug : '')});
 
   await navigate(backend);
@@ -23,8 +44,10 @@ export async function aiWalkthrough({ call, evaluate, until, click, typePython, 
   assert.equal(await currentTrack(), 'backend');
   const before = await api('/api/course');
   const backendFiles = (await api('/api/lessons/' + backend)).files;
+  const allAi = before.ai.modules.flatMap(module => module.lessons);
   await changeTrack('ai-engineering');
-  await waitLesson(concept);
+  await waitLesson(allAi[0].slug);
+  if (allAi[0].slug !== concept) await selectLesson(allAi.find(item => item.slug === concept));
   assert.equal(await currentTrack(), 'ai-engineering');
   assert.equal(await evaluate(`document.querySelector('.course-progress b').textContent`), before.ai.summary.percent + '%');
   assert.equal(await hidden(), true);
@@ -42,7 +65,7 @@ export async function aiWalkthrough({ call, evaluate, until, click, typePython, 
   await loadEditor();
   const solution = await readFile(new URL('../content/ai-stage-01/ai01-ai-roles-and-boundaries/solution/main.py', import.meta.url), 'utf8');
   await typePython(solution);
-  await click('.workspace-actions .run-button');
+  await submit('run');
   await until(`document.querySelector('.terminal-panel')?.innerText.includes('Черновик: llm')`);
   await click('.theory-complete-card button');
   await until(`document.querySelector('.theory-complete-card strong')?.textContent==='Урок отмечен'`);
@@ -76,5 +99,36 @@ export async function aiWalkthrough({ call, evaluate, until, click, typePython, 
   await navigate(concept);
   await waitLesson(concept);
   assert.equal(await currentTrack(), 'ai-engineering');
+  await size(1720, 1050);
+  const graded = allAi.find(item => item.slug === 'ai03-direct-provider-adapter');
+  if (graded) {
+    // A deep-linked lesson in another AI module must select the right sidebar.
+    await selectLesson(graded);
+    assert.equal(await hidden(), true);
+    await loadEditor();
+    await submit('check');
+    await until(`document.querySelector('.terminal-result-summary .failed')?.textContent.endsWith(' / 11 tests')`);
+    assert.equal((await api('/api/lessons/' + graded.slug)).progress.task_completed, false);
+    const gradedSolution = await readFile(new URL('../content/ai-stage-03/ai03-direct-provider-adapter/solution/main.py', import.meta.url), 'utf8');
+    await typePython(gradedSolution);
+    await submit('run');
+    await until(`document.querySelector('.terminal-result-summary')?.textContent.includes('exit 0')`);
+    await submit('check');
+    await until(`document.querySelector('.terminal-result-summary .passed')?.textContent==='11 / 11 tests'`);
+    await until(`document.querySelector('.lesson-title-row .status-pill')?.textContent==='completed'`);
+    const result = await api('/api/course');
+    assert.equal(result.ai.summary.completed, after.ai.summary.completed + 1);
+    assert.equal(result.summary.completed, before.summary.completed);
+    assert.equal(result.summary.xp, after.summary.xp + 20);
+    await changeTrack('backend');
+    await waitLesson(backend);
+    await changeTrack('ai-engineering');
+    await waitLesson(graded.slug);
+    assert.equal((await api('/api/lessons/' + graded.slug)).files['main.py'], gradedSolution);
+    await call('Page.reload');
+    await waitLesson(graded.slug);
+    assert.equal((await api('/api/lessons/' + graded.slug)).progress.task_completed, true);
+    console.log(JSON.stringify({aiGraded:true, failedCheck:true, passedCheck:11, xp:20, savedFiles:true, completionAfterReload:true}));
+  }
   console.log(JSON.stringify({aiNavigation:true, trackProgress:true, learnReview:true, monacoRun:true, savedFiles:true, reload:true, mobile390:true, themes:true, deepLink:true}));
 }
