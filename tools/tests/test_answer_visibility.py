@@ -84,7 +84,10 @@ print("42")
 
 def test_no_known_answer_leaks_in_any_published_stage_8_onward_lesson():
     records = audit(ROOT / 'content')
-    assert len(records) == 306
+    assert sum(not record['id'].startswith('ai-engineering.') for record in records) == 306
+    manifest = json.loads((ROOT / 'content/ai_curriculum.json').read_text())
+    published_ai = {item['id'] for stage in manifest['stages'] for item in stage['lessons'] if item['status'] == 'published'}
+    assert {record['id'] for record in records if record['id'].startswith('ai-engineering.')} == published_ai
     leaks = [(r['slug'], i) for r in records for i in r['issues'] if i['code'].startswith('answer-')]
     assert leaks == []
 
