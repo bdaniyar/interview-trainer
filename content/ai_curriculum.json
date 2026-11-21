@@ -55,7 +55,7 @@
           "slug": "ai02-data-and-model-lifecycle",
           "number": "AI2.1",
           "title": "Данные, признаки и жизненный цикл модели",
-          "status": "planned",
+          "status": "published",
           "prerequisites": [
             "ai-engineering.01.02.ai-roles-and-boundaries"
           ],
@@ -67,7 +67,7 @@
           "slug": "ai02-tokens-and-tokenization",
           "number": "AI2.5",
           "title": "Токены и токенизация",
-          "status": "planned",
+          "status": "published",
           "prerequisites": [
             "ai-engineering.02.01.data-and-model-lifecycle"
           ],
@@ -79,7 +79,7 @@
           "slug": "ai02-context-window-budget",
           "number": "AI2.8",
           "title": "Контекстное окно и бюджет токенов",
-          "status": "planned",
+          "status": "published",
           "prerequisites": [
             "ai-engineering.02.05.tokens-and-tokenization"
           ],
@@ -91,7 +91,7 @@
           "slug": "ai02-sampling-and-limitations",
           "number": "AI2.10",
           "title": "Sampling и ограничения LLM",
-          "status": "planned",
+          "status": "published",
           "prerequisites": [
             "ai-engineering.02.05.tokens-and-tokenization",
             "ai-engineering.02.08.context-window-and-token-budget"
