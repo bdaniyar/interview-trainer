@@ -21,7 +21,8 @@ import {
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { api } from '../api';
-import type { CourseData, ExecutionResult, LessonData, LessonSummary } from '../types';
+import { resumeTrack, trackForLesson, trackModules } from '../courseTracks';
+import type { CourseData, CourseTrack, ExecutionResult, LessonData, LessonSummary } from '../types';
 import { CodeWorkspace } from './CodeWorkspace';
 import { InterviewModal } from './InterviewModal';
 import { MarkdownLesson } from './MarkdownLesson';
@@ -57,21 +58,27 @@ export function CourseApp() {
   const filesRef = useRef(files);
   const activeSlugRef = useRef(activeSlug);
   const loadedLessonRef = useRef<LessonData | null>(null);
+  const navigationRequest = useRef(0);
+  const completionRequest = useRef(0);
 
-  const flattened = useMemo(() => course?.modules.flatMap((module) => module.lessons) ?? [], [course]);
+  const track = course ? trackForLesson(course, activeSlug) ?? 'backend' : 'backend';
+  const aiTrack = track === 'ai-engineering';
+  const modules = useMemo(() => course ? trackModules(course, track) : [], [course, track]);
+  const summary = aiTrack ? course?.ai?.summary : course?.summary;
+  const flattened = useMemo(() => modules.flatMap((module) => module.lessons), [modules]);
   const activePosition = flattened.findIndex((item) => item.slug === activeSlug) + 1;
 
   useEffect(() => { filesRef.current = files; }, [files]);
-  useEffect(() => { activeSlugRef.current = activeSlug; }, [activeSlug]);
 
   const applyCourse = useCallback((data: CourseData) => {
     setCourse(data);
     const storedTheme = localStorage.getItem('pythoria-theme') as 'dark' | 'light' | null;
     setTheme(storedTheme ?? data.summary.theme ?? 'dark');
     const querySlug = new URLSearchParams(window.location.search).get('lesson');
-    const exists = data.modules.some((module) => module.lessons.some((item) => item.slug === querySlug));
-    setActiveSlug((current) => current || (exists && querySlug ? querySlug : data.summary.last_opened_lesson));
-    setExpandedModules((current) => current.size ? current : new Set([data.modules[0]?.slug]));
+    const preferred = localStorage.getItem('pythoria-track') === 'ai-engineering' ? 'ai-engineering' : 'backend';
+    const slug = querySlug && trackForLesson(data, querySlug) ? querySlug
+      : resumeTrack(data, preferred, localStorage.getItem('pythoria-ai-lesson')) || resumeTrack(data, 'backend', null);
+    setActiveSlug((current) => current || slug);
   }, []);
 
   const loadCourse = useCallback(() => api.course().then(applyCourse), [applyCourse]);
@@ -82,6 +89,7 @@ export function CourseApp() {
 
   useEffect(() => {
     if (!activeSlug) return;
+    activeSlugRef.current = activeSlug;
     let cancelled = false;
     Promise.all([api.lesson(activeSlug), api.openLesson(activeSlug)])
       .then(([data]) => {
@@ -89,6 +97,10 @@ export function CourseApp() {
         loadedLessonRef.current = data;
         filesRef.current = data.files;
         setLesson(data);
+        setExpandedModules((current) => new Set(current).add(data.module_slug));
+        const nextTrack = data.tracks?.includes('ai-engineering') ? 'ai-engineering' : 'backend';
+        localStorage.setItem('pythoria-track', nextTrack);
+        localStorage.setItem(`pythoria-${nextTrack}-lesson`, data.slug);
         setFiles(data.files);
         setLoadingLesson(false);
         window.history.replaceState({}, '', `?lesson=${activeSlug}`);
@@ -117,32 +129,50 @@ export function CourseApp() {
 
   const selectLesson = useCallback((slug: string) => {
     if (!slug || slug === activeSlugRef.current) return;
+    const request = ++navigationRequest.current;
     setLoadingLesson(true);
+    setError('');
     setMentorOpen(false);
-    void saveFiles().catch(() => undefined).finally(() => setActiveSlug(slug));
+    void saveFiles().catch(() => undefined).finally(() => {
+      if (navigationRequest.current !== request) return;
+      activeSlugRef.current = slug;
+      setActiveSlug(slug);
+    });
   }, [saveFiles]);
 
-  const refreshCourseAndLesson = useCallback(async () => {
-    const [courseData, lessonData] = await Promise.all([api.course(), api.lesson(activeSlugRef.current)]);
+  const selectTrack = (next: CourseTrack) => {
+    if (!course || track === next) return;
+    const remembered = localStorage.getItem(`pythoria-${next}-lesson`);
+    const slug = remembered && trackForLesson(course, remembered) === next
+      ? remembered : resumeTrack(course, next, null);
+    setSearch('');
+    selectLesson(slug);
+  };
+
+  const refreshCourseAndLesson = useCallback(async (slug: string) => {
+    const request = ++completionRequest.current;
+    const [courseData, lessonData] = await Promise.all([api.course(), api.lesson(slug)]);
+    if (completionRequest.current !== request) return;
     setCourse(courseData);
-    setLesson(lessonData);
+    if (activeSlugRef.current === slug && loadedLessonRef.current?.slug === slug) setLesson(lessonData);
   }, []);
 
   const completeTheory = async () => {
     if (!lesson) return;
+    const slug = lesson.slug;
     try {
-      const result = await api.completeTheory(lesson.slug);
+      const result = await api.completeTheory(slug);
       setToast(result.xp_awarded ? `Теория пройдена · +${result.xp_awarded} XP` : 'Теория уже отмечена');
-      await refreshCourseAndLesson();
+      await refreshCourseAndLesson(slug);
     } catch (err) {
       setToast(err instanceof Error ? err.message : 'Не удалось сохранить прогресс');
     }
   };
 
-  const onCheckComplete = async (result: ExecutionResult) => {
-    if (result.passed) setToast(result.xp_awarded ? `Верное решение · +${result.xp_awarded} XP` : 'Верное решение');
-    else setToast(`${result.tests_passed ?? 0} / ${result.tests_total ?? 0} tests passed`);
-    await refreshCourseAndLesson();
+  const onCheckComplete = async (slug: string, result: ExecutionResult) => {
+    if (activeSlugRef.current === slug && result.passed) setToast(result.xp_awarded ? `Верное решение · +${result.xp_awarded} XP` : 'Верное решение');
+    else if (activeSlugRef.current === slug) setToast(`${result.tests_passed ?? 0} / ${result.tests_total ?? 0} tests passed`);
+    await refreshCourseAndLesson(slug);
   };
 
   const switchTheme = () => {
@@ -209,23 +239,29 @@ export function CourseApp() {
     );
   }
 
-  if (!course || !activeSlug) {
+  if (!course || !summary || !activeSlug) {
     return <main className={`loading-screen ${theme}`}><div className="brand-mark pulse">P</div><p>Загружаем курс…</p></main>;
   }
 
   const filteredModules = search.trim()
-    ? course.modules.map((module) => ({ ...module, lessons: module.lessons.filter((item) => item.title.toLowerCase().includes(search.toLowerCase())) })).filter((module) => module.lessons.length)
-    : course.modules;
+    ? modules.map((module) => ({ ...module, lessons: module.lessons.filter((item) => item.title.toLowerCase().includes(search.trim().toLowerCase())) })).filter((module) => module.lessons.length)
+    : modules;
 
   return (
     <main className={`course-app ${theme} ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`} style={{ '--sidebar-width': `${sidebarWidth}px` } as React.CSSProperties}>
       <header className="topbar">
         <div className="brand">
-          <button className="mobile-menu" onClick={() => setSidebarOpen(true)}><Menu size={18} /></button>
+          <button className="mobile-menu" aria-label="Содержание трека" onClick={() => setSidebarOpen(true)}><Menu size={18} /></button>
           <span className="brand-mark">P</span><span className="brand-name">PYTHORIA</span>
           <button className="collapse-button" onClick={() => setSidebarCollapsed(!sidebarCollapsed)} title="Свернуть sidebar">{sidebarCollapsed ? <PanelLeftOpen size={16} /> : <PanelLeftClose size={16} />}</button>
         </div>
-        <div className="course-title"><span>{course.title}</span><small>{course.summary.completed} / {course.summary.total} уроков</small></div>
+        <div className="course-title">
+          <select aria-label="Учебный трек" value={track} onChange={(event) => selectTrack(event.target.value as CourseTrack)}>
+            <option value="backend">Python Backend</option>
+            {course.ai?.modules.length ? <option value="ai-engineering">AI Engineering</option> : null}
+          </select>
+          <small>{summary.completed} / {summary.total} уроков</small>
+        </div>
         <div className="top-actions">
           <span className="streak"><Flame size={14} /> 3 дня</span>
           <span className="xp"><Trophy size={14} /> {course.summary.xp} XP</span>
@@ -238,9 +274,9 @@ export function CourseApp() {
         <aside className={`course-sidebar ${sidebarOpen ? 'mobile-open' : ''}`}>
           <div className="mobile-sidebar-head"><b>Содержание</b><button onClick={() => setSidebarOpen(false)}><X size={17} /></button></div>
           <div className="course-progress">
-            <div className="progress-copy"><span>Прогресс курса</span><b>{course.summary.percent}%</b></div>
-            <div className="progress-track"><span style={{ width: `${course.summary.percent}%` }} /></div>
-            <small>{course.summary.completed} уроков завершено</small>
+            <div className="progress-copy"><span>Прогресс курса</span><b>{summary.percent}%</b></div>
+            <div className="progress-track"><span style={{ width: `${summary.percent}%` }} /></div>
+            <small>{summary.completed} уроков завершено</small>
           </div>
           <label className="lesson-search"><Search size={14} /><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Найти урок…" /></label>
           <nav>
@@ -249,14 +285,19 @@ export function CourseApp() {
               return (
                 <section className="sidebar-module" key={module.slug}>
                   <button className="module-heading" onClick={() => toggleModule(module.slug)}>
-                    <span>{String(module.order).padStart(2, '0')}</span><strong>{module.title}</strong>{expanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
+                    <span>{aiTrack ? module.slug.replace('ai-stage-', 'AI') : String(module.order).padStart(2, '0')}</span><strong>{module.title}</strong>{expanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
                   </button>
                   {expanded ? <div className="lesson-list">{module.lessons.map((item) => <LessonRow key={item.slug} lesson={item} active={item.slug === activeSlug} onClick={() => selectLesson(item.slug)} />)}</div> : null}
                 </section>
               );
             })}
           </nav>
-          <button className="interview-link" onClick={() => setInterviewOpen(true)}><GraduationCap size={16} /><span><b>Режим собеседования</b><small>Оригинальные вопросы курса</small></span><ChevronRight size={14} /></button>
+          {aiTrack && course.ai ? <details className="ai-roadmap">
+            <summary>План трека · {course.ai.roadmap.reduce((total, item) => total + item.planned, 0)} запланировано</summary>
+            <ul>{course.ai.roadmap.filter((item) => item.planned).map((item) => (
+              <li key={item.slug}>{item.title} · {item.planned}</li>
+            ))}</ul>
+          </details> : <button className="interview-link" onClick={() => setInterviewOpen(true)}><GraduationCap size={16} /><span><b>Режим собеседования</b><small>Оригинальные вопросы курса</small></span><ChevronRight size={14} /></button>}
         </aside>
 
         <div className="vertical-resizer sidebar-resizer" onPointerDown={startSidebarResize} />
@@ -264,14 +305,14 @@ export function CourseApp() {
         <div className="content-stack" style={{ gridTemplateColumns: `minmax(260px, ${100 - workspaceRatio}fr) 5px minmax(340px, ${workspaceRatio}fr)` }}>
           <section className="lesson-pane">
             <div className="lesson-toolbar">
-              <div><span className="eyebrow">МОДУЛЬ {course.modules.findIndex((module) => module.slug === lesson?.module_slug) + 1} · УРОК {activePosition}</span><strong>{lesson?.title ?? 'Загрузка…'}</strong></div>
+              <div><span className="eyebrow">МОДУЛЬ {modules.findIndex((module) => module.slug === lesson?.module_slug) + 1} · УРОК {activePosition}</span><strong>{lesson?.number ? `${lesson.number} · ` : ''}{lesson?.title ?? 'Загрузка…'}</strong></div>
               <div className="toolbar-actions">
                 <button className={`mentor-button ${mentorOpen ? 'active' : ''}`} onClick={() => setMentorOpen(!mentorOpen)}><Bot size={15} /> AI-ментор</button>
-                <span>{activePosition} / {course.summary.total}</span>
+                <span>{activePosition} / {summary.total}</span>
               </div>
             </div>
             {loadingLesson || !lesson ? <div className="lesson-loading"><div /><div /><div /></div> : (
-              <MarkdownLesson lesson={lesson} theme={theme} position={activePosition} total={course.summary.total} onCompleteTheory={() => void completeTheory()} onNavigate={navigate} />
+              <MarkdownLesson key={lesson.slug} lesson={lesson} theme={theme} position={activePosition} total={summary.total} onCompleteTheory={() => void completeTheory()} onNavigate={navigate} />
             )}
             {mentorOpen && lesson ? <aside className="mentor-card"><header><Bot size={16} /><b>AI-ментор</b><button onClick={() => setMentorOpen(false)}><X size={14} /></button></header><p>Начни с контракта задачи. Для темы <b>{lesson.topics[0]}</b> проверь граничные случаи и не меняй публичную сигнатуру.</p><div className="mentor-tip"><BookOpenCheck size={14} /> {lesson.workspace_kind === 'sql' ? 'Открой схему базы, выбери столбцы и проверь результат через Run.' : 'Запусти Check: тесты укажут, какой сценарий ещё не покрыт.'}</div></aside> : null}
           </section>
@@ -312,7 +353,7 @@ export function CourseApp() {
               theme={theme}
               onFilesChange={setFiles}
               onSaved={saveFiles}
-              onCheckComplete={(result) => void onCheckComplete(result)}
+              onCheckComplete={(result) => void onCheckComplete(lesson.slug, result)}
             />
           ) : <div />}
         </div>

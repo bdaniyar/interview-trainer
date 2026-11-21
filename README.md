@@ -431,3 +431,5 @@ python scripts/smoke_test.py
 ```
 
 Smoke-test проверяет frontend response, backend/runner health, 370 published lessons, 20 interview sets, сохранение файлов, stdout, SyntaxError, failed/passed hidden tests, terminal и persistent progress.
+
+Трек [AI Engineering](docs/AI_TRACK.md) открывается из верхней панели Pythoria.

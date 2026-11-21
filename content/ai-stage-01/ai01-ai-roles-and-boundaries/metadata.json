@@ -1,0 +1,59 @@
+{
+  "id": "ai-engineering.01.02.ai-roles-and-boundaries",
+  "slug": "ai01-ai-roles-and-boundaries",
+  "number": "AI1.2",
+  "title": "AI, ML, Deep Learning и работа AI Engineer",
+  "prerequisites": [],
+  "practice": "concept",
+  "module_slug": "ai-stage-01",
+  "module_title": "Профессия, границы AI и диагностика",
+  "module_order": 101,
+  "order": 1102,
+  "description": "Научись выбирать между правилом, запросом, поиском и моделью на конкретных задачах Python Backend.",
+  "duration": 60,
+  "xp": 5,
+  "topics": [
+    "AI и ML",
+    "Deep Learning",
+    "Training и inference",
+    "Границы LLM"
+  ],
+  "has_task": false,
+  "has_solution": true,
+  "tracks": [
+    "ai-engineering"
+  ],
+  "modes": [
+    "learn",
+    "practice",
+    "interview"
+  ],
+  "priority": "P1",
+  "interview_probability": "high",
+  "market_frequency": "not_assessed",
+  "market_evidence": "Приоритет задан ролью урока в проекте P1.",
+  "content_status": "complete",
+  "content_source": "curated",
+  "editorial_status": "published",
+  "quality_revision": 1,
+  "last_verified": "2026-11-21",
+  "reviewed_on": "2026-11-21",
+  "sources": [
+    {
+      "source_id": "F0",
+      "url": "https://developers.google.com/machine-learning/crash-course",
+      "section": "ML Models, Advanced ML models",
+      "applicability": "Карта понятий, без стандарта должностей",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-21"
+    },
+    {
+      "source_id": "F6",
+      "url": "https://developers.google.com/machine-learning/crash-course/llm",
+      "section": "Introduction to Large Language Models",
+      "applicability": "Основы генерации; конкретный выбор архитектуры в упражнении задан контрактом",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-21"
+    }
+  ]
+}

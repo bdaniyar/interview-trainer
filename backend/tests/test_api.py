@@ -95,3 +95,34 @@ def test_theory_completion_is_idempotent(client):
     assert first["xp_awarded"] == 5
     assert second["xp_awarded"] == 0
     assert second["xp"] == 5
+
+
+def test_ai_catalog_and_guided_completion_preserve_backend_progress(client):
+    slug = "ai01-ai-roles-and-boundaries"
+    backend_slug = "generators"
+    files = {"main.py": "print('backend draft')", "notes.py": "X = 4"}
+    client.put(f"/api/lessons/{backend_slug}/files", json={"files": files}).raise_for_status()
+    client.post(f"/api/lessons/{backend_slug}/open").raise_for_status()
+    client.post(f"/api/progress/{backend_slug}/theory", json={}).raise_for_status()
+    baseline = client.get("/api/course").json()
+    assert baseline["ai"]["summary"]["completed"] == 0
+    assert baseline["ai"]["summary"]["total"] == sum(len(module["lessons"]) for module in baseline["ai"]["modules"])
+    assert sum(stage["planned"] for stage in baseline["ai"]["roadmap"]) + baseline["ai"]["summary"]["total"] == 72
+    assert slug not in {item["slug"] for module in baseline["modules"] for item in module["lessons"]}
+    lesson = client.get(f"/api/lessons/{slug}").json()
+    assert lesson["workspace_kind"] == "python"
+    assert set(lesson["files"]) == {"main.py", "public_cases.py"}
+    assert not lesson["has_task"] and lesson["has_solution"]
+    assert "tests" not in lesson and "hidden_tests" not in lesson
+    assert client.get("/api/lessons/ai01-ai-task-and-baseline").status_code == 404
+    assert client.post(f"/api/check", json={"lesson_slug": slug, "files": lesson["files"]}).status_code == 409
+    client.post(f"/api/lessons/{slug}/open").raise_for_status()
+    assert client.post(f"/api/progress/{slug}/theory", json={}).json()["xp_awarded"] == 5
+    assert client.post(f"/api/progress/{slug}/theory", json={}).json()["xp_awarded"] == 0
+    after = client.get("/api/course").json()
+    assert after["summary"] == {**baseline["summary"], "xp": baseline["summary"]["xp"] + 5}
+    assert after["summary"]["last_opened_lesson"] == backend_slug
+    assert after["modules"] == baseline["modules"]
+    assert after["ai"]["summary"]["completed"] == 1
+    assert after["ai"]["summary"]["percent"] == round(100 / after["ai"]["summary"]["total"])
+    assert client.get(f"/api/lessons/{backend_slug}").json()["files"] == files
