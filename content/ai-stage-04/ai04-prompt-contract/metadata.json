@@ -1,0 +1,70 @@
+{
+  "id": "ai-engineering.04.01.prompt-contract",
+  "slug": "ai04-prompt-contract",
+  "number": "AI4.1",
+  "title": "Промпт как версионируемый контракт",
+  "prerequisites": [
+    "ai-engineering.01.04.ai-task-and-baseline",
+    "ai-engineering.03.08.chat-contract-tests"
+  ],
+  "practice": "graded",
+  "module_slug": "ai-stage-04",
+  "module_title": "Prompts и structured output",
+  "module_order": 104,
+  "order": 1401,
+  "description": "Собери неизменяемую политику и отдели недоверенные данные поездки.",
+  "duration": 120,
+  "xp": 25,
+  "topics": [
+    "Собери неизменяемую политику и отдели недоверенные данные поездки.",
+    "Few-shot",
+    "Prompt version"
+  ],
+  "has_task": true,
+  "has_solution": true,
+  "tracks": [
+    "ai-engineering"
+  ],
+  "modes": [
+    "learn",
+    "practice",
+    "interview"
+  ],
+  "priority": "P1",
+  "interview_probability": "high",
+  "market_frequency": "not_assessed",
+  "market_evidence": "Тема предусмотрена учебным планом AI Engineering.",
+  "content_status": "complete",
+  "content_source": "curated",
+  "editorial_status": "published",
+  "quality_revision": 1,
+  "last_verified": "2026-11-22",
+  "reviewed_on": "2026-11-22",
+  "sources": [
+    {
+      "source_id": "A1",
+      "url": "https://developers.openai.com/api/docs/guides/text",
+      "section": "OpenAI Responses, инструкции и вход",
+      "applicability": "Формат Responses API",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-22"
+    },
+    {
+      "source_id": "A5",
+      "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+      "section": "OpenAI Evaluation best practices",
+      "applicability": "Сценарии, критерии и регрессии",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-22"
+    },
+    {
+      "source_id": "S1",
+      "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/",
+      "section": "OWASP LLM01, Prompt Injection",
+      "applicability": "Граница доверия приложения",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-22"
+    }
+  ],
+  "task_id": "ai-engineering.04.01.prompt-contract.practice"
+}
