@@ -1,0 +1,62 @@
+{
+  "id": "ai-engineering.02.03.loss-and-gradient-step",
+  "slug": "ai02-loss-and-gradient-step",
+  "number": "AI2.3",
+  "title": "Ошибка модели и шаг градиентного спуска",
+  "prerequisites": [
+    "ai-engineering.02.01.data-and-model-lifecycle",
+    "ai-engineering.02.02.vectors-and-matrices"
+  ],
+  "practice": "graded",
+  "module_slug": "ai-stage-02",
+  "module_title": "ML, нейросети и LLM с нуля",
+  "module_order": 102,
+  "order": 1203,
+  "description": "Выведи градиенты MSE и проверь их конечными разностями.",
+  "duration": 180,
+  "xp": 25,
+  "topics": [
+    "Выведи градиенты MSE и проверь их конечными разностями.",
+    "Линейный прогноз",
+    "Градиентный спуск"
+  ],
+  "has_task": true,
+  "has_solution": true,
+  "tracks": [
+    "ai-engineering"
+  ],
+  "modes": [
+    "learn",
+    "practice",
+    "interview"
+  ],
+  "priority": "P1",
+  "interview_probability": "high",
+  "market_frequency": "not_assessed",
+  "market_evidence": "Тема предусмотрена учебным планом AI Engineering.",
+  "content_status": "complete",
+  "content_source": "curated",
+  "editorial_status": "published",
+  "quality_revision": 1,
+  "last_verified": "2026-11-22",
+  "reviewed_on": "2026-11-22",
+  "sources": [
+    {
+      "source_id": "F2",
+      "url": "https://developers.google.com/machine-learning/crash-course/linear-regression/gradient-descent",
+      "section": "Google ML Crash Course, Gradient descent",
+      "applicability": "Градиент, шаг и learning rate",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-22"
+    },
+    {
+      "source_id": "FLOAT",
+      "url": "https://docs.python.org/3.12/tutorial/floatingpoint.html",
+      "section": "Python, Floating-Point Arithmetic",
+      "applicability": "Двоичные float и сравнение с допуском",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-22"
+    }
+  ],
+  "task_id": "ai-engineering.02.03.loss-and-gradient-step.practice"
+}

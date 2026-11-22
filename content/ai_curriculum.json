@@ -2,9 +2,9 @@
   "track": "ai-engineering",
   "title": "AI Engineering",
   "lesson_count": 72,
-  "release": "R0",
-  "release_status": "complete",
-  "release_lesson_count": 15,
+  "release": "R1",
+  "release_status": "in_progress",
+  "release_lesson_count": 18,
   "stages": [
     {
       "slug": "ai-stage-01",
@@ -43,6 +43,19 @@
           ],
           "practice": "guided",
           "minutes": 90
+        },
+        {
+          "id": "ai-engineering.01.04.ai-task-and-baseline",
+          "slug": "ai01-ai-task-and-baseline",
+          "number": "AI1.4",
+          "title": "Как поставить проверяемую AI-задачу",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.01.02.ai-roles-and-boundaries",
+            "ai-engineering.01.03.ai-backend-architecture"
+          ],
+          "practice": "concept",
+          "minutes": 90
         }
       ]
     },
@@ -62,6 +75,31 @@
           ],
           "practice": "guided",
           "minutes": 120
+        },
+        {
+          "id": "ai-engineering.02.02.vectors-and-matrices",
+          "slug": "ai02-vectors-and-matrices",
+          "number": "AI2.2",
+          "title": "Векторы, матрицы и их размеры",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.02.01.data-and-model-lifecycle"
+          ],
+          "practice": "graded",
+          "minutes": 150
+        },
+        {
+          "id": "ai-engineering.02.03.loss-and-gradient-step",
+          "slug": "ai02-loss-and-gradient-step",
+          "number": "AI2.3",
+          "title": "Ошибка модели и шаг градиентного спуска",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.02.01.data-and-model-lifecycle",
+            "ai-engineering.02.02.vectors-and-matrices"
+          ],
+          "practice": "graded",
+          "minutes": 180
         },
         {
           "id": "ai-engineering.02.05.tokens-and-tokenization",
