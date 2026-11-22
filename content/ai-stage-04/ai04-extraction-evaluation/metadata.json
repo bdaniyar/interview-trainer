@@ -1,0 +1,65 @@
+{
+  "id": "ai-engineering.04.05.extraction-evaluation",
+  "slug": "ai04-extraction-evaluation",
+  "number": "AI4.5",
+  "title": "Оценка извлечения по полям и исходам",
+  "prerequisites": [
+    "ai-engineering.04.02.schema-and-domain-model",
+    "ai-engineering.04.03.structured-output-parser",
+    "ai-engineering.04.04.structured-output-failures",
+    "ai-engineering.02.01.data-and-model-lifecycle"
+  ],
+  "practice": "graded",
+  "module_slug": "ai-stage-04",
+  "module_title": "Prompts и structured output",
+  "module_order": 104,
+  "order": 1405,
+  "description": "Раздели метрики формы, фактов, пропусков и отказов на dev и holdout.",
+  "duration": 180,
+  "xp": 25,
+  "topics": [
+    "Раздели метрики формы, фактов, пропусков и отказов на dev и holdout.",
+    "Evaluation dataset",
+    "Field accuracy",
+    "Exact match"
+  ],
+  "has_task": true,
+  "has_solution": true,
+  "tracks": [
+    "ai-engineering"
+  ],
+  "modes": [
+    "learn",
+    "practice",
+    "interview"
+  ],
+  "priority": "P1",
+  "interview_probability": "high",
+  "market_frequency": "not_assessed",
+  "market_evidence": "Тема предусмотрена учебным планом AI Engineering.",
+  "content_status": "complete",
+  "content_source": "curated",
+  "editorial_status": "published",
+  "quality_revision": 1,
+  "last_verified": "2026-11-22",
+  "reviewed_on": "2026-11-22",
+  "sources": [
+    {
+      "source_id": "A5",
+      "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+      "section": "OpenAI Evaluation best practices",
+      "applicability": "Сценарии, критерии и регрессии",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-22"
+    },
+    {
+      "source_id": "F1",
+      "url": "https://developers.google.com/machine-learning/crash-course/overfitting/dividing-datasets",
+      "section": "Google ML Crash Course, Dividing datasets",
+      "applicability": "Разделение dev/test",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-22"
+    }
+  ],
+  "task_id": "ai-engineering.04.05.extraction-evaluation.practice"
+}

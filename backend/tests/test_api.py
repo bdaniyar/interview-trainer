@@ -157,3 +157,49 @@ def test_ai_check_feedback_hides_cases_and_completes_only_requested_lesson(clien
     assert not client.get("/api/lessons/ai03-messages-and-instructions").json()["progress"]["task_completed"]
     course = client.get("/api/course").json()
     assert course["ai"]["summary"]["completed"] == 1 and course["summary"]["completed"] == 0
+
+
+def test_r1_expansion_preserves_synthetic_r0_progress_and_files(client, monkeypatch, tmp_path):
+    import json
+    from pathlib import Path
+
+    from backend.app.content import ContentRepository
+
+    root = Path(__file__).resolve().parents[2]
+    current = main_module.content_repo
+    r0 = (root / "tools/tests/fixtures/ai-r0-manifest.json").read_text()
+    old_slugs = {item["slug"] for stage in json.loads(r0)["stages"] for item in stage["lessons"]}
+    (tmp_path / "ai_curriculum.json").write_text(r0)
+    (tmp_path / "interview_sets.json").symlink_to(current.root / "interview_sets.json")
+    for source in current.root.glob("*/*/metadata.json"):
+        lesson = source.parent
+        if lesson.parent.name.startswith("ai-stage-") and lesson.name not in old_slugs:
+            continue
+        link = tmp_path / lesson.relative_to(current.root)
+        link.parent.mkdir(exist_ok=True)
+        link.symlink_to(lesson, target_is_directory=True)
+    monkeypatch.setattr(main_module, "content_repo", ContentRepository(tmp_path))
+    ai_slug = "ai01-ai-roles-and-boundaries"
+    backend_slug = "generators"
+    for slug in (ai_slug, backend_slug):
+        client.post(f"/api/lessons/{slug}/open").raise_for_status()
+        client.put(f"/api/lessons/{slug}/files", json={"files": {"main.py": f"# saved {slug}"}}).raise_for_status()
+        client.post(f"/api/progress/{slug}/theory", json={}).raise_for_status()
+    question = client.get("/api/interview").json()["questions"][0]
+    answer = {"question_id": question["id"], "answer": "Synthetic interview answer"}
+    assert client.post("/api/interview/complete", json=answer).json()["xp_awarded"] == 5
+    interview = client.get("/api/interview").json()
+    assert interview["questions"][0]["completed"]
+    before = client.get("/api/course").json()
+    stored = {slug: client.get(f"/api/lessons/{slug}").json() for slug in (ai_slug, backend_slug)}
+    assert before["ai"]["summary"] == {"total": 15, "completed": 1, "percent": 7}
+
+    monkeypatch.setattr(main_module, "content_repo", current)
+    after = client.get("/api/course").json()
+    assert after["ai"]["summary"] == {"total": 29, "completed": 1, "percent": 3}
+    assert after["summary"] == before["summary"]
+    assert client.get("/api/interview").json() == interview
+    assert client.post("/api/interview/complete", json=answer).json()["xp_awarded"] == 0
+    for slug, lesson in stored.items():
+        observed = client.get(f"/api/lessons/{slug}").json()
+        assert (observed["progress"], observed["files"]) == (lesson["progress"], lesson["files"])

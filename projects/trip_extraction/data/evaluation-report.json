@@ -1,0 +1,242 @@
+{
+  "dataset_sha256": "dc128857a417fa01b69ea49f5b8eed81ef08dd8d319869ddbd33faaeccb610c4",
+  "fixture_sha256": "cacb5b42bbc6dc0fa0a623a4d6d92ea5fc63acd0a543af7b0160d0f9706727fd",
+  "model": "scripted-trip-v1",
+  "schema_version": "trip.schema.v1",
+  "versions": {
+    "trip.prompt.v1": {
+      "dev": {
+        "errors": {
+          "trip-01": [],
+          "trip-02": [],
+          "trip-03": [],
+          "trip-04": [],
+          "trip-05": [],
+          "trip-06": [],
+          "trip-07": [],
+          "trip-08": [],
+          "trip-09": [],
+          "trip-10": [],
+          "trip-11": [
+            "city"
+          ],
+          "trip-12": []
+        },
+        "metrics": {
+          "domain_validity": {
+            "passed": 8,
+            "rate": 0.8,
+            "total": 10
+          },
+          "exact_match": {
+            "passed": 7,
+            "rate": 0.875,
+            "total": 8
+          },
+          "field_accuracy": {
+            "passed": 23,
+            "rate": 0.9583333333333334,
+            "total": 24
+          },
+          "outcome_accuracy": {
+            "passed": 12,
+            "rate": 1.0,
+            "total": 12
+          },
+          "refusal_handling": {
+            "passed": 1,
+            "rate": 1.0,
+            "total": 1
+          },
+          "schema_validity": {
+            "passed": 10,
+            "rate": 1.0,
+            "total": 10
+          },
+          "unknown_correctness": {
+            "passed": 8,
+            "rate": 1.0,
+            "total": 8
+          }
+        }
+      },
+      "holdout": {
+        "errors": {
+          "trip-13": [],
+          "trip-14": [],
+          "trip-15": [],
+          "trip-16": [],
+          "trip-17": [],
+          "trip-18": [],
+          "trip-19": [
+            "status",
+            "check_out"
+          ],
+          "trip-20": []
+        },
+        "metrics": {
+          "domain_validity": {
+            "passed": 5,
+            "rate": 0.8333333333333334,
+            "total": 6
+          },
+          "exact_match": {
+            "passed": 4,
+            "rate": 0.8,
+            "total": 5
+          },
+          "field_accuracy": {
+            "passed": 11,
+            "rate": 0.9166666666666666,
+            "total": 12
+          },
+          "outcome_accuracy": {
+            "passed": 7,
+            "rate": 0.875,
+            "total": 8
+          },
+          "refusal_handling": {
+            "passed": 1,
+            "rate": 1.0,
+            "total": 1
+          },
+          "schema_validity": {
+            "passed": 6,
+            "rate": 0.8571428571428571,
+            "total": 7
+          },
+          "unknown_correctness": {
+            "passed": 8,
+            "rate": 1.0,
+            "total": 8
+          }
+        }
+      }
+    },
+    "trip.prompt.v2-regression": {
+      "dev": {
+        "errors": {
+          "trip-01": [],
+          "trip-02": [],
+          "trip-03": [],
+          "trip-04": [
+            "status",
+            "city"
+          ],
+          "trip-05": [
+            "status",
+            "city"
+          ],
+          "trip-06": [],
+          "trip-07": [],
+          "trip-08": [],
+          "trip-09": [],
+          "trip-10": [
+            "guests"
+          ],
+          "trip-11": [
+            "city"
+          ],
+          "trip-12": []
+        },
+        "metrics": {
+          "domain_validity": {
+            "passed": 8,
+            "rate": 0.8,
+            "total": 10
+          },
+          "exact_match": {
+            "passed": 4,
+            "rate": 0.5,
+            "total": 8
+          },
+          "field_accuracy": {
+            "passed": 23,
+            "rate": 0.9583333333333334,
+            "total": 24
+          },
+          "outcome_accuracy": {
+            "passed": 10,
+            "rate": 0.8333333333333334,
+            "total": 12
+          },
+          "refusal_handling": {
+            "passed": 1,
+            "rate": 1.0,
+            "total": 1
+          },
+          "schema_validity": {
+            "passed": 10,
+            "rate": 1.0,
+            "total": 10
+          },
+          "unknown_correctness": {
+            "passed": 5,
+            "rate": 0.625,
+            "total": 8
+          }
+        }
+      },
+      "holdout": {
+        "errors": {
+          "trip-13": [],
+          "trip-14": [
+            "city"
+          ],
+          "trip-15": [
+            "guests"
+          ],
+          "trip-16": [],
+          "trip-17": [],
+          "trip-18": [],
+          "trip-19": [
+            "status",
+            "check_out"
+          ],
+          "trip-20": [
+            "status",
+            "city",
+            "guests"
+          ]
+        },
+        "metrics": {
+          "domain_validity": {
+            "passed": 5,
+            "rate": 0.8333333333333334,
+            "total": 6
+          },
+          "exact_match": {
+            "passed": 1,
+            "rate": 0.2,
+            "total": 5
+          },
+          "field_accuracy": {
+            "passed": 11,
+            "rate": 0.9166666666666666,
+            "total": 12
+          },
+          "outcome_accuracy": {
+            "passed": 6,
+            "rate": 0.75,
+            "total": 8
+          },
+          "refusal_handling": {
+            "passed": 1,
+            "rate": 1.0,
+            "total": 1
+          },
+          "schema_validity": {
+            "passed": 6,
+            "rate": 0.8571428571428571,
+            "total": 7
+          },
+          "unknown_correctness": {
+            "passed": 4,
+            "rate": 0.5,
+            "total": 8
+          }
+        }
+      }
+    }
+  }
+}

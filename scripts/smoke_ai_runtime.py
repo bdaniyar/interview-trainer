@@ -51,6 +51,8 @@ def files(directory):
 
 # Deliberate behavior changes with varied inputs. Each must fail the real grader.
 NEGATIVE_CONTROLS = {
+    "AI4.5": ('and type(observed[field]) is type(expected[field])', 'and True'),
+    "AI4.6": ('self.check_in>=self.check_out', 'self.check_in==self.check_out'),
     "AI4.3": ('getattr(response,"schema_version",None)!=expected_revision', 'getattr(response,"schema_version",None)=="blocked"'),
     "AI4.4": ('{"incomplete","malformed","retryable"}', '{"incomplete","malformed","retryable","refusal"}'),
     "AI4.1": ('Prompt(VERSION,POLICY,EXAMPLES,text,', 'Prompt(VERSION,note or POLICY,EXAMPLES,text,'),

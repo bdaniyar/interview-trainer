@@ -3,8 +3,8 @@
   "title": "AI Engineering",
   "lesson_count": 72,
   "release": "R1",
-  "release_status": "in_progress",
-  "release_lesson_count": 26,
+  "release_status": "complete",
+  "release_lesson_count": 29,
   "stages": [
     {
       "slug": "ai-stage-01",
@@ -365,6 +365,47 @@
             "ai-engineering.03.04.retries-and-rate-limits"
           ],
           "practice": "graded",
+          "minutes": 150
+        },
+        {
+          "id": "ai-engineering.04.05.extraction-evaluation",
+          "slug": "ai04-extraction-evaluation",
+          "number": "AI4.5",
+          "title": "Оценка извлечения по полям и исходам",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.04.02.schema-and-domain-model",
+            "ai-engineering.04.03.structured-output-parser",
+            "ai-engineering.04.04.structured-output-failures",
+            "ai-engineering.02.01.data-and-model-lifecycle"
+          ],
+          "practice": "graded",
+          "minutes": 180
+        },
+        {
+          "id": "ai-engineering.04.06.extraction-api",
+          "slug": "ai04-extraction-api",
+          "number": "AI4.6",
+          "title": "HTTP API поездки и происхождение результата",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.04.04.structured-output-failures",
+            "ai-engineering.04.05.extraction-evaluation",
+            "ai-engineering.03.07.fastapi-chat-service"
+          ],
+          "practice": "graded",
+          "minutes": 180
+        },
+        {
+          "id": "ai-engineering.04.07.extraction-project-review",
+          "slug": "ai04-extraction-project-review",
+          "number": "AI4.7",
+          "title": "Воспроизводимая оценка и защита P2",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.04.06.extraction-api"
+          ],
+          "practice": "guided",
           "minutes": 150
         }
       ]
