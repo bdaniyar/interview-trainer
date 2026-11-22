@@ -1,0 +1,72 @@
+{
+  "id": "ai-engineering.04.06.extraction-api",
+  "slug": "ai04-extraction-api",
+  "number": "AI4.6",
+  "title": "HTTP API поездки и происхождение результата",
+  "prerequisites": [
+    "ai-engineering.04.04.structured-output-failures",
+    "ai-engineering.04.05.extraction-evaluation",
+    "ai-engineering.03.07.fastapi-chat-service"
+  ],
+  "practice": "graded",
+  "module_slug": "ai-stage-04",
+  "module_title": "Prompts и structured output",
+  "module_order": 104,
+  "order": 1406,
+  "description": "Собери POST /extract-trip с явными исходами, схемой и injected provider.",
+  "duration": 180,
+  "xp": 25,
+  "topics": [
+    "Собери POST /extract-trip с явными исходами, схемой и injected provider.",
+    "FastAPI",
+    "Request ID",
+    "Приватность"
+  ],
+  "has_task": true,
+  "has_solution": true,
+  "tracks": [
+    "ai-engineering"
+  ],
+  "modes": [
+    "learn",
+    "practice",
+    "interview"
+  ],
+  "priority": "P1",
+  "interview_probability": "high",
+  "market_frequency": "not_assessed",
+  "market_evidence": "Тема предусмотрена учебным планом AI Engineering.",
+  "content_status": "complete",
+  "content_source": "curated",
+  "editorial_status": "published",
+  "quality_revision": 1,
+  "last_verified": "2026-11-22",
+  "reviewed_on": "2026-11-22",
+  "sources": [
+    {
+      "source_id": "FASTAPI",
+      "url": "https://fastapi.tiangolo.com/tutorial/dependencies/",
+      "section": "FastAPI Dependencies",
+      "applicability": "FastAPI 0.116.1 и подмена зависимостей",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-22"
+    },
+    {
+      "source_id": "A2",
+      "url": "https://developers.openai.com/api/docs/guides/structured-outputs",
+      "section": "OpenAI Structured Outputs, schema and refusals",
+      "applicability": "Responses API и ограниченное подмножество JSON Schema",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-22"
+    },
+    {
+      "source_id": "S1",
+      "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/",
+      "section": "OWASP LLM01, Prompt Injection",
+      "applicability": "Граница доверия приложения",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-22"
+    }
+  ],
+  "task_id": "ai-engineering.04.06.extraction-api.practice"
+}

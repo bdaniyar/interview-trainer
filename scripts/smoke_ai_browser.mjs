@@ -10,6 +10,7 @@ export async function aiWalkthrough({ call, evaluate, until, click, typePython, 
     await until(button);
     await evaluate(`(${button}).click()`);
     await waitLesson(item.slug);
+    await until(`document.querySelector('.lesson-title-row h1')?.textContent===${JSON.stringify(item.title)}`);
   };
   const waitLesson = (slug) => until(`new URLSearchParams(location.search).get('lesson')===${JSON.stringify(slug)} && document.querySelector('.lesson-title-row h1')`);
   const currentTrack = () => evaluate(`document.querySelector('[aria-label="Учебный трек"]').value`);
@@ -18,7 +19,10 @@ export async function aiWalkthrough({ call, evaluate, until, click, typePython, 
     select.value = ${JSON.stringify(value)};
     select.dispatchEvent(new Event('change', {bubbles:true}));
   })()`);
-  const hidden = () => evaluate(`Array.from(document.querySelectorAll('.answer-reveal,.lesson-disclosure')).every(d=>!d.open)`);
+  const hidden = () => evaluate(`(() => {
+    const answers = Array.from(document.querySelectorAll('.answer-reveal,.lesson-disclosure'));
+    return answers.length > 0 && answers.every(d=>!d.open);
+  })()`);
   const loadEditor = async () => {
     await until(`typeof window.require==='function' && document.querySelector('.editor-panel textarea')`);
     await evaluate(`new Promise((resolve,reject)=>window.require(['vs/editor/editor.main'],loaded=>{window.__phase8aMonaco=loaded.m||loaded;resolve(true)},reject))`);
@@ -129,6 +133,59 @@ export async function aiWalkthrough({ call, evaluate, until, click, typePython, 
     await waitLesson(graded.slug);
     assert.equal((await api('/api/lessons/' + graded.slug)).progress.task_completed, true);
     console.log(JSON.stringify({aiGraded:true, failedCheck:true, passedCheck:11, xp:20, savedFiles:true, completionAfterReload:true}));
+  }
+  if (allAi.length === 29) {
+    assert.deepEqual(before.ai.modules.map(module => module.lessons.length), [4, 10, 8, 7]);
+    assert.equal(before.ai.roadmap.reduce((total, stage) => total + stage.planned, 0), 43);
+    for (const item of allAi) {
+      await selectLesson(item);
+      assert.equal(await hidden(), true);
+      await click('.lesson-mode-switch button:nth-child(2)');
+      assert.equal(await hidden(), true);
+      await click('.lesson-mode-switch button:first-child');
+    }
+    await evaluate(`(() => {
+      const create = URL.createObjectURL;
+      const anchor = HTMLAnchorElement.prototype.click;
+      URL.createObjectURL = blob => {
+        window.__exportedNotes = blob.text();
+        return create(blob);
+      };
+      HTMLAnchorElement.prototype.click = function () {
+        window.__exportedFile = this.download;
+      };
+      try {
+        Array.from(document.querySelectorAll('button')).find(b=>b.textContent==='Скачать Markdown').click();
+      } finally {
+        URL.createObjectURL = create;
+        HTMLAnchorElement.prototype.click = anchor;
+      }
+    })()`);
+    assert.equal(await evaluate('window.__exportedFile'), 'ai04-extraction-project-review.md');
+    const notes = await evaluate('window.__exportedNotes');
+    assert.ok(notes.includes('# Воспроизводимая оценка и защита P2'));
+    assert.ok(notes.includes('Краткий конспект') && notes.includes('Источники'));
+    await call('Page.reload');
+    await waitLesson('ai04-extraction-project-review');
+    assert.equal(await currentTrack(), 'ai-engineering');
+    const apiLab = allAi.find(item => item.slug === 'ai04-extraction-api');
+    await selectLesson(apiLab);
+    await loadEditor();
+    await submit('check');
+    await until(`document.querySelector('.terminal-result-summary .failed')?.textContent.endsWith(' / 14 tests')`);
+    assert.equal((await api('/api/lessons/' + apiLab.slug)).progress.task_completed, false);
+    const apiSolution = await readFile(new URL('../content/ai-stage-04/ai04-extraction-api/solution/main.py', import.meta.url), 'utf8');
+    await typePython(apiSolution);
+    await submit('run');
+    await until(`document.querySelector('.terminal-result-summary')?.textContent.includes('exit 0')`);
+    await submit('check');
+    await until(`document.querySelector('.terminal-result-summary .passed')?.textContent==='14 / 14 tests'`);
+    await call('Page.reload');
+    await waitLesson(apiLab.slug);
+    const savedLab = await api('/api/lessons/' + apiLab.slug);
+    assert.equal(savedLab.files['main.py'], apiSolution);
+    assert.equal(savedLab.progress.task_completed, true);
+    console.log(JSON.stringify({r1Navigation:allAi.length, stageCounts:[4,10,8,7], markdownExport:true, notesAfterReload:true, r1FailedCheck:true, r1PassedCheck:14}));
   }
   console.log(JSON.stringify({aiNavigation:true, trackProgress:true, learnReview:true, monacoRun:true, savedFiles:true, reload:true, mobile390:true, themes:true, deepLink:true}));
 }

@@ -1,0 +1,20 @@
+{"kind": "completed", "payload": {"trip": {"check_in": "2027-12-10", "check_out": "2027-12-15", "city": "Алматы", "guests": 3}}, "text": "В Алматы с 2027-12-10 по 2027-12-15, нас трое."}
+{"kind": "completed", "payload": {"trip": {"check_in": "2027-05-08", "check_out": "2027-05-11", "city": "Tallinn", "guests": 2}}, "text": "Two guests in Tallinn, 2027-05-08 through 2027-05-11."}
+{"kind": "completed", "payload": {"trip": {"check_in": null, "check_out": null, "city": "Алматы", "guests": 3}}, "text": "Хочу поехать в Алматы с 10 по 15 декабря, нас трое."}
+{"kind": "completed", "payload": {"trip": {"check_in": "2027-04-02", "check_out": "2027-04-05", "city": null, "guests": 2}}, "text": "Нас двое, въезд 2027-04-02, выезд 2027-04-05. Город уточню."}
+{"kind": "completed", "payload": {"trip": {"check_in": "2028-01-02", "check_out": "2028-01-06", "city": null, "guests": 4}}, "text": "Book for Berlin or Hamburg, 2028-01-02 to 2028-01-06, for four."}
+{"kind": "completed", "payload": {"trip": {"check_in": "2027-07-19", "check_out": "2027-07-16", "city": "Бишкек", "guests": 2}}, "text": "Въезд 2027-07-19, выезд 2027-07-16, Бишкек для двоих."}
+{"kind": "completed", "payload": {"trip": {"check_in": "2027-08-08", "check_out": "2027-08-09", "city": "Utrecht", "guests": 0}}, "text": "Stay in Utrecht, 2027-08-08 to 2027-08-09 for zero guests."}
+{"kind": "refusal", "payload": null, "text": "Учебный запрос с явным отказом сценария 08."}
+{"kind": "incomplete", "payload": null, "text": "Synthetic interrupted extraction scenario 09."}
+{"kind": "completed", "payload": {"trip": {"check_in": null, "check_out": null, "city": "Астана", "guests": null}}, "text": "Астана, даты и состав группы пока неизвестны."}
+{"kind": "completed", "payload": {"trip": {"check_in": "2027-09-14", "check_out": "2027-09-16", "city": "Krakow", "guests": 1}}, "text": "Trip in Warsaw, 2027-09-14 to 2027-09-16 for one."}
+{"kind": "completed", "payload": {"trip": {"check_in": "2027-11-20", "check_out": null, "city": "Краков", "guests": 2}}, "text": "Краков, вдвоём, въезд 2027-11-20. Выезд решим позже."}
+{"kind": "completed", "payload": {"trip": {"check_in": "2028-02-29", "check_out": "2028-03-02", "city": "Oslo", "guests": 3}}, "text": "Three people in Oslo, arrival 2028-02-29 and departure 2028-03-02."}
+{"kind": "completed", "payload": {"trip": {"check_in": null, "check_out": null, "city": null, "guests": 2}}, "text": "Нас двое, рассматриваем Павлодар или Экибастуз, дат ещё нет."}
+{"kind": "completed", "payload": {"trip": {"check_in": null, "check_out": null, "city": "Rome", "guests": null}}, "text": "A trip to Rome on September 14. Group size not decided."}
+{"kind": "completed", "payload": {"trip": {"check_in": "2027-02-29", "check_out": "2027-03-04", "city": "Кокшетау", "guests": 4}}, "text": "Номер для четверых в Кокшетау, 2027-02-29 — 2027-03-04."}
+{"kind": "completed", "payload": {"trip": {"check_in": "2027-06-01", "check_out": "2027-06-04", "city": "Sydney", "guests": "3"}}, "text": "Synthetic response with an invalid guest field: Sydney, 2027-06-01 to 2027-06-04."}
+{"kind": "refusal", "payload": null, "text": "Учебный отказ в извлечении, сценарий 18."}
+{"kind": "completed", "payload": {"trip": {"check_in": "2027-10-05", "check_out": "2027-10-08", "city": "Атырау", "guests": 2}}, "text": "Атырау, двое взрослых. 2027-10-05 по 2027-10-07."}
+{"kind": "completed", "payload": {"trip": {"check_in": "2028-05-12", "check_out": "2028-05-17", "city": null, "guests": null}}, "text": "Keep the city and guest count unknown. Book from 2028-05-12 to 2028-05-17."}
