@@ -39,3 +39,21 @@ def test_planned_bundle_and_backend_collision(tmp_path):
     errors = validate_ai(tmp_path, bundles, [first])
     assert "AI published manifest and bundles differ" in errors
     assert "AI slug collision" in errors
+
+
+def test_r0_manifest_and_bundle_identity(tmp_path):
+    path, current, bundles = copy_manifest(tmp_path)
+    baseline = json.loads((Path(__file__).parent / "fixtures/ai-r0-manifest.json").read_text())
+    r0 = {item["id"]: item for stage in baseline["stages"] for item in stage["lessons"]}
+    current_records = {item["id"]: item for stage in current["stages"] for item in stage["lessons"]}
+    assert {key: current_records[key] for key in r0} == r0
+    path.write_text(json.dumps(baseline))
+    assert validate_ai(tmp_path, [(meta, d) for meta, d in bundles if meta["id"] in r0], []) == []
+
+
+def test_r1_completion_requires_all_stages(tmp_path):
+    path, manifest, bundles = copy_manifest(tmp_path)
+    manifest.update(release="R1", release_status="complete")
+    manifest["stages"][3]["lessons"].clear()
+    path.write_text(json.dumps(manifest))
+    assert any("29 lessons" in error for error in validate_ai(tmp_path, bundles, []))

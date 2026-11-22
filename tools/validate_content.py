@@ -356,7 +356,8 @@ def validate(run_solutions: bool, strict_quality: bool = False) -> None:
             print(f"- {error}", file=sys.stderr)
         raise SystemExit(1)
     if ai_bundles:
-        print(f"AI R0: {len(ai_bundles)} published lessons, {sum(meta['has_task'] for meta, _ in ai_bundles)} graded labs")
+        release = json.loads((CONTENT / "ai_curriculum.json").read_text(encoding="utf-8"))["release"]
+        print(f"AI {release}: {len(ai_bundles)} published lessons, {sum(meta['has_task'] for meta, _ in ai_bundles)} graded labs")
     print(f"Content validation passed: {len(taxonomy)} taxonomy records, {published} published lessons, {len(tasks)} executable tasks")
 
 

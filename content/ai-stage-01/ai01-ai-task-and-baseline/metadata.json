@@ -1,0 +1,61 @@
+{
+  "id": "ai-engineering.01.04.ai-task-and-baseline",
+  "slug": "ai01-ai-task-and-baseline",
+  "number": "AI1.4",
+  "title": "Как поставить проверяемую AI-задачу",
+  "prerequisites": [
+    "ai-engineering.01.02.ai-roles-and-boundaries",
+    "ai-engineering.01.03.ai-backend-architecture"
+  ],
+  "practice": "concept",
+  "module_slug": "ai-stage-01",
+  "module_title": "Профессия, границы AI и диагностика",
+  "module_order": 101,
+  "order": 1104,
+  "description": "Проверь ответ модели по фактам, источнику и правам доступа.",
+  "duration": 90,
+  "xp": 5,
+  "topics": [
+    "Проверь ответ модели по фактам, источнику и правам доступа.",
+    "Baseline",
+    "Критерии приёмки"
+  ],
+  "has_task": false,
+  "has_solution": true,
+  "tracks": [
+    "ai-engineering"
+  ],
+  "modes": [
+    "learn",
+    "practice",
+    "interview"
+  ],
+  "priority": "P1",
+  "interview_probability": "high",
+  "market_frequency": "not_assessed",
+  "market_evidence": "Тема предусмотрена учебным планом AI Engineering.",
+  "content_status": "complete",
+  "content_source": "curated",
+  "editorial_status": "published",
+  "quality_revision": 1,
+  "last_verified": "2026-11-22",
+  "reviewed_on": "2026-11-22",
+  "sources": [
+    {
+      "source_id": "A5",
+      "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+      "section": "OpenAI Evaluation best practices",
+      "applicability": "Сценарии, критерии и регрессии",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-22"
+    },
+    {
+      "source_id": "S1",
+      "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/",
+      "section": "OWASP LLM01, Prompt Injection",
+      "applicability": "Граница доверия приложения",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-22"
+    }
+  ]
+}

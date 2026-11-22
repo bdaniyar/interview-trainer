@@ -1,5 +1,6 @@
 """Exercise published AI workspaces through the disposable Docker API."""
 
+import argparse
 import json
 import os
 import time
@@ -50,6 +51,8 @@ def files(directory):
 
 # Deliberate behavior changes with varied inputs. Each must fail the real grader.
 NEGATIVE_CONTROLS = {
+    "AI2.2": ('checked(right), strict=True', 'checked(right)'),
+    "AI2.3": ('db=2*fsum(errors)/n', 'db=2*fsum(errors)'),
     "AI3.1": ('    try:\n        response =', '    return GenerationResult("completed", "fixed")\n    try:\n        response ='),
     "AI3.2": ('return Request(POLICY, items, ALLOWED_TOOLS)', 'return Request(external_note or POLICY, items, ALLOWED_TOOLS)'),
     "AI3.3": ('await client.aclose()', 'pass'),
@@ -62,6 +65,9 @@ NEGATIVE_CONTROLS = {
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--lesson", action="append", default=[], help="Published lesson number, for example AI2.2")
+    args = parser.parse_args()
     catalog = call("/api/course")
     backend = call("/api/lessons/is-vs-eq")
     sql = call("/api/sql/lessons/s10-select-aliases-and-expressions")
@@ -69,7 +75,11 @@ def main():
     published = [(stage["slug"], item) for stage in manifest["stages"]
                  for item in stage["lessons"] if item["status"] == "published"]
     assert catalog["ai"]["summary"]["total"] == len(published)
-    for module, item in published:
+    selected = [(stage, item) for stage, item in published
+                if not args.lesson or item["number"] in args.lesson]
+    if not selected or set(args.lesson) - {item["number"] for _, item in selected}:
+        parser.error("All selected lessons must be published")
+    for module, item in selected:
         slug = item["slug"]
         path = "/api/lessons/" + slug
         lesson = call(path)
@@ -129,12 +139,12 @@ assert not Path("/data/pythoria.db").exists()
 print("offline boundary confirmed")
 """
     guard = execute("/api/run", {
-        "lesson_slug": published[0][1]["slug"],
+        "lesson_slug": selected[0][1]["slug"],
         "files": {"main.py": probe},
     })
     assert guard["exit_code"] == 0 and "offline boundary confirmed" in guard["stdout"], guard
     # Restore the preview exercise program after the isolation probe.
-    stage, first = published[0]
+    stage, first = selected[0]
     call("/api/lessons/" + first["slug"] + "/files", {
         "files": {**files(ROOT / "content" / stage / first["slug"] / "solution"), "notes.py": "# Learner draft"},
     }, method="PUT")

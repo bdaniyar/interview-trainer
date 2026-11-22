@@ -1,0 +1,69 @@
+{
+  "id": "ai-engineering.02.02.vectors-and-matrices",
+  "slug": "ai02-vectors-and-matrices",
+  "number": "AI2.2",
+  "title": "Векторы, матрицы и их размеры",
+  "prerequisites": [
+    "ai-engineering.02.01.data-and-model-lifecycle"
+  ],
+  "practice": "graded",
+  "module_slug": "ai-stage-02",
+  "module_title": "ML, нейросети и LLM с нуля",
+  "module_order": 102,
+  "order": 1202,
+  "description": "Посчитай произведение, норму и преобразование прямоугольной матрицей.",
+  "duration": 150,
+  "xp": 25,
+  "topics": [
+    "Посчитай произведение, норму и преобразование прямоугольной матрицей.",
+    "Shape",
+    "Dot product"
+  ],
+  "has_task": true,
+  "has_solution": true,
+  "tracks": [
+    "ai-engineering"
+  ],
+  "modes": [
+    "learn",
+    "practice",
+    "interview"
+  ],
+  "priority": "P1",
+  "interview_probability": "high",
+  "market_frequency": "not_assessed",
+  "market_evidence": "Тема предусмотрена учебным планом AI Engineering.",
+  "content_status": "complete",
+  "content_source": "curated",
+  "editorial_status": "published",
+  "quality_revision": 1,
+  "last_verified": "2026-11-22",
+  "reviewed_on": "2026-11-22",
+  "sources": [
+    {
+      "source_id": "F3",
+      "url": "https://developers.google.com/machine-learning/crash-course/neural-networks",
+      "section": "Google ML Crash Course, Neural networks",
+      "applicability": "Входы, слои и нелинейность",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-22"
+    },
+    {
+      "source_id": "F7",
+      "url": "https://developers.google.com/machine-learning/crash-course/embeddings",
+      "section": "Google ML Crash Course, Embeddings",
+      "applicability": "Размерность и сходство представлений",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-22"
+    },
+    {
+      "source_id": "FLOAT",
+      "url": "https://docs.python.org/3.12/tutorial/floatingpoint.html",
+      "section": "Python, Floating-Point Arithmetic",
+      "applicability": "Двоичные float и сравнение с допуском",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-22"
+    }
+  ],
+  "task_id": "ai-engineering.02.02.vectors-and-matrices.practice"
+}

@@ -114,7 +114,7 @@ def test_ai_catalog_and_guided_completion_preserve_backend_progress(client):
     assert set(lesson["files"]) == {"main.py", "public_cases.py"}
     assert not lesson["has_task"] and lesson["has_solution"]
     assert "tests" not in lesson and "hidden_tests" not in lesson
-    assert client.get("/api/lessons/ai01-ai-task-and-baseline").status_code == 404
+    assert client.get("/api/lessons/ai05-tool-calling-loop").status_code == 404
     assert client.post(f"/api/check", json={"lesson_slug": slug, "files": lesson["files"]}).status_code == 409
     client.post(f"/api/lessons/{slug}/open").raise_for_status()
     assert client.post(f"/api/progress/{slug}/theory", json={}).json()["xp_awarded"] == 5

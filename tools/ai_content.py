@@ -20,18 +20,31 @@ def validate_ai(content: Path, bundles: list[tuple[dict, Path]], taxonomy: list[
     by_id = {item["id"]: item for _, item in records}
     errors: list[str] = []
     if (
-        manifest["track"] != "ai-engineering" or manifest["release"] != "R0"
-        or len(stages) != 10
+        manifest["track"] != "ai-engineering" or len(stages) != 10
     ):
         errors.append("AI roadmap requires 10 stages and 72 planned or published lessons")
     if manifest["lesson_count"] != 72 or sum(s["lesson_count"] for s in stages) != 72:
         errors.append("AI roadmap total must be 72")
-    if manifest["release_lesson_count"] != len(records) or len(records) != 15:
-        errors.append("AI R0 requires exactly 15 scheduled lessons")
-    if manifest.get("release_status") == "complete" and any(item["status"] != "published" for _, item in records):
-        errors.append("Complete AI R0 must publish every scheduled lesson")
-    if sum(item["practice"] == "graded" for _, item in records) != 8:
-        errors.append("AI R0 requires exactly eight graded assignments")
+    release = manifest["release"]
+    status = manifest.get("release_status")
+    stage_counts = [len(stage["lessons"]) for stage in stages]
+    if manifest["release_lesson_count"] != len(records):
+        errors.append("AI release lesson count differs from the manifest")
+    if status not in {"in_progress", "complete"}:
+        errors.append("AI release status must be in_progress or complete")
+    if status == "complete" and any(item["status"] != "published" for _, item in records):
+        errors.append("Complete AI release must publish every scheduled lesson")
+    if release == "R0":
+        if len(records) != 15 or sum(item["practice"] == "graded" for _, item in records) != 8:
+            errors.append("AI R0 requires 15 lessons including eight graded assignments")
+    elif release == "R1":
+        r1_sizes = [4, 10, 8, 7] + [0] * 6
+        if any(count > limit for count, limit in zip(stage_counts, r1_sizes)):
+            errors.append("AI R1 scope ends at AI4")
+        if status == "complete" and stage_counts != r1_sizes:
+            errors.append("Complete AI R1 requires all 29 lessons across AI1–AI4")
+    else:
+        errors.append(f"Unknown AI release {release}")
     for field in ("id", "slug", "number"):
         values = [item[field] for _, item in records]
         backend = {item[field] for item in taxonomy}
@@ -41,7 +54,7 @@ def validate_ai(content: Path, bundles: list[tuple[dict, Path]], taxonomy: list[
         errors.append("duplicate AI stage slug")
     for stage in stages:
         if len(stage["lessons"]) > stage["lesson_count"]:
-            errors.append(f"{stage['slug']}: more R0 records than roadmap lessons")
+            errors.append(f"{stage['slug']}: more release records than roadmap lessons")
     graph = TopologicalSorter({item["id"]: item["prerequisites"] for _, item in records})
     try:
         tuple(graph.static_order())
