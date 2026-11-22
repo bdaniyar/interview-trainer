@@ -92,11 +92,12 @@ export async function aiWalkthrough({ call, evaluate, until, click, typePython, 
   await until(`document.querySelector('.course-sidebar')?.getBoundingClientRect().left>=-1`);
   await click('.mobile-sidebar-head button');
   assert.equal(await evaluate(`document.documentElement.scrollWidth<=innerWidth`), true);
+  const nextTheme = await evaluate(`document.querySelector('.course-app').classList.contains('dark')`) ? 'light' : 'dark';
   await click('[aria-label="Сменить тему"]');
-  await until(`document.querySelector('.course-app.light')`);
+  await until(`document.querySelector('.course-app.${nextTheme}')`);
   await call('Page.reload');
   await waitLesson(concept);
-  await until(`document.querySelector('.course-app.light')`);
+  await until(`document.querySelector('.course-app.${nextTheme}')`);
 
   await changeTrack('backend');
   await waitLesson(backend);

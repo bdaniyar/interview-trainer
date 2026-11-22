@@ -68,10 +68,17 @@ SDK-проверки выполнены под Python 3.12.13 с OpenAI 3.57.0, 
 | `python evaluate.py --output /tmp/p2-evaluation.json` и `cmp data/evaluation-report.json /tmp/p2-evaluation.json` в P2 | Отчёт совпал побайтово. |
 | `python -m pytest tools/ai_sdk_verify` в среде из SDK lock | 12 passed. |
 | `.venv/bin/python scripts/smoke_ai_runtime.py --lesson AI…` по строкам каждой поставки | 14 Run, 12 успешных Check, стартовые решения и дополнительные правдоподобные ошибочные решения отклонены. Файлы сохранились. Проверены границы sandbox. |
+| `node scripts/smoke_sql_browser.mjs --ai-only` | Все 29 AI-уроков открылись через поиск. Проверены Learn и Review, Markdown, навигация, файлы, XP и desktop/mobile. AI3.1 и AI4.6 отклонили старт и приняли эталон с 11/11 и 14/14. |
+| `node scripts/smoke_sql_browser.mjs` | 23 SQL Run и Check через Monaco, пять Worker-упражнений, три Architecture-урока, JSONB, Web Transaction и Index Lab. |
+| `SQL_DOCKER_TESTS=1 .venv/bin/python -m pytest -o addopts='' -q sql_runner/tests/integration/test_postgres.py` | 19 passed. Выбранный набор покрывает реальный PostgreSQL, corpus решений, привилегии, изоляцию, таймауты, очистку и Python Runner. |
 
 Негативный контроль AI2.2 заменил вычисление `matvec` константой `[8, 7, -2]`. Публичный пример напечатал ожидаемый вывод. Скрытые сценарии на других данных отклонили решение, 8 failed и 2 passed.
 
 В P2 дополнительно сделаны восемь loopback-запросов к Uvicorn, семь из них конкурентно. Подтверждены успешный ответ, отсутствие выдуманного года, 502 при противоречивых датах и malformed payload, refusal, incomplete, 422 и уникальные request ID. Тесты дополнительно проверяют типы, recovery, отсутствие приватного текста и ключа в ответах и логах и запрет сетевых подключений.
+
+В браузерных регрессиях Web Transaction Lab проверены два независимых редактора, наблюдаемая блокировка PostgreSQL, освобождение при commit, serializable, ошибочный и успешный Check, черновики и прогресс после reload. Index Lab проверен на чтение строк и реального плана, на оба исхода Check и сохранение состояния после reload и reset. Прогресс SQL учитывается отдельно от XP. Основной прогон подтверждает сохранение Python-файлов при переходе между SQL и Python.
+
+Для AI проверено сворачивание ответов в обоих режимах на всех этапах, скачивание `ai04-extraction-project-review.md` с конспектом и источниками, переключение Backend и AI, изолированный процент, Monaco, прямые ссылки, 390 px и сохранение темы и файлов после reload. На повторном запуске smoke выявил зависимость от заранее выбранной темы. Сценарий теперь определяет ожидаемую тему по состоянию интерфейса до переключения. Итоговый браузерный прогон прошёл на чистой preview-базе.
 
 ## Совместимость и данные
 
@@ -81,13 +88,13 @@ Wire data, текст и заметка разделены. Полномочия
 
 ## Порядок интеграции
 
-| Поставка | PR | Ветка назначения | Graded |
-| --- | --- | --- | ---: |
-| 11A | [#24](https://github.com/bdaniyar/interview-trainer/pull/24) | `main` | 2 |
-| 11B | [#25](https://github.com/bdaniyar/interview-trainer/pull/25) | `feat/ai-numerical-foundations-phase11a` | 2 |
-| 11C | [#26](https://github.com/bdaniyar/interview-trainer/pull/26) | `feat/ai-neural-attention-phase11b` | 2 |
-| 11D | [#27](https://github.com/bdaniyar/interview-trainer/pull/27) | `feat/ai-training-embeddings-phase11c` | 2 |
-| 11E | [#28](https://github.com/bdaniyar/interview-trainer/pull/28) | `feat/ai-prompt-schema-phase11d` | 2 |
-| 11F | [#29](https://github.com/bdaniyar/interview-trainer/pull/29) | `feat/ai-structured-failures-phase11e` | 2 |
+| Поставка | PR | Ветка назначения | Коммит реализации | Graded |
+| --- | --- | --- | --- | ---: |
+| 11A | [#24](https://github.com/bdaniyar/interview-trainer/pull/24) | `main` | `6dd95cbd5cbfe8639b556ef9e129485e9051ff7c` | 2 |
+| 11B | [#25](https://github.com/bdaniyar/interview-trainer/pull/25) | `feat/ai-numerical-foundations-phase11a` | `f273c1dda0af9024d3de18c3ed01a97f38cabd45` | 2 |
+| 11C | [#26](https://github.com/bdaniyar/interview-trainer/pull/26) | `feat/ai-neural-attention-phase11b` | `d2a990db2282c15e40c89cd3d7e472e220813173` | 2 |
+| 11D | [#27](https://github.com/bdaniyar/interview-trainer/pull/27) | `feat/ai-training-embeddings-phase11c` | `5cc7942f6b8ef58e08d9b6c9f76171cce7aa938d` | 2 |
+| 11E | [#28](https://github.com/bdaniyar/interview-trainer/pull/28) | `feat/ai-prompt-schema-phase11d` | `c9aff30ae713820202f6b6a82993069ac8e38b05` | 2 |
+| 11F | [#29](https://github.com/bdaniyar/interview-trainer/pull/29) | `feat/ai-structured-failures-phase11e` | `2a05e7e79fc5f410f425c119ea6b1132665f80b6` | 2 |
 
 Ожидаемый порядок ревью и merge commits `#24 → #25 → #26 → #27 → #28 → #29`. После слияния каждой зависимости переведи следующую ветку на `main` в настройках base PR и проверь перечень файлов перед ревью. Этот порядок сохраняет историю коммитов и границы изменений каждой поставки.
