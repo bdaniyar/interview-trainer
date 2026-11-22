@@ -1,0 +1,64 @@
+{
+  "id": "ai-engineering.02.06.transformer-attention",
+  "slug": "ai02-transformer-attention",
+  "number": "AI2.6",
+  "title": "Как Transformer вычисляет внимание",
+  "prerequisites": [
+    "ai-engineering.02.02.vectors-and-matrices",
+    "ai-engineering.02.04.neural-network-forward",
+    "ai-engineering.02.05.tokens-and-tokenization"
+  ],
+  "practice": "graded",
+  "module_slug": "ai-stage-02",
+  "module_title": "ML, нейросети и LLM с нуля",
+  "module_order": 102,
+  "order": 1206,
+  "description": "Посчитай single-head attention, масштабирующий множитель и causal mask.",
+  "duration": 210,
+  "xp": 25,
+  "topics": [
+    "Посчитай single-head attention, масштабирующий множитель и causal mask.",
+    "Q, K, V",
+    "Softmax",
+    "Архитектуры Transformer"
+  ],
+  "has_task": true,
+  "has_solution": true,
+  "tracks": [
+    "ai-engineering"
+  ],
+  "modes": [
+    "learn",
+    "practice",
+    "interview"
+  ],
+  "priority": "P1",
+  "interview_probability": "high",
+  "market_frequency": "not_assessed",
+  "market_evidence": "Тема предусмотрена учебным планом AI Engineering.",
+  "content_status": "complete",
+  "content_source": "curated",
+  "editorial_status": "published",
+  "quality_revision": 1,
+  "last_verified": "2026-11-22",
+  "reviewed_on": "2026-11-22",
+  "sources": [
+    {
+      "source_id": "F5",
+      "url": "https://arxiv.org/html/1706.03762v7",
+      "section": "Vaswani et al., Attention Is All You Need §3",
+      "applicability": "Архитектура 2017 и scaled dot-product attention",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-22"
+    },
+    {
+      "source_id": "F6",
+      "url": "https://developers.google.com/machine-learning/crash-course/llm",
+      "section": "Google ML Crash Course, Introduction to LLMs",
+      "applicability": "Токены, модели и стадии обучения",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-22"
+    }
+  ],
+  "task_id": "ai-engineering.02.06.transformer-attention.practice"
+}

@@ -4,7 +4,7 @@
   "lesson_count": 72,
   "release": "R1",
   "release_status": "in_progress",
-  "release_lesson_count": 18,
+  "release_lesson_count": 20,
   "stages": [
     {
       "slug": "ai-stage-01",
@@ -102,6 +102,19 @@
           "minutes": 180
         },
         {
+          "id": "ai-engineering.02.04.neural-network-forward",
+          "slug": "ai02-neural-network-forward",
+          "number": "AI2.4",
+          "title": "Два нейронных слоя и прямой проход",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.02.02.vectors-and-matrices",
+            "ai-engineering.02.03.loss-and-gradient-step"
+          ],
+          "practice": "graded",
+          "minutes": 180
+        },
+        {
           "id": "ai-engineering.02.05.tokens-and-tokenization",
           "slug": "ai02-tokens-and-tokenization",
           "number": "AI2.5",
@@ -112,6 +125,20 @@
           ],
           "practice": "guided",
           "minutes": 120
+        },
+        {
+          "id": "ai-engineering.02.06.transformer-attention",
+          "slug": "ai02-transformer-attention",
+          "number": "AI2.6",
+          "title": "Как Transformer вычисляет внимание",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.02.02.vectors-and-matrices",
+            "ai-engineering.02.04.neural-network-forward",
+            "ai-engineering.02.05.tokens-and-tokenization"
+          ],
+          "practice": "graded",
+          "minutes": 210
         },
         {
           "id": "ai-engineering.02.08.context-window-and-token-budget",
