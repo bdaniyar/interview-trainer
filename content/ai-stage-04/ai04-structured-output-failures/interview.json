@@ -1,0 +1,42 @@
+[
+  {
+    "question": "Чем invalid domain отличается от malformed?",
+    "answer": [
+      "Invalid domain проходит wire shape.",
+      "Например, две даты имеют правильный тип, но checkout предшествует checkin."
+    ],
+    "short_answer": "Invalid domain проходит wire shape.",
+    "junior_answer": "Например, две даты имеют правильный тип, но checkout предшествует checkin.",
+    "follow_up_question": "Как исправлять неизвестный год?",
+    "follow_up_answer": "Просить уточнение и хранить null.",
+    "priority": "P1",
+    "expected_answer": {
+      "follow_up_questions": [
+        "Как исправлять неизвестный год?"
+      ],
+      "must_mention": [
+        "Invalid domain проходит wire shape."
+      ]
+    }
+  },
+  {
+    "question": "Что гарантирует timeout?",
+    "answer": [
+      "Локальное прекращение ожидания.",
+      "Он оставляет внешний эффект неизвестным. Повторы требуют отдельной политики."
+    ],
+    "short_answer": "Локальное прекращение ожидания.",
+    "junior_answer": "Он оставляет внешний эффект неизвестным. Повторы требуют отдельной политики.",
+    "follow_up_question": "Что сохранить на repair?",
+    "follow_up_answer": "Исходный request, общий счётчик и correlation ID.",
+    "priority": "P1",
+    "expected_answer": {
+      "follow_up_questions": [
+        "Что сохранить на repair?"
+      ],
+      "must_mention": [
+        "Локальное прекращение ожидания."
+      ]
+    }
+  }
+]

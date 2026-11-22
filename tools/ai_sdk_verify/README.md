@@ -13,3 +13,9 @@ uv pip sync --python /tmp/pythoria-sdk-check/bin/python --require-hashes tools/a
 Основной пример находится в `example.py`; жизненным циклом клиента управляет вызывающий код. Урок использует SDK-shaped fake, совместимый с networkless Runner. Совместимость с живой моделью и её качество этими тестами не измеряются.
 
 Проверка AI3.5 дополнительно подаёт SSE-кадры через MockTransport. Она проверяет тип события, Unicode delta, final response и закрытие HTTPX2 stream.
+
+## Phase 11 и Structured Outputs
+
+`structured.py` показывает `AsyncOpenAI.responses.parse(..., text_format=WireExtraction)`. С тем же lock-файлом Python 3.12.13, OpenAI 3.57.0, HTTPX2 2.16.2 и Pydantic 2.14.4 выполнены 6 новых MockTransport cases. Они проверяют вложенную строгую схему, обязательные nullable поля, typed `output_parsed`, refusal, incomplete и ошибки разбора. В частности, оборванная JSON-строка в incomplete item поднимает Pydantic ValidationError до возврата ответа SDK. Если приложение должно различать incomplete и malformed во всех таких случаях, сначала прочитай статус ответа, полученного без автопарсинга, затем валидируй полный payload.
+
+Проверки SDK выполняются в среде авторов. В Runner остаются отдельные offline fixtures. Сверка образцов и источников выполнена 2026-11-22.

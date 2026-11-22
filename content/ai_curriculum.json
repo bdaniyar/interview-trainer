@@ -4,7 +4,7 @@
   "lesson_count": 72,
   "release": "R1",
   "release_status": "in_progress",
-  "release_lesson_count": 24,
+  "release_lesson_count": 26,
   "stages": [
     {
       "slug": "ai-stage-01",
@@ -340,6 +340,32 @@
           ],
           "practice": "graded",
           "minutes": 120
+        },
+        {
+          "id": "ai-engineering.04.03.structured-output-parser",
+          "slug": "ai04-structured-output-parser",
+          "number": "AI4.3",
+          "title": "Как разобрать ответ Structured Outputs",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.04.02.schema-and-domain-model",
+            "ai-engineering.03.01.direct-provider-adapter"
+          ],
+          "practice": "graded",
+          "minutes": 150
+        },
+        {
+          "id": "ai-engineering.04.04.structured-output-failures",
+          "slug": "ai04-structured-output-failures",
+          "number": "AI4.4",
+          "title": "Отказ, обрыв и границы восстановления",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.04.03.structured-output-parser",
+            "ai-engineering.03.04.retries-and-rate-limits"
+          ],
+          "practice": "graded",
+          "minutes": 150
         }
       ]
     },

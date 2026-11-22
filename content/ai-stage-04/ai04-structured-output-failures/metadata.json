@@ -1,0 +1,63 @@
+{
+  "id": "ai-engineering.04.04.structured-output-failures",
+  "slug": "ai04-structured-output-failures",
+  "number": "AI4.4",
+  "title": "Отказ, обрыв и границы восстановления",
+  "prerequisites": [
+    "ai-engineering.04.03.structured-output-parser",
+    "ai-engineering.03.04.retries-and-rate-limits"
+  ],
+  "practice": "graded",
+  "module_slug": "ai-stage-04",
+  "module_title": "Prompts и structured output",
+  "module_order": 104,
+  "order": 1404,
+  "description": "Прими решение о повторах по типу исхода и общему бюджету.",
+  "duration": 150,
+  "xp": 25,
+  "topics": [
+    "Прими решение о повторах по типу исхода и общему бюджету.",
+    "Error taxonomy",
+    "Уточнение",
+    "Correlation ID"
+  ],
+  "has_task": true,
+  "has_solution": true,
+  "tracks": [
+    "ai-engineering"
+  ],
+  "modes": [
+    "learn",
+    "practice",
+    "interview"
+  ],
+  "priority": "P1",
+  "interview_probability": "high",
+  "market_frequency": "not_assessed",
+  "market_evidence": "Тема предусмотрена учебным планом AI Engineering.",
+  "content_status": "complete",
+  "content_source": "curated",
+  "editorial_status": "published",
+  "quality_revision": 1,
+  "last_verified": "2026-11-22",
+  "reviewed_on": "2026-11-22",
+  "sources": [
+    {
+      "source_id": "A2",
+      "url": "https://developers.openai.com/api/docs/guides/structured-outputs",
+      "section": "OpenAI Structured Outputs, schema and refusals",
+      "applicability": "Responses API и ограниченное подмножество JSON Schema",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-22"
+    },
+    {
+      "source_id": "A7",
+      "url": "https://developers.openai.com/api/docs/guides/error-codes",
+      "section": "OpenAI API, Error codes",
+      "applicability": "Сетевые ошибки, timeout и статусы",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-22"
+    }
+  ],
+  "task_id": "ai-engineering.04.04.structured-output-failures.practice"
+}
