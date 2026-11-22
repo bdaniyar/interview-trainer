@@ -4,7 +4,7 @@
   "lesson_count": 72,
   "release": "R1",
   "release_status": "in_progress",
-  "release_lesson_count": 22,
+  "release_lesson_count": 24,
   "stages": [
     {
       "slug": "ai-stage-01",
@@ -315,7 +315,33 @@
       "slug": "ai-stage-04",
       "title": "Prompts и structured output",
       "lesson_count": 7,
-      "lessons": []
+      "lessons": [
+        {
+          "id": "ai-engineering.04.01.prompt-contract",
+          "slug": "ai04-prompt-contract",
+          "number": "AI4.1",
+          "title": "Промпт как версионируемый контракт",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.01.04.ai-task-and-baseline",
+            "ai-engineering.03.08.chat-contract-tests"
+          ],
+          "practice": "graded",
+          "minutes": 120
+        },
+        {
+          "id": "ai-engineering.04.02.schema-and-domain-model",
+          "slug": "ai04-schema-and-domain-model",
+          "number": "AI4.2",
+          "title": "JSON Schema и правила поездки",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.04.01.prompt-contract"
+          ],
+          "practice": "graded",
+          "minutes": 120
+        }
+      ]
     },
     {
       "slug": "ai-stage-05",
