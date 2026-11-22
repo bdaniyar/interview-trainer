@@ -1,0 +1,42 @@
+[
+  {
+    "question": "Как устроен target shift?",
+    "answer": [
+      "Цель — следующий токен.",
+      "Строку i сопоставляем токену i+1. Mask исключает отдельные target позиции."
+    ],
+    "short_answer": "Цель — следующий токен.",
+    "junior_answer": "Строку i сопоставляем токену i+1. Mask исключает отдельные target позиции.",
+    "follow_up_question": "Что если все исключены?",
+    "follow_up_answer": "У среднего нет знаменателя. Контракт вернёт None.",
+    "priority": "P1",
+    "expected_answer": {
+      "follow_up_questions": [
+        "Что если все исключены?"
+      ],
+      "must_mention": [
+        "Цель — следующий токен."
+      ]
+    }
+  },
+  {
+    "question": "Чем SFT отличается от retrieval?",
+    "answer": [
+      "SFT меняет параметры.",
+      "Retrieval читает индекс и формирует данные для конкретного inference."
+    ],
+    "short_answer": "SFT меняет параметры.",
+    "junior_answer": "Retrieval читает индекс и формирует данные для конкретного inference.",
+    "follow_up_question": "Что менять при новой статье?",
+    "follow_up_answer": "Обычно индекс, если нужна актуальная ссылка; проверить качество отдельно.",
+    "priority": "P1",
+    "expected_answer": {
+      "follow_up_questions": [
+        "Что менять при новой статье?"
+      ],
+      "must_mention": [
+        "SFT меняет параметры."
+      ]
+    }
+  }
+]

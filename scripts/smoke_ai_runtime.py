@@ -51,6 +51,8 @@ def files(directory):
 
 # Deliberate behavior changes with varied inputs. Each must fail the real grader.
 NEGATIVE_CONTROLS = {
+    "AI2.7": ('zip(tokens[1:],distributions', 'zip(tokens[:-1],distributions'),
+    "AI2.9": ('left.model!=right.model or ', ''),
     "AI2.4": ('[max(0,z) for z in hidden]', 'hidden'),
     "AI2.6": ('available=k[:i+1] if causal else k', 'available=k'),
     "AI2.2": ('checked(right), strict=True', 'checked(right)'),
