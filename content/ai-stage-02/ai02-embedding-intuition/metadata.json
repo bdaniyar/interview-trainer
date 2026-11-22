@@ -1,0 +1,64 @@
+{
+  "id": "ai-engineering.02.09.embedding-intuition",
+  "slug": "ai02-embedding-intuition",
+  "number": "AI2.9",
+  "title": "Embeddings, длина и смысловая близость",
+  "prerequisites": [
+    "ai-engineering.02.02.vectors-and-matrices",
+    "ai-engineering.02.04.neural-network-forward",
+    "ai-engineering.02.05.tokens-and-tokenization"
+  ],
+  "practice": "graded",
+  "module_slug": "ai-stage-02",
+  "module_title": "ML, нейросети и LLM с нуля",
+  "module_order": 102,
+  "order": 1209,
+  "description": "Сравни toy-векторы и лексический baseline с проверкой совместимости.",
+  "duration": 120,
+  "xp": 25,
+  "topics": [
+    "Сравни toy-векторы и лексический baseline с проверкой совместимости.",
+    "Cosine",
+    "Нормализация",
+    "Модель и размерность"
+  ],
+  "has_task": true,
+  "has_solution": true,
+  "tracks": [
+    "ai-engineering"
+  ],
+  "modes": [
+    "learn",
+    "practice",
+    "interview"
+  ],
+  "priority": "P1",
+  "interview_probability": "high",
+  "market_frequency": "not_assessed",
+  "market_evidence": "Тема предусмотрена учебным планом AI Engineering.",
+  "content_status": "complete",
+  "content_source": "curated",
+  "editorial_status": "published",
+  "quality_revision": 1,
+  "last_verified": "2026-11-22",
+  "reviewed_on": "2026-11-22",
+  "sources": [
+    {
+      "source_id": "F7",
+      "url": "https://developers.google.com/machine-learning/crash-course/embeddings",
+      "section": "Google ML Crash Course, Embeddings",
+      "applicability": "Размерность и сходство представлений",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-22"
+    },
+    {
+      "source_id": "F3",
+      "url": "https://developers.google.com/machine-learning/crash-course/neural-networks",
+      "section": "Google ML Crash Course, Neural networks",
+      "applicability": "Входы, слои и нелинейность",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-22"
+    }
+  ],
+  "task_id": "ai-engineering.02.09.embedding-intuition.practice"
+}

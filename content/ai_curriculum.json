@@ -4,7 +4,7 @@
   "lesson_count": 72,
   "release": "R1",
   "release_status": "in_progress",
-  "release_lesson_count": 20,
+  "release_lesson_count": 22,
   "stages": [
     {
       "slug": "ai-stage-01",
@@ -141,6 +141,20 @@
           "minutes": 210
         },
         {
+          "id": "ai-engineering.02.07.pretraining-and-alignment",
+          "slug": "ai02-pretraining-and-alignment",
+          "number": "AI2.7",
+          "title": "Предобучение LLM и настройка поведения",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.02.01.data-and-model-lifecycle",
+            "ai-engineering.02.03.loss-and-gradient-step",
+            "ai-engineering.02.06.transformer-attention"
+          ],
+          "practice": "graded",
+          "minutes": 120
+        },
+        {
           "id": "ai-engineering.02.08.context-window-and-token-budget",
           "slug": "ai02-context-window-budget",
           "number": "AI2.8",
@@ -150,6 +164,20 @@
             "ai-engineering.02.05.tokens-and-tokenization"
           ],
           "practice": "guided",
+          "minutes": 120
+        },
+        {
+          "id": "ai-engineering.02.09.embedding-intuition",
+          "slug": "ai02-embedding-intuition",
+          "number": "AI2.9",
+          "title": "Embeddings, длина и смысловая близость",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.02.02.vectors-and-matrices",
+            "ai-engineering.02.04.neural-network-forward",
+            "ai-engineering.02.05.tokens-and-tokenization"
+          ],
+          "practice": "graded",
           "minutes": 120
         },
         {
