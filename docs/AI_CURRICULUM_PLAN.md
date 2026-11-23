@@ -1,10 +1,12 @@
 # Pythoria: персональный путь от Python Backend к AI Engineering
 
-**Статус: research / design; все новые этапы, уроки, задания и функции — planned.**
-Проверка репозитория и первичных источников: **2026-11-14, Asia/Almaty**;
-контрольные чтения отдельных разделов — **2026-11-15**. Основа Pythoria:
-`bdaniyar/interview-trainer`, `main`, commit `b39d1f0ccd4aad2e50913b9f0bb2d7f0185d2356`.
-Документ не публикует учебный контент и не меняет приложение, curriculum, XP, сохранённый код или БД.
+**Статус на 2026-11-23, Asia/Almaty.** На `main` `5694b7b6010167f05aed7e99b459a65f629e2392`
+опубликованы R0/R1, 29 AI-уроков в AI1–AI4 и 370 уроков Backend. P1 и P2 доступны как
+офлайн-проекты. AI5–AI10 и P3–P9 запланированы.
+
+Первоначальный дизайн и проверка источников зафиксированы 2026-11-14/15 на commit
+`b39d1f0ccd4aad2e50913b9f0bb2d7f0185d2356`. Срез рынка от 23.11.2026 уточняет практику
+следующих этапов. [Отчёт рынка](AI_ENGINEERING_MARKET_2026.md) · [Проверки R0](AI_R0_VERIFICATION.md) · [Проверки R1](AI_R1_VERIFICATION.md).
 
 ## 1. Резюме и образовательная цель
 
@@ -16,7 +18,7 @@
 Маршрут: **существующий backend → основы AI → прямой LLM API → структурированные результаты
 и инструменты → RAG → LangChain → агентные workflows и MCP → LangGraph → production AI**.
 В основе — 10 этапов, **72 содержательных урока** и 9 проектов. Два проекта приходятся на RAG:
-сначала поиск, затем ответы по найденным материалам. Уроки не являются опубликованными страницами.
+сначала поиск, затем ответы по найденным материалам. Прогресс учитывает 29 опубликованных уроков R1.
 
 Почему этот маршрут персональный:
 
@@ -31,9 +33,9 @@
 - Наличие AI-assisted кода не равно самостоятельному владению. До сокращения повторения
   проводятся короткие диагностики и самостоятельные изменения с тестами.
 
-Первый полезный релиз — **15 выбранных уроков, 8 офлайн coding labs и проект Chat API**,
-с полными русскими объяснениями и Markdown-конспектами. Он не ждёт RAG, GPU, брокера
-провайдеров, агента или новой IDE. Остальные основы и проекты добавляются небольшими релизами.
+R0 выпустил 15 уроков, 8 офлайн-лабораторий и Chat API. R1 завершил AI1–AI4 и добавил
+Structured Trip Extraction: теперь опубликованы 29 уроков и 20 лабораторий с Check.
+Оставшиеся 43 урока добавляются небольшими релизами.
 
 Оценка нагрузки — проектная, а не обещание скорости: **189 часов** по карточкам уроков с
 упражнениями и **110–158 часов** на самостоятельную сборку проектов, включая capstone.
@@ -84,7 +86,7 @@
 | LangChain | Уже написанные provider/tools/retriever interfaces | Абстракции сообщений, models, middleware, текущий agent API | Lockfiles, adapters, tracing | `langchain` v1 API и один provider integration package | Переписать готовый проект и сравнить один и тот же набор контрактов |
 | Agents и MCP | Очереди, state transitions, backend tools | Выбор действий моделью, bounded loop, protocol roles/capabilities/transports | Trust boundaries, approval, ownership | Собственный loop; затем MCP Python SDK v2 API, протокол 2026-07-28 | Агент с read-only tools и отдельным approval для синтетической записи |
 | LangGraph | Queue leases, state machine, PostgreSQL | StateGraph, reducers, checkpoint, interrupt, replay semantics | Стабильный idempotency key и uncertain external outcome | `langgraph`, checkpoint adapter | Убить процесс до/после side effect и доказать отсутствие повторного эффекта |
-| Evals/security | pytest, failure injection, интеграционные тесты | Dataset eval, retrieval metrics, judge bias, indirect injection, data exfiltration | Приватность логов и fixtures | Собственный JSONL eval harness; optional OTel | Показать, как корректный HTTP 200 скрывает неправильный ответ или небезопасный tool |
+| Evals/security | pytest, failure injection, интеграционные тесты | Dataset eval, retrieval metrics, judge bias, indirect injection, data exfiltration | Приватность логов и fixtures | Собственный JSONL eval harness; локальный OpenTelemetry | Показать, как корректный HTTP 200 скрывает неправильный ответ или небезопасный tool |
 | Production AI | Docker Compose, Redis, Celery, PostgreSQL, retries | Model migration, cost/latency/quality trade-off, prompt/index versions, AI-specific cache keys | Связка очереди с внешним платным вызовом; не переносить exactly-once обещание из локальной БД | SDK + pgvector + task queue + metrics; без обязательного SaaS | Индексация после crash, лимит расходов, rollback модели и регрессионный отчёт |
 
 OAuth входит в самооценку пользователя, но полноценный OAuth flow в выбранной выборке не
@@ -114,26 +116,27 @@ SQL 10.7/10.8, metadata/interview, starter/solution/hidden tests и инстру
 
 ### 3.1. Проверенный inventory
 
-- Taxonomy находится в **`content/curriculum.json`**, а не в корне: 406 lesson IDs, 33 этапа
-  с номерами 0–32; 359 complete и 47 planned. На диске 417 metadata: дополнительно 11 archived.
-- 63 bundles имеют Python coding tasks. Stage 8: 12 curated уроков; некоторые физически
-  лежат в `content/concurrency/`. Нельзя строить связи только по имени директории.
-- В SQL registry **8** уроков 10.2–10.9 с Check: projection, WHERE, NULL, ORDER/LIMIT,
-  DISTINCT, aggregates, GROUP BY, HAVING. В банке 49 SQL records; это не 49 подключённых labs.
-  README ещё говорит о пяти подключённых задачах — код и SQL_GRADING точнее.
+- `content/curriculum.json` содержит 406 записей Backend, а `content/course.json` показывает
+  370 опубликованных уроков Backend. `content/ai_curriculum.json` отдельно объявляет 72 урока,
+  из них 29 опубликованы. Состав AI1–AI4 — 4, 10, 8 и 7.
+- Python Run/Check уже обслуживает Backend и AI. Среди опубликованных AI-упражнений
+  20 лабораторий с Check. P1/P2 дают runnable HTTP-сервисы и отдельные offline suites.
+- SQL Workspace, Web Transaction Lab и Index Lab работают на изолированном PostgreSQL.
+  Есть проверяемые Worker-упражнения и Architecture-уроки. Этот опыт используется при
+  проектировании P4/P5/P9. [Проверки совместимости R1](AI_R1_VERIFICATION.md#совместимость-и-данные).
 
 | Компонент / код | Реальное поведение | Повторное использование | Необходимое расширение / ограничение |
 | --- | --- | --- | --- |
-| `backend/app/content.py` | Discovery `*/*/metadata.json`, global order, complete-only navigation; читает Markdown, interview, starter и server-selected tests | Не создавать второй lesson loader | Loader не исполняет prerequisites и не выделяет AI path; отдельное добавление track manifest/filter |
-| `MarkdownLesson.tsx`, `lessonMarkdown.ts` | Learn/Review, GFM, code highlighting, закрытые `<details>`, сброс раскрытий при смене режима | Полная теория, self-check, источники, «Шпаргалка» | Quick Review/search/export как отдельные небольшие функции. Заголовок JUNIOR BACKEND сейчас жёсткий |
-| `CourseApp.tsx` | Sidebar, темы, resize, загрузка файлов и progress; dispatch Python/SQL workspace | Сохранить UX и routing | Path selector/отдельная статистика; sidebar пока не фильтрует `tracks` |
+| `backend/app/content.py` | Discovery `*/*/metadata.json`, global order, complete-only navigation; читает Markdown, interview, starter и server-selected tests; фильтрует треки | Переиспользовать ContentRepository и AI manifest | Пререквизиты проверяются в контенте; порядок изучения не становится новой серверной авторизацией |
+| `MarkdownLesson.tsx`, `lessonMarkdown.ts` | Learn/Review, GFM, code highlighting, закрытые `<details>`, сброс раскрытий при смене режима | Полная теория, self-check, источники, «Шпаргалка» и экспорт Markdown | Библиотека конспектов и bookmarks остаются дальнейшей работой |
+| `CourseApp.tsx` | Выбор Backend/AI, поиск по треку, независимый процент, файлы, темы и routing Python/SQL | Сохранить UX и routing | AI5–AI10 добавляются через действующий manifest |
 | `CodeWorkspace.tsx` | Monaco, **несколько** файлов, создание/rename/delete `.py`, autosave, Run/Check, терминал, solution reveal | Первые offline AI labs и FastAPI TestClient | Не предлагать multi-file с нуля. UI не создаёт `.json/.md`, хотя backend принимает их. Live web preview/SSE viewer нет |
 | `backend/app/schemas.py` | До 24 файлов; разрешены `.py/.txt/.json/.md/.toml/.yaml/.yml`, path/size validation | JSON fixtures возможны в starter payload | Серверный immutable fixture registry позже; не смешивать editable данные и эталон grading |
 | `backend/app/main.py` | `/run`, `/check`, ограниченный terminal; tests выбираются по lesson, Check даёт +20 XP один раз; theory +5 | Python labs без новой API поверхности | `persist_files` удаляет отсутствующие файлы: всегда сохранять полный workspace. Не передавать SQL drafts через `/files` |
 | `runner/app/main.py`, sandbox Dockerfile | Python 3.12, pytest/FastAPI/Pydantic/httpx/SQLAlchemy/Alembic; контейнер на запуск; no network, 128 MiB, 0.5 CPU, 64 PID, timeout 4s, output 32 KiB; plugin autoload off | stdlib math, fakes, validation, ASGI tests через TestClient; async tests через `asyncio.run` | Нет provider SDK, NumPy/torch/transformers. Нет постоянно работающего FastAPI-сервера. 4s не подходят реальному inference/model loading |
 | SQL stack: `sql_routes`, `sql_content`, `sql_check`, `sql_runner/` | PG17 sandboxes, Explorer/Run/reset, server registries, fresh hidden datasets, comparator, отдельный task progress | UX таблицы, fixtures/version/checksum подход и архитектурный опыт | Это read-only SQL, не произвольный Python→PG канал. pgvector/DDL/внешний AI здесь не разрешены |
-| SQLite models/database | `UserState(id=1)`, lesson progress/code keyed by slug; SQL attempt/task progress отдельно; startup `create_all` | Новые уникальные AI slugs без изменения старых ключей | Нет общей multi-user auth и versioned DB migration системы. Отдельный AI процент можно сначала вычислять по manifest |
-| `content_quality.py`, `validate_content.py`, `curated_content.py` | Структура, boilerplate/leaks, curated bundle gate, защита генератора от overwrite; frontend имеет Vitest | Расширять существующие валидаторы и тесты | Проверки API freshness, source versions, eval fixtures и нового namespace ещё отсутствуют |
+| SQLite models/database | `UserState(id=1)`, lesson progress/code keyed by slug; SQL attempt/task progress отдельно; startup `create_all` | Стабильные AI slugs и прежние ключи; процент AI отдельно, XP общий | Учебная SQLite остаётся отдельной от проектных БД и synthetic multi-user fixtures |
+| `content_quality.py`, `validate_content.py`, `curated_content.py` | Структура, answer visibility, curated bundles, AI namespace и R0/R1 manifest | Переиспользовать статическую проверку и целевые suites | Актуальность источников и качество реальной модели проверяются отдельно |
 
 Важная граница: hidden pytest передаются в тот же sandbox, где выполняется код студента.
 Они не отдаются обычным lesson endpoint, но это **не защита от злонамеренного чтения файлов
@@ -141,32 +144,23 @@ SQL 10.7/10.8, metadata/interview, starter/solution/hidden tests и инстру
 `/solution` доступен по явному запросу без обязательной зафиксированной попытки; UI reveal —
 педагогическое скрытие, не контроль доступа. Новый план не обещает иной текущей гарантии.
 
-### 3.2. Идентификаторы и совместимость будущего трека
+### 3.2. Идентификаторы и совместимость трека
 
-Зарезервировать отдельный namespace **`ai-engineering`**, modules **`ai-stage-01` … `ai-stage-10`**,
-lesson ID **`ai-engineering.01.01.backend-diagnostic`**, slug **`ai01-backend-diagnostic`**.
-Это предложение для будущей additive интеграции; ни одного такого ID сейчас в taxonomy нет.
-Номер для отображения — `AI1.1`, не `1.1`. Не присваивать существующим этапам 0–32 новые смыслы.
+Runtime использует namespace **`ai-engineering`**, этапы **`ai-stage-01` … `ai-stage-10`**,
+манифест `content/ai_curriculum.json` и двухуровневые bundles. Номер для отображения —
+`AI1.1`. При расхождении с первоначальным планом канонический ID опубликованного урока
+берётся из манифеста R1. Историческое расхождение AI2.8 описано в [AI Track](AI_TRACK.md).
+Новые карточки сохраняют slug, prerequisites и отдельный порядок AI.
 
-Будущий manifest: `content/ai_curriculum.json`; bundles остаются на двух уровнях
-`content/ai-stage-01/ai01-backend-diagnostic/`. Это совместимо с discovery loader, но
-**ещё не совместимо со всеми validators**: текущие проверки знают backend taxonomy,
-numeric stage, P0/P1=complete и фиксированные headings. В отдельном PR сделать track-aware
-validation, namespace/slug/order collision checks, отображение planned и фильтр навигации.
-До него manifest и bundles не добавлять. Порядок хранить отдельно внутри path; глобальный
-`order/module_order` выделить новым диапазоном после проверки max, без renumber backend.
-
-Первые progress records остаются keyed by новые slugs. AI percent вычисляется по опубликованным
-AI урокам, backend percent — по backend manifest. Общий существующий XP не обнулять и не
-обещать отдельный AI XP без спецификации. Project milestones, версии eval runs и multi-user
-ownership позднее потребуют отдельных additive таблиц и явной миграции, а не побочного `create_all`.
+Прогресс и сохранённый код адресуются по стабильным slug, проценты считаются в каждом треке,
+XP остаётся общим. Проектные PostgreSQL/Redis/SQLite создаются отдельно. Project milestones, версии eval runs и multi-user ownership проектируются отдельно.
 
 ## 4. Метод исследования и политика источников
 
 В §19 приведены **проверенные URL, конкретные разделы, дата и применимость версии**.
 Ссылки `[F1]`, `[A1]` и т. п. в карточках обозначают строки этой матрицы и являются ссылками.
 Даты проверки страниц — 2026-11-14 и отмеченные в §19 контрольные чтения 2026-11-15;
-это не даты выполнения будущих примеров.
+это даты чтения первоначальных источников. Для AI5–AI10 [срез 23.11.2026](AI_ENGINEERING_MARKET_2026.md#10-актуальность-технических-источников) фиксирует текущий API и patch registry. Исполняемый lock подтверждается при реализации.
 
 Порядок: official docs/reference → official SDK docs → первичная статья → собственный
 учебный вывод. «Документированный факт», «учебное упрощение» и «наш проектный выбор»
@@ -194,6 +188,21 @@ ownership позднее потребуют отдельных additive табл
 остаётся задачей code-verification PR. Major/API/protocol version из источника записывается
 сейчас; exact package versions и lockfile фиксируются после воспроизводимого прогона.
 Не записывать выдуманный `tested_version` ради заполнения поля.
+
+### Рыночная сверка 11.2026
+
+В выборке 30 карточек: 17 по Казахстану и 13 международных. Наблюдения поддерживают путь
+**Applied AI / AI Backend** на базе Python backend: прямые tools и authorization (AI5/P3),
+поиск по документам с ACL и RU/KZ/EN eval (AI6/P4–P5), сопоставимые framework-контракты
+(AI7/P6), протокол, approval и bounded loop (AI8/P7), проверяемое восстановление (AI9/P8),
+наблюдаемость, CI, deploy и rollback (AI10/P9). PostgreSQL+pgvector изучаются глубоко,
+Qdrant сравнивается на одинаковом наборе. Основной стек трассировки — local OpenTelemetry.
+Глубокое model engineering остаётся дополнительной веткой. [30 карточек, подсчёты и методика](AI_ENGINEERING_MARKET_2026.md).
+
+Приоритеты и gates ниже относятся к будущим фазам. Сохраняются 72 core-урока, 10 этапов,
+9 проектов, существующие ID и prerequisites. Все обязательные практики проектируются
+для локального CPU и offline fixtures. Измерения новых окружений и деплоя появляются
+в PR реализации соответствующего этапа.
 
 ## 5. Как писать и преподавать
 
@@ -254,17 +263,26 @@ AI1.1–1.3 → AI2.1, 2.5, 2.8, 2.10 → AI3.1–3.8. Все его реаль�
 После P1 пройти оставшиеся AI1/AI2 уроки; AI2 целиком и AI4/AI5 обязательны до RAG.
 Это ранняя практика с API, а не замена ML foundations набором терминов.
 
-Optional model-oriented ветка после AI2, параллельно основному пути: 6 модулей, **в число
-72 не входят**. (1) tensors/autograd/PyTorch CPU и training loop; (2) datasets, leakage,
-checkpoint и validation; (3) supervised fine-tuning маленькой открытой модели; (4) LoRA/PEFT,
-trainable parameters и сравнение с baseline; (5) local inference, quantization, GPU memory,
-batching и serving; (6) versioned artifacts, monitoring/drift и MLOps. Источники [F8], [F9].
-Каждый модуль заканчивается исполняемым экспериментом и отчётом, а не установкой библиотеки.
-GPU/квоты/лицензии выбираются отдельно; обучение большой LLM не является capstone core.
+Optional model-oriented ветка после AI2 остаётся на шести модулях вне 72 core-уроков:
+
+1. NumPy shapes, PyTorch CPU tensors/autograd и сверка конечной разностью.
+2. pandas/HF Datasets и scikit-learn baseline с group split и контролем leakage.
+3. HF Transformers/Tokenizers, inference и tiny training на синтетических данных.
+4. PEFT/LoRA с отчётом по trainable parameters, held-out качеству и размерам артефакта.
+   QLoRA — отдельный эксперимент на явно совместимом устройстве.
+5. Одна quantized модель 1–3B через Ollama. Ориентир для opt-in — 16 GiB RAM хоста,
+   4–6 GiB диска и короткий контекст. Измерить latency/TTFT, tok/s и RAM. vLLM — разбор
+   batching/KV cache и optional serving smoke на совместимом backend.
+6. Версионирование model/dataset, drift и воспроизводимость. MLflow — optional adapter.
+
+Эти ресурсы плановые. Модель/лицензия, RAM и CPU/ARM64 compatibility фиксируются
+при реализации каждого эксперимента. Core ограничивается CPU-математикой и fixed vectors.
+[Практика и ресурсы ветки](AI_ENGINEERING_MARKET_2026.md#9-дополнительная-ветка-ml--model-engineering).
 
 ## 7. Подробный inventory уроков и зависимостей
 
-Все следующие **72 карточки — planned**. В заголовках используются короткие номера AIx.y.
+Ниже **72 карточки**. AI1–AI4 опубликованы по манифесту R1, AI5–AI10 запланированы.
+В заголовках используются короткие номера AIx.y.
 Полный ID/slug указан явно; ссылки prerequisites на AIx.y однозначно разрешаются в карточку.
 `D0` — диагностика basic async/DTO/tests из §2.3, `Dsql` — SQL refresh, `Djobs` — race/retry
 refresh. Уроки внутри этапа идут по порядку, но обязательны только явно указанные dependencies.
@@ -576,6 +594,17 @@ refresh. Уроки внутри этапа идут по порядку, но �
 
 ### AI5 — Tools и состояние беседы · 7 уроков
 
+**Обязательная практика AI5.** В AI5.1–5.2 провести через один typed adapter два результата
+с разными call IDs, включая out-of-order ответы, повтор и неверный JSON. В AI5.3/5.6
+caller берётся из приложения, а tool registry проверяет allowlist, schema, scope и владельца
+перед доступом к данным. Тест со spy фиксирует ноль чтений чужого ресурса и ноль writes.
+В AI5.4–5.5 общий deadline ограничивает всю цепочку; step, call и output limits
+проверяются отдельно. История двух диалогов не смешивается, пары call/result остаются
+атомарными при урезании контекста. В AI5.7 читаются данные из синтетического репозитория
+через реальные функции, вывод включает terminal reason и redacted trace. Рискованное
+действие формирует видимый человеку proposal. Approval и исполнение синтетического
+write вводятся в P7.
+
 #### AI5.1 — Tool calling: предложение модели и действие приложения
 
 `ai-engineering.05.01.tool-call-protocol` · `ai05-tool-call-protocol`
@@ -647,6 +676,22 @@ refresh. Уроки внутри этапа идут по порядку, но �
 - **Проверка:** новый hidden сценарий меняет ID/owner/порядок calls; suite проверяет фактическое исполнение и отсутствие writes. Ошибка: заранее заготовленный answer без calls. Источники [A3], [S1].
 
 ### AI6 — Embeddings, vector search и RAG · 10 уроков
+
+**Обязательная практика AI6.** Глубокий профиль P4 — PG17+pgvector, отдельная БД и
+exact baseline. В AI6.2–6.5 зафиксировать версии документа, embedding space и индекса,
+проверить replay, tombstone, ACL и отличие exact от HNSW по recall@k/плану/времени.
+Сравнить pgvector с Qdrant по SQL joins, транзакции, payload filters, обновлению и
+согласованию двух хранилищ. Код второй БД — optional P1 lab на тех же IDs, vectors,
+qrels и фильтрах, со своим отчётом. В AI6.6 использовать PostgreSQL FTS, отдельно
+просчитать BM25 на малом корпусе, совместить ранги через RRF и применить scripted
+reranker только к top-N. CPU cross-encoder — отдельный optional эксперимент.
+
+В AI6.7–6.10 обязательны права до выборки, повторная проверка происхождения перед
+контекстом и цитированием, invalidate после update/delete/revoke и отдельные retrieval/
+answer отчёты по RU/KZ/EN. Написать offline trace ingest/retrieve/generate через
+OpenTelemetry и проверить отсутствие raw payload. Набор KZ маркируется языковым кодом
+`kk`; один code-switch вопрос и cross-language retrieval входят в проверку. Конкретный
+embedding model тестируется только в opt-in сравнении с закреплённой лицензией и ресурсами.
 
 #### AI6.1 — Cosine similarity руками
 
@@ -735,7 +780,7 @@ refresh. Уроки внутри этапа идут по порядку, но �
 - **До / уровень / время:** AI6.5–6.8, AI4.5; средний; 180 мин. Профиль F; P5.
 - **Цель/понятия:** считать recall@k/MRR по qrels, измерить groundedness/citation support отдельно от task correctness; назвать ограничения judge.
 - **Интуиция/глубина:** если документ не найден, хороший prompt часто не поможет. Если документ найден, генератор всё равно может ошибиться.
-- **Практика:** 30 RU/EN synthetic questions с qrels, unanswerable/conflicting/ACL cases; построить per-case report и error bucket, сравнить lexical baseline с hybrid.
+- **Практика:** 30 RU/KZ/EN synthetic questions с qrels, unanswerable/conflicting/ACL и code-switch cases; построить per-case report и error bucket, сравнить lexical baseline с hybrid.
 - **Проверка:** ручные rank examples, duplicate IDs, no relevant docs имеют публичную политику denominator; нельзя менять qrels после получения score. Ошибка: единственный LLM judge score или точный match фразы. Источники [R4], [A5].
 
 #### AI6.10 — Document RAG Service и обновление корпуса
@@ -749,6 +794,17 @@ refresh. Уроки внутри этапа идут по порядку, но �
 - **Проверка:** update/delete/replay, cross-owner, held-out RAG suite и report; ошибки: mixed embedding spaces, partial reindex виден как complete, live quality заявлена по fixture. Источники [R1], [R3], [B1].
 
 ### AI7 — LangChain как осмысленная абстракция · 6 уроков
+
+**Обязательная практика AI7.** Сначала P3 и P5 на прямом SDK/protocol. Затем общий
+contract corpus для двух путей с capture входов/выходов. В AI7.1/7.5 использовать
+LangChain v1, `langchain.agents.create_agent` и текущий middleware. Сверка
+23.11.2026 зафиксировала `langchain` 1.5.2, API и migration guide. Конкретные
+`langchain-core` и provider integration package закрепить после offline import и
+contract smoke. В AI7.2–7.4 проверить stream/usage, отказ, error categories, ACL и
+идентификацию retrieval результатов. В AI7.5–7.6 ввести deliberate double-retry
+или потерю ACL и показать красный тест и локальный trace. Решение о framework
+оформить сравнением одинакового сценария, зависимостей и наблюдаемости.
+[Migration guide](https://docs.langchain.com/oss/python/migrate/langchain-v1) · [Release 1.5.2](https://pypi.org/project/langchain/1.5.2/).
 
 #### AI7.1 — Версии и карта абстракций LangChain
 
@@ -812,6 +868,19 @@ refresh. Уроки внутри этапа идут по порядку, но �
 
 ### AI8 — Agentic workflows и MCP · 6 уроков
 
+**Обязательная практика AI8.** Для AI8.1–8.2 запустить один сценарий с детерминированным
+router и агентом с лимитами шагов, вызовов, байтов и deadline. Trace объясняет каждую
+остановку. В AI8.3–8.4 основной MCP contract — ревизия `2026-07-28`,
+`server/discover` и per-request metadata; текущая линия Python SDK v2, снимок
+`mcp==2.3.0` на 23.11.2026. Перед публикацией закрепить patch и выполнить real SDK
+in-memory плюс локальный stdio smoke. Разобрать legacy `initialize` отдельно.
+Инструменты только read-only. Авторизацию данных проверять на application boundary
+по trusted principal, scope и ресурсу. В AI8.5–8.6 approval привязывает caller, действие,
+аргументы и срок, а retry после неизвестного эффекта требует reconciliation.
+CrewAI, AutoGen, Google ADK и OpenAI Agents SDK достаточно сравнить по loop/state/approval
+в ADR. Multi-agent orchestration остаётся дополнительной темой.
+[Спецификация MCP](https://modelcontextprotocol.io/specification/2026-07-28) · [SDK 2.3.0](https://github.com/modelcontextprotocol/python-sdk/releases/tag/v2.3.0).
+
 #### AI8.1 — Детерминированный workflow или агент
 
 `ai-engineering.08.01.workflow-versus-agent` · `ai08-workflow-versus-agent`
@@ -839,7 +908,7 @@ refresh. Уроки внутри этапа идут по порядку, но �
 - **До / уровень / время:** AI8.2; средний; 150 мин. Профиль F; P7.
 - **Цель/понятия:** различить host/client/server, tools/resources/prompts, JSON-RPC, discovery, protocol metadata и capabilities.
 - **Интуиция/глубина:** MCP стандартизирует общение с источниками и tools, но не является LLM, agent framework или системой авторизации сам по себе. Разобрать 2026-07-28 и несовместимость некоторых старых handshake примеров.
-- **Практика:** protocol transcripts с version/capability/tool schemas; написать validator ожидаемых metadata и разрешённых методов, корректно классифицировать unsupported version.
+- **Практика:** protocol transcripts с per-request metadata, discovery, version и tool schemas; написать validator ожидаемых metadata и разрешённых методов, корректно классифицировать unsupported version.
 - **Проверка:** malformed/unknown method/version, namespace collision, отсутствующая capability, invalid schema. Ошибка: считать любой JSON HTTP endpoint MCP или доверять server annotations как authority. Источники [M1], [M2].
 
 #### AI8.4 — MCP server и client с тестами
@@ -873,6 +942,18 @@ refresh. Уроки внутри этапа идут по порядку, но �
 - **Проверка:** policy invariants на каждом шаге, допустимы разные корректные последовательности, max budget строгий. Ошибка: exact trace sequence там, где задача допускает альтернативы, или score только по final phrase. Источники [A5], [M2], [S1].
 
 ### AI9 — LangGraph, evaluation и security · 7 уроков
+
+**Обязательная практика AI9.** Сверка 23.11.2026 зафиксировала `langgraph` 1.2.24
+и документированные `StateGraph`, persistence и interrupts. Проверить собственный lock
+runtime/saver перед выпуском. В AI9.2–9.4 закрыть process, открыть persistent saver в новом
+процессе, продолжить тот же thread и проверить stable business key при сбое до эффекта,
+после эффекта до checkpoint и после checkpoint до ответа. При неопределённом результате
+без dedup зарезервировать явный reconcile/stop. В AI9.5–9.7 считать отдельно task success,
+policy violations, cost и согласие judge с ручной разметкой. Заморозить наборы и добавить
+tool/document injection, cross-tenant и повтор approval. Приложить redacted OpenTelemetry
+timeline графа, approval и retry. Итоговое сообщение и successful demo дополняются фактической
+проверкой состояния, счётчика write effects и восстановления.
+[Persistence](https://docs.langchain.com/oss/python/langgraph/persistence) · [Release 1.2.24](https://pypi.org/project/langgraph/1.2.24/).
 
 #### AI9.1 — Граф: state, nodes, edges и reducers
 
@@ -946,6 +1027,27 @@ refresh. Уроки внутри этапа идут по порядку, но �
 
 ### AI10 — Production AI Engineering · 7 уроков
 
+**Обязательная практика AI10.** В AI10.1–10.3 определить service SLO отдельно от
+semantic quality, transactional activation, очередь, rate limits и cache/quota по tenant,
+ACL revision и версиям. В AI10.4 сделать OpenTelemetry Python SDK с локальным exporter
+и redacted run artifacts. Привязать trace к ingest, queue, retrieval, generation и tools,
+замерить p50/p95, TTFT для streaming и token/cost с явными unknown. В AI10.5 добавить
+GitHub Actions с офлайн unit, реальными локальными интеграциями и blocking eval regression,
+lock и versions image/model/prompt/index. Смена capability проходит fail-fast до трафика.
+
+В AI10.6–10.7 воспроизвести запуск, обновление и откат локального Compose, restore из
+синтетической копии и container/secret/deletion tests. Один дополнительный облачный маршрут —
+push digest в **ECR**, одиночный **ECS Fargate** сервис на коротком synthetic smoke,
+**GitHub Actions OIDC** с разрешением только из нужного environment/ref. На AWS задать
+IAM task roles, минимальный egress, TLS или ограниченный тестовый endpoint, лимит числа
+tasks, время работы и очистку. Core сдаётся локально. Cloud run opt-in, с отдельным
+подтверждением фактической цены региона, сметой Fargate/ECR/logs/network и cleanup
+задач, ECS service, хранилищ и логов. Для первичного smoke ориентир — 0,5 vCPU, 1 GiB RAM
+и максимум 60 минут для одной задачи. В rollback пересчитать смету и учесть любой
+параллельный период. S3 export синтетических отчётов — отдельный opt-in с lifecycle.
+Бюджетное уведомление дополняет ограничения ресурсов.
+[GitHub Actions OIDC](https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments/oidc-in-aws) · [Fargate](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html) · [Тарифы](https://aws.amazon.com/fargate/pricing/).
+
 #### AI10.1 — Production service: контракты, конфигурация и SLO
 
 `ai-engineering.10.01.production-ai-contracts` · `ai10-production-ai-contracts`
@@ -954,7 +1056,7 @@ refresh. Уроки внутри этапа идут по порядку, но �
 - **Цель/понятия:** разделить service SLO, semantic quality и security gates; определить config/model/prompt/index versions и graceful degradation.
 - **Интуиция/глубина:** работающий backend нуждается в предсказуемом поведении при ошибке модели, БД или quota. HTTP availability не измеряет answer correctness.
 - **Практика:** capstone config с offline/live modes и readiness dependencies; synthetic failure matrix → typed status; provider secrets отсутствуют в публичном config dump.
-- **Проверка:** unavailable retriever/provider/quota, unsupported capability, invalid config fail fast; не объявлять проект production-ready по одному deploy. Ошибки: health всегда 200 или fallback без сообщения об ограничении. Источники [A5], [A7], [B3].
+- **Проверка:** unavailable retriever/provider/quota, unsupported capability, invalid config fail fast; не объявлять проект production-ready по одному deploy. Ошибки: health всегда 200 или fallback без сообщения об ограничении. Routing сравнить на двух scripted adapters по capability, latency и budget. Источники [A5], [A7], [B3].
 
 #### AI10.2 — Фоновая индексация, Celery и idempotency
 
@@ -983,7 +1085,7 @@ refresh. Уроки внутри этапа идут по порядку, но �
 - **До / уровень / время:** AI10.3, AI3.5; сложный; 180 мин. Профиль G; P9.
 - **Цель/понятия:** измерить retrieval/provider/tool/queue durations, time-to-first-token, p50/p95, usage/cost/error rate и redacted correlation.
 - **Интуиция/глубина:** средняя задержка скрывает медленные хвосты; trace показывает конкретный bottleneck. Содержимое пользователя не должно стать metric label.
-- **Практика:** injected clock и span sink, далее optional OTel exporter; построить latency report с sample size и warm/cold разделением.
+- **Практика:** injected clock, OpenTelemetry SDK и локальный exporter; построить latency report с sample size и warm/cold разделением.
 - **Проверка:** spans закрываются при error/cancel, request ID связывает этапы, PII/key не попадает в attributes, finite cardinality. Ошибки: сравнить streaming total только с TTFT или заполнять пропуски нулями. Источник [B3].
 
 #### AI10.5 — Model/provider migration и evals в CI
@@ -993,7 +1095,7 @@ refresh. Уроки внутри этапа идут по порядку, но �
 - **До / уровень / время:** AI10.4, AI9.5; сложный; 180 мин. Профиль G; P9.
 - **Цель/понятия:** capability matrix, pinned versions, contract regression, canary/shadow, rollout/rollback и embedding migration отдельно от generation model.
 - **Интуиция/глубина:** обновление модели похоже на смену внешней зависимости с изменением поведения. Даже прежняя schema не гарантирует прежнее качество.
-- **Практика:** два scripted provider adapters с различным refusal/tool behavior; CI report сравнивает frozen evals и blocks запретный diff, выбирает rollback config.
+- **Практика:** два scripted provider adapters с различным refusal/tool behavior; GitHub Actions сравнивает frozen evals, отклоняет известную регрессию и сохраняет предыдущий release config.
 - **Проверка:** несовместимая schema/tool capability выявлена до traffic, budget regression не теряется, secrets отсутствуют в CI artifacts. Ошибки: automatic latest upgrade без eval или менять dataset вместе с моделью. Источники [A5], [A2], [C1].
 
 #### AI10.6 — Deploy, приватность и disaster recovery
@@ -1140,6 +1242,14 @@ Failures показывают category и полезный пример без �
 - **Ошибки:** передача user_id моделью, SQL/shell tool, model output исполняется как код,
   единственный hardcoded final answer. Реальный Hotel backend не подключается; paid API не нужен.
 
+- **Gate Phase 11.5:** минимум 12 scripted workflows с success, repeated/out-of-order call,
+  invalid DTO, cross-tenant access, history budget, timeout и cancellation. Два read-only
+  tools вызывают настоящий synthetic service/adapter; assertions проверяют call ID,
+  типизированный исход и счётчик эффекта. Auth failure даёт 0 чтений чужого ресурса,
+  proposal даёт 0 writes. В двух параллельных запросах история изолирована. Fresh clone
+  проходит offline suite и local HTTP smoke, выводит redacted trace. На защите добавить
+  одно разрешённое чтение и написать тест запрета.
+
 ### P4 — PostgreSQL Vector Search · AI6.1–6.5 · 10–14 часов
 
 - **Цель/prerequisites/stack:** научиться vector operators и измерять ANN относительно exact;
@@ -1154,19 +1264,37 @@ Failures показывают category и полезный пример без �
 - **Ошибки:** вызов CREATE EXTENSION из student query, index без measurement, смешение spaces.
   Paid API не нужен; настоящие embedding vectors можно добавить отдельным экспериментом.
 
+- **Gate Phase 11.5:** fresh clone запускает отдельный Compose и миграцию PG17+pgvector.
+  Один seed corpus с ≥2 tenants, версиями, равными distance и tombstones. Повтор ingest
+  сохраняет число активных фрагментов, смена версии и revoke меняют результаты атомарно
+  на границе каталога. Exact IDs сверяются с независимым маленьким oracle. Отчёт содержит
+  EXPLAIN, recall@k против exact и latency с N и same filters. Сравнение Qdrant в ADR
+  обязательно, реальный второй профиль опционален. Вывод о скорости допустим после замера.
+
 ### P5 — Document Knowledge Assistant · после AI6 · 14–20 часов
 
 - **Цель/prerequisites/stack:** перейти от поиска к обоснованному ответу; P4/AI4–AI6,
   plain Python + provider interface, pgvector/FTS, synthetic Markdown corpus.
-- **Milestones/features:** 20-document ingest/provenance → lexical baseline → dense/hybrid →
+- **Milestones/features:** 20-document RU/KZ/EN ingest/provenance → lexical baseline → dense/hybrid →
   bounded context/rerank → citations/abstain → update/delete/active index → eval.
-- **Tests/eval:** 30 RU/EN questions с qrels, answerable/unanswerable/conflict/ACL cases;
+- **Tests/eval:** 30 RU/KZ/EN questions с qrels, answerable/unanswerable/conflict/ACL и code-switch cases;
   retrieval scores отдельно от claim-support и domain correctness; regression report.
 - **Acceptance/deliverables:** fixed fixtures проходят, citations только разрешённых версий,
   deletion закрывает retrieval и cache; выбранная конфигурация обоснована сравнением, а не
   универсальным порогом. **Portfolio:** end-to-end RAG с объяснимыми failure buckets.
 - **Ошибки:** LangChain скрывает незнакомый pipeline, весь corpus в prompt, citations без support,
   качество по одному удачному ответу. Paid API optional; fake embeddings не объявляются semantic model.
+
+- **Gate Phase 11.5:** ≥20 документов, минимум два tenant и 30 кейсов, по 10 RU/KZ/EN
+  (6 dev и 4 holdout на язык). Cross-lingual и code-switch случаи входят в эти 30,
+  парафразы/переводы одного кейса не пересекают split. Qrels содержат допустимые source IDs
+  и версии, answer labels покрывают unsupported claim/abstain. Показать FTS, dense,
+  RRF/hybrid и top-N scripted reranker на тех же qrels. Выбор настройки фиксируется на
+  dev до holdout. Отчёт разделяет recall@k/MRR и claim support, citations и abstention.
+  Пустые знаменатели обозначаются null. Gate проверяет отсутствие cross-tenant/stale
+  выдачи после update/delete/revoke, отключение retrieval в mutant и redacted traces.
+  Фиксированные embeddings и generator подтверждают свойства pipeline. Качество на
+  настоящей модели требует отдельного эксперимента.
 
 ### P6 — LangChain Refactoring Comparison · после AI7 · 8–12 часов
 
@@ -1180,6 +1308,12 @@ Failures показывают category и полезный пример без �
   и ADR объясняют выбор direct/framework. **Portfolio:** техническая оценка цены abstraction.
 - **Ошибки:** старый `LLMChain` tutorial, разные datasets, удаление старой версии до сравнения,
   неявные retries. Core offline, paid API optional.
+
+- **Gate Phase 11.5:** два adapters проходят один parametrized contract suite. Проверить
+  auth, refusal, cancellation, missing usage и bounded retry; изменить один внутренний
+  компонент и сохранить публичный ответ. Lock, import smoke и data-free traces дают
+  диагностику от endpoint до model/tool. ADR сравнивает изменения зависимостей,
+  latency на одном workload, условия rollback и цену добавленной абстракции.
 
 ### P7 — Multi-tool Assistant + MCP · после AI8 · 12–16 часов
 
@@ -1195,6 +1329,14 @@ Failures показывают category и полезный пример без �
 - **Ошибки:** передать широкий bearer token remote server, доверять tool annotations, approval
   как строка модели. Никаких настоящих отмен/рассылок; live model и paid API optional.
 
+- **Gate Phase 11.5:** реальные SDK in-memory и stdio tests фиксируют revision и
+  discovery/list/call, disconnected transport, wrong schema и unsupported version.
+  Один сценарий повторяется deterministic router и bounded agent; ≥12 workflows с
+  no-scope, revoked owner, tool failure, exhausted budget и stale/replayed approval.
+  Счётчик синтетического эффекта равен 1 только после matching approval и 0 на denied
+  cases. Опубликовать trace decision и threat model, объяснить сравнение с одним SDK
+  из списка альтернатив без установки всех framework.
+
 ### P8 — Durable LangGraph Workflow · после AI9 · 14–20 часов
 
 - **Цель/prerequisites/stack:** реализовать состояние, паузу, restart и regression testing;
@@ -1208,6 +1350,14 @@ Failures показывают category и полезный пример без �
   state transition diagram и границы at-least-once гарантий.
 - **Ошибки:** InMemorySaver для restart claim, UUID key внутри replayable node, approval state
   без владельца. Network/paid API не нужны для recovery proof.
+
+- **Gate Phase 11.5:** ≥20 graph и отдельные adversarial scenarios. Процесс завершается
+  в трёх окнах вокруг tool effect/checkpoint, восстановление запускается другим
+  процессом. Подтвердить ≤1 синтетического эффекта при заявленном dedup contract,
+  обработку uncertain outcome, owner check после restart и replay resume. Отчёт
+  показывает состояние saver и effect store, redacted approval/recovery trace и расхождения
+  judge/human по 10 размеченным парам. Тест должен отклонять in-memory saver как замену
+  persistent recovery и любой policy violation на фиксированном наборе.
 
 ### P9 — Study Materials AI Backend · после AI10 · 28–40 часов
 
@@ -1229,6 +1379,17 @@ Failures показывают category и полезный пример без �
   один approval workflow; без OCR/audio/browser automation и multi-agent swarm.
 - **Ошибки:** все frameworks одновременно, user key в worker logs, stale ACL cache, mixed indexes,
   claim exactly-once внешнего inference. Paid API optional; final offline service обязателен.
+
+- **Gate Phase 11.5:** fresh-clone Compose, DB/Redis/Celery, 30 retrieval и 20 agent/security
+  cases, offline CI и проверяемый release archive. CI отклоняет известный model/prompt
+  regression и сканирует артефакты на синтетический секрет. В локальном release drill
+  переключить immutable version, зафиксировать отказ/rollback и повторить smoke после
+  restore без stale ACL/context. Отчёт различает p50/p95, TTFT, usage/cost и число и тип
+  ошибок; содержит N, concurrency, hardware и warm/cold режим. Local load начинается
+  с 100 запросов и concurrency 4 на synthetic paths. SLO назначаются после baseline.
+  Core evidence включает trace через local OpenTelemetry, очередь и incident timeline,
+  ADR, runbook и blind change. Опциональный ECR/ECS маршрут из AI10.6 получает отдельное
+  подтверждение deploy, rollback и cleanup при добровольном AWS-запуске.
 
 ## 10. Архитектура AI learning environment
 
@@ -1327,9 +1488,8 @@ recall, не отдельная библиотека кратких замето
   Почему валидный source ID не доказывает support? Ответы закрыты по умолчанию.
 - Источники/версия: [R1], [R3], [R4], embedding/index/prompt revisions и дата verification.
 
-Markdown export — сначала ссылки на исходные notes и project README, затем download
-`lesson.md`/`review.md` + source manifest; относительные paths и fenced code остаются переносимыми
-в любой Markdown-notes workflow. Не связывать учебный процесс с конкретным платным note app.
+R1 уже экспортирует Markdown-конспект со ссылками на источники. Отдельная библиотека
+может позже добавить экспорт полного `lesson.md`/`review.md` и source manifest. Не связывать учебный процесс с конкретным платным note app.
 `tools/export_course_snapshot.py` уже есть: проверить его формат перед расширением, не строить
 дублирующий exporter автоматически. Отметка «прочитано» и «лабораторная сдана» отдельно;
 личные заметки, bookmarks и project rubric — будущие additive данные.
@@ -1354,7 +1514,8 @@ LangGraph появляется после bounded loop/state machine: можно
 conditional edges, durable checkpoint и interrupt [L1], [L2], [L3], [L4]. Он не требует LangChain, хотя
 часто используется с ним. Graph persistence и Celery jobs имеют разные обязанности:
 первое хранит execution state, второе распределяет фоновую работу. Не накладывать оба на
-каждый request. LangSmith/SaaS tracing — optional, JSON traces и local evaluator достаточны.
+каждый request. Основной путь использует OpenTelemetry Python, локальный экспорт и свой evaluator.
+LangSmith/Langfuse рассматриваются как альтернативные UI и хранилища экспериментов.
 
 ## 13. Модели, APIs, провайдеры и расходы
 
@@ -1376,8 +1537,7 @@ SDK — OpenAI Responses [A1], [A6]. Это выбор для последова
 
 Model name не вшивается в lesson logic. Автор code-verification PR выбирает доступную модель,
 проверяет capabilities и eval, фиксирует `model_id`, snapshot если доступен, API revision,
-SDK lock и дату. Patch numbers здесь не придуманы: применимость источников есть в §19,
-**exact tested stack пока отсутствует**. Версия platform dependencies не обновляется этим планом.
+SDK lock и дату. Применимость источников есть в §19, точный OpenAI SDK lock для R0/R1 указан в [проверках SDK](../tools/ai_sdk_verify/README.md). Совместимость будущих framework-профилей проверяется отдельно.
 
 Core стоимость внешних APIs — **0**. CPU/Docker требуют локальных ресурсов и первоначальной
 загрузки images; «без API оплаты» не означает нулевой расход памяти/электроэнергии. Local model
@@ -1496,9 +1656,9 @@ policy, не свойство источника. Release notices/deprecation, f
 
 ### 15.3. Интеграция с текущими проверками
 
-Не писать второй общий validator. Расширить существующий для AI manifest/namespace,
-prerequisite DAG, source records/versions и execution profiles; использовать текущие
-answer-leak и curated bundle gates. Старые lesson/interview IDs и array positions не менять.
+Переиспользовать действующий validator AI manifest/namespace, prerequisite DAG,
+source records/versions, answer visibility и curated bundle gates. Новый execution
+profile проходит дополнительную проверку в своём PR. Старые lesson/interview IDs и array positions не менять.
 AI нельзя добавлять в `legacy_debt`, чтобы обойти review. Generators не запускаются для
 создания 72 уроков: inventory — план, каждый bundle пишется и проверяется отдельно.
 
@@ -1527,11 +1687,11 @@ PR1 уже даёт один полноценный урок: обучение �
 обязательных upload UI, vector infrastructure, persistent agent runner или provider gateway.
 Оценки разработки ориентировочные и не суммируются в обещание дедлайна одному студенту.
 
-### Следующие релизы
+### R1 и следующие релизы
 
 | Релиз | Контент | Минимум platform features | Что остаётся отдельной/optional работой |
 | --- | --- | --- | --- |
-| R1 — полные foundations и extraction | Оставшиеся AI1/AI2 + AI4; P2 | Existing Python labs; author-side locked SDK code verification; source manifest validation | Полный model training branch, online UI |
+| R1 — полные foundations и extraction, опубликован | Оставшиеся AI1/AI2 + AI4; P2 | Existing Python labs; author-side locked SDK code verification; source manifest validation | Полный model training branch, online UI |
 | R2 — tools и диалог | AI5; P3 | Scripted trace как text/JSON, owner fixtures, bounded loop; проект локально | Hosted user accounts/provider state/approvals не требуются для synthetic lab |
 | R3 — retrieval и RAG | AI6; P4/P5 | Downloadable project starter, PG17+pgvector Compose и real integration tests; notes доступны сразу | Hosted vector sandbox/upload pipeline; сначала измерить спрос/ресурсы |
 | R4 — frameworks и MCP | AI7/AI8; P6/P7 | Versioned local profiles/locks, SDK in-memory tests, safe trace/eval reports | Remote MCP deployment/OAuth integrations, multi-agent orchestration |
@@ -1557,7 +1717,7 @@ PR1 уже даёт один полноценный урок: обучение �
 | Секреты/hidden tests в student process | Не помещать туда credentials/private data; future gateway и trusted evaluator отдельно | До live execution в платформе |
 | Инфраструктура поглощает время подготовки к работе | Один stack, 20–50 docs, ≤3 tools; полные ML training и SaaS optional | После P9 по профессиональной цели |
 | Не определён weekly budget и available API account | План 6–8 часов/неделю как ориентир, offline complete path | Персональный календарь после первых 2–3 уроков; не блокирует план |
-| Неизвестно, какой exact embedding model подходит RU/EN corpus | Fixture/exact/lexical baseline, отдельное сравнение 2 моделей на dev; license/CPU/download проверяются тогда | P4/P5 implementation, не делать benchmark claims сейчас |
+| Неизвестно, какой exact embedding model подходит RU/KZ/EN corpus | Fixture/exact/lexical baseline, отдельное сравнение 2 моделей на dev; license/CPU/download проверяются тогда | P4/P5 implementation, не делать benchmark claims сейчас |
 | Private StudyHub reviewers не видят исходники | В плане только несекретная сводка inspected behavior; no private payload/code copy | Для независимого code review нужен разрешённый доступ, не выдуманная публичная проверяемость |
 
 Открыты перед соответствующим PR, но **не блокируют R0**: точные SDK patches/model snapshot;
@@ -1588,7 +1748,7 @@ redesign Pythoria до первого учебного материала.
 - [ ] Студент может объяснить путь request→provider→typed outcome, исправить один blind failure
   и назвать, чего fake/live tests не доказывают. Уже можно учиться, независимо от будущего RAG UI.
 
-Это DoD **будущего R0**, а не заявление, что планирующий PR выполнил эти implementation checks.
+Это исходный DoD для R0. Результаты реализации зафиксированы в [отчёте R0](AI_R0_VERIFICATION.md), последующее расширение — в [отчёте R1](AI_R1_VERIFICATION.md).
 
 ## 19. Проверенные первичные источники и source matrix
 
