@@ -3,8 +3,8 @@
   "title": "AI Engineering",
   "lesson_count": 72,
   "release": "R2",
-  "release_status": "in_progress",
-  "release_lesson_count": 35,
+  "release_status": "complete",
+  "release_lesson_count": 36,
   "stages": [
     {
       "slug": "ai-stage-01",
@@ -494,6 +494,23 @@
           ],
           "practice": "graded",
           "minutes": 150
+        },
+        {
+          "id": "ai-engineering.05.07.booking-assistant-project",
+          "slug": "ai05-booking-assistant-project",
+          "number": "AI5.7",
+          "title": "Read-only Booking Assistant",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.05.01.tool-call-protocol",
+            "ai-engineering.05.02.validated-tool-registry",
+            "ai-engineering.05.03.tool-authorization",
+            "ai-engineering.05.04.bounded-tool-loop",
+            "ai-engineering.05.05.conversation-state",
+            "ai-engineering.05.06.tool-trust-boundaries"
+          ],
+          "practice": "graded",
+          "minutes": 180
         }
       ]
     },

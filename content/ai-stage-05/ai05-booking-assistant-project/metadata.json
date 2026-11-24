@@ -1,0 +1,90 @@
+{
+  "id": "ai-engineering.05.07.booking-assistant-project",
+  "slug": "ai05-booking-assistant-project",
+  "number": "AI5.7",
+  "title": "Read-only Booking Assistant",
+  "prerequisites": [
+    "ai-engineering.05.01.tool-call-protocol",
+    "ai-engineering.05.02.validated-tool-registry",
+    "ai-engineering.05.03.tool-authorization",
+    "ai-engineering.05.04.bounded-tool-loop",
+    "ai-engineering.05.05.conversation-state",
+    "ai-engineering.05.06.tool-trust-boundaries"
+  ],
+  "practice": "graded",
+  "module_slug": "ai-stage-05",
+  "module_title": "Tools и состояние диалога",
+  "module_order": 105,
+  "order": 1507,
+  "description": "Собираем backend ассистента из контекста, авторизованных tools и типизированного результата.",
+  "duration": 180,
+  "xp": 25,
+  "topics": [
+    "Собираем backend ассистента из контекста, авторизованных tools и типизированного результата.",
+    "Read-only Booking Assistant",
+    "Проект P3"
+  ],
+  "has_task": true,
+  "has_solution": true,
+  "tracks": [
+    "ai-engineering"
+  ],
+  "modes": [
+    "learn",
+    "practice",
+    "interview"
+  ],
+  "priority": "P1",
+  "interview_probability": "high",
+  "market_frequency": "not_assessed",
+  "market_evidence": "Phase 11.5, матрица навыков и аудит Pythoria.",
+  "content_status": "complete",
+  "content_source": "curated",
+  "editorial_status": "published",
+  "quality_revision": 1,
+  "last_verified": "2026-11-24",
+  "reviewed_on": "2026-11-24",
+  "sources": [
+    {
+      "source_id": "FAST",
+      "url": "https://fastapi.tiangolo.com/tutorial/dependencies/",
+      "section": "Dependencies",
+      "applicability": "FastAPI; dependency-injected trusted principal",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-24"
+    },
+    {
+      "source_id": "A3",
+      "url": "https://developers.openai.com/api/docs/guides/function-calling",
+      "section": "Function calling, tool schemas and multiple results",
+      "applicability": "Responses API; provider ids, continuation and reasoning items",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-24"
+    },
+    {
+      "source_id": "OW",
+      "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/",
+      "section": "LLM01:2025 Prompt Injection",
+      "applicability": "GenAI; direct and indirect input, least privilege",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-24"
+    },
+    {
+      "source_id": "BOLA",
+      "url": "https://api-security.owasp.org/editions/2023/en/0xa1-broken-object-level-authorization/",
+      "section": "API1:2023 Broken Object Level Authorization",
+      "applicability": "Object authorization on every protected ID",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-24"
+    },
+    {
+      "source_id": "PY",
+      "url": "https://docs.python.org/3.12/library/asyncio-task.html",
+      "section": "Cancellation, Timeouts, Task Groups",
+      "applicability": "Python 3.12; asyncio.timeout and cancellation",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-24"
+    }
+  ],
+  "task_id": "ai-engineering.05.07.booking-assistant-project.practice"
+}
