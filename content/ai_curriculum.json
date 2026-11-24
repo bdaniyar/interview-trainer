@@ -4,7 +4,7 @@
   "lesson_count": 72,
   "release": "R3",
   "release_status": "in_progress",
-  "release_lesson_count": 43,
+  "release_lesson_count": 45,
   "stages": [
     {
       "slug": "ai-stage-01",
@@ -619,6 +619,35 @@
             "ai-engineering.06.06.hybrid-and-rerank",
             "ai-engineering.04.07.extraction-project-review",
             "ai-engineering.05.07.booking-assistant-project"
+          ],
+          "practice": "graded",
+          "minutes": 180
+        },
+        {
+          "id": "ai-engineering.06.08.citations-and-abstention",
+          "slug": "ai06-citations-and-abstention",
+          "number": "AI6.8",
+          "title": "Проверка цитат, поддержка и отказ",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.06.07.plain-python-rag",
+            "ai-engineering.04.03.structured-output-parser"
+          ],
+          "practice": "graded",
+          "minutes": 150
+        },
+        {
+          "id": "ai-engineering.06.09.rag-evaluation",
+          "slug": "ai06-rag-evaluation",
+          "number": "AI6.9",
+          "title": "Оценка retrieval и качества ответа RAG",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.06.05.ann-and-recall",
+            "ai-engineering.06.06.hybrid-and-rerank",
+            "ai-engineering.06.07.plain-python-rag",
+            "ai-engineering.06.08.citations-and-abstention",
+            "ai-engineering.04.05.extraction-evaluation"
           ],
           "practice": "graded",
           "minutes": 180

@@ -1,0 +1,7 @@
+{
+  "method": "dense",
+  "k": 6,
+  "rerank_window": 4,
+  "fixture_sha256": "31a18c57bc6e388a3a821ae86db9ef390e7c2c477bf5d49e4dc08550481d939f",
+  "criterion": "dev recall, then dev MRR, then order fts/dense/hybrid/rerank"
+}

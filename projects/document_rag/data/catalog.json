@@ -1,0 +1,294 @@
+[
+  {
+    "id": "bridge-ru",
+    "title": "Мост утром",
+    "version": 1,
+    "tenant": "north",
+    "owner": "alice",
+    "file": "bridge-ru-v1.md",
+    "grants": [],
+    "deleted": false,
+    "revoke": []
+  },
+  {
+    "id": "bridge-kk",
+    "title": "Көпір кестесі",
+    "version": 1,
+    "tenant": "north",
+    "owner": "alice",
+    "file": "bridge-kk-v1.md",
+    "grants": [],
+    "deleted": false,
+    "revoke": []
+  },
+  {
+    "id": "bridge-en",
+    "title": "River bridge hours",
+    "version": 1,
+    "tenant": "north",
+    "owner": "alice",
+    "file": "bridge-en-v1.md",
+    "grants": [],
+    "deleted": false,
+    "revoke": []
+  },
+  {
+    "id": "archive-ru",
+    "title": "Архив мастерской",
+    "version": 1,
+    "tenant": "north",
+    "owner": "alice",
+    "file": "archive-ru-v1.md",
+    "grants": [],
+    "deleted": false,
+    "revoke": []
+  },
+  {
+    "id": "archive-kk",
+    "title": "Мұрағат рұқсаты",
+    "version": 1,
+    "tenant": "north",
+    "owner": "alice",
+    "file": "archive-kk-v1.md",
+    "grants": [],
+    "deleted": false,
+    "revoke": []
+  },
+  {
+    "id": "archive-en",
+    "title": "Workshop archive",
+    "version": 1,
+    "tenant": "north",
+    "owner": "alice",
+    "file": "archive-en-v1.md",
+    "grants": [],
+    "deleted": false,
+    "revoke": []
+  },
+  {
+    "id": "locker-east",
+    "title": "Восточный шкафчик",
+    "version": 1,
+    "tenant": "north",
+    "owner": "alice",
+    "file": "locker-east-v1.md",
+    "grants": [],
+    "deleted": false,
+    "revoke": []
+  },
+  {
+    "id": "locker-west",
+    "title": "Locker desk circular",
+    "version": 1,
+    "tenant": "north",
+    "owner": "alice",
+    "file": "locker-west-v1.md",
+    "grants": [],
+    "deleted": false,
+    "revoke": []
+  },
+  {
+    "id": "locker-kk",
+    "title": "Жәшік ережесі",
+    "version": 1,
+    "tenant": "north",
+    "owner": "alice",
+    "file": "locker-kk-v1.md",
+    "grants": [],
+    "deleted": false,
+    "revoke": []
+  },
+  {
+    "id": "vault-global",
+    "title": "Қойма коды",
+    "version": 1,
+    "tenant": "south",
+    "owner": "alice",
+    "file": "vault-global-v1.md",
+    "grants": [],
+    "deleted": false,
+    "revoke": []
+  },
+  {
+    "id": "vault-local",
+    "title": "Vault shift chart",
+    "version": 1,
+    "tenant": "north",
+    "owner": "bob",
+    "file": "vault-local-v1.md",
+    "grants": [],
+    "deleted": false,
+    "revoke": []
+  },
+  {
+    "id": "calendar-center",
+    "title": "Календарь мероприятий",
+    "version": 1,
+    "tenant": "north",
+    "owner": "alice",
+    "file": "calendar-center-v1.md",
+    "grants": [],
+    "deleted": false,
+    "revoke": []
+  },
+  {
+    "id": "calendar-center",
+    "title": "Календарь мероприятий",
+    "version": 2,
+    "tenant": "north",
+    "owner": "alice",
+    "file": "calendar-center-v2.md",
+    "grants": [],
+    "deleted": false,
+    "revoke": []
+  },
+  {
+    "id": "calendar-south",
+    "title": "Күнтізбе өзгерісі",
+    "version": 1,
+    "tenant": "south",
+    "owner": "alice",
+    "file": "calendar-south-v1.md",
+    "grants": [],
+    "deleted": false,
+    "revoke": []
+  },
+  {
+    "id": "boat-kk",
+    "title": "Қайық айлағы",
+    "version": 1,
+    "tenant": "north",
+    "owner": "alice",
+    "file": "boat-kk-v1.md",
+    "grants": [],
+    "deleted": false,
+    "revoke": []
+  },
+  {
+    "id": "boat-en",
+    "title": "Boat berth",
+    "version": 1,
+    "tenant": "north",
+    "owner": "alice",
+    "file": "boat-en-v1.md",
+    "grants": [],
+    "deleted": false,
+    "revoke": []
+  },
+  {
+    "id": "boat-ru",
+    "title": "Лодка у причала",
+    "version": 1,
+    "tenant": "north",
+    "owner": "alice",
+    "file": "boat-ru-v1.md",
+    "grants": [],
+    "deleted": false,
+    "revoke": []
+  },
+  {
+    "id": "ferry-schedule",
+    "title": "Паромная переправа",
+    "version": 1,
+    "tenant": "north",
+    "owner": "alice",
+    "file": "ferry-schedule-v1.md",
+    "grants": [],
+    "deleted": false,
+    "revoke": []
+  },
+  {
+    "id": "library-members",
+    "title": "Library visitor pass",
+    "version": 1,
+    "tenant": "north",
+    "owner": "bob",
+    "file": "library-members-v1.md",
+    "grants": [
+      "alice"
+    ],
+    "deleted": false,
+    "revoke": []
+  },
+  {
+    "id": "library-decoy",
+    "title": "Library exhibit",
+    "version": 1,
+    "tenant": "north",
+    "owner": "alice",
+    "file": "library-decoy-v1.md",
+    "grants": [],
+    "deleted": false,
+    "revoke": []
+  },
+  {
+    "id": "tunnel-gone",
+    "title": "Закрытый тоннель",
+    "version": 1,
+    "tenant": "north",
+    "owner": "alice",
+    "file": "tunnel-gone-v1.md",
+    "grants": [],
+    "deleted": true,
+    "revoke": []
+  },
+  {
+    "id": "tunnel-private",
+    "title": "Tunnel clearance",
+    "version": 1,
+    "tenant": "north",
+    "owner": "bob",
+    "file": "tunnel-private-v1.md",
+    "grants": [
+      "alice"
+    ],
+    "deleted": false,
+    "revoke": [
+      "alice"
+    ]
+  },
+  {
+    "id": "welcome",
+    "title": "Дорожка к выставке",
+    "version": 1,
+    "tenant": "north",
+    "owner": "alice",
+    "file": "welcome-v1.md",
+    "grants": [],
+    "deleted": false,
+    "revoke": []
+  },
+  {
+    "id": "first-aid",
+    "title": "Алғашқы көмек",
+    "version": 1,
+    "tenant": "north",
+    "owner": "alice",
+    "file": "first-aid-v1.md",
+    "grants": [],
+    "deleted": false,
+    "revoke": []
+  },
+  {
+    "id": "painting",
+    "title": "Workshop mural",
+    "version": 1,
+    "tenant": "north",
+    "owner": "alice",
+    "file": "painting-v1.md",
+    "grants": [],
+    "deleted": false,
+    "revoke": []
+  },
+  {
+    "id": "seating",
+    "title": "Зал ожидания",
+    "version": 1,
+    "tenant": "north",
+    "owner": "alice",
+    "file": "seating-v1.md",
+    "grants": [],
+    "deleted": false,
+    "revoke": []
+  }
+]

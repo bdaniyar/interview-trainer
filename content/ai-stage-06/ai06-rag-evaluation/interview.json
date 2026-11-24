@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Зачем хранить qrels отдельно от модели?",
+    "answer": [
+      "Это заранее согласованная разметка цели.",
+      "Генератор не получает её из eval."
+    ],
+    "short_answer": "Это заранее согласованная разметка цели.",
+    "junior_answer": "Генератор не получает её из eval.",
+    "follow_up_question": "Что такое holdout?",
+    "follow_up_answer": "Набор для проверки уже выбранной конфигурации.",
+    "priority": "P1",
+    "expected_answer": {
+      "must_mention": [
+        "Это заранее согласованная разметка цели."
+      ],
+      "follow_up_questions": [
+        "Что такое holdout?"
+      ]
+    }
+  },
+  {
+    "question": "Почему два разных знаменателя?",
+    "answer": [
+      "Recall сравнивает с релевантными, precision — с выданными.",
+      "Для empty частей применяем документированную null policy."
+    ],
+    "short_answer": "Recall сравнивает с релевантными, precision — с выданными.",
+    "junior_answer": "Для empty частей применяем документированную null policy.",
+    "follow_up_question": "Когда RR равен нулю?",
+    "follow_up_answer": "Релевантные документы есть, но поиск не вернул ни одного.",
+    "priority": "P1",
+    "expected_answer": {
+      "must_mention": [
+        "Recall сравнивает с релевантными, precision — с выданными."
+      ],
+      "follow_up_questions": [
+        "Когда RR равен нулю?"
+      ]
+    }
+  },
+  {
+    "question": "Что делать при найденном источнике и неправильном ответе?",
+    "answer": [
+      "Разобрать generation, citation и поддержку claim отдельно.",
+      "Ошибка поиска и ошибка ответа требуют разных действий."
+    ],
+    "short_answer": "Разобрать generation, citation и поддержку claim отдельно.",
+    "junior_answer": "Ошибка поиска и ошибка ответа требуют разных действий.",
+    "follow_up_question": "Можно ли считать forbidden долей среднего качества?",
+    "follow_up_answer": "Нет, это отдельный блокирующий результат.",
+    "priority": "P1",
+    "expected_answer": {
+      "must_mention": [
+        "Разобрать generation, citation и поддержку claim отдельно."
+      ],
+      "follow_up_questions": [
+        "Можно ли считать forbidden долей среднего качества?"
+      ]
+    }
+  }
+]

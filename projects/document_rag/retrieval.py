@@ -64,11 +64,11 @@ class RetrievalStore(Store):
         return tuple(keyed[s] for s in dict.fromkeys(sources) if s in keyed)
 
 
-def retrieve(store, actor, text, space, *, method, k, embed, scorer, window=5):
+def retrieve(store, actor, text, space, *, method, k, embed, scorer, window=5, lexical_text=None):
     actor.require("read")
     if method not in {"fts", "dense", "hybrid", "rerank"}:
         raise ValueError("unknown retrieval method")
-    lexical = store.lexical(actor, text, space, k) if method != "dense" else ()
+    lexical = store.lexical(actor, text if lexical_text is None else lexical_text, space, k) if method != "dense" else ()
     dense = store.dense(actor, embed(text), space, k) if method != "fts" else ()
     hits = {hit.source.key: hit.source for hit in (*lexical, *dense)}
     if method in {"fts", "dense"}:
