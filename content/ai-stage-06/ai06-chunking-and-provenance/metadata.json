@@ -1,0 +1,61 @@
+{
+  "id": "ai-engineering.06.03.chunking-and-provenance",
+  "slug": "ai06-chunking-and-provenance",
+  "number": "AI6.3",
+  "title": "Chunking и происхождение фрагмента",
+  "prerequisites": [
+    "ai-engineering.06.02.embedding-pipeline",
+    "ai-engineering.02.08.context-window-and-token-budget"
+  ],
+  "practice": "graded",
+  "module_slug": "ai-stage-06",
+  "module_order": 106,
+  "module_title": "Embeddings, поиск и RAG",
+  "order": 1603,
+  "description": "Нарезаем Markdown с версиями, страницами и исходными смещениями.",
+  "duration": 150,
+  "xp": 25,
+  "tracks": [
+    "ai-engineering"
+  ],
+  "topics": [
+    "Chunking и происхождение фрагмента",
+    "Нарезаем Markdown с версиями, страницами и исходными смещениями."
+  ],
+  "has_task": true,
+  "has_solution": true,
+  "modes": [
+    "learn",
+    "practice",
+    "interview"
+  ],
+  "priority": "P1",
+  "interview_probability": "high",
+  "market_frequency": "not_assessed",
+  "market_evidence": "Phase 11.5, матрица навыков и аудит Pythoria.",
+  "content_status": "complete",
+  "content_source": "curated",
+  "editorial_status": "published",
+  "quality_revision": 1,
+  "last_verified": "2026-11-24",
+  "reviewed_on": "2026-11-24",
+  "sources": [
+    {
+      "source_id": "TEXT",
+      "url": "https://docs.python.org/3.12/library/stdtypes.html#text-sequence-type-str",
+      "section": "Text Sequence Type",
+      "applicability": "Границы Unicode code points",
+      "verified_on": "2026-11-24",
+      "claim_kind": "documented"
+    },
+    {
+      "source_id": "HASH",
+      "url": "https://docs.python.org/3.12/library/hashlib.html",
+      "section": "SHA-256 and byte inputs",
+      "applicability": "Идентичность текста и cache keys",
+      "verified_on": "2026-11-24",
+      "claim_kind": "documented"
+    }
+  ],
+  "task_id": "ai-engineering.06.03.chunking-and-provenance.practice"
+}

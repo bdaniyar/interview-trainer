@@ -2,9 +2,9 @@
   "track": "ai-engineering",
   "title": "AI Engineering",
   "lesson_count": 72,
-  "release": "R2",
-  "release_status": "complete",
-  "release_lesson_count": 36,
+  "release": "R3",
+  "release_status": "in_progress",
+  "release_lesson_count": 39,
   "stages": [
     {
       "slug": "ai-stage-01",
@@ -518,7 +518,56 @@
       "slug": "ai-stage-06",
       "title": "Embeddings, поиск и RAG",
       "lesson_count": 10,
-      "lessons": []
+      "lessons": [
+        {
+          "id": "ai-engineering.06.01.cosine-similarity",
+          "slug": "ai06-cosine-similarity",
+          "number": "AI6.1",
+          "title": "Cosine similarity руками",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.02.01.data-and-model-lifecycle",
+            "ai-engineering.02.02.vectors-and-matrices",
+            "ai-engineering.02.03.loss-and-gradient-step",
+            "ai-engineering.02.04.neural-network-forward",
+            "ai-engineering.02.05.tokens-and-tokenization",
+            "ai-engineering.02.06.transformer-attention",
+            "ai-engineering.02.07.pretraining-and-alignment",
+            "ai-engineering.02.08.context-window-and-token-budget",
+            "ai-engineering.02.09.embedding-intuition",
+            "ai-engineering.02.10.sampling-and-limitations",
+            "ai-engineering.05.07.booking-assistant-project"
+          ],
+          "practice": "graded",
+          "minutes": 120
+        },
+        {
+          "id": "ai-engineering.06.02.embedding-pipeline",
+          "slug": "ai06-embedding-pipeline",
+          "number": "AI6.2",
+          "title": "Embedding pipeline и версии пространства",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.06.01.cosine-similarity",
+            "ai-engineering.03.04.retries-and-rate-limits"
+          ],
+          "practice": "graded",
+          "minutes": 150
+        },
+        {
+          "id": "ai-engineering.06.03.chunking-and-provenance",
+          "slug": "ai06-chunking-and-provenance",
+          "number": "AI6.3",
+          "title": "Chunking и происхождение фрагмента",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.06.02.embedding-pipeline",
+            "ai-engineering.02.08.context-window-and-token-budget"
+          ],
+          "practice": "graded",
+          "minutes": 150
+        }
+      ]
     },
     {
       "slug": "ai-stage-07",

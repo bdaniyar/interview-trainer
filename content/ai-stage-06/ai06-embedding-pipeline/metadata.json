@@ -1,0 +1,61 @@
+{
+  "id": "ai-engineering.06.02.embedding-pipeline",
+  "slug": "ai06-embedding-pipeline",
+  "number": "AI6.2",
+  "title": "Embedding pipeline и версии пространства",
+  "prerequisites": [
+    "ai-engineering.06.01.cosine-similarity",
+    "ai-engineering.03.04.retries-and-rate-limits"
+  ],
+  "practice": "graded",
+  "module_slug": "ai-stage-06",
+  "module_order": 106,
+  "module_title": "Embeddings, поиск и RAG",
+  "order": 1602,
+  "description": "Проверяем результаты batch и сохраняем совместимые векторы.",
+  "duration": 150,
+  "xp": 25,
+  "tracks": [
+    "ai-engineering"
+  ],
+  "topics": [
+    "Embedding pipeline и версии пространства",
+    "Проверяем результаты batch и сохраняем совместимые векторы."
+  ],
+  "has_task": true,
+  "has_solution": true,
+  "modes": [
+    "learn",
+    "practice",
+    "interview"
+  ],
+  "priority": "P1",
+  "interview_probability": "high",
+  "market_frequency": "not_assessed",
+  "market_evidence": "Phase 11.5, матрица навыков и аудит Pythoria.",
+  "content_status": "complete",
+  "content_source": "curated",
+  "editorial_status": "published",
+  "quality_revision": 1,
+  "last_verified": "2026-11-24",
+  "reviewed_on": "2026-11-24",
+  "sources": [
+    {
+      "source_id": "EMB",
+      "url": "https://developers.openai.com/api/docs/guides/embeddings",
+      "section": "Embeddings; practical uses and dimensions",
+      "applicability": "Документированное устройство API, упражнение использует fake",
+      "verified_on": "2026-11-24",
+      "claim_kind": "documented"
+    },
+    {
+      "source_id": "HASH",
+      "url": "https://docs.python.org/3.12/library/hashlib.html",
+      "section": "SHA-256 and byte inputs",
+      "applicability": "Идентичность текста и cache keys",
+      "verified_on": "2026-11-24",
+      "claim_kind": "documented"
+    }
+  ],
+  "task_id": "ai-engineering.06.02.embedding-pipeline.practice"
+}

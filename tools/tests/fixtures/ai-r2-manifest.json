@@ -1,0 +1,548 @@
+{
+  "track": "ai-engineering",
+  "title": "AI Engineering",
+  "lesson_count": 72,
+  "release": "R2",
+  "release_status": "complete",
+  "release_lesson_count": 36,
+  "stages": [
+    {
+      "slug": "ai-stage-01",
+      "title": "Профессия, границы AI и диагностика",
+      "lesson_count": 4,
+      "lessons": [
+        {
+          "id": "ai-engineering.01.01.backend-diagnostic",
+          "slug": "ai01-backend-diagnostic",
+          "number": "AI1.1",
+          "title": "Диагностика backend-основ",
+          "status": "published",
+          "prerequisites": [],
+          "practice": "diagnostic",
+          "minutes": 90
+        },
+        {
+          "id": "ai-engineering.01.02.ai-roles-and-boundaries",
+          "slug": "ai01-ai-roles-and-boundaries",
+          "number": "AI1.2",
+          "title": "AI, ML, Deep Learning и работа AI Engineer",
+          "status": "published",
+          "prerequisites": [],
+          "practice": "concept",
+          "minutes": 60
+        },
+        {
+          "id": "ai-engineering.01.03.ai-backend-architecture",
+          "slug": "ai01-ai-backend-architecture",
+          "number": "AI1.3",
+          "title": "Архитектура AI-приложения",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.01.01.backend-diagnostic",
+            "ai-engineering.01.02.ai-roles-and-boundaries"
+          ],
+          "practice": "guided",
+          "minutes": 90
+        },
+        {
+          "id": "ai-engineering.01.04.ai-task-and-baseline",
+          "slug": "ai01-ai-task-and-baseline",
+          "number": "AI1.4",
+          "title": "Как поставить проверяемую AI-задачу",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.01.02.ai-roles-and-boundaries",
+            "ai-engineering.01.03.ai-backend-architecture"
+          ],
+          "practice": "concept",
+          "minutes": 90
+        }
+      ]
+    },
+    {
+      "slug": "ai-stage-02",
+      "title": "ML, нейросети и LLM с нуля",
+      "lesson_count": 10,
+      "lessons": [
+        {
+          "id": "ai-engineering.02.01.data-and-model-lifecycle",
+          "slug": "ai02-data-and-model-lifecycle",
+          "number": "AI2.1",
+          "title": "Данные, признаки и жизненный цикл модели",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.01.02.ai-roles-and-boundaries"
+          ],
+          "practice": "guided",
+          "minutes": 120
+        },
+        {
+          "id": "ai-engineering.02.02.vectors-and-matrices",
+          "slug": "ai02-vectors-and-matrices",
+          "number": "AI2.2",
+          "title": "Векторы, матрицы и их размеры",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.02.01.data-and-model-lifecycle"
+          ],
+          "practice": "graded",
+          "minutes": 150
+        },
+        {
+          "id": "ai-engineering.02.03.loss-and-gradient-step",
+          "slug": "ai02-loss-and-gradient-step",
+          "number": "AI2.3",
+          "title": "Ошибка модели и шаг градиентного спуска",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.02.01.data-and-model-lifecycle",
+            "ai-engineering.02.02.vectors-and-matrices"
+          ],
+          "practice": "graded",
+          "minutes": 180
+        },
+        {
+          "id": "ai-engineering.02.04.neural-network-forward",
+          "slug": "ai02-neural-network-forward",
+          "number": "AI2.4",
+          "title": "Два нейронных слоя и прямой проход",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.02.02.vectors-and-matrices",
+            "ai-engineering.02.03.loss-and-gradient-step"
+          ],
+          "practice": "graded",
+          "minutes": 180
+        },
+        {
+          "id": "ai-engineering.02.05.tokens-and-tokenization",
+          "slug": "ai02-tokens-and-tokenization",
+          "number": "AI2.5",
+          "title": "Токены и токенизация",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.02.01.data-and-model-lifecycle"
+          ],
+          "practice": "guided",
+          "minutes": 120
+        },
+        {
+          "id": "ai-engineering.02.06.transformer-attention",
+          "slug": "ai02-transformer-attention",
+          "number": "AI2.6",
+          "title": "Как Transformer вычисляет внимание",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.02.02.vectors-and-matrices",
+            "ai-engineering.02.04.neural-network-forward",
+            "ai-engineering.02.05.tokens-and-tokenization"
+          ],
+          "practice": "graded",
+          "minutes": 210
+        },
+        {
+          "id": "ai-engineering.02.07.pretraining-and-alignment",
+          "slug": "ai02-pretraining-and-alignment",
+          "number": "AI2.7",
+          "title": "Предобучение LLM и настройка поведения",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.02.01.data-and-model-lifecycle",
+            "ai-engineering.02.03.loss-and-gradient-step",
+            "ai-engineering.02.06.transformer-attention"
+          ],
+          "practice": "graded",
+          "minutes": 120
+        },
+        {
+          "id": "ai-engineering.02.08.context-window-and-token-budget",
+          "slug": "ai02-context-window-budget",
+          "number": "AI2.8",
+          "title": "Контекстное окно и бюджет токенов",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.02.05.tokens-and-tokenization"
+          ],
+          "practice": "guided",
+          "minutes": 120
+        },
+        {
+          "id": "ai-engineering.02.09.embedding-intuition",
+          "slug": "ai02-embedding-intuition",
+          "number": "AI2.9",
+          "title": "Embeddings, длина и смысловая близость",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.02.02.vectors-and-matrices",
+            "ai-engineering.02.04.neural-network-forward",
+            "ai-engineering.02.05.tokens-and-tokenization"
+          ],
+          "practice": "graded",
+          "minutes": 120
+        },
+        {
+          "id": "ai-engineering.02.10.sampling-and-limitations",
+          "slug": "ai02-sampling-and-limitations",
+          "number": "AI2.10",
+          "title": "Sampling и ограничения LLM",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.02.05.tokens-and-tokenization",
+            "ai-engineering.02.08.context-window-and-token-budget"
+          ],
+          "practice": "guided",
+          "minutes": 120
+        }
+      ]
+    },
+    {
+      "slug": "ai-stage-03",
+      "title": "Прямой LLM API",
+      "lesson_count": 8,
+      "lessons": [
+        {
+          "id": "ai-engineering.03.01.direct-provider-adapter",
+          "slug": "ai03-direct-provider-adapter",
+          "number": "AI3.1",
+          "title": "Прямой адаптер провайдера",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.01.01.backend-diagnostic",
+            "ai-engineering.01.02.ai-roles-and-boundaries",
+            "ai-engineering.01.03.ai-backend-architecture",
+            "ai-engineering.02.01.data-and-model-lifecycle",
+            "ai-engineering.02.05.tokens-and-tokenization",
+            "ai-engineering.02.08.context-window-and-token-budget",
+            "ai-engineering.02.10.sampling-and-limitations"
+          ],
+          "practice": "graded",
+          "minutes": 120
+        },
+        {
+          "id": "ai-engineering.03.02.messages-and-instructions",
+          "slug": "ai03-messages-and-instructions",
+          "number": "AI3.2",
+          "title": "Сообщения, инструкции и внешние данные",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.03.01.direct-provider-adapter"
+          ],
+          "practice": "graded",
+          "minutes": 90
+        },
+        {
+          "id": "ai-engineering.03.03.async-provider-lifecycle",
+          "slug": "ai03-async-provider-lifecycle",
+          "number": "AI3.3",
+          "title": "Жизненный цикл async-клиента и отмена",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.01.01.backend-diagnostic",
+            "ai-engineering.03.01.direct-provider-adapter"
+          ],
+          "practice": "graded",
+          "minutes": 150
+        },
+        {
+          "id": "ai-engineering.03.04.retries-and-rate-limits",
+          "slug": "ai03-retries-and-rate-limits",
+          "number": "AI3.4",
+          "title": "Повторы и лимиты запросов",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.03.03.async-provider-lifecycle"
+          ],
+          "practice": "graded",
+          "minutes": 150
+        },
+        {
+          "id": "ai-engineering.03.05.streaming-events",
+          "slug": "ai03-streaming-events",
+          "number": "AI3.5",
+          "title": "Streaming и события потока",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.03.02.messages-and-instructions",
+            "ai-engineering.03.03.async-provider-lifecycle"
+          ],
+          "practice": "graded",
+          "minutes": 150
+        },
+        {
+          "id": "ai-engineering.03.06.usage-and-cost-budget",
+          "slug": "ai03-usage-and-cost-budget",
+          "number": "AI3.6",
+          "title": "Usage, цена и бюджет",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.02.08.context-window-and-token-budget",
+            "ai-engineering.03.01.direct-provider-adapter"
+          ],
+          "practice": "graded",
+          "minutes": 120
+        },
+        {
+          "id": "ai-engineering.03.07.fastapi-chat-service",
+          "slug": "ai03-fastapi-chat-service",
+          "number": "AI3.7",
+          "title": "Chat API на FastAPI",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.03.02.messages-and-instructions",
+            "ai-engineering.03.03.async-provider-lifecycle",
+            "ai-engineering.03.04.retries-and-rate-limits",
+            "ai-engineering.03.05.streaming-events",
+            "ai-engineering.03.06.usage-and-cost-budget"
+          ],
+          "practice": "graded",
+          "minutes": 180
+        },
+        {
+          "id": "ai-engineering.03.08.chat-contract-tests",
+          "slug": "ai03-chat-contract-tests",
+          "number": "AI3.8",
+          "title": "Контрактные тесты Chat API",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.03.07.fastapi-chat-service"
+          ],
+          "practice": "graded",
+          "minutes": 180
+        }
+      ]
+    },
+    {
+      "slug": "ai-stage-04",
+      "title": "Prompts и structured output",
+      "lesson_count": 7,
+      "lessons": [
+        {
+          "id": "ai-engineering.04.01.prompt-contract",
+          "slug": "ai04-prompt-contract",
+          "number": "AI4.1",
+          "title": "Промпт как версионируемый контракт",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.01.04.ai-task-and-baseline",
+            "ai-engineering.03.08.chat-contract-tests"
+          ],
+          "practice": "graded",
+          "minutes": 120
+        },
+        {
+          "id": "ai-engineering.04.02.schema-and-domain-model",
+          "slug": "ai04-schema-and-domain-model",
+          "number": "AI4.2",
+          "title": "JSON Schema и правила поездки",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.04.01.prompt-contract"
+          ],
+          "practice": "graded",
+          "minutes": 120
+        },
+        {
+          "id": "ai-engineering.04.03.structured-output-parser",
+          "slug": "ai04-structured-output-parser",
+          "number": "AI4.3",
+          "title": "Как разобрать ответ Structured Outputs",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.04.02.schema-and-domain-model",
+            "ai-engineering.03.01.direct-provider-adapter"
+          ],
+          "practice": "graded",
+          "minutes": 150
+        },
+        {
+          "id": "ai-engineering.04.04.structured-output-failures",
+          "slug": "ai04-structured-output-failures",
+          "number": "AI4.4",
+          "title": "Отказ, обрыв и границы восстановления",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.04.03.structured-output-parser",
+            "ai-engineering.03.04.retries-and-rate-limits"
+          ],
+          "practice": "graded",
+          "minutes": 150
+        },
+        {
+          "id": "ai-engineering.04.05.extraction-evaluation",
+          "slug": "ai04-extraction-evaluation",
+          "number": "AI4.5",
+          "title": "Оценка извлечения по полям и исходам",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.04.02.schema-and-domain-model",
+            "ai-engineering.04.03.structured-output-parser",
+            "ai-engineering.04.04.structured-output-failures",
+            "ai-engineering.02.01.data-and-model-lifecycle"
+          ],
+          "practice": "graded",
+          "minutes": 180
+        },
+        {
+          "id": "ai-engineering.04.06.extraction-api",
+          "slug": "ai04-extraction-api",
+          "number": "AI4.6",
+          "title": "HTTP API поездки и происхождение результата",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.04.04.structured-output-failures",
+            "ai-engineering.04.05.extraction-evaluation",
+            "ai-engineering.03.07.fastapi-chat-service"
+          ],
+          "practice": "graded",
+          "minutes": 180
+        },
+        {
+          "id": "ai-engineering.04.07.extraction-project-review",
+          "slug": "ai04-extraction-project-review",
+          "number": "AI4.7",
+          "title": "Воспроизводимая оценка и защита P2",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.04.06.extraction-api"
+          ],
+          "practice": "guided",
+          "minutes": 150
+        }
+      ]
+    },
+    {
+      "slug": "ai-stage-05",
+      "title": "Tools и состояние диалога",
+      "lesson_count": 7,
+      "lessons": [
+        {
+          "id": "ai-engineering.05.01.tool-call-protocol",
+          "slug": "ai05-tool-call-protocol",
+          "number": "AI5.1",
+          "title": "Tool calling и связь вызовов с результатами",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.04.07.extraction-project-review"
+          ],
+          "practice": "graded",
+          "minutes": 120
+        },
+        {
+          "id": "ai-engineering.05.02.validated-tool-registry",
+          "slug": "ai05-validated-tool-registry",
+          "number": "AI5.2",
+          "title": "Реестр инструментов и проверка аргументов",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.05.01.tool-call-protocol",
+            "ai-engineering.04.02.schema-and-domain-model"
+          ],
+          "practice": "graded",
+          "minutes": 150
+        },
+        {
+          "id": "ai-engineering.05.03.tool-authorization",
+          "slug": "ai05-tool-authorization",
+          "number": "AI5.3",
+          "title": "Авторизация инструментов backend",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.05.02.validated-tool-registry",
+            "ai-engineering.01.01.backend-diagnostic"
+          ],
+          "practice": "graded",
+          "minutes": 150
+        },
+        {
+          "id": "ai-engineering.05.04.bounded-tool-loop",
+          "slug": "ai05-bounded-tool-loop",
+          "number": "AI5.4",
+          "title": "Ограниченный цикл инструментов",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.05.01.tool-call-protocol",
+            "ai-engineering.05.02.validated-tool-registry",
+            "ai-engineering.05.03.tool-authorization",
+            "ai-engineering.03.04.retries-and-rate-limits"
+          ],
+          "practice": "graded",
+          "minutes": 180
+        },
+        {
+          "id": "ai-engineering.05.05.conversation-state",
+          "slug": "ai05-conversation-state",
+          "number": "AI5.5",
+          "title": "История беседы и бюджет контекста",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.05.04.bounded-tool-loop",
+            "ai-engineering.02.08.context-window-and-token-budget"
+          ],
+          "practice": "graded",
+          "minutes": 150
+        },
+        {
+          "id": "ai-engineering.05.06.tool-trust-boundaries",
+          "slug": "ai05-tool-trust-boundaries",
+          "number": "AI5.6",
+          "title": "Недоверенные данные и предложение отмены",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.05.03.tool-authorization",
+            "ai-engineering.05.04.bounded-tool-loop",
+            "ai-engineering.05.05.conversation-state"
+          ],
+          "practice": "graded",
+          "minutes": 150
+        },
+        {
+          "id": "ai-engineering.05.07.booking-assistant-project",
+          "slug": "ai05-booking-assistant-project",
+          "number": "AI5.7",
+          "title": "Read-only Booking Assistant",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.05.01.tool-call-protocol",
+            "ai-engineering.05.02.validated-tool-registry",
+            "ai-engineering.05.03.tool-authorization",
+            "ai-engineering.05.04.bounded-tool-loop",
+            "ai-engineering.05.05.conversation-state",
+            "ai-engineering.05.06.tool-trust-boundaries"
+          ],
+          "practice": "graded",
+          "minutes": 180
+        }
+      ]
+    },
+    {
+      "slug": "ai-stage-06",
+      "title": "Embeddings, поиск и RAG",
+      "lesson_count": 10,
+      "lessons": []
+    },
+    {
+      "slug": "ai-stage-07",
+      "title": "LangChain",
+      "lesson_count": 6,
+      "lessons": []
+    },
+    {
+      "slug": "ai-stage-08",
+      "title": "Agentic workflows и MCP",
+      "lesson_count": 6,
+      "lessons": []
+    },
+    {
+      "slug": "ai-stage-09",
+      "title": "LangGraph, evaluation и безопасность",
+      "lesson_count": 7,
+      "lessons": []
+    },
+    {
+      "slug": "ai-stage-10",
+      "title": "Production AI Engineering",
+      "lesson_count": 7,
+      "lessons": []
+    }
+  ]
+}

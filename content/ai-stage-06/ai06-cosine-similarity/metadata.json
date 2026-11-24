@@ -1,0 +1,70 @@
+{
+  "id": "ai-engineering.06.01.cosine-similarity",
+  "slug": "ai06-cosine-similarity",
+  "number": "AI6.1",
+  "title": "Cosine similarity руками",
+  "prerequisites": [
+    "ai-engineering.02.01.data-and-model-lifecycle",
+    "ai-engineering.02.02.vectors-and-matrices",
+    "ai-engineering.02.03.loss-and-gradient-step",
+    "ai-engineering.02.04.neural-network-forward",
+    "ai-engineering.02.05.tokens-and-tokenization",
+    "ai-engineering.02.06.transformer-attention",
+    "ai-engineering.02.07.pretraining-and-alignment",
+    "ai-engineering.02.08.context-window-and-token-budget",
+    "ai-engineering.02.09.embedding-intuition",
+    "ai-engineering.02.10.sampling-and-limitations",
+    "ai-engineering.05.07.booking-assistant-project"
+  ],
+  "practice": "graded",
+  "module_slug": "ai-stage-06",
+  "module_order": 106,
+  "module_title": "Embeddings, поиск и RAG",
+  "order": 1601,
+  "description": "Сравниваем направление векторов и собираем устойчивый top-k.",
+  "duration": 120,
+  "xp": 25,
+  "tracks": [
+    "ai-engineering"
+  ],
+  "topics": [
+    "Cosine similarity руками",
+    "Сравниваем направление векторов и собираем устойчивый top-k."
+  ],
+  "has_task": true,
+  "has_solution": true,
+  "modes": [
+    "learn",
+    "practice",
+    "interview"
+  ],
+  "priority": "P1",
+  "interview_probability": "high",
+  "market_frequency": "not_assessed",
+  "market_evidence": "Phase 11.5, матрица навыков и аудит Pythoria.",
+  "content_status": "complete",
+  "content_source": "curated",
+  "editorial_status": "published",
+  "quality_revision": 1,
+  "last_verified": "2026-11-24",
+  "reviewed_on": "2026-11-24",
+  "sources": [
+    {
+      "source_id": "MATH",
+      "url": "https://docs.python.org/3.12/library/math.html",
+      "section": "Floating-point arithmetic, fsum, hypot, isfinite",
+      "applicability": "Вычисления Python 3.12",
+      "verified_on": "2026-11-24",
+      "claim_kind": "documented"
+    },
+    {
+      "source_id": "EMB",
+      "url": "https://developers.openai.com/api/docs/guides/embeddings",
+      "section": "Embeddings; practical uses and dimensions",
+      "applicability": "Документированное устройство API, упражнение использует fake",
+      "verified_on": "2026-11-24",
+      "claim_kind": "documented"
+    }
+  ],
+  "task_id": "ai-engineering.06.01.cosine-similarity.practice"
+}

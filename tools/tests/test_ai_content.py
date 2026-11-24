@@ -69,10 +69,28 @@ def test_r1_manifest_remains_valid_and_identical(tmp_path):
 
 def test_r2_completion_requires_seven_graded_ai5_labs(tmp_path):
     path, manifest, bundles = copy_manifest(tmp_path)
-    manifest["release_status"] = "complete"
+    manifest.update(release="R2", release_status="complete")
     manifest["stages"][4]["lessons"].pop()
     manifest["stages"][4]["lessons"][0]["practice"] = "guided"
     path.write_text(json.dumps(manifest))
     errors = validate_ai(tmp_path, bundles, [])
     assert any("36 lessons" in error for error in errors)
     assert "AI5 lessons require graded labs" in errors
+
+def test_r2_snapshot_remains_valid_and_identical(tmp_path):
+    path, current, bundles = copy_manifest(tmp_path)
+    baseline = json.loads((Path(__file__).parent / "fixtures/ai-r2-manifest.json").read_text())
+    assert current["stages"][:5] == baseline["stages"][:5]
+    path.write_text(json.dumps(baseline))
+    assert validate_ai(tmp_path, [(m, d) for m, d in bundles if m["module_order"] < 106], []) == []
+
+
+def test_r3_completion_requires_ten_offline_components(tmp_path):
+    path, manifest, bundles = copy_manifest(tmp_path)
+    manifest["release_status"] = "complete"
+    manifest["stages"][5]["lessons"].pop()
+    manifest["stages"][5]["lessons"][0]["practice"] = "guided"
+    path.write_text(json.dumps(manifest))
+    errors = validate_ai(tmp_path, bundles, [])
+    assert any("46 lessons" in error for error in errors)
+    assert "AI6 requires offline graded components" in errors
