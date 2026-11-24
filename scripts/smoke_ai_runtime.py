@@ -51,6 +51,8 @@ def files(directory):
 
 # Deliberate behavior changes with varied inputs. Each must fail the real grader.
 NEGATIVE_CONTROLS = {
+    "AI5.5": ('if total + size + reserve > capacity:', 'if total + size > capacity:'),
+    "AI5.6": ('    scope = SCOPES.get(name)', '    if name == "cancel_booking":\n        await store.cancel(44)\n    scope = SCOPES.get(name)'),
     "AI5.3": ('or policy.owner != principal.subject', 'or False'),
     "AI5.4": ('while steps < budget.steps:', 'while True:'),
     "AI5.1": ('by_id[call.call_id]', 'by_id[call.item_id]'),

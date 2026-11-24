@@ -4,7 +4,7 @@
   "lesson_count": 72,
   "release": "R2",
   "release_status": "in_progress",
-  "release_lesson_count": 33,
+  "release_lesson_count": 35,
   "stages": [
     {
       "slug": "ai-stage-01",
@@ -467,6 +467,33 @@
           ],
           "practice": "graded",
           "minutes": 180
+        },
+        {
+          "id": "ai-engineering.05.05.conversation-state",
+          "slug": "ai05-conversation-state",
+          "number": "AI5.5",
+          "title": "История беседы и бюджет контекста",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.05.04.bounded-tool-loop",
+            "ai-engineering.02.08.context-window-and-token-budget"
+          ],
+          "practice": "graded",
+          "minutes": 150
+        },
+        {
+          "id": "ai-engineering.05.06.tool-trust-boundaries",
+          "slug": "ai05-tool-trust-boundaries",
+          "number": "AI5.6",
+          "title": "Недоверенные данные и предложение отмены",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.05.03.tool-authorization",
+            "ai-engineering.05.04.bounded-tool-loop",
+            "ai-engineering.05.05.conversation-state"
+          ],
+          "practice": "graded",
+          "minutes": 150
         }
       ]
     },

@@ -1,0 +1,71 @@
+{
+  "id": "ai-engineering.05.06.tool-trust-boundaries",
+  "slug": "ai05-tool-trust-boundaries",
+  "number": "AI5.6",
+  "title": "Недоверенные данные и предложение отмены",
+  "prerequisites": [
+    "ai-engineering.05.03.tool-authorization",
+    "ai-engineering.05.04.bounded-tool-loop",
+    "ai-engineering.05.05.conversation-state"
+  ],
+  "practice": "graded",
+  "module_slug": "ai-stage-05",
+  "module_title": "Tools и состояние диалога",
+  "module_order": 105,
+  "order": 1506,
+  "description": "Проверь границу доверия и создай pending proposal без изменения брони.",
+  "duration": 150,
+  "xp": 25,
+  "topics": [
+    "Проверь границу доверия и создай pending proposal без изменения брони.",
+    "Недоверенные данные и предложение отмены",
+    "Проект P3"
+  ],
+  "has_task": true,
+  "has_solution": true,
+  "tracks": [
+    "ai-engineering"
+  ],
+  "modes": [
+    "learn",
+    "practice",
+    "interview"
+  ],
+  "priority": "P1",
+  "interview_probability": "high",
+  "market_frequency": "not_assessed",
+  "market_evidence": "Phase 11.5, матрица навыков и аудит Pythoria.",
+  "content_status": "complete",
+  "content_source": "curated",
+  "editorial_status": "published",
+  "quality_revision": 1,
+  "last_verified": "2026-11-24",
+  "reviewed_on": "2026-11-24",
+  "sources": [
+    {
+      "source_id": "OW",
+      "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/",
+      "section": "LLM01:2025 Prompt Injection",
+      "applicability": "GenAI; direct and indirect input, least privilege",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-24"
+    },
+    {
+      "source_id": "BOLA",
+      "url": "https://api-security.owasp.org/editions/2023/en/0xa1-broken-object-level-authorization/",
+      "section": "API1:2023 Broken Object Level Authorization",
+      "applicability": "Object authorization on every protected ID",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-24"
+    },
+    {
+      "source_id": "PD",
+      "url": "https://pydantic.dev/docs/validation/latest/concepts/strict_mode/",
+      "section": "Strict Mode",
+      "applicability": "Pydantic 2.x; strict argument and payload types",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-24"
+    }
+  ],
+  "task_id": "ai-engineering.05.06.tool-trust-boundaries.practice"
+}
