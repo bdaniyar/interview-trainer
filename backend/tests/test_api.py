@@ -1,5 +1,11 @@
 from __future__ import annotations
 
+import json
+from pathlib import Path
+
+import pytest
+
+from backend.app.content import ContentRepository
 from backend.app import main as main_module
 
 
@@ -159,26 +165,31 @@ def test_ai_check_feedback_hides_cases_and_completes_only_requested_lesson(clien
     assert course["ai"]["summary"]["completed"] == 1 and course["summary"]["completed"] == 0
 
 
-def test_r1_expansion_preserves_synthetic_r0_progress_and_files(client, monkeypatch, tmp_path):
-    import json
-    from pathlib import Path
-
-    from backend.app.content import ContentRepository
-
+def frozen_ai_repository(destination, current, release):
     root = Path(__file__).resolve().parents[2]
-    current = main_module.content_repo
-    r0 = (root / "tools/tests/fixtures/ai-r0-manifest.json").read_text()
-    old_slugs = {item["slug"] for stage in json.loads(r0)["stages"] for item in stage["lessons"]}
-    (tmp_path / "ai_curriculum.json").write_text(r0)
-    (tmp_path / "interview_sets.json").symlink_to(current.root / "interview_sets.json")
+    manifest = (root / f"tools/tests/fixtures/ai-{release}-manifest.json").read_text()
+    old_slugs = {item["slug"] for stage in json.loads(manifest)["stages"] for item in stage["lessons"]}
+    destination.mkdir()
+    (destination / "ai_curriculum.json").write_text(manifest)
+    (destination / "interview_sets.json").symlink_to(current.root / "interview_sets.json")
     for source in current.root.glob("*/*/metadata.json"):
         lesson = source.parent
         if lesson.parent.name.startswith("ai-stage-") and lesson.name not in old_slugs:
             continue
-        link = tmp_path / lesson.relative_to(current.root)
+        link = destination / lesson.relative_to(current.root)
         link.parent.mkdir(exist_ok=True)
         link.symlink_to(lesson, target_is_directory=True)
-    monkeypatch.setattr(main_module, "content_repo", ContentRepository(tmp_path))
+    return ContentRepository(destination)
+
+
+@pytest.mark.parametrize(("release", "old_total", "before_percent"), [("r0", 15, 7), ("r1", 29, 3)])
+def test_expansion_preserves_synthetic_progress_and_files(client, monkeypatch, tmp_path, release, old_total, before_percent):
+    current = main_module.content_repo
+    previous = frozen_ai_repository(tmp_path / "previous", current, release)
+    next_catalog = frozen_ai_repository(tmp_path / "next", current, "r1") if release == "r0" else current
+    new_total = json.loads((next_catalog.root / "ai_curriculum.json").read_text())["release_lesson_count"]
+    assert new_total > old_total
+    monkeypatch.setattr(main_module, "content_repo", previous)
     ai_slug = "ai01-ai-roles-and-boundaries"
     backend_slug = "generators"
     for slug in (ai_slug, backend_slug):
@@ -188,18 +199,23 @@ def test_r1_expansion_preserves_synthetic_r0_progress_and_files(client, monkeypa
     question = client.get("/api/interview").json()["questions"][0]
     answer = {"question_id": question["id"], "answer": "Synthetic interview answer"}
     assert client.post("/api/interview/complete", json=answer).json()["xp_awarded"] == 5
+    assert client.put("/api/preferences", json={"theme": "light"}).json()["theme"] == "light"
     interview = client.get("/api/interview").json()
     assert interview["questions"][0]["completed"]
     before = client.get("/api/course").json()
     stored = {slug: client.get(f"/api/lessons/{slug}").json() for slug in (ai_slug, backend_slug)}
-    assert before["ai"]["summary"] == {"total": 15, "completed": 1, "percent": 7}
+    assert before["ai"]["summary"] == {"total": old_total, "completed": 1, "percent": before_percent}
 
-    monkeypatch.setattr(main_module, "content_repo", current)
+    monkeypatch.setattr(main_module, "content_repo", next_catalog)
     after = client.get("/api/course").json()
-    assert after["ai"]["summary"] == {"total": 29, "completed": 1, "percent": 3}
+    assert after["ai"]["summary"] == {"total": new_total, "completed": 1, "percent": round(100 / new_total)}
     assert after["summary"] == before["summary"]
     assert client.get("/api/interview").json() == interview
     assert client.post("/api/interview/complete", json=answer).json()["xp_awarded"] == 0
     for slug, lesson in stored.items():
         observed = client.get(f"/api/lessons/{slug}").json()
         assert (observed["progress"], observed["files"]) == (lesson["progress"], lesson["files"])
+    if release == "r1":
+        for lesson in after["ai"]["modules"][-1]["lessons"]:
+            progress = client.get(f"/api/lessons/{lesson['slug']}").json()["progress"]
+            assert not progress["task_completed"] and not progress["theory_completed"]
