@@ -1,0 +1,65 @@
+{
+  "id": "ai-engineering.06.07.plain-python-rag",
+  "slug": "ai06-plain-python-rag",
+  "number": "AI6.7",
+  "title": "RAG на Python: от поиска до ответа",
+  "prerequisites": [
+    "ai-engineering.06.03.chunking-and-provenance",
+    "ai-engineering.06.04.pgvector-exact-search",
+    "ai-engineering.06.05.ann-and-recall",
+    "ai-engineering.06.06.hybrid-and-rerank",
+    "ai-engineering.04.07.extraction-project-review",
+    "ai-engineering.05.07.booking-assistant-project"
+  ],
+  "practice": "graded",
+  "module_slug": "ai-stage-06",
+  "module_order": 106,
+  "module_title": "Embeddings, поиск и RAG",
+  "order": 1607,
+  "description": "Строим разрешённый context, вызываем генератор и проверяем ссылки.",
+  "duration": 180,
+  "xp": 25,
+  "tracks": [
+    "ai-engineering"
+  ],
+  "topics": [
+    "RAG на Python: от поиска до ответа",
+    "Строим разрешённый context, вызываем генератор и проверяем ссылки."
+  ],
+  "has_task": true,
+  "has_solution": true,
+  "modes": [
+    "learn",
+    "practice",
+    "interview"
+  ],
+  "priority": "P1",
+  "interview_probability": "high",
+  "market_frequency": "not_assessed",
+  "market_evidence": "Phase 11.5, матрица навыков и аудит Pythoria.",
+  "content_status": "complete",
+  "content_source": "curated",
+  "editorial_status": "published",
+  "quality_revision": 1,
+  "last_verified": "2026-11-24",
+  "reviewed_on": "2026-11-24",
+  "sources": [
+    {
+      "source_id": "RAG",
+      "url": "https://arxiv.org/abs/2005.11401",
+      "section": "Retrieval-Augmented Generation",
+      "applicability": "Граница retrieval и generation",
+      "verified_on": "2026-11-24",
+      "claim_kind": "documented"
+    },
+    {
+      "source_id": "OWASP",
+      "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/",
+      "section": "Indirect prompt injection",
+      "applicability": "Недоверенный текст документов",
+      "verified_on": "2026-11-24",
+      "claim_kind": "documented"
+    }
+  ],
+  "task_id": "ai-engineering.06.07.plain-python-rag.practice"
+}

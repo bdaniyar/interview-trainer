@@ -4,7 +4,7 @@
   "lesson_count": 72,
   "release": "R3",
   "release_status": "in_progress",
-  "release_lesson_count": 41,
+  "release_lesson_count": 43,
   "stages": [
     {
       "slug": "ai-stage-01",
@@ -589,6 +589,36 @@
           "status": "published",
           "prerequisites": [
             "ai-engineering.06.04.pgvector-exact-search"
+          ],
+          "practice": "graded",
+          "minutes": 180
+        },
+        {
+          "id": "ai-engineering.06.06.hybrid-and-rerank",
+          "slug": "ai06-hybrid-and-rerank",
+          "number": "AI6.6",
+          "title": "Лексический поиск, RRF и reranking",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.06.04.pgvector-exact-search",
+            "ai-engineering.06.05.ann-and-recall"
+          ],
+          "practice": "graded",
+          "minutes": 180
+        },
+        {
+          "id": "ai-engineering.06.07.plain-python-rag",
+          "slug": "ai06-plain-python-rag",
+          "number": "AI6.7",
+          "title": "RAG на Python: от поиска до ответа",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.06.03.chunking-and-provenance",
+            "ai-engineering.06.04.pgvector-exact-search",
+            "ai-engineering.06.05.ann-and-recall",
+            "ai-engineering.06.06.hybrid-and-rerank",
+            "ai-engineering.04.07.extraction-project-review",
+            "ai-engineering.05.07.booking-assistant-project"
           ],
           "practice": "graded",
           "minutes": 180

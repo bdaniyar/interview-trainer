@@ -1,0 +1,69 @@
+{
+  "id": "ai-engineering.06.06.hybrid-and-rerank",
+  "slug": "ai06-hybrid-and-rerank",
+  "number": "AI6.6",
+  "title": "Лексический поиск, RRF и reranking",
+  "prerequisites": [
+    "ai-engineering.06.04.pgvector-exact-search",
+    "ai-engineering.06.05.ann-and-recall"
+  ],
+  "practice": "graded",
+  "module_slug": "ai-stage-06",
+  "module_order": 106,
+  "module_title": "Embeddings, поиск и RAG",
+  "order": 1606,
+  "description": "Сравниваем BM25 и FTS, объединяем ранги и ограничиваем rerank.",
+  "duration": 180,
+  "xp": 25,
+  "tracks": [
+    "ai-engineering"
+  ],
+  "topics": [
+    "Лексический поиск, RRF и reranking",
+    "Сравниваем BM25 и FTS, объединяем ранги и ограничиваем rerank."
+  ],
+  "has_task": true,
+  "has_solution": true,
+  "modes": [
+    "learn",
+    "practice",
+    "interview"
+  ],
+  "priority": "P1",
+  "interview_probability": "high",
+  "market_frequency": "not_assessed",
+  "market_evidence": "Phase 11.5, матрица навыков и аудит Pythoria.",
+  "content_status": "complete",
+  "content_source": "curated",
+  "editorial_status": "published",
+  "quality_revision": 1,
+  "last_verified": "2026-11-24",
+  "reviewed_on": "2026-11-24",
+  "sources": [
+    {
+      "source_id": "PG",
+      "url": "https://www.postgresql.org/docs/17/textsearch-controls.html",
+      "section": "Parsing, ranking",
+      "applicability": "PostgreSQL FTS",
+      "verified_on": "2026-11-24",
+      "claim_kind": "documented"
+    },
+    {
+      "source_id": "RRF",
+      "url": "https://cormack.uwaterloo.ca/cormack/cormacksigir09-rrf.pdf",
+      "section": "Reciprocal Rank Fusion",
+      "applicability": "Ранги с 1, сумма обратных рангов",
+      "verified_on": "2026-11-24",
+      "claim_kind": "documented"
+    },
+    {
+      "source_id": "BM25",
+      "url": "https://www.staff.city.ac.uk/~sbrp622/papers/foundations_bm25_review.pdf",
+      "section": "BM25 and the probabilistic relevance framework",
+      "applicability": "TF saturation, IDF, length normalization",
+      "verified_on": "2026-11-24",
+      "claim_kind": "documented"
+    }
+  ],
+  "task_id": "ai-engineering.06.06.hybrid-and-rerank.practice"
+}
