@@ -4,7 +4,7 @@
   "lesson_count": 72,
   "release": "R3",
   "release_status": "in_progress",
-  "release_lesson_count": 39,
+  "release_lesson_count": 41,
   "stages": [
     {
       "slug": "ai-stage-01",
@@ -566,6 +566,32 @@
           ],
           "practice": "graded",
           "minutes": 150
+        },
+        {
+          "id": "ai-engineering.06.04.pgvector-exact-search",
+          "slug": "ai06-pgvector-exact-search",
+          "number": "AI6.4",
+          "title": "PostgreSQL и pgvector: точный поиск",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.06.01.cosine-similarity",
+            "ai-engineering.06.02.embedding-pipeline",
+            "ai-engineering.06.03.chunking-and-provenance"
+          ],
+          "practice": "graded",
+          "minutes": 180
+        },
+        {
+          "id": "ai-engineering.06.05.ann-and-recall",
+          "slug": "ai06-ann-and-recall",
+          "number": "AI6.5",
+          "title": "HNSW и измерение recall",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.06.04.pgvector-exact-search"
+          ],
+          "practice": "graded",
+          "minutes": 180
         }
       ]
     },

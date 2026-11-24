@@ -51,6 +51,8 @@ def files(directory):
 
 # Deliberate behavior changes with varied inputs. Each must fail the real grader.
 NEGATIVE_CONTROLS = {
+    "AI6.4": ('scope.subject == row.owner or scope.subject in row.readers', 'True'),
+    "AI6.5": ('/ len(reference) if reference else None', '/ k if reference else None'),
     "AI6.1": ('return min(1.0, max(-1.0, similarity))', 'return abs(similarity)'),
     "AI6.2": ('row.space != space or not valid(space, row.vector)', 'not valid(space, row.vector)'),
     "AI6.3": ('start = stop - overlap', 'start = stop'),
