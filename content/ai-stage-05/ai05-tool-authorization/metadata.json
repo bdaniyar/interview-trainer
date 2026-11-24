@@ -1,0 +1,70 @@
+{
+  "id": "ai-engineering.05.03.tool-authorization",
+  "slug": "ai05-tool-authorization",
+  "number": "AI5.3",
+  "title": "Авторизация инструментов backend",
+  "prerequisites": [
+    "ai-engineering.05.02.validated-tool-registry",
+    "ai-engineering.01.01.backend-diagnostic"
+  ],
+  "practice": "graded",
+  "module_slug": "ai-stage-05",
+  "module_title": "Tools и состояние диалога",
+  "module_order": 105,
+  "order": 1503,
+  "description": "Отдели policy lookup от чтения и докажи изоляцию владельцев.",
+  "duration": 150,
+  "xp": 25,
+  "topics": [
+    "Отдели policy lookup от чтения и докажи изоляцию владельцев.",
+    "Авторизация инструментов backend",
+    "Проект P3"
+  ],
+  "has_task": true,
+  "has_solution": true,
+  "tracks": [
+    "ai-engineering"
+  ],
+  "modes": [
+    "learn",
+    "practice",
+    "interview"
+  ],
+  "priority": "P1",
+  "interview_probability": "high",
+  "market_frequency": "not_assessed",
+  "market_evidence": "Phase 11.5, матрица навыков и аудит Pythoria.",
+  "content_status": "complete",
+  "content_source": "curated",
+  "editorial_status": "published",
+  "quality_revision": 1,
+  "last_verified": "2026-11-24",
+  "reviewed_on": "2026-11-24",
+  "sources": [
+    {
+      "source_id": "BOLA",
+      "url": "https://api-security.owasp.org/editions/2023/en/0xa1-broken-object-level-authorization/",
+      "section": "API1:2023 Broken Object Level Authorization",
+      "applicability": "Object authorization on every protected ID",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-24"
+    },
+    {
+      "source_id": "FAST",
+      "url": "https://fastapi.tiangolo.com/tutorial/dependencies/",
+      "section": "Dependencies",
+      "applicability": "FastAPI; dependency-injected trusted principal",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-24"
+    },
+    {
+      "source_id": "OW",
+      "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/",
+      "section": "LLM01:2025 Prompt Injection",
+      "applicability": "GenAI; direct and indirect input, least privilege",
+      "claim_kind": "documented",
+      "verified_on": "2026-11-24"
+    }
+  ],
+  "task_id": "ai-engineering.05.03.tool-authorization.practice"
+}

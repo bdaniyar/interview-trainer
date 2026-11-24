@@ -4,7 +4,7 @@
   "lesson_count": 72,
   "release": "R2",
   "release_status": "in_progress",
-  "release_lesson_count": 31,
+  "release_lesson_count": 33,
   "stages": [
     {
       "slug": "ai-stage-01",
@@ -439,6 +439,34 @@
           ],
           "practice": "graded",
           "minutes": 150
+        },
+        {
+          "id": "ai-engineering.05.03.tool-authorization",
+          "slug": "ai05-tool-authorization",
+          "number": "AI5.3",
+          "title": "Авторизация инструментов backend",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.05.02.validated-tool-registry",
+            "ai-engineering.01.01.backend-diagnostic"
+          ],
+          "practice": "graded",
+          "minutes": 150
+        },
+        {
+          "id": "ai-engineering.05.04.bounded-tool-loop",
+          "slug": "ai05-bounded-tool-loop",
+          "number": "AI5.4",
+          "title": "Ограниченный цикл инструментов",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.05.01.tool-call-protocol",
+            "ai-engineering.05.02.validated-tool-registry",
+            "ai-engineering.05.03.tool-authorization",
+            "ai-engineering.03.04.retries-and-rate-limits"
+          ],
+          "practice": "graded",
+          "minutes": 180
         }
       ]
     },
