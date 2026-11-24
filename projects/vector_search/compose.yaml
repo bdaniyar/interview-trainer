@@ -1,0 +1,19 @@
+name: pythoria-p4
+services:
+  postgres:
+    image: pgvector/pgvector:0.8.2-pg17-bookworm@sha256:feb68f4f15446397d8cac7f4fe48fe4586de83160d1fc48b46283312d1a33966
+    environment:
+      POSTGRES_DB: vector_lab
+      POSTGRES_USER: vector_admin
+      POSTGRES_PASSWORD: local_vector_admin
+    ports:
+      - "127.0.0.1:${VECTOR_PORT:-15437}:5432"
+    tmpfs:
+      - /var/lib/postgresql/data:size=512m
+    volumes:
+      - ./migrations:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U vector_admin -d vector_lab"]
+      interval: 1s
+      timeout: 2s
+      retries: 30
