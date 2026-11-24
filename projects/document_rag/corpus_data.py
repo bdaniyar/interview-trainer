@@ -11,6 +11,7 @@ from .scripted import batch
 HERE = Path(__file__).parent
 DATA = HERE / "data"
 SPACE = Space()
+LOCAL_DSN = "postgresql://vector_app:local_vector_app@127.0.0.1:15438/vector_lab"
 SCOPES = frozenset({"read", "ingest", "delete", "share"})
 ACTORS = {"north-alice": Actor("north", "alice", SCOPES),
           "north-bob": Actor("north", "bob", SCOPES),
