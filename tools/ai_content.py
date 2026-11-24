@@ -53,6 +53,16 @@ def validate_ai(content: Path, bundles: list[tuple[dict, Path]], taxonomy: list[
             errors.append("AI5 lessons require graded labs")
         if status == "complete" and len(ai5) != 7:
             errors.append("Complete AI R2 requires 36 lessons including all seven AI5 labs")
+    elif release == "R3":
+        ai6 = stages[5]["lessons"] if len(stages) > 5 else []
+        if stage_counts[:5] != [4, 10, 8, 7, 7] or len(ai6) > 10 or any(stage_counts[6:]):
+            errors.append("AI R3 preserves AI1–AI5 and ends at AI6")
+        if any(item["status"] != "published" for stage in stages[:5] for item in stage["lessons"]):
+            errors.append("AI R3 must preserve all published R2 lessons")
+        if any(item["practice"] != "graded" for item in ai6):
+            errors.append("AI6 requires offline graded components")
+        if status == "complete" and len(ai6) != 10:
+            errors.append("Complete AI R3 requires all 46 lessons across AI1–AI6")
     else:
         errors.append(f"Unknown AI release {release}")
     for field in ("id", "slug", "number"):

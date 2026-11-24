@@ -51,6 +51,9 @@ def files(directory):
 
 # Deliberate behavior changes with varied inputs. Each must fail the real grader.
 NEGATIVE_CONTROLS = {
+    "AI6.1": ('return min(1.0, max(-1.0, similarity))', 'return abs(similarity)'),
+    "AI6.2": ('row.space != space or not valid(space, row.vector)', 'not valid(space, row.vector)'),
+    "AI6.3": ('start = stop - overlap', 'start = stop'),
     "AI5.7": ('rows = [await repository.read(number) for number in ids]',
               'return Observation(call.id, "ok", ((42, "confirmed"),))'),
     "AI5.5": ('if total + size + reserve > capacity:', 'if total + size > capacity:'),
