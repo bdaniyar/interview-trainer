@@ -1,0 +1,42 @@
+[
+  {
+    "question": "Почему UUID брони не авторизует чтение?",
+    "answer": [
+      "Требуется проверка объекта для trusted principal.",
+      "Непредсказуемый ID не заменяет scope, tenant, владельца и актуальную политику."
+    ],
+    "short_answer": "Требуется проверка объекта для trusted principal.",
+    "junior_answer": "Непредсказуемый ID не заменяет scope, tenant, владельца и актуальную политику.",
+    "follow_up_question": "Где проверять отзыв права?",
+    "follow_up_answer": "На границе защищённой выборки совместно с правом чтения.",
+    "priority": "P1",
+    "expected_answer": {
+      "follow_up_questions": [
+        "Где проверять отзыв права?"
+      ],
+      "must_mention": [
+        "Требуется проверка объекта для trusted principal."
+      ]
+    }
+  },
+  {
+    "question": "Что должен показать тест на чужую бронь?",
+    "answer": [
+      "Ноль protected reads и writes.",
+      "Policy metadata можно читать, а protected payload должен остаться внутри; ответ совпадает с неизвестным ID."
+    ],
+    "short_answer": "Ноль protected reads и writes.",
+    "junior_answer": "Policy metadata можно читать, а protected payload должен остаться внутри; ответ совпадает с неизвестным ID.",
+    "follow_up_question": "Почему не достаточно проверить 404?",
+    "follow_up_answer": "Код мог сначала прочитать чужую строку и затем скрыть её, нарушив требование доступа.",
+    "priority": "P1",
+    "expected_answer": {
+      "follow_up_questions": [
+        "Почему не достаточно проверить 404?"
+      ],
+      "must_mention": [
+        "Ноль protected reads и writes."
+      ]
+    }
+  }
+]
