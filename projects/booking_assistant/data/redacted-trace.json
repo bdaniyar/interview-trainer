@@ -1,0 +1,46 @@
+[
+  {
+    "request_id": "8d33f0db12044a12838a08bb9cd2754e",
+    "step": 1,
+    "event": "model",
+    "tool": null,
+    "call_id": null,
+    "outcome": "tools",
+    "calls": 0,
+    "output_bytes": 0,
+    "elapsed_ms": 0
+  },
+  {
+    "request_id": "8d33f0db12044a12838a08bb9cd2754e",
+    "step": 1,
+    "event": "tool",
+    "tool": "get_booking",
+    "call_id": "call-1",
+    "outcome": "ok",
+    "calls": 1,
+    "output_bytes": 121,
+    "elapsed_ms": 1
+  },
+  {
+    "request_id": "8d33f0db12044a12838a08bb9cd2754e",
+    "step": 2,
+    "event": "model",
+    "tool": null,
+    "call_id": null,
+    "outcome": "final",
+    "calls": 1,
+    "output_bytes": 121,
+    "elapsed_ms": 1
+  },
+  {
+    "request_id": "8d33f0db12044a12838a08bb9cd2754e",
+    "step": 2,
+    "event": "terminal",
+    "tool": null,
+    "call_id": null,
+    "outcome": "completed",
+    "calls": 1,
+    "output_bytes": 162,
+    "elapsed_ms": 1
+  }
+]

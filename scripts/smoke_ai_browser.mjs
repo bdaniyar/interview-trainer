@@ -135,9 +135,11 @@ export async function aiWalkthrough({ call, evaluate, until, click, typePython, 
     assert.equal((await api('/api/lessons/' + graded.slug)).progress.task_completed, true);
     console.log(JSON.stringify({aiGraded:true, failedCheck:true, passedCheck:11, xp:20, savedFiles:true, completionAfterReload:true}));
   }
-  if (allAi.length === 29) {
-    assert.deepEqual(before.ai.modules.map(module => module.lessons.length), [4, 10, 8, 7]);
-    assert.equal(before.ai.roadmap.reduce((total, stage) => total + stage.planned, 0), 43);
+  if (allAi.length === 29 || allAi.length === 36) {
+    const r2 = allAi.length === 36;
+    const stageCounts = r2 ? [4, 10, 8, 7, 7] : [4, 10, 8, 7];
+    assert.deepEqual(before.ai.modules.map(module => module.lessons.length), stageCounts);
+    assert.equal(before.ai.roadmap.reduce((total, stage) => total + stage.planned, 0), 72 - allAi.length);
     for (const item of allAi) {
       await selectLesson(item);
       assert.equal(await hidden(), true);
@@ -162,31 +164,44 @@ export async function aiWalkthrough({ call, evaluate, until, click, typePython, 
         HTMLAnchorElement.prototype.click = anchor;
       }
     })()`);
-    assert.equal(await evaluate('window.__exportedFile'), 'ai04-extraction-project-review.md');
+    const last = allAi.at(-1);
+    assert.equal(await evaluate('window.__exportedFile'), last.slug + '.md');
     const notes = await evaluate('window.__exportedNotes');
-    assert.ok(notes.includes('# Воспроизводимая оценка и защита P2'));
+    assert.ok(notes.includes('# ' + last.title));
     assert.ok(notes.includes('Краткий конспект') && notes.includes('Источники'));
     await call('Page.reload');
-    await waitLesson('ai04-extraction-project-review');
+    await waitLesson(last.slug);
     assert.equal(await currentTrack(), 'ai-engineering');
-    const apiLab = allAi.find(item => item.slug === 'ai04-extraction-api');
-    await selectLesson(apiLab);
+    const apiLab = r2 ? last : allAi.find(item => item.slug === 'ai04-extraction-api');
+    const totalChecks = r2 ? 22 : 14;
+    if (r2) {
+      await navigate(backend);
+      await waitLesson(backend);
+      await navigate(apiLab.slug);
+      await waitLesson(apiLab.slug);
+      await until(`document.querySelector('.lesson-title-row h1')?.textContent===${JSON.stringify(apiLab.title)}`);
+      assert.equal(await currentTrack(), 'ai-engineering');
+      assert.equal(await hidden(), true);
+    } else {
+      await selectLesson(apiLab);
+    }
     await loadEditor();
     await submit('check');
-    await until(`document.querySelector('.terminal-result-summary .failed')?.textContent.endsWith(' / 14 tests')`);
+    await until(`document.querySelector('.terminal-result-summary .failed')?.textContent.endsWith(' / ${totalChecks} tests')`);
     assert.equal((await api('/api/lessons/' + apiLab.slug)).progress.task_completed, false);
-    const apiSolution = await readFile(new URL('../content/ai-stage-04/ai04-extraction-api/solution/main.py', import.meta.url), 'utf8');
+    const stage = r2 ? 'ai-stage-05' : 'ai-stage-04';
+    const apiSolution = await readFile(new URL(`../content/${stage}/${apiLab.slug}/solution/main.py`, import.meta.url), 'utf8');
     await typePython(apiSolution);
     await submit('run');
     await until(`document.querySelector('.terminal-result-summary')?.textContent.includes('exit 0')`);
     await submit('check');
-    await until(`document.querySelector('.terminal-result-summary .passed')?.textContent==='14 / 14 tests'`);
+    await until(`document.querySelector('.terminal-result-summary .passed')?.textContent==='${totalChecks} / ${totalChecks} tests'`);
     await call('Page.reload');
     await waitLesson(apiLab.slug);
     const savedLab = await api('/api/lessons/' + apiLab.slug);
     assert.equal(savedLab.files['main.py'], apiSolution);
     assert.equal(savedLab.progress.task_completed, true);
-    console.log(JSON.stringify({r1Navigation:allAi.length, stageCounts:[4,10,8,7], markdownExport:true, notesAfterReload:true, r1FailedCheck:true, r1PassedCheck:14}));
+    console.log(JSON.stringify({aiLessons:allAi.length, stageCounts, markdownExport:true, notesAfterReload:true, failedCheck:true, passedCheck:totalChecks}));
   }
   console.log(JSON.stringify({aiNavigation:true, trackProgress:true, learnReview:true, monacoRun:true, savedFiles:true, reload:true, mobile390:true, themes:true, deepLink:true}));
 }
