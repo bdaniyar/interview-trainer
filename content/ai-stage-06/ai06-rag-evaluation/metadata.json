@@ -1,0 +1,64 @@
+{
+  "id": "ai-engineering.06.09.rag-evaluation",
+  "slug": "ai06-rag-evaluation",
+  "number": "AI6.9",
+  "title": "Оценка retrieval и качества ответа RAG",
+  "prerequisites": [
+    "ai-engineering.06.05.ann-and-recall",
+    "ai-engineering.06.06.hybrid-and-rerank",
+    "ai-engineering.06.07.plain-python-rag",
+    "ai-engineering.06.08.citations-and-abstention",
+    "ai-engineering.04.05.extraction-evaluation"
+  ],
+  "practice": "graded",
+  "module_slug": "ai-stage-06",
+  "module_order": 106,
+  "module_title": "Embeddings, поиск и RAG",
+  "order": 1609,
+  "description": "Разделяем ошибки поиска и ответа на замороженных примерах.",
+  "duration": 180,
+  "xp": 25,
+  "tracks": [
+    "ai-engineering"
+  ],
+  "topics": [
+    "Оценка retrieval и качества ответа RAG",
+    "Разделяем ошибки поиска и ответа на замороженных примерах."
+  ],
+  "has_task": true,
+  "has_solution": true,
+  "modes": [
+    "learn",
+    "practice",
+    "interview"
+  ],
+  "priority": "P1",
+  "interview_probability": "high",
+  "market_frequency": "not_assessed",
+  "market_evidence": "Phase 11.5, матрица навыков и аудит Pythoria.",
+  "content_status": "complete",
+  "content_source": "curated",
+  "editorial_status": "published",
+  "quality_revision": 1,
+  "last_verified": "2026-11-24",
+  "reviewed_on": "2026-11-24",
+  "sources": [
+    {
+      "source_id": "IR",
+      "url": "https://github.com/usnistgov/trec_eval/blob/main/m_recip_rank.c",
+      "section": "Evaluation of ranked retrieval results",
+      "applicability": "Знаменатели и оценка ранга",
+      "verified_on": "2026-11-24",
+      "claim_kind": "documented"
+    },
+    {
+      "source_id": "RAG",
+      "url": "https://arxiv.org/abs/2005.11401",
+      "section": "Retrieval-Augmented Generation",
+      "applicability": "Граница retrieval и generation",
+      "verified_on": "2026-11-24",
+      "claim_kind": "documented"
+    }
+  ],
+  "task_id": "ai-engineering.06.09.rag-evaluation.practice"
+}

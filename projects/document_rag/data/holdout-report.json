@@ -1,0 +1,2270 @@
+{
+  "split": "holdout",
+  "n": 12,
+  "configuration": {
+    "method": "dense",
+    "k": 6,
+    "rerank_window": 4,
+    "fixture_sha256": "31a18c57bc6e388a3a821ae86db9ef390e7c2c477bf5d49e4dc08550481d939f",
+    "criterion": "dev recall, then dev MRR, then order fts/dense/hybrid/rerank"
+  },
+  "retrieval": {
+    "fts": {
+      "recall": {
+        "mean": 0.5185185185185186,
+        "n": 9
+      },
+      "precision": {
+        "mean": 0.9166666666666666,
+        "n": 6
+      },
+      "mrr": {
+        "mean": 0.6666666666666666,
+        "n": 9
+      }
+    },
+    "dense": {
+      "recall": {
+        "mean": 1.0,
+        "n": 9
+      },
+      "precision": {
+        "mean": 0.20833333333333334,
+        "n": 12
+      },
+      "mrr": {
+        "mean": 0.8333333333333334,
+        "n": 9
+      }
+    },
+    "hybrid": {
+      "recall": {
+        "mean": 1.0,
+        "n": 9
+      },
+      "precision": {
+        "mean": 0.20833333333333334,
+        "n": 12
+      },
+      "mrr": {
+        "mean": 0.8333333333333334,
+        "n": 9
+      }
+    },
+    "rerank": {
+      "recall": {
+        "mean": 1.0,
+        "n": 9
+      },
+      "precision": {
+        "mean": 0.20833333333333334,
+        "n": 12
+      },
+      "mrr": {
+        "mean": 1.0,
+        "n": 9
+      }
+    }
+  },
+  "answer": {
+    "answer_correct": {
+      "mean": 1.0,
+      "n": 12
+    },
+    "citation_valid": {
+      "mean": 1.0,
+      "n": 9
+    },
+    "claim_supported": {
+      "mean": 1.0,
+      "n": 9
+    },
+    "correct_abstention": {
+      "mean": 1.0,
+      "n": 3
+    },
+    "correct_conflict": {
+      "mean": null,
+      "n": 0
+    },
+    "rejects_unsupported_control": {
+      "mean": 1.0,
+      "n": 9
+    },
+    "error_buckets": {
+      "ok": 12
+    }
+  },
+  "languages": {
+    "ru": {
+      "n": 4,
+      "retrieval": {
+        "fts": {
+          "recall": {
+            "mean": 0.4444444444444444,
+            "n": 3
+          },
+          "precision": {
+            "mean": 1.0,
+            "n": 2
+          },
+          "mrr": {
+            "mean": 0.6666666666666666,
+            "n": 3
+          }
+        },
+        "dense": {
+          "recall": {
+            "mean": 1.0,
+            "n": 3
+          },
+          "precision": {
+            "mean": 0.20833333333333331,
+            "n": 4
+          },
+          "mrr": {
+            "mean": 0.8333333333333334,
+            "n": 3
+          }
+        },
+        "hybrid": {
+          "recall": {
+            "mean": 1.0,
+            "n": 3
+          },
+          "precision": {
+            "mean": 0.20833333333333331,
+            "n": 4
+          },
+          "mrr": {
+            "mean": 0.8333333333333334,
+            "n": 3
+          }
+        },
+        "rerank": {
+          "recall": {
+            "mean": 1.0,
+            "n": 3
+          },
+          "precision": {
+            "mean": 0.20833333333333331,
+            "n": 4
+          },
+          "mrr": {
+            "mean": 1.0,
+            "n": 3
+          }
+        }
+      },
+      "answer": {
+        "answer_correct": {
+          "mean": 1.0,
+          "n": 4
+        },
+        "citation_valid": {
+          "mean": 1.0,
+          "n": 3
+        },
+        "claim_supported": {
+          "mean": 1.0,
+          "n": 3
+        },
+        "correct_abstention": {
+          "mean": 1.0,
+          "n": 1
+        },
+        "correct_conflict": {
+          "mean": null,
+          "n": 0
+        },
+        "rejects_unsupported_control": {
+          "mean": 1.0,
+          "n": 3
+        },
+        "error_buckets": {
+          "ok": 4
+        }
+      }
+    },
+    "kk": {
+      "n": 4,
+      "retrieval": {
+        "fts": {
+          "recall": {
+            "mean": 0.1111111111111111,
+            "n": 3
+          },
+          "precision": {
+            "mean": 1.0,
+            "n": 1
+          },
+          "mrr": {
+            "mean": 0.3333333333333333,
+            "n": 3
+          }
+        },
+        "dense": {
+          "recall": {
+            "mean": 1.0,
+            "n": 3
+          },
+          "precision": {
+            "mean": 0.20833333333333331,
+            "n": 4
+          },
+          "mrr": {
+            "mean": 0.8333333333333334,
+            "n": 3
+          }
+        },
+        "hybrid": {
+          "recall": {
+            "mean": 1.0,
+            "n": 3
+          },
+          "precision": {
+            "mean": 0.20833333333333331,
+            "n": 4
+          },
+          "mrr": {
+            "mean": 0.8333333333333334,
+            "n": 3
+          }
+        },
+        "rerank": {
+          "recall": {
+            "mean": 1.0,
+            "n": 3
+          },
+          "precision": {
+            "mean": 0.20833333333333331,
+            "n": 4
+          },
+          "mrr": {
+            "mean": 1.0,
+            "n": 3
+          }
+        }
+      },
+      "answer": {
+        "answer_correct": {
+          "mean": 1.0,
+          "n": 4
+        },
+        "citation_valid": {
+          "mean": 1.0,
+          "n": 3
+        },
+        "claim_supported": {
+          "mean": 1.0,
+          "n": 3
+        },
+        "correct_abstention": {
+          "mean": 1.0,
+          "n": 1
+        },
+        "correct_conflict": {
+          "mean": null,
+          "n": 0
+        },
+        "rejects_unsupported_control": {
+          "mean": 1.0,
+          "n": 3
+        },
+        "error_buckets": {
+          "ok": 4
+        }
+      }
+    },
+    "en": {
+      "n": 4,
+      "retrieval": {
+        "fts": {
+          "recall": {
+            "mean": 1.0,
+            "n": 3
+          },
+          "precision": {
+            "mean": 0.8333333333333334,
+            "n": 3
+          },
+          "mrr": {
+            "mean": 1.0,
+            "n": 3
+          }
+        },
+        "dense": {
+          "recall": {
+            "mean": 1.0,
+            "n": 3
+          },
+          "precision": {
+            "mean": 0.20833333333333331,
+            "n": 4
+          },
+          "mrr": {
+            "mean": 0.8333333333333334,
+            "n": 3
+          }
+        },
+        "hybrid": {
+          "recall": {
+            "mean": 1.0,
+            "n": 3
+          },
+          "precision": {
+            "mean": 0.20833333333333331,
+            "n": 4
+          },
+          "mrr": {
+            "mean": 0.8333333333333334,
+            "n": 3
+          }
+        },
+        "rerank": {
+          "recall": {
+            "mean": 1.0,
+            "n": 3
+          },
+          "precision": {
+            "mean": 0.20833333333333331,
+            "n": 4
+          },
+          "mrr": {
+            "mean": 1.0,
+            "n": 3
+          }
+        }
+      },
+      "answer": {
+        "answer_correct": {
+          "mean": 1.0,
+          "n": 4
+        },
+        "citation_valid": {
+          "mean": 1.0,
+          "n": 3
+        },
+        "claim_supported": {
+          "mean": 1.0,
+          "n": 3
+        },
+        "correct_abstention": {
+          "mean": 1.0,
+          "n": 1
+        },
+        "correct_conflict": {
+          "mean": null,
+          "n": 0
+        },
+        "rejects_unsupported_control": {
+          "mean": 1.0,
+          "n": 3
+        },
+        "error_buckets": {
+          "ok": 4
+        }
+      }
+    }
+  },
+  "security": {
+    "forbidden": 0,
+    "stale": 0,
+    "unsupported_control_failures": 0
+  },
+  "cases": [
+    {
+      "id": "ru-07",
+      "lang": "ru",
+      "split": "holdout",
+      "qrels": [
+        [
+          "boat-kk",
+          1
+        ],
+        [
+          "boat-en",
+          1
+        ],
+        [
+          "boat-ru",
+          1
+        ]
+      ],
+      "retrieval": {
+        "fts": {
+          "ranked": [
+            [
+              "boat-ru",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 1,
+            "relevant": 3,
+            "returned": 1,
+            "recall": 0.3333333333333333,
+            "precision": 1.0,
+            "mrr": 1.0
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "dense": {
+          "ranked": [
+            [
+              "boat-en",
+              1
+            ],
+            [
+              "boat-kk",
+              1
+            ],
+            [
+              "boat-ru",
+              1
+            ],
+            [
+              "painting",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-en",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 3,
+            "relevant": 3,
+            "returned": 6,
+            "recall": 1.0,
+            "precision": 0.5,
+            "mrr": 1.0
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "hybrid": {
+          "ranked": [
+            [
+              "boat-ru",
+              1
+            ],
+            [
+              "boat-en",
+              1
+            ],
+            [
+              "boat-kk",
+              1
+            ],
+            [
+              "painting",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-en",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 3,
+            "relevant": 3,
+            "returned": 6,
+            "recall": 1.0,
+            "precision": 0.5,
+            "mrr": 1.0
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "rerank": {
+          "ranked": [
+            [
+              "boat-ru",
+              1
+            ],
+            [
+              "boat-en",
+              1
+            ],
+            [
+              "boat-kk",
+              1
+            ],
+            [
+              "painting",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-en",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 3,
+            "relevant": 3,
+            "returned": 6,
+            "recall": 1.0,
+            "precision": 0.5,
+            "mrr": 1.0
+          },
+          "stale": 0,
+          "forbidden": 0
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "expected": "answered",
+        "claims": [
+          "boat=B3"
+        ],
+        "answer_correct": true,
+        "citation_valid": true,
+        "claim_supported": true,
+        "correct_abstention": null,
+        "correct_conflict": null,
+        "rejects_unsupported_control": true,
+        "bucket": "ok"
+      }
+    },
+    {
+      "id": "ru-08",
+      "lang": "ru",
+      "split": "holdout",
+      "qrels": [
+        [
+          "ferry-schedule",
+          1
+        ]
+      ],
+      "retrieval": {
+        "fts": {
+          "ranked": [
+            [
+              "ferry-schedule",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 1,
+            "relevant": 1,
+            "returned": 1,
+            "recall": 1.0,
+            "precision": 1.0,
+            "mrr": 1.0
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "dense": {
+          "ranked": [
+            [
+              "ferry-schedule",
+              1
+            ],
+            [
+              "painting",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-en",
+              1
+            ],
+            [
+              "archive-kk",
+              1
+            ],
+            [
+              "archive-ru",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 1,
+            "relevant": 1,
+            "returned": 6,
+            "recall": 1.0,
+            "precision": 0.16666666666666666,
+            "mrr": 1.0
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "hybrid": {
+          "ranked": [
+            [
+              "ferry-schedule",
+              1
+            ],
+            [
+              "painting",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-en",
+              1
+            ],
+            [
+              "archive-kk",
+              1
+            ],
+            [
+              "archive-ru",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 1,
+            "relevant": 1,
+            "returned": 6,
+            "recall": 1.0,
+            "precision": 0.16666666666666666,
+            "mrr": 1.0
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "rerank": {
+          "ranked": [
+            [
+              "ferry-schedule",
+              1
+            ],
+            [
+              "archive-en",
+              1
+            ],
+            [
+              "painting",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-kk",
+              1
+            ],
+            [
+              "archive-ru",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 1,
+            "relevant": 1,
+            "returned": 6,
+            "recall": 1.0,
+            "precision": 0.16666666666666666,
+            "mrr": 1.0
+          },
+          "stale": 0,
+          "forbidden": 0
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "expected": "answered",
+        "claims": [
+          "ferry=21:10"
+        ],
+        "answer_correct": true,
+        "citation_valid": true,
+        "claim_supported": true,
+        "correct_abstention": null,
+        "correct_conflict": null,
+        "rejects_unsupported_control": true,
+        "bucket": "ok"
+      }
+    },
+    {
+      "id": "ru-09",
+      "lang": "ru",
+      "split": "holdout",
+      "qrels": [
+        [
+          "library-members",
+          1
+        ]
+      ],
+      "retrieval": {
+        "fts": {
+          "ranked": [],
+          "metrics": {
+            "hits": 0,
+            "relevant": 1,
+            "returned": 0,
+            "recall": 0.0,
+            "precision": null,
+            "mrr": 0.0
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "dense": {
+          "ranked": [
+            [
+              "library-decoy",
+              1
+            ],
+            [
+              "library-members",
+              1
+            ],
+            [
+              "painting",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-en",
+              1
+            ],
+            [
+              "archive-kk",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 1,
+            "relevant": 1,
+            "returned": 6,
+            "recall": 1.0,
+            "precision": 0.16666666666666666,
+            "mrr": 0.5
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "hybrid": {
+          "ranked": [
+            [
+              "library-decoy",
+              1
+            ],
+            [
+              "library-members",
+              1
+            ],
+            [
+              "painting",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-en",
+              1
+            ],
+            [
+              "archive-kk",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 1,
+            "relevant": 1,
+            "returned": 6,
+            "recall": 1.0,
+            "precision": 0.16666666666666666,
+            "mrr": 0.5
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "rerank": {
+          "ranked": [
+            [
+              "library-members",
+              1
+            ],
+            [
+              "library-decoy",
+              1
+            ],
+            [
+              "painting",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-en",
+              1
+            ],
+            [
+              "archive-kk",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 1,
+            "relevant": 1,
+            "returned": 6,
+            "recall": 1.0,
+            "precision": 0.16666666666666666,
+            "mrr": 1.0
+          },
+          "stale": 0,
+          "forbidden": 0
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "expected": "answered",
+        "claims": [
+          "library=L7"
+        ],
+        "answer_correct": true,
+        "citation_valid": true,
+        "claim_supported": true,
+        "correct_abstention": null,
+        "correct_conflict": null,
+        "rejects_unsupported_control": true,
+        "bucket": "ok"
+      }
+    },
+    {
+      "id": "ru-10",
+      "lang": "ru",
+      "split": "holdout",
+      "qrels": [],
+      "retrieval": {
+        "fts": {
+          "ranked": [],
+          "metrics": {
+            "hits": 0,
+            "relevant": 0,
+            "returned": 0,
+            "recall": null,
+            "precision": null,
+            "mrr": null
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "dense": {
+          "ranked": [
+            [
+              "painting",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-en",
+              1
+            ],
+            [
+              "archive-kk",
+              1
+            ],
+            [
+              "archive-ru",
+              1
+            ],
+            [
+              "boat-en",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 0,
+            "relevant": 0,
+            "returned": 6,
+            "recall": null,
+            "precision": 0.0,
+            "mrr": null
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "hybrid": {
+          "ranked": [
+            [
+              "painting",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-en",
+              1
+            ],
+            [
+              "archive-kk",
+              1
+            ],
+            [
+              "archive-ru",
+              1
+            ],
+            [
+              "boat-en",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 0,
+            "relevant": 0,
+            "returned": 6,
+            "recall": null,
+            "precision": 0.0,
+            "mrr": null
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "rerank": {
+          "ranked": [
+            [
+              "archive-en",
+              1
+            ],
+            [
+              "archive-kk",
+              1
+            ],
+            [
+              "painting",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-ru",
+              1
+            ],
+            [
+              "boat-en",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 0,
+            "relevant": 0,
+            "returned": 6,
+            "recall": null,
+            "precision": 0.0,
+            "mrr": null
+          },
+          "stale": 0,
+          "forbidden": 0
+        }
+      },
+      "answer": {
+        "status": "insufficient_evidence",
+        "expected": "insufficient_evidence",
+        "claims": [],
+        "answer_correct": true,
+        "citation_valid": null,
+        "claim_supported": null,
+        "correct_abstention": true,
+        "correct_conflict": null,
+        "rejects_unsupported_control": null,
+        "bucket": "ok"
+      }
+    },
+    {
+      "id": "kk-07",
+      "lang": "kk",
+      "split": "holdout",
+      "qrels": [
+        [
+          "boat-kk",
+          1
+        ],
+        [
+          "boat-en",
+          1
+        ],
+        [
+          "boat-ru",
+          1
+        ]
+      ],
+      "retrieval": {
+        "fts": {
+          "ranked": [
+            [
+              "boat-kk",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 1,
+            "relevant": 3,
+            "returned": 1,
+            "recall": 0.3333333333333333,
+            "precision": 1.0,
+            "mrr": 1.0
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "dense": {
+          "ranked": [
+            [
+              "boat-en",
+              1
+            ],
+            [
+              "boat-kk",
+              1
+            ],
+            [
+              "boat-ru",
+              1
+            ],
+            [
+              "painting",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-en",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 3,
+            "relevant": 3,
+            "returned": 6,
+            "recall": 1.0,
+            "precision": 0.5,
+            "mrr": 1.0
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "hybrid": {
+          "ranked": [
+            [
+              "boat-kk",
+              1
+            ],
+            [
+              "boat-en",
+              1
+            ],
+            [
+              "boat-ru",
+              1
+            ],
+            [
+              "painting",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-en",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 3,
+            "relevant": 3,
+            "returned": 6,
+            "recall": 1.0,
+            "precision": 0.5,
+            "mrr": 1.0
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "rerank": {
+          "ranked": [
+            [
+              "boat-kk",
+              1
+            ],
+            [
+              "boat-en",
+              1
+            ],
+            [
+              "boat-ru",
+              1
+            ],
+            [
+              "painting",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-en",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 3,
+            "relevant": 3,
+            "returned": 6,
+            "recall": 1.0,
+            "precision": 0.5,
+            "mrr": 1.0
+          },
+          "stale": 0,
+          "forbidden": 0
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "expected": "answered",
+        "claims": [
+          "boat=B3"
+        ],
+        "answer_correct": true,
+        "citation_valid": true,
+        "claim_supported": true,
+        "correct_abstention": null,
+        "correct_conflict": null,
+        "rejects_unsupported_control": true,
+        "bucket": "ok"
+      }
+    },
+    {
+      "id": "kk-08",
+      "lang": "kk",
+      "split": "holdout",
+      "qrels": [
+        [
+          "ferry-schedule",
+          1
+        ]
+      ],
+      "retrieval": {
+        "fts": {
+          "ranked": [],
+          "metrics": {
+            "hits": 0,
+            "relevant": 1,
+            "returned": 0,
+            "recall": 0.0,
+            "precision": null,
+            "mrr": 0.0
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "dense": {
+          "ranked": [
+            [
+              "ferry-schedule",
+              1
+            ],
+            [
+              "painting",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-en",
+              1
+            ],
+            [
+              "archive-kk",
+              1
+            ],
+            [
+              "archive-ru",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 1,
+            "relevant": 1,
+            "returned": 6,
+            "recall": 1.0,
+            "precision": 0.16666666666666666,
+            "mrr": 1.0
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "hybrid": {
+          "ranked": [
+            [
+              "ferry-schedule",
+              1
+            ],
+            [
+              "painting",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-en",
+              1
+            ],
+            [
+              "archive-kk",
+              1
+            ],
+            [
+              "archive-ru",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 1,
+            "relevant": 1,
+            "returned": 6,
+            "recall": 1.0,
+            "precision": 0.16666666666666666,
+            "mrr": 1.0
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "rerank": {
+          "ranked": [
+            [
+              "ferry-schedule",
+              1
+            ],
+            [
+              "archive-en",
+              1
+            ],
+            [
+              "painting",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-kk",
+              1
+            ],
+            [
+              "archive-ru",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 1,
+            "relevant": 1,
+            "returned": 6,
+            "recall": 1.0,
+            "precision": 0.16666666666666666,
+            "mrr": 1.0
+          },
+          "stale": 0,
+          "forbidden": 0
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "expected": "answered",
+        "claims": [
+          "ferry=21:10"
+        ],
+        "answer_correct": true,
+        "citation_valid": true,
+        "claim_supported": true,
+        "correct_abstention": null,
+        "correct_conflict": null,
+        "rejects_unsupported_control": true,
+        "bucket": "ok"
+      }
+    },
+    {
+      "id": "kk-09",
+      "lang": "kk",
+      "split": "holdout",
+      "qrels": [
+        [
+          "library-members",
+          1
+        ]
+      ],
+      "retrieval": {
+        "fts": {
+          "ranked": [],
+          "metrics": {
+            "hits": 0,
+            "relevant": 1,
+            "returned": 0,
+            "recall": 0.0,
+            "precision": null,
+            "mrr": 0.0
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "dense": {
+          "ranked": [
+            [
+              "library-decoy",
+              1
+            ],
+            [
+              "library-members",
+              1
+            ],
+            [
+              "painting",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-en",
+              1
+            ],
+            [
+              "archive-kk",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 1,
+            "relevant": 1,
+            "returned": 6,
+            "recall": 1.0,
+            "precision": 0.16666666666666666,
+            "mrr": 0.5
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "hybrid": {
+          "ranked": [
+            [
+              "library-decoy",
+              1
+            ],
+            [
+              "library-members",
+              1
+            ],
+            [
+              "painting",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-en",
+              1
+            ],
+            [
+              "archive-kk",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 1,
+            "relevant": 1,
+            "returned": 6,
+            "recall": 1.0,
+            "precision": 0.16666666666666666,
+            "mrr": 0.5
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "rerank": {
+          "ranked": [
+            [
+              "library-members",
+              1
+            ],
+            [
+              "library-decoy",
+              1
+            ],
+            [
+              "painting",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-en",
+              1
+            ],
+            [
+              "archive-kk",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 1,
+            "relevant": 1,
+            "returned": 6,
+            "recall": 1.0,
+            "precision": 0.16666666666666666,
+            "mrr": 1.0
+          },
+          "stale": 0,
+          "forbidden": 0
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "expected": "answered",
+        "claims": [
+          "library=L7"
+        ],
+        "answer_correct": true,
+        "citation_valid": true,
+        "claim_supported": true,
+        "correct_abstention": null,
+        "correct_conflict": null,
+        "rejects_unsupported_control": true,
+        "bucket": "ok"
+      }
+    },
+    {
+      "id": "kk-10",
+      "lang": "kk",
+      "split": "holdout",
+      "qrels": [],
+      "retrieval": {
+        "fts": {
+          "ranked": [],
+          "metrics": {
+            "hits": 0,
+            "relevant": 0,
+            "returned": 0,
+            "recall": null,
+            "precision": null,
+            "mrr": null
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "dense": {
+          "ranked": [
+            [
+              "painting",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-en",
+              1
+            ],
+            [
+              "archive-kk",
+              1
+            ],
+            [
+              "archive-ru",
+              1
+            ],
+            [
+              "boat-en",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 0,
+            "relevant": 0,
+            "returned": 6,
+            "recall": null,
+            "precision": 0.0,
+            "mrr": null
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "hybrid": {
+          "ranked": [
+            [
+              "painting",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-en",
+              1
+            ],
+            [
+              "archive-kk",
+              1
+            ],
+            [
+              "archive-ru",
+              1
+            ],
+            [
+              "boat-en",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 0,
+            "relevant": 0,
+            "returned": 6,
+            "recall": null,
+            "precision": 0.0,
+            "mrr": null
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "rerank": {
+          "ranked": [
+            [
+              "archive-en",
+              1
+            ],
+            [
+              "archive-kk",
+              1
+            ],
+            [
+              "painting",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-ru",
+              1
+            ],
+            [
+              "boat-en",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 0,
+            "relevant": 0,
+            "returned": 6,
+            "recall": null,
+            "precision": 0.0,
+            "mrr": null
+          },
+          "stale": 0,
+          "forbidden": 0
+        }
+      },
+      "answer": {
+        "status": "insufficient_evidence",
+        "expected": "insufficient_evidence",
+        "claims": [],
+        "answer_correct": true,
+        "citation_valid": null,
+        "claim_supported": null,
+        "correct_abstention": true,
+        "correct_conflict": null,
+        "rejects_unsupported_control": null,
+        "bucket": "ok"
+      }
+    },
+    {
+      "id": "en-07",
+      "lang": "en",
+      "split": "holdout",
+      "qrels": [
+        [
+          "boat-kk",
+          1
+        ],
+        [
+          "boat-en",
+          1
+        ],
+        [
+          "boat-ru",
+          1
+        ]
+      ],
+      "retrieval": {
+        "fts": {
+          "ranked": [
+            [
+              "boat-en",
+              1
+            ],
+            [
+              "boat-kk",
+              1
+            ],
+            [
+              "boat-ru",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 3,
+            "relevant": 3,
+            "returned": 3,
+            "recall": 1.0,
+            "precision": 1.0,
+            "mrr": 1.0
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "dense": {
+          "ranked": [
+            [
+              "boat-en",
+              1
+            ],
+            [
+              "boat-kk",
+              1
+            ],
+            [
+              "boat-ru",
+              1
+            ],
+            [
+              "painting",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-en",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 3,
+            "relevant": 3,
+            "returned": 6,
+            "recall": 1.0,
+            "precision": 0.5,
+            "mrr": 1.0
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "hybrid": {
+          "ranked": [
+            [
+              "boat-en",
+              1
+            ],
+            [
+              "boat-kk",
+              1
+            ],
+            [
+              "boat-ru",
+              1
+            ],
+            [
+              "painting",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-en",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 3,
+            "relevant": 3,
+            "returned": 6,
+            "recall": 1.0,
+            "precision": 0.5,
+            "mrr": 1.0
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "rerank": {
+          "ranked": [
+            [
+              "boat-en",
+              1
+            ],
+            [
+              "boat-kk",
+              1
+            ],
+            [
+              "boat-ru",
+              1
+            ],
+            [
+              "painting",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-en",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 3,
+            "relevant": 3,
+            "returned": 6,
+            "recall": 1.0,
+            "precision": 0.5,
+            "mrr": 1.0
+          },
+          "stale": 0,
+          "forbidden": 0
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "expected": "answered",
+        "claims": [
+          "boat=B3"
+        ],
+        "answer_correct": true,
+        "citation_valid": true,
+        "claim_supported": true,
+        "correct_abstention": null,
+        "correct_conflict": null,
+        "rejects_unsupported_control": true,
+        "bucket": "ok"
+      }
+    },
+    {
+      "id": "en-08",
+      "lang": "en",
+      "split": "holdout",
+      "qrels": [
+        [
+          "ferry-schedule",
+          1
+        ]
+      ],
+      "retrieval": {
+        "fts": {
+          "ranked": [
+            [
+              "ferry-schedule",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 1,
+            "relevant": 1,
+            "returned": 1,
+            "recall": 1.0,
+            "precision": 1.0,
+            "mrr": 1.0
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "dense": {
+          "ranked": [
+            [
+              "ferry-schedule",
+              1
+            ],
+            [
+              "painting",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-en",
+              1
+            ],
+            [
+              "archive-kk",
+              1
+            ],
+            [
+              "archive-ru",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 1,
+            "relevant": 1,
+            "returned": 6,
+            "recall": 1.0,
+            "precision": 0.16666666666666666,
+            "mrr": 1.0
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "hybrid": {
+          "ranked": [
+            [
+              "ferry-schedule",
+              1
+            ],
+            [
+              "painting",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-en",
+              1
+            ],
+            [
+              "archive-kk",
+              1
+            ],
+            [
+              "archive-ru",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 1,
+            "relevant": 1,
+            "returned": 6,
+            "recall": 1.0,
+            "precision": 0.16666666666666666,
+            "mrr": 1.0
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "rerank": {
+          "ranked": [
+            [
+              "ferry-schedule",
+              1
+            ],
+            [
+              "painting",
+              1
+            ],
+            [
+              "archive-en",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-kk",
+              1
+            ],
+            [
+              "archive-ru",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 1,
+            "relevant": 1,
+            "returned": 6,
+            "recall": 1.0,
+            "precision": 0.16666666666666666,
+            "mrr": 1.0
+          },
+          "stale": 0,
+          "forbidden": 0
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "expected": "answered",
+        "claims": [
+          "ferry=21:10"
+        ],
+        "answer_correct": true,
+        "citation_valid": true,
+        "claim_supported": true,
+        "correct_abstention": null,
+        "correct_conflict": null,
+        "rejects_unsupported_control": true,
+        "bucket": "ok"
+      }
+    },
+    {
+      "id": "en-09",
+      "lang": "en",
+      "split": "holdout",
+      "qrels": [
+        [
+          "library-members",
+          1
+        ]
+      ],
+      "retrieval": {
+        "fts": {
+          "ranked": [
+            [
+              "library-members",
+              1
+            ],
+            [
+              "library-decoy",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 1,
+            "relevant": 1,
+            "returned": 2,
+            "recall": 1.0,
+            "precision": 0.5,
+            "mrr": 1.0
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "dense": {
+          "ranked": [
+            [
+              "library-decoy",
+              1
+            ],
+            [
+              "library-members",
+              1
+            ],
+            [
+              "painting",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-en",
+              1
+            ],
+            [
+              "archive-kk",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 1,
+            "relevant": 1,
+            "returned": 6,
+            "recall": 1.0,
+            "precision": 0.16666666666666666,
+            "mrr": 0.5
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "hybrid": {
+          "ranked": [
+            [
+              "library-decoy",
+              1
+            ],
+            [
+              "library-members",
+              1
+            ],
+            [
+              "painting",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-en",
+              1
+            ],
+            [
+              "archive-kk",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 1,
+            "relevant": 1,
+            "returned": 6,
+            "recall": 1.0,
+            "precision": 0.16666666666666666,
+            "mrr": 0.5
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "rerank": {
+          "ranked": [
+            [
+              "library-members",
+              1
+            ],
+            [
+              "library-decoy",
+              1
+            ],
+            [
+              "painting",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-en",
+              1
+            ],
+            [
+              "archive-kk",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 1,
+            "relevant": 1,
+            "returned": 6,
+            "recall": 1.0,
+            "precision": 0.16666666666666666,
+            "mrr": 1.0
+          },
+          "stale": 0,
+          "forbidden": 0
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "expected": "answered",
+        "claims": [
+          "library=L7"
+        ],
+        "answer_correct": true,
+        "citation_valid": true,
+        "claim_supported": true,
+        "correct_abstention": null,
+        "correct_conflict": null,
+        "rejects_unsupported_control": true,
+        "bucket": "ok"
+      }
+    },
+    {
+      "id": "en-10",
+      "lang": "en",
+      "split": "holdout",
+      "qrels": [],
+      "retrieval": {
+        "fts": {
+          "ranked": [],
+          "metrics": {
+            "hits": 0,
+            "relevant": 0,
+            "returned": 0,
+            "recall": null,
+            "precision": null,
+            "mrr": null
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "dense": {
+          "ranked": [
+            [
+              "painting",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-en",
+              1
+            ],
+            [
+              "archive-kk",
+              1
+            ],
+            [
+              "archive-ru",
+              1
+            ],
+            [
+              "boat-en",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 0,
+            "relevant": 0,
+            "returned": 6,
+            "recall": null,
+            "precision": 0.0,
+            "mrr": null
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "hybrid": {
+          "ranked": [
+            [
+              "painting",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-en",
+              1
+            ],
+            [
+              "archive-kk",
+              1
+            ],
+            [
+              "archive-ru",
+              1
+            ],
+            [
+              "boat-en",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 0,
+            "relevant": 0,
+            "returned": 6,
+            "recall": null,
+            "precision": 0.0,
+            "mrr": null
+          },
+          "stale": 0,
+          "forbidden": 0
+        },
+        "rerank": {
+          "ranked": [
+            [
+              "archive-en",
+              1
+            ],
+            [
+              "painting",
+              1
+            ],
+            [
+              "archive-kk",
+              1
+            ],
+            [
+              "seating",
+              1
+            ],
+            [
+              "archive-ru",
+              1
+            ],
+            [
+              "boat-en",
+              1
+            ]
+          ],
+          "metrics": {
+            "hits": 0,
+            "relevant": 0,
+            "returned": 6,
+            "recall": null,
+            "precision": 0.0,
+            "mrr": null
+          },
+          "stale": 0,
+          "forbidden": 0
+        }
+      },
+      "answer": {
+        "status": "insufficient_evidence",
+        "expected": "insufficient_evidence",
+        "claims": [],
+        "answer_correct": true,
+        "citation_valid": null,
+        "claim_supported": null,
+        "correct_abstention": true,
+        "correct_conflict": null,
+        "rejects_unsupported_control": null,
+        "bucket": "ok"
+      }
+    }
+  ]
+}

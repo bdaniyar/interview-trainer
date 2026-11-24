@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Что делает ссылку допустимой?",
+    "answer": [
+      "Права, текущая версия, membership в context.",
+      "Далее содержательная проверка устанавливает связь с claim."
+    ],
+    "short_answer": "Права, текущая версия, membership в context.",
+    "junior_answer": "Далее содержательная проверка устанавливает связь с claim.",
+    "follow_up_question": "Можно ли дать генератору gold labels?",
+    "follow_up_answer": "Нет, только вход и реальные evidence.",
+    "priority": "P1",
+    "expected_answer": {
+      "must_mention": [
+        "Права, текущая версия, membership в context."
+      ],
+      "follow_up_questions": [
+        "Можно ли дать генератору gold labels?"
+      ]
+    }
+  },
+  {
+    "question": "Как проверить версию при долгой генерации?",
+    "answer": [
+      "Повторно проверить provenance и ACL на конце операции.",
+      "Граница согласованности должна быть описана."
+    ],
+    "short_answer": "Повторно проверить provenance и ACL на конце операции.",
+    "junior_answer": "Граница согласованности должна быть описана.",
+    "follow_up_question": "Что считать безопасным при revoke?",
+    "follow_up_answer": "Вернуть статус без затронутых claims и цитат.",
+    "priority": "P1",
+    "expected_answer": {
+      "must_mention": [
+        "Повторно проверить provenance и ACL на конце операции."
+      ],
+      "follow_up_questions": [
+        "Что считать безопасным при revoke?"
+      ]
+    }
+  },
+  {
+    "question": "Что делать при несовместимых правилах одной силы?",
+    "answer": [
+      "Вернуть конфликт или запросить уточнение.",
+      "Механизм приоритета должен быть явным."
+    ],
+    "short_answer": "Вернуть конфликт или запросить уточнение.",
+    "junior_answer": "Механизм приоритета должен быть явным.",
+    "follow_up_question": "Что проверяет support fixture?",
+    "follow_up_answer": "Связь конкретной утверждаемой строки с конкретным источником.",
+    "priority": "P1",
+    "expected_answer": {
+      "must_mention": [
+        "Вернуть конфликт или запросить уточнение."
+      ],
+      "follow_up_questions": [
+        "Что проверяет support fixture?"
+      ]
+    }
+  }
+]

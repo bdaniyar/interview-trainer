@@ -51,6 +51,8 @@ def files(directory):
 
 # Deliberate behavior changes with varied inputs. Each must fail the real grader.
 NEGATIVE_CONTROLS = {
+    "AI6.8": ('if claim.text not in support.get(ref, ()):', 'if False:'),
+    "AI6.9": ('hits / len(relevant) if relevant else None', 'hits / k if relevant else None'),
     "AI6.6": ('enumerate(dict.fromkeys(ordered), 1)', 'enumerate(ordered, 1)'),
     "AI6.7": ('rows = retrieve(principal, question)', 'rows = ()'),
     "AI6.4": ('scope.subject == row.owner or scope.subject in row.readers', 'True'),
