@@ -1,0 +1,21 @@
+name: pythoria-p5
+include:
+  - ../vector_search/compose.yaml
+services:
+  api:
+    profiles: ["api"]
+    build:
+      context: ../..
+      dockerfile: projects/document_rag/Dockerfile
+    environment:
+      RAG_DSN: postgresql://vector_app:local_vector_app@postgres:5432/vector_lab
+    ports:
+      - "127.0.0.1:${RAG_PORT:-18766}:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "from urllib.request import urlopen; urlopen('http://localhost:8000/openapi.json', timeout=2)"]
+      interval: 2s
+      timeout: 3s
+      retries: 20

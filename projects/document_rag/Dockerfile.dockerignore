@@ -1,0 +1,11 @@
+**
+!projects
+!projects/vector_search
+!projects/vector_search/*.py
+!projects/document_rag
+!projects/document_rag/*.py
+!projects/document_rag/requirements.txt
+!projects/document_rag/corpus
+!projects/document_rag/corpus/*.md
+!projects/document_rag/data
+!projects/document_rag/data/catalog.json

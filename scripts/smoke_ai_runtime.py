@@ -51,6 +51,7 @@ def files(directory):
 
 # Deliberate behavior changes with varied inputs. Each must fail the real grader.
 NEGATIVE_CONTROLS = {
+    "AI6.10": ('if any(resolve(state, actor, ref) != text for ref, text in supplied.items()):', 'if False:'),
     "AI6.8": ('if claim.text not in support.get(ref, ()):', 'if False:'),
     "AI6.9": ('hits / len(relevant) if relevant else None', 'hits / k if relevant else None'),
     "AI6.6": ('enumerate(dict.fromkeys(ordered), 1)', 'enumerate(ordered, 1)'),

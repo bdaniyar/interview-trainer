@@ -3,8 +3,8 @@
   "title": "AI Engineering",
   "lesson_count": 72,
   "release": "R3",
-  "release_status": "in_progress",
-  "release_lesson_count": 45,
+  "release_status": "complete",
+  "release_lesson_count": 46,
   "stages": [
     {
       "slug": "ai-stage-01",
@@ -651,6 +651,26 @@
           ],
           "practice": "graded",
           "minutes": 180
+        },
+        {
+          "id": "ai-engineering.06.10.document-rag-project",
+          "slug": "ai06-document-rag-project",
+          "number": "AI6.10",
+          "title": "Document Knowledge Assistant: жизненный цикл RAG",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.06.01.cosine-similarity",
+            "ai-engineering.06.02.embedding-pipeline",
+            "ai-engineering.06.03.chunking-and-provenance",
+            "ai-engineering.06.04.pgvector-exact-search",
+            "ai-engineering.06.05.ann-and-recall",
+            "ai-engineering.06.06.hybrid-and-rerank",
+            "ai-engineering.06.07.plain-python-rag",
+            "ai-engineering.06.08.citations-and-abstention",
+            "ai-engineering.06.09.rag-evaluation"
+          ],
+          "practice": "graded",
+          "minutes": 210
         }
       ]
     },

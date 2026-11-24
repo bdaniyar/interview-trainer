@@ -9,14 +9,13 @@ from hashlib import sha256
 from pathlib import Path
 
 from .citations import verdict
-from .corpus_data import ACTORS, DATA, HERE, SPACE, cases, catalog, seed
+from .corpus_data import ACTORS, DATA, HERE, LOCAL_DSN, SPACE, cases, catalog, seed
 from .metrics import mean_defined, rank_score
 from .pipeline import Claim, Draft, context_for
 from .retrieval import RetrievalStore, retrieve
 from .scripted import embed, generate, lexical_query, rerank_script
 
 
-LOCAL_DSN = "postgresql://vector_app:local_vector_app@127.0.0.1:15438/vector_lab"
 METHODS = ("fts", "dense", "hybrid", "rerank")
 K, WINDOW = 6, 4
 EXPECTED_FILES = ("catalog.json", "questions.jsonl")

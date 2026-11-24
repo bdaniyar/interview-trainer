@@ -135,14 +135,18 @@ export async function aiWalkthrough({ call, evaluate, until, click, typePython, 
     assert.equal((await api('/api/lessons/' + graded.slug)).progress.task_completed, true);
     console.log(JSON.stringify({aiGraded:true, failedCheck:true, passedCheck:11, xp:20, savedFiles:true, completionAfterReload:true}));
   }
-  if (allAi.length === 29 || allAi.length === 36) {
-    const r2 = allAi.length === 36;
-    const stageCounts = r2 ? [4, 10, 8, 7, 7] : [4, 10, 8, 7];
+  if ([29, 36, 46].includes(allAi.length)) {
+    const r3 = allAi.length === 46;
+    const r2 = allAi.length >= 36;
+    const stageCounts = r3 ? [4, 10, 8, 7, 7, 10] : r2 ? [4, 10, 8, 7, 7] : [4, 10, 8, 7];
     assert.deepEqual(before.ai.modules.map(module => module.lessons.length), stageCounts);
     assert.equal(before.ai.roadmap.reduce((total, stage) => total + stage.planned, 0), 72 - allAi.length);
     for (const item of allAi) {
       await selectLesson(item);
       assert.equal(await hidden(), true);
+      if (r3 && item.slug === 'ai06-pgvector-exact-search') {
+        await until(`document.body.innerText.includes('Браузерный Check проверяет только Python oracle')`);
+      }
       await click('.lesson-mode-switch button:nth-child(2)');
       assert.equal(await hidden(), true);
       await click('.lesson-mode-switch button:first-child');
@@ -173,7 +177,7 @@ export async function aiWalkthrough({ call, evaluate, until, click, typePython, 
     await waitLesson(last.slug);
     assert.equal(await currentTrack(), 'ai-engineering');
     const apiLab = r2 ? last : allAi.find(item => item.slug === 'ai04-extraction-api');
-    const totalChecks = r2 ? 22 : 14;
+    const totalChecks = r3 ? 13 : r2 ? 22 : 14;
     if (r2) {
       await navigate(backend);
       await waitLesson(backend);
@@ -189,7 +193,7 @@ export async function aiWalkthrough({ call, evaluate, until, click, typePython, 
     await submit('check');
     await until(`document.querySelector('.terminal-result-summary .failed')?.textContent.endsWith(' / ${totalChecks} tests')`);
     assert.equal((await api('/api/lessons/' + apiLab.slug)).progress.task_completed, false);
-    const stage = r2 ? 'ai-stage-05' : 'ai-stage-04';
+    const stage = r3 ? 'ai-stage-06' : r2 ? 'ai-stage-05' : 'ai-stage-04';
     const apiSolution = await readFile(new URL(`../content/${stage}/${apiLab.slug}/solution/main.py`, import.meta.url), 'utf8');
     await typePython(apiSolution);
     await submit('run');

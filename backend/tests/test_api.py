@@ -182,11 +182,12 @@ def frozen_ai_repository(destination, current, release):
     return ContentRepository(destination)
 
 
-@pytest.mark.parametrize(("release", "old_total", "before_percent"), [("r0", 15, 7), ("r1", 29, 3)])
+@pytest.mark.parametrize(("release", "old_total", "before_percent"), [("r0", 15, 7), ("r1", 29, 3), ("r2", 36, 3)])
 def test_expansion_preserves_synthetic_progress_and_files(client, monkeypatch, tmp_path, release, old_total, before_percent):
     current = main_module.content_repo
     previous = frozen_ai_repository(tmp_path / "previous", current, release)
-    next_catalog = frozen_ai_repository(tmp_path / "next", current, "r1") if release == "r0" else current
+    successor = {"r0": "r1", "r1": "r2"}.get(release)
+    next_catalog = frozen_ai_repository(tmp_path / "next", current, successor) if successor else current
     new_total = json.loads((next_catalog.root / "ai_curriculum.json").read_text())["release_lesson_count"]
     assert new_total > old_total
     monkeypatch.setattr(main_module, "content_repo", previous)
@@ -215,7 +216,7 @@ def test_expansion_preserves_synthetic_progress_and_files(client, monkeypatch, t
     for slug, lesson in stored.items():
         observed = client.get(f"/api/lessons/{slug}").json()
         assert (observed["progress"], observed["files"]) == (lesson["progress"], lesson["files"])
-    if release == "r1":
+    if release in {"r1", "r2"}:
         for lesson in after["ai"]["modules"][-1]["lessons"]:
             progress = client.get(f"/api/lessons/{lesson['slug']}").json()["progress"]
             assert not progress["task_completed"] and not progress["theory_completed"]

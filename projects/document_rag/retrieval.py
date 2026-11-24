@@ -1,5 +1,6 @@
 """P5 queries return metadata first, evidence text only after a second scoped check."""
 import json
+from contextlib import nullcontext
 from dataclasses import dataclass
 
 from projects.vector_search.contracts import Actor, Hit, Source, Space
@@ -64,21 +65,23 @@ class RetrievalStore(Store):
         return tuple(keyed[s] for s in dict.fromkeys(sources) if s in keyed)
 
 
-def retrieve(store, actor, text, space, *, method, k, embed, scorer, window=5, lexical_text=None):
+def retrieve(store, actor, text, space, *, method, k, embed, scorer, window=5, lexical_text=None, step=lambda _name, **_attrs: nullcontext()):
     actor.require("read")
     if method not in {"fts", "dense", "hybrid", "rerank"}:
         raise ValueError("unknown retrieval method")
     lexical = store.lexical(actor, text if lexical_text is None else lexical_text, space, k) if method != "dense" else ()
     dense = store.dense(actor, embed(text), space, k) if method != "fts" else ()
     hits = {hit.source.key: hit.source for hit in (*lexical, *dense)}
-    if method in {"fts", "dense"}:
-        keys = [hit.source.key for hit in lexical or dense]
-    else:
-        keys = [key for key, _ in rrf(([hit.source.key for hit in lexical],
-                                       [hit.source.key for hit in dense]), limit=k)]
+    with step("rank", candidates=len(hits)):
+        if method in {"fts", "dense"}:
+            keys = [hit.source.key for hit in lexical or dense]
+        else:
+            keys = [key for key, _ in rrf(([hit.source.key for hit in lexical],
+                                           [hit.source.key for hit in dense]), limit=k)]
     evidence = store.scoped_sources(actor, tuple(hits[key] for key in keys), space, with_text=True)
     if method == "rerank":
-        by_key = {item.source.key: item for item in evidence}
-        ordered = rerank(keys, by_key, window, lambda prefix: scorer(text, prefix, by_key))
-        evidence = tuple(by_key[key] for key in ordered)
+        with step("rerank", candidates=min(window, len(evidence))):
+            by_key = {item.source.key: item for item in evidence}
+            ordered = rerank(keys, by_key, window, lambda prefix: scorer(text, prefix, by_key))
+            evidence = tuple(by_key[key] for key in ordered)
     return evidence

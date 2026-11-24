@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Что видно при частичном batch?",
+    "answer": [
+      "Последняя целиком активированная версия.",
+      "Сбой подготовки не переключает pointer."
+    ],
+    "short_answer": "Последняя целиком активированная версия.",
+    "junior_answer": "Сбой подготовки не переключает pointer.",
+    "follow_up_question": "Можно ли повторить ingest?",
+    "follow_up_answer": "Да, при тех же version и fingerprint он идемпотентен.",
+    "priority": "P1",
+    "expected_answer": {
+      "must_mention": [
+        "Последняя целиком активированная версия."
+      ],
+      "follow_up_questions": [
+        "Можно ли повторить ingest?"
+      ]
+    }
+  },
+  {
+    "question": "Для чего access epoch?",
+    "answer": [
+      "Он обнаруживает изменение прав даже при неизменной версии.",
+      "Revoke→grant не делает старый snapshot текущим."
+    ],
+    "short_answer": "Он обнаруживает изменение прав даже при неизменной версии.",
+    "junior_answer": "Revoke→grant не делает старый snapshot текущим.",
+    "follow_up_question": "Где проверяется финальная цитата?",
+    "follow_up_answer": "После generation, перед формированием ответа.",
+    "priority": "P1",
+    "expected_answer": {
+      "must_mention": [
+        "Он обнаруживает изменение прав даже при неизменной версии."
+      ],
+      "follow_up_questions": [
+        "Где проверяется финальная цитата?"
+      ]
+    }
+  },
+  {
+    "question": "Что покажет безопасный trace?",
+    "answer": [
+      "Имена стадий, порядок, outcome, ревизии, размеры и задержку.",
+      "Private identity и raw payload не нужны для корреляции."
+    ],
+    "short_answer": "Имена стадий, порядок, outcome, ревизии, размеры и задержку.",
+    "junior_answer": "Private identity и raw payload не нужны для корреляции.",
+    "follow_up_question": "Какая гарантия остаётся при update после финального SELECT?",
+    "follow_up_answer": "Проверка относится к snapshot SELECT и не отзывает уже отправленный ответ.",
+    "priority": "P1",
+    "expected_answer": {
+      "must_mention": [
+        "Имена стадий, порядок, outcome, ревизии, размеры и задержку."
+      ],
+      "follow_up_questions": [
+        "Какая гарантия остаётся при update после финального SELECT?"
+      ]
+    }
+  }
+]

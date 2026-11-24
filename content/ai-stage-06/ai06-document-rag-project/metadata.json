@@ -1,0 +1,84 @@
+{
+  "id": "ai-engineering.06.10.document-rag-project",
+  "slug": "ai06-document-rag-project",
+  "number": "AI6.10",
+  "title": "Document Knowledge Assistant: жизненный цикл RAG",
+  "prerequisites": [
+    "ai-engineering.06.01.cosine-similarity",
+    "ai-engineering.06.02.embedding-pipeline",
+    "ai-engineering.06.03.chunking-and-provenance",
+    "ai-engineering.06.04.pgvector-exact-search",
+    "ai-engineering.06.05.ann-and-recall",
+    "ai-engineering.06.06.hybrid-and-rerank",
+    "ai-engineering.06.07.plain-python-rag",
+    "ai-engineering.06.08.citations-and-abstention",
+    "ai-engineering.06.09.rag-evaluation"
+  ],
+  "practice": "graded",
+  "module_slug": "ai-stage-06",
+  "module_order": 106,
+  "module_title": "Embeddings, поиск и RAG",
+  "order": 1610,
+  "description": "Соединяем атомарную активацию документов, права, цитаты и OpenTelemetry.",
+  "duration": 210,
+  "xp": 25,
+  "tracks": [
+    "ai-engineering"
+  ],
+  "topics": [
+    "Document Knowledge Assistant: жизненный цикл RAG",
+    "Соединяем атомарную активацию документов, права, цитаты и OpenTelemetry."
+  ],
+  "has_task": true,
+  "has_solution": true,
+  "modes": [
+    "learn",
+    "practice",
+    "interview"
+  ],
+  "priority": "P1",
+  "interview_probability": "high",
+  "market_frequency": "not_assessed",
+  "market_evidence": "Phase 11.5, матрица навыков и аудит Pythoria.",
+  "content_status": "complete",
+  "content_source": "curated",
+  "editorial_status": "published",
+  "quality_revision": 1,
+  "last_verified": "2026-11-24",
+  "reviewed_on": "2026-11-24",
+  "sources": [
+    {
+      "source_id": "PGV",
+      "url": "https://github.com/pgvector/pgvector/tree/v0.8.2",
+      "section": "Querying, HNSW, filtering",
+      "applicability": "PG17 + pgvector 0.8.2",
+      "verified_on": "2026-11-24",
+      "claim_kind": "documented"
+    },
+    {
+      "source_id": "OTEL",
+      "url": "https://opentelemetry.io/docs/languages/python/instrumentation/",
+      "section": "Creating nested spans",
+      "applicability": "Локальный SDK, безопасные атрибуты",
+      "verified_on": "2026-11-24",
+      "claim_kind": "documented"
+    },
+    {
+      "source_id": "FAST",
+      "url": "https://fastapi.tiangolo.com/tutorial/dependencies/",
+      "section": "Dependencies",
+      "applicability": "Внедрение доверенного principal",
+      "verified_on": "2026-11-24",
+      "claim_kind": "documented"
+    },
+    {
+      "source_id": "BOLA",
+      "url": "https://api-security.owasp.org/editions/2023/en/0xa1-broken-object-level-authorization/",
+      "section": "Object-level authorization",
+      "applicability": "Проверка прав перед чтением",
+      "verified_on": "2026-11-24",
+      "claim_kind": "documented"
+    }
+  ],
+  "task_id": "ai-engineering.06.10.document-rag-project.practice"
+}
