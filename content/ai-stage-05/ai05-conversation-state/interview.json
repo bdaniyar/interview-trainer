@@ -1,0 +1,42 @@
+[
+  {
+    "question": "Почему call и outputs обрезают одной группой?",
+    "answer": [
+      "Чтобы не оставить orphan result.",
+      "Один model turn может содержать несколько IDs, каждому соответствует свой result. Частичная группа меняет смысл контекста."
+    ],
+    "short_answer": "Чтобы не оставить orphan result.",
+    "junior_answer": "Один model turn может содержать несколько IDs, каждому соответствует свой result. Частичная группа меняет смысл контекста.",
+    "follow_up_question": "Можно пропустить свежий обмен и взять старую реплику?",
+    "follow_up_answer": "В этой задаче сохраняем непрерывный свежий суффикс, поэтому останавливаем отбор.",
+    "priority": "P1",
+    "expected_answer": {
+      "follow_up_questions": [
+        "Можно пропустить свежий обмен и взять старую реплику?"
+      ],
+      "must_mention": [
+        "Чтобы не оставить orphan result."
+      ]
+    }
+  },
+  {
+    "question": "Почему conversation ID не действует как credential?",
+    "answer": [
+      "ID — ссылка, доступ определяет владелец.",
+      "Backend проверяет tenant и subject, решает конфликт конкурентных turns и хранит retention policy."
+    ],
+    "short_answer": "ID — ссылка, доступ определяет владелец.",
+    "junior_answer": "Backend проверяет tenant и subject, решает конфликт конкурентных turns и хранит retention policy.",
+    "follow_up_question": "Как проверить разделение на тесте?",
+    "follow_up_answer": "Отправить два запроса к разным беседам и два к одной, сверить снимки истории и наблюдаемый конфликт.",
+    "priority": "P1",
+    "expected_answer": {
+      "follow_up_questions": [
+        "Как проверить разделение на тесте?"
+      ],
+      "must_mention": [
+        "ID — ссылка, доступ определяет владелец."
+      ]
+    }
+  }
+]

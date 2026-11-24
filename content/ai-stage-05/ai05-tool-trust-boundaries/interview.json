@@ -1,0 +1,42 @@
+[
+  {
+    "question": "Почему prompt injection проверяют возле tool executor?",
+    "answer": [
+      "Executor владеет allowlist и authorization.",
+      "Недоверенные данные могут убедить модель попросить действие, но исполнитель проверяет scope, объект и DTO до доступа."
+    ],
+    "short_answer": "Executor владеет allowlist и authorization.",
+    "junior_answer": "Недоверенные данные могут убедить модель попросить действие, но исполнитель проверяет scope, объект и DTO до доступа.",
+    "follow_up_question": "Достаточно ли запретить пару слов?",
+    "follow_up_answer": "Нет. Разные формулировки могут привести к тому же вызову; проверяется действие и полномочия.",
+    "priority": "P1",
+    "expected_answer": {
+      "follow_up_questions": [
+        "Достаточно ли запретить пару слов?"
+      ],
+      "must_mention": [
+        "Executor владеет allowlist и authorization."
+      ]
+    }
+  },
+  {
+    "question": "Чем proposal отличается от записи?",
+    "answer": [
+      "Proposal фиксирует намерение без эффекта.",
+      "Он содержит server-generated ID, точные аргументы и владельца, ожидает отдельного решения человека."
+    ],
+    "short_answer": "Proposal фиксирует намерение без эффекта.",
+    "junior_answer": "Он содержит server-generated ID, точные аргументы и владельца, ожидает отдельного решения человека.",
+    "follow_up_question": "Как проверить отсутствие записи?",
+    "follow_up_answer": "Проверить наблюдаемый счётчик эффекта и состояние синтетического репозитория после запроса.",
+    "priority": "P1",
+    "expected_answer": {
+      "follow_up_questions": [
+        "Как проверить отсутствие записи?"
+      ],
+      "must_mention": [
+        "Proposal фиксирует намерение без эффекта."
+      ]
+    }
+  }
+]
