@@ -47,7 +47,7 @@ Forced планы, actual buffers/rows, параметры HNSW и формул�
 | FTS + dense RRF | 1,0000 / 1,0000 | 1,0000 / 0,8333 |
 | RRF + bounded rerank | 1,0000 / 1,0000 | 1,0000 / 1,0000 |
 
-По языкам dev FTS recall (ru/kk/en) 0,500/0,250/1,000 при четырёх определённых cases на язык. Holdout FTS recall 0,444/0,111/1,000 при трёх на язык. Exact dense recall 1,000 во всех срезах. Ответы совпали по 6/6 dev и 4/4 holdout для каждого языка. Citation validity и claim support — по 9/9 определённых ответов в каждом split. Верные отказы 6/6 и 3/3. Верные конфликты 3/3 dev, для holdout метрика null. Неверные утверждения с формально допустимой ссылкой отклонены в 9/9 на каждом split. Forbidden/stale результатов **0** на всех методах. Отчёты совпали побайтово. Измеренное время отделено от eval: например, holdout dense 15,715 / 24,984 мс p50/p95, n=12.
+По языкам dev FTS recall (ru/kk/en) 0,500/0,250/1,000 при четырёх определённых cases на язык. Holdout FTS recall 0,444/0,111/1,000 при трёх на язык. Exact dense recall 1,000 во всех срезах. Ответы совпали по 6/6 dev и 4/4 holdout для каждого языка. Citation validity и claim support — по 9/9 определённых ответов в каждом split. Верные отказы 6/6 и 3/3. Верные конфликты 3/3 dev, для holdout метрика null. Неверные утверждения с формально допустимой ссылкой отклонены в 9/9 на каждом split. Forbidden/stale результатов **0** на всех методах. Отчёты совпали побайтово (SHA-256 dev `e26d8fff0ecbe6bda74880d9825b239cbfc4ddc94f7081b5b04730f750ba91a5`, holdout `647242e05b0754cf4263037525767aeb7fe07de31aa5e02835c4bd6665a20916`). Измеренное время отделено от eval: например, holdout dense 15,715 / 24,984 мс p50/p95, n=12.
 
 Gold читает evaluator после генерации. Оценка охватывает scripted extractive replies, cross-language и code-switch. Независимой редакторской оценки kk и проверки качества live модели не было. [Корпус, split, метрики и ограничения](../projects/document_rag/EVALUATION.md).
 
@@ -65,7 +65,7 @@ Gold читает evaluator после генерации. Оценка охва
 | `node scripts/smoke_sql_browser.mjs` | 23 SQL labs, 5 Worker labs, 3 Architecture-урока, Web Transaction Lab, JSONB и Index Lab. Проверены blocking/commit release, SQL draft и Python files после reload, отдельный прогресс и XP. |
 | `SQL_DOCKER_TESTS=1 python3 -m pytest -o addopts='' -q sql_runner/tests/integration/test_postgres.py` | 19 passed с настоящим ограниченным PostgreSQL. |
 | `python -m pytest -o addopts='' -q projects/vector_search/tests` и та же команда для `projects/document_rag/tests` | P4 7, P5 16. Отдельные PG профили. |
-| `python -m projects.document_rag.smoke_http` | Loopback FastAPI подтвердил казахский вопрос с цитатой, tenant, отказ на подмене поля, replay и tombstone. |
+| `python -m projects.document_rag.smoke_http` | Прошёл через host Uvicorn и через свежий Compose-профиль `api`. Подтверждены казахский вопрос с цитатой, tenant, отказ на подмене поля, replay и tombstone. Docker-образ собран с закреплённым uv и хешами lock. |
 | Тесты P1, P2, P3 и `python -m pytest -o addopts='' -q tools/ai_sdk_verify` | 26/33/33 и 22 MockTransport. |
 
 ## Совместимость и границы
