@@ -2,9 +2,9 @@
   "track": "ai-engineering",
   "title": "AI Engineering",
   "lesson_count": 72,
-  "release": "R1",
-  "release_status": "complete",
-  "release_lesson_count": 29,
+  "release": "R2",
+  "release_status": "in_progress",
+  "release_lesson_count": 31,
   "stages": [
     {
       "slug": "ai-stage-01",
@@ -414,7 +414,33 @@
       "slug": "ai-stage-05",
       "title": "Tools и состояние диалога",
       "lesson_count": 7,
-      "lessons": []
+      "lessons": [
+        {
+          "id": "ai-engineering.05.01.tool-call-protocol",
+          "slug": "ai05-tool-call-protocol",
+          "number": "AI5.1",
+          "title": "Tool calling и связь вызовов с результатами",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.04.07.extraction-project-review"
+          ],
+          "practice": "graded",
+          "minutes": 120
+        },
+        {
+          "id": "ai-engineering.05.02.validated-tool-registry",
+          "slug": "ai05-validated-tool-registry",
+          "number": "AI5.2",
+          "title": "Реестр инструментов и проверка аргументов",
+          "status": "published",
+          "prerequisites": [
+            "ai-engineering.05.01.tool-call-protocol",
+            "ai-engineering.04.02.schema-and-domain-model"
+          ],
+          "practice": "graded",
+          "minutes": 150
+        }
+      ]
     },
     {
       "slug": "ai-stage-06",
